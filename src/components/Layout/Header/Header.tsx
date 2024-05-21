@@ -13,6 +13,8 @@ import { PiBag } from 'react-icons/pi';
 import Button from '@/components/ui/Button/Button';
 import { FaRegUser } from 'react-icons/fa';
 import { RiMenuFold3Fill } from 'react-icons/ri';
+import { MdOutlineHome } from 'react-icons/md';
+import DrawerMenu from '@/components/ui/DrawerMenu/DrawerMenu';
 
 
 const Header = () => {
@@ -48,9 +50,18 @@ const Header = () => {
       <Container >
           <div className='flex justify-between flex-wrap lg:flex-nowrap gap-0 md:gap-2 items-center' >
               <Image className='w-14 md:w-24' src={logo} alt="logo" width={100} height={100} />
-              <div className='p-1 rounded-md block md:hidden text-white bg-primary'>
+              <DrawerMenu
+                title={<><div className='p-1 rounded-md block md:hidden text-white bg-primary'>
               <TbCategoryMinus  size={20} />
-              </div>
+              </div></>}
+              content={<>
+              <ul className='space-y-2'>
+                <li><Link className='text-base font-semibold text-black hover:text-black' href={"/"}>Dinnig</Link></li>
+                <li><Link className='text-base font-semibold text-black hover:text-black' href={"/"}>Bedrrom</Link></li>
+                <li><Link className='text-base font-semibold text-black hover:text-black' href={"/"}>Kitchen</Link></li>
+              </ul>
+              </>}
+              />
               <div className='border w-3/6 md:w-full max-w-screen-md flex'>
               <SelectList 
                 className=' w-40 h-12 borderless-select border-r hidden md:block'
@@ -65,9 +76,19 @@ const Header = () => {
                 <input className='w-full px-4 focus:outline-none active:border-none focus:border-none border-white ' type="text" placeholder='Search Product Here...'/>
                 <Button className='rounded-l-md px-2 md:px-4' title={<IoSearch size={25} />}/>
               </div>
-              <div className='p-1 rounded-md block md:hidden text-white bg-primary'>
-              <RiMenuFold3Fill  size={20} />
-              </div>
+               <DrawerMenu
+                title={<><div className='p-1 rounded-md block md:hidden text-white bg-primary'>
+                <RiMenuFold3Fill  size={20} />
+                </div></>}
+              content={<>
+              <ul className='space-y-2'>
+                <li><Link className='text-base font-semibold text-black hover:text-black' href={"/"}>Home</Link></li>
+                <li><Link className='text-base font-semibold text-black hover:text-black' href={"/"}>Product</Link></li>
+                <li><Link className='text-base font-semibold text-black hover:text-black' href={"/"}>About</Link></li>
+                <li><Link className='text-base font-semibold text-black hover:text-black' href={"/"}>Contact</Link></li>
+              </ul>
+              </>}
+              />
               <div className='hidden md:flex gap-2 md:gap-4 lg:gap-8 '>
                 <Link className='relative group ' href={"/"}>
                   <div className='rounded-full text-white w-6 h-6 bg-dark group-hover:bg-primary absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
@@ -85,7 +106,8 @@ const Header = () => {
               </div>
             </div>
       </Container>
-      {/* <div className='bg-primary py-4 '>
+    </div>
+    <div className='bg-primary py-4 hidden md:block '>
         <ul className='flex justify-center gap-12 text-white'>
           <li><Link className='hover:underline' href={"/"}>Home</Link></li>
           <li><Link className='hover:underline' href={"/"}>Product</Link></li>
@@ -93,8 +115,27 @@ const Header = () => {
           <li><Link className='hover:underline' href={"/"}>Contact</Link></li>
         </ul>
         
-      </div> */}
-    </div>
+      </div>
+
+      <div className='bg-primary p-3 fixed w-full bottom-0 block md:hidden'>
+      <div className='flex justify-evenly gap-4 '>
+              <Link className='text-base lg:text-lg ' href={"/profile"}><MdOutlineHome  size={30}  className= 'text-white' /></Link>
+
+                <Link className='relative group ' href={"/"}>
+                  <div className='rounded-full text-dark w-6 h-6 bg-white  absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
+                    1
+                  </div>
+                <IoMdHeartEmpty className='text-white  transition duration-200 ease-in' size={30} />
+                </Link>
+                <Link className='relative group' href={"/"}>
+                  <div className='rounded-full text-dark w-6 h-6 bg-white  absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
+                    1
+                  </div>
+                  <PiBag   className='text-white  transition duration-200 ease-in' size={30} />
+                </Link>
+                <Link className='text-base lg:text-lg ' href={"/profile"}><FaRegUser size={25}  className= 'text-white' /></Link>
+              </div>
+      </div>
     </>
   )
 }
