@@ -5,6 +5,7 @@ import { Layout } from 'antd';
 import { FaFacebookF, FaTwitter, FaInstagram, FaPinterest } from 'react-icons/fa';
 import Link from 'next/link';
 
+
 const { Footer: AntFooter } = Layout;
 
 const Footer: React.FC = () => {
