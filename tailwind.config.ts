@@ -8,6 +8,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        optima: ["var(--font-optima)"],
+      },
+    colors:{
+        primary: "#C72031",
+        secondary:"#FFFCF5",
+        dark:"#3A393C"
+    },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
