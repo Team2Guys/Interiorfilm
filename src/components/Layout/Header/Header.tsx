@@ -33,7 +33,7 @@ const Header = () => {
                   <Link href={"mailto:abc@gmail.com"}>abc@gmail.com</Link>
                   </div>
             </div>
-            <div className='hidden md:flex gap-2  mx-auto md:mx-0' >
+            <div className='hidden lg:flex gap-2  mx-auto md:mx-0' >
                 <p className='text-sm md:text-base  text-center lg:text-start'>Get Up To 20% off in your first order</p>
             </div>
             <div className='flex gap-2 items-center mx-auto md:mx-0 ' >
@@ -49,10 +49,10 @@ const Header = () => {
     <div className='bg-secondary border-b w-full py-3'>
       <Container >
           <div className='flex justify-between flex-wrap lg:flex-nowrap gap-0 md:gap-2 items-center' >
-              <Image className='w-14 md:w-24' src={logo} alt="logo" width={100} height={100} />
+              <Image className='w-14 lg:w-24' src={logo} alt="logo" width={100} height={100} />
               <DrawerMenu
               width={250}
-                title={<><div className='p-1 rounded-md block md:hidden text-white bg-primary'>
+                title={<><div className='p-1 rounded-md block lg:hidden text-white bg-primary'>
               <TbCategoryMinus  size={20} />
               </div></>}
               content={<>
@@ -63,9 +63,9 @@ const Header = () => {
               </ul>
               </>}
               />
-              <div className='border w-3/6 md:w-full max-w-screen-md flex'>
+              <div className='border w-3/6 lg:w-full max-w-screen-md flex'>
               <SelectList 
-                className=' w-40 h-12 borderless-select border-r hidden md:block'
+                className=' w-40 h-12 borderless-select border-r hidden lg:block'
                 defaultValue="All Categories"
                 options={[
                   { value: 'Dining', label: 'Dining' },
@@ -79,7 +79,7 @@ const Header = () => {
               </div>
                <DrawerMenu
                width={250}
-                title={<><div className='p-1 rounded-md block md:hidden text-white bg-primary'>
+                title={<><div className='p-1 rounded-md block lg:hidden text-white bg-primary'>
                 <RiMenuFold3Fill  size={20} />
                 </div></>}
               content={<>
@@ -91,7 +91,7 @@ const Header = () => {
               </ul>
               </>}
               />
-              <div className='hidden md:flex gap-2 md:gap-4 lg:gap-8 '>
+              <div className='hidden lg:flex gap-2 md:gap-4 lg:gap-8 '>
                 <Link className='relative group ' href={"/"}>
                   <div className='rounded-full text-white w-6 h-6 bg-dark group-hover:bg-primary absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
                     1
@@ -109,7 +109,7 @@ const Header = () => {
             </div>
       </Container>
     </div>
-    <div className='bg-primary py-4 hidden md:block '>
+    <div className='bg-primary py-4 hidden lg:block '>
         <ul className='flex justify-center gap-12 text-white'>
           <li><Link className='hover:underline' href={"/"}>Home</Link></li>
           <li><Link className='hover:underline' href={"/"}>Product</Link></li>
@@ -119,7 +119,7 @@ const Header = () => {
         
       </div>
 
-      <div className='bg-primary p-3 fixed w-full bottom-0 block md:hidden'>
+      <div className='bg-primary p-3 fixed w-full bottom-0 block lg:hidden'>
       <div className='flex justify-evenly gap-4 '>
               <Link className='text-base lg:text-lg ' href={"/profile"}><MdOutlineHome  size={30}  className= 'text-white' /></Link>
 
