@@ -3,18 +3,18 @@ import Container from '../Container/Container'
 import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
 import Link from 'next/link';
 import { IoMailOutline, IoSearch } from "react-icons/io5";
-import SelectList from '@/components/ui/Select/Select';
-import { CiGlobe, CiHeart, CiUser } from 'react-icons/ci';
+import { CiGlobe } from 'react-icons/ci';
 import Image from 'next/image';
 import logo from "../../../../public//images/logo.png"
 import { IoMdHeartEmpty } from 'react-icons/io';
-import { TbArrowsExchange, TbCategoryMinus } from 'react-icons/tb';
+import {  TbCategoryMinus } from 'react-icons/tb';
 import { PiBag } from 'react-icons/pi';
-import Button from '@/components/ui/Button/Button';
 import { FaRegUser } from 'react-icons/fa';
 import { RiMenuFold3Fill } from 'react-icons/ri';
 import { MdOutlineHome } from 'react-icons/md';
-import DrawerMenu from '@/components/ui/DrawerMenu/DrawerMenu';
+import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu';
+import SelectList from 'components/ui/Select/Select';
+import Button from 'components/ui/Button/Button';
 
 
 const Header = () => {

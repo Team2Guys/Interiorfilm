@@ -4,6 +4,8 @@ import React from 'react';
 import { Layout } from 'antd';
 import { FaFacebookF, FaTwitter, FaInstagram, FaPinterest } from 'react-icons/fa';
 import Link from 'next/link';
+import logo from "../../../../public/images/logo.png"
+import Image from 'next/image';
 
 const { Footer: AntFooter } = Layout;
 
@@ -12,20 +14,20 @@ const Footer: React.FC = () => {
     <AntFooter className="text-gray-800 py-8 bg-secondary ">
       <div className="container lg:px-40 mx-auto px-4 flex flex-col md:flex-row justify-between">
         <div className="mb-8 md:mb-0">
-          <img src="/logo.png" alt="Interior Film" className="w-32 mb-4" />
+          <Image width={100} height={100} src={logo} alt="Interior Film" className="w-32 mb-4" />
           <p>Contact Info</p>
           <p>17 Princess Road, London, Greater London NW1 8JR, UK</p>
           <div className="flex space-x-4 mt-4">
-            <Link href="https://facebook.com" target="_blank" className='hover:text-primary' rel="noopener noreferrer">
+            <Link href="https://facebook.com"  className='hover:text-primary'>
               <FaFacebookF className="text-xl hover:text-primary" />
             </Link>
-            <Link href="https://twitter.com" target="_blank" className='hover:text-primary' rel="noopener noreferrer">
+            <Link href="https://twitter.com"  className='hover:text-primary'>
               <FaTwitter className="text-xl hover:text-primary" />
             </Link>
-            <Link href="https://instagram.com" target="_blank" className='hover:text-primary' rel="noopener noreferrer">
+            <Link href="https://instagram.com"  className='hover:text-primary'>
               <FaInstagram className="text-xl hover:text-primary" />
             </Link>
-            <Link href="https://pinterest.com" target="_blank" className='hover:text-primary' rel="noopener noreferrer">
+            <Link href="https://pinterest.com"  className='hover:text-primary'>
               <FaPinterest className="text-xl hover:text-primary" />
             </Link>
           </div>
