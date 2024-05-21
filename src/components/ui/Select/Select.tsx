@@ -15,7 +15,7 @@ interface Option {
 interface SelectListProps {
   options: Option[];
   className?: string;
-  defaultValue: string;
+  defaultValue: any;
 }
 
 const SelectList: React.FC<SelectListProps> = ({ options,className,defaultValue }) => {

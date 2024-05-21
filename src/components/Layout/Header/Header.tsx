@@ -2,57 +2,98 @@ import React from 'react'
 import Container from '../Container/Container'
 import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
 import Link from 'next/link';
-import { IoMailOutline } from "react-icons/io5";
+import { IoMailOutline, IoSearch } from "react-icons/io5";
 import SelectList from '@/components/ui/Select/Select';
-import { CiGlobe, CiUser } from 'react-icons/ci';
+import { CiGlobe, CiHeart, CiUser } from 'react-icons/ci';
+import Image from 'next/image';
+import logo from "../../../../public//images/logo.png"
+import { IoMdHeartEmpty } from 'react-icons/io';
+import { TbArrowsExchange, TbCategoryMinus } from 'react-icons/tb';
+import { PiBag } from 'react-icons/pi';
+import Button from '@/components/ui/Button/Button';
+import { FaRegUser } from 'react-icons/fa';
+import { RiMenuFold3Fill } from 'react-icons/ri';
 
 
 const Header = () => {
   return (
     <>
     <div className=' bg-secondary border-b w-full'>
-        <Container className='flex justify-between flex-wrap lg:flex-nowrap gap-2 p-2 items-center'>
+        <Container >
+          <div className='flex justify-between flex-wrap lg:flex-nowrap gap-2 p-2 items-center'>
             <div className='flex gap-4 mx-auto md:mx-0' >
-                  <div className='flex gap-1 text-sm md:text-base  items-center hover:underline'>
+                  <div className='flex gap-1 text-sm md:text-base lg:text-lg  items-center hover:underline'>
                   <HiOutlineDevicePhoneMobile  className='text-primary' />
                   <Link  href={"tel:+9213123123"}>+9213123123</Link>
                   </div>
-                  <div className='flex gap-1 text-sm md:text-base  items-center hover:underline'>
+                  <div className='flex gap-1 text-sm md:text-base lg:text-lg  items-center hover:underline'>
                   <IoMailOutline   className='text-primary' />
                   <Link href={"mailto:abc@gmail.com"}>abc@gmail.com</Link>
                   </div>
             </div>
-            <div className='flex gap-2  mx-auto md:mx-0' >
-                <p className='text-sm md:text-base  text-center lg:text-start'>Get Up To *0% off in your first order</p>
+            <div className='hidden md:flex gap-2  mx-auto md:mx-0' >
+                <p className='text-sm md:text-base  text-center lg:text-start'>Get Up To 20% off in your first order</p>
             </div>
             <div className='flex gap-2 items-center mx-auto md:mx-0 ' >
-                <SelectList 
-                className='borderless-select w-[70px] md:w-20'
-                defaultValue="USD"
-                options={[
-                  { value: 'USD', label: 'USD' },
-                  { value: 'AED', label: 'AED' },
-                  { value: 'ERU', label: 'ERU' },
-                ]}
-                />
-                <SelectList 
-                className='borderless-select w-[70px] md:w-20'
-                defaultValue="ENG"
-                options={[
-                  { value: 'ENG', label: 'ENG' },
-                  { value: 'ARB', label: 'ARB' },
-                  { value: 'CHI', label: 'CHI' },
-                ]}
-                />
-                <div className='flex gap-2 items-center text-sm md:text-base '>
+         
+                <div className='flex gap-2 items-center text-sm md:text-base lg:text-lg '>
                 <CiGlobe className='text-primary'  />
-                <Link className='text-sm md:text-base ' href={"/login"}>Login/Register</Link>
+                <Link className='text-sm md:text-base  ' href={"/login"}>Login/Register</Link>
                 </div>
-                <Link className='text-base ' href={"/profile"}><CiUser  className='text-primary' /></Link>
             </div>
-              
-
+            </div>
         </Container>
+    </div>
+    <div className='bg-secondary border-b w-full py-3'>
+      <Container >
+          <div className='flex justify-between flex-wrap lg:flex-nowrap gap-0 md:gap-2 items-center' >
+              <Image className='w-14 md:w-24' src={logo} alt="logo" width={100} height={100} />
+              <div className='p-1 rounded-md block md:hidden text-white bg-primary'>
+              <TbCategoryMinus  size={20} />
+              </div>
+              <div className='border w-3/6 md:w-full max-w-screen-md flex'>
+              <SelectList 
+                className=' w-40 h-12 borderless-select border-r hidden md:block'
+                defaultValue="All Categories"
+                options={[
+                  { value: 'Dining', label: 'Dining' },
+                  { value: 'Living', label: 'Living' },
+                  { value: 'Bedroom', label: 'Bedroom' },
+                ]}
+                />
+                
+                <input className='w-full px-4 focus:outline-none active:border-none focus:border-none border-white ' type="text" placeholder='Search Product Here...'/>
+                <Button className='rounded-l-md px-2 md:px-4' title={<IoSearch size={25} />}/>
+              </div>
+              <div className='p-1 rounded-md block md:hidden text-white bg-primary'>
+              <RiMenuFold3Fill  size={20} />
+              </div>
+              <div className='hidden md:flex gap-2 md:gap-4 lg:gap-8 '>
+                <Link className='relative group ' href={"/"}>
+                  <div className='rounded-full text-white w-6 h-6 bg-dark group-hover:bg-primary absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
+                    1
+                  </div>
+                <IoMdHeartEmpty className='text-primary group-hover:text-dark transition duration-200 ease-in' size={30} />
+                </Link>
+                <Link className='relative group' href={"/"}>
+                  <div className='rounded-full text-white w-6 h-6 bg-dark group-hover:bg-primary absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
+                    1
+                  </div>
+                  <PiBag   className='text-primary group-hover:text-dark transition duration-200 ease-in' size={30} />
+                </Link>
+                <Link className='text-base lg:text-lg ' href={"/profile"}><FaRegUser size={25}  className= 'text-primary' /></Link>
+              </div>
+            </div>
+      </Container>
+      {/* <div className='bg-primary py-4 '>
+        <ul className='flex justify-center gap-12 text-white'>
+          <li><Link className='hover:underline' href={"/"}>Home</Link></li>
+          <li><Link className='hover:underline' href={"/"}>Product</Link></li>
+          <li><Link className='hover:underline' href={"/"}>About</Link></li>
+          <li><Link className='hover:underline' href={"/"}>Contact</Link></li>
+        </ul>
+        
+      </div> */}
     </div>
     </>
   )
