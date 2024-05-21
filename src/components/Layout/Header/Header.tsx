@@ -51,6 +51,7 @@ const Header = () => {
           <div className='flex justify-between flex-wrap lg:flex-nowrap gap-0 md:gap-2 items-center' >
               <Image className='w-14 md:w-24' src={logo} alt="logo" width={100} height={100} />
               <DrawerMenu
+              width={250}
                 title={<><div className='p-1 rounded-md block md:hidden text-white bg-primary'>
               <TbCategoryMinus  size={20} />
               </div></>}
@@ -77,6 +78,7 @@ const Header = () => {
                 <Button className='rounded-l-md px-2 md:px-4' title={<IoSearch size={25} />}/>
               </div>
                <DrawerMenu
+               width={250}
                 title={<><div className='p-1 rounded-md block md:hidden text-white bg-primary'>
                 <RiMenuFold3Fill  size={20} />
                 </div></>}

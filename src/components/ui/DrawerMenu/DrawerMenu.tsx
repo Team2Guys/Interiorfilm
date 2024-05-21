@@ -7,9 +7,10 @@ interface drawerprops {
   title:any;
   content:any;
   className?:string;
+  width?:number;
 }
 
-const DrawerMenu:React.FC<drawerprops> = ({title,content,className}) => {
+const DrawerMenu:React.FC<drawerprops> = ({title,content,className,width}) => {
 const [open, setOpen] = useState(false);
 const showDrawer = () => {
   
@@ -25,7 +26,7 @@ const onClose = () => {
     <div className={`${className}`} onClick={showDrawer}>
     {title}
     </div>
-      <Drawer  onClose={onClose} open={open}>
+      <Drawer  onClose={onClose} open={open} width={width}>
         {content}
       </Drawer>
     </>
