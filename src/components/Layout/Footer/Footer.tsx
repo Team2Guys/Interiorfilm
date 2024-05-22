@@ -1,71 +1,93 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout } from 'antd';
-import { FaFacebookF, FaTwitter, FaInstagram, FaPinterest } from 'react-icons/fa';
+import { FaFacebookF, FaTwitter, FaInstagram, FaPinterest, FaAngleDown, FaAngleUp } from 'react-icons/fa';
 import Link from 'next/link';
-import logo from "../../../../public/images/logo.png"
+import logo from "../../../../public/images/logo.png";
 import Image from 'next/image';
-
+import { socialLinks, categories, customerCare, pages } from 'data/FooterData';
 
 const { Footer: AntFooter } = Layout;
 
 const Footer: React.FC = () => {
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
+  const [isCustomerCareOpen, setIsCustomerCareOpen] = useState(false);
+  const [isPagesOpen, setIsPagesOpen] = useState(false);
+
+  const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
+  const toggleCustomerCare = () => setIsCustomerCareOpen(!isCustomerCareOpen);
+  const togglePages = () => setIsPagesOpen(!isPagesOpen);
+
   return (
-    <AntFooter className="text-gray-800 py-8 bg-secondary ">
-      <div className="container lg:px-40 mx-auto px-4 flex flex-col md:flex-row justify-between">
+    <AntFooter className="text-gray-800 lg:py-8 pt-8 pb-0 px-0 bg-secondary">
+      <div className="container lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row justify-between">
         <div className="mb-8 md:mb-0">
           <Image width={100} height={100} src={logo} alt="Interior Film" className="w-32 mb-4" />
           <p>Contact Info</p>
-          <p>17 Princess Road, London, Greater London NW1 8JR, UK</p>
+          <p className='w-2/3 '>17 Princess Road, London, Greater London NW1 8JR, UK</p>
           <div className="flex space-x-4 mt-4">
-            <Link href="https://facebook.com"  className='hover:text-primary'>
-              <FaFacebookF className="text-xl hover:text-primary" />
-            </Link>
-            <Link href="https://twitter.com"  className='hover:text-primary'>
-              <FaTwitter className="text-xl hover:text-primary" />
-            </Link>
-            <Link href="https://instagram.com"  className='hover:text-primary'>
-              <FaInstagram className="text-xl hover:text-primary" />
-            </Link>
-            <Link href="https://pinterest.com"  className='hover:text-primary'>
-              <FaPinterest className="text-xl hover:text-primary" />
-            </Link>
+            {socialLinks.map((link, index) => (
+              <Link key={index} href={link.href} className='hover:text-primary'>
+                {React.createElement(require('react-icons/fa')[link.icon], { className: "text-lg hover:text-primary" })}
+              </Link>
+            ))}
           </div>
         </div>
-        <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-16">
-          <div>
-            <h4 className="font-semibold mb-4">Categories</h4>
-            <ul className="space-y-2">
-              <li><Link href={"/"} className='hover:text-primary'>Laptops & Computers</Link></li>
-              <li><Link href={"#"} className='hover:text-primary'>Cameras & Photography</Link></li>
-              <li><Link href={"#"} className='hover:text-primary'>Smart Phones & Tablets</Link></li>
-              <li><Link href={"#"} className='hover:text-primary'>Video Games & Consoles</Link></li>
-              <li><Link href={"#"} className='hover:text-primary'>TV & Audio</Link></li>
-              <li><Link href={"#"} className='hover:text-primary'>Gadgets</Link></li>
-              <li><Link href={"#"} className='hover:text-primary'>Waterproof Headphones</Link></li>
+        <hr className='lg:hidden bg-primary mb-5' />
+        <div className="flex flex-col md:flex-row md:space-y-0 md:space-x-24">
+          <div className='lg:pb-0 pb-3'>
+            <h3 
+              className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
+              onClick={toggleCategories}
+            >
+              Categories
+              <span className="ml-2 md:hidden">
+                {isCategoriesOpen ? <FaAngleUp /> : <FaAngleDown />}
+              </span>
+            </h3>
+            <ul className={`space-y-2 transition-all duration-300 overflow-hidden ${isCategoriesOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}>
+              {categories.map((category, index) => (
+                <li key={index}>
+                  <Link href={category.href} className='hover:text-primary'>{category.name}</Link>
+                </li>
+              ))}
             </ul>
           </div>
-          <div>
-            <h4 className="font-semibold mb-4">Customer Care</h4>
-            <ul className="space-y-2">
-              <li><Link href={"#"} className='hover:text-primary'>My Account</Link></li>
-              <li><Link href={"#"} className='hover:text-primary'>Discount</Link></li>
-              <li><Link href={"#"} className='hover:text-primary'></Link></li>
-              <li><Link href={""} className='hover:text-primary'>Orders History</Link></li>
-              <li><Link href={"#"} className='hover:text-primary'>Order Tracking</Link></li>
+          <div className='lg:pb-0 pb-3'>
+            <h3 
+              className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
+              onClick={toggleCustomerCare}
+            >
+              Customer Care
+              <span className="ml-2 md:hidden">
+                {isCustomerCareOpen ? <FaAngleUp /> : <FaAngleDown />}
+              </span>
+            </h3>
+            <ul className={`space-y-2 transition-all duration-300 overflow-hidden ${isCustomerCareOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}>
+              {customerCare.map((item, index) => (
+                <li key={index}>
+                  <Link href={item.href} className='hover:text-primary'>{item.name}</Link>
+                </li>
+              ))}
             </ul>
           </div>
-          <div>
-            <h4 className="font-semibold mb-4">Pages</h4>
-            <ul className="space-y-2">
-              <li><Link href={"#"} className='hover:text-primary'>Blog</Link></li>
-              <li><Link href={"#"} className='hover:text-primary'>Browse the Shop</Link></li>
-              <li><Link href={"#"} className='hover:text-primary'>Category</Link></li>
-              <li> <Link href={"#"} className='hover:text-primary'>Pre-Built Pages</Link></li>
-              <li><Link href={"#"} className='hover:text-primary'>Visual Composer Elements</Link></li>
-              <li><Link href={"#"} className='hover:text-primary'>WooCommerce Pages</Link></li>
-              <li><Link href={"#"} className='hover:text-primary'>WooCommerce Shortcodes</Link></li>
+          <div className='lg:pb-0 pb-3'>
+          <h3 
+              className="font-semibold mb-4 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
+              onClick={togglePages}
+            >
+              Pages
+              <span className="ml-2 md:hidden">
+                {isPagesOpen ? <FaAngleUp /> : <FaAngleDown />}
+              </span>
+            </h3>
+            <ul className={`space-y-2 transition-all duration-300 overflow-hidden ${isPagesOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}>
+              {pages.map((page, index) => (
+                <li key={index}>
+                  <Link href={page.href} className='hover:text-primary'>{page.name}</Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
