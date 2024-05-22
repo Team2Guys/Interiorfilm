@@ -8,6 +8,7 @@ import img6 from "../../public/images/img-13.png"
 import img7 from "../../public/images/img-14.png"
 import img8 from "../../public/images/img-15.png"
 import img9 from "../../public/images/img-16.png"
+import CollectiveProduct from "components/widgets/CollectiveProduct/CollectiveProduct";
 
 const tabs = [
   { label: 'Interior Vinyl Wraps', content: <><TabsData
@@ -41,12 +42,19 @@ const tabs = [
   ]}
   /></> },
 ];
+const products = [
+  { image:img2, category: 'Realistic Woodgrain' },
+  { image:img2, category: 'Realistic Marbles' },
+  { image:img2, category: 'Realistic Matte' },
+];
 
 export default function Home() {
   return (
     <>
+      {/* <HeroSlider/> */}
       <h1 className="text-[40px] md:text-[55px] font-bold text-center mt-10">DISCOVER OUR PRODUCT RANGES</h1>
       <Tabs tabs={tabs} />
+      <CollectiveProduct products={products} />
     </>
   );
 }
