@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
 
   return (
     <>
-      <AntFooter className="text-gray-800 lg:py-8 pt-8 pb-0 px-0 bg-secondary">
+      <AntFooter className="text-gray-800 lg:py-8 pt-8 pb-0 px-0 bg-secondary mt-10">
         <div className="container lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row justify-between">
           <div className="mb-8 md:mb-0">
             <Image width={100} height={100} src={logo} alt="Interior Film" className="w-32 mb-4" />
