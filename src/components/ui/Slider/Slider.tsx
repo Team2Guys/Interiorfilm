@@ -34,7 +34,7 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
-            <div className="relative h-96 md:h-128 lg:h flex items-center justify-start">
+            <div className="relative lg:h-[80vh] md:h-128 flex items-center justify-start">
               <Image
                 src={slide.image}
                 alt="Interior Film"
@@ -42,10 +42,10 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
                 objectFit="cover"
                 className="w-full h-full"
               />
-              <div className='absolute left-6 md:left-40 lg:left-72 top-1/2 transform -translate-y-1/2'>
+              <div className='absolute left-6 md:left-40 lg:left-80 top-1/2 transform -translate-y-1/2'>
                 <div>
                   <p className='text-xl md:text-3xl lg:text-4xl'>{slide.title}</p>
-                  <h2 className='text-2xl md:text-4xl lg:text-6xl py-2 text-primary'>{slide.subtitle}</h2>
+                  <h2 className='text-2xl md:text-4xl lg:text-7xl py-2 text-primary'>{slide.subtitle}</h2>
                   <p className='text-base md:w-2/3 lg:w-3/5 w-3/4'>{slide.description}</p>
                 </div>
                 <div className="flex items-center justify-start mt-6">

@@ -107,17 +107,17 @@ const Footer: React.FC = () => {
               <p className='text-xs'>© Interior Film - All Rights Reserved</p>
             </div>
             <div className='flex items-center gap-2 py-2 lg:order-2 order-1'>
-  {bottomImages.map((image, index) => (
-    <Image
-      key={index}
-      width={100}
-      height={0}
-      src={image}
-      alt="Interior Film"
-      className="w-10"
-    />
-  ))}
-</div> 
+              {bottomImages.map((image, index) => (
+                <Image
+                  key={index}
+                  width={100}
+                  height={0}
+                  src={image}
+                  alt="Interior Film"
+                  className="w-10"
+                />
+              ))}
+            </div> 
 
           </div>  
         </div>
