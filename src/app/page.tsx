@@ -8,8 +8,17 @@ import img6 from "../../public/images/img-13.png"
 import img7 from "../../public/images/img-14.png"
 import img8 from "../../public/images/img-15.png"
 import img9 from "../../public/images/img-16.png"
+import img143 from "../../public/images/CA143.png"
+import img003 from "../../public/images/KH9003.png"
+import img107 from "../../public/images/CA107.png"
 import CollectiveProduct from "components/widgets/CollectiveProduct/CollectiveProduct";
 import HeroSlider from "components/Carousel/HeroSlider/HeroSlider";
+import Offer from "components/widgets/Offer/Offer";
+import { SlDiamond } from "react-icons/sl";
+import { CgBulb } from "react-icons/cg";
+import { GiPayMoney } from "react-icons/gi";
+import { RiCustomerService2Line } from "react-icons/ri";
+import Testimonial from "components/widgets/Testimonial/Testimonial";
 
 const tabs = [
   { label: 'Interior Vinyl Wraps', content: <><TabsData
@@ -44,11 +53,16 @@ const tabs = [
   /></> },
 ];
 const products = [
-  { image:img2, category: 'Realistic Woodgrain' },
-  { image:img2, category: 'Realistic Marbles' },
-  { image:img2, category: 'Realistic Matte' },
+  { image:img143, category: 'Realistic Woodgrain' },
+  { image:img003, category: 'Realistic Marbles' },
+  { image:img107, category: 'Realistic Matte' },
 ];
-
+const offers = [
+  { icon:<SlDiamond className='text-primary  group-hover:text-white' size={40} /> ,title: 'Quality Products', detail: 'Get free Quality Products for your interior design project.' },
+  { icon:<CgBulb className='text-primary  group-hover:text-white' size={40} /> ,title: 'Reasonable Pricing', detail: 'We ensure the highest quality standards for your interiors.' },
+  { icon:<GiPayMoney className='text-primary  group-hover:text-white' size={40} /> ,title: 'Reasonable Pricing', detail: 'Competitive pricing for all our services.' },
+  { icon:<RiCustomerService2Line className='text-primary  group-hover:text-white' size={40} /> ,title: '24/7 Support', detail: 'Our support team is available 24/7 to assist you.' },
+];
 export default function Home() {
   return (
     <>
@@ -56,6 +70,8 @@ export default function Home() {
       <h1 className="text-[40px] md:text-[55px] font-bold text-center mt-10">DISCOVER OUR PRODUCT RANGES</h1>
       <Tabs tabs={tabs} />
       <CollectiveProduct products={products} />
+      <Offer Offers={offers}/>
+      <Testimonial/>
     </>
   );
 }

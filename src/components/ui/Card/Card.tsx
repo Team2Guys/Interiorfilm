@@ -28,7 +28,7 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
         <div className='bg-white shadow-md p-2 w-full mt-2 group' key={index}>
           <div className='relative'>
             <Image className='w-full bg-contain h-44 md:h-72' width={300} height={300} src={product.image} alt='Image' />
-           <div className='space-y-3 absolute top-4 right-4 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition ease-in-out duration-400 '> 
+           <div className='space-y-3 absolute top-4 right-4 overflow-hidden translate-x-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition ease-in-out duration-400 hidden md:block '> 
            <Link href={"/"} className='w-10 h-10 rounded-full  bg-white hover:bg-primary flex justify-center items-center '>
             <LuShoppingCart className='text-primary hover:text-white' size={25} />
             </Link>
