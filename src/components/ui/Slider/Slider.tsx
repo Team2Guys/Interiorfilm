@@ -34,7 +34,7 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
-            <div className="relative h-96 md:h-128 lg:h-screen flex items-center justify-start">
+            <div className="relative h-96 md:h-128 lg:h flex items-center justify-start">
               <Image
                 src={slide.image}
                 alt="Interior Film"

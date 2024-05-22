@@ -37,7 +37,6 @@ export default function RootLayout({
         <HeroSlider/>
         {children}
         <Footer/>
-        <FooterB/>
       </body>
     </html>
   );
