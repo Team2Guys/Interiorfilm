@@ -21,8 +21,8 @@ interface Offer {
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-10 gap-2 md:gap-4'>
             {
                 Offers.map((array,index)=>(
-                    <div className='group'>
-                    <div className='shadow p-2  group-hover:shadow-lg flex flex-col justify-center items-center space-y-3 pt-10 pb-10 px-4' key={index}>
+                    <div className='group' key={index}>
+                    <div className='shadow p-2  group-hover:shadow-lg flex flex-col justify-center items-center space-y-3 pt-10 pb-10 px-4' >
                     <div className='w-16 h-16 rounded-full bg-white group-hover:bg-primary flex justify-center items-center'>
                         {array.icon}
                     </div>
