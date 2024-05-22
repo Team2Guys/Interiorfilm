@@ -5,6 +5,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "components/Layout/Header/Header";
 import Footer from "components/Layout/Footer/Footer";
+import FooterB from "components/Layout/Footer/FooterB";
+import HeroSlider from "components/Carousel/HeroSlider/HeroSlider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,8 +34,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={` ${inter.className}`}>
         <Header/>
+        <HeroSlider/>
         {children}
         <Footer/>
+        <FooterB/>
       </body>
     </html>
   );
