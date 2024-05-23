@@ -82,8 +82,8 @@ const Product = () => {
 
                 {colorsARray.map((color, index) =>{
                     return (
-                        <div className={`rounded-full p-1 ${color.colorName ===colorName ? " border-2 border-primary": ""}`}>
-                         <div key={index} className={` space-x-2 h-4 w-4 cursor-pointer rounded-full `} style={{backgroundColor: `#${color.colorName}`}} onClick={()=>{setColorName(color.colorName)}}>
+                        <div className={`rounded-full p-1 ${color.colorName ===colorName ? " border-2 border-primary": ""}`} key={index}>
+                         <div  className={` space-x-2 h-4 w-4 cursor-pointer rounded-full `} style={{backgroundColor: `#${color.colorName}`}} onClick={()=>{setColorName(color.colorName)}}>
                         </div>
                         </div>
                     )
@@ -98,7 +98,7 @@ const Product = () => {
              </div>
             </div>
             <div className='w-9/12'>
-            <div className='grid grid-cols-3 gap-2'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
 
                 <Card ProductCard={items} />
             </div>
