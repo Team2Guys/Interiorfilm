@@ -11,6 +11,9 @@ import paypal from "../../../../public/images/paypal.jpg";
 import visacard from "../../../../public/images/visacard.jpg";
 import mastercard from "../../../../public/images/mastercard.jpg";
 import maestrocard from "../../../../public/images/maestrocard.jpg";
+import Container from '../Container/Container';
+import { SlEnvolopeLetter } from 'react-icons/sl';
+import Button from 'components/ui/Button/Button';
 
 const { Footer: AntFooter } = Layout;
 
@@ -26,6 +29,20 @@ const Footer: React.FC = () => {
 
   return (
     <>
+    <div className='bg-white pt-10'>
+    <Container>
+      <div className='flex flex-wrap md:flex-nowrap justify-between'>
+        <div className='flex items-center gap-2 w-full md:w-2/6'>
+        <SlEnvolopeLetter className='text-primary' size={35} />
+        <p><span className='text-primary'>$90 OFF*</span> YOUR ORDER! SUBSCRBE TO OUR NEWSLETTER TODAY.</p>
+        </div>
+        <div className='flex items-center justify-center mt-5 md:mt-0'>
+          <input className='bg-secondary h-12 px-2 outline-primary w-4/6 md:w-auto' type='email' placeholder='Enter Email Address'/>
+          <Button title={"Sign Up"}/>
+        </div>
+      </div>
+    </Container>
+    </div>
       <AntFooter className="text-gray-800 lg:py-8 pt-8 pb-0 px-0 bg-secondary mt-10">
         <div className="container lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row justify-between">
           <div className="mb-8 md:mb-0">

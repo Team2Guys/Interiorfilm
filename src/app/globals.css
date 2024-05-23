@@ -29,3 +29,6 @@
     background: rgb(199 32 49) !important;
   }
   
+  .ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector{
+    border-color: #C72031 !important;
+  }

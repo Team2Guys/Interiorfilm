@@ -21,13 +21,13 @@ interface Offer {
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-10 gap-2 md:gap-4'>
             {
                 Offers.map((array,index)=>(
-                    <div className='group' key={index}>
-                    <div className='shadow p-2  group-hover:shadow-lg flex flex-col justify-center items-center space-y-3 pt-10 pb-10 px-4' >
+                    <div className='group ' key={index}>
+                    <div className='shadow p-1 md:p-2  group-hover:shadow-lg flex flex-col justify-center items-center space-y-3 pt-10 pb-10 px-1 md:px-4 h-72' >
                     <div className='w-16 h-16 rounded-full bg-white group-hover:bg-primary flex justify-center items-center'>
                         {array.icon}
                     </div>
-                    <h1 className='font-medium'>{array.title}</h1>
-                    <p className='text-center'>{array.detail}</p>
+                    <h1 className='font-medium text-center'>{array.title}</h1>
+                    <p className='text-center text-sm md:text-base'>{array.detail}</p>
                  </div>
                  </div>
                 ))

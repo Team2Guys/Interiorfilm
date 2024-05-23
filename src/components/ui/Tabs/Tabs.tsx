@@ -17,12 +17,12 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
 
   return (
     <Container className='mt-10'>
-      <div className="flex space-x-2 items-center justify-center">
+      <div className="flex space-x-2 items-center justify-center ">
         {tabs.map((tab, index) => (
           <button
             key={index}
             onClick={() => setActiveTab(index)}
-            className={`py-2 px-4 rounded-md border  ${activeTab === index ? 'bg-primary text-white' : 'border-primary text-dark'}`}
+            className={`py-2 px-4 rounded-md border line-clamp-1 w-full md:w-auto h-10  ${activeTab === index ? 'bg-primary text-white' : 'border-primary text-dark'}`}
           >
             {tab.label}
           </button>

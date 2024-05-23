@@ -19,6 +19,7 @@ const config: Config = {
     },
       backgroundImage: {
         'client': "url('/images/Clints.png')",
+        'overlay': "url('/images/overlay.png')",
       },
     },
   },
