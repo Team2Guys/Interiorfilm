@@ -23,10 +23,10 @@ const onClose = () => {
 
   return (
     <>
-    <div className={`${className}`} onClick={showDrawer}>
-    {title}
-    </div>
-      <Drawer  onClose={onClose} open={open} width={width}>
+      <div className={`${className}`} onClick={showDrawer}>
+      {title}
+      </div>
+      <Drawer onClose={onClose} open={open} width={width}>
         {content}
       </Drawer>
     </>

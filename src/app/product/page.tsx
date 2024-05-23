@@ -15,6 +15,8 @@ import Card from 'components/ui/Card/Card'
 import Link from 'next/link'
 import Collapse from 'components/ui/Collapse/Collapse'
 import { Slider } from 'antd'
+import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu'
+import { IoFunnelOutline } from 'react-icons/io5'
 
 const items=[
     { image: img3, title: "JBL Micoro Headphone", price: 23, oldprice: 38, star: 2 },
@@ -62,8 +64,9 @@ const Product = () => {
             <input className='px-2 border-2 rounded-md border-primary outline-none w-3/6 md:w-auto' type='search' placeholder="Search"/>
        
         </div>
-        <div className='flex gap-10'>
-            <div className='w-3/12 space-y-3'>
+
+        <div className='flex flex-wrap md:flex-nowrap gap-10'>
+            <div className='w-full md:w-3/12 space-y-3 hidden md:block'>
              <div className='p-2 bg-secondary'>
                 <Collapse title="All Categories">
                 <ul className='px-1 pt-2 space-y-1'>
@@ -97,10 +100,48 @@ const Product = () => {
                 </Collapse>
              </div>
             </div>
-            <div className='w-9/12'>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
+            <DrawerMenu 
+            className='float-end'
+            width={250}
+            title={<><div className='flex md:hidden mt-5  underline gap-2 items-center'><IoFunnelOutline size={20} />Filters </div></>}
+            content={<div className='space-y-2'>
+            <div className='p-2 bg-secondary'>
+                <Collapse title="All Categories">
+                <ul className='px-1 pt-2 space-y-1'>
+                        <li><Link href={"/"}>Dresses</Link></li>
+                        <li><Link href={"/"}>Sweatshirts</Link></li>
+                        <li><Link href={"/"}>Jackets</Link></li>
+                        <li><Link href={"/"}>Denim Jeans</Link></li>
+                        <li><Link href={"/"}>Shorts</Link></li>
+                    </ul>
+                </Collapse>
+             </div>
 
-                <Card ProductCard={items} />
+             <div className='p-2 bg-secondary'>
+                <Collapse title="All Filters">
+                <div  className='flex flex-wrap gap-2'>
+
+                {colorsARray.map((color, index) =>{
+                    return (
+                        <div className={`rounded-full p-1 ${color.colorName ===colorName ? " border-2 border-primary": ""}`} key={index}>
+                         <div  className={` space-x-2 h-4 w-4 cursor-pointer rounded-full `} style={{backgroundColor: `#${color.colorName}`}} onClick={()=>{setColorName(color.colorName)}}>
+                        </div>
+                        </div>
+                    )
+                })}
+                </div>
+                </Collapse>
+             </div>
+             <div className='p-2 bg-secondary'>
+                <Collapse title="Filter Price">
+                <Slider range={{ draggableTrack: true }} defaultValue={[0,10]} />
+                </Collapse>
+             </div>
+            </div>}
+            />
+            <div className='w-full md:w-9/12'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
+            <Card ProductCard={items} />
             </div>
             </div> 
         </div>
