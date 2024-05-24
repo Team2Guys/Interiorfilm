@@ -25,7 +25,7 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
   return (
     <>
       {ProductCard.map((product, index) => (
-        <div className='bg-white shadow-md p-2 w-full mt-2 group' key={index}>
+        <Link href={"/detail"} className='bg-white shadow-md p-2 w-full mt-2 group' key={index}>
           <div className='relative'>
             <Image className='w-full bg-contain h-44 md:h-72' width={300} height={300} src={product.image} alt='Image' />
            <div className='space-y-3 absolute top-4 right-4 overflow-hidden translate-x-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition ease-in-out duration-400 hidden md:block '> 
@@ -47,12 +47,13 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
                 Dhs. <span>{product.oldprice}</span>.00
               </p>
             </div>
+            
             <div className='flex gap-2 justify-center'>
               <Rate disabled allowHalf defaultValue={product.star} />
               <p>(24)</p>
             </div>
           </div>
-        </div>
+        </Link>
       ))}
     </>
   );

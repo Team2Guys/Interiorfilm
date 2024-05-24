@@ -10,14 +10,16 @@ interface Tab  {
 
 interface TabsProps  {
   tabs: Tab[];
+  className?: string;
+  classContent?: string;
 };
 
-const Tabs: React.FC<TabsProps> = ({ tabs }) => {
+const Tabs: React.FC<TabsProps> = ({ tabs,className,classContent }) => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
     <Container className='mt-10'>
-      <div className="flex space-x-2 items-center justify-center ">
+      <div className={`flex space-x-2 ${className}`}  >
         {tabs.map((tab, index) => (
           <button
             key={index}
@@ -28,7 +30,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
           </button>
         ))}
       </div>
-      <div className="mt-4">
+      <div className={`mt-4 ${classContent}`}>
         {tabs[activeTab].content}
       </div>
     </Container>

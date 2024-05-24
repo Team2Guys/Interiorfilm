@@ -31,4 +31,22 @@
   
   .ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector{
     border-color: #C72031 !important;
+    color: #ffffff !important;
+
+  }
+
+  .ant-pagination .ant-pagination-item-active a{
+    color: #ffffff !important;
+    background-color: #C72031;
+    border-radius: 50px !important;
+
+
+  }
+  .ant-pagination .ant-pagination-item-active{
+    border-color: white !important;
+  }
+  .ant-pagination .ant-pagination-item{
+    line-height: 40px !important;
+    min-width:40px !important;
+    height: 40px !important;
   }
