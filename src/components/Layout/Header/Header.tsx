@@ -85,7 +85,7 @@ const Header = () => {
               content={<>
               <ul className='space-y-2'>
                 <li><Link className='text-base font-semibold text-black hover:text-black' href={"/"}>Home</Link></li>
-                <li><Link className='text-base font-semibold text-black hover:text-black' href={"/"}>Product</Link></li>
+                <li><Link className='text-base font-semibold text-black hover:text-black' href={"/product"}>Product</Link></li>
                 <li><Link className='text-base font-semibold text-black hover:text-black' href={"/"}>About</Link></li>
                 <li><Link className='text-base font-semibold text-black hover:text-black' href={"/"}>Contact</Link></li>
               </ul>
@@ -112,7 +112,7 @@ const Header = () => {
     <div className='bg-primary py-4 hidden lg:block '>
         <ul className='flex justify-center gap-12 text-white'>
           <li><Link className='hover:underline' href={"/"}>Home</Link></li>
-          <li><Link className='hover:underline' href={"/"}>Product</Link></li>
+          <li><Link className='hover:underline' href={"/product"}>Product</Link></li>
           <li><Link className='hover:underline' href={"/"}>About</Link></li>
           <li><Link className='hover:underline' href={"/"}>Contact</Link></li>
         </ul>

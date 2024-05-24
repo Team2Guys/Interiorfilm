@@ -14,7 +14,7 @@ import img9 from "../../../public/images/img-16.png"
 import Card from 'components/ui/Card/Card'
 import Link from 'next/link'
 import Collapse from 'components/ui/Collapse/Collapse'
-import { Slider } from 'antd'
+import { Pagination, Slider } from 'antd'
 import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu'
 import { IoFunnelOutline } from 'react-icons/io5'
 
@@ -46,7 +46,7 @@ const Product = () => {
     
   return (
     <>
-    <Overlay/>
+    <Overlay title="Product"/>
     <Container className='mt-20'>
         <div className='flex justify-end gap-3'>
             <div className='flex gap-2 items-center w-3/6 md:w-auto'>
@@ -143,6 +143,7 @@ const Product = () => {
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
             <Card ProductCard={items} />
             </div>
+            <Pagination className='text-center rounded-full mt-10' defaultCurrent={1} total={40} />
             </div> 
         </div>
 
