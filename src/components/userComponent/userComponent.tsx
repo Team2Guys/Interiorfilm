@@ -10,19 +10,31 @@ import Link from "next/link";
 import Loader from "components/Loader/Loader";
 import Input from "components/Common/Input";
 import { USRPROPS } from 'types/interfaces';
+import { IoArrowBackSharp } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 export default function UserComponent({ handleSubmit, error, loading, inputFields, title,descrition,InstructionText, routingText }: USRPROPS) {
 
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter()
 
   return (
     <>
       <div className="min-h-screen flex items-center justify-center">
-        <div className='flex h-[80vh] w-[90%]'>
+        <div className='flex h-[100vh] w-[90%]'>
           <div className='w-2/5	h-full'>
             <Image src='/images/Register_login.png' className='w-full h-full' alt='RegisterImage' width={500} height={500} />
           </div>
-          <div className='w-2/4 flex justify-center items-center flex-col'>
+
+          <div  className='w-2/4'>
+            <div className="flex justify-end  mt-10">
+       <p className="rounded-full text-[#3A393C] text-base cursor-pointer flex gap-2 items-center" onClick={()=>router.push('/')}>
+          <span className="rounded-full text-white p-1 bg-[#C72031]" ><IoArrowBackSharp className="rounded-full text-white "/></span>  
+              Back to home
+       </p>
+              </div>
+
+          <div className='full h-full flex justify-center items-center flex-col'>
 
             <div className='w-3/5'>
               <div className='flex flex-col items-center mb-20'><h2 className='text-base text-[#3A393C]'>{title && title}</h2>
@@ -78,8 +90,12 @@ export default function UserComponent({ handleSubmit, error, loading, inputField
 
               </div>
             </div>
+            </div>
+
+
           </div>
 
+      
 
 
 
