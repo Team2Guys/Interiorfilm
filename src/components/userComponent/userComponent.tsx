@@ -11,7 +11,7 @@ import Loader from "components/Loader/Loader";
 import Input from "components/Common/Input";
 import { USRPROPS } from 'types/interfaces';
 
-export default function userComponent({ handleSubmit, error, loading, inputFields, title,descrition,InstructionText, routingText }: USRPROPS) {
+export default function UserComponent({ handleSubmit, error, loading, inputFields, title,descrition,InstructionText, routingText }: USRPROPS) {
 
   const [showPassword, setShowPassword] = useState(false);
 

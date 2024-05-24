@@ -8,7 +8,7 @@ import Toaster from "components/Toaster/Toaster";
 import { IoIosLock, IoMdMail } from "react-icons/io";
 
 
-export default function page() {
+export default function Page() {
     const router = useRouter()
 
     const [formData, setFormData] = useState({
