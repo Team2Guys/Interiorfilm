@@ -3,20 +3,13 @@ import { Inter } from "next/font/google";
 // import localFont from "next/font/local";
 
 import "./globals.css";
-import Header from "components/Layout/Header/Header";
-import Footer from "components/Layout/Footer/Footer";
+import PathnameWrapper from "components/PathnameWrapper";
+
+import { ToastContainer } from 'react-toastify';
+
+
 
 const inter = Inter({ subsets: ["latin"] });
-
-// const optima = localFont({
-//   src: [
-//     {
-//       path: '../../public/fonts/OPTIMA.TTF',  // Ensure the path starts with a slash to point to the public directory
-//       weight: '700',
-//     },
-//   ],
-//   variable: '--font-optima',
-// });
 
 export const metadata: Metadata = {
   title: "Interior Film",
@@ -28,12 +21,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
   return (
     <html lang="en">
       <body className={` ${inter.className}`}>
-        <Header/>
+      <PathnameWrapper>
         {children}
-        <Footer/>
+        <ToastContainer />
+
+        </PathnameWrapper>
+
       </body>
     </html>
   );
