@@ -52,8 +52,14 @@ export default function Page() {
       } catch (err: any) {
         console.log(err, "err")
         setloading(false)
-  
-        setError(err.message)
+        if (err.response && err.response.data && err.response.data.message) {
+            setError(err.response.data.message);
+          } else if (err.message) {
+            setError(err.message);
+          } else {
+            setError('An unexpected error occurred.');
+          }
+
       }
     };
 

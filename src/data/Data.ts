@@ -21,3 +21,9 @@ export const validateForm = (formData: { fullName: string; email: string; passwo
   
     return '';
   };
+
+  export  const withoutHeaderPages = [
+    "/login",
+    '/register',
+    "/superAdminlogin"
+  ]

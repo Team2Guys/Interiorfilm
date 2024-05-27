@@ -3,16 +3,23 @@
 import { usePathname } from 'next/navigation';
 import Header from 'components/Layout/Header/Header';
 import Footer from './Layout/Footer/Footer';
+import {withoutHeaderPages} from 'data/Data'
 
 const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
+  const withoutHeaderPages = [
+    "/login",
+    '/register',
+    "/superAdminlogin"
+  ]
 
   return (
     <>
-      {(pathname == '/login' || pathname == '/register' ) ? null : 
+      {
+      withoutHeaderPages.includes(pathname) ? null : 
       <Header />}
       {children}
-      {(pathname == '/login' || pathname == '/register' ) ? null : 
+      { withoutHeaderPages.includes(pathname) ? null  : 
       <Footer />}
     </>
   );

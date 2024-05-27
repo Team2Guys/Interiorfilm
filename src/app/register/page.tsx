@@ -142,7 +142,7 @@ let {confirmpassword , ...withoutconfirmPassword} = formData
 
   return (
     <>
-    <div><USRcomponent handleSubmit={handleSubmit}  error={error} loading={loading} inputFields={inputFields} title="Create a Account"  InstructionText="Already have a Account?" routingText ='login'/></div>
+    <USRcomponent handleSubmit={handleSubmit}  error={error} loading={loading} inputFields={inputFields} title="Create a Account"  InstructionText="Already have a Account?" routingText ='login'/>
 
 
     </>
