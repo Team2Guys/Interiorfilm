@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-
 import Image from "next/image";
 import Button from "components/Common/Button";
 import Link from "next/link";
@@ -26,39 +25,34 @@ export default function UserComponent({
 
   return (
     <>
-    <div className="flex flex-wrap md:flex-nowrap md:gap-4 w-full">
-      <div className="w-full md:w-2/4">
-      <Image
-              src="/images/Register_login.png"
-              className="bg-cover object-fill"
-              alt="RegisterImage"
-              width={1000}
-              height={1000}
-            />
-      </div>
-      <div className="w-full md:w-2/4">
-        <Container>
-        <div className="flex justify-end  mt-10">
+      <div className="lg:flex flex-wrap md:flex-nowrap md:gap-4 lg:px-0 px-5 w-full gap-0">
+        <div style={{ backgroundImage: "url('/images/Register_login.jpg')" }} 
+          className="lg:w-[60%] bg-cover bg-center h-screen lg:block hidden"
+        >
+        </div>
+        <div className="lg:w-[40%] ">
+          <Container>
+            <div className="flex justify-end mt-10 absolute ">
               <p
-                className="rounded-full text-[#3A393C] text-base cursor-pointer flex gap-2 items-center"
+                className="rounded-full text-[#3A393C] text-sm cursor-pointer flex gap-2 items-center"
                 onClick={() => router.push("/")}
               >
                 <span className="rounded-full text-white p-1 bg-[#C72031]">
-                  <IoArrowBackSharp className="rounded-full text-white " />
+                  <IoArrowBackSharp className="rounded-full text-white" />
                 </span>
                 Back to home
               </p>
             </div>
-            <div className="full h-full flex justify-center items-center flex-col">
-              <div className="w-3/5">
-                <div className="flex flex-col items-center mb-20">
-                  <h2 className="text-base text-[#3A393C]">{title && title}</h2>
-                  <p className="text-base text-[#9096B2]">
+            <div className="h-screen flex justify-center items-center flex-col ">
+              <div className="lg:w-3/5">
+                <div className="flex flex-col items-center lg:mb-20 mb-10">
+                  <h2 className="text-xl text-[#3A393C] lg:text-4xl">{title && title}</h2>
+                  <p className="text-sm text-[#9096B2] mt-3 text-center">
                     {descrition && descrition}
                   </p>
                 </div>
 
-                <div className="inputs_container w-full ">
+                <div className="inputs_container w-full">
                   <form className="space-y-4" onSubmit={handleSubmit}>
                     {inputFields.map((field: any, index: any) => (
                       <Input
@@ -78,24 +72,24 @@ export default function UserComponent({
                         {error}
                       </div>
                     ) : null}
-                    <p className="pt-1">
-                      {title && title !== "Login" ? null : (
+                    <p className="pt-1 ">
+                      {title && title !== "Sign In" ? null : (
                         <Link
-                          className="underline text-[16px] text-[#9096B2] pt-4"
+                          className="underline text-[#9096B2] pt-4 text-sm"
                           href={"/forgot"}
                         >
-                          Forgot your password?
+                          <span>Forgot your password?</span>
                         </Link>
                       )}
                     </p>
 
                     <Button
-                      className="bg-[#c62131] text-white p-3 lg:w-full md:w-28 rounded-none lg:mt-10"
+                      className="bg-[#c62131] text-white lg:p-3 p-2 lg:w-full lg:md:w-28 w-full rounded-none lg:mt-10"
                       title={
                         loading ? (
                           <Loader color="#fff" />
-                        ) : title && title === "Login" ? (
-                          "Sign in"
+                        ) : title && title === "Sign In" ? (
+                          "Sign In"
                         ) : (
                           "Sign up"
                         )
@@ -103,13 +97,13 @@ export default function UserComponent({
                       type="submit"
                       disable={loading}
                     />
-                    <div className="flex justify-end space-y-3  w-full">
-                      <p className="text-[#9096B2] tex-base">
+                    <div className="flex justify-end space-y-3 w-full">
+                      <p className="text-[#9096B2] text-sm">
                         {InstructionText && InstructionText}{" "}
                         <Link
-                          className="underline text-[16px] text-[#c62131]"
+                          className="underline text-sm text-[#c62131]"
                           href={
-                            title && title === "Login" ? "/register" : "/login"
+                            title && title === "Sign In" ? "/register" : "/login"
                           }
                         >
                           {routingText && routingText}
@@ -120,10 +114,9 @@ export default function UserComponent({
                 </div>
               </div>
             </div>
-        </Container>
+          </Container>
+        </div>
       </div>
-    </div>
-
     </>
   );
 }
