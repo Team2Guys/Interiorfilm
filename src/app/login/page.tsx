@@ -1,6 +1,5 @@
 'use client'
 import React, { useState } from "react";
-
 import USRcomponent from 'components/userComponent/userComponent'
 import { useRouter } from "next/navigation";
 import axios from 'axios';
@@ -88,6 +87,6 @@ export default function Page() {
   
 
   return (
-    <div><USRcomponent handleSubmit={handleSubmit}  error={error} loading={loading} inputFields={inputFields} title="Login" descrition="Please login using account detail bellow." InstructionText="Don't Have an Account?" routingText =' Create account'/></div>
+    <div><USRcomponent handleSubmit={handleSubmit}  error={error} loading={loading} inputFields={inputFields} title="Sign In" descrition="Please login using account detail bellow." InstructionText="Don't Have an Account?" routingText =' Create account'/></div>
   )
 }

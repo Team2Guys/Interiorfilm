@@ -9,7 +9,7 @@ interface ButtonProps {
   value?: any;
   icon?:any;
 type?:any
-disable:boolean | null | undefined
+disable?:boolean | null | undefined
 }
 
 const Button: React.FC<ButtonProps> = ({
