@@ -95,7 +95,7 @@ const DashboardLogin: React.FC = () => {
   ];
   return (
     <>
-        <div><USRcomponent handleSubmit={handleSubmit}  error={error} loading={loading} inputFields={inputFields} title="Login as SuperAdmin" /></div>
+        <div><USRcomponent handleSubmit={handleSubmit}  error={error} loading={loading} inputFields={inputFields} title="Login as SuperAdmin" buttonTitle="Sign in" /></div>
    
 
     </>

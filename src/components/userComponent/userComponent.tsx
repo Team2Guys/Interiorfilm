@@ -19,8 +19,11 @@ export default function UserComponent({
   descrition,
   InstructionText,
   routingText,
+  buttonTitle,
+  navigationLink,
+  navigationTxt
 }: USRPROPS) {
-  const [showPassword, setShowPassword] = useState(false);
+
   const router = useRouter();
 
   return (
@@ -73,14 +76,16 @@ export default function UserComponent({
                       </div>
                     ) : null}
                     <p className="pt-1 ">
-                      {title && title !== "Sign In" ? null : (
+                      {!navigationLink  ? null : (
                         <Link
                           className="underline text-[#9096B2] pt-4 text-sm"
-                          href={"/forgot"}
+                          href={navigationLink}
                         >
-                         Forgot your password?
+                        { navigationTxt}
                         </Link>
                       )}
+
+
                     </p>
 
                     <Button
@@ -88,11 +93,7 @@ export default function UserComponent({
                       title={
                         loading ? (
                           <Loader color="#fff" />
-                        ) : title && title === "Sign In" ? (
-                          "Sign In"
-                        ) : (
-                          "Sign up"
-                        )
+                        ) : buttonTitle
                       }
                       type="submit"
                       disable={loading}
