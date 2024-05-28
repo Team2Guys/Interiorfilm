@@ -1,9 +1,11 @@
+"use client"
 import React from 'react';
 import Image from 'next/image';
 import { Rate } from 'antd';
 import { LuShoppingCart } from 'react-icons/lu';
 import { GoHeart } from 'react-icons/go';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface Product {
   image?: any;
@@ -18,6 +20,7 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
+  const router = useRouter()
   if (ProductCard.length === 0) {
     return <p className="text-center text-xl text-dark flex items-center">No products</p>;
   }
@@ -25,7 +28,9 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
   return (
     <>
       {ProductCard.map((product, index) => (
-        <Link href={"/detail"} className='bg-white shadow-md p-2 w-full mt-2 group' key={index}>
+        // <Link href={"/detail"} className='bg-white shadow-md p-2 w-full mt-2 group' key={index}>
+
+<div className='cursor-pointer' onClick={()=>router.push('/detail')}>
           <div className='relative'>
             <Image className='w-full bg-contain h-44 md:h-72' width={300} height={300} src={product.image} alt='Image' />
            <div className='space-y-3 absolute top-4 right-4 overflow-hidden translate-x-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition ease-in-out duration-400 hidden md:block '> 
@@ -53,7 +58,12 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
               <p>(24)</p>
             </div>
           </div>
-        </Link>
+
+</div>
+
+
+  
+
       ))}
     </>
   );

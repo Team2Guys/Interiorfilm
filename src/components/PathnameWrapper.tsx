@@ -17,10 +17,12 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
     <>
       {
       withoutHeaderPages.includes(pathname) ? null : 
-      <Header />}
+      <Header />
+      }
       {children}
       { withoutHeaderPages.includes(pathname) ? null  : 
-      <Footer />}
+      <Footer /> 
+      }
     </>
   );
 };

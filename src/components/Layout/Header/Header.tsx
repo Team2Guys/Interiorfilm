@@ -15,8 +15,10 @@ import { MdOutlineHome } from 'react-icons/md';
 import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu';
 import SelectList from 'components/ui/Select/Select';
 import Button from 'components/ui/Button/Button';
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
+  const router = useRouter()
   return (
     <>
       <div className='bg-secondary border-b w-full'>
@@ -38,7 +40,7 @@ const Header = () => {
             <div className='flex gap-2 items-center mx-auto md:mx-0'>
               <div className='flex gap-2 items-center text-sm md:text-base lg:text-lg'>
                 <CiGlobe className='text-primary' />
-                <Link className='text-sm md:text-base' href="/login">Login/Register</Link>
+                <p className='text-sm md:text-base'><span className='cursor-pointer' onClick={()=>router.push('/login')}>Login</span>/<span className='cursor-pointer'  onClick={()=>router.push('/register')}>Register</span></p>
               </div>
             </div>
           </div>
@@ -89,18 +91,27 @@ const Header = () => {
               </>}
             />
             <div className='hidden lg:flex gap-2 md:gap-4 lg:gap-8'>
-              <Link className='relative group' href="/">
-                <div className='rounded-full text-white w-6 h-6 bg-dark group-hover:bg-primary absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
-                  1
-                </div>
+              <div className='relative group'>
+              <Link className='group' href="/">
+              
                 <IoMdHeartEmpty className='text-primary group-hover:text-dark transition duration-200 ease-in' size={30} />
               </Link>
-              <Link className='relative group' href="/">
-                <div className='rounded-full text-white w-6 h-6 bg-dark group-hover:bg-primary absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
+              <div className='rounded-full text-white w-6 h-6 bg-dark group-hover:bg-primary absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
                   1
                 </div>
+
+              </div>
+    
+              <div className='relative group'>
+                          
+              <Link className='relative group' href="/">
+              
                 <PiBag className='text-primary group-hover:text-dark transition duration-200 ease-in' size={30} />
               </Link>
+              <div className='rounded-full text-white w-6 h-6 bg-dark group-hover:bg-primary absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
+                  1
+                </div>
+</div>
               <Link className='text-base lg:text-lg' href="/profile"><FaRegUser size={25} className='text-primary' /></Link>
             </div>
           </div>
@@ -117,18 +128,31 @@ const Header = () => {
       <div className='bg-primary p-3 fixed w-full bottom-0 block lg:hidden z-50'>
         <div className='flex justify-evenly gap-4'>
           <Link className='text-base lg:text-lg' href="/profile"><MdOutlineHome size={30} className='text-white' /></Link>
-          <Link className='relative group' href="/">
-            <div className='rounded-full text-dark w-6 h-6 bg-white absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
+          
+
+          <div className='relative group'>
+          <Link href="/">
+
+<IoMdHeartEmpty className='text-white transition duration-200 ease-in' size={30} />
+</Link>
+          <div className='rounded-full text-dark w-6 h-6 bg-white absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
               1
             </div>
-            <IoMdHeartEmpty className='text-white transition duration-200 ease-in' size={30} />
-          </Link>
-          <Link className='relative group' href="/">
-            <div className='rounded-full text-dark w-6 h-6 bg-white absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
-              1
-            </div>
+          </div>
+    
+
+
+    <div className='relative group'>
+          <Link  href="/">
+        
             <PiBag className='text-white transition duration-200 ease-in' size={30} />
           </Link>
+          <div className='rounded-full text-dark w-6 h-6 bg-white absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
+              1
+            </div>
+
+    </div>
+
           <Link className='text-base lg:text-lg' href="/profile"><FaRegUser size={25} className='text-white' /></Link>
         </div>
       </div>

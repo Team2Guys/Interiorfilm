@@ -31,10 +31,11 @@ export default function Page() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       setError('');
-      setloading(true)
-      console.log(formData, "formate")
+
       if (!formData.email || !formData.password) return setError('All fields are rquired')
       try {
+        setloading(true)
+
         let user: any = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/login`, formData)
         console.log(user.data, "user token")
         const ISSERVER = typeof window === "undefined"
@@ -50,7 +51,6 @@ export default function Page() {
   
       } catch (err: any) {
         console.log(err, "err")
-        setloading(false)
         if (err.response && err.response.data && err.response.data.message) {
             setError(err.response.data.message);
           } else if (err.message) {
@@ -58,6 +58,9 @@ export default function Page() {
           } else {
             setError('An unexpected error occurred.');
           }
+
+      } finally{
+        setloading(false)
 
       }
     };

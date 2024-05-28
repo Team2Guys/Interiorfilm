@@ -69,6 +69,7 @@ export default function Home() {
       <HeroSlider/>
       <h1 className="text-[40px] md:text-[55px] font-bold text-center mt-10">DISCOVER OUR PRODUCT RANGES</h1>
       <Tabs className="justify-center items-center" tabs={tabs} />
+
       <CollectiveProduct products={products} />
       <Offer Offers={offers}/>
       <Testimonial/>

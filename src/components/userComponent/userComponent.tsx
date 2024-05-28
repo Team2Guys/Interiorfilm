@@ -78,7 +78,7 @@ export default function UserComponent({
                           className="underline text-[#9096B2] pt-4 text-sm"
                           href={"/forgot"}
                         >
-                          <span>Forgot your password?</span>
+                         Forgot your password?
                         </Link>
                       )}
                     </p>
@@ -100,14 +100,17 @@ export default function UserComponent({
                     <div className="flex justify-end space-y-3 w-full">
                       <p className="text-[#9096B2] text-sm">
                         {InstructionText && InstructionText}{" "}
+                        {
+                          routingText && 
                         <Link
                           className="underline text-sm text-[#c62131]"
                           href={
                             title && title === "Sign In" ? "/register" : "/login"
                           }
                         >
-                          {routingText && routingText}
+                          {routingText}
                         </Link>
+                        }
                       </p>
                     </div>
                   </form>
