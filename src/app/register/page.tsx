@@ -15,18 +15,19 @@ interface FormData {
   password: string;
   confirmpassword: string;
 }
+const initialFormData =        {
+  fullName: "",
+  email: "",
+  password: "",
+  confirmpassword: "",
+}
 
 const Register: React.FC = () => {
   const router = useRouter();
   const [error, setError] = useState<string | null | undefined>();
   const [loading, setloading] = useState<boolean | null | undefined>(false);
 
-  const [formData, setFormData] = useState<FormData>({
-    fullName: "",
-    email: "",
-    password: "",
-    confirmpassword: "",
-  });
+  const [formData, setFormData] = useState<FormData>(initialFormData);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -55,9 +56,9 @@ const Register: React.FC = () => {
     let { confirmpassword, ...withoutconfirmPassword } = formData;
     try {
       let user = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/signup`,
-        withoutconfirmPassword
-      );
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/signup`,withoutconfirmPassword);
+    setFormData(initialFormData)
+
       setloading(false);
       Toaster("success", "You have sucessfully Register!");
       setTimeout(() => {
@@ -135,6 +136,7 @@ const Register: React.FC = () => {
           title="Sign Up"
           InstructionText="Already have a Account?"
           routingText="login"
+          buttonTitle="Sign up"
         />
       </div>
     </>
