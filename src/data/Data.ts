@@ -1,3 +1,6 @@
+import img from "../../public/images/img-14.png"
+import img2 from "../../public/images/img-15.png"
+
 export const validateForm = (formData: { fullName: string; email: string; password: string; confirmpassword: string }) => {
     if (formData.password !== formData.confirmpassword) {
       return 'Confirm password and password do not match.';
@@ -26,4 +29,12 @@ export const validateForm = (formData: { fullName: string; email: string; passwo
     "/login",
     '/register',
     "/superAdminlogin"
+  ]
+
+
+ export const productdata =[
+    {image:img,title:"Lorem ipsum",description:"Lorem ipsum dolor consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius nunc id varius adipiscing elit. Phasellus blandit massa enim."},
+    {image:img2,title:"Lorem ipsum",description:"Lorem ipsum dolor consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius nunc id varius adipiscing elit. Phasellus blandit massa enim."},
+    {image:img2,title:"Lorem ipsum",description:"Lorem ipsum dolor consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius nunc id varius adipiscing elit. Phasellus blandit massa enim."},
+    {image:img,title:"Lorem ipsum",description:"Lorem ipsum dolor consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius nunc id varius adipiscing elit. Phasellus blandit massa enim."},
   ]

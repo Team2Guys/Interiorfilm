@@ -33,7 +33,7 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
     <>
       {ProductCard.map((product, index) => (
         <div
-          className="cursor-pointer"
+          className="cursor-pointer group"
           onClick={() => router.push("/detail")}
           key={index}
         >
