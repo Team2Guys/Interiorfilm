@@ -6,14 +6,15 @@ import axios from 'axios';
 import Toaster from "components/Toaster/Toaster";
 import { IoIosLock, IoMdMail } from "react-icons/io";
 
+const initialFormData =    {
+  email: "",
+  password: "",
+};
 
 export default function Page() {
     const router = useRouter()
 
-    const [formData, setFormData] = useState({
-      email: "",
-      password: "",
-    });
+    const [formData, setFormData] = useState(initialFormData);
   
     const [error, setError] = useState<string | null | undefined>();
     const [loading, setloading] = useState<boolean | null | undefined>(false);
@@ -41,6 +42,8 @@ export default function Page() {
         const ISSERVER = typeof window === "undefined"
         !ISSERVER ? localStorage.setItem('2guysToken', user.data.token) : null
         setloading(false)
+    setFormData(initialFormData)
+
   
         Toaster("success", "You have sucessfully login")
         setTimeout(() => {
@@ -90,6 +93,19 @@ export default function Page() {
   
 
   return (
-    <div><USRcomponent handleSubmit={handleSubmit}  error={error} loading={loading} inputFields={inputFields} title="Sign In" descrition="Please login using account detail bellow." InstructionText="Don't Have an Account?" routingText =' Create account'/></div>
+    <div><USRcomponent handleSubmit={handleSubmit} 
+     error={error} 
+     loading={loading}
+      inputFields={inputFields} 
+      title="Sign In" descrition="Please login using account detail bellow."
+       InstructionText="Don't Have an Account?"
+      routingText ='Create account'
+       buttonTitle="Sign In"  
+       navigationLink="/forgot-password"
+       navigationTxt="Forgot your password?"
+       />
+       
+        
+        </div>
   )
 }

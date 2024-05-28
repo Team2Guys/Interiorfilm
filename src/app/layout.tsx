@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-// import localFont from "next/font/local";
+import localFont from "next/font/local";
 
 import "./globals.css";
 import PathnameWrapper from "components/PathnameWrapper";
 
 import { ToastContainer } from 'react-toastify';
 
-const inter = Inter({ subsets: ["latin"] });
+
+const optimaFont = localFont({
+  src: "../../public/font/OPTIMA.woff",
+})
 
 export const metadata: Metadata = {
   title: "Interior Film",
@@ -20,10 +22,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-
   return (
     <html lang="en">
-      <body className={` ${inter.className}`}>
+      <body className={`
+        ${optimaFont.className}`}>
       <PathnameWrapper>
         {children}
         <ToastContainer />

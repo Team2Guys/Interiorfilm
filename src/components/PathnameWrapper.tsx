@@ -10,7 +10,8 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
   const withoutHeaderPages = [
     "/login",
     '/register',
-    "/superAdminlogin"
+    "/superAdminlogin",
+    "/forgot-password"
   ]
 
   return (

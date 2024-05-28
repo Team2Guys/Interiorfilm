@@ -6,8 +6,6 @@ import Loader from "components/Loader/Loader";
 import { useAppDispatch} from "components/Others/HelperRedux";
 import { loggedInUserAction } from '../redux/slices/AdminsSlice';
 import axios from 'axios'
-import { headers } from "next/headers";
-
 function ProtectedRoute(WrappedComponent:any) {
   const Wrapper=(props: any) => {
     const router = useRouter();
