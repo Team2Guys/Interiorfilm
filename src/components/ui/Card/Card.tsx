@@ -28,8 +28,6 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
   return (
     <>
       {ProductCard.map((product, index) => (
-        // <Link href={"/detail"} className='bg-white shadow-md p-2 w-full mt-2 group' key={index}>
-
 <div className='cursor-pointer' onClick={()=>router.push('/detail')}>
           <div className='relative'>
             <Image className='w-full bg-contain h-44 md:h-72' width={300} height={300} src={product.image} alt='Image' />
