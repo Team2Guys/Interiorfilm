@@ -36,14 +36,15 @@ const Footer: React.FC = () => {
         <SlEnvolopeLetter className='text-primary' size={35} />
         <p><span className='text-primary'>$90 OFF*</span> YOUR ORDER! SUBSCRBE TO OUR NEWSLETTER TODAY.</p>
         </div>
-        <div className='flex items-center justify-center mt-5 md:mt-0'>
-          <input className='bg-secondary h-12 px-2 outline-primary w-4/6 md:w-auto' type='email' placeholder='Enter Email Address'/>
-          <Button title={"Sign Up"}/>
+        <div className='flex items-center justify-center mt-5 md:mt-0 rounded-none'>
+          <input className='bg-secondary rounded-none h-8 px-2 outline-primary w-4/6 md:w-auto' type='email' placeholder='Enter Email Address'/>
+          <Button className='text-sm px-5' title={"Sign Up"}/>
         </div>
       </div>
     </Container>
     </div>
-      <AntFooter className="text-gray-800 lg:py-8 pt-8 pb-0 px-0 bg-secondary mt-10">
+    <div className="bg-secondary">
+      <Container className="text-gray-800 lg:py-8 pt-8 pb-0 px-0  mt-10">
         <div className="container lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row justify-between">
           <div className="mb-8 md:mb-0">
             <Image width={100} height={100} src={logo} alt="Interior Film" className="w-32 mb-4" />
@@ -51,8 +52,8 @@ const Footer: React.FC = () => {
             <p className='w-2/3 '>17 Princess Road, London, Greater London NW1 8JR, UK</p>
             <div className="flex space-x-4 mt-4">
               {socialLinks.map((link, index) => (
-                <Link key={index} href={link.href} className='hover:text-primary'>
-                  {React.createElement(require('react-icons/fa')[link.icon], { className: "text-lg hover:text-primary" })}
+                <Link key={index} href={link.href} className='hover:text-primary link-footer'>
+                  {React.createElement(require('react-icons/fa')[link.icon], { className: "text-lg hover:text-primary link-footer" })}
                 </Link>
               ))}
             </div>
@@ -72,7 +73,7 @@ const Footer: React.FC = () => {
               <ul className={`space-y-2 transition-all duration-300 overflow-hidden ${isCategoriesOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}>
                 {categories.map((category, index) => (
                   <li key={index}>
-                    <Link href={category.href} className='hover:text-primary'>{category.name}</Link>
+                    <Link href={category.href} className='hover:text-primary link-footer'>{category.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -90,7 +91,7 @@ const Footer: React.FC = () => {
               <ul className={`space-y-2 transition-all duration-300 overflow-hidden ${isCustomerCareOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}>
                 {customerCare.map((item, index) => (
                   <li key={index}>
-                    <Link href={item.href} className='hover:text-primary'>{item.name}</Link>
+                    <Link href={item.href} className='hover:text-primary link-footer'>{item.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -108,16 +109,17 @@ const Footer: React.FC = () => {
               <ul className={`space-y-2 transition-all duration-300 overflow-hidden ${isPagesOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}>
                 {pages.map((page, index) => (
                   <li key={index}>
-                    <Link href={page.href} className='hover:text-primary'>{page.name}</Link>
+                    <Link href={page.href} className='hover:text-primary link-footer'>{page.name}</Link>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
         </div>
-      </AntFooter>
-
-      <div className='bg-primary lg:py-0 py-3 lg:mt-0 lg:mb-0 mb-6'>
+      </Container>
+      </div>
+      <div className="bg-primary">
+      <Container className='lg:py-0 py-3 lg:mt-0 lg:mb-0 mb-6'>
         <div className='container mx-auto'>
           <div className="flex items-center flex-wrap lg:justify-between justify-center">
             <div className='text-white lg:order-1 order-2'>
@@ -138,6 +140,7 @@ const Footer: React.FC = () => {
 
           </div>  
         </div>
+      </Container>
       </div>
     </>
   );

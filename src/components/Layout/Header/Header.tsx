@@ -23,11 +23,11 @@ const Header = () => {
         <Container>
           <div className='flex justify-between flex-wrap lg:flex-nowrap gap-2 p-2 items-center'>
             <div className='flex gap-4 mx-auto md:mx-0'>
-              <div className='flex gap-1 text-sm md:text-base lg:text-lg items-center hover:underline'>
+              <div className='flex gap-1 text-sm md:text-base lg:text-lg items-center link-underline'>
                 <HiOutlineDevicePhoneMobile className='text-primary' />
                 <Link href="tel:+971505974495">+971 50 597 4495</Link>
               </div>
-              <div className='flex gap-1 text-sm md:text-base lg:text-lg items-center hover:underline'>
+              <div className='flex gap-1 text-sm md:text-base lg:text-lg items-center link-underline'>
                 <IoMailOutline className='text-primary' />
                 <Link href="mailto:cs@avenue39.com">cs@avenue39.com</Link>
               </div>
@@ -83,7 +83,7 @@ const Header = () => {
                 <ul className='space-y-2'>
                   <li><Link className='text-base font-semibold text-black hover:text-black' href="/">Home</Link></li>
                   <li><Link className='text-base font-semibold text-black hover:text-black' href="/product">Product</Link></li>
-                  <li><Link className='text-base font-semibold text-black hover:text-black' href="/">About</Link></li>
+                  <li><Link className='text-base font-semibold text-black hover:text-black' href="/about">About</Link></li>
                   <li><Link className='text-base font-semibold text-black hover:text-black' href="/">Contact</Link></li>
                 </ul>
               </>}
@@ -108,10 +108,10 @@ const Header = () => {
       </div>
       <div className='bg-primary py-4 hidden lg:block'>
         <ul className='flex justify-center gap-12 text-white'>
-          <li><Link className='hover:underline' href="/">Home</Link></li>
-          <li><Link className='hover:underline' href="/product">Product</Link></li>
-          <li><Link className='hover:underline' href="/">About</Link></li>
-          <li><Link className='hover:underline' href="/">Contact</Link></li>
+          <li><Link className='link-underline' href="/">Home</Link></li>
+          <li><Link className='link-underline' href="/product">Product</Link></li>
+          <li><Link className='link-underline' href="/about">About</Link></li>
+          <li><Link className='link-underline' href="/contact">Contact</Link></li>
         </ul>
       </div>
       <div className='bg-primary p-3 fixed w-full bottom-0 block lg:hidden z-50'>
