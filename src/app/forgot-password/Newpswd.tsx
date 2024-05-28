@@ -50,7 +50,7 @@ function Newpswd({ email }: NewPasswordProps) {
     setError("");
     if (!formData.newPassword || !formData.password) return setError("All fields are rquired");
     if (formData.newPassword !== formData.password) return setError("confirm and new password should be same");
-    if (!email) return null;
+    if (!email) return setError("unexpected error occured");
     try {
       console.log("formData", formData);
     setloading(true)
