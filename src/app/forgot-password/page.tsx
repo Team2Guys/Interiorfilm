@@ -16,10 +16,7 @@ const Forgot = () => {
   const [error, setError] = useState<string | null | undefined>();
   const [forgotEmail, setforgotEmail] = useState<boolean>(false);
   const [loading, setloading] = useState<boolean | null | undefined>(false);
-  const initialFormData = {
-    email: "",
-   
-  };
+  const initialFormData = {email: "" };
 
   const [formData, setFormData] = useState(initialFormData);
 
@@ -45,8 +42,8 @@ const Forgot = () => {
       );
       console.log(user, 'user')
       setloading(false)
-    setFormData(initialFormData)
-    setforgotEmail(true)
+      setforgotEmail(true)
+    // setFormData(initialFormData)
 
     } catch (err: any) {
       console.log(err, "err");
