@@ -28,7 +28,7 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
   return (
     <>
       {ProductCard.map((product, index) => (
-<div className='cursor-pointer' onClick={()=>router.push('/detail')}>
+<div className='cursor-pointer' onClick={()=>router.push('/detail')} key={index}>
           <div className='relative'>
             <Image className='w-full bg-contain h-44 md:h-72' width={300} height={300} src={product.image} alt='Image' />
            <div className='space-y-3 absolute top-4 right-4 overflow-hidden translate-x-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition ease-in-out duration-400 hidden md:block '> 

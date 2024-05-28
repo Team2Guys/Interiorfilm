@@ -25,11 +25,11 @@ const Header = () => {
         <Container>
           <div className='flex justify-between flex-wrap lg:flex-nowrap gap-2 p-2 items-center'>
             <div className='flex gap-4 mx-auto md:mx-0'>
-              <div className='flex gap-1 text-sm md:text-base lg:text-lg items-center link-underline'>
+              <div className='flex gap-1 text-sm md:text-base lg:text-lg items-center '>
                 <HiOutlineDevicePhoneMobile className='text-primary' />
                 <Link href="tel:+971505974495">+971 50 597 4495</Link>
               </div>
-              <div className='flex gap-1 text-sm md:text-base lg:text-lg items-center link-underline'>
+              <div className='flex gap-1 text-sm md:text-base lg:text-lg items-center '>
                 <IoMailOutline className='text-primary' />
                 <Link href="mailto:cs@avenue39.com">cs@avenue39.com</Link>
               </div>
