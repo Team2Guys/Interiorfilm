@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import Container from '../Container/Container';
 import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
 import Link from 'next/link';
@@ -19,10 +19,46 @@ import Megamanu from './Megamanu/Megamanu';
 import Mobiletab from 'components/ui/Tabs/Mobiletab/Mobiletab';
 
 
-const Header = () => {
+const Header= () => {
 
+  const [open, setOpen] = useState(false);
+  const [category, setcategory] = useState(false);
+  
 
+  const showDrawer = () => {
+  
+    setOpen(true);
+  };
+  
+  const onClose = () => {
+    setOpen(false);
+  };
+  
+  const CategoryHandler = () => {
+  
+    setcategory(true);
+  };
+  
+  const CategoryHandlerclose = () => {
+    setcategory(false);
+  };
+  
   const router = useRouter()
+
+
+
+  useEffect(() => {
+    const handleCartChange = () => {
+      setcategory(false);
+      setOpen(false);
+    };
+
+    window.addEventListener("cartChanged", handleCartChange);
+
+    return () => {
+      window.removeEventListener("cartChanged", handleCartChange);
+    };
+  }, []);
   return (
     <>
       <div className='bg-secondary border-b w-full'>
@@ -63,24 +99,30 @@ const Header = () => {
               <Button className='rounded-l-md px-2 md:px-4' title={<IoSearch size={25} />} />
             </div>
             <DrawerMenu
+            showDrawer={showDrawer}
+            onClose={onClose}
+            open={open}
               width={250}
               title={<><div className='p-1 rounded-md block lg:hidden text-white bg-primary'>
                 <RiMenuFold3Fill size={20} />
               </div></>}
               content={<>
                 <ul className='space-y-2'>
-                  <li><Link className='text-base font-semibold text-black hover:text-black' href="/">Home</Link></li>
+                  <li><Link className='text-base font-semibold text-black hover:text-black' onClick={onClose} href="/">Home</Link></li>
                   <li><DrawerMenu
                       classDrawer=' back-transparent  backdrop-blur-md p-2 shadow-none'
                         className='text-base font-semibold text-black hover:text-black cursor-pointer'
                       width={500}
+                      showDrawer={CategoryHandler}
+                      onClose={CategoryHandlerclose}
+                      open={category}
                         title={"product"}
                         content={<>
-                          <Mobiletab/>
+                          <Mobiletab  />
                         </>}
                       /></li>
-                  <li><Link className='text-base font-semibold text-black hover:text-black ' href="/about">About</Link></li>
-                  <li><Link className='text-base font-semibold text-black hover:text-black' href="/contact">Contact</Link></li>
+                  <li><Link className='text-base font-semibold text-black hover:text-black ' onClick={onClose} href="/about">About</Link></li>
+                  <li><Link className='text-base font-semibold text-black hover:text-black' onClick={onClose} href="/contact">Contact</Link></li>
                 </ul>
               </>}
             />
@@ -145,7 +187,7 @@ const Header = () => {
           <div className='rounded-full text-dark w-6 h-6 bg-white absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
               1
             </div>
-    </div>
+        </div>
           <Link className='text-base lg:text-lg' href="/profile"><FaRegUser size={25} className='text-white' /></Link>
         </div>
       </div>

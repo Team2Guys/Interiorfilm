@@ -24,12 +24,12 @@ const tabData: TabData[] = [
 
 ];
 
-const Mobiletab: React.FC = () => {
+const Mobiletab: React.FC = ({onclose}:any) => {
   return (
     <div >
       <Tabs className='z-20 text-xl' defaultActiveKey="1">
         {tabData.map(({ key, tab, content }) => (
-          <TabPane className='z-20' tab={tab} key={key}>
+          <TabPane   className='z-20' tab={tab} key={key}>
             {content}
           </TabPane>
         ))}

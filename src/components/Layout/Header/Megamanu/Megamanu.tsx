@@ -4,7 +4,7 @@ import { menuSlide } from 'data/Data'
 import React from 'react'
 
 const items=[
-    { label:"Cement Gray Series", content:<><ProductSlider Related={menuSlide} /></>},
+    { label:"Cement Gray Series",  content:<><ProductSlider Related={menuSlide} /></>},
     { label:"Skin Texture Series", content:"Skin Texture Series"},
     { label:"Wood Grain Series ", content:<><ProductSlider Related={menuSlide} /></>},
     { label:"Fabric Series", content:<><ProductSlider Related={menuSlide} /></>},

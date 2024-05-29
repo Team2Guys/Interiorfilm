@@ -2,6 +2,7 @@ import React from 'react';
 import img from "../../../../../public/images/img-11.png";
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface MenuData {
   image?: any; // Adjust type based on your actual data type, could be 'StaticImageData' if imported directly
@@ -13,6 +14,7 @@ interface MenucardProps {
 }
 
 const Menucard: React.FC<MenucardProps> = ({ menudata = [] }) => {
+  const router = useRouter();
   if (menudata.length === 0) {
     return (
       <p className="text-center text-xl text-white flex items-center">
@@ -21,10 +23,15 @@ const Menucard: React.FC<MenucardProps> = ({ menudata = [] }) => {
     );
   }
 
+  const navigationHandler =()=>{
+    router.push(`/detail`)
+    window.dispatchEvent(new Event("cartChanged"));
+  }
+
   return (
     <div className="grid grid-cols-2 gap-4">
       {menudata.map((array, index) => (
-        <Link href={`/productlist`} className="bg-white p-1 rounded-md shadow-xl hover:text-black" key={index}>
+        <div onClick={navigationHandler } className="bg-white p-1 rounded-md shadow-xl hover:text-black" key={index}>
           <Image
             width={300}
             height={300}
@@ -37,7 +44,7 @@ const Menucard: React.FC<MenucardProps> = ({ menudata = [] }) => {
               Code: <span>{array.title}</span>
             </h1>
           </div>
-        </Link>
+        </div>
       ))}
     </div>
   );
