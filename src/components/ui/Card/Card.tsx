@@ -37,7 +37,7 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
           onClick={() => router.push("/detail")}
           key={index}
         >
-          <div className="relative">
+          <div className="relative w-fit m-auto">
             <Image
               className="bg-contain h-full md:h-72"
               width={300}
