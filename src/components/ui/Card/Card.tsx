@@ -10,9 +10,9 @@ import { useRouter } from "next/navigation";
 interface Product {
   image?: any;
   title: string;
-  price: number;
-  oldprice: number;
-  star: number;
+  price?: number;
+  oldprice?: number;
+  star?: number;
 }
 
 interface CardProps {
@@ -21,6 +21,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
   const router = useRouter();
+
   if (ProductCard.length === 0) {
     return (
       <p className="text-center text-xl text-dark flex items-center">
@@ -33,22 +34,24 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
     <>
       {ProductCard.map((product, index) => (
         <div
-          className="cursor-pointer group custom-shadow transition-all my-3"
+          className="cursor-pointer group"
           onClick={() => router.push("/detail")}
           key={index}
         >
           <div className="relative">
-            <Image
-              className="bg-contain h-full md:h-72"
-              width={300}
-              height={300}
-              src={product.image}
-              alt="Image"
-            />
-            <div className="space-y-3 absolute top-4 right-4 overflow-hidden translate-x-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition ease-in-out duration-400 hidden md:block ">
+            {product.image && (
+              <Image
+                className="w-full bg-contain h-44 md:h-72"
+                width={300}
+                height={300}
+                src={product.image}
+                alt="Image"
+              />
+            )}
+            <div className="space-y-3 absolute top-4 right-4 overflow-hidden translate-x-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition ease-in-out duration-400 hidden md:block">
               <Link
                 href={"/"}
-                className="w-10 h-10 rounded-full  bg-white hover:bg-primary flex justify-center items-center "
+                className="w-10 h-10 rounded-full bg-white hover:bg-primary flex justify-center items-center"
               >
                 <LuShoppingCart
                   className="text-primary hover:text-white"
@@ -57,29 +60,35 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
               </Link>
               <Link
                 href={"/"}
-                className="w-10 h-10 rounded-full  bg-white hover:bg-primary flex justify-center items-center "
+                className="w-10 h-10 rounded-full bg-white hover:bg-primary flex justify-center items-center"
               >
                 <GoHeart className="text-primary hover:text-white" size={25} />
               </Link>
             </div>
           </div>
-          <div className="mt-2 text-center space-y-1 pt-3 pb-5">
-            <h1 className="lg:text-lg text-sm text-center text-dark group-hover:text-primary transition-all font-semibold">
-              {product.title}
+          <div className="mt-2 text-center space-y-1">
+            <h1 className="text-xl text-center text-dark font-semibold">
+              Code : <span>{product.title}</span>
             </h1>
-            <div className="flex gap-2 justify-center text-sm py-1 mt-0">
-              <p className="text-primary group-hover:text-dark transition-all font-bold">
-                Dhs. <span>{product.price}</span>.00
-              </p>
-              <p className="line-through text-light">
-                Dhs. <span>{product.oldprice}</span>.00
-              </p>
-            </div>
-
-            <div className="flex gap-1 justify-center">
-              <Rate className="text-sm gap-0" disabled allowHalf defaultValue={product.star} />
-              <p>(24)</p>
-            </div>
+            {product.price !== undefined && (
+              <div className="flex gap-2 justify-center">
+                <p className="text-primary">
+                  Dhs. <span>{product.price}</span>.00
+                </p>
+                {product.oldprice && (
+                  <p className="line-through text-light">
+                    Dhs. <span>{product.oldprice}</span>.00
+                  </p>
+                )}
+              </div>
+            )}
+             {product.star !== undefined && (
+           <div className="flex gap-2 justify-center">
+           <Rate disabled allowHalf defaultValue={product.star} />
+           <p>(24)</p>
+         </div>
+            )}
+            
           </div>
         </div>
       ))}

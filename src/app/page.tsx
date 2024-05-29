@@ -21,6 +21,7 @@ import { RiCustomerService2Line } from "react-icons/ri";
 import Testimonial from "components/widgets/Testimonial/Testimonial";
 import ProductSlider from "components/Carousel/ProductSlider/ProductSlider";
 import Container from "components/Layout/Container/Container";
+import { productSlide } from "data/Data";
 
 const tabs = [
   {
@@ -183,50 +184,6 @@ const tabs = [
     ),
   },
 ];
-const items = [
-  {
-    image: img3,
-    title: "JBL Micoro Headphone",
-    price: 23,
-    oldprice: 38,
-    star: 2,
-  },
-  {
-    image: img4,
-    title: "Bose Color Speaker",
-    price: 21,
-    oldprice: 38,
-    star: 3,
-  },
-  {
-    image: img5,
-    title: "Bose Color Speaker",
-    price: 30,
-    oldprice: 38,
-    star: 1,
-  },
-  {
-    image: img6,
-    title: "Asus Watch Speaker",
-    price: 28,
-    oldprice: 38,
-    star: 5,
-  },
-  {
-    image: img7,
-    title: "Asus Watch Speaker",
-    price: 12,
-    oldprice: 38,
-    star: 4,
-  },
-  {
-    image: img8,
-    title: "Sony Wireless Bohm",
-    price: 19,
-    oldprice: 38,
-    star: 2,
-  },
-];
 
 const products = [
   { image: img143, category: "Realistic Woodgrain" },
@@ -275,8 +232,8 @@ export default function Home() {
 
       <CollectiveProduct products={products} />
       <Container className="mt-20">
-        <h1 className="lg:text-5xl md:text-3xl font-semibold text-xl text-center mb-5">Feature Product</h1>
-        <ProductSlider Related={items} />
+        <h1 className="text-[40px] md:text-[55px]l font-bold text-center mb-5">Feature Product</h1>
+        <ProductSlider Related={productSlide} />
       </Container>
       <Offer Offers={offers} />
       <Testimonial />

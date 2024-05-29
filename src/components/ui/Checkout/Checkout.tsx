@@ -1,4 +1,4 @@
-import CheckoutData from 'checkoutData/CheckOutData';
+import CheckoutData from 'components/widgets/checkoutData/CheckOutData';
 import React from 'react';
 
 const CheckOut: React.FC = () => {
@@ -64,7 +64,7 @@ const CheckOut: React.FC = () => {
               />
             </div>
           </div>
-          <CheckoutData />
+          <CheckoutData/>
         </div>
       </div>
     </div>

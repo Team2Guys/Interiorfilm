@@ -18,7 +18,7 @@ import { Rate } from 'antd';
 interface review{
   name: string;
   detail: string;
-  star: number;
+  star?: number;
 }
 
 
@@ -78,8 +78,8 @@ const Slider: React.FC<Reviewprops> = ({Reviews}) => {
           },
         }}
         autoplay={{
-          delay: 3000, // Delay between slides in ms (3000ms = 3s)
-          disableOnInteraction: false, // Autoplay will not be disabled after user interactions
+          delay: 3000, 
+          disableOnInteraction: false, 
         }}
         modules={[Navigation, Autoplay]}
         className="mySwiper"
@@ -99,7 +99,7 @@ const Slider: React.FC<Reviewprops> = ({Reviews}) => {
                   <h1 className='font-semibold underline'>{array.name}</h1>
                  <div className='block'>
                  {/* <FaQuoteLeft className='text-light group-hover:text-primary' size={18} /> */}
-                  <p className='text-start'><span className='text-xl'>"</span> {array.detail} <span className='text-xl'> "</span>
+                  <p className='text-start'><span className='text-xl'></span> {array.detail} <span className='text-xl'></span>
                   </p>
                   {/* <FaQuoteRight className=' text-light group-hover:text-primary' size={18} /> */}
                  </div>

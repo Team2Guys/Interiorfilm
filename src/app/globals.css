@@ -80,9 +80,24 @@
 .custom-shadow {
   box-shadow: 0px 3px 21px #3737D512;
 }
-:where(.css-dev-only-do-not-override-17seli4).ant-rate .ant-rate-star:not(:last-child) {
+.ant-rate .ant-rate-star:not(:last-child) {
   margin-inline-end: 3px;
 }
 .ant-pagination-item {
   box-shadow: 0px 3px 21px #3737D512;
+}
+
+.ant-popover-content{
+  width: 1280px;
+}
+
+@media screen and (max-width: 1390px) {
+  .ant-popover-content{
+    width: 1100px;
+  }
+}
+@media screen and (max-width: 1230px) {
+  .ant-popover-content{
+    width: 900px;
+  }
 }

@@ -1,6 +1,6 @@
 
 import Image from 'next/image';
-import checkoutimg from '../../public/images/img-1.png';
+import checkoutimg from '../../../../public/images/img-1.png';
 import React from 'react';
 import Link from 'next/link';
 

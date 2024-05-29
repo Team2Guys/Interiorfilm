@@ -18,9 +18,9 @@ import Card from 'components/ui/Card/Card';
 interface Relateddata{
   image: any;
   title: string;
-  price: number;
-  oldprice: number;
-  star: number;
+  price?: number;
+  oldprice?: number;
+  star?: number;
 }
 
 
