@@ -268,14 +268,14 @@ export default function Home() {
   return (
     <>
       <HeroSlider />
-      <h1 className="text-[40px] md:text-[55px] font-bold text-center mt-10">
+      <h1 className="lg:text-5xl md:text-3xl font-semibold text-xl text-center mt-10">
         DISCOVER OUR PRODUCT RANGES
       </h1>
       <Tabs className="justify-center items-center" tabs={tabs} />
 
       <CollectiveProduct products={products} />
       <Container className="mt-20">
-        <h1 className="text-[40px] md:text-[55px]l font-bold text-center mb-5">Feature Product</h1>
+        <h1 className="lg:text-5xl md:text-3xl font-semibold text-xl text-center mb-5">Feature Product</h1>
         <ProductSlider Related={items} />
       </Container>
       <Offer Offers={offers} />

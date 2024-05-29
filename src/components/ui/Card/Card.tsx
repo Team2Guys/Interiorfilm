@@ -33,7 +33,7 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
     <>
       {ProductCard.map((product, index) => (
         <div
-          className="cursor-pointer group"
+          className="cursor-pointer group custom-shadow transition-all my-3"
           onClick={() => router.push("/detail")}
           key={index}
         >
@@ -63,12 +63,12 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
               </Link>
             </div>
           </div>
-          <div className="mt-2 text-center space-y-1">
-            <h1 className="text-xl text-center text-dark font-semibold">
+          <div className="mt-2 text-center space-y-1 pt-3 pb-5">
+            <h1 className="text-lg text-center text-dark group-hover:text-primary transition-all font-semibold">
               {product.title}
             </h1>
-            <div className="flex gap-2 justify-center">
-              <p className="text-primary">
+            <div className="flex gap-2 justify-center text-sm py-1 mt-0">
+              <p className="text-primary group-hover:text-dark transition-all font-bold">
                 Dhs. <span>{product.price}</span>.00
               </p>
               <p className="line-through text-light">
@@ -76,8 +76,8 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
               </p>
             </div>
 
-            <div className="flex gap-2 justify-center">
-              <Rate disabled allowHalf defaultValue={product.star} />
+            <div className="flex gap-1 justify-center">
+              <Rate className="text-sm gap-0" disabled allowHalf defaultValue={product.star} />
               <p>(24)</p>
             </div>
           </div>

@@ -26,7 +26,7 @@ const CollectiveProduct: React.FC<CollectiveProductProps> = ({ products }) => {
             <div className='flex justify-center items-center w-3/6'>
               <div className='px-8'>
                 <h1 className='text-lg font-medium mb-4'>{product.category}</h1>
-                <Link className='border rounded p-2 border-primary hover:bg-primary hover:text-white text-dark' href={"/"}>View All</Link>
+                <Link className='border rounded px-5 text-sm py-2 transition-all border-primary hover:bg-primary hover:text-white text-dark' href={"/"}>View All</Link>
               </div>
             </div>
           </div>
