@@ -91,33 +91,19 @@ export const validateForm = (formData: { fullName: string; email: string; passwo
     },
   ]
   export const menuSlide =[
-    {
-      image: img3,
-      title: "CA-13089",
-    },
-    {
-      image: img4,
-      title: "CA-13050",
-   
-    },
-    {
-      image: img5,
-      title: "CA-13067",
- 
-    },
-    {
-      image: img6,
-      title: "CA-13324",
-  
-    },
-    {
-      image: img7,
-      title: "CA-12324",
-     
-    },
-    {
-      image: img8,
-      title: "CA-12524",
+    {image: img3,title: "CA-13089",},
+    { image: img4,title: "CA-13050",},
+    {image: img5,title: "CA-13067",},
+    {image: img6,title: "CA-13324",},
+    {image: img7,title: "CA-12324",},
+    {image: img8,title: "CA-12524", },
+  ]
 
-    },
+  export const menudata =[
+    {image: img3,title: "CA-13089",},
+    { image: img4,title: "CA-13050",},
+    {image: img5,title: "CA-13067",},
+    {image: img6,title: "CA-13324",},
+    {image: img7,title: "CA-12324",},
+    {image: img8,title: "CA-12524", },
   ]
