@@ -54,7 +54,7 @@ const Slider: React.FC<Reviewprops> = ({Reviews}) => {
           <MdArrowForwardIos size={25} />
         </button> */}
         <div className='text-center mb-10'>
-          <h2 className='lg:text-5xl md:text-3xl font-semibold text-xl w-96 leading-10 mx-auto '>What Say Our Top Clients</h2>
+          <h2 className='lg:text-5xl md:text-3xl font-semibold text-xl lg:w-96 leading-10 mx-auto '>What Say Our Top Clients</h2>
         </div>
       </div>
       
@@ -65,7 +65,7 @@ const Slider: React.FC<Reviewprops> = ({Reviews}) => {
         loop={true}
         breakpoints={{
           640: {
-            slidesPerView: 2,
+            slidesPerView: 1,
             spaceBetween: 20,
           },
           768: {

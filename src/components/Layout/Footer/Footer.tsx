@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
       <div className='flex flex-wrap md:flex-nowrap justify-between'>
         <div className='flex items-center gap-2 w-full md:w-2/6'>
         <SlEnvolopeLetter className='text-primary' size={35} />
-        <p><span className='text-primary'>$90 OFF*</span> YOUR ORDER! SUBSCRBE TO OUR NEWSLETTER TODAY.</p>
+        <p className='lg:text-base text-sm '><span className='text-primary '>$90 OFF*</span> YOUR ORDER! SUBSCRBE TO OUR NEWSLETTER TODAY.</p>
         </div>
         <div className='flex items-center justify-center mt-5 md:mt-0 rounded-none'>
           <input className='bg-secondary rounded-none h-8 px-2 outline-primary w-4/6 md:w-auto' type='email' placeholder='Enter Email Address'/>

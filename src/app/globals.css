@@ -83,3 +83,6 @@
 :where(.css-dev-only-do-not-override-17seli4).ant-rate .ant-rate-star:not(:last-child) {
   margin-inline-end: 3px;
 }
+.ant-pagination-item {
+  box-shadow: 0px 3px 21px #3737D512;
+}

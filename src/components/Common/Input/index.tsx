@@ -4,8 +4,6 @@ import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import React, { useState } from "react";
 
 
-
-
 interface InputProps {
   type: string;
   name: string;

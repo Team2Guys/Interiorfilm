@@ -268,8 +268,8 @@ export default function Home() {
   return (
     <>
       <HeroSlider />
-      <h1 className="lg:text-5xl md:text-3xl font-semibold text-xl text-center mt-10">
-        DISCOVER OUR PRODUCT RANGES
+      <h1 className="lg:text-5xl md:text-3xl text-lg font-semibold  text-center mt-10">
+        Discover Our Product Ranges
       </h1>
       <Tabs className="justify-center items-center" tabs={tabs} />
 

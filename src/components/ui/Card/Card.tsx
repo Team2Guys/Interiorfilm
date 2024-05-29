@@ -39,7 +39,7 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
         >
           <div className="relative">
             <Image
-              className="w-full bg-contain h-44 md:h-72"
+              className="bg-contain h-full md:h-72"
               width={300}
               height={300}
               src={product.image}
@@ -64,7 +64,7 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
             </div>
           </div>
           <div className="mt-2 text-center space-y-1 pt-3 pb-5">
-            <h1 className="text-lg text-center text-dark group-hover:text-primary transition-all font-semibold">
+            <h1 className="lg:text-lg text-sm text-center text-dark group-hover:text-primary transition-all font-semibold">
               {product.title}
             </h1>
             <div className="flex gap-2 justify-center text-sm py-1 mt-0">
