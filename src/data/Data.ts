@@ -39,7 +39,6 @@ export const validateForm = (formData: { fullName: string; email: string; passwo
   ]
 
 
-<<<<<<< HEAD
   import * as Yup from 'yup';
 import {Product, Category} from 'types/interfaces'
 
@@ -114,7 +113,6 @@ export  const generateSlug = (text:string) => {
 };
 
 
-=======
  export const productdata =[
     {image:img,title:"Lorem ipsum",description:"Lorem ipsum dolor consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius nunc id varius adipiscing elit. Phasellus blandit massa enim."},
     {image:img2,title:"Lorem ipsum",description:"Lorem ipsum dolor consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius nunc id varius adipiscing elit. Phasellus blandit massa enim."},
@@ -195,4 +193,3 @@ export  const generateSlug = (text:string) => {
     {image: img7,title: "CA-12324",},
     {image: img8,title: "CA-12524", },
   ]
->>>>>>> 28beb706687f6d0741ca5cd640e4a767dae2fecc
