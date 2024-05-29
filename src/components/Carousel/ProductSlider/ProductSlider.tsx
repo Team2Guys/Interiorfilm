@@ -18,9 +18,9 @@ import Card from 'components/ui/Card/Card';
 interface Relateddata{
   image: any;
   title: string;
-  price: number;
-  oldprice: number;
-  star: number;
+  price?: number;
+  oldprice?: number;
+  star?: number;
 }
 
 
@@ -48,18 +48,18 @@ const ProductSlider: React.FC<relatedprops> = ({Related}) => {
 
   return (
     <div className="relative">
-      <div className='text-end mb-5'>
+      <div className='text-end lg:mb-2'>
         <button ref={prevRef} className=' p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
-          <MdArrowBackIos size={25} />
+          <MdArrowBackIos size={15} />
         </button>
         <button ref={nextRef} className=' p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white'>
-          <MdArrowForwardIos size={25} />
+          <MdArrowForwardIos size={15} />
         </button>
       </div>
       
       <Swiper
         ref={swiperRef}
-        slidesPerView={2} // Default to 1 slide per view
+        slidesPerView={1} // Default to 1 slide per view
         spaceBetween={20}
         loop={true}
         breakpoints={{

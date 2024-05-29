@@ -23,8 +23,8 @@ const TabsData = ({items}:any) => {
         <Card ProductCard={items} />
     
     </div>
-    <div className=' text-center mt-10 mb-5'>
-        <Link className='bg-primary rounded-md py-3 px-8 text-white' href={"/"}>View All</Link>
+    <div className=' text-center mt-10 mb-7'>
+        <Link className='bg-primary rounded-md py-3 px-10 text-white' href={"/"}>View All</Link>
         </div>
     </>
 

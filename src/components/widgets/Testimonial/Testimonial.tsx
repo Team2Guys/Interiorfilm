@@ -4,7 +4,7 @@ import React from 'react'
 
 const Testimonial:React.FC = () => {
   return (
-    <div className='bg-client bg-cover bg-no-repeat h-[450px] w-full mt-10'>
+    <div className='bg-client bg-cover bg-no-repeat h-[500px] w-full mt-10'>
         <Container className='pt-20'>
         <Slider
         Reviews={[
