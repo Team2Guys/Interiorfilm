@@ -101,3 +101,23 @@
     width: 900px;
   }
 }
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+  color:#ffffff !important;
+}
+.ant-tabs .ant-tabs-tab:hover{
+  color:#ffffff !important;
+}
+
+.back-transparent{
+  background: transparent !important;
+}
+.ant-drawer .ant-drawer-close{
+  background-color: white !important;
+  padding: 10px;
+  width: 30px;
+  height: 30px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}
+.ant-tabs .ant-tabs-tab{
+  color: #ffffff !important;
+}

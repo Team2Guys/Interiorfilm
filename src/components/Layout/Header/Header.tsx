@@ -58,29 +58,9 @@ const Header = () => {
             <Link href={"/"}>
             <Image className='w-14 lg:w-24' src={logo} alt="logo" width={100} height={100} />
             </Link>
-            {/* <DrawerMenu
-              width={250}
-              title={<><div className='p-1 rounded-md block lg:hidden text-white bg-primary'>
-                <TbCategoryMinus size={20} />
-              </div></>}
-              content={<>
-                <ul className='space-y-2'>
-                  <li><Link className='text-base font-semibold text-black hover:text-black' href="/">Dining</Link></li>
-                  <li><Link className='text-base font-semibold text-black hover:text-black' href="/">Bedroom</Link></li>
-                  <li><Link className='text-base font-semibold text-black hover:text-black' href="/">Kitchen</Link></li>
-                </ul>
-              </>}
-            /> */}
+           
             <div className='border w-3/6 lg:w-full max-w-screen-md flex'>
-              {/* <SelectList
-                className='w-40 h-12 borderless-select border-r hidden lg:block'
-                defaultValue="All Categories"
-                options={[
-                  { value: 'Dining', label: 'Dining' },
-                  { value: 'Living', label: 'Living' },
-                  { value: 'Bedroom', label: 'Bedroom' },
-                ]}
-              /> */}
+              
               <input className='w-full px-4 focus:outline-none active:border-none focus:border-none border-white' type="text" placeholder='Search Product Here...' />
               <Button className='rounded-l-md px-2 md:px-4' title={<IoSearch size={25} />} />
             </div>
@@ -93,6 +73,7 @@ const Header = () => {
                 <ul className='space-y-2'>
                   <li><Link className='text-base font-semibold text-black hover:text-black' href="/">Home</Link></li>
                   <li><DrawerMenu
+                      classDrawer=' back-transparent  backdrop-blur-md p-2 shadow-none'
                         className='text-base font-semibold text-black hover:text-black cursor-pointer'
                       width={500}
                         title={"product"}
@@ -100,7 +81,7 @@ const Header = () => {
                           <Mobiletab/>
                         </>}
                       /></li>
-                  <li><Link className='text-base font-semibold text-black hover:text-black' href="/about">About</Link></li>
+                  <li><Link className='text-base font-semibold text-black hover:text-black ' href="/about">About</Link></li>
                   <li><Link className='text-base font-semibold text-black hover:text-black' href="/contact">Contact</Link></li>
                 </ul>
               </>}
