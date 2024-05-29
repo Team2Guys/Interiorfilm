@@ -1,6 +1,6 @@
 import ProductSlider from 'components/Carousel/ProductSlider/ProductSlider'
 import Menutabs from 'components/ui/Tabs/Menutabs/Menutabs'
-import { menuSlide, productSlide } from 'data/Data'
+import { menuSlide } from 'data/Data'
 import React from 'react'
 
 const items=[
@@ -11,7 +11,6 @@ const items=[
     { label:"Marble Serie", content:<><ProductSlider Related={menuSlide} /></>},
     { label:"Plain Series", content:<><ProductSlider Related={menuSlide} /></>},
 ]
-
 const Megamanu = () => {
   return (
     <>
