@@ -28,10 +28,11 @@ function ProtectedRoute(WrappedComponent:any) {
    
     useEffect(() => {
       let token = localStorage.getItem("2guysAdminToken"); 
-      console.log(token, "token")
 
       if (!token) {
-        router.push("/dashboardlogin");
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+
+        router.push("/Admin-login");
       } else {
         AddminProfileTriggerHandler(token)
         setLoading(false);

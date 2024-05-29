@@ -3,9 +3,12 @@ import localFont from "next/font/local";
 
 import "./globals.css";
 import PathnameWrapper from "components/PathnameWrapper";
-
 import { ToastContainer } from 'react-toastify';
-
+import { Providers } from "./Providers";
+import "jsvectormap/dist/css/jsvectormap.css";
+import "flatpickr/dist/flatpickr.min.css";
+import "../css/satoshi.css";
+import "../css/style.css";
 
 const optimaFont = localFont({
   src: "../../public/font/OPTIMA.woff",
@@ -24,6 +27,8 @@ export default function RootLayout({
 
 
   return (
+    <Providers>
+
     <html lang="en">
       <body className={`
         ${optimaFont.className}`}>
@@ -35,5 +40,7 @@ export default function RootLayout({
 
       </body>
     </html>
+    </Providers>
+
   );
 }

@@ -11,17 +11,19 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
     "/login",
     '/register',
     "/superAdminlogin",
-    "/forgot-password"
+    "/forgot-password",
+    "/dashboard",
+
   ]
 
   return (
     <>
       {
-      withoutHeaderPages.includes(pathname) ? null : 
+      withoutHeaderPages.includes(pathname)  || pathname.split('/').includes('dashboard') ? null : 
       <Header />
       }
       {children}
-      { withoutHeaderPages.includes(pathname) ? null  : 
+      { withoutHeaderPages.includes(pathname) || pathname.split('/').includes('dashboard') ? null  : 
       <Footer /> 
       }
     </>

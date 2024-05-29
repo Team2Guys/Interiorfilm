@@ -17,6 +17,8 @@ import Collapse from 'components/ui/Collapse/Collapse'
 import { Pagination, Slider } from 'antd'
 import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu'
 import { IoFunnelOutline } from 'react-icons/io5'
+import Cookies from 'js-cookie';
+
 
 const items=[
     { image: img3, title: "JBL Micoro Headphone", price: 23, oldprice: 38, star: 2 },
@@ -33,6 +35,9 @@ const Product = () => {
 
     const [colorName, setColorName] = useState<string>()
     console.log(colorName)
+    const token = Cookies.get('token');
+
+    console.log(token, 'token')
 
     let colorsARray =[
         { colorName : '000'},

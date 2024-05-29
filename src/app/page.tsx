@@ -20,6 +20,7 @@ import { GiPayMoney } from "react-icons/gi";
 import { RiCustomerService2Line } from "react-icons/ri";
 import Testimonial from "components/widgets/Testimonial/Testimonial";
 
+
 const tabs = [
   { label: 'Interior Vinyl Wraps', content: <><TabsData
   items ={ [
@@ -63,7 +64,9 @@ const offers = [
   { icon:<GiPayMoney className='text-primary  group-hover:text-white' size={40} /> ,title: 'Reasonable Pricing', detail: 'Competitive pricing for all our services.' },
   { icon:<RiCustomerService2Line className='text-primary  group-hover:text-white' size={40} /> ,title: '24/7 Support', detail: 'Our support team is available 24/7 to assist you.' },
 ];
+
 export default function Home() {
+ 
   return (
     <>
       <HeroSlider/>
