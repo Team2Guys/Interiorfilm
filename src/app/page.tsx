@@ -22,7 +22,6 @@ import Testimonial from "components/widgets/Testimonial/Testimonial";
 import ProductSlider from "components/Carousel/ProductSlider/ProductSlider";
 import Container from "components/Layout/Container/Container";
 import { productSlide } from "data/Data";
-import Mobiletab from "components/ui/Tabs/Mobiletab/Mobiletab";
 
 const tabData = [
   { key: '1', tab: 'Cement Gray Series', content: <><TabsData
@@ -203,7 +202,9 @@ const offers = [
     detail: "Our support team is available 24/7 to assist you.",
   },
 ];
+
 export default function Home() {
+ 
   return (
     <>
       <HeroSlider />

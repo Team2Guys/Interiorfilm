@@ -1,22 +1,24 @@
-"use client";
-import Container from "components/Layout/Container/Container";
-import SelectList from "components/ui/Select/Select";
-import Overlay from "components/widgets/Overlay/Overlay";
-import React, { useState } from "react";
-import img2 from "../../../public/images/img-1.png";
-import img3 from "../../../public/images/img-10.png";
-import img4 from "../../../public/images/img-11.png";
-import img5 from "../../../public/images/img-12.png";
-import img6 from "../../../public/images/img-13.png";
-import img7 from "../../../public/images/img-14.png";
-import img8 from "../../../public/images/img-15.png";
-import img9 from "../../../public/images/img-16.png";
-import Card from "components/ui/Card/Card";
-import Link from "next/link";
-import Collapse from "components/ui/Collapse/Collapse";
-import { Pagination, Slider } from "antd";
-import DrawerMenu from "components/ui/DrawerMenu/DrawerMenu";
-import { IoFunnelOutline } from "react-icons/io5";
+'use client'
+import Container from 'components/Layout/Container/Container'
+import SelectList from 'components/ui/Select/Select'
+import Overlay from 'components/widgets/Overlay/Overlay'
+import React, { useState } from 'react'
+import img2 from "../../../public/images/img-1.png"
+import img3 from "../../../public/images/img-10.png"
+import img4 from "../../../public/images/img-11.png"
+import img5 from "../../../public/images/img-12.png"
+import img6 from "../../../public/images/img-13.png"
+import img7 from "../../../public/images/img-14.png"
+import img8 from "../../../public/images/img-15.png"
+import img9 from "../../../public/images/img-16.png"
+import Card from 'components/ui/Card/Card'
+import Link from 'next/link'
+import Collapse from 'components/ui/Collapse/Collapse'
+import { Pagination, Slider } from 'antd'
+import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu'
+import { IoFunnelOutline } from 'react-icons/io5'
+import Cookies from 'js-cookie';
+
 
 const items = [
   {
@@ -78,18 +80,23 @@ const items = [
 ];
 
 const Product = () => {
-  const [colorName, setColorName] = useState<string>();
-  console.log(colorName);
 
-  let colorsARray = [
-    { colorName: "000" },
-    { colorName: "153" },
-    { colorName: "343" },
-    { colorName: "e22" },
-    { colorName: "ht3" },
-    { colorName: "7f3" },
-  ];
+    const [colorName, setColorName] = useState<string>()
+    console.log(colorName)
+    const token = Cookies.get('token');
 
+    console.log(token, 'token')
+
+    let colorsARray =[
+        { colorName : '000'},
+        { colorName : '153'}, 
+        { colorName : '343'},
+        { colorName : 'e22'},
+        { colorName : 'ht3'},
+        { colorName : '7f3'},
+
+]
+    
   return (
     <>
       <Overlay title="Product" />
