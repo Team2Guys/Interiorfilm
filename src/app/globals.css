@@ -102,10 +102,10 @@
   }
 }
 .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
-  color:#ffffff !important;
+  color:black !important;
 }
 .ant-tabs .ant-tabs-tab:hover{
-  color:#ffffff !important;
+  color:black !important;
 }
 
 .back-transparent{
@@ -119,5 +119,32 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
 }
 .ant-tabs .ant-tabs-tab{
-  color: #ffffff !important;
+  color: black !important;
+}
+
+
+@media screen and (max-width: 768px) {
+  .color-black.ant-tabs .ant-tabs-tab{
+    color: black !important;
+    border-bottom: #C72031 !important
+  }
+  .color-black.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+    color:black !important;
+    border-bottom: #C72031 !important
+  }
+  .color-black.ant-tabs .ant-tabs-tab:hover{
+    color:black !important;
+    border-bottom: #C72031 !important
+  }
+
+  .color-white.ant-tabs .ant-tabs-tab{
+    color: white !important;
+  }
+  .color-white.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+    color:white !important;
+    border-bottom: #C72031 !important;
+  }
+  .color-white.ant-tabs .ant-tabs-tab:hover{
+    color:white !important;
+  }
 }

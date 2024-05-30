@@ -119,3 +119,5 @@ export const validateForm = (formData: { fullName: string; email: string; passwo
     {image: img7,title: "CA-12324",},
     {image: img8,title: "CA-12524", },
   ]
+
+  

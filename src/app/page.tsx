@@ -22,13 +22,57 @@ import Testimonial from "components/widgets/Testimonial/Testimonial";
 import ProductSlider from "components/Carousel/ProductSlider/ProductSlider";
 import Container from "components/Layout/Container/Container";
 import { productSlide } from "data/Data";
+import Mobiletab from "components/ui/Tabs/Mobiletab/Mobiletab";
 
-const tabs = [
-  {
-    label: "Interior Vinyl Wraps",
-    content: (
-      <>
-        <TabsData
+const tabData = [
+  { key: '1', tab: 'Cement Gray Series', content: <><TabsData
+  items={[
+    {
+      image: img2,
+      title: "Sony Wireless Bohm",
+      price: 19,
+      oldprice: 38,
+      star: 2,
+    },
+    {
+      image: img3,
+      title: "JBL Micoro Headphone",
+      price: 23,
+      oldprice: 38,
+      star: 2,
+    },
+    {
+      image: img4,
+      title: "Bose Color Speaker",
+      price: 21,
+      oldprice: 38,
+      star: 2,
+    },
+    {
+      image: img5,
+      title: "Bose Color Speaker",
+      price: 30,
+      oldprice: 38,
+      star: 2,
+    },
+    {
+      image: img6,
+      title: "Asus Watch Speaker",
+      price: 28,
+      oldprice: 38,
+      star: 2,
+    },
+    {
+      image: img7,
+      title: "Asus Watch Speaker",
+      price: 12,
+      oldprice: 38,
+      star: 2,
+    },
+  ]}
+/></> },
+  { key: '2', tab: 'Skin Texture Series', content: <><TabsData/></> },
+  { key: '3', tab: 'Wood Grain Series', content: <><TabsData
           items={[
             {
               image: img2,
@@ -73,39 +117,33 @@ const tabs = [
               star: 2,
             },
           ]}
-        />
-      </>
-    ),
-  },
-  {
-    label: "Exterior Vinyl Wraps",
-    content: (
-      <>
-        <TabsData
+        /></> },
+  { key: '4', tab: 'Fabric Series', content: <><TabsData/></> },
+  { key: '5', tab: 'Marble Serie', content: <><TabsData
           items={[
             {
-              image: img8,
+              image: img2,
               title: "Sony Wireless Bohm",
               price: 19,
               oldprice: 38,
               star: 2,
             },
             {
-              image: img9,
+              image: img3,
               title: "JBL Micoro Headphone",
               price: 23,
               oldprice: 38,
               star: 2,
             },
             {
-              image: img2,
+              image: img4,
               title: "Bose Color Speaker",
               price: 21,
               oldprice: 38,
               star: 2,
             },
             {
-              image: img4,
+              image: img5,
               title: "Bose Color Speaker",
               price: 30,
               oldprice: 38,
@@ -119,71 +157,18 @@ const tabs = [
               star: 2,
             },
             {
-              image: img5,
+              image: img7,
               title: "Asus Watch Speaker",
               price: 12,
               oldprice: 38,
               star: 2,
             },
           ]}
-        />
-      </>
-    ),
-  },
-  {
-    label: "Window Film",
-    content: (
-      <>
-        <TabsData
-          items={[
-            {
-              image: img5,
-              title: "Sony Wireless Bohm",
-              price: 19,
-              oldprice: 38,
-              star: 2,
-            },
-            {
-              image: img4,
-              title: "JBL Micoro Headphone",
-              price: 23,
-              oldprice: 38,
-              star: 2,
-            },
-            {
-              image: img3,
-              title: "Bose Color Speaker",
-              price: 21,
-              oldprice: 38,
-              star: 2,
-            },
-            {
-              image: img2,
-              title: "Bose Color Speaker",
-              price: 30,
-              oldprice: 38,
-              star: 2,
-            },
-            {
-              image: img8,
-              title: "Asus Watch Speaker",
-              price: 28,
-              oldprice: 38,
-              star: 2,
-            },
-            {
-              image: img9,
-              title: "Asus Watch Speaker",
-              price: 12,
-              oldprice: 38,
-              star: 2,
-            },
-          ]}
-        />
-      </>
-    ),
-  },
+        /></> },
+  { key: '6', tab: 'Plain Series', content: <><TabsData/></> },
+
 ];
+
 
 const products = [
   { image: img143, category: "Realistic Woodgrain" },
@@ -192,9 +177,8 @@ const products = [
 ];
 const offers = [
   {
-    icon: (
-      <SlDiamond className="text-primary  group-hover:text-white" size={40} />
-    ),
+    icon: 
+      <SlDiamond className="text-primary  group-hover:text-white" size={40} />,
     title: "Quality Products",
     detail: "Get free Quality Products for your interior design project.",
   },
@@ -204,9 +188,7 @@ const offers = [
     detail: "We ensure the highest quality standards for your interiors.",
   },
   {
-    icon: (
-      <GiPayMoney className="text-primary  group-hover:text-white" size={40} />
-    ),
+    icon: <GiPayMoney className="text-primary  group-hover:text-white" size={40} />,
     title: "Reasonable Pricing",
     detail: "Competitive pricing for all our services.",
   },
@@ -226,8 +208,9 @@ export default function Home() {
     <>
       <HeroSlider />
       <h1 className="lg:text-5xl md:text-3xl text-lg font-semibold  text-center mt-10">Discover Our Product Ranges</h1>
-      <Tabs className="justify-center items-center" tabs={tabs} />
-
+      <Container className="mt-10">
+      <Mobiletab className="color-black" tabData={tabData}  />
+      </Container>
       <CollectiveProduct products={products} />
       <Container className="mt-20">
         <h1 className="lg:text-5xl md:text-3xl font-semibold text-xl text-center mb-5">Feature Product</h1>

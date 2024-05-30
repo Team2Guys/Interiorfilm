@@ -17,7 +17,21 @@ import { useRouter } from 'next/navigation';
 import {  Popover } from 'antd';
 import Megamanu from './Megamanu/Megamanu';
 import Mobiletab from 'components/ui/Tabs/Mobiletab/Mobiletab';
+import Menucard from 'components/ui/Card/Menucard/Menucard';
+import { menudata } from 'data/Data';
 
+
+const tabData = [
+  { key: '1', tab: 'Cement Gray Series', content: <><Menucard 
+    menudata={menudata}
+  /></> },
+  { key: '2', tab: 'Skin Texture Series', content: <><Menucard/></> },
+  { key: '3', tab: 'Wood Grain Series', content: <><Menucard menudata={menudata}/></> },
+  { key: '4', tab: 'Fabric Series', content: <><Menucard/></> },
+  { key: '5', tab: 'Marble Serie', content: <><Menucard menudata={menudata}/></> },
+  { key: '6', tab: 'Plain Series', content: <><Menucard menudata={menudata}/></> },
+
+];
 
 const Header= () => {
 
@@ -118,17 +132,17 @@ const Header= () => {
                       open={category}
                         title={"product"}
                         content={<>
-                          <Mobiletab  />
+                          <Mobiletab className='color-white' tabData={tabData}  />
                         </>}
                       /></li>
-                  <li><Link className='text-base font-semibold text-black hover:text-black ' onClick={onClose} href="/about">About</Link></li>
-                  <li><Link className='text-base font-semibold text-black hover:text-black' onClick={onClose} href="/contact">Contact</Link></li>
+                  <li><Link className='text-base font-semibold text-black hover:text-black ' onClick={onClose} href="/about">About Us</Link></li>
+                  <li><Link className='text-base font-semibold text-black hover:text-black' onClick={onClose} href="/contact">Contact Us</Link></li>
                 </ul>
               </>}
             />
             <div className='hidden lg:flex gap-2 md:gap-4 lg:gap-8'>
               <div className='relative group'>
-              <Link className='group' href="/">
+              <Link className='group' href="/wishlist">
               
                 <IoMdHeartEmpty className='text-primary group-hover:text-dark transition duration-200 ease-in' size={30} />
               </Link>
@@ -140,7 +154,7 @@ const Header= () => {
     
               <div className='relative group'>
                           
-              <Link className='relative group' href="/">
+              <Link className='relative group' href="/cart">
               
                 <PiBag className='text-primary group-hover:text-dark transition duration-200 ease-in' size={30} />
               </Link>
@@ -169,7 +183,7 @@ const Header= () => {
           
 
           <div className='relative group'>
-          <Link href="/">
+          <Link href="/wishlist">
 
         <IoMdHeartEmpty className='text-white transition duration-200 ease-in' size={30} />
         </Link>
@@ -177,17 +191,16 @@ const Header= () => {
               1
             </div>
           </div>
-    
-
 
     <div className='relative group'>
-          <Link  href="/">
+          <Link  href="/cart">
             <PiBag className='text-white transition duration-200 ease-in' size={30} />
           </Link>
           <div className='rounded-full text-dark w-6 h-6 bg-white absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
               1
             </div>
         </div>
+
           <Link className='text-base lg:text-lg' href="/profile"><FaRegUser size={25} className='text-white' /></Link>
         </div>
       </div>
