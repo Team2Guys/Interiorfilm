@@ -40,7 +40,7 @@ export const validateForm = (formData: { fullName: string; email: string; passwo
 
 
   import * as Yup from 'yup';
-import {Product, Category} from 'types/interfaces'
+  import {Product, Category} from 'types/interfaces'
 
 
 export const inputFields = [
