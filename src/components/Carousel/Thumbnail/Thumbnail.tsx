@@ -30,7 +30,6 @@ const Thumbnail: React.FC<thumbprops> = ({thumbs}) => {
         } as React.CSSProperties}
         loop={true}
         spaceBetween={10}
-        navigation={true}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper2">
