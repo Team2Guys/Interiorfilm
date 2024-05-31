@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState,useLayoutEffect } from 'react';
 import { Layout } from 'antd';
 import { FaFacebookF, FaTwitter, FaInstagram, FaPinterest, FaAngleDown, FaAngleUp } from 'react-icons/fa';
 import Link from 'next/link';
@@ -21,12 +21,28 @@ const Footer: React.FC = () => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isCustomerCareOpen, setIsCustomerCareOpen] = useState(false);
   const [isPagesOpen, setIsPagesOpen] = useState(false);
+  const [category, setCategory] = useState<any[]>();
+;
+
+
 
   const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
   const toggleCustomerCare = () => setIsCustomerCareOpen(!isCustomerCareOpen);
   const togglePages = () => setIsPagesOpen(!isPagesOpen);
   const bottomImages = [paypal, visacard, mastercard, maestrocard];
 
+  const CategoryHandler = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
+    );
+    const Categories = await response.json();
+    setCategory(Categories);
+  };
+  
+  useLayoutEffect(() => {
+    CategoryHandler();
+  }, []);
+  
   return (
     <>
     <div className='bg-white pt-10'>
@@ -71,9 +87,9 @@ const Footer: React.FC = () => {
                 </span>
               </h3>
               <ul className={`space-y-2 transition-all duration-300 overflow-hidden ${isCategoriesOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}>
-                {categories.map((category, index) => (
+                {category && category.map((category, index) => (
                   <li key={index}>
-                    <Link href={category.href} className='hover:text-primary link-footer'>{category.name}</Link>
+                    <Link href="/" className='hover:text-primary link-footer'>{category.name}</Link>
                   </li>
                 ))}
               </ul>
