@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client'
 import Container from 'components/Layout/Container/Container'
 import SelectList from 'components/ui/Select/Select'
@@ -14,7 +15,7 @@ import img9 from "../../../public/images/img-16.png"
 import Card from 'components/ui/Card/Card'
 import Link from 'next/link'
 import Collapse from 'components/ui/Collapse/Collapse'
-import { Slider } from 'antd'
+import { Select, Slider } from 'antd'
 import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu'
 import { IoFunnelOutline } from 'react-icons/io5'
 import Cookies from 'js-cookie';
@@ -27,64 +28,6 @@ import { getPaginatedproducts, getPRODUCTS} from 'utils/helperFunctions'
 import { number } from 'yup'
 
 
-const items = [
-  {
-    image: img3,
-    title: "JBL Micoro Headphone",
-    price: 23,
-    oldprice: 38,
-    star: 2,
-  },
-  {
-    image: img4,
-    title: "Bose Color Speaker",
-    price: 21,
-    oldprice: 38,
-    star: 2,
-  },
-  {
-    image: img5,
-    title: "Bose Color Speaker",
-    price: 30,
-    oldprice: 38,
-    star: 2,
-  },
-  {
-    image: img6,
-    title: "Asus Watch Speaker",
-    price: 28,
-    oldprice: 38,
-    star: 2,
-  },
-  {
-    image: img7,
-    title: "Asus Watch Speaker",
-    price: 12,
-    oldprice: 38,
-    star: 2,
-  },
-  {
-    image: img8,
-    title: "Sony Wireless Bohm",
-    price: 19,
-    oldprice: 38,
-    star: 2,
-  },
-  {
-    image: img9,
-    title: "Bose Color Speaker",
-    price: 30,
-    oldprice: 38,
-    star: 2,
-  },
-  {
-    image: img6,
-    title: "Asus Watch Speaker",
-    price: 28,
-    oldprice: 38,
-    star: 2,
-  },
-];
 
 const Product = () => {
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
@@ -93,6 +36,8 @@ const Product = () => {
   const [error, setError] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
   const [colorName, setColorName] = useState<string>()
+  const [searchTerm, setSearchTerm] = useState<string>("")
+  const [sortOption, setSortOption] = useState<string>("Default")
 
     let colorsARray =[
         { colorName : '000'},
@@ -107,6 +52,7 @@ useLayoutEffect(()=>{
   getPRODUCTS(setTotalProducts,setError,setLoading,1, setTotalPage, setTotalProductscount)
 },[])
 
+console.log(totalProducts, "totalProducts")
 
 
 const getProductsHandler =(page: number)=>{
@@ -115,28 +61,55 @@ const getProductsHandler =(page: number)=>{
 }
 
 console.log(totalProductscount, "totalProductscount")
+
+const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  setSearchTerm(event.target.value)
+}
+
+const handleSortChange = (value: string) => {
+  setSortOption(value)
+}
+
+const filteredProducts = totalProducts
+  .filter(product =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (!colorName || product.colors.some(color => color.colorName === colorName))
+  )
+
+const sortedProducts = filteredProducts.sort((a, b) => {
+  if (sortOption === "Low to High") {
+    return a.salePrice - b.salePrice
+  } else if (sortOption === "High to Low") {
+    return b.salePrice - a.salePrice
+  } else {
+    return 0 // Default sorting (could be by name or id)
+  }
+})
     
   return (
     <>
       <Overlay title="Product" />
       <Container className="mt-20">
-        <div className="flex justify-end gap-3">
+      <div className="flex justify-end gap-3">
           <div className="flex gap-2 items-center w-3/6 md:w-auto">
             <h1 className="">Sort By: </h1>
-            <SelectList
-              className=" w-40 h-12 border-primary "
-              defaultValue="Default"
-              options={[
-                { value: "Best Match", label: "Best Match" },
-                { value: "Low to High", label: "Low to High" },
-                { value: "High to Low", label: "High to Low" },
-              ]}
-            />
+            <Select
+            defaultValue="Default"
+            className='w-40 h-13'
+            onChange={handleSortChange}
+            options={[
+              { value: "Default", label: "Default",disabled: true},
+              { value: "Low to High", label: "Low to High" },
+              { value: "High to Low", label: "High to Low" },
+            ]}
+          />
           </div>
           <input
             className="px-2 border-2 rounded-md border-primary outline-none w-3/6 md:w-auto"
             type="search"
             placeholder="Search"
+            value={searchTerm}
+            onChange={handleSearchChange}
           />
         </div>
 
@@ -282,7 +255,7 @@ console.log(totalProductscount, "totalProductscount")
                   {
       loading ? <div className="flex justify-center item-center"><Loader/></div>  : 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-              <Card ProductCard={totalProducts}/>
+              <Card ProductCard={sortedProducts} />
             </div>
               }
             <Pagintaion setTotalPage={totalPage} totalSize ={totalProductscount ? Number(totalProductscount): 5  } handlerChange={getProductsHandler}  />

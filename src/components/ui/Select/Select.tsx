@@ -1,10 +1,6 @@
-"use client"
+'use client'
 import React from 'react';
 import { Select } from 'antd';
-
-const handleChange = (value: string) => {
-  console.log(`selected ${value}`);
-};
 
 interface Option {
   value: string;
@@ -16,14 +12,15 @@ interface SelectListProps {
   options: Option[];
   className?: string;
   defaultValue: any;
+  onChange: (value: string) => void;
 }
 
-const SelectList: React.FC<SelectListProps> = ({ options,className,defaultValue }) => {
+const SelectList: React.FC<SelectListProps> = ({ options, className, defaultValue, onChange }) => {
   return (
     <Select
-    className={`${className}`}
+      className={className}
       defaultValue={defaultValue}
-      onChange={handleChange}
+      onChange={onChange}
       options={options}
     />
   );
