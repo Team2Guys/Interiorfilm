@@ -133,9 +133,9 @@ const sortedProducts = filteredProducts.sort((a, b) => {
               <Collapse title="All Categories">
                 <ul className="px-1 pt-2 space-y-1">
 
-                  {category?.map((item)=>{
+                  {category?.map((item,index)=>{
                     return (
-                      <li>
+                      <li key={index}>
                       <Link href={"/"}>{item.name}</Link>
                     </li>
                     )
