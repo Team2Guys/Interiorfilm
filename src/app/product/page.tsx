@@ -93,6 +93,8 @@ const Product = () => {
   const [error, setError] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
   const [colorName, setColorName] = useState<string>()
+  const [category, setCategory] = useState<any[]>();
+
 
     let colorsARray =[
         { colorName : '000'},
@@ -107,6 +109,18 @@ useLayoutEffect(()=>{
   getPRODUCTS(setTotalProducts,setError,setLoading,1, setTotalPage, setTotalProductscount)
 },[])
 
+
+const CategoryHandler = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
+  );
+  const Categories = await response.json();
+  setCategory(Categories);
+};
+
+useLayoutEffect(() => {
+  CategoryHandler();
+}, []);
 
 
 const getProductsHandler =(page: number)=>{
@@ -146,21 +160,14 @@ console.log(totalProductscount, "totalProductscount")
           <div className="p-2 bg-secondary">
               <Collapse title="All Categories">
                 <ul className="px-1 pt-2 space-y-1">
-                  <li>
-                    <Link href={"/"}>Dresses</Link>
-                  </li>
-                  <li>
-                    <Link href={"/"}>Sweatshirts</Link>
-                  </li>
-                  <li>
-                    <Link href={"/"}>Jackets</Link>
-                  </li>
-                  <li>
-                    <Link href={"/"}>Denim Jeans</Link>
-                  </li>
-                  <li>
-                    <Link href={"/"}>Shorts</Link>
-                  </li>
+
+                  {category?.map((item)=>{
+                    return (
+                      <li>
+                      <Link href={"/"}>{item.name}</Link>
+                    </li>
+                    )
+                  })}
                 </ul>
               </Collapse>
             </div>
