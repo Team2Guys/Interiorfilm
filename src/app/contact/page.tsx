@@ -40,7 +40,7 @@ const Contact = () => {
                     </div>
                 </div>
             </div>
-            <div className='border rounded-md'>
+            <div className='border border-gray rounded-md'>
                 <form className='p-4 pt-10'>
                     <LabelInput label='Name' placeholder='Enter Name' type='text' id='name'/>
                     <LabelInput label='Email' placeholder='Enter Email' type='email' id='Email'/>
@@ -48,7 +48,7 @@ const Contact = () => {
                     <label className="block uppercase tracking-wide text-dark text-sm font-bold mb-2">
                         Comment
                     </label>
-                    <textarea className="appearance-none block w-full bg-gray-200 text-dark border mt-4 border-gray-200 rounded py-5 px-5 leading-tight focus:outline-none focus:bg-white focus:border-dark outline-dark"  placeholder={"Enter Comment"} />
+                    <textarea className="appearance-none block w-full bg-gray-200 text-dark border border-gray mt-4 border-gray-200 rounded py-5 px-5 leading-tight focus:outline-none focus:bg-white focus:border-dark outline-dark"  placeholder={"Enter Comment"} />
                     <Button className='text-center w-full bg-primary py-3 text-white mt-5' title={"Submit Now"}/>
                     </div>
                 </form>

@@ -47,14 +47,12 @@ const ProductSlider: React.FC<relatedprops> = ({Related}) => {
   }, []);
 
   return (
-    <div className="relative">
-      <div className='text-end lg:mb-2'>
+    <div className="flex items-center justify-center">
+      <div className=' w-1/12'>
         <button ref={prevRef} className=' p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
           <MdArrowBackIos size={15} />
         </button>
-        <button ref={nextRef} className=' p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white'>
-          <MdArrowForwardIos size={15} />
-        </button>
+      
       </div>
       
       <Swiper
@@ -72,7 +70,7 @@ const ProductSlider: React.FC<relatedprops> = ({Related}) => {
             spaceBetween: 10,
           },
           1024: {
-            slidesPerView: 4,
+            slidesPerView: 3.5,
             spaceBetween: 20,
           },
         }}
@@ -95,6 +93,11 @@ const ProductSlider: React.FC<relatedprops> = ({Related}) => {
   
 
       </Swiper>
+      <div className='w-1/12'>
+      <button ref={nextRef} className=' p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
+          <MdArrowForwardIos size={15} />
+        </button>
+      </div>
     </div>
   );
 };

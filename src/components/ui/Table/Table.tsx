@@ -4,7 +4,10 @@ import img from "../../../../public/images/img-1.png"
 import Image from 'next/image'
 import { IoMdCloseCircleOutline } from 'react-icons/io'
 import { RxMinus, RxPlus } from 'react-icons/rx'
+import { usePathname } from 'next/navigation'
+import Button from '../Button/Button'
 const Table = () => {
+  const pathName = usePathname()
     const [count, setCount] = useState(0);
 
     const increment = () => {
@@ -28,7 +31,7 @@ const Table = () => {
               <th scope="col" className="px-6 py-3 text-start text-xl font-optima text-dark ">Product</th>
               <th scope="col" className="px-6 py-3 text-start text-xl font-medium text-dark ">Price</th>
               <th scope="col" className="px-6 py-3 text-start text-xl font-medium text-dark ">Quantity</th>
-              <th scope="col" className="px-6 py-3 text-end text-xl font-medium text-dark ">Total</th>
+              <th scope="col" className="px-6 py-3 text-end text-xl font-medium text-dark ">{ pathName == "/wishlist" ? "Action" : "Total"}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -52,19 +55,21 @@ const Table = () => {
               <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base"><p >AED <span>120</span>.00</p></td>
               <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base">
                 <div className='flex'>
-                     <div onClick={decrement} className='h-8 w-8 rounded-md bg-white border flex justify-center items-center'>
+                     <div onClick={decrement} className='h-8 w-8 rounded-md bg-white border border-gray flex justify-center items-center'>
                      <RxMinus size={20} />
                      </div>
                      <div className='h-8 w-8 rounded-md bg-white flex justify-center items-center'>
                      {count}
                      </div>
-                     <div onClick={increment} className='h-8 w-8 rounded-md bg-white border flex justify-center items-center'>
+                     <div onClick={increment} className='h-8 w-8 rounded-md bg-white border border-gray flex justify-center items-center'>
                      <RxPlus size={20} />
                      </div>
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-end text-sm md:text-base">
+                {pathName == "/wishlist" ? <Button className='px-4 rounded-md' title={"Add To Cart"}/> : 
                 <p>AED <span>120</span>.00</p>
+                }
               </td>
             </tr>
        
@@ -82,7 +87,7 @@ const Table = () => {
             <div className='space-y-1'>
                 <h1 className='text-sm md:text-base font-medium'>Basic Korean-style Bag</h1>
                 <p className=' text-xs md:text-sm text-gray-500'>Color: <span>Brown</span></p>
-                <div className='flex'>
+                <div className='flex mb-2'>
                      <div onClick={decrement} className='h-6 w-6 rounded-md bg-white border flex justify-center items-center'>
                      <RxMinus size={20} />
                      </div>
@@ -93,7 +98,10 @@ const Table = () => {
                      <RxPlus size={20} />
                      </div>
                 </div>
-                <p className='text-sm md:text-base font-base'>AED <span>120</span>.00</p>
+                  {pathName == "/wishlist" ? <Button className='px-2 md:px-4 text-sm md:text-base rounded-md' title={"Add To Cart"}/> : 
+                  <p className='text-sm md:text-base font-base'>AED <span>120</span>.00</p>
+                  }
+                
             </div>
         </div>
     </div>

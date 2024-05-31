@@ -17,6 +17,8 @@ import { HiOutlinePlusSm } from 'react-icons/hi'
 import { GoHeart } from 'react-icons/go'
 import Tabs from 'components/ui/Tabs/Tabs'
 import ProductSlider from 'components/Carousel/ProductSlider/ProductSlider'
+import Menutabs from 'components/ui/Tabs/Menutabs/Menutabs'
+import Mobiletab from 'components/ui/Tabs/Mobiletab/Mobiletab'
 
 const items=[
     { image: img3, title: "JBL Micoro Headphone", price: 23, oldprice: 38, star: 2 },
@@ -50,8 +52,8 @@ const Detail = () => {
         { colorName : '7f3'},
 
 ]
-const tabs = [
-    { label: 'Description', content: <div className='space-y-3'>
+const tabData = [
+    { key:"1",tab: 'Description', content: <div className='space-y-3'>
     <div>
         <h1 className='font-semibold'>Viverra a consectetur</h1>
         <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Vivamus bibendum magna Lorem ipsum dolor sit amet, consectetur adipiscing elit.Contrary to popular belief, Lorem Ipsum is not simply random text. It lassical Latin literature from 45 BC, making it</p>
@@ -61,7 +63,7 @@ const tabs = [
         <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Vivamus bibendum magna Lorem ipsum dolor sit amet, consectetur adipiscing elit.Contrary to popular belief, Lorem Ipsum is not simply random text. It lassical Latin literature from 45 BC, making it</p>
     </div>
     </div> },
-    { label: 'Additional Info', content: <>
+    { key:"2",tab: 'Additional Info', content: <>
     <div className='space-y-3'>
     <div>
         <h1 className='font-semibold'>Viverra a consectetur</h1>
@@ -81,8 +83,8 @@ const tabs = [
    
     </div>
     </> },
-    { label: 'Review', content: <></> },
-    { label: 'Video', content:<></> },
+    { key:"3",tab: 'Review', content: <></> },
+    { key:"4",tab: 'Video', content:<></> },
   ];
 
   return (
@@ -158,12 +160,11 @@ const tabs = [
         </Container>
         <div className='bg-secondary  mt-20'>
          <Container>
-         <Tabs className='pt-10' classContent='pb-10' tabs={tabs} />
+        <Mobiletab className='pt-10 pb-10' tabData={tabData}/>
          </Container>
         </div>
         <Container className='mt-20'>
          <h1 className='text-lg md:text-3xl mb-5=-'>Related Product</h1>
-
          <ProductSlider
          Related={items}
          />

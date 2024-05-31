@@ -17,7 +17,21 @@ import { useRouter } from 'next/navigation';
 import {  Popover } from 'antd';
 import Megamanu from './Megamanu/Megamanu';
 import Mobiletab from 'components/ui/Tabs/Mobiletab/Mobiletab';
+import Menucard from 'components/ui/Card/Menucard/Menucard';
+import { menudata } from 'data/Data';
 
+
+const tabData = [
+  { key: '1', tab: 'Cement Gray Series', content: <><Menucard 
+    menudata={menudata}
+  /></> },
+  { key: '2', tab: 'Skin Texture Series', content: <><Menucard/></> },
+  { key: '3', tab: 'Wood Grain Series', content: <><Menucard menudata={menudata}/></> },
+  { key: '4', tab: 'Fabric Series', content: <><Menucard/></> },
+  { key: '5', tab: 'Marble Serie', content: <><Menucard menudata={menudata}/></> },
+  { key: '6', tab: 'Plain Series', content: <><Menucard menudata={menudata}/></> },
+
+];
 
 const Header= () => {
 
@@ -61,7 +75,7 @@ const Header= () => {
   }, []);
   return (
     <>
-      <div className='bg-secondary border-b w-full'>
+      <div className='bg-secondary border-b border-gray  w-full'>
         <Container>
           <div className='flex justify-between flex-wrap lg:flex-nowrap gap-2 p-2 items-center'>
             <div className='flex gap-4 mx-auto md:mx-0'>
@@ -86,14 +100,14 @@ const Header= () => {
           </div>
         </Container>
       </div>
-      <div className='bg-secondary border-b w-full py-3'>
+      <div className='bg-secondary  w-full py-3'>
         <Container>
           <div className='flex justify-between flex-wrap lg:flex-nowrap gap-0 md:gap-2 items-center'>
             <Link href={"/"}>
             <Image className='w-14 lg:w-24' src={logo} alt="logo" width={100} height={100} />
             </Link>
            
-            <div className='border w-3/6 lg:w-full max-w-screen-md flex'>
+            <div className='border border-gray w-3/6 lg:w-full max-w-screen-md flex'>
               
               <input className='w-full px-4 focus:outline-none active:border-none focus:border-none border-white' type="text" placeholder='Search Product Here...' />
               <Button className='rounded-l-md px-2 md:px-4' title={<IoSearch size={25} />} />
@@ -118,17 +132,17 @@ const Header= () => {
                       open={category}
                         title={"product"}
                         content={<>
-                          <Mobiletab  />
+                          <Mobiletab className='color-white' tabData={tabData}  />
                         </>}
                       /></li>
-                  <li><Link className='text-base font-semibold text-black hover:text-black ' onClick={onClose} href="/about">About</Link></li>
-                  <li><Link className='text-base font-semibold text-black hover:text-black' onClick={onClose} href="/contact">Contact</Link></li>
+                  <li><Link className='text-base font-semibold text-black hover:text-black ' onClick={onClose} href="/about">About Us</Link></li>
+                  <li><Link className='text-base font-semibold text-black hover:text-black' onClick={onClose} href="/contact">Contact Us</Link></li>
                 </ul>
               </>}
             />
             <div className='hidden lg:flex gap-2 md:gap-4 lg:gap-8'>
               <div className='relative group'>
-              <Link className='group' href="/">
+              <Link className='group' href="/wishlist">
               
                 <IoMdHeartEmpty className='text-primary group-hover:text-dark transition duration-200 ease-in' size={30} />
               </Link>
@@ -140,7 +154,7 @@ const Header= () => {
     
               <div className='relative group'>
                           
-              <Link className='relative group' href="/">
+              <Link className='relative group' href="/cart">
               
                 <PiBag className='text-primary group-hover:text-dark transition duration-200 ease-in' size={30} />
               </Link>
@@ -156,7 +170,7 @@ const Header= () => {
       <div className='bg-primary py-4 hidden lg:block'>
         <ul className='flex justify-center gap-12 text-white'>
           <li><Link className='link-underline' href="/">Home</Link></li>
-          <li><Popover className='cursor-pointer link-underline' placement="bottom" trigger="click" content={Megamanu} title="">
+          <li><Popover className='cursor-pointer link-underline' placement="bottom" trigger="hover" content={Megamanu} title="">
             Product
           </Popover></li>
           <li><Link className='link-underline' href="/about">About</Link></li>
@@ -169,7 +183,7 @@ const Header= () => {
           
 
           <div className='relative group'>
-          <Link href="/">
+          <Link href="/wishlist">
 
         <IoMdHeartEmpty className='text-white transition duration-200 ease-in' size={30} />
         </Link>
@@ -177,17 +191,16 @@ const Header= () => {
               1
             </div>
           </div>
-    
-
 
     <div className='relative group'>
-          <Link  href="/">
+          <Link  href="/cart">
             <PiBag className='text-white transition duration-200 ease-in' size={30} />
           </Link>
           <div className='rounded-full text-dark w-6 h-6 bg-white absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
               1
             </div>
         </div>
+
           <Link className='text-base lg:text-lg' href="/profile"><FaRegUser size={25} className='text-white' /></Link>
         </div>
       </div>
