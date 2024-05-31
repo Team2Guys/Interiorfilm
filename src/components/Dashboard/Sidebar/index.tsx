@@ -284,7 +284,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             fill="white"
                           />
                         </svg>
-                        Forms
+                        Products & Categories
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
                             open && "rotate-180"
@@ -318,7 +318,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 "text-white"
                               }`}
                             >
-                              Form Elements
+                          Add Products
                             </Link>
                           </li>
                           <li>
@@ -329,7 +329,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 "text-white"
                               } `}
                             >
-                              Form Layout
+                              Add Categories
                             </Link>
                           </li>
                         </ul>

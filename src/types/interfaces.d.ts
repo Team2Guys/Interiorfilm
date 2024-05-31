@@ -57,3 +57,61 @@ export interface USRPROPS {
   }
   
   interface ProductWithImages extends Product, Images {}
+
+  export interface FormValues {
+    name: string;
+    description: string;
+    salePrice: string;
+    purchasePrice: string;
+    discountPrice: string;
+    starRating: string;
+    reviews: string;
+    colors: { colorName: string }[];
+    modelDetails: { name: string; detail: string }[];
+    spacification: { specsDetails: string }[];
+    sizes: string[];
+    category: string
+  
+  }
+
+
+interface Image {
+  public_id: string;
+  imageUrl: string;
+}
+
+interface Color {
+  colorName?: string;
+}
+interface ModelDetail {
+  name?: string;
+  detail?: string;
+}
+
+interface Specification {
+  specsDetails?: string;
+}
+
+interface PRODUCTS_TYPES {
+  name: string;
+  posterImageUrl: Image;
+  hoverImageUrl?: Image;
+  description: string;
+  salePrice: number;
+  purchasePrice: number;
+  category: string; 
+  imageUrl: Image[];
+  discountPrice?: number;
+  colors?: Color[];
+  modelDetails?: ModelDetail[];
+  spacification?: Specification[];
+  createdAt: Date;
+  updatedAt: Date;
+  starRating?: string;
+  reviews?: string;
+  sizes?: string[];
+}
+
+export default PRODUCTS_TYPES;
+
+  

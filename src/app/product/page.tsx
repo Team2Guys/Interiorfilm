@@ -2,7 +2,7 @@
 import Container from 'components/Layout/Container/Container'
 import SelectList from 'components/ui/Select/Select'
 import Overlay from 'components/widgets/Overlay/Overlay'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import img2 from "../../../public/images/img-1.png"
 import img3 from "../../../public/images/img-10.png"
 import img4 from "../../../public/images/img-11.png"
@@ -14,10 +14,14 @@ import img9 from "../../../public/images/img-16.png"
 import Card from 'components/ui/Card/Card'
 import Link from 'next/link'
 import Collapse from 'components/ui/Collapse/Collapse'
-import { Pagination, Slider } from 'antd'
+import { Slider } from 'antd'
 import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu'
 import { IoFunnelOutline } from 'react-icons/io5'
 import Cookies from 'js-cookie';
+import Pagintaion from 'components/Pagination/Pagintaion'
+import PRODUCTS_TYPES from 'types/interfaces'
+
+import { getPaginatedproducts, getPRODUCTS} from 'utils/helperFunctions'
 
 
 const items = [
@@ -80,6 +84,10 @@ const items = [
 ];
 
 const Product = () => {
+  const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
+  const [totalPage, setTotalPage] = useState<string | undefined>()
+  const [error, setError] = useState<any>()
+  const [loading, setLoading] = useState<boolean>(false)
 
     const [colorName, setColorName] = useState<string>()
     console.log(colorName)
@@ -96,6 +104,10 @@ const Product = () => {
         { colorName : '7f3'},
 
 ]
+useEffect(()=>{
+  getPRODUCTS(setTotalProducts, setTotalPage,setError,setLoading)
+},[])
+
     
   return (
     <>
@@ -258,11 +270,8 @@ const Product = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
               <Card ProductCard={items} />
             </div>
-            <Pagination
-              className="text-center rounded-full mt-10"
-              defaultCurrent={1}
-              total={40}
-            />
+            <Pagintaion setTotalPage={totalPage}/>
+  
           </div>
         </div>
       </Container>
