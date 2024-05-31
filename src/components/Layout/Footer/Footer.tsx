@@ -38,7 +38,7 @@ const Footer: React.FC = () => {
         </div>
         <div className='flex items-center justify-center mt-5 md:mt-0 rounded-none'>
           <input className='bg-secondary rounded-none h-8 px-2 outline-primary w-4/6 md:w-auto' type='email' placeholder='Enter Email Address'/>
-          <Button className='text-sm px-5' title={"Sign Up"}/>
+          <Button className='text-sm px-5' title={"SUBSCRBE"}/>
         </div>
       </div>
     </Container>

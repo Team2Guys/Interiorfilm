@@ -25,7 +25,7 @@ const CheckoutData: React.FC = () => {
       <h2 className="text-lg font-medium text-gray-900 mb-4">Order Summary</h2>
       <div className="space-y-4">
         {items.map((item, index) => (
-          <div key={index} className="flex justify-between items-top border-b pb-2">
+          <div key={index} className="flex justify-between items-top border-b border-gray pb-2">
             <div className="flex gap-2">
               <Image width={10} height={10} src={checkoutimg} alt="Interior Film" className="w-14" />
               <div>
@@ -38,7 +38,7 @@ const CheckoutData: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className="mt-6 border-t pt-4">
+      <div className="mt-6 border-t border-gray pt-4">
         <div className="flex justify-between mb-2">
           <p className="text-gray-600">Subtotal:</p>
           <p className="font-medium text-gray-900">£381.00</p>

@@ -55,13 +55,13 @@ const Table = () => {
               <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base"><p >AED <span>120</span>.00</p></td>
               <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base">
                 <div className='flex'>
-                     <div onClick={decrement} className='h-8 w-8 rounded-md bg-white border flex justify-center items-center'>
+                     <div onClick={decrement} className='h-8 w-8 rounded-md bg-white border border-gray flex justify-center items-center'>
                      <RxMinus size={20} />
                      </div>
                      <div className='h-8 w-8 rounded-md bg-white flex justify-center items-center'>
                      {count}
                      </div>
-                     <div onClick={increment} className='h-8 w-8 rounded-md bg-white border flex justify-center items-center'>
+                     <div onClick={increment} className='h-8 w-8 rounded-md bg-white border border-gray flex justify-center items-center'>
                      <RxPlus size={20} />
                      </div>
                 </div>

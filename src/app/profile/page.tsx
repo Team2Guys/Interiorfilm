@@ -49,10 +49,10 @@ const Profile: React.FC = () => {
         <div className='flex flex-wrap md:flex-nowrap md:gap-4'>
           <div className='p-2 rounded-md shadow w-full md:w-4/12 hidden md:block'>
             <div className='space-y-2 flex flex-col'>
-              <Link className='border p-2 w-96 rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/profile"}>Profile</Link>
-              <Link className='border p-2 w-96 rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/wishlist"}>Wishlist</Link>
-              <Link className='border p-2 w-96 rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/about"}>About Us</Link>
-              <Link className='border p-2 w-96 rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/profile"}>Log Out</Link>
+              <Link className='border border-gray p-2 w-96 rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/profile"}>Profile</Link>
+              <Link className='border border-gray p-2 w-96 rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/wishlist"}>Wishlist</Link>
+              <Link className='border border-gray p-2 w-96 rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/about"}>About Us</Link>
+              <Link className='border border-gray p-2 w-96 rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/profile"}>Log Out</Link>
             </div>
           </div>
           <div className='p-4 rounded-md shadow w-full md:w-8/12'>

@@ -14,7 +14,7 @@ const CheckOut: React.FC = () => {
               <input
                 type="text"
                 placeholder="Email or mobile phone number"
-                className="w-full border border-t-0 border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2"
+                className="w-full border border-gray border-t-0 border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2"
               />
               <div className="flex items-center mt-2">
                 <input type="checkbox" id="news" className="mr-2" />
@@ -28,39 +28,39 @@ const CheckOut: React.FC = () => {
               <input
                 type="text"
                 placeholder="First name (optional)"
-                className="border border-t-0 border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2"
+                className="border border-t-0 border-gray border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2"
               />
               <input
                 type="text"
                 placeholder="Last name"
-                className="border border-t-0 border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2"
+                className="border border-t-0 border-gray border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2"
               />
             </div>
             <input
               type="text"
               placeholder="Address"
-              className="w-full border border-t-0 border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2 mt-6"
+              className="w-full border border-t-0 border-gray border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2 mt-6"
             />
             <input
               type="text"
               placeholder="Apartment, suite, etc (optional)"
-              className="w-full border border-t-0 border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2 mt-6"
+              className="w-full border border-t-0 border-gray border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2 mt-6"
             />
             <input
               type="text"
               placeholder="City"
-              className="w-full border border-t-0 border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2 mt-6"
+              className="w-full border border-t-0 border-gray border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2 mt-6"
             />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
               <input
                 type="text"
                 placeholder="Bangladesh"
-                className="border border-t-0 border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2"
+                className="border border-t-0 border-gray border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2"
               />
               <input
                 type="text"
                 placeholder="Postal Code"
-                className="border-t-0 border-l-0 border-r-0 border-b border-gray-300 shadow-0 outline-0 p-2"
+                className="border-t-0 border-gray border-l-0 border-r-0 border-b border-gray-300 shadow-0 outline-0 p-2"
               />
             </div>
           </div>

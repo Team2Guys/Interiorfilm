@@ -21,12 +21,12 @@ const Cart = () => {
                     <h1 className='text-lg font-medium'>Subtotals:</h1>
                     <h1 className='text-lg font-medium text-primary'>AED <span>100</span>.00</h1>
                 </div>
-            <hr className='w-96 mx-auto' />
+            <hr className='w-96 mx-auto border-gray' />
             <div className='flex justify-between items-center'>
                     <h1 className='text-lg font-medium'>Total:</h1>
                     <h1 className='text-lg font-medium text-primary'>AED <span>120</span>.00</h1>
                 </div>
-            <hr className='w-96 mx-auto' />
+            <hr className='w-96 mx-auto border-gray' />
             <div className='flex justify-center items-center'>
             <Button className='w-full bg-dark text-white' title={"Proceed To Checkout"}/>
             </div>

@@ -75,7 +75,7 @@ const Header= () => {
   }, []);
   return (
     <>
-      <div className='bg-secondary border-b w-full'>
+      <div className='bg-secondary border-b border-gray  w-full'>
         <Container>
           <div className='flex justify-between flex-wrap lg:flex-nowrap gap-2 p-2 items-center'>
             <div className='flex gap-4 mx-auto md:mx-0'>
@@ -100,14 +100,14 @@ const Header= () => {
           </div>
         </Container>
       </div>
-      <div className='bg-secondary border-b w-full py-3'>
+      <div className='bg-secondary  w-full py-3'>
         <Container>
           <div className='flex justify-between flex-wrap lg:flex-nowrap gap-0 md:gap-2 items-center'>
             <Link href={"/"}>
             <Image className='w-14 lg:w-24' src={logo} alt="logo" width={100} height={100} />
             </Link>
            
-            <div className='border w-3/6 lg:w-full max-w-screen-md flex'>
+            <div className='border border-gray w-3/6 lg:w-full max-w-screen-md flex'>
               
               <input className='w-full px-4 focus:outline-none active:border-none focus:border-none border-white' type="text" placeholder='Search Product Here...' />
               <Button className='rounded-l-md px-2 md:px-4' title={<IoSearch size={25} />} />
@@ -170,7 +170,7 @@ const Header= () => {
       <div className='bg-primary py-4 hidden lg:block'>
         <ul className='flex justify-center gap-12 text-white'>
           <li><Link className='link-underline' href="/">Home</Link></li>
-          <li><Popover className='cursor-pointer link-underline' placement="bottom" trigger="click" content={Megamanu} title="">
+          <li><Popover className='cursor-pointer link-underline' placement="bottom" trigger="hover" content={Megamanu} title="">
             Product
           </Popover></li>
           <li><Link className='link-underline' href="/about">About</Link></li>
