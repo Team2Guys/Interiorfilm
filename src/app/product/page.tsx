@@ -38,6 +38,8 @@ const Product = () => {
   const [colorName, setColorName] = useState<string>()
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [sortOption, setSortOption] = useState<string>("Default")
+  const [category, setCategory] = useState<any[]>();
+
 
     let colorsARray =[
         { colorName : '000'},
@@ -52,7 +54,18 @@ useLayoutEffect(()=>{
   getPRODUCTS(setTotalProducts,setError,setLoading,1, setTotalPage, setTotalProductscount)
 },[])
 
-console.log(totalProducts, "totalProducts")
+
+const CategoryHandler = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
+  );
+  const Categories = await response.json();
+  setCategory(Categories);
+};
+
+useLayoutEffect(() => {
+  CategoryHandler();
+}, []);
 
 
 const getProductsHandler =(page: number)=>{
@@ -119,21 +132,14 @@ const sortedProducts = filteredProducts.sort((a, b) => {
           <div className="p-2 bg-secondary">
               <Collapse title="All Categories">
                 <ul className="px-1 pt-2 space-y-1">
-                  <li>
-                    <Link href={"/"}>Dresses</Link>
-                  </li>
-                  <li>
-                    <Link href={"/"}>Sweatshirts</Link>
-                  </li>
-                  <li>
-                    <Link href={"/"}>Jackets</Link>
-                  </li>
-                  <li>
-                    <Link href={"/"}>Denim Jeans</Link>
-                  </li>
-                  <li>
-                    <Link href={"/"}>Shorts</Link>
-                  </li>
+
+                  {category?.map((item)=>{
+                    return (
+                      <li>
+                      <Link href={"/"}>{item.name}</Link>
+                    </li>
+                    )
+                  })}
                 </ul>
               </Collapse>
             </div>
