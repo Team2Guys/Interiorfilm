@@ -21,8 +21,9 @@ console.log(totalSize, "totalSize")
     <div>   <Pagination
               className="text-center rounded-full mt-10"
               defaultCurrent={1}
-              total={setTotalPage ? Number(setTotalPage) : 10}
-              pageSize={Number(totalSize)}
+              defaultPageSize={6}
+              total={totalSize ? Number(totalSize) : 5}
+              pageSize={6}
               onChange={(page, pageSize)=>{handlerChange(page)}}
             />
             </div>

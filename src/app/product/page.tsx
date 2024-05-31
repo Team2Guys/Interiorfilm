@@ -253,7 +253,7 @@ const sortedProducts = filteredProducts.sort((a, b) => {
             
             <>
                   {
-      loading ? <div className="flex justify-center item-center"><Loader/></div>  : 
+      loading ? <div className="flex justify-center items-center h-2/3"><Loader/></div>  : 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
               <Card ProductCard={sortedProducts} />
             </div>
