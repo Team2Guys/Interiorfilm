@@ -6,45 +6,38 @@ import { LuShoppingCart } from "react-icons/lu";
 import { GoHeart } from "react-icons/go";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import PRODUCTS_TYPES from 'types/interfaces'
 
-interface Product {
-  image?: any;
-  title: string;
-  price?: number;
-  oldprice?: number;
-  star?: number;
-}
 
 interface CardProps {
-  ProductCard?: Product[];
+  ProductCard?: PRODUCTS_TYPES[] |  any;
 }
 
-const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
+const Card: React.FC<CardProps> = ({ ProductCard }) => {
   const router = useRouter();
-  if (ProductCard.length === 0) {
-    return (
-      <p className="text-center text-xl text-dark flex items-center">
-        No products
-      </p>
-    );
-  }
-
   return (
     <>
-      {ProductCard.map((product, index) => (
+
+      {
+   
+      ProductCard && ProductCard.map((product:any, index:any) => (
         <div
           className="cursor-pointer group custom-shadow transition-all my-3"
           onClick={() => router.push("/detail")}
           key={index}
         >
+
           <div className="relative">
-            <Image
-              className="bg-contain h-full md:h-72"
-              width={300}
-              height={300}
-              src={product.image}
-              alt="Image"
-            />
+            {
+              product.posterImageUrl && product.posterImageUrl.imageUrl  ? 
+              <Image
+                className="bg-contain h-full md:h-72"
+                width={300}
+                height={300}
+                src={product.posterImageUrl.imageUrl}
+                alt="Image"
+              /> : null
+            }
             <div className="space-y-3 absolute top-4 right-4 overflow-hidden translate-x-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition ease-in-out duration-400 hidden md:block ">
               <Link
                 href={"/"}
@@ -63,27 +56,35 @@ const Card: React.FC<CardProps> = ({ ProductCard = [] }) => {
               </Link>
             </div>
           </div>
+
           <div className="mt-2 text-center space-y-1 pt-3 pb-5">
             <h1 className="lg:text-lg text-sm text-center text-dark group-hover:text-primary transition-all font-semibold">
-            Code : <span>{product.title}</span>
+              Code : <span>{product.name}</span>
             </h1>
-            {product.price !== undefined && (
-            <div className="flex gap-2 justify-center text-sm py-1 mt-0">
-              <p className="text-primary group-hover:text-dark transition-all font-bold">
-                Dhs. <span>{product.price}</span>.00
-              </p>
-              <p className="line-through text-light">
-                Dhs. <span>{product.oldprice}</span>.00
-              </p>
-            </div>
+            {(
+              <div className="flex gap-2 justify-center text-sm py-1 mt-0">
+                <p className="text-primary group-hover:text-dark transition-all font-bold">
+                  Dhs. <span>{product.discountPrice ? product.discountPrice : product.salePrice}</span>.00
+                </p>
+
+
+
+                {product.discountPrice ?
+                  <p className="line-through text-light">
+                    Dhs. <span>{product.salePrice}</span>.00
+                  </p>
+                  : null
+                }
+
+              </div>
             )}
-            {product.star !== undefined && (
-            <div className="flex gap-1 justify-center">
-            <Rate className="text-sm gap-0" disabled allowHalf defaultValue={product.star} />
-            <p>(24)</p>
-          </div>
+            {product.starRating !== undefined && (
+              <div className="flex gap-1 justify-center">
+                <Rate className="text-sm gap-0" disabled allowHalf defaultValue={(Number(product.starRating))} />
+                <p>{product.reviews}</p>
+              </div>
             )}
-           
+
           </div>
         </div>
       ))}

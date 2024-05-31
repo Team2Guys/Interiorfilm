@@ -20,7 +20,7 @@ const SelectGroupTwo: React.FC<PROPS> = ({ name, value, changeHandler, isOptionS
   return (
     <div>
       <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-        Select Country
+      Select Category
       </label>
 
       <div className="relative z-20 bg-white dark:bg-form-input">

@@ -2,7 +2,7 @@
 import Container from 'components/Layout/Container/Container'
 import SelectList from 'components/ui/Select/Select'
 import Overlay from 'components/widgets/Overlay/Overlay'
-import React, { useState,useEffect } from 'react'
+import React, { useState,useLayoutEffect } from 'react'
 import img2 from "../../../public/images/img-1.png"
 import img3 from "../../../public/images/img-10.png"
 import img4 from "../../../public/images/img-11.png"
@@ -20,8 +20,11 @@ import { IoFunnelOutline } from 'react-icons/io5'
 import Cookies from 'js-cookie';
 import Pagintaion from 'components/Pagination/Pagintaion'
 import PRODUCTS_TYPES from 'types/interfaces'
+import Loader from "components/Loader/Loader";
+
 
 import { getPaginatedproducts, getPRODUCTS} from 'utils/helperFunctions'
+import { number } from 'yup'
 
 
 const items = [
@@ -86,14 +89,10 @@ const items = [
 const Product = () => {
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
   const [totalPage, setTotalPage] = useState<string | undefined>()
+  const [totalProductscount, setTotalProductscount] = useState<number | undefined>()
   const [error, setError] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
-
-    const [colorName, setColorName] = useState<string>()
-    console.log(colorName)
-    const token = Cookies.get('token');
-
-    console.log(token, 'token')
+  const [colorName, setColorName] = useState<string>()
 
     let colorsARray =[
         { colorName : '000'},
@@ -104,10 +103,18 @@ const Product = () => {
         { colorName : '7f3'},
 
 ]
-useEffect(()=>{
-  getPRODUCTS(setTotalProducts, setTotalPage,setError,setLoading)
+useLayoutEffect(()=>{
+  getPRODUCTS(setTotalProducts,setError,setLoading,1, setTotalPage, setTotalProductscount)
 },[])
 
+
+
+const getProductsHandler =(page: number)=>{
+  getPRODUCTS(setTotalProducts,setError,setLoading,page)
+
+}
+
+console.log(totalProductscount, "totalProductscount")
     
   return (
     <>
@@ -267,11 +274,22 @@ useEffect(()=>{
             }
           />
           <div className="w-full md:w-9/12">
+
+            {
+                 error? <div className="text-red flex justify-center items-center">{error}</div> : 
+            
+            <>
+                  {
+      loading ? <div className="flex justify-center item-center"><Loader/></div>  : 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-              <Card ProductCard={items} />
+              <Card ProductCard={totalProducts}/>
             </div>
-            <Pagintaion setTotalPage={totalPage}/>
+              }
+            <Pagintaion setTotalPage={totalPage} totalSize ={totalProductscount ? Number(totalProductscount): 5  } handlerChange={getProductsHandler}  />
   
+          
+            </>
+            }
           </div>
         </div>
       </Container>

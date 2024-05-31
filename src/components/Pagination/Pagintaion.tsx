@@ -8,20 +8,23 @@ import { getPaginatedproducts, getPRODUCTS} from 'utils/helperFunctions'
 
 interface Pagintaion {
     setTotalPage: string | undefined,
+    totalSize: number;
+    handlerChange:Function
 
 }
 
-export default function Pagintaion({setTotalPage}:Pagintaion) {
+export default function Pagintaion({setTotalPage,totalSize,handlerChange}:Pagintaion) {
 
-
+console.log(totalSize, "totalSize")
 
   return (
     <div>   <Pagination
               className="text-center rounded-full mt-10"
               defaultCurrent={1}
-              total={setTotalPage ? Number(setTotalPage) : 5}
-              pageSize={6}
-              onChange={(page, pageSize)=>{console.log(page, pageSize)}}
-            /></div>
+              total={setTotalPage ? Number(setTotalPage) : 10}
+              pageSize={Number(totalSize)}
+              onChange={(page, pageSize)=>{handlerChange(page)}}
+            />
+            </div>
   )
 }

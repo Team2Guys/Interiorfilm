@@ -56,7 +56,7 @@ export interface USRPROPS {
   
   }
   
-  interface ProductWithImages extends Product, Images {}
+  export interface ProductWithImages extends Product, Images {}
 
   export interface FormValues {
     name: string;
@@ -71,6 +71,7 @@ export interface USRPROPS {
     spacification: { specsDetails: string }[];
     sizes: string[];
     category: string
+    code:string
   
   }
 

@@ -61,14 +61,15 @@ export const uploadPhotosToBackend = async (files: File[]): Promise<any[]> => {
   export const getPaginatedproducts = async(page: number)=>{
     try{
         let response:any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getPaginateProducts?page=${page}`)
-        console.log(response, "data")
         let products = response.data.products
         let totalPages = response.data.totalPages
         let currentPage = response.data.currentPage
+      let totalProducts = response.data.totalProducts
        return {
             products,
             totalPages,
             currentPage,
+            totalProducts
         }
 
     }catch(err:any){
@@ -83,15 +84,23 @@ export const uploadPhotosToBackend = async (files: File[]): Promise<any[]> => {
 }
 
 
-export let getPRODUCTS = async( setTotalProducts:setTotalProducts, setTotalPage:setTotalPage,setError:setError,setLoading:setLoading)=>{
+export let getPRODUCTS = async( setTotalProducts:setTotalProducts, setError:setError,setLoading:setLoading, pageNumber: number, setTotalPage?:setTotalPage, setTotalProductscount?:any)=>{
   try{
       setLoading(true)
-      const { products, totalPages, currentPage } = await getPaginatedproducts(1)
+      const { products, totalPages, currentPage,totalProducts }:any = await getPaginatedproducts(pageNumber)
       setTotalProducts(products)
-      setTotalPage(totalPages)
+      setTotalPage && setTotalPage(totalPages)
+      setTotalProductscount && setTotalProductscount(totalProducts)
 
-  }catch(err){
-      setError(err)
+  }catch(err:any){
+    console.log(err, "err")
+    if (err.response && err.response.data && err.response.data.message) {
+      setError(err.response.data.message);
+    } else if (err.message) {
+      setError(err.message);
+    } else {
+      setError('An unexpected error occurred.');
+    }
   } finally{
       setLoading(false)
 
