@@ -27,65 +27,6 @@ import { getPaginatedproducts, getPRODUCTS} from 'utils/helperFunctions'
 import { number } from 'yup'
 
 
-const items = [
-  {
-    image: img3,
-    title: "JBL Micoro Headphone",
-    price: 23,
-    oldprice: 38,
-    star: 2,
-  },
-  {
-    image: img4,
-    title: "Bose Color Speaker",
-    price: 21,
-    oldprice: 38,
-    star: 2,
-  },
-  {
-    image: img5,
-    title: "Bose Color Speaker",
-    price: 30,
-    oldprice: 38,
-    star: 2,
-  },
-  {
-    image: img6,
-    title: "Asus Watch Speaker",
-    price: 28,
-    oldprice: 38,
-    star: 2,
-  },
-  {
-    image: img7,
-    title: "Asus Watch Speaker",
-    price: 12,
-    oldprice: 38,
-    star: 2,
-  },
-  {
-    image: img8,
-    title: "Sony Wireless Bohm",
-    price: 19,
-    oldprice: 38,
-    star: 2,
-  },
-  {
-    image: img9,
-    title: "Bose Color Speaker",
-    price: 30,
-    oldprice: 38,
-    star: 2,
-  },
-  {
-    image: img6,
-    title: "Asus Watch Speaker",
-    price: 28,
-    oldprice: 38,
-    star: 2,
-  },
-];
-
 const Product = () => {
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
   const [totalPage, setTotalPage] = useState<string | undefined>()
@@ -128,7 +69,7 @@ const getProductsHandler =(page: number)=>{
 
 }
 
-console.log(totalProductscount, "totalProductscount")
+console.log(totalProducts, "products")
     
   return (
     <>

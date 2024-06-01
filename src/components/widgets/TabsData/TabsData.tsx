@@ -20,7 +20,7 @@ const TabsData = ({items}:any) => {
                 </div>
             </div>
         </div>
-        <Card ProductCard={items} />
+        <Card  />
     
     </div>
     <div className=' text-center mt-10 mb-7'>
