@@ -216,7 +216,7 @@ export default function Home() {
       <CollectiveProduct products={products} />
       <Container className="mt-20">
         <h1 className="lg:text-5xl md:text-3xl font-semibold text-xl text-center mb-5">Feature Product</h1>
-        <ProductSlider Related={productSlide} />
+        <ProductSlider  />
       </Container>
       <Offer Offers={offers} />
       <Testimonial />
