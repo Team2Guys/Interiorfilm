@@ -84,7 +84,7 @@ const ProductSlider: React.FC = () => {
             spaceBetween: 10,
           },
           1024: {
-            slidesPerView: 2,
+            slidesPerView: 3.5,
             spaceBetween: 20,
           },
         }}
@@ -92,10 +92,12 @@ const ProductSlider: React.FC = () => {
         className="mySwiper"
       >
         {totalProducts && totalProducts.map((product, index) => (
+          
         <SwiperSlide key={index} >
-           <div   key={index} className='flex gap-10 w-full'> <Card/></div> 
+           <Card ProductCard={[product]}/>
         </SwiperSlide>
         ))}
+
       </Swiper>
 
       <div className='w-1/12'>

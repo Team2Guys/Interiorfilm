@@ -61,7 +61,7 @@ let Homepage = pathname.startsWith('/')
 
       {
 
-        totalProducts ? ( Homepage ? totalProducts.slice(0, 6) : totalProducts).map((product: any, index: any) => (
+        totalProducts ? ( Homepage ? totalProducts.slice(0, 1) : totalProducts).map((product: any, index: any) => (
           <div
             className="cursor-pointer group custom-shadow transition-all my-3"
             onClick={() => router.push("/detail")}
