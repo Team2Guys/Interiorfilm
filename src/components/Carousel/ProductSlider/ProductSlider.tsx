@@ -1,27 +1,28 @@
-
+//@ts-nocheck
 "use client";
-import React, { useState, useLayoutEffect, useRef, useEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect, useRef } from 'react'
 
+// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-import { Pagination, Navigation } from 'swiper/modules';
+// Import required modules
+import {Navigation } from 'swiper/modules';
+
 import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import Card from 'components/ui/Card/Card';
-import { usePathname } from 'next/navigation';
 import axios from 'axios';
-import PRODUCTS_TYPES from 'types/interfaces'; // Ensure correct import of PRODUCT_TYPES
 
-const ProductSlider: React.FC = () => {
+const ProductSlider: React.FC<relatedprops> = () => {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<any>(null);
-  const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[] | undefined>([]);
-  const [error, setError] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const pathname = usePathname();
+  const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
+  const [error, setError] = useState<any>()
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
     if (swiperRef.current && swiperRef.current.swiper) {
@@ -35,16 +36,20 @@ const ProductSlider: React.FC = () => {
     }
   }, []);
 
-  const getallProducts = async () => {
-    try {
-      if (pathname.startsWith("/product")) return;
-      setLoading(true);
 
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
-      const products = response.data.products;
-      setTotalProducts(products);
+
+
+  const getallProducts = async () => {
+
+    try {
+      setLoading(true)
+
+      let response: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`)
+      let products = response.data.products
+      setTotalProducts(products)
+
     } catch (err: any) {
-      console.log(err, "err");
+      console.log(err, "err")
       if (err.response && err.response.data && err.response.data.message) {
         setError(err.response.data.message);
       } else if (err.message) {
@@ -53,25 +58,26 @@ const ProductSlider: React.FC = () => {
         setError('An unexpected error occurred.');
       }
     } finally {
-      setLoading(false);
+      setLoading(true)
+
     }
-  };
 
+  }
   useLayoutEffect(() => {
-    getallProducts();
-  }, []);
-
+    getallProducts()
+  }, [])
   return (
     <div className="flex items-center justify-center">
-      <div className='w-1/12'>
-        <button ref={prevRef} className='p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
+      <div className=' w-1/12'>
+        <button ref={prevRef} className=' p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
           <MdArrowBackIos size={15} />
         </button>
+
       </div>
 
       <Swiper
         ref={swiperRef}
-        slidesPerView={1}
+        slidesPerView={1} // Default to 1 slide per view
         spaceBetween={20}
         loop={true}
         breakpoints={{
@@ -91,6 +97,7 @@ const ProductSlider: React.FC = () => {
         modules={[Navigation]}
         className="mySwiper"
       >
+<<<<<<< HEAD
         {totalProducts && totalProducts.map((product, index) => (
           
         <SwiperSlide key={index} >
@@ -99,9 +106,20 @@ const ProductSlider: React.FC = () => {
         ))}
 
       </Swiper>
+=======
+>>>>>>> 2c1d80c1392665be1ccf97fdd21778d0f8e8dfed
 
+        {
+          totalProducts.map((array, index) => (
+            <SwiperSlide key={index}>
+              <Card ProductCard={[array]
+              } />
+            </SwiperSlide>
+          ))
+        }
+      </Swiper>
       <div className='w-1/12'>
-        <button ref={nextRef} className='p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
+        <button ref={nextRef} className=' p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
           <MdArrowForwardIos size={15} />
         </button>
       </div>

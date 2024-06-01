@@ -6,8 +6,6 @@ import img4 from "../../public/images/img-11.png";
 import img5 from "../../public/images/img-12.png";
 import img6 from "../../public/images/img-13.png";
 import img7 from "../../public/images/img-14.png";
-import img8 from "../../public/images/img-15.png";
-import img9 from "../../public/images/img-16.png";
 import img143 from "../../public/images/CA143.png";
 import img003 from "../../public/images/KH9003.png";
 import img107 from "../../public/images/CA107.png";
@@ -26,50 +24,6 @@ import Mobiletab from "components/ui/Tabs/Mobiletab/Mobiletab";
 
 const tabData = [
   { key: '1', tab: 'Cement Gray Series', content: <><TabsData
-  items={[
-    {
-      image: img2,
-      title: "Sony Wireless Bohm",
-      price: 19,
-      oldprice: 38,
-      star: 2,
-    },
-    {
-      image: img3,
-      title: "JBL Micoro Headphone",
-      price: 23,
-      oldprice: 38,
-      star: 2,
-    },
-    {
-      image: img4,
-      title: "Bose Color Speaker",
-      price: 21,
-      oldprice: 38,
-      star: 2,
-    },
-    {
-      image: img5,
-      title: "Bose Color Speaker",
-      price: 30,
-      oldprice: 38,
-      star: 2,
-    },
-    {
-      image: img6,
-      title: "Asus Watch Speaker",
-      price: 28,
-      oldprice: 38,
-      star: 2,
-    },
-    {
-      image: img7,
-      title: "Asus Watch Speaker",
-      price: 12,
-      oldprice: 38,
-      star: 2,
-    },
-  ]}
 /></> },
   { key: '2', tab: 'Skin Texture Series', content: <><TabsData/></> },
   { key: '3', tab: 'Wood Grain Series', content: <><TabsData
@@ -203,6 +157,7 @@ const offers = [
     detail: "Our support team is available 24/7 to assist you.",
   },
 ];
+console.log(productSlide,"productSlide")
 
 export default function Home() {
  
@@ -216,8 +171,12 @@ export default function Home() {
       <CollectiveProduct products={products} />
       <Container className="mt-20">
         <h1 className="lg:text-5xl md:text-3xl font-semibold text-xl text-center mb-5">Feature Product</h1>
+<<<<<<< HEAD
         
         <ProductSlider  />
+=======
+        <ProductSlider />
+>>>>>>> 2c1d80c1392665be1ccf97fdd21778d0f8e8dfed
       </Container>
       <Offer Offers={offers} />
       <Testimonial />

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaEye } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
 
 const productData = [
@@ -67,6 +67,7 @@ const TableTwo: React.FC = () => {
             </p>
           </div>
           <div className="col-span-2 flex gap-4 items-center justify-end md:justify-start">
+          <FaEye className="text-black dark:text-white" size={20} />
           <FaEdit className="text-black dark:text-white" size={20} />
           <MdDeleteOutline className="text-black dark:text-white" size={20} />
 

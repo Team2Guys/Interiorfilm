@@ -120,50 +120,54 @@ export  const generateSlug = (text:string) => {
     {image:img,title:"Lorem ipsum",description:"Lorem ipsum dolor consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius nunc id varius adipiscing elit. Phasellus blandit massa enim."},
   ]
 
-  export const productSlide =[
-    {
-      image: img3,
-      title: "CA-13089",
-      price: 23,
-      oldprice: 38,
-      star: 2,
-    },
-    {
-      image: img4,
-      title: "CA-13050",
-      price: 21,
-      oldprice: 38,
-      star: 3,
-    },
-    {
-      image: img5,
-      title: "CA-13067",
-      price: 30,
-      oldprice: 38,
-      star: 1,
-    },
-    {
-      image: img6,
-      title: "CA-13324",
-      price: 28,
-      oldprice: 38,
-      star: 5,
-    },
-    {
-      image: img7,
-      title: "CA-12324",
-      price: 12,
-      oldprice: 38,
-      star: 4,
-    },
-    {
-      image: img8,
-      title: "CA-13321",
-      price: 19,
-      oldprice: 38,
-      star: 2,
-    },
-  ]
+  
+
+  // export const productSlide =[
+  //   {
+  //     image: img3,
+  //     title: "CA-13089",
+  //     price: 23,
+  //     oldprice: 38,
+  //     star: 2,
+  //   },
+  //   {
+  //     image: img4,
+  //     title: "CA-13050",
+  //     price: 21,
+  //     oldprice: 38,
+  //     star: 3,
+  //   },
+  //   {
+  //     image: img5,
+  //     title: "CA-13067",
+  //     price: 30,
+  //     oldprice: 38,
+  //     star: 1,
+  //   },
+  //   {
+  //     image: img6,
+  //     title: "CA-13324",
+  //     price: 28,
+  //     oldprice: 38,
+  //     star: 5,
+  //   },
+  //   {
+  //     image: img7,
+  //     title: "CA-12324",
+  //     price: 12,
+  //     oldprice: 38,
+  //     star: 4,
+  //   },
+  //   {
+  //     image: img8,
+  //     title: "CA-13321",
+  //     price: 19,
+  //     oldprice: 38,
+  //     star: 2,
+  //   },
+  // ]
+
+
   export const menuSlide =[
     {image: img3,title: "CA-13089",},
     { image: img4,title: "CA-13050",},
@@ -195,3 +199,64 @@ export  const generateSlug = (text:string) => {
   ]
 
   
+
+
+
+let object =   {
+    "posterImageUrl": {
+        "public_id": "interiorFilms/gzqytriq64tbw0ysnmjj",
+        "imageUrl": "http://res.cloudinary.com/dz7nqwiev/image/upload/v1717080299/interiorFilms/gzqytriq64tbw0ysnmjj.webp"
+    },
+    "hoverImageUrl": {
+        "public_id": "interiorFilms/zxbphxd41gx9md4ctieb",
+        "imageUrl": "http://res.cloudinary.com/dz7nqwiev/image/upload/v1717080312/interiorFilms/zxbphxd41gx9md4ctieb.webp"
+    },
+    "_id": "66589101abf3d210cd79a967",
+    "name": "sdafsadfsad",
+    "description": "fsadfsadf",
+    "salePrice": 234324,
+    "purchasePrice": 234324,
+    "category": "663b62e659582e15349280b5",
+    "imageUrl": [
+        {
+            "public_id": "interiorFilms/oz5hd8vk32wlkxpe2n1u",
+            "imageUrl": "http://res.cloudinary.com/dz7nqwiev/image/upload/v1717080310/interiorFilms/oz5hd8vk32wlkxpe2n1u.webp",
+            "_id": "66589101abf3d210cd79a968"
+        }
+    ],
+    "discountPrice": 234324,
+    "colors": [
+        {
+            "colorName": "sdfdsf",
+            "_id": "66589101abf3d210cd79a969"
+        }
+    ],
+    "modelDetails": [
+        {
+            "name": "asdfsd",
+            "detail": "asdfdsaf",
+            "_id": "66589101abf3d210cd79a96a"
+        }
+    ],
+    "spacification": [
+        {
+            "specsDetails": "asdfsadf",
+            "_id": "66589101abf3d210cd79a96b"
+        }
+    ],
+    "createdAt": "2024-05-30T14:45:21.168Z",
+    "starRating": "234",
+    "reviews": "324324",
+    "sizes": [
+        "asdfsdf"
+    ],
+    "updatedAt": "2024-05-30T14:45:21.202Z",
+    "__v": 0
+}
+
+export let productSlide:any =[]
+
+
+for(let i =0; i <=5 ; i++){
+  productSlide.push(object)
+}
