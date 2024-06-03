@@ -99,7 +99,7 @@ const Footer: React.FC = () => {
                 className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
                 onClick={toggleCustomerCare}
               >
-                Customer Care
+                Quick Links
                 <span className="ml-2 md:hidden">
                   {isCustomerCareOpen ? <FaAngleUp /> : <FaAngleDown />}
                 </span>

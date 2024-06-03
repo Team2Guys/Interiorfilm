@@ -80,9 +80,9 @@ const ViewProduct = () => {
 
             <div className="flex items-center justify-center p-2.5 xl:p-5">
             <div className="col-span-2 flex gap-4 items-center justify-end md:justify-start">
-            <FaEye className="text-black dark:text-white" size={20} />
-            <FaEdit className="text-black dark:text-white" size={20} />
-            <MdDeleteOutline className="text-black dark:text-white" size={20} />
+            <FaEye className="text-black dark:text-white cursor-pointer" size={20} />
+            <FaEdit className="text-black dark:text-white cursor-pointer" size={20} />
+            <MdDeleteOutline className="text-black dark:text-white cursor-pointer" size={20} />
 
             </div>
             </div>

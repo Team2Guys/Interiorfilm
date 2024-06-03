@@ -11,7 +11,7 @@ import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
   return (
     <>
     <DefaultLayout>
-        <ECommerce />
+      <ECommerce />
     </DefaultLayout>
 
     </>
