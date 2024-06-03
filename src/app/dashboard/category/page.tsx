@@ -7,10 +7,10 @@ import { Metadata } from "next";
 import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
 
 
-const TablesPage = () => {
+const category = () => {
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Tables" />
+      <Breadcrumb pageName="Category" />
 
       <div className="flex flex-col gap-10">
         {/* <TableOne /> */}
@@ -21,4 +21,4 @@ const TablesPage = () => {
   );
 };
 
-export default TablesPage;
+export default category;

@@ -97,17 +97,6 @@ const ProductSlider: React.FC<relatedprops> = () => {
         modules={[Navigation]}
         className="mySwiper"
       >
-<<<<<<< HEAD
-        {totalProducts && totalProducts.map((product, index) => (
-          
-        <SwiperSlide key={index} >
-           <Card ProductCard={[product]}/>
-        </SwiperSlide>
-        ))}
-
-      </Swiper>
-=======
->>>>>>> 2c1d80c1392665be1ccf97fdd21778d0f8e8dfed
 
         {
           totalProducts.map((array, index) => (
