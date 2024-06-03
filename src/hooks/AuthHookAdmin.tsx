@@ -1,38 +1,39 @@
 
 'use client'
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import Loader from "components/Loader/Loader";
-import { useAppDispatch} from "components/Others/HelperRedux";
+import { useAppDispatch } from "components/Others/HelperRedux";
 import { loggedInUserAction } from '../redux/slices/AdminsSlice';
 import axios from 'axios'
-function ProtectedRoute(WrappedComponent:any) {
-  const Wrapper=(props: any) => {
+import Cookies from 'js-cookie';
+
+function ProtectedRoute(WrappedComponent: any) {
+  const Wrapper = (props: any) => {
     const router = useRouter();
     const [loading, setLoading] = useState<boolean>(true);
     const dispatch = useAppDispatch();
-    const AddminProfileTriggerHandler = async(token:string)=>{
-      try{
-        let user:any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/getAdminHandler`,{
-            headers: {
-              "token" : token
-            }
-        }  )
 
-        console.log(user.data, "user token")
+
+    const AddminProfileTriggerHandler = async (token: string) => {
+      try {
+        let user: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/getAdminHandler`, {
+          headers: {
+            "token": token
+          }
+        })
         dispatch(loggedInUserAction(user.data.user))
-       }catch(err:any){
+      } catch (err: any) {
         console.log(err, "err")
-       }
+      }
     }
-   
+
     useEffect(() => {
-      let token = localStorage.getItem("2guysAdminToken"); 
+      const token = Cookies.get('2guysAdminToken');
 
       if (!token) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
-
-        router.push("/Admin-login");
+        router.push("/dashboard/auth/Admin-login");
       } else {
         AddminProfileTriggerHandler(token)
         setLoading(false);
@@ -56,7 +57,7 @@ function ProtectedRoute(WrappedComponent:any) {
         </div>
       );
     } else {
-    
+
 
       return <WrappedComponent {...props} />;
     }

@@ -1,6 +1,9 @@
+'use client'
+
 import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
 import TableTwo from "components/Dashboard/Tables/TableTwo";
 import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
+import ProtectedRoute from "hooks/AuthHookAdmin";
 
 
 const category = () => {
@@ -17,4 +20,4 @@ const category = () => {
   );
 };
 
-export default category;
+export default  ProtectedRoute(category);

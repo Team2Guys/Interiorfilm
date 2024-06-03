@@ -1,14 +1,11 @@
+'use client'
 import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
 import Image from "next/image";
 import { Metadata } from "next";
 import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
 import Link from "next/link";
+import ProtectedRoute from "hooks/AuthHookAdmin";
 
-export const metadata: Metadata = {
-  title: "Next.js Profile | TailAdmin - Next.js Dashboard Template",
-  description:
-    "This is Next.js Profile page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
-};
 
 const Profile = () => {
   return (
@@ -313,4 +310,7 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+
+
+export default  ProtectedRoute(Profile)
+

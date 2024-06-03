@@ -4,6 +4,7 @@ import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
 import { Metadata } from "next";
 import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
 import ViewProduct from "components/Dashboard/Tables/ViewProduct";
+import ProtectedRoute from "hooks/AuthHookAdmin";
 
 
 const Products = () => {
@@ -18,4 +19,5 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default ProtectedRoute(Products)
+
