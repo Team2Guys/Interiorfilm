@@ -118,7 +118,7 @@ const sortedProducts = filteredProducts.sort((a, b) => {
           />
           </div>
           <input
-            className="px-2 border-2 rounded-md border-primary outline-none w-3/6 md:w-auto"
+            className="px-2 border rounded-md border-primary outline-none w-3/6 md:w-auto"
             type="search"
             placeholder="Search"
             value={searchTerm}
