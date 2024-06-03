@@ -27,7 +27,7 @@ const UploadFile = ({setImagesUrl,handleFileChange,handleDrop}:PROPS) => {
     >
       
   
-        <div className="p-4 text-center">
+        <div className="p-4 text-center text-black dark:text-white">
           <input 
             type="file" 
             accept="image/*" 
@@ -37,7 +37,7 @@ const UploadFile = ({setImagesUrl,handleFileChange,handleDrop}:PROPS) => {
           />
           <label htmlFor="fileInput" className="cursor-pointer">
             <BsCloudUpload className="inline-block mb-2 text-4xl text-gray-500" />
-            <p>Drag & Drop or Click to Upload</p>
+            <p className="text-black dark:text-white">Drag & Drop or Click to Upload</p>
           </label>
         </div>
     </div>

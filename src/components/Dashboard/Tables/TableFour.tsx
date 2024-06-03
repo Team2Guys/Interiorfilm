@@ -63,22 +63,22 @@ const TableFour: React.FC = () => {
         <div className="flex flex-col">
           <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4">
             <div className="p-2.5 xl:p-4">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
+              <h5 className="text-sm font-medium uppercase xsm:text-base text-black dark:text-white">
                 Source
               </h5>
             </div>
             <div className="p-2.5 text-center xl:p-4">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
+              <h5 className="text-sm font-medium uppercase xsm:text-base text-black dark:text-white">
                 Visitors
               </h5>
             </div>
             <div className="p-2.5 text-center xl:p-4">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
+              <h5 className="text-sm font-medium uppercase xsm:text-base text-black dark:text-white">
                 Revenues
               </h5>
             </div>
             <div className="hidden p-2.5 text-center sm:block xl:p-4">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
+              <h5 className="text-sm font-medium uppercase xsm:text-base text-black dark:text-white">
                 Conversion
               </h5>
             </div>

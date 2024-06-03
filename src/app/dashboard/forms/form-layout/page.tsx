@@ -75,10 +75,10 @@ const FormLayout = ({ seteditCategory, editCategory }: any) => {
             return (
               <Form onSubmit={formik.handleSubmit}>
                 <div className="flex justify-center ">
-                  <div className="flex flex-col gap-9 w-2/5">
-                    <div className="rounded-sm border border-stroke bg-white ">
+                  <div className="flex flex-col gap-9 w-2/5 dark:border-strokedark dark:bg-boxdark">
+                    <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
 
-                      <div className="rounded-sm border border-stroke bg-white ">
+                      <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
                         <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                           <h3 className="font-medium text-black dark:text-white">
                             Add Category Images

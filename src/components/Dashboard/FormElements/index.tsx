@@ -169,10 +169,10 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
           return (
             <Form onSubmit={formik.handleSubmit}>
               <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-                <div className="flex flex-col gap-9">
-                  <div className="rounded-sm border border-stroke bg-white  ">
+                <div className="flex flex-col gap-9 dark:border-strokedark dark:bg-boxdark">
+                  <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark ">
 
-                    <div className="rounded-sm border border-stroke bg-white">
+                    <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                       <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                         <h3 className="font-medium text-black dark:text-white">
                           Add Product Images
@@ -214,7 +214,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <div>
-                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                        <label className="mb-3 block text-sm font-medium text-black dark:text-white ">
                           Product Title
                         </label>
                         <input
@@ -339,7 +339,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
 
                       <div className='flex gap-4'>
-                        <div className="rounded-sm border border-stroke bg-white w-2/4">
+                        <div className="rounded-sm border border-stroke bg-white w-2/4 dark:border-strokedark dark:bg-boxdark">
                           <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                             <h3 className="font-medium text-black dark:text-white">
                               Colors
@@ -389,7 +389,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
 
                         {/* Sizes */}
-                        <div className="rounded-sm border border-stroke bg-white w-2/4" >
+                        <div className="rounded-sm border border-stroke bg-white w-2/4 dark:border-strokedark dark:bg-boxdark" >
                           <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
                             <h3 className="font-medium text-black dark:text-white">
                               Sizes
@@ -453,7 +453,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
 
                     <div className="w-2/4">
-                      <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                      <label className="mb-3 block text-sm font-medium text-black dark:text-dark">
                         Star Rating
                       </label>
                       <input
@@ -472,7 +472,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                     </div>
 
                     <div className="w-2/4">
-                      <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                      <label className="mb-3 block text-sm font-medium text-black dark:text-dark">
                         Reviews
                       </label>
                       <input
@@ -494,7 +494,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
 
 
-                  <div className="rounded-sm border border-stroke bg-white ">
+                  <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
                       <h3 className="font-medium text-black dark:text-white">
                         Model Details
@@ -555,7 +555,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                     </div>
                   </div>
 
-                  <div className="rounded-sm border border-stroke bg-white">
+                  <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                       <h3 className="font-medium text-black dark:text-white">
                         Specification
@@ -605,7 +605,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                   </div>
 
 
-                  <div className="rounded-sm border border-stroke bg-white ">
+                  <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                       <h3 className="font-medium text-black dark:text-white">
                         Add Hover Image
@@ -642,7 +642,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                     }
                   </div>
 
-                  <div className="rounded-sm border border-stroke bg-white ">
+                  <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                       <h3 className="font-medium text-black dark:text-white">
                         Add Product Images

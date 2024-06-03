@@ -146,10 +146,10 @@ const initialValue = {
                         Edit your photo
                       </span>
                       <span className="flex gap-2.5">
-                        <button className="text-sm hover:text-primary">
+                        <button className="text-sm hover:text-primary text-black dark:text-white">
                           Delete
                         </button>
-                        <button className="text-sm hover:text-primary">
+                        <button className="text-sm hover:text-primary text-black dark:text-white">
                           Update
                         </button>
                       </span>
@@ -194,12 +194,12 @@ const initialValue = {
                           />
                         </svg>
                       </span>
-                      <p>
-                        <span className="text-primary">Click to upload</span> or
+                      <p className="text-black dark:text-white">
+                        <span className="text-primary dark:text-white">Click to upload</span> or
                         drag and drop
                       </p>
-                      <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
-                      <p>(max, 800 X 800px)</p>
+                      <p className="mt-1.5 text-black dark:text-white">SVG, PNG, JPG or GIF</p>
+                      <p className="text-black dark:text-white">(max, 800 X 800px)</p>
                     </div>
                   </div>
 
