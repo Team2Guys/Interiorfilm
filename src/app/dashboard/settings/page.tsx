@@ -63,7 +63,7 @@ const initialValue = {
                       Email Address
                     </label>
                     <div className="relative">
-                      <span className="absolute left-4.5 top-4">
+                      <span className="absolute left-4.5 top-4 text-black dark:text-white">
                         <svg
                           className="fill-current"
                           width="20"
@@ -130,7 +130,7 @@ const initialValue = {
                   Profile Photo
                 </h3>
               </div>
-              <div className="p-7">
+              <div className="px-7 py-5">
                 <form action="#">
                   <div className="mb-4 flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full">
@@ -158,7 +158,7 @@ const initialValue = {
 
                   <div
                     id="FileUpload"
-                    className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border border-dashed border-primary bg-gray px-4 py-4 dark:bg-meta-4 sm:py-7.5"
+                    className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border border-dashed border-primary bg-gray px-4 dark:bg-meta-4 py-2"
                   >
                     <input
                       type="file"
@@ -166,7 +166,7 @@ const initialValue = {
                       className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
                     />
                     <div className="flex flex-col items-center justify-center space-y-3">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-white text-black dark:text-white">
                         <svg
                           width="16"
                           height="16"
@@ -194,12 +194,12 @@ const initialValue = {
                           />
                         </svg>
                       </span>
-                      <p className="text-black dark:text-white">
-                        <span className="text-primary dark:text-white">Click to upload</span> or
+                      <p className="text-black dark:text-white text-sm">
+                        <span className="text-primary dark:text-white text-sm">Click to upload</span> or
                         drag and drop
                       </p>
-                      <p className="mt-1.5 text-black dark:text-white">SVG, PNG, JPG or GIF</p>
-                      <p className="text-black dark:text-white">(max, 800 X 800px)</p>
+                      <p className="mt-1.5 text-black dark:text-white text-sm">SVG, PNG, JPG or GIF</p>
+                      <p className="text-black dark:text-white text-sm">(max, 800 X 800px)</p>
                     </div>
                   </div>
 
