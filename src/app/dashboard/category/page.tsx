@@ -1,10 +1,9 @@
-import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
-import TableOne from "components/Dashboard/Tables/TableOne";
-import TableThree from "components/Dashboard/Tables/TableThree";
-import TableTwo from "components/Dashboard/Tables/TableTwo";
+'use client'
 
-import { Metadata } from "next";
+import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
+import TableTwo from "components/Dashboard/Tables/TableTwo";
 import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
+import ProtectedRoute from "hooks/AuthHookAdmin";
 
 
 const category = () => {
@@ -21,4 +20,4 @@ const category = () => {
   );
 };
 
-export default category;
+export default  ProtectedRoute(category);

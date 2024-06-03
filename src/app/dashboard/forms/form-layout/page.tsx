@@ -17,6 +17,7 @@ import {
   categoryInitialValues,
   categoryValidationSchema,
 } from "data/Data"
+import ProtectedRoute from 'hooks/AuthHookAdmin';
 
 interface editCategoryNameType {
   name: string
@@ -162,4 +163,4 @@ const FormLayout = ({ seteditCategory, editCategory }: any) => {
   );
 };
 
-export default FormLayout;
+export default ProtectedRoute( FormLayout);

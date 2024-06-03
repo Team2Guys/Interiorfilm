@@ -12,6 +12,8 @@ import USRcomponent from 'components/userComponent/userComponent'
 import { IoIosLock, IoMdMail } from "react-icons/io";
 import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
 
+import Cookies from 'js-cookie';
+
 
 
 
@@ -55,7 +57,7 @@ const intialvalue =   {
     let user:any = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/adminLogin`,formData)
     console.log(user.data, "user token")
     const ISSERVER = typeof window === "undefined"
-    !ISSERVER ? localStorage.setItem('2guysAdminToken', user.data.token) : null
+    !ISSERVER ?  Cookies.set('2guysAdminToken', user.data.token, { expires: 1 })   : null
     setloading(false)
     dispatch(loggedInUserAction(user.data.user))
     setFormData(intialvalue)

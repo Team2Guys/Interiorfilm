@@ -8,18 +8,26 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import PRODUCTS_TYPES from 'types/interfaces';
 import axios from 'axios';
+import {generateSlug} from 'data/Data'
+
 
 interface CardProps {
   ProductCard?: PRODUCTS_TYPES[];
   slider?: boolean;
+  categoryId?: string
+  carDetail?:string
 }
 
-const Card: React.FC<CardProps> = ({ ProductCard, slider }) => {
+
+
+const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId ,carDetail }) => {
   const router = useRouter();
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const pathname = usePathname();
+
+  let CategoryId = categoryId ? categoryId : 'demo'
 
   const getallProducts = async () => {
     try {
@@ -43,9 +51,26 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider }) => {
     }
   }
 
+  const ProductFilterHandler = () => {
+    if (CategoryId != "demo") {
+        console.log("CategoryId:", CategoryId);
+        let filtered = totalProducts.filter((item) => {
+            console.log("Item Category:", item.category);
+            return item.category == CategoryId;
+        });
+let newArray = filtered.length > 6 ? filtered.slice(0, 6) : filtered
+        setTotalProducts(newArray);
+    }
+}
+
   useEffect(() => {
     getallProducts();
   }, []);
+
+  useEffect(() => {
+    console.log('function called')
+    ProductFilterHandler();
+  }, [carDetail]);
 
   const Homepage = pathname.startsWith('/');
   const slicedArray = Homepage && totalProducts ? totalProducts.slice(0, 6) : [];
@@ -53,9 +78,11 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider }) => {
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
+      <>
+  
       <div
         className="cursor-pointer group custom-shadow transition-all my-3"
-        onClick={() => router.push("/detail")}
+        onClick={() => router.push(`/detail/${generateSlug(product.name)}`)}
         key={index}
       >
         <div className="relative">
@@ -105,6 +132,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider }) => {
           )}
         </div>
       </div>
+      </>
     );
   };
 
@@ -113,7 +141,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider }) => {
       {ProductCard && ProductCard.length > 0 ? (
         ProductCard.map(renderProduct)
       ) : (
-        productsToRender.length > 0 && productsToRender.map(renderProduct)
+        productsToRender.length > 0 ?  productsToRender.map(renderProduct) : <div className='flex justify-center'> No Product Found </div>
       )}
     </>
   );

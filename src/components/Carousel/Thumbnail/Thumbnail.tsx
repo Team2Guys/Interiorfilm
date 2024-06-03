@@ -9,13 +9,10 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import Image from 'next/image';
-
-interface thumb{
-    image?: any;
-}
+import {IMAGE_INTERFACE} from 'types/interfaces'
 
 interface thumbprops{
-    thumbs : thumb[];
+    thumbs : IMAGE_INTERFACE[];
 }
 
 const Thumbnail: React.FC<thumbprops> = ({thumbs}) => {
@@ -36,7 +33,7 @@ const Thumbnail: React.FC<thumbprops> = ({thumbs}) => {
         {
             thumbs.map((array,index)=>(
             <SwiperSlide key={index} >
-                <Image className='bg-contain w-full' src={array.image} width={500} height={500} alt='Image'/>
+                <Image className='bg-contain w-full' src={array.imageUrl} width={500} height={500} alt='Image'/>
               </SwiperSlide>
             ))
         }
@@ -54,7 +51,7 @@ const Thumbnail: React.FC<thumbprops> = ({thumbs}) => {
            {
             thumbs.map((array,index)=>(
                 <SwiperSlide key={index}>
-                <Image className='bg-contain p-2 bg-white shadow-md w-full md:h-32' src={array.image} width={150} height={150} alt='Image'/>
+                <Image className='bg-contain p-2 bg-white shadow-md w-full md:h-32' src={array.imageUrl} width={150} height={150} alt='Image'/>
               </SwiperSlide>
             ))
         }    

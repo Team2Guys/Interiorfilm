@@ -19,109 +19,8 @@ import { RiCustomerService2Line } from "react-icons/ri";
 import Testimonial from "components/widgets/Testimonial/Testimonial";
 import ProductSlider from "components/Carousel/ProductSlider/ProductSlider";
 import Container from "components/Layout/Container/Container";
-import { productSlide } from "data/Data";
 import Mobiletab from "components/ui/Tabs/Mobiletab/Mobiletab";
 
-const tabData = [
-  { key: '1', tab: 'Cement Gray Series', content: <><TabsData
-/></> },
-  { key: '2', tab: 'Skin Texture Series', content: <><TabsData/></> },
-  { key: '3', tab: 'Wood Grain Series', content: <><TabsData
-          items={[
-            {
-              image: img2,
-              title: "Sony Wireless Bohm",
-              price: 19,
-              oldprice: 38,
-              star: 2,
-            },
-            {
-              image: img3,
-              title: "JBL Micoro Headphone",
-              price: 23,
-              oldprice: 38,
-              star: 2,
-            },
-            {
-              image: img4,
-              title: "Bose Color Speaker",
-              price: 21,
-              oldprice: 38,
-              star: 2,
-            },
-            {
-              image: img5,
-              title: "Bose Color Speaker",
-              price: 30,
-              oldprice: 38,
-              star: 2,
-            },
-            {
-              image: img6,
-              title: "Asus Watch Speaker",
-              price: 28,
-              oldprice: 38,
-              star: 2,
-            },
-            {
-              image: img7,
-              title: "Asus Watch Speaker",
-              price: 12,
-              oldprice: 38,
-              star: 2,
-            },
-          ]}
-        /></> },
-  { key: '4', tab: 'Fabric Series', content: <><TabsData/></> },
-  { key: '5', tab: 'Marble Serie', content: <><TabsData
-          items={[
-            {
-              image: img2,
-              title: "Sony Wireless Bohm",
-              price: 19,
-              oldprice: 38,
-              star: 2,
-            },
-            {
-              image: img3,
-              title: "JBL Micoro Headphone",
-              price: 23,
-              oldprice: 38,
-              star: 2,
-            },
-            {
-              image: img4,
-              title: "Bose Color Speaker",
-              price: 21,
-              oldprice: 38,
-              star: 2,
-            },
-            {
-              image: img5,
-              title: "Bose Color Speaker",
-              price: 30,
-              oldprice: 38,
-              star: 2,
-            },
-            {
-              image: img6,
-              title: "Asus Watch Speaker",
-              price: 28,
-              oldprice: 38,
-              star: 2,
-            },
-            {
-              image: img7,
-              title: "Asus Watch Speaker",
-              price: 12,
-              oldprice: 38,
-              star: 2,
-            },
-          ]}
-        /></> },
-  { key: '6', tab: 'Plain Series', content: <><TabsData/></> },
-
-];
 
 
 const products = [
@@ -129,6 +28,7 @@ const products = [
   { image: img003, category: "Realistic Marbles" },
   { image: img107, category: "Realistic Matte" },
 ];
+
 const offers = [
   {
     icon: 
@@ -157,8 +57,6 @@ const offers = [
     detail: "Our support team is available 24/7 to assist you.",
   },
 ];
-console.log(productSlide,"productSlide")
-
 export default function Home() {
  
   return (
@@ -166,12 +64,13 @@ export default function Home() {
       <HeroSlider />
       <h1 className="lg:text-5xl md:text-3xl text-lg font-semibold  text-center mt-10">Discover Our Product Ranges</h1>
       <Container className="mt-10">
-      <Mobiletab className="color-black" tabData={tabData}  />
+      <Mobiletab className="color-black" />
       </Container>
       <CollectiveProduct products={products} />
       <Container className="mt-20">
         <h1 className="lg:text-5xl md:text-3xl font-semibold text-xl text-center mb-5">Feature Product</h1>
-        <ProductSlider />
+        
+        <ProductSlider  />
       </Container>
       <Offer Offers={offers} />
       <Testimonial />
