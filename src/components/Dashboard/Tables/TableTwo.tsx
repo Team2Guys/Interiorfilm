@@ -1,30 +1,30 @@
 "use client";
 
+import { Pagination } from "antd";
 import Image from "next/image";
+import { useLayoutEffect, useState } from "react";
 import { FaEdit, FaEye } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
 
-const productData = [
-  {
-    image: "/images/product/product-01.png",
-    name: "Apple Watch Series 7",
-  },
-  {
-    image: "/images/product/product-02.png",
-    name: "Macbook Pro M1",
-  },
-  {
-    image: "/images/product/product-03.png",
-    name: "Dell Inspiron 15",
-  },
-  {
-    image: "/images/product/product-04.png",
-    name: "HP Probook 450",
-  },
-];
 
 const TableTwo: React.FC = () => {
+  const [category, setCategory] = useState<any[]>();
+  const CategoryHandler = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
+    );
+    const Categories = await response.json();
+    setCategory(Categories);
+  };
+  
+  useLayoutEffect(() => {
+    CategoryHandler();
+  }, []);
+  
+
+
   return (
+    <>
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="px-4 py-6 md:px-6 xl:px-7.5">
         <h4 className="text-xl font-semibold text-black dark:text-white">
@@ -44,7 +44,7 @@ const TableTwo: React.FC = () => {
         </div>
       </div>
 
-      {productData.map((product, key) => (
+      {category && category.map((product, key) => (
         <div
           className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
           key={key}
@@ -53,7 +53,7 @@ const TableTwo: React.FC = () => {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <div className="h-12.5 w-15 rounded-md">
                 <Image
-                  src={product.image}
+                  src={product.posterImageUrl.imageUrl}
                   width={60}
                   height={50}
                   alt="Product"
@@ -74,7 +74,10 @@ const TableTwo: React.FC = () => {
           </div>
         </div>
       ))}
+      
     </div>
+  
+    </>
   );
 };
 
