@@ -1,7 +1,5 @@
+"use client"
 import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
-
-
-import { Metadata } from "next";
 import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
 import ViewProduct from "components/Dashboard/Tables/ViewProduct";
 import ProtectedRoute from "hooks/AuthHookAdmin";
