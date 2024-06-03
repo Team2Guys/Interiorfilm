@@ -59,7 +59,6 @@ const ProductSlider: React.FC<relatedprops> = () => {
       }
     } finally {
       setLoading(true)
-
     }
 
   }
