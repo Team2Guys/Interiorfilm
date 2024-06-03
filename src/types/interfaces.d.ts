@@ -76,7 +76,7 @@ export interface USRPROPS {
   }
 
 
-interface Image {
+export interface IMAGE_INTERFACE {
   public_id: string;
   imageUrl: string;
 }
@@ -101,7 +101,7 @@ interface PRODUCTS_TYPES {
   salePrice: number;
   purchasePrice: number;
   category: string; 
-  imageUrl: Image[];
+  imageUrl: IMAGE_INTERFACE[];
   discountPrice?: number;
   colors?: Color[];
   modelDetails?: ModelDetail[];
