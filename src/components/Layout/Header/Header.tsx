@@ -73,6 +73,9 @@ const Header= () => {
       window.removeEventListener("cartChanged", handleCartChange);
     };
   }, []);
+
+
+
   return (
     <>
       <div className='bg-secondary border-b border-gray  w-full'>
@@ -132,7 +135,7 @@ const Header= () => {
                       open={category}
                         title={"product"}
                         content={<>
-                          <Mobiletab className='color-white' tabData={tabData}  />
+                          <Mobiletab className='color-white' />
                         </>}
                       /></li>
                   <li><Link className='text-base font-semibold text-black hover:text-black ' onClick={onClose} href="/about">About Us</Link></li>

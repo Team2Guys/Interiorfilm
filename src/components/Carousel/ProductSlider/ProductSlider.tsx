@@ -1,22 +1,24 @@
 //@ts-nocheck
 "use client";
 import React, { useState, useLayoutEffect, useEffect, useRef } from 'react'
-
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-// Import Swiper styles
+
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-
-// Import required modules
 import {Navigation } from 'swiper/modules';
 
 import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import Card from 'components/ui/Card/Card';
 import axios from 'axios';
+import {generateSlug} from 'data/Data'
+import Loader from 'components/Loader/Loader'
 
-const ProductSlider: React.FC<relatedprops> = () => {
+interface PRODUCT_SLIDER_PRPS {
+  Productname?:string | null
+}
+
+const ProductSlider: React.FC<PRODUCT_SLIDER_PRPS> = ({Productname}) => {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<any>(null);
@@ -37,7 +39,7 @@ const ProductSlider: React.FC<relatedprops> = () => {
   }, []);
 
 
-
+console.log(Productname, "Productname")
 
   const getallProducts = async () => {
 
@@ -46,7 +48,16 @@ const ProductSlider: React.FC<relatedprops> = () => {
 
       let response: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`)
       let products = response.data.products
-      setTotalProducts(products)
+      if(Productname && products){
+        let filteredProductst = products.filter((item)=>generateSlug(item.name) !== Productname)
+        console.log(filteredProductst, "filteredProductst", Productname)
+      setTotalProducts(filteredProductst)
+
+      }
+      else {
+        setTotalProducts(products)
+
+      }
 
     } catch (err: any) {
       console.log(err, "err")
@@ -58,15 +69,17 @@ const ProductSlider: React.FC<relatedprops> = () => {
         setError('An unexpected error occurred.');
       }
     } finally {
-      setLoading(true)
+      setLoading(false)
 
     }
 
   }
+
   useLayoutEffect(() => {
     getallProducts()
-  }, [])
+  }, [Productname])
   return (
+    loading ? <div className='flex justify-center items-center h-[20vh]'><Loader/></div>: 
     <div className="flex items-center justify-center">
       <div className=' w-1/12'>
         <button ref={prevRef} className=' p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
@@ -97,22 +110,22 @@ const ProductSlider: React.FC<relatedprops> = () => {
         modules={[Navigation]}
         className="mySwiper"
       >
+        {totalProducts && totalProducts.map((product, index) => (
+          
+        <SwiperSlide key={index} >
+           <Card ProductCard={[product]}/>
+        </SwiperSlide>
+        ))}
 
-        {
-          totalProducts.map((array, index) => (
-            <SwiperSlide key={index}>
-              <Card ProductCard={[array]
-              } />
-            </SwiperSlide>
-          ))
-        }
       </Swiper>
+
       <div className='w-1/12'>
         <button ref={nextRef} className=' p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
           <MdArrowForwardIos size={15} />
         </button>
       </div>
     </div>
+
   );
 };
 
