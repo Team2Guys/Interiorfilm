@@ -1,11 +1,11 @@
 "use client";
 
-import { BRAND } from "types/types";
+import { PRODUCTBRANCH } from "types/types";
 import Image from "next/image";
 import { FaEdit, FaEye } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
 
-const brandData: BRAND[] = [
+const brandData: PRODUCTBRANCH[] = [
   {
     logo: "/images/brand/brand-01.svg",
     name: "Google",
