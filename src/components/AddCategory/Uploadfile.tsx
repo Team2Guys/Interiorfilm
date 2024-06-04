@@ -45,3 +45,4 @@ const UploadFile = ({setImagesUrl,handleFileChange,handleDrop}:PROPS) => {
 };
 
 export default UploadFile;
+
