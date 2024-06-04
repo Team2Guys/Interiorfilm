@@ -123,7 +123,7 @@ const Table: React.FC<TableProps> = ({ cartdata, wishlistdata }) => {
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base"><p>AED <span>{pathName === "/wishlist" ? ( product.discountPrice ? product.discountPrice : product.price) :(product.discountPrice ? product.discountPrice : product.price)}</span>.00</p></td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base"><p>AED <span>{pathName === "/wishlist" ? ( product.discountPrice ? product.discountPrice * (counts[index] || 1) : product.price * (counts[index] || 1)) :(product.discountPrice ? product.discountPrice : product.price)}</span>.00</p></td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base">
                         <div className='flex'>
                           <div onClick={() => decrement(index)} className='h-8 w-8 rounded-md bg-white border border-gray flex justify-center items-center'>
