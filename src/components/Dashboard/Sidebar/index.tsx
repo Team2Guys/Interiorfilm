@@ -156,7 +156,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           !open && "hidden"
                         }`}
                       >
-                        <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
+                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
                           <li>
                             <Link
                               href="/dashboard"
@@ -209,7 +209,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           !open && "hidden"
                         }`}
                       >
-                        <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
+                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
                         
                           <li>
                             <Link
@@ -224,7 +224,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <li>
                             <Link
                               href="/dashboard/category"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white mt-2.5 ${
                                 pathname === "/dashboard/category" &&
                                 "text-white"
                               }`}
@@ -278,12 +278,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           !open && "hidden"
                         }`}
                       >
-                        <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
+                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
                           <li>
                             <Link
-                              href="/dashboard/forms/form-elements"
+                              href="/dashboard/products/AddNewProduct"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/dashboard/forms/form-elements" &&
+                                pathname === "/dashboard/products/AddNewProduct" &&
                                 "text-white"
                               }`}
                             >
