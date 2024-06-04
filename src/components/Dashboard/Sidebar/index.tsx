@@ -222,9 +222,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         
                           <li>
                             <Link
-                              href="/dashboard/forms/form-layout"
+                              href="/dashboard/Add_Category/AddNewCategory"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "dashboard/forms/form-layout" &&
+                                pathname === "dashboard/Add_Category/AddNewCategory" &&
                                 "text-white"
                               } `}
                             >

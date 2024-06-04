@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useState } from "react";
 import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
 import Image from "next/image";
@@ -7,15 +7,19 @@ import ProtectedRoute from "hooks/AuthHookAdmin";
 import { useAppSelector } from "components/Others/HelperRedux";
 
 const Settings = () => {
-  const { loggedInUser }: any = useAppSelector(state => state.usersSlice);
+  const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
 
   const initialValue = {
-    name: loggedInUser ? `${loggedInUser.firstName} ${loggedInUser.lastName}` : "",
+    name: loggedInUser
+      ? `${loggedInUser.firstName} ${loggedInUser.lastName}`
+      : "",
   };
 
   const [name, setName] = useState(initialValue.name);
   const [email, setEmail] = useState(loggedInUser?.email || "");
-  const [profilePhoto, setProfilePhoto] = useState<string | ArrayBuffer | null>("/images/user/user-03.png");
+  const [profilePhoto, setProfilePhoto] = useState<string | ArrayBuffer | null>(
+    "/images/user/user-03.png"
+  );
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -125,9 +129,8 @@ const Settings = () => {
                         value={email}
                         onChange={handleEmailChange}
                       />
-                    </div>              
+                    </div>
                   </div>
-        
                   <div className="flex justify-end gap-4.5">
                     <button
                       className="flex justify-center rounded border border-stroke px-6 py-2 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
@@ -158,7 +161,9 @@ const Settings = () => {
                   <div className="mb-4 flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full overflow-hidden">
                       <Image
-                        src={typeof profilePhoto === "string" ? profilePhoto : ""}
+                        src={
+                          typeof profilePhoto === "string" ? profilePhoto : ""
+                        }
                         width={55}
                         height={55}
                         alt="User"
@@ -169,10 +174,16 @@ const Settings = () => {
                         Edit your photo
                       </span>
                       <span className="flex gap-2.5">
-                        <button className="text-sm hover:text-primary text-black dark:text-white" type="button">
+                        <button
+                          className="text-sm hover:text-primary text-black dark:text-white"
+                          type="button"
+                        >
                           Delete
                         </button>
-                        <button className="text-sm hover:text-primary text-black dark:text-white" type="button">
+                        <button
+                          className="text-sm hover:text-primary text-black dark:text-white"
+                          type="button"
+                        >
                           Update
                         </button>
                       </span>
@@ -186,16 +197,31 @@ const Settings = () => {
                       className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
                     />
                     <div className="flex flex-col items-center justify-center">
-                    <span className="my-2 inline-block rounded-full bg-white border-primary border  p-2">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-        <path fill="#c72031" d="M10 16v-5h4v5h5l-7 7-7-7h5zm-4-16v2h12v-2h-12zm-4 4h20v2h-20v-2z"/>
-      </svg>
-    </span>
+                      <span className="my-2 inline-block rounded-full bg-white border-primary border  p-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          width="20"
+                          height="20"
+                        >
+                          <path
+                            fill="#c72031"
+                            d="M10 16v-5h4v5h5l-7 7-7-7h5zm-4-16v2h12v-2h-12zm-4 4h20v2h-20v-2z"
+                          />
+                        </svg>
+                      </span>
                       <p className="text-black dark:text-white text-sm">
-                        <span className="text-primary dark:text-white text-sm">Click to upload</span> or drag and drop
+                        <span className="text-primary dark:text-white text-sm">
+                          Click to upload
+                        </span>{" "}
+                        or drag and drop
                       </p>
-                      <p className="mt-1.5 text-black dark:text-white text-sm">SVG, PNG, JPG or GIF</p>
-                      <p className="text-black dark:text-white text-sm">(max, 800 X 800px)</p>
+                      <p className="mt-1.5 text-black dark:text-white text-sm">
+                        SVG, PNG, JPG or GIF
+                      </p>
+                      <p className="text-black dark:text-white text-sm">
+                        (max, 800 X 800px)
+                      </p>
                     </div>
                   </div>
                   <div className="flex justify-end gap-4.5">
