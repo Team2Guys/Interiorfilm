@@ -122,52 +122,6 @@ export  const generateSlug = (text:string) => {
 
   
 
-  // export const productSlide =[
-  //   {
-  //     image: img3,
-  //     title: "CA-13089",
-  //     price: 23,
-  //     oldprice: 38,
-  //     star: 2,
-  //   },
-  //   {
-  //     image: img4,
-  //     title: "CA-13050",
-  //     price: 21,
-  //     oldprice: 38,
-  //     star: 3,
-  //   },
-  //   {
-  //     image: img5,
-  //     title: "CA-13067",
-  //     price: 30,
-  //     oldprice: 38,
-  //     star: 1,
-  //   },
-  //   {
-  //     image: img6,
-  //     title: "CA-13324",
-  //     price: 28,
-  //     oldprice: 38,
-  //     star: 5,
-  //   },
-  //   {
-  //     image: img7,
-  //     title: "CA-12324",
-  //     price: 12,
-  //     oldprice: 38,
-  //     star: 4,
-  //   },
-  //   {
-  //     image: img8,
-  //     title: "CA-13321",
-  //     price: 19,
-  //     oldprice: 38,
-  //     star: 2,
-  //   },
-  // ]
-
-
   export const menuSlide =[
     {image: img3,title: "CA-13089",},
     { image: img4,title: "CA-13050",},
