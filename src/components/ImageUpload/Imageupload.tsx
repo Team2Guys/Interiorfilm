@@ -46,14 +46,11 @@ const UploadFile = ({ setImagesUrl, setposterimageUrl, sethoverImage }: PROPS) =
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const files = e.target.files ? Array.from(e.target.files) : [];
-    console.log("Selected files", files);
     try {
       const response = await uploadPhotosToBackend(files);
       setImagesUrl && setImagesUrl((prev) => [...prev, ...response]);
       setposterimageUrl && setposterimageUrl(response);
       sethoverImage && sethoverImage(response);
-
-
       console.log("Photos uploaded successfully");
     } catch (error) {
       console.error("Failed to upload photos:", error);
@@ -66,12 +63,9 @@ const UploadFile = ({ setImagesUrl, setposterimageUrl, sethoverImage }: PROPS) =
     }
   };
 
-  console.log(isDraggableArea, 
-    "isDraggableArea"
-  )
   return (
     <div
-      className={`m-4 ${isDraggableArea ? 'border border-sky-500' : 'border border-stroke'}`}
+      className={`m-4 cursor-pointer ${isDraggableArea ? 'border border-sky-500' : 'border border-stroke'}`}
       onDrop={handleDrop}
       onDragOver={(e) => {
         e.preventDefault();
