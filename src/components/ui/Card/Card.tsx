@@ -4,7 +4,6 @@ import Image from "next/image";
 import { Rate, message } from "antd";
 import { LuShoppingCart } from "react-icons/lu";
 import { GoHeart } from "react-icons/go";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import PRODUCTS_TYPES from 'types/interfaces';
 import axios from 'axios';
@@ -23,6 +22,12 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
+  const [count, setCount] = useState<any>(1);
+
+
+  const handleChange = (e: any) => {
+    setSelectedValue(e.target.value);
+  };
   const pathname = usePathname();
 
   let CategoryId = categoryId ? categoryId : 'demo';
@@ -36,7 +41,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
       let products = response.data.products;
       setTotalProducts(products);
       if (products.length > 0 && products[0].colors && products[0].colors.length > 0) {
-        setSelectedValue(products[0].colors[0]); // Assuming 'colors' is an array of available colors for each product
+        setSelectedValue(products[0].colors[0]);
       }
       console.log(response.data.products, "setTotalProducts");
     } catch (err: any) {
@@ -74,65 +79,114 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
     ProductFilterHandler();
   }, [carDetail]);
 
-  const handleAddToCart = (product: PRODUCTS_TYPES) => {
-    // Use selectedValue or default to the first color if not selected
-    const colorToAdd = selectedValue || (product.colors && product.colors[0]);
 
+  const handleAddToCart = (product: any) => {
+    const colorToAdd = selectedValue || (product.colors && product.colors[0]);
+  
     if (!colorToAdd) {
       message.error('Please select a color.');
       return;
     }
-
+  
     console.log("Product added to cart:", product);
-
+  
     const newCartItem = {
-      id: product.id,
+      id: product._id,
       name: product.name,
       price: product.salePrice,
       imageUrl: product.posterImageUrl?.imageUrl,
-      color: colorToAdd,
+      discountPrice: product.discountPrice,
+      color: selectedValue,
       count: 1,
-      totalPrice: product.salePrice,
+      totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
     };
   
-    // Fetch existing cart items from local storage or initialize an empty array
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    console.log("existingCart", existingCart)
+    console.log("product", product)
+
+    const existingItemIndex = existingCart.findIndex((item: any) => item.id === product._id);
   
-    // Check if the product already exists in the cart
-    const existingItemIndex = existingCart.findIndex((item: any) => item.id === product.id && item.color === colorToAdd);
-  
+
     if (existingItemIndex !== -1) {
-      existingCart[existingItemIndex].count += 1;
-      existingCart[existingItemIndex].totalPrice = existingCart[existingItemIndex].count * product.salePrice;
+      const updatedCart = existingCart.map((item: any, index: number) => {
+        if (index === existingItemIndex) {
+          return {
+            ...item,
+            count: item.count + 1,
+            totalPrice: (item.count + 1) * (item.discountPrice ? item.discountPrice : item.price),
+          };
+        }
+        return item;
+      });
+      console.log(updatedCart)
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+
     } else {
-      // If the product doesn't exist, add it to the cart
       existingCart.push(newCartItem);
+      localStorage.setItem("cart", JSON.stringify(existingCart));
     }
   
-    // Update local storage with the updated cart
-    localStorage.setItem("cart", JSON.stringify(existingCart));
     message.success('Product added to cart successfully!');
     window.dispatchEvent(new Event("cartChanged"));
+    console.log(existingCart , "existingCart")
   };
-  const handleAddToWishlist = (product: PRODUCTS_TYPES) => {
-    // Fetch existing wishlist items from local storage or initialize an empty array
-    let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
   
-    // Check if the product already exists in the wishlist
-    const existingItemIndex = existingWishlist.findIndex((item: any) => item.id === product.id);
   
-    if (existingItemIndex !== -1) {
-      message.warning('Product is already in the wishlist.');
+  const handleAddToWishlist = (product: any) => {
+    const colorToAdd = selectedValue || (product.colors && product.colors[0]);
+  
+    if (!colorToAdd) {
+      message.error('Please select a color.');
       return;
     }
   
-    // Add the product to the wishlist
-    existingWishlist.push(product);
+    console.log("Product added to wishlist:", product);
   
-    // Update local storage with the updated wishlist
-    localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
-    message.success('Product added to wishlist successfully!');
+    const newWishlistItem = {
+      id: product._id,
+      name: product.name,
+      price: product.salePrice,
+      imageUrl: product.posterImageUrl?.imageUrl,
+      discountPrice: product.discountPrice,
+      color: selectedValue,
+      count: 1,
+      totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
+    };
+  
+    let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    console.log("existingWishlist", existingWishlist)
+    console.log("product", product)
+
+    const existingItemIndex = existingWishlist.findIndex((item: any) => item.id === product._id);
+  
+
+    if (existingItemIndex !== -1) {
+      const updatedWishlist = existingWishlist.map((item: any, index: number) => {
+        if (index === existingItemIndex) {
+          return {
+            ...item,
+            count: item.count + 1,
+            totalPrice: (item.count + 1) * (item.discountPrice ? item.discountPrice : item.price),
+          };
+        }
+        return item;
+      });
+      console.log(updatedWishlist)
+      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+
+    } else {
+      existingWishlist.push(newWishlistItem);
+      localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
+    }
+  
+    message.success('Product added to Wishlist successfully!');
+    window.dispatchEvent(new Event("wishlistChanged"));
+    console.log(existingWishlist , "existingWishlist")
   };
+  
+
+  
 
   const Homepage = pathname.startsWith('/');
   const slicedArray = Homepage && totalProducts ? totalProducts.slice(0, 6) : [];
@@ -147,8 +201,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
           >
             <LuShoppingCart className="p-2 rounded-full bg-white hover:bg-primary text-primary hover:text-white" size={40} />
           </button>
-          <button
-            onClick={() => handleAddToWishlist(product)}
+          <button onClick={() => handleAddToWishlist(product)}
             className="flex justify-center items-center z-10"
           >
             <GoHeart className="p-2 rounded-full bg-white hover:bg-primary text-primary hover:text-white" size={40} />

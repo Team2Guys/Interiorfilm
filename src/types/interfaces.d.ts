@@ -103,7 +103,7 @@ interface PRODUCTS_TYPES {
   purchasePrice: number;
   category: string; 
   imageUrl: IMAGE_INTERFACE[];
-  discountPrice?: number;
+  discountPrice?: any;
   colors?: Color[];
   modelDetails?: ModelDetail[];
   spacification?: Specification[];

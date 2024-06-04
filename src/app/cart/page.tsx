@@ -1,3 +1,4 @@
+//@ts-nocheck
 "use client"
 import Button from 'components/Common/Button'
 import Container from 'components/Layout/Container/Container'
@@ -19,7 +20,7 @@ const Cart = () => {
       <Container className='mt-10'>
         <div className='flex flex-wrap md:flex-nowrap md:gap-5'>
           <div className='w-full md:w-8/12'>
-            <Table data={cartItems}/>
+            <Table cartdata={cartItems}/>
           </div>
           <div className='w-full md:w-4/12 mt-3'>
             <div className='w-full bg-secondary p-2 space-y-3 rounded-sm pb-5'>
