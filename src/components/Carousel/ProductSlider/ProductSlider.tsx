@@ -69,7 +69,7 @@ console.log(Productname, "Productname")
         setError('An unexpected error occurred.');
       }
     } finally {
-      setLoading(true)
+      setLoading(false)
     }
 
   }
