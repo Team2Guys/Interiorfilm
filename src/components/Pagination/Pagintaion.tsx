@@ -15,8 +15,6 @@ interface Pagintaion {
 
 export default function Pagintaion({setTotalPage,totalSize,handlerChange}:Pagintaion) {
 
-console.log(totalSize, "totalSize")
-
   return (
     <div>   <Pagination
               className="text-center rounded-full mt-10"
