@@ -40,17 +40,17 @@ const ViewProduct = () => {
       <div className="flex flex-col">
         <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 ">
           <div className="p-2.5 xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
+            <h5 className="text-sm font-medium uppercase xsm:text-base text-black dark:text-white">
               Product
             </h5>
           </div>
           <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
+            <h5 className="text-sm font-medium uppercase xsm:text-base text-black dark:text-white">
               Price
             </h5>
           </div>
           <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
+            <h5 className="text-sm font-medium uppercase xsm:text-base text-black dark:text-white" >
               Action
             </h5>
           </div>
@@ -80,9 +80,9 @@ const ViewProduct = () => {
 
             <div className="flex items-center justify-center p-2.5 xl:p-5">
             <div className="col-span-2 flex gap-4 items-center justify-end md:justify-start">
-            <FaEye className="text-black dark:text-white" size={20} />
-            <FaEdit className="text-black dark:text-white" size={20} />
-            <MdDeleteOutline className="text-black dark:text-white" size={20} />
+            <FaEye className="text-black dark:text-white cursor-pointer" size={20} />
+            <FaEdit className="text-black dark:text-white cursor-pointer" size={20} />
+            <MdDeleteOutline className="text-black dark:text-white cursor-pointer" size={20} />
 
             </div>
             </div>

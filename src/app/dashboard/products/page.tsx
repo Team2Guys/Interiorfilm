@@ -1,3 +1,5 @@
+'use client'
+
 import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
 
 

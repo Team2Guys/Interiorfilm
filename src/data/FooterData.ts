@@ -16,21 +16,18 @@ export const socialLinks = [
   ];
   
   export const customerCare = [
-    { name: "My Account", href: "#" },
-    { name: "Discount", href: "#" },
-    { name: "Returns", href: "#" },
-    { name: "Orders History", href: "#" },
-    { name: "Order Tracking", href: "#" },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Corporate Order", href: "/contact" },
+    { name: "Contact Us", href: "/contact" },
   ];
   
   export const pages = [
-    { name: "Blog", href: "#" },
-    { name: "Browse the Shop", href: "#" },
-    { name: "Category", href: "#" },
-    { name: "Pre-Built Pages", href: "#" },
-    { name: "Visual Composer Elements", href: "#" },
-    { name: "WooCommerce Pages", href: "#" },
-    { name: "WooCommerce Shortcodes", href: "#" },
+    { name: "Privacy Policy", href: "#" },
+    { name: "Terms & Condition", href: "#" },
+    { name: "Return and Refund", href: "#" },
+    { name: "Shipment Policy", href: "#" },
+
   ];
   
 

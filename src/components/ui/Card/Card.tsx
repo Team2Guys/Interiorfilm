@@ -97,16 +97,16 @@ let newArray = filtered.length > 6 ? filtered.slice(0, 6) : filtered
           )}
           <div className="space-y-3 absolute top-4 right-4 overflow-hidden translate-x-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition ease-in-out duration-400 hidden md:block">
             <Link
-              href={"/"}
-              className="w-10 h-10 rounded-full bg-white hover:bg-primary flex justify-center items-center"
+              href={"/cart"}
+              className=" flex justify-center items-center"
             >
-              <LuShoppingCart className="text-primary hover:text-white" size={25} />
+              <LuShoppingCart className=" p-2 rounded-full bg-white hover:bg-primary text-primary hover:text-white" size={40} />
             </Link>
             <Link
-              href={"/"}
-              className="w-10 h-10 rounded-full bg-white hover:bg-primary flex justify-center items-center"
+              href={"/wishlist"}
+              className=" flex justify-center items-center"
             >
-              <GoHeart className="text-primary hover:text-white" size={25} />
+              <GoHeart className=" p-2 rounded-full bg-white hover:bg-primary text-primary hover:text-white" size={40} />
             </Link>
           </div>
         </div>

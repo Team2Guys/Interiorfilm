@@ -95,7 +95,7 @@ const Header = (props: {
               <input
                 type="text"
                 placeholder="Type to search..."
-                className="w-full bg-transparent pl-9 pr-4 font-medium focus:outline-none xl:w-125"
+                className="w-full bg-transparent pl-9 pr-4 font-medium focus:outline-none xl:w-125 text-black dark:text-white"
               />
             </div>
           </form>
