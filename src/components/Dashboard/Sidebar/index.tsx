@@ -10,15 +10,13 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { GrCodeSandbox } from "react-icons/gr";
 import { useAppSelector } from "components/Others/HelperRedux";
 
-
-
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
-  const { loggedInUser }: any = useAppSelector(state => state.usersSlice);
+  const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
 
   const pathname = usePathname();
 
@@ -28,7 +26,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   let storedSidebarExpanded = "true";
 
   const [sidebarExpanded, setSidebarExpanded] = useState(
-    storedSidebarExpanded === null ? false : storedSidebarExpanded === "true",
+    storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
   );
 
   // close on click outside
@@ -66,7 +64,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     }
   }, [sidebarExpanded]);
 
-  console.log(loggedInUser, "loggedInUser")
+  // console.log(loggedInUser, "loggedInUser");
   return (
     <aside
       ref={sidebar}
@@ -80,7 +78,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           <Image
             width={176}
             height={32}
-            src={"/images/logo.png"}
+            src={"/images/logo/white-logo.png"}
             alt="Logo"
             priority
           />
@@ -130,7 +128,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   return (
                     <React.Fragment>
                       <Link
-                        href="#"
+                        href="/dashboard"
                         className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === "/" ||
                             pathname.includes("dashboard")) &&
@@ -144,11 +142,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }}
                       >
                         <MdOutlineDashboard size={20} className="text-white" />
-
                         Dashboard
-                        <MdOutlineKeyboardArrowDown size={30} className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${
+                        <MdOutlineKeyboardArrowDown
+                          size={30}
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${
                             open && "rotate-180"
-                          }`} />
+                          }`}
+                        />
                       </Link>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
@@ -177,14 +177,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === "dashboard/forms" || pathname.includes("dashboard/forms")
+                  pathname === "dashboard/forms" ||
+                  pathname.includes("dashboard/forms")
                 }
               >
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
                       <Link
-                        href="#"
+                        href="/dashboard"
                         className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === "dashboard/forms" ||
                             pathname.includes("dashboard/forms")) &&
@@ -199,9 +200,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       >
                         <BiCategoryAlt size={20} className="text-white" />
                         Category
-                        <MdOutlineKeyboardArrowDown size={30} className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${
+                        <MdOutlineKeyboardArrowDown
+                          size={30}
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${
                             open && "rotate-180"
-                          }`} />
+                          }`}
+                        />
                       </Link>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
@@ -210,28 +214,28 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }`}
                       >
                         <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
-                        
                           <li>
                             <Link
                               href="/dashboard/Add_Category/AddNewCategory"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "dashboard/Add_Category/AddNewCategory" &&
+                                pathname ===
+                                  "dashboard/Add_Category/AddNewCategory" &&
                                 "text-white"
                               } `}
                             >
                               Add Categories
                             </Link>
                             <li>
-                            <Link
-                              href="/dashboard/category"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white mt-2.5 ${
-                                pathname === "/dashboard/category" &&
-                                "text-white"
-                              }`}
-                            >
-                              View Categories
-                            </Link>
-                          </li>
+                              <Link
+                                href="/dashboard/category"
+                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white mt-2.5 ${
+                                  pathname === "/dashboard/category" &&
+                                  "text-white"
+                                }`}
+                              >
+                                View Categories
+                              </Link>
+                            </li>
                           </li>
                         </ul>
                       </div>
@@ -244,21 +248,22 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Forms --> */}
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === "dashboard/forms" || pathname.includes("dashboard/forms")
+                  pathname === "dashboard/forms" ||
+                  pathname.includes("dashboard/forms")
                 }
               >
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
                       <Link
-                        href="#"
+                        href="/dashboard"
                         className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === "dashboard/forms" ||
                             pathname.includes("dashboard/forms")) &&
                           "bg-graydark dark:bg-meta-4"
                         }`}
                         onClick={(e) => {
-                          e.preventDefault();
+                          e.preventDefault(); // Prevent default link behavior
                           sidebarExpanded
                             ? handleClick()
                             : setSidebarExpanded(true);
@@ -266,11 +271,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       >
                         <GrCodeSandbox size={20} className="text-white" />
                         Products
-                        <MdOutlineKeyboardArrowDown size={30} className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${
+                        <MdOutlineKeyboardArrowDown
+                          size={30}
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${
                             open && "rotate-180"
-                          }`} />
-
-                      
+                          }`}
+                        />
                       </Link>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
@@ -283,11 +289,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <Link
                               href="/dashboard/products/AddNewProduct"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/dashboard/products/AddNewProduct" &&
+                                pathname ===
+                                  "/dashboard/products/AddNewProduct" &&
                                 "text-white"
                               }`}
                             >
-                          Add Products
+                              Add Products
                             </Link>
                           </li>
                           <li>
@@ -308,6 +315,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   );
                 }}
               </SidebarLinkGroup>
+
               <li>
                 <Link
                   href="/dashboard/settings"
