@@ -1,113 +1,157 @@
-"use client"
-import React, { useState } from 'react'
-import img from "../../../../public/images/img-1.png"
-import Image from 'next/image'
-import { IoMdCloseCircleOutline } from 'react-icons/io'
-import { RxMinus, RxPlus } from 'react-icons/rx'
-import { usePathname } from 'next/navigation'
-import Button from '../Button/Button'
-const Table = () => {
-  const pathName = usePathname()
-    const [count, setCount] = useState(0);
+//@ts-nocheck
+"use client";
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { RxMinus, RxPlus } from 'react-icons/rx';
+import { usePathname } from 'next/navigation';
+import { Modal } from 'antd';
+import Button from '../Button/Button';
+import PRODUCTS_TYPES from 'types/interfaces';
 
-    const increment = () => {
-      setCount(count + 1);
-    };
-  
-    const decrement = () => {
-      if (count > 0) {
-        setCount(count - 1);
-      }
-    };
-  return (
-    <>
-<div className="hidden md:flex flex-col">
-  <div className="-m-1.5 overflow-x-auto">
-    <div className="p-1.5 min-w-full inline-block align-middle">
-      <div className="overflow-hidden">
-        <table className="min-w-full">
-          <thead>
-            <tr>
-              <th scope="col" className="px-6 py-3 text-start text-xl font-optima text-dark ">Product</th>
-              <th scope="col" className="px-6 py-3 text-start text-xl font-medium text-dark ">Price</th>
-              <th scope="col" className="px-6 py-3 text-start text-xl font-medium text-dark ">Quantity</th>
-              <th scope="col" className="px-6 py-3 text-end text-xl font-medium text-dark ">{ pathName == "/wishlist" ? "Action" : "Total"}</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            <tr>
-              <td className="md:px-3 md:py-4  text-sm font-medium">
-                <div className='flex gap-1'>
-                    <div className='relative'>
-                        <Image className='w-24 h-24 bg-contain' width={100} height={100} src={img} alt='Cart'/>
-                        <div className='absolute -top-2 -right-2'>
-                            <div className='bg-white shadow h-5 w-5 rounded-full cursor-pointer'>
-                             <IoMdCloseCircleOutline size={20} />
-                            </div>
-                        </div>
-                    </div>
-                    <div className='p-2'>
-                        <h1 className='text-sm md:text-base font-medium'>Basic Korean-style Bag</h1>
-                        <p className=' text-xs md:text-sm text-gray-500'>Color: <span>Brown</span></p>
-                    </div>
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base"><p >AED <span>120</span>.00</p></td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base">
-                <div className='flex'>
-                     <div onClick={decrement} className='h-8 w-8 rounded-md bg-white border border-gray flex justify-center items-center'>
-                     <RxMinus size={20} />
-                     </div>
-                     <div className='h-8 w-8 rounded-md bg-white flex justify-center items-center'>
-                     {count}
-                     </div>
-                     <div onClick={increment} className='h-8 w-8 rounded-md bg-white border border-gray flex justify-center items-center'>
-                     <RxPlus size={20} />
-                     </div>
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-end text-sm md:text-base">
-                {pathName == "/wishlist" ? <Button className='px-4 rounded-md' title={"Add To Cart"}/> : 
-                <p>AED <span>120</span>.00</p>
-                }
-              </td>
-            </tr>
-       
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div className='border rounded-md p-2 bg-white shadow block md:hidden'>
-    <div className='flex'>
-        <div className='flex gap-2'>
-            <Image className='rounded-md' width={80} height={80} src={img} alt='cart'/>
-            <div className='space-y-1'>
-                <h1 className='text-sm md:text-base font-medium'>Basic Korean-style Bag</h1>
-                <p className=' text-xs md:text-sm text-gray-500'>Color: <span>Brown</span></p>
-                <div className='flex mb-2'>
-                     <div onClick={decrement} className='h-6 w-6 rounded-md bg-white border flex justify-center items-center'>
-                     <RxMinus size={20} />
-                     </div>
-                     <div className='h-6 w-6 rounded-md bg-white flex justify-center items-center'>
-                     {count}
-                     </div>
-                     <div onClick={increment} className='h-6 w-6 rounded-md bg-white border flex justify-center items-center'>
-                     <RxPlus size={20} />
-                     </div>
-                </div>
-                  {pathName == "/wishlist" ? <Button className='px-2 md:px-4 text-sm md:text-base rounded-md' title={"Add To Cart"}/> : 
-                  <p className='text-sm md:text-base font-base'>AED <span>120</span>.00</p>
-                  }
-                
-            </div>
-        </div>
-    </div>
-</div>
-    </>
-  )
+interface TableProps {
+  cartdata: PRODUCTS_TYPES[];
+  wishlistdata: PRODUCTS_TYPES[];
 }
 
-export default Table
+const Table: React.FC<TableProps> = ({ cartdata, wishlistdata }) => {
+  const pathName = usePathname();
+  const [data, setData] = useState<PRODUCTS_TYPES[]>([]);
+  const [counts, setCounts] = useState<{ [key: number]: number }>({});
+  console.log(wishlistdata , "wishlistdata")
+  useEffect(() => {
+    const initialData = pathName === "/wishlist" ? wishlistdata : cartdata;
+    setData(initialData);
+    const initialCounts = initialData.reduce((acc, product, index) => {
+      acc[index] = product.count || 1;
+      return acc;
+    }, {});
+    setCounts(initialCounts);
+  }, [pathName, cartdata, wishlistdata]);
+
+  const increment = (index: number) => {
+    setCounts(prevCounts => {
+      const newCounts = { ...prevCounts, [index]: prevCounts[index] + 1 };
+      updateLocalStorage(index, newCounts[index]);
+      return newCounts;
+    });
+  };
+
+  const decrement = (index: number) => {
+    setCounts(prevCounts => {
+      if (prevCounts[index] > 1) {
+        const newCounts = { ...prevCounts, [index]: prevCounts[index] - 1 };
+        updateLocalStorage(index, newCounts[index]);
+        return newCounts;
+      }
+      return prevCounts;
+    });
+  };
+
+  const updateLocalStorage = (index: number, count: number) => {
+    const updatedData = [...data];
+    updatedData[index].count = count;
+    if (pathName === "/wishlist") {
+      updatedData[index].totalPrice = updatedData[index].price * count;
+    } else {
+      updatedData[index].totalPrice = updatedData[index].price * count;
+    }
+    setData(updatedData);
+  
+    if (pathName === "/wishlist") {
+      localStorage.setItem("wishlist", JSON.stringify(updatedData));
+    } else {
+      localStorage.setItem("cart", JSON.stringify(updatedData));
+    }
+  };
+
+  const deleteItem = (index: number) => {
+    const updatedData = data.filter((_, i) => i !== index);
+    setData(updatedData);
+
+    if (pathName === "/wishlist") {
+      localStorage.setItem("wishlist", JSON.stringify(updatedData));
+    } else {
+      localStorage.setItem("cart", JSON.stringify(updatedData));
+    }
+  };
+
+  const showDeleteConfirm = (index: number) => {
+    Modal.confirm({
+      title: 'Are you sure you want to delete this item?',
+      content: 'This action cannot be undone.',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        deleteItem(index);
+      },
+    });
+  };
+
+  return (
+    <>
+      <div className="hidden md:flex flex-col">
+        <div className="-m-1.5 overflow-x-auto">
+          <div className="p-1.5 min-w-full inline-block align-middle">
+            <div className="overflow-hidden">
+              <table className="min-w-full">
+                <thead>
+                  <tr>
+                    <th scope="col" className="px-6 py-3 text-start text-xl font-optima text-dark">Product</th>
+                    <th scope="col" className="px-6 py-3 text-start text-xl font-medium text-dark">Price</th>
+                    <th scope="col" className="px-6 py-3 text-start text-xl font-medium text-dark">Quantity</th>
+                    <th scope="col" className="px-6 py-3 text-end text-xl font-medium text-dark">{pathName === "/wishlist" ? "Action" : "Total"}</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {data.map((product, index) => (
+                    <tr key={index}>
+                      <td className="md:px-3 md:py-4 text-sm font-medium">
+                        <div className='flex gap-1'>
+                          <div className='relative'>
+                            <Image className='w-24 h-24 bg-contain' width={100} height={100} src={product.imageUrl[0].imageUrl || product.imageUrl} alt='Product' />
+                            <div className='absolute -top-2 -right-2'>
+                              <div onClick={() => showDeleteConfirm(index)} className='bg-white shadow h-5 w-5 rounded-full cursor-pointer'>
+                                <IoMdCloseCircleOutline size={20} />
+                              </div>
+                            </div>
+                          </div>
+                          <div className='p-2'>
+                            <h1 className='text-sm md:text-base font-medium'>{typeof product.name === 'string' ? product.name : ''}</h1>
+                            <p className='text-xs md:text-sm text-gray-500'>Color: <span>{typeof product.color === 'string' ? product.color : ''}</span></p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base"><p>AED <span>{pathName === "/wishlist" ? ( product.discountPrice ? product.discountPrice * (counts[index] || 1) : product.price * (counts[index] || 1)) :(product.discountPrice ? product.discountPrice : product.price)}</span>.00</p></td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base">
+                        <div className='flex'>
+                          <div onClick={() => decrement(index)} className='h-8 w-8 rounded-md bg-white border border-gray flex justify-center items-center'>
+                            <RxMinus size={20} />
+                          </div>
+                          <div className='h-8 w-8 rounded-md bg-white flex justify-center items-center'>
+                            {counts[index] || 1}
+                          </div>
+                          <div onClick={() => increment(index)} className='h-8 w-8 rounded-md bg-white border border-gray flex justify-center items-center'>
+                            <RxPlus size={20} />
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-end text-sm md:text-base">
+                        {pathName === "/wishlist" ? <Button className='px-4 rounded-md' title={"Add To Cart"} /> :
+                          <p>AED <span> {pathName === "/wishlist" ?( product.discountPrice ? product.discountPrice * (counts[index] || 1) : product.price * (counts[index] || 1)) :(product.discountPrice ? product.discountPrice* (counts[index] || 1) : product.price * (counts[index] || 1))}</span>.00</p>
+                        }
+                      </td> 
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default Table;

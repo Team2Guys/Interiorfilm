@@ -94,6 +94,7 @@ interface Specification {
 }
 
 interface PRODUCTS_TYPES {
+  id: any;
   name: string;
   posterImageUrl: Image;
   hoverImageUrl?: Image;
@@ -102,7 +103,7 @@ interface PRODUCTS_TYPES {
   purchasePrice: number;
   category: string; 
   imageUrl: IMAGE_INTERFACE[];
-  discountPrice?: number;
+  discountPrice?: any;
   colors?: Color[];
   modelDetails?: ModelDetail[];
   spacification?: Specification[];
