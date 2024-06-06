@@ -99,6 +99,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
       color: selectedValue,
       count: 1,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
+      purchasePrice: product.purchasePrice
     };
   
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -140,7 +141,8 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
       message.error('Please select a color.');
       return;
     }
-  
+
+console.log(selectedValue, "selectedValue")
     console.log("Product added to wishlist:", product);
   
     const newWishlistItem = {

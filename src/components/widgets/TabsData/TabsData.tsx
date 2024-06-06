@@ -25,7 +25,7 @@ const TabsData = ({category,carDetail}:any) => {
     
     </div>
     <div className=' text-center mt-10 mb-7'>
-        <Link className='bg-primary rounded-md py-3 px-10 text-white' href={"/"}>View All</Link>
+        <Link className='bg-primary rounded-md py-3 px-10 text-white hover:text-white' href={"./productlist"}>View All</Link>
         </div>
     </>
 

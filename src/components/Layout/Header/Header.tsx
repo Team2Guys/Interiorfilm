@@ -37,7 +37,43 @@ const Header= () => {
 
   const [open, setOpen] = useState(false);
   const [category, setcategory] = useState(false);
-  
+  const [cartItems, setCartItems] = useState([]);
+  const [WishlistItems, setWishlistItems] = useState([]);
+
+  useEffect(() => {
+    const existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    setWishlistItems(existingWishlist);
+  }, []);
+  useEffect(() => {
+    const handleWishlistChange = () => {
+      const updatedWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+      setWishlistItems(updatedWishlist);
+    };
+
+    window.addEventListener("WishlistChanged", handleWishlistChange);
+
+    return () => {
+      window.removeEventListener("WishlistChanged", handleWishlistChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    setCartItems(existingCart);
+  }, []);
+
+  useEffect(() => {
+    const handleCartChange = () => {
+      const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+      setCartItems(updatedCart);
+    };
+
+    window.addEventListener("cartChanged", handleCartChange);
+
+    return () => {
+      window.removeEventListener("cartChanged", handleCartChange);
+    };
+  }, []);
 
   const showDrawer = () => {
   
@@ -144,27 +180,29 @@ const Header= () => {
               </>}
             />
             <div className='hidden lg:flex gap-2 md:gap-4 lg:gap-8'>
-              <div className='relative group'>
-              <Link className='group' href="/wishlist">
-              
+              <Link className='group relative' href="/wishlist">
+                { WishlistItems.length > 0 ? 
+                <>
                 <IoMdHeartEmpty className='text-primary group-hover:text-dark transition duration-200 ease-in' size={30} />
-              </Link>
-              <div className='rounded-full text-white w-6 h-6 bg-dark group-hover:bg-primary absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
-                  1
+                <div className='rounded-full text-white w-6 h-6 bg-dark group-hover:bg-primary absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
+                  {WishlistItems.reduce((count:any, item:any) => count + item.count, 0)}
                 </div>
+                </>
+                : <><IoMdHeartEmpty className='text-primary group-hover:text-dark transition duration-200 ease-in' size={30} /></>
+              }
+              </Link>
 
-              </div>
-    
-              <div className='relative group'>
-                          
               <Link className='relative group' href="/cart">
-              
+
                 <PiBag className='text-primary group-hover:text-dark transition duration-200 ease-in' size={30} />
-              </Link>
-              <div className='rounded-full text-white w-6 h-6 bg-dark group-hover:bg-primary absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
-                  1
+               { cartItems.length > 0 ? 
+               <div className='rounded-full text-white w-6 h-6 bg-dark group-hover:bg-primary absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
+               {cartItems.reduce((count:any, item:any) => count + item.count, 0)}
                 </div>
-          </div>
+                : <></>
+              }
+              </Link>
+
               <Link className='text-base lg:text-lg' href="/profile"><FaRegUser size={25} className='text-primary' /></Link>
             </div>
           </div>
@@ -182,28 +220,30 @@ const Header= () => {
       </div>
       <div className='bg-primary p-3 fixed w-full bottom-0 block lg:hidden z-50'>
         <div className='flex justify-evenly gap-4'>
-          <Link className='text-base lg:text-lg' href="/profile"><MdOutlineHome size={30} className='text-white' /></Link>
+          <Link className='text-base lg:text-lg' href="/"><MdOutlineHome size={30} className='text-white' /></Link>
           
+          <Link className='group relative' href="/wishlist">
+                { WishlistItems.length > 0 ? 
+                <>
+                <IoMdHeartEmpty className='text-white transition duration-200 ease-in' size={30} />
+                <div className='rounded-full text-dark w-6 h-6 bg-white absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
+                  {WishlistItems.reduce((count:any, item:any) => count + item.count, 0)}
+                </div>
+                </>
+                : <><IoMdHeartEmpty className='text-white transition duration-200 ease-in' size={30} /></>
+              }
+              </Link>
 
-          <div className='relative group'>
-          <Link href="/wishlist">
+              <Link className='relative group' href="/cart">
 
-        <IoMdHeartEmpty className='text-white transition duration-200 ease-in' size={30} />
-        </Link>
-          <div className='rounded-full text-dark w-6 h-6 bg-white absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
-              1
-            </div>
-          </div>
-
-    <div className='relative group'>
-          <Link  href="/cart">
-            <PiBag className='text-white transition duration-200 ease-in' size={30} />
-          </Link>
-          <div className='rounded-full text-dark w-6 h-6 bg-white absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
-              1
-            </div>
-        </div>
-
+                <PiBag className='text-white transition duration-200 ease-in' size={30} />
+               { cartItems.length > 0 ? 
+               <div className='rounded-full text-dark w-6 h-6 bg-white absolute bottom-3 left-4 flex justify-center items-center transition duration-200 ease-in'>
+               {cartItems.reduce((count:any, item:any) => count + item.count, 0)}
+                </div>
+                : <></>
+              }
+              </Link>
           <Link className='text-base lg:text-lg' href="/profile"><FaRegUser size={25} className='text-white' /></Link>
         </div>
       </div>
