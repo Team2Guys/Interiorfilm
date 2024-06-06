@@ -36,6 +36,7 @@ const Table: React.FC<TableProps> = ({ cartdata, wishlistdata }) => {
       return newCounts;
     });
   };
+  
 
   const decrement = (index: number) => {
     setCounts(prevCounts => {
@@ -150,6 +151,53 @@ const Table: React.FC<TableProps> = ({ cartdata, wishlistdata }) => {
           </div>
         </div>
       </div>
+
+
+      {data.map((product, index) => (
+                <>
+                    <div className='p-2 rounded-md mt-5 bg-white shadow block md:hidden' key={index}>
+                        <div className='space-y-2'>
+                            <div className='flex gap-3'>
+                                  <div className='relative '>
+                                    <div className='bg-gray p-1 rounded-md'>
+                                  <Image className='w-20 h-20 bg-contain' width={80} height={80} src={product.imageUrl[0].imageUrl || product.imageUrl} alt='Product' />
+                                    </div>
+                                  <div className='absolute -top-2 -right-2'>
+                                    <div onClick={() => showDeleteConfirm(index)} className='bg-white shadow h-5 w-5 rounded-full cursor-pointer'>
+                                      <IoMdCloseCircleOutline size={20} />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className='space-y-1 w-8/12'>
+                                    <h1 className='text-14 font-semibold'>{typeof product.name === 'string' ? product.name : ''}</h1>
+                                    <h2 className='text-12 font-medium'>Dhs. <span>{product.price}</span>.00 AED</h2>
+                                    <h2 className='text-12 font-medium'>Color: <span>{typeof product.color === 'string' ? product.color : ''}</span></h2>
+                                    <div className='flex'>
+                                    <div onClick={() => decrement(index)} className='h-7 w-7 rounded-md bg-white border border-gray flex justify-center items-center'>
+                                      <RxMinus size={20} />
+                                    </div>
+                                    <div className='h-7 w-7 rounded-md bg-white flex justify-center items-center'>
+                                      {counts[index] || 1}
+                                    </div>
+                                    <div onClick={() => increment(index)} className='h-7 w-7 rounded-md bg-white border border-gray flex justify-center items-center'>
+                                      <RxPlus size={20} />
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                            <div className='flex gap-2 '>
+                                <h1 className='font-bold'>Total: </h1>
+                                {pathName === "/wishlist" ? <Button className='px-4 rounded-md' title={"Add To Cart"} /> :
+                              <p>AED <span> {pathName === "/wishlist" ?( product.discountPrice ? product.discountPrice * (counts[index] || 1) : product.price * (counts[index] || 1)) :(product.discountPrice ? product.discountPrice* (counts[index] || 1) : product.price * (counts[index] || 1))}</span>.00</p>
+                        }
+
+                            </div>
+                        </div>
+                    </div>
+
+                </>
+            ))}
+
     </>
   );
 }

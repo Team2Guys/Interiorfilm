@@ -3,7 +3,7 @@ import Thumbnail from 'components/Carousel/Thumbnail/Thumbnail'
 import Container from 'components/Layout/Container/Container'
 import Overlay from 'components/widgets/Overlay/Overlay'
 import React, { useState, useEffect, useLayoutEffect } from 'react'
-import { Rate } from 'antd'
+import { Rate, message } from 'antd'
 
 import { GoHeart } from 'react-icons/go'
 import ProductSlider from 'components/Carousel/ProductSlider/ProductSlider'
@@ -19,7 +19,60 @@ const Detail = ({ params }: { params: { productname: string } }) => {
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [productDetail, setproductDetail] = useState<PRODUCTS_TYPES | null>(null);
   const [productsLoading, setProductsloading] = useState<boolean>(false);
+  const [selectedValue, setSelectedValue] = useState<string | null>(null);
 
+  const handleAddToCart = (product: any) => {
+    const colorToAdd = selectedValue || (product.colors && product.colors[0]);
+  
+    if (!colorToAdd) {
+      message.error('Please select a color.');
+      return;
+    }
+  
+    console.log("Product added to cart:", product);
+  
+    const newCartItem = {
+      id: product._id,
+      name: product.name,
+      price: product.salePrice,
+      imageUrl: product.posterImageUrl?.imageUrl,
+      discountPrice: product.discountPrice,
+      color: selectedValue,
+      count: 1,
+      totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
+      purchasePrice: product.purchasePrice
+    };
+  
+    let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    console.log("existingCart", existingCart)
+    console.log("product", product)
+
+    const existingItemIndex = existingCart.findIndex((item: any) => item.id === product._id);
+  
+
+    if (existingItemIndex !== -1) {
+      const updatedCart = existingCart.map((item: any, index: number) => {
+        if (index === existingItemIndex) {
+          return {
+            ...item,
+            count: item.count + 1,
+            totalPrice: (item.count + 1) * (item.discountPrice ? item.discountPrice : item.price),
+          };
+        }
+        return item;
+      });
+      console.log(updatedCart)
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+    } else {
+      existingCart.push(newCartItem);
+      localStorage.setItem("cart", JSON.stringify(existingCart));
+    }
+  
+    message.success('Product added to cart successfully!');
+    window.dispatchEvent(new Event("cartChanged"));
+    console.log(existingCart , "existingCart")
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -169,7 +222,7 @@ const Detail = ({ params }: { params: { productname: string } }) => {
 
                   <p>{productDetail.description}</p>
                   <div className='flex gap-2'>
-                    <button className='bg-primary rounded-md py-3 px-8 text-white'>Add To Cart</button>
+                    <button className='bg-primary rounded-md py-3 px-8 text-white' onClick={() => handleAddToCart(productDetail)} >Add To Cart</button>
                     <button className='bg-primary rounded-md py-3 px-3 text-white'><GoHeart size={25} /></button>
                   </div>
                   <div className='flex items-center gap-2'>
