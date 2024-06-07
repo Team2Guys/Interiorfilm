@@ -183,7 +183,7 @@ console.log(selectedValue, "selectedValue")
     }
   
     message.success('Product added to Wishlist successfully!');
-    window.dispatchEvent(new Event("wishlistChanged"));
+    window.dispatchEvent(new Event("WishlistChanged"));
     console.log(existingWishlist , "existingWishlist")
   };
   
