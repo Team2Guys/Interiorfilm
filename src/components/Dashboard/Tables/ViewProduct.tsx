@@ -1,95 +1,204 @@
 "use client";
 
-import { PRODUCTBRANCH } from "types/types";
+
+import React, { useState } from "react";
+import { Table } from "antd";
 import Image from "next/image";
-import { FaEdit, FaEye } from "react-icons/fa";
-import { MdDeleteOutline } from "react-icons/md";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import axios from "axios";
+import Loader from "components/Loader/Loader";
+import { useRouter } from "next/navigation";
+import { FaRegEye } from "react-icons/fa";
+import { LiaEdit } from "react-icons/lia";
 
-const brandData: PRODUCTBRANCH[] = [
-  {
-    logo: "/images/brand/brand-01.svg",
-    name: "Google",
-    price: 120,
-  },
-  {
-    logo: "/images/brand/brand-02.svg",
-    name: "Twitter",
-    price: 120,
-  },
-  {
-    logo: "/images/brand/brand-03.svg",
-    name: "Github",
-    price: 120,
-  },
-  {
-    logo: "/images/brand/brand-04.svg",
-    name: "Vimeo",
-    price: 120,
-  },
-  {
-    logo: "/images/brand/brand-05.svg",
-    name: "Facebook",
-    price: 120,
+import { generateSlug } from 'data/Data';
 
-  },
-];
+interface Product {
+  _id: string;
+  name: string;
+  category: string;
+  posterImageUrl: { imageUrl: string };
+  createdAt: string;
+}
 
-const ViewProduct = () => {
-  return (
-    <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <div className="flex flex-col">
-        <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 ">
-          <div className="p-2.5 xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base text-black dark:text-white">
-              Product
-            </h5>
-          </div>
-          <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base text-black dark:text-white">
-              Price
-            </h5>
-          </div>
-          <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base text-black dark:text-white" >
-              Action
-            </h5>
-          </div>
-        </div>
+interface CategoryProps {
+  Categories: any;
+  setCategory: any;
+  setselecteMenu: (menu: string) => void;
+  loading: boolean;
+  canAddProduct: boolean;
+  canDeleteProduct: boolean;
+  setEditProduct: any;
+}
 
-        {brandData.map((brand, key) => (
-          <div
-            className={`grid grid-cols-3  ${
-              key === brandData.length - 1
-                ? ""
-                : "border-b border-stroke dark:border-strokedark"
+const ViewProduct: React.FC<CategoryProps> = ({
+  Categories,
+  setCategory,
+  setselecteMenu,
+  loading,
+  canAddProduct,
+  canDeleteProduct,
+  setEditProduct
+}) => {
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredProducts: Product[] = Categories?.filter((product: any) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  ) || [];
+
+  const handleDelete = async (key: string) => {
+    try {
+      let response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteProduct/${key}`
+      );
+      console.log("Deleted", response);
+      setCategory((prev: Product[]) => prev.filter((item) => item._id !== key));
+    } catch (err) {
+      console.log("Deleting record with key:", err);
+    }
+  };
+
+  const columns = [
+    {
+      title: "Image",
+      dataIndex: "posterImageUrl",
+      key: "posterImageUrl",
+      render: (text: any, record: Product) => (
+        <Image
+          src={record.posterImageUrl?.imageUrl}
+          alt={`Image of ${record.name}`}
+          width={50}
+          height={50}
+        />
+      ),
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Stock Quantity",
+      dataIndex: "totalStockQuantity",
+      key: "totalStockQuantity",
+    },
+
+    {
+      title: "Date",
+      dataIndex: "createdAt",
+      key: "date",
+      render: (text: any, record: Product) => {
+        const createdAt = new Date(record.createdAt);
+        const formattedDate = `${createdAt.getFullYear()}-${String(
+          createdAt.getMonth() + 1
+        ).padStart(2, "0")}-${String(createdAt.getDate()).padStart(2, "0")}`;
+        return <span>{formattedDate}</span>;
+      },
+    },
+    {
+      title: "Time",
+      dataIndex: "createdAt",
+      key: "time",
+      render: (text: any, record: Product) => {
+        const createdAt = new Date(record.createdAt);
+        const formattedTime = `${String(createdAt.getHours()).padStart(
+          2,
+          "0"
+        )}:${String(createdAt.getMinutes()).padStart(2, "0")}`;
+        return <span>{formattedTime}</span>;
+      },
+    },
+    {
+      title: "Preview",
+      key: "Preview",
+      render: (text: any, record: Product) => {
+        const handleClick = () => {
+          console.log(record, "record");
+
+          const url = `/detail/${generateSlug(record.name)}`;
+          window.open(url, '_blank');
+        };
+        return <FaRegEye className="cursor-pointer" onClick={handleClick} />;
+      },
+    },
+    {
+      title: "Edit",
+      key: "Edit",
+      render: (text: any, record: Product) => (
+        <LiaEdit
+          className={"cursor-pointer"}
+          size={20}
+          onClick={() => {
+            setEditProduct(record);
+            setselecteMenu("Add Products");
+          }}
+        />
+      ),
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text: any, record: Product) => (
+        <RiDeleteBin6Line
+          className={`${canDeleteProduct ? "text-red-500 cursor-pointer" : ""} ${!canDeleteProduct ? "cursor-not-allowed text-gray-400" : ""
             }`}
-            key={key}
-          >
-            <div className="flex items-center gap-3 p-2.5 xl:p-5">
-              <div className="flex-shrink-0">
-                <Image src={brand.logo} alt="Brand" width={48} height={48} />
-              </div>
-              <p className="hidden text-black dark:text-white sm:block">
-                {brand.name}
+          size={20}
+          onClick={() => {
+            if (canDeleteProduct) {
+              handleDelete(record._id);
+              
+            }
+          }}
+        />
+      ),
+    },
+  ];
+
+
+  return (
+    <div>
+      {loading ? (
+        <div className="flex justify-center mt-10">
+          <Loader />
+        </div>
+      ) : (
+        <>
+          <div className="flex justify-between mb-4 items-center flex-wrap">
+            <input
+              className="peer lg:p-3 p-2 block outline-none border rounded-md border-gray-200 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+              type="search"
+              placeholder="Search Product"
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+            <div>
+              <p
+                className={`${canAddProduct && 'cursor-pointer'
+                  } p-2 ${canAddProduct && 'hover:bg-gray-200'} flex justify-center ${!canAddProduct && 'cursor-not-allowed text-gray-400'
+                  }`}
+                onClick={() => {
+                  if (canAddProduct) {
+                    setselecteMenu("Add Products");
+                    setEditProduct(undefined);
+                  }
+                }}
+              >
+                Add Products
               </p>
             </div>
-
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-black dark:text-white">AED {brand.price}</p>
-            </div>
-
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
-            <div className="col-span-2 flex gap-4 items-center justify-end md:justify-start">
-            <FaEye className="text-black dark:text-white cursor-pointer" size={20} />
-            <FaEdit className="text-black dark:text-white cursor-pointer" size={20} />
-            <MdDeleteOutline className="text-black dark:text-white cursor-pointer" size={20} />
-
-            </div>
-            </div>
-
           </div>
-        ))}
-      </div>
+          {filteredProducts && filteredProducts.length > 0 ? (
+            <Table className="overflow-x-scroll" dataSource={filteredProducts} columns={columns} rowKey="_id" pagination={false} />
+          ) : (
+            "No Products found"
+          )}
+        </>
+      )}
     </div>
   );
 };

@@ -7,8 +7,12 @@ import Loader from "components/Loader/Loader";
 import Input from "components/Common/Input";
 import { USRPROPS } from "types/interfaces";
 import { IoArrowBackSharp } from "react-icons/io5";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Container from "components/Layout/Container/Container";
+import { Select } from 'antd';
+
+
+const { Option } = Select;
 
 export default function UserComponent({
   handleSubmit,
@@ -21,13 +25,22 @@ export default function UserComponent({
   routingText,
   buttonTitle,
   navigationLink,
-  navigationTxt
+  navigationTxt,
+  SelectComonent
 }: USRPROPS) {
 
   const router = useRouter();
+  const pathname = usePathname()
+const [adminType, setadminType]= useState<string | undefined>("Admin")
+let adminFlag =  pathname === "/dashboard/auth/Admin-login";
+  
+  const selecthandleChange = (value:string) => {
+    setadminType(value)
+  };
 
   return (
     <>
+    {SelectComonent ? <SelectComonent/> : null}
       <div className="lg:flex flex-wrap md:flex-nowrap md:gap-4 lg:px-0 px-5 w-full gap-0">
         <div style={{ backgroundImage: "url('/images/Register_login.jpg')" }} 
           className="lg:w-[60%] bg-cover bg-center h-screen lg:block hidden"
@@ -54,6 +67,27 @@ export default function UserComponent({
                     {descrition && descrition}
                   </p>
                 </div>
+{
+ adminFlag ? 
+<div className=" mb-2 flex gap-3 items-center">
+  <p>Sign in As </p>
+<Select
+defaultValue='Admin'
+style={{ width: 120 }}
+onChange={selecthandleChange}
+options={[
+{ value: 'Admin', label: 'Admin' },
+{ value: 'spuer-Admin', label: 'spuer-Admin' },
+
+]}
+/>
+  
+</div>
+
+ : null
+}
+
+    
 
                 <div className="inputs_container w-full">
                   <form className="space-y-4" onSubmit={handleSubmit}>

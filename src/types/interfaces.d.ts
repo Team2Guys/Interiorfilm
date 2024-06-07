@@ -13,6 +13,7 @@ export interface USRPROPS {
     routingText? : string
     navigationLink?:string
     navigationTxt?:string
+    SelectComonent?:any
   
   }
 

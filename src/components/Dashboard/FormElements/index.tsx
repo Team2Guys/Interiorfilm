@@ -1,5 +1,7 @@
+//@ts-nocheck
 "use client";
-import React, { useState, DragEvent, SetStateAction, useEffect } from 'react';
+
+import React, { useState, DragEvent, SetStateAction, useEffect, useLayoutEffect } from 'react';
 import { Formik, FieldArray, FormikErrors, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
@@ -12,9 +14,15 @@ import { Product, FormValues } from "types/interfaces";
 import Toaster from "components/Toaster/Toaster";
 import axios from 'axios';
 
+import { IoMdArrowRoundBack } from "react-icons/io";
+import Loader from 'components/Loader/Loader';
+import { usePathname } from 'next/navigation';
+
 interface ADDPRODUCTFORMPROPS {
+  setselecteMenu: any
   EditInitialValues?: any | undefined,
   EditProductValue?: Product | undefined
+  setEditProduct?: any
 
 }
 
@@ -41,7 +49,11 @@ const validationSchema = Yup.object().shape({
 
 });
 
-const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProductValue }) => {
+
+const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProductValue, setselecteMenu, setEditProduct }) => {
+
+  const pathname = usePathname()
+
 
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
@@ -57,6 +69,9 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
   const changeTextColor = () => {
     setIsOptionSelected(true);
   };
+
+
+
   const initialValues: FormValues = {
     name: '',
     description: '',
@@ -70,11 +85,36 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
     spacification: [],
     sizes: [],
     category: "",
-    code:""
+    code: ""
 
   };
 
 
+
+  useLayoutEffect(() => {
+    const CategoryHandler = async () => {
+      try {
+        if (!EditInitialValues) return;
+        const {
+          posterImageUrl,
+          hoverImageUrl,
+          imageUrl,
+          _id,
+          createdAt,
+          updatedAt,
+          __v,
+          ...EditInitialProductValues
+        } = EditInitialValues as any;
+        imageUrl ? setImagesUrl(imageUrl) : null;
+        sethoverImage([hoverImageUrl]);
+        posterImageUrl ? setposterimageUrl([posterImageUrl]) : null;
+      } catch (err) {
+        console.log(err, "err");
+      }
+    };
+
+    CategoryHandler();
+  }, []);
 
   const onSubmit = async (values: any, { resetForm }: any) => {
     try {
@@ -82,7 +122,6 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
       let posterImageUrl = posterimageUrl && posterimageUrl[0];
       let hoverImageUrl = hoverImage && hoverImage[0];
       let createdAt = Date.now()
-      console.log(posterImageUrl, "posterimageUrl");
       if (!posterImageUrl || !hoverImageUrl || !(imagesUrl.length > 0)) {
         throw new Error("Please select relevant Images");
 
@@ -104,12 +143,13 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
       const response = await axios.post(url, newValue);
       console.log(response, "response");
       Toaster("success", updateFlag ? "Product has been sucessufully Updated !" : "Product has been sucessufully Created !");
-      setProductInitialValue(null)
+      setProductInitialValue(initialValues)
       resetForm();
       setloading(false)
       sethoverImage(null)
       setposterimageUrl(null)
       setImagesUrl([])
+      updateFlag ? setEditProduct && setEditProduct(undefined) : null
 
 
     }
@@ -157,10 +197,22 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
 
   return (
+
     <>
-      <Breadcrumb pageName="Add products" />
+      <p
+        className="text-2xl font-black mb-4 flex items-center justify-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer"
+        onClick={() => {
+          setselecteMenu("Add All Products");
+        }}
+      >
+        {" "}
+        <IoMdArrowRoundBack /> Back
+      </p>
+
+        
       <Formik
-        initialValues={initialValues}
+        enableReinitialize
+        initialValues={productInitialValue ? productInitialValue : initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
 
@@ -227,7 +279,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                             }`}
                         />
                         {formik.touched.name && formik.errors.name ? (
-                          <div className="text-red text-sm">{formik.errors.name}</div>
+                          <div className="text-red text-sm">{formik.errors.name as String}</div>
                         ) : null}
                       </div>
 
@@ -244,7 +296,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                             }`}
                         />
                         {formik.touched.description && formik.errors.description ? (
-                          <div className="text-red text-sm">{formik.errors.description}</div>
+                          <div className="text-red text-sm">{formik.errors.description as FormikErrors<FormValues['description']>}</div>
                         ) : null}
                       </div>
 
@@ -264,7 +316,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                               }`}
                           />
                           {formik.touched.salePrice && formik.errors.salePrice ? (
-                            <div className="text-red text-sm">{formik.errors.salePrice}</div>
+                            <div className="text-red text-sm"> {formik.errors.salePrice as FormikErrors<FormValues['salePrice']>}</div>
                           ) : null}
                         </div>
 
@@ -283,7 +335,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                               }`}
                           />
                           {formik.touched.purchasePrice && formik.errors.purchasePrice ? (
-                            <div className="text-red text-sm">{formik.errors.purchasePrice}</div>
+                            <div className="text-red text-sm">{formik.errors.purchasePrice as FormikErrors<FormValues['purchasePrice']>}</div>
                           ) : null}
                         </div>
                         <div className='w-[33%]'>
@@ -301,7 +353,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                               }`}
                           />
                           {formik.touched.discountPrice && formik.errors.discountPrice ? (
-                            <div className="text-red text-sm">{formik.errors.discountPrice}</div>
+                            <div className="text-red text-sm">{formik.errors.discountPrice as String}</div>
                           ) : null}
 
                         </div>
@@ -309,21 +361,21 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
                       <div className='flex gap-4'>
                         <div className='w-2/4'>
-                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                          Product Code
-                        </label>
-                        <input
-                          type="text"
-                          name="code"
-                          onChange={formik.handleChange}
-                          value={formik.values.code}
-                          placeholder="Product code"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name ? 'border-red-500' : ''
-                            }`}
-                        />
-                        {formik.touched.name && formik.errors.code ? (
-                          <div className="text-red text-sm">{formik.errors.code}</div>
-                        ) : null}
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                            Product Code
+                          </label>
+                          <input
+                            type="text"
+                            name="code"
+                            onChange={formik.handleChange}
+                            value={formik.values.code}
+                            placeholder="Product code"
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name ? 'border-red-500' : ''
+                              }`}
+                          />
+                          {formik.touched.name && formik.errors.code ? (
+                            <div className="text-red text-sm">{formik.errors.code as String}</div>
+                          ) : null}
 
                         </div>
                         <div className='w-2/4'>
@@ -350,7 +402,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                             <FieldArray name="colors">
                               {({ push, remove }) => (
                                 <div className='flex flex-col gap-2'>
-                                  {formik.values.colors.map((color, index) => (
+                                  {formik.values.colors.map((color: any, index: any) => (
                                     <div key={index} className="flex">
                                       <input
                                         type="text"
@@ -400,7 +452,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                             <FieldArray name="sizes">
                               {({ push, remove }) => (
                                 <div className='flex flex-col gap-2'>
-                                  {formik.values.sizes.map((size, index) => (
+                                  {formik.values.sizes.map((size: any, index: any) => (
                                     <div key={index} className="flex items-center">
                                       <input
                                         type="text"
@@ -449,7 +501,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
                 <div className="flex flex-col gap-5">
                   <div className='flex gap-4'>
-                  
+
 
 
                     <div className="w-2/4">
@@ -467,7 +519,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                           }`}
                       />
                       {formik.touched.starRating && formik.errors.starRating ? (
-                        <div className="text-red text-sm">{formik.errors.starRating}</div>
+                        <div className="text-red text-sm">{formik.errors.starRating as String}</div>
                       ) : null}
                     </div>
 
@@ -486,7 +538,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                           }`}
                       />
                       {formik.touched.reviews && formik.errors.reviews ? (
-                        <div className="text-red text-sm">{formik.errors.reviews}</div>
+                        <div className="text-red text-sm">{formik.errors.reviews as String}</div>
                       ) : null}
                     </div>
 
@@ -504,7 +556,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                       <FieldArray name="modelDetails">
                         {({ push, remove }) => (
                           <div className='flex flex-col gap-2'>
-                            {formik.values.modelDetails.map((model, index) => (
+                            {formik.values.modelDetails.map((model: any, index: any) => (
                               <div key={index} className="flex items-center">
                                 <input
                                   type="text"
@@ -565,7 +617,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                       <FieldArray name="spacification">
                         {({ push, remove }) => (
                           <div className='flex flex-col gap-2'>
-                            {formik.values.spacification.map((spec, index) => (
+                            {formik.values.spacification.map((spec: any, index: any) => (
                               <div key={index} className="flex items-center">
                                 <input
                                   type="text"
@@ -683,34 +735,27 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                       </div>
                     ) : null}
 
-                  
+
 
                   </div>
-
-
-
-
-
-
-
-
                 </div>
 
 
               </div>
 
-              { imgError ?
-                    <div className='flex justify-center'>
+              {imgError ?
+                <div className='flex justify-center'>
 
-                      <div className="text-red pt-2 pb-2">{imgError}</div>
-                    </div>
-                     : null
-                    }
+                  <div className="text-red pt-2 pb-2">{imgError}</div>
+                </div>
+                : null
+              }
 
-          
+
 
               <button type="submit" className="mt-4  px-8 py-2 bg-blue-500 text-white rounded">
-                Submit
+                {loading ? <Loader /> : 'Submit'}
+
               </button>
             </Form>
 
