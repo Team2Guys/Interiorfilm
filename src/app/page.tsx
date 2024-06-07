@@ -66,7 +66,7 @@ export default function Home() {
       <Container className="mt-10">
       <Mobiletab className="color-black" />
       </Container>
-      <CollectiveProduct products={products} />
+      {/* <CollectiveProduct products={products} /> */}
       <Container className="mt-20">
         <h1 className="lg:text-5xl md:text-3xl font-semibold text-xl text-center mb-5">Feature Product</h1>
         

@@ -74,6 +74,60 @@ const Detail = ({ params }: { params: { productname: string } }) => {
     console.log(existingCart , "existingCart")
   };
 
+  const handleAddToWishlist = (product: any) => {
+    const colorToAdd = selectedValue || (product.colors && product.colors[0]);
+  
+    if (!colorToAdd) {
+      message.error('Please select a color.');
+      return;
+    }
+
+console.log(selectedValue, "selectedValue")
+    console.log("Product added to wishlist:", product);
+  
+    const newWishlistItem = {
+      id: product._id,
+      name: product.name,
+      price: product.salePrice,
+      imageUrl: product.posterImageUrl?.imageUrl,
+      discountPrice: product.discountPrice,
+      color: selectedValue,
+      count: 1,
+      totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
+    };
+  
+    let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    console.log("existingWishlist", existingWishlist)
+    console.log("product", product)
+
+    const existingItemIndex = existingWishlist.findIndex((item: any) => item.id === product._id);
+  
+
+    if (existingItemIndex !== -1) {
+      const updatedWishlist = existingWishlist.map((item: any, index: number) => {
+        if (index === existingItemIndex) {
+          return {
+            ...item,
+            count: item.count + 1,
+            totalPrice: (item.count + 1) * (item.discountPrice ? item.discountPrice : item.price),
+          };
+        }
+        return item;
+      });
+      console.log(updatedWishlist)
+      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+
+    } else {
+      existingWishlist.push(newWishlistItem);
+      localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
+    }
+  
+    message.success('Product added to Wishlist successfully!');
+    window.dispatchEvent(new Event("WishlistChanged"));
+    console.log(existingWishlist , "existingWishlist")
+  };
+  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -223,7 +277,7 @@ const Detail = ({ params }: { params: { productname: string } }) => {
                   <p>{productDetail.description}</p>
                   <div className='flex gap-2'>
                     <button className='bg-primary rounded-md py-3 px-8 text-white' onClick={() => handleAddToCart(productDetail)} >Add To Cart</button>
-                    <button className='bg-primary rounded-md py-3 px-3 text-white'><GoHeart size={25} /></button>
+                    <button className='bg-primary rounded-md py-3 px-3 text-white' onClick={() => handleAddToWishlist(productDetail)}><GoHeart size={25} /></button>
                   </div>
                   <div className='flex items-center gap-2'>
                     <p className='font-medium text-lg'>Categories: </p>

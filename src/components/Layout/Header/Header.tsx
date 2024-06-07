@@ -57,23 +57,25 @@ const Header= () => {
     };
   }, []);
 
-  useEffect(() => {
-    const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    setCartItems(existingCart);
-  }, []);
 
-  useEffect(() => {
-    const handleCartChange = () => {
-      const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
-      setCartItems(updatedCart);
-    };
+  
+    useEffect(() => {
+      const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+      setCartItems(existingCart);
+    }, []);
 
-    window.addEventListener("cartChanged", handleCartChange);
+    useEffect(() => {
+      const handleCartChange = () => {
+        const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        setCartItems(updatedCart);
+      };
 
-    return () => {
-      window.removeEventListener("cartChanged", handleCartChange);
-    };
-  }, []);
+      window.addEventListener("cartChanged", handleCartChange);
+
+      return () => {
+        window.removeEventListener("cartChanged", handleCartChange);
+      };
+    }, []);
 
   const showDrawer = () => {
   

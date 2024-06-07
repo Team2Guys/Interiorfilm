@@ -104,7 +104,7 @@ const Slider: React.FC<Reviewprops> = ({Reviews}) => {
                   {/* <FaQuoteRight className=' text-light group-hover:text-primary' size={18} /> */}
                  </div>
                     <div className="flex gap-1 justify-start">
-                      <Rate className="text-sm gap-0"  />
+                      <Rate disabled defaultValue={array.star} className="text-sm gap-0"  />
                     </div>                  
                 </div>
               </div>
