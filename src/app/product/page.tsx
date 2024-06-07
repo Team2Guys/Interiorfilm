@@ -6,12 +6,14 @@ import React, { useState,useLayoutEffect } from 'react'
 import Card from 'components/ui/Card/Card'
 import Link from 'next/link'
 import Collapse from 'components/ui/Collapse/Collapse'
-import { Select } from 'antd'
+import { Select, Space } from 'antd'
 import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu'
 import { IoFunnelOutline } from 'react-icons/io5'
 import Pagintaion from 'components/Pagination/Pagintaion'
 import PRODUCTS_TYPES from 'types/interfaces'
 import Loader from "components/Loader/Loader";
+import type { RadioChangeEvent } from 'antd';
+import { Radio } from 'antd';
 
 import { getPaginatedproducts, getPRODUCTS} from 'utils/helperFunctions'
 import Input from 'components/Common/regularInputs'
@@ -28,7 +30,14 @@ const Product = () => {
   const [category, setCategory] = useState<any[]>();
   const [open, setOpen] = useState(false);
   const [priceRange, setPriceRange] = useState({ from: "", to: Infinity });
+  const [value, setValue] = useState(1);
+  const [activeLink, setActiveLink] = useState("");
 
+
+  const onChange = (e: RadioChangeEvent) => {
+    console.log('radio checked', e.target.value);
+    setValue(e.target.value);
+  };
   const showDrawer = () => {
     setOpen(true);
   };
@@ -42,12 +51,14 @@ const Product = () => {
   }, [])
 
   const CategoryHandler = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
-    );
-    const Categories = await response.json();
-    setCategory(Categories);
-    console.log(setCategory, "setCategory")
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+    const categories = await response.json();
+    setCategory(categories);
+    
+    // Set active link to the first category when categories are fetched
+    if (categories.length > 0) {
+      setActiveLink(categories[0].name);
+    }
   };
 
   useLayoutEffect(() => {
@@ -86,7 +97,10 @@ const Product = () => {
       return 0 // Default sorting (could be by name or id)
     }
   })
-    
+  const handleCategoryClick = (categoryName: string) => {
+    setActiveLink(categoryName);
+  };
+
   return (
     <>
       <Overlay title="Product" />
@@ -119,25 +133,37 @@ const Product = () => {
             <div className="sticky top-20">
               <div className="p-2 bg-secondary">
                 <Collapse title="All Categories">
-                  <ul className="px-1 pt-2 space-y-1">
+                  <ul className="px-1 pt-2 space-y-1 ">
                     {category?.map((item, index) => (
-                      <li key={index}>
-                        <Link href={"/"}>{item.name}</Link>
+                      <li className='flex flex-col w-full' key={index} >
+                        <Link className={activeLink === item.name ? "bg-primary px-2 text-white rounded-md w-full h-8 flex items-center" : "hover:bg-primary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center"} onClick={() => handleCategoryClick(item.name)} href={"/"}>{item.name}</Link>
                       </li>
                     ))}
                   </ul>
                 </Collapse>
               </div>
               <div className="p-2 bg-secondary">
+                <Collapse title="Availability">
+                <Radio.Group onChange={onChange} value={value}>
+                <Space direction="vertical">
+                  <Radio value={1}>In Stock</Radio>
+                  <Radio value={2}>Out Of Stock</Radio>
+                  </Space>
+                </Radio.Group>
+                </Collapse>
+              </div>
+              <div className="p-2 bg-secondary">
                 <Collapse title="Filter Price">
                   <div className='flex gap-2'>
-                    <Input
+                    <Input 
+                    className='h-10'
                       placeholder='From'
                       type='number'
                       value={priceRange.from === Infinity ? '' : priceRange.from}
                       onChange={(e) => handlePriceChange('from', Number(e.target.value))}
                     />
                     <Input
+                    className='h-10'
                       placeholder='To'
                       type='number'
                       value={priceRange.to === Infinity ? '' : priceRange.to}
@@ -175,16 +201,28 @@ const Product = () => {
                     </ul>
                   </Collapse>
                 </div>
+                  <div className="p-2 bg-secondary">
+                  <Collapse title="Availability">
+                  <Radio.Group onChange={onChange} value={value}>
+                  <Space direction="vertical">
+                    <Radio value={1}>In Stock</Radio>
+                    <Radio value={2}>Out Of Stock</Radio>
+                    </Space>
+                  </Radio.Group>
+                  </Collapse>
+                </div>
                 <div className="p-2 bg-secondary">
                   <Collapse title="Filter Price">
                     <div className='flex gap-2'>
                       <Input
+                        className='h-10'
                         placeholder='From'
                         type='number'
                         value={priceRange.from === Infinity ? '' : priceRange.from}
                         onChange={(e) => handlePriceChange('from', Number(e.target.value))}
                       />
                       <Input
+                        className='h-10'
                         placeholder='To'
                         type='number'
                         value={priceRange.to === Infinity ? '' : priceRange.to}
@@ -205,7 +243,7 @@ const Product = () => {
                   <div className="flex justify-center items-center h-2/3"><Loader /></div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                    <Card ProductCard={sortedProducts} />
+                    <Card ProductCard={sortedProducts} /> 
                   </div>
                 )}
                 <Pagintaion

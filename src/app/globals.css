@@ -167,3 +167,8 @@
   border-color: #C72031 !important;
 
 }
+
+.ant-radio-wrapper .ant-radio-checked .ant-radio-inner{
+  border-color: #C72031 !important;
+    background-color: #C72031 !important;;
+}
