@@ -26,23 +26,27 @@ export default function UserComponent({
   buttonTitle,
   navigationLink,
   navigationTxt,
-  SelectComonent
+  SelectComonent,
+  setadminType,
+  adminType
 }: USRPROPS) {
+
+
 
   const router = useRouter();
   const pathname = usePathname()
-const [adminType, setadminType]= useState<string | undefined>("Admin")
-let adminFlag =  pathname === "/dashboard/auth/Admin-login";
-  
-  const selecthandleChange = (value:string) => {
-    setadminType(value)
+
+  let adminFlag = pathname === "/dashboard/auth/Admin-login";
+
+  const selecthandleChange = (value: string) => {
+    setadminType && setadminType(value)
   };
 
   return (
     <>
-    {SelectComonent ? <SelectComonent/> : null}
+      {SelectComonent ? <SelectComonent /> : null}
       <div className="lg:flex flex-wrap md:flex-nowrap md:gap-4 lg:px-0 px-5 w-full gap-0">
-        <div style={{ backgroundImage: "url('/images/Register_login.jpg')" }} 
+        <div style={{ backgroundImage: "url('/images/Register_login.jpg')" }}
           className="lg:w-[60%] bg-cover bg-center h-screen lg:block hidden"
         >
         </div>
@@ -62,32 +66,32 @@ let adminFlag =  pathname === "/dashboard/auth/Admin-login";
             <div className="h-screen flex justify-center items-center flex-col ">
               <div className="lg:w-3/5">
                 <div className="flex flex-col items-center lg:mb-20 mb-10">
-                  <h2 className="text-xl text-[#3A393C] lg:text-4xl">{adminFlag ?`Sign In as ${adminType}`:title && title}</h2>
+                  <h2 className="text-xl text-[#3A393C] lg:text-4xl">{adminFlag ? `Sign In as ${adminType}` : title && title}</h2>
                   <p className="text-sm text-[#9096B2] mt-3 text-center">
                     {descrition && descrition}
                   </p>
                 </div>
-{
- adminFlag ? 
-<div className=" mb-2 flex gap-3 items-center">
-  <p>Sign in As </p>
-<Select
-defaultValue='Admin'
-style={{ width: 120 }}
-onChange={selecthandleChange}
-options={[
-{ value: 'Admin', label: 'Admin' },
-{ value: 'spuer-Admin', label: 'spuer-Admin' },
+                {
+                  adminFlag ?
+                    <div className=" mb-2 flex gap-3 items-center">
+                      <p>Sign in As </p>
+                      <Select
+                        defaultValue='Admin'
+                        style={{ width: 120 }}
+                        onChange={selecthandleChange}
+                        options={[
+                          { value: 'Admin', label: 'Admin' },
+                          { value: 'spuer-Admin', label: 'spuer-Admin' },
 
-]}
-/>
-  
-</div>
+                        ]}
+                      />
 
- : null
-}
+                    </div>
 
-    
+                    : null
+                }
+
+
 
                 <div className="inputs_container w-full">
                   <form className="space-y-4" onSubmit={handleSubmit}>
@@ -105,17 +109,17 @@ options={[
                       />
                     ))}
                     {error ? (
-                      <div className="flex justify-center text-red-600">
+                      <div className="flex justify-center text-red">
                         {error}
                       </div>
                     ) : null}
                     <p className="pt-1 ">
-                      {!navigationLink  ? null : (
+                      {!navigationLink ? null : (
                         <Link
                           className="underline text-[#9096B2] pt-4 text-sm"
                           href={navigationLink}
                         >
-                        { navigationTxt}
+                          {navigationTxt}
                         </Link>
                       )}
 
@@ -136,15 +140,15 @@ options={[
                       <p className="text-[#9096B2] text-sm">
                         {InstructionText && InstructionText}{" "}
                         {
-                          routingText && 
-                        <Link
-                          className="underline text-sm text-[#c62131]"
-                          href={
-                            title && title === "Sign In" ? "/register" : "/login"
-                          }
-                        >
-                          {routingText}
-                        </Link>
+                          routingText &&
+                          <Link
+                            className="underline text-sm text-[#c62131]"
+                            href={
+                              title && title === "Sign In" ? "/register" : "/login"
+                            }
+                          >
+                            {routingText}
+                          </Link>
                         }
                       </p>
                     </div>

@@ -76,7 +76,7 @@ function Admins({setselecteMenu}:any) {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (text: any, record: any) => `${record.firstName} ${record.lastName}`
+      render: (text: any, record: any) => `${record.fullname}`
     },
     {
       title: "Email",

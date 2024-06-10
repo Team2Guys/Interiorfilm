@@ -1,4 +1,4 @@
-import {FormEventHandler } from "react";
+import React, {FormEventHandler, SetStateAction } from "react";
 
 React.FormEvent<HTMLFormElement>
 export interface USRPROPS {
@@ -14,6 +14,8 @@ export interface USRPROPS {
     navigationLink?:string
     navigationTxt?:string
     SelectComonent?:any
+    setadminType?:React.Dispatch<SetStateAction<string | undefined>>
+    adminType?:string | undefined
   
   }
 

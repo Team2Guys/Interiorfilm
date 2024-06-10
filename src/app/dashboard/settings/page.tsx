@@ -19,8 +19,8 @@ const Settings = () => {
   const dispatch = useAppDispatch();
 
   const initialFormData = {
-    firstName: loggedInUser ? `${loggedInUser.firstName}` : "",
-    lastName: loggedInUser ? `${loggedInUser.lastName}` : ""
+    fullname: loggedInUser ? `${loggedInUser.fullname}` : "",
+
   };
   const initialValue = {
     name: loggedInUser ? `${loggedInUser.email}` : "",
@@ -45,13 +45,12 @@ const Settings = () => {
     try {
       let initialFormData = {
         email: loggedInUser.email,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
+        fullname: formData.fullname,
         profilePhoto: profilePhoto,
       };
 
       if (loggedInUser) {
-        let { firstName, lastName, profilePhoto, ...extractedData } = loggedInUser;
+        let { fullname, profilePhoto, ...extractedData } = loggedInUser;
         console.log(extractedData, "extractedData");
 
         // Combine initialFormData and extractedData into one object
@@ -117,8 +116,7 @@ const Settings = () => {
   }
 
   useEffect(() => {
-    if (loggedInUser) {
-      ;
+    if (loggedInUser && loggedInUser.profilePhoto) {
       Object.keys(loggedInUser.profilePhoto).length > 0 ? setProfilePhoto(loggedInUser.profilePhoto) : null
     }
   }, [loggedInUser]);
@@ -207,33 +205,15 @@ const Settings = () => {
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
                       htmlFor="name"
                     >
-                      First Name
+                      Full Name
                     </label>
                     <input
                       className="w-full rounded border border-stroke bg-gray px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       type="text"
-                      name="firstName"
-                      id="firstName"
-                      placeholder="last Name"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="mb-5.5">
-                    <label
-                      className="mb-3 block text-sm font-medium text-black dark:text-white"
-                      htmlFor="name"
-                    >
-                      Last name
-                    </label>
-                    <input
-                      className="w-full rounded border border-stroke bg-gray px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                      type="text"
-                      name="lastName"
-                      id="lastName"
-                      placeholder="Last Name"
-                      value={formData.lastName}
+                      name="fullname"
+                      id="fullname"
+                      placeholder="Full Name"
+                      value={formData.fullname}
                       onChange={handleChange}
                     />
                   </div>

@@ -46,6 +46,7 @@ const DropdownUser = () => {
 
   const logoutHhandler = ()=>{
 Cookies.remove('2guysAdminToken');
+Cookies.remove('getSuperAdminHandler');
     router.push('/dashboard/auth/Admin-login')
 
   }
@@ -59,7 +60,7 @@ Cookies.remove('2guysAdminToken');
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-      {loggedInUser ? loggedInUser.firstName + loggedInUser.lastName: null }
+      {loggedInUser ? loggedInUser.fullname : null }
           </span>
           <span className="block text-xs">{loggedInUser?.role}</span>
         </span>

@@ -10,6 +10,8 @@ import Loader from "components/Loader/Loader";
 import { useRouter } from "next/navigation";
 import { FaRegEye } from "react-icons/fa";
 import { LiaEdit } from "react-icons/lia";
+import { useAppSelector } from "components/Others/HelperRedux";
+
 
 import { generateSlug } from 'data/Data';
 
@@ -26,8 +28,6 @@ interface CategoryProps {
   setCategory: any;
   setselecteMenu: (menu: string) => void;
   loading: boolean;
-  canAddProduct: boolean;
-  canDeleteProduct: boolean;
   setEditProduct: any;
 }
 
@@ -36,8 +36,6 @@ const ViewProduct: React.FC<CategoryProps> = ({
   setCategory,
   setselecteMenu,
   loading,
-  canAddProduct,
-  canDeleteProduct,
   setEditProduct
 }) => {
   const router = useRouter();
@@ -46,6 +44,15 @@ const ViewProduct: React.FC<CategoryProps> = ({
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
+  const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
+
+  const canAddProduct=loggedInUser && (loggedInUser.role =='Admin' ?   loggedInUser.canAddProduct : true ) 
+  const canDeleteProduct=loggedInUser && (loggedInUser.role =='Admin' ?  loggedInUser.canDeleteProduct : true )
+  const canEditproduct = loggedInUser && (loggedInUser.role =='Admin'  ? loggedInUser.canDeleteProduct : true )  
+
+
+  console.log(canDeleteProduct, "canAddProduct"
+  )
 
   const filteredProducts: Product[] = Categories?.filter((product: any) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -131,11 +138,16 @@ const ViewProduct: React.FC<CategoryProps> = ({
       key: "Edit",
       render: (text: any, record: Product) => (
         <LiaEdit
-          className={"cursor-pointer"}
+  
+          className={`${canEditproduct ? "cursor-pointer" : ""} ${!canEditproduct ? "cursor-not-allowed text-slate-200" : ""
+            }`}
           size={20}
           onClick={() => {
-            setEditProduct(record);
-            setselecteMenu("Add Products");
+   if(canEditproduct)           {
+     setEditProduct(record);
+     setselecteMenu("Add Products");
+
+            }
           }}
         />
       ),
@@ -145,7 +157,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
       key: "action",
       render: (text: any, record: Product) => (
         <RiDeleteBin6Line
-          className={`${canDeleteProduct ? "text-red-500 cursor-pointer" : ""} ${!canDeleteProduct ? "cursor-not-allowed text-gray-400" : ""
+          className={`${canDeleteProduct ? "text-red cursor-pointer" : ""} ${!canDeleteProduct ? "cursor-not-allowed text-slate-200" : ""
             }`}
           size={20}
           onClick={() => {
@@ -179,7 +191,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
             <div>
               <p
                 className={`${canAddProduct && 'cursor-pointer'
-                  } p-2 ${canAddProduct && 'hover:bg-gray-200'} flex justify-center ${!canAddProduct && 'cursor-not-allowed text-gray-400'
+                  } p-2 ${canAddProduct && 'hover:bg-slate-300'} flex justify-center ${!canAddProduct && 'cursor-not-allowed text-slate-300'
                   }`}
                 onClick={() => {
                   if (canAddProduct) {

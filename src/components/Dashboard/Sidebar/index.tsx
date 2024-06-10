@@ -18,6 +18,7 @@ interface SidebarProps {
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
+  let superAdmin = loggedInUser && loggedInUser.role !=='Admin'
 
   const pathname = usePathname();
 
@@ -122,7 +123,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Dashboard --> */}
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === "/" || pathname.includes("dashboard")
+                  pathname === "/dashboard" 
                 }
               >
                 {(handleClick, open) => {
@@ -131,8 +132,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <Link
                         href="/dashboard"
                         className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === "/" ||
-                            pathname.includes("dashboard")) &&
+                          (pathname === "/dashboard" 
+                          ) &&
                           "bg-graydark dark:bg-meta-4"
                         }`}
                         onClick={(e) => {
@@ -305,6 +306,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   );
                 }}
               </SidebarLinkGroup>
+{
+  superAdmin ? 
               <li>
                 <Link
                   href="/dashboard/super-admin"
@@ -317,7 +320,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
                   Admin
                 </Link>
-              </li>
+              </li> : null
+}
+
 
               <li>
                 <Link
