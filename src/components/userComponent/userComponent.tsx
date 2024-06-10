@@ -66,22 +66,21 @@ export default function UserComponent({
             <div className="h-screen flex justify-center items-center flex-col ">
               <div className="lg:w-3/5">
                 <div className="flex flex-col items-center lg:mb-20 mb-10">
-                  <h2 className="text-xl text-[#3A393C] lg:text-4xl">{adminFlag ? `Sign In as ${adminType}` : title && title}</h2>
+                  <h2 className="text-xl text-[#3A393C] lg:text-4xl">{adminFlag ? `Sign in as ${adminType}` : title && title}</h2>
                   <p className="text-sm text-[#9096B2] mt-3 text-center">
                     {descrition && descrition}
                   </p>
                 </div>
                 {
                   adminFlag ?
-                    <div className=" mb-2 flex gap-3 items-center">
-                      <p>Sign in As </p>
-                      <Select
+                    <div className=" mb-4 flex gap-3 items-center">
+                      <p className="w-full">Sign in As </p>
+                      <Select className="w-full"
                         defaultValue='Admin'
-                        style={{ width: 120 }}
                         onChange={selecthandleChange}
                         options={[
                           { value: 'Admin', label: 'Admin' },
-                          { value: 'spuer-Admin', label: 'spuer-Admin' },
+                          { value: 'Super-Admin', label: 'Super-Admin' },
 
                         ]}
                       />

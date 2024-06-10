@@ -4,6 +4,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
 import Loader from "components/Loader/Loader";
 import Cookies from 'js-cookie';
+import { FaEdit } from "react-icons/fa";
 
       const superAdmintoken  = Cookies.get('superAdminToken');
 
@@ -12,6 +13,7 @@ function Admins({ setselecteMenu }: any) {
   const [admins, setAdmins] = useState([]);
   const [loading, setloading] = useState<boolean>(false);
   const [delLoading, setDelLoading] = useState<string | null>(null);
+  const [editLoading, setEditLoading] = useState<string | null>(null);
   const superAdmintoken  = Cookies.get('superAdminToken');
 
 
@@ -137,6 +139,21 @@ function Admins({ setselecteMenu }: any) {
       ),
     },
 
+    // {
+    //   title: "Edit",
+    //   key: "edit",
+    //   render: (text: any, record: any) =>
+    //     editLoading === record._id ? ( 
+    //       <Loader />
+    //     ) : (
+    //       <FaEdit
+    //         className="cursor-pointer text-red-500"
+    //         size={20}
+    //         onClick={() => handleEdit(record._id)}
+    //       />
+    //     ),
+        
+    // },
     {
       title: "Actions",
       key: "actions",
@@ -150,6 +167,7 @@ function Admins({ setselecteMenu }: any) {
             onClick={() => handleDelete(record._id)}
           />
         ),
+        
     },
   ];
 
@@ -162,7 +180,7 @@ function Admins({ setselecteMenu }: any) {
         </div>
       ) : (
         <>
-          <div className="flex justify-between mb-4 items-center">
+          <div className="flex justify-between mb-4 items-center text-black dark:text-white ">
             <p>Admins</p>
             <div>
               <Button
@@ -174,7 +192,7 @@ function Admins({ setselecteMenu }: any) {
             </div>
           </div>
           {admins && admins.length > 0 ? (
-            <Table dataSource={admins} columns={columns} pagination={false} rowKey="_id" />
+            <Table className="overflow-auto dark:border-strokedark dark:bg-boxdark" dataSource={admins} columns={columns} pagination={false} rowKey="_id" />
           ) : (
             <div className="flex justify-center"> No Admin found</div>
           )}

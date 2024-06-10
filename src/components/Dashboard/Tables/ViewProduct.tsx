@@ -180,7 +180,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
         </div>
       ) : (
         <>
-          <div className="flex justify-between mb-4 items-center flex-wrap">
+          <div className="flex justify-between mb-4 items-center flex-wrap text-black dark:text-white">
             <input
               className="peer lg:p-3 p-2 block outline-none border rounded-md border-gray-200 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
               type="search"
