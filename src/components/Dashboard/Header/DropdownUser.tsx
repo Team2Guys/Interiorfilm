@@ -4,10 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAppSelector } from "components/Others/HelperRedux";
+import Cookies from 'js-cookie';
+import { useRouter } from "next/navigation";
+
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { loggedInUser }: any = useAppSelector(state => state.usersSlice);
+  const router = useRouter()
 
 
   const trigger = useRef<any>(null);
@@ -39,6 +43,12 @@ const DropdownUser = () => {
     return () => document.removeEventListener("keydown", keyHandler);
   });
 
+
+  const logoutHhandler = ()=>{
+Cookies.remove('2guysAdminToken');
+    router.push('/dashboard/auth/Admin-login')
+
+  }
   return (
     <div className="relative">
       <Link
@@ -125,7 +135,7 @@ const DropdownUser = () => {
           </li>
     
         </ul>
-        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base text-black dark:text-white">
+        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base text-black dark:text-white" onClick={logoutHhandler}>
           <svg
             className="fill-current"
             width="22"

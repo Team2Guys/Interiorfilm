@@ -286,18 +286,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }`}
                       >
                         <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
-                          <li>
-                            <Link
-                              href="/dashboard/products/AddNewProduct"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname ===
-                                  "/dashboard/products/AddNewProduct" &&
-                                "text-white"
-                              }`}
-                            >
-                              Add Products
-                            </Link>
-                          </li>
+                      
                           <li>
                             <Link
                               href="/dashboard/products"

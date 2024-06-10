@@ -1,15 +1,69 @@
 "use client";
-import React from "react";
+import React, { useLayoutEffect, useState } from "react";
 import ChartOne from "./Charts/ChartOne";
 import ChartThree from "./Charts/ChartThree";
 import ChartTwo from "./Charts/ChartTwo";
 import CardDataStats from "./CardDataStats";
+import Cookies from 'js-cookie';
+interface RECORDS {
+  totalAdmins: string,
+  totalCategories: string,
+  totalProducts: string,
+  totalUsers: string,
+  totalProfit:string
+
+}
 
 const ECommerce: React.FC = () => {
+  const [loading, setloading] = useState(false)
+  const [records, setRecords] = useState<RECORDS | undefined>()
+
+
+  const getAllAdmins = async () => {
+
+    try {
+      setloading(true)
+      const token = Cookies.get('2guysAdminToken');
+
+      if (!token) {
+        return;
+      }
+
+      const headers = {
+        'token': token
+      };
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/geRecords`, {
+        method: 'GET',
+        headers: headers
+      });
+
+
+      const record = await response.json();
+      setRecords(record)
+
+      setloading(false)
+
+    } catch (err) {
+      console.log(err, "err")
+      setloading(false)
+
+    }
+
+
+
+  };
+  useLayoutEffect(() => {
+
+
+    getAllAdmins();
+  }, [])
   return (
+
     <>
+      <button onClick={getAllAdmins}> handler button</button>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Total views" total="$3.456K" rate="0.43%" levelUp>
+      <CardDataStats title="Admins" total={records?.totalAdmins ? records?.totalAdmins : ''}>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -28,7 +82,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Profit" total="$45,2K" rate="4.35%" levelUp>
+        <CardDataStats title="Total Profit" total={records?.totalProfit ? records?.totalProfit : ''} >
           <svg
             className="fill-primary dark:fill-white"
             width="20"
@@ -51,7 +105,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Product" total="2.450" rate="2.59%" levelUp>
+        <CardDataStats title="Total Product" total={records?.totalProducts ? records?.totalProducts : ''} >
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -70,7 +124,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Users" total="3.456" rate="0.95%" levelDown>
+        <CardDataStats title="Total Users" total={records?.totalUsers ? records?.totalUsers : ''} >
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -99,7 +153,7 @@ const ECommerce: React.FC = () => {
         <ChartOne />
         <ChartTwo />
         <ChartThree />
-  
+
       </div>
     </>
   );

@@ -10,14 +10,20 @@ import { useAppDispatch} from "components/Others/HelperRedux";
 import { loggedInUserAction } from '../../../../redux/slices/AdminsSlice';
 import USRcomponent from 'components/userComponent/userComponent'
 import { IoIosLock, IoMdMail } from "react-icons/io";
-import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
+import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";;
+import { Select } from 'antd';
+
+const { Option } = Select;
+
 
 import Cookies from 'js-cookie';
 
 
 
 
-
+const handleChange = (value: string) => {
+  console.log(`selected ${value}`);
+};
 
 
 const DashboardLogin= () => {
@@ -36,14 +42,7 @@ const intialvalue =   {
   const [loading, setloading] = useState<boolean | null | undefined>(false);
 
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-   
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -107,10 +106,24 @@ const intialvalue =   {
     },
   ];
 
+  const selecthandleChange = (value:string) => {
+    // Handle the selected value directly
+    console.log(`selected ${value}`);
+  };
+
+
+
+
 
   return (
     <>
-    <div><USRcomponent handleSubmit={handleSubmit} 
+    <div>
+      
+   
+  
+
+      
+      <USRcomponent handleSubmit={handleSubmit} 
      error={error} 
      loading={loading}
       inputFields={inputFields} 

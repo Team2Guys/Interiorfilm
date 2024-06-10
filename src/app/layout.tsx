@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Script from 'next/script'
 
 import "./globals.css";
 import PathnameWrapper from "components/PathnameWrapper";
@@ -38,6 +39,8 @@ export default function RootLayout({
         </PathnameWrapper>
 
       </body>
+      <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
+
     </html>
     </Providers>
 
