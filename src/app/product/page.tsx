@@ -27,43 +27,70 @@ const Product = () => {
   const [colorName, setColorName] = useState<string>()
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [sortOption, setSortOption] = useState<string>("Default")
-  const [category, setCategory] = useState<any[]>();
-  const [open, setOpen] = useState(false);
-  const [priceRange, setPriceRange] = useState({ from: "", to: Infinity });
-  const [value, setValue] = useState(1);
-  const [activeLink, setActiveLink] = useState("");
+  const [category, setCategory] = useState<any[]>()
+  const [open, setOpen] = useState(false)
+  const [priceRange, setPriceRange] = useState({ from: "", to: Infinity })
+  const [value, setValue] = useState(1)
+  const [activeLink, setActiveLink] = useState("")
+  const [inStockOnly, setInStockOnly] = useState<boolean>(false)
+  const [outOfStockOnly, setOutOfStockOnly] = useState<boolean>(false)
 
+  const handleInStockChange: CheckboxProps['onChange'] = (e) => {
+    setInStockOnly(e.target.checked)
+    setOutOfStockOnly(false)
+    setValue(2)
+  }
+
+  const handleOutOfStockChange: CheckboxProps['onChange'] = (e) => {
+    setOutOfStockOnly(e.target.checked)
+    setInStockOnly(false)
+    setValue(3)
+  }
+
+  const handleAllProductsChange = () => {
+    setInStockOnly(false)
+    setOutOfStockOnly(false)
+    setValue(1)
+  }
 
   const onChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
-    setValue(e.target.value);
-  };
+    setValue(e.target.value)
+    if (e.target.value === 1) {
+      handleAllProductsChange()
+    } else if (e.target.value === 2) {
+      setInStockOnly(true)
+      setOutOfStockOnly(false)
+    } else if (e.target.value === 3) {
+      setOutOfStockOnly(true)
+      setInStockOnly(false)
+    }
+  }
+
   const showDrawer = () => {
-    setOpen(true);
-  };
-  
+    setOpen(true)
+  }
+
   const onClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   useLayoutEffect(() => {
     getPRODUCTS(setTotalProducts, setError, setLoading, 1, setTotalPage, setTotalProductscount)
   }, [])
 
   const CategoryHandler = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
-    const categories = await response.json();
-    setCategory(categories);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`)
+    const categories = await response.json()
+    setCategory(categories)
     
-    // Set active link to the first category when categories are fetched
     if (categories.length > 0) {
-      setActiveLink(categories[0].name);
+      setActiveLink(categories[0].name)
     }
-  };
+  }
 
   useLayoutEffect(() => {
-    CategoryHandler();
-  }, []);
+    CategoryHandler()
+  }, [])
 
   const getProductsHandler = (page: number) => {
     getPRODUCTS(setTotalProducts, setError, setLoading, page)
@@ -78,14 +105,16 @@ const Product = () => {
   }
 
   const handlePriceChange = (key: string, value: number) => {
-    setPriceRange(prev => ({ ...prev, [key]: value }));
+    setPriceRange(prev => ({ ...prev, [key]: value }))
   }
 
   const filteredProducts = totalProducts
     .filter(product =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (!colorName || product.colors.some(color => color.colorName === colorName)) &&
-      (product.salePrice >= priceRange.from && product.salePrice <= priceRange.to)
+      (product.salePrice >= priceRange.from && product.salePrice <= priceRange.to) &&
+      (!inStockOnly || product.totalStockQuantity > 0) &&
+      (!outOfStockOnly || product.totalStockQuantity === 0 || !product.totalStockQuantity)
     )
 
   const sortedProducts = filteredProducts.sort((a, b) => {
@@ -94,12 +123,13 @@ const Product = () => {
     } else if (sortOption === "High to Low") {
       return b.salePrice - a.salePrice
     } else {
-      return 0 // Default sorting (could be by name or id)
+      return 0
     }
   })
+
   const handleCategoryClick = (categoryName: string) => {
-    setActiveLink(categoryName);
-  };
+    setActiveLink(categoryName)
+  }
 
   return (
     <>
@@ -146,8 +176,9 @@ const Product = () => {
                 <Collapse title="Availability">
                 <Radio.Group onChange={onChange} value={value}>
                 <Space direction="vertical">
-                  <Radio value={1}>In Stock</Radio>
-                  <Radio value={2}>Out Of Stock</Radio>
+                <Radio  value={1}>All Product</Radio>
+                  <Radio checked={inStockOnly} onChange={handleInStockChange} value={2}>In Stock</Radio>
+                  <Radio checked={outOfStockOnly} onChange={handleOutOfStockChange} value={3}>Out Of Stock</Radio>
                   </Space>
                 </Radio.Group>
                 </Collapse>
@@ -205,8 +236,8 @@ const Product = () => {
                   <Collapse title="Availability">
                   <Radio.Group onChange={onChange} value={value}>
                   <Space direction="vertical">
-                    <Radio value={1}>In Stock</Radio>
-                    <Radio value={2}>Out Of Stock</Radio>
+                    <Radio checked={inStockOnly} onChange={handleInStockChange} value={1}>In Stock</Radio>
+                    <Radio checked={outOfStockOnly} onChange={handleOutOfStockChange} value={2}>Out Of Stock</Radio>
                     </Space>
                   </Radio.Group>
                   </Collapse>

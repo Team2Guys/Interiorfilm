@@ -51,6 +51,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   ) || [];
 
+  console.log(filteredProducts ,"filteredProducts")
   const handleDelete = async (key: string) => {
     try {
       let response = await axios.delete(
