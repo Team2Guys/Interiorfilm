@@ -117,6 +117,7 @@ interface PRODUCTS_TYPES {
   starRating?: string;
   reviews?: string;
   sizes?: string[];
+  
 }
 
 export default PRODUCTS_TYPES;

@@ -35,6 +35,8 @@ const Product = () => {
   const [inStockOnly, setInStockOnly] = useState<boolean>(false)
   const [outOfStockOnly, setOutOfStockOnly] = useState<boolean>(false)
 
+
+  console.log(totalProducts, "totalProducts")
   const handleInStockChange: CheckboxProps['onChange'] = (e) => {
     setInStockOnly(e.target.checked)
     setOutOfStockOnly(false)
@@ -84,9 +86,6 @@ const Product = () => {
     console.log(categories, "categories categories")
     setCategory(categories)
     
-    if (categories.length > 0) {
-      setActiveLink(categories[0].name)
-    }
   }
 
   useLayoutEffect(() => {
@@ -167,7 +166,7 @@ const Product = () => {
                   <ul className="px-1 pt-2 space-y-1 ">
                     {category?.map((item, index) => (
                       <li className='flex flex-col w-full' key={index} >
-                        <Link className={activeLink === item.name ? "bg-primary px-2 text-white rounded-md w-full h-8 flex items-center" : "hover:bg-primary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center"} onClick={() => handleCategoryClick(item.name)} href={"/"}>{item.name}</Link>
+                        <div className={activeLink === item.name ? "bg-primary px-2 text-white rounded-md w-full h-8 flex items-center cursor-pointer" : "hover:bg-primary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center cursor-pointer"} onClick={() => handleCategoryClick(item.name)} href={"/"}>{item.name}</div>
                       </li>
                     ))}
                   </ul>
@@ -206,66 +205,7 @@ const Product = () => {
               </div>
             </div>
           </div>
-          <DrawerMenu
-            showDrawer={showDrawer}
-            onClose={onClose}
-            open={open}
-            className="float-end"
-            width={300}
-            title={
-              <>
-                <div className="flex md:hidden mt-5 underline gap-2 items-center">
-                  <IoFunnelOutline size={20} />
-                  Filters{" "}
-                </div>
-              </>
-            }
-            content={
-              <div className="space-y-2">
-                <div className="p-2 bg-secondary">
-                  <Collapse title="All Categories">
-                    <ul className="px-1 pt-2 space-y-1">
-                      {category?.map((item, index) => (
-                        <li key={index}>
-                          <Link href={"/"}>{item.name}</Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </Collapse>
-                </div>
-                  <div className="p-2 bg-secondary">
-                  <Collapse title="Availability">
-                  <Radio.Group onChange={onChange} value={value}>
-                  <Space direction="vertical">
-                    <Radio checked={inStockOnly} onChange={handleInStockChange} value={1}>In Stock</Radio>
-                    <Radio checked={outOfStockOnly} onChange={handleOutOfStockChange} value={2}>Out Of Stock</Radio>
-                    </Space>
-                  </Radio.Group>
-                  </Collapse>
-                </div>
-                <div className="p-2 bg-secondary">
-                  <Collapse title="Filter Price">
-                    <div className='flex gap-2'>
-                      <Input
-                        className='h-10'
-                        placeholder='From'
-                        type='number'
-                        value={priceRange.from === Infinity ? '' : priceRange.from}
-                        onChange={(e) => handlePriceChange('from', Number(e.target.value))}
-                      />
-                      <Input
-                        className='h-10'
-                        placeholder='To'
-                        type='number'
-                        value={priceRange.to === Infinity ? '' : priceRange.to}
-                        onChange={(e) => handlePriceChange('to', Number(e.target.value))}
-                      />
-                    </div>
-                  </Collapse>
-                </div>
-              </div>
-            }
-          />
+
           <div className="w-full md:w-9/12">
             {error ? (
               <div className="text-red flex justify-center items-center">{error}</div>
