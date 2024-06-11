@@ -179,18 +179,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === "dashboard/forms" ||
-                  pathname.includes("dashboard/forms")
+                  pathname === "/dashboard/Add_Category/AddNewCategory" 
                 }
               >
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
                       <Link
-                        href="/dashboard"
+                        href="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === "dashboard/forms" ||
-                            pathname.includes("dashboard/forms")) &&
+                          (pathname === "/dashboard/Add_Category/AddNewCategory" 
+          
+                          ) &&
                           "bg-graydark dark:bg-meta-4"
                         }`}
                         onClick={(e) => {
@@ -246,12 +246,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   );
                 }}
               </SidebarLinkGroup>
-              {/* <!-- Menu Item Forms --> */}
-              {/* <!-- Menu Item Forms --> */}
+              
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === "dashboard/forms" ||
-                  pathname.includes("dashboard/forms")
+                  pathname === "/dashboard/products" 
                 }
               >
                 {(handleClick, open) => {
@@ -260,8 +258,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <Link
                         href="/dashboard"
                         className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === "dashboard/forms" ||
-                            pathname.includes("dashboard/forms")) &&
+                          (pathname === "/dashboard/products" ) &&
                           "bg-graydark dark:bg-meta-4"
                         }`}
                         onClick={(e) => {
