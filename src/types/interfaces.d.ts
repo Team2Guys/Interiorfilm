@@ -35,6 +35,8 @@ export interface USRPROPS {
     price: string;
     category: string;
     colors: { colorName: string }[];
+    totalStockQuantity: number;
+    variantStockQuantities: { variant: string; quantity: number }[]; 
     modelDetails: { name: string; detail: string }[]; 
     spacification: { specsDetails: string }[];
     discountPrice: string;

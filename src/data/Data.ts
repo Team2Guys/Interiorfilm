@@ -55,7 +55,14 @@ export const inputFields = [
     { name: "name", type: 'text' },
 
   ];
-
+  export const withoutVariation = [
+    { name: "totalStockQuantity", type: 'number' },
+  ];
+  
+  export const Variation = [
+    { name: "variant", type: 'text' },
+    { name: "quantity", type: 'number' },
+  ];
 
 
   export const validationSchema = Yup.object({
@@ -84,6 +91,8 @@ export const inputFields = [
     description: '',
     price: '',
     colors: [],
+    totalStockQuantity: 0,
+    variantStockQuantities: [],
     modelDetails: [],
     spacification: [],
     discountPrice: '',

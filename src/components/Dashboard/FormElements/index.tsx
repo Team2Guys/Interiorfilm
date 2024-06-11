@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, DragEvent, SetStateAction, useEffect, useLayoutEffect } from 'react';
-import { Formik, FieldArray, FormikErrors, Form, ErrorMessage } from 'formik';
+import { Formik, FieldArray, FormikErrors, Form, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
 import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
 import SelectGroupTwo from "components/Dashboard/SelectGroup/SelectGroupTwo";
@@ -13,10 +13,10 @@ import { ImageRemoveHandler } from 'utils/helperFunctions';
 import { Product, FormValues } from "types/interfaces";
 import Toaster from "components/Toaster/Toaster";
 import axios from 'axios';
-
 import { IoMdArrowRoundBack } from "react-icons/io";
 import Loader from 'components/Loader/Loader';
 import { usePathname } from 'next/navigation';
+import { withoutVariation } from 'data/Data';
 
 interface ADDPRODUCTFORMPROPS {
   setselecteMenu: any
@@ -64,7 +64,14 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
   const [productInitialValue, setProductInitialValue] = useState<any | null | undefined>(EditProductValue)
   const [imgError, setError] = useState<string | null | undefined>()
   const [Categories, setCategories] = useState<any[]>();
+  const [VariationOption, setVariationOption] = useState<string>("");
 
+
+  const handleOptionChange = (e: any) => {
+    setVariationOption(e.target.value);
+    setQuantity('');
+    setColor('');
+  };
 
   const changeTextColor = () => {
     setIsOptionSelected(true);
@@ -81,6 +88,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
     starRating: '',
     reviews: '',
     colors: [],
+    variantStockQuantities:[],
     modelDetails: [],
     spacification: [],
     sizes: [],
@@ -544,7 +552,112 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
                   </div>
 
+                  <div>
 
+<div className="mb-4">
+  <label className="block text-sm font-medium text-gray-700 mb-2">
+    Add stock Quantity
+  </label>
+  <Field
+    id="variationSelect" value={VariationOption} onChange={handleOptionChange}
+    as="select"
+    name="category"
+    className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent bg-white"
+  >
+    <option value="" className="text-gray-500">
+      Select a Variation
+    </option>
+    <option value="withoutVariation">Without Variation</option>
+    <option value="withVariation">With Variation</option>
+  </Field>
+</div>
+
+{VariationOption === 'withoutVariation' && (
+  <>
+    {withoutVariation.map((inputField, index) => (
+      <div key={index} className="mb-4">
+        <label className="block text-sm font-medium mb-1">
+          {inputField.name.charAt(0).toLocaleUpperCase() +
+            inputField.name.slice(1)}
+        </label>
+        <Field
+          type={inputField.type}
+          name={inputField.name}
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+        />
+        <ErrorMessage
+          name={inputField.name}
+          component="div"
+          className="text-red-500"
+        />
+      </div>
+    ))}
+  </>
+)}
+
+{VariationOption === 'withVariation' && (
+  <>
+    <FieldArray name="variantStockQuantities">
+      {({ push, remove }) => (
+        <div>
+          {formik.values.variantStockQuantities.map((model, index) => (
+            <div
+              key={index}
+              className="flex flex-col md:flex-row md:items-center mb-4"
+            >
+              <div className="md:flex-1 md:mr-4 mb-4 md:mb-0">
+                <Field
+                  type="text"
+                  name={`variantStockQuantities[${index}].Variant`}
+                  placeholder="Variant"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                />
+                <ErrorMessage
+                  name={`variantStockQuantities[${index}].Variant`}
+                  component="div"
+                  className="text-red-500 mt-1"
+                />
+              </div>
+              <div className="md:flex-1 md:mr-4 mb-4 md:mb-0">
+                <Field
+                  type="number"
+                  name={`variantStockQuantities[${index}].Quantity`}
+
+                  placeholder="Quantity"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                />
+                <ErrorMessage
+                  name={`variantStockQuantities[${index}].Quantity`}
+                  component="div"
+                  className="text-red-500 mt-1"
+                />
+              </div>
+              <div className="md:flex-none text-right">
+                <button
+                  type="button"
+                  onClick={() => remove(index)}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          ))}
+          <div className="text-left">
+            <button
+              type="button"
+              onClick={() => push({ name: "", detail: "" })}
+              className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
+            >
+              Add Variation
+            </button>
+          </div>
+        </div>
+      )}
+    </FieldArray>
+  </>
+)}
+</div>
 
                   <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">

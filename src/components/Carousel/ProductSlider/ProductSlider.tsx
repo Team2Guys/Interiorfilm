@@ -114,7 +114,7 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PRPS> = ({ Productname }) => {
           <button ref={nextRef} className='p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
             <MdArrowForwardIos size={15} />
           </button>
-        </div>
+        </div> 
       </div>
   );
 };
