@@ -1,77 +1,205 @@
-//@ts-nocheck
-import { Table } from 'antd'
-import Button from 'components/Common/Button'
-import React from 'react'
-import { MdOutlineDelete } from 'react-icons/md';
+import React, { useEffect, useState } from "react";
+import { Table, Button } from "antd";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import axios from "axios";
+import Loader from "components/Loader/Loader";
+import Cookies from 'js-cookie';
+import { FaEdit } from "react-icons/fa";
 
-const dataSource = [
-    {
-      key: '1',
-      Name: 'John Doe',
-      Email: 32,
-      age: 32,
-      AddProduct: 32,
-      DeleteProduct: 32,
-      AddCategory: 32,
-      DeleteCategory: 32,
-      Action: <><MdOutlineDelete size={20} /> </>,
-      
-    },
+      const superAdmintoken  = Cookies.get('superAdminToken');
 
-  ];
-  
+
+function Admins({ setselecteMenu }: any) {
+  const [admins, setAdmins] = useState([]);
+  const [loading, setloading] = useState<boolean>(false);
+  const [delLoading, setDelLoading] = useState<string | null>(null);
+  const [editLoading, setEditLoading] = useState<string | null>(null);
+  const superAdmintoken  = Cookies.get('superAdminToken');
+
+
+  useEffect(() => {
+    const getAllAdmins = async () => {
+      try {
+        setloading(true);
+        const token = Cookies.get('superAdminToken');
+        if (!token) {
+          return;
+        }
+
+        const headers = {
+          token: token,
+        };
+
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/getAllAdmins`,
+          {
+            method: "GET",
+            headers: headers,
+          }
+        );
+
+        const admins = await response.json();
+        console.log(admins, "admins")
+        setAdmins(admins);
+        setloading(false);
+      } catch (err) {
+        console.log(err, "err");
+        setloading(false);
+      }
+    };
+
+    getAllAdmins();
+  }, []);
+
+  const handleDelete = async (id: string) => {
+    try {
+      const token = localStorage.getItem("superAdminToken");
+      if (!token) {
+        // Handle case where token is not available
+        return;
+      }
+      setDelLoading(id); // Set loading state for the specific admin being deleted
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/deletAdmin/${id}`,
+        {
+          headers: {
+            token: token,
+          },
+        }
+      );
+      setAdmins((prevAdmins) =>
+        prevAdmins.filter((admin: any) => admin._id !== id)
+      );
+    } catch (error) {
+      console.error("Error deleting admin:", error);
+    } finally {
+      setDelLoading(null); // Reset loading state after delete operation completes
+    }
+  };
+
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'Name',
-      key: 'Name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      render: (text: any, record: any) =>
+        `${record.fullname}`,
     },
     {
-      title: 'Email',
-      dataIndex: 'Email',
-      key: 'Email',
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: 'Add Product',
-      dataIndex: 'AddProduct',
-      key: 'AddProduct',
+      title: "Can Add Product",
+      dataIndex: "canAddProduct",
+      key: "canAddProduct",
+      render: (text: any, record: any) => (
+        <span>{record.canAddProduct ? "Yes" : "No"}</span>
+      ),
     },
     {
-        title: 'Delete Product',
-        dataIndex: 'DeleteProduct',
-        key: 'DeleteProduct',
-      },
-      {
-        title: 'Add Category',
-        dataIndex: 'AddCategory',
-        key: 'AddCategory',
-      },
-      {
-        title: 'Delete Category',
-        dataIndex: 'DeleteCategory',
-        key: 'DeleteCategory',
-      },
+      title: "Can Delete Product",
+      dataIndex: "canDeleteProduct",
+      key: "canDeleteProduct",
+      render: (text: any, record: any) => (
+        <span>{record.canDeleteProduct ? "Yes" : "No"}</span>
+      ),
+    },
     {
-        title: 'Action',
-        dataIndex: 'Action',
-        key: 'Action',
-        fixed: 'right',
-        width: 10,
-      },
+      title: "Can Add Category",
+      dataIndex: "canAddCategory",
+      key: "canAddCategory",
+      render: (text: any, record: any) => (
+        <span>{record.canAddCategory ? "Yes" : "No"}</span>
+      ),
+    },
+    {
+      title: "Can View Product",
+      dataIndex: "canDeleteCategory",
+      key: "canDeleteCategory",
+      render: (text: any, record: any) => (
+        <span>{record.canDeleteCategory ? "Yes" : "No"}</span>
+      ),
+    },
+    {
+      title: "Can view Profit",
+      dataIndex: "canCheckProfit",
+      key: "canCheckProfit",
+      render: (text: any, record: any) => (
+        <span>{record.canCheckProfit ? "Yes" : "No"}</span>
+      ),
+    },
+    {
+      title: "Can View Total user",
+      dataIndex: "canViewUsers",
+      key: "canViewUsers",
+      render: (text: any, record: any) => (
+        <span>{record.canViewUsers ? "Yes" : "No"}</span>
+      ),
+    },
+
+    // {
+    //   title: "Edit",
+    //   key: "edit",
+    //   render: (text: any, record: any) =>
+    //     editLoading === record._id ? ( 
+    //       <Loader />
+    //     ) : (
+    //       <FaEdit
+    //         className="cursor-pointer text-red-500"
+    //         size={20}
+    //         onClick={() => handleEdit(record._id)}
+    //       />
+    //     ),
+        
+    // },
+    {
+      title: "Actions",
+      key: "actions",
+      render: (text: any, record: any) =>
+        delLoading === record._id ? ( // Check if loading state matches current admin ID
+          <Loader />
+        ) : (
+          <RiDeleteBin6Line
+            className="cursor-pointer text-red-500"
+            size={20}
+            onClick={() => handleDelete(record._id)}
+          />
+        ),
+        
+    },
   ];
 
-const AllAdmin = ({setselecteMenu}:any) => {
   return (
-    <>
-          <div className="flex justify-between mb-4 items-center">
-            <p className='font-semibold text-lg'>All Admin</p>
+    <div>
+      {/* Admins Table */}
+      {loading ? (
+        <div className="flex justify-center mt-10">
+          <Loader />
+        </div>
+      ) : (
+        <>
+          <div className="flex justify-between mb-4 items-center text-black dark:text-white ">
+            <p>Admins</p>
             <div>
-              <Button className='bg-primary text-white' title={"Add new Admin"}  onClick={() => setselecteMenu("Add Admin")}/>
+              <Button
+                type="primary"
+                onClick={() => setselecteMenu("Add Admin")}
+              >
+                Add new Admin
+              </Button>
             </div>
           </div>
-          <Table className='overflow-x-auto overflow-hidden' dataSource={dataSource} columns={columns}  pagination={false}/>
-    </>
-  )
+          {admins && admins.length > 0 ? (
+            <Table className="overflow-auto dark:border-strokedark dark:bg-boxdark" dataSource={admins} columns={columns} pagination={false} rowKey="_id" />
+          ) : (
+            <div className="flex justify-center"> No Admin found</div>
+          )}
+        </>
+      )}
+    </div>
+  );
 }
 
-export default AllAdmin
+export default Admins;

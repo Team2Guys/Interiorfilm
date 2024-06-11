@@ -15,8 +15,8 @@ const CreateAdmin = ({setselecteMenu}:any) => {
     <p className="text-lg font-black mb-4 flex items-center justify-center gap-2
        hover:bg-gray-200 w-fit p-2 cursor-pointer"  onClick={() =>{setselecteMenu('AllAdmin')}}> <IoMdArrowRoundBack />  Back</p>
 
-<Form className='max-w-screen-md mx-auto  p-3 rounded-md shadow mt-1 mb-5' layout="vertical">
-        <Row gutter={[10,10]}>
+<Form className='max-w-screen-md mx-auto  rounded-md shadow-xl mt-1 mb-5' layout="vertical">
+        <Row gutter={[10,10]} className='lg:p-6 p-4'>
         <Col xl={{order:1,span:24}} lg={{order:1,span:24}} md={{order:1,span:24}} sm={{order:1,span:24}} xs={{order:1,span:24}}>
             <p className='text-2xl'>Create New Admin</p>
           </Col>
@@ -55,10 +55,12 @@ const CreateAdmin = ({setselecteMenu}:any) => {
             <Col xl={{order:1,span:6}} lg={{order:1,span:6}} md={{order:1,span:6}} sm={{order:1,span:12}} xs={{order:1,span:12}}>
             <Checkbox onChange={onChange}>Can Check Profit</Checkbox>
             </Col>
-            <Col xl={{order:1,span:12}} lg={{order:1,span:12}} md={{order:1,span:12}} sm={{order:1,span:24}} xs={{order:1,span:24}}>
-            <Checkbox onChange={onChange}>Can View Product , Category & User</Checkbox>
+            <Col xl={{order:1,span:6}} lg={{order:1,span:6}} md={{order:1,span:6}} sm={{order:1,span:12}} xs={{order:1,span:12}}>
+            <Checkbox onChange={onChange}>Can View Product</Checkbox>
             </Col>
-            
+            <Col xl={{order:1,span:6}} lg={{order:1,span:6}} md={{order:1,span:6}} sm={{order:1,span:12}} xs={{order:1,span:12}}>
+            <Checkbox onChange={onChange}>Category & User</Checkbox>
+            </Col>            
             <Col className='text-center mt-2' xl={{order:1,span:24}} lg={{order:1,span:24}} md={{order:1,span:24}} sm={{order:1,span:24}} xs={{order:1,span:24}}>
             <Button className='bg-primary text-white w-full' title={"Add Admin"} />
             </Col>

@@ -7,6 +7,8 @@ import { useAppDispatch } from "components/Others/HelperRedux";
 import { loggedInUserAction } from '../redux/slices/AdminsSlice';
 import axios from 'axios'
 import Cookies from 'js-cookie';
+import { useAppSelector } from "components/Others/HelperRedux";
+
 
 function ProtectedRoute(WrappedComponent: any) {
   const Wrapper = (props: any) => {
@@ -14,10 +16,11 @@ function ProtectedRoute(WrappedComponent: any) {
     const [loading, setLoading] = useState<boolean>(true);
     const dispatch = useAppDispatch();
 
-
-    const AddminProfileTriggerHandler = async (token: string) => {
+    const AddminProfileTriggerHandler = async (token: string, adminFlag:boolean) => {
       try {
-        let user: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/getAdminHandler`, {
+
+        let apiEndpoint = adminFlag ?  "getSuperAdminHandler" : "getAdminHandler"
+        let user: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/${apiEndpoint}`, {
           headers: {
             "token": token
           }
@@ -28,14 +31,17 @@ function ProtectedRoute(WrappedComponent: any) {
       }
     }
 
+    
     useEffect(() => {
       const token = Cookies.get('2guysAdminToken');
-
-      if (!token) {
+      const superAdmintoken  = Cookies.get('superAdminToken');
+      let Finaltoken = superAdmintoken ? superAdmintoken : token
+console.log(Finaltoken)
+      if (!Finaltoken) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         router.push("/dashboard/auth/Admin-login");
       } else {
-        AddminProfileTriggerHandler(token)
+        AddminProfileTriggerHandler( Finaltoken, superAdmintoken ? true : false)
         setLoading(false);
       }
     }, [router]);

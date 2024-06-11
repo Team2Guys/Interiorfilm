@@ -18,8 +18,7 @@ const AddAdmin = ({setselecteMenu}:any) => {
 
   // Initialize state for form data
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    fullname: "",
     email: "",
     password: "",
     canAddProduct: false,
@@ -48,8 +47,7 @@ const AddAdmin = ({setselecteMenu}:any) => {
     setLoading(true);
 console.log(formData, "formData")
     if (
-      !formData.firstName ||
-      !formData.lastName ||
+      !formData.fullname ||
       !formData.email ||
       !formData.password
     )
@@ -63,8 +61,7 @@ console.log(formData, "formData")
       Toaster("success", "Admin user has been sucessufully Created !");
       if(user){
         setFormData({
-          firstName: "",
-          lastName: "",
+          fullname: "",
           email: "",
           password: "",
           canAddProduct: false,
@@ -92,24 +89,15 @@ console.log(formData, "formData")
         <form className="space-y-4" onSubmit={handleSubmit}>
           <Input
             type="text"
-            name="firstName"
-            placeholder="Enter First Name"
+            name="fullname"
+            placeholder="Enter Full Name"
             label="First Name"
-            value={formData.firstName}
+            value={formData.fullname}
             onChange={handleChange}
-            id="firstName"
+            id="fullname"
             
           />
-          <Input
-            type="text"
-            name="lastName"
-            placeholder="Enter Last Name"
-            label="Last Name"
-            value={formData.lastName}
-            onChange={handleChange}
-            id="lastName"
-            
-          />
+
           <Input
             type="email"
             name="email"
