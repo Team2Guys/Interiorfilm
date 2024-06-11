@@ -81,6 +81,7 @@ const Product = () => {
   const CategoryHandler = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`)
     const categories = await response.json()
+    console.log(categories, "categories categories")
     setCategory(categories)
     
     if (categories.length > 0) {
