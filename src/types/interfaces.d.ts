@@ -116,7 +116,9 @@ interface PRODUCTS_TYPES {
   updatedAt: Date;
   starRating?: string;
   reviews?: string;
+  totalStockQuantity?: number;
   sizes?: string[];
+  
 }
 
 export default PRODUCTS_TYPES;

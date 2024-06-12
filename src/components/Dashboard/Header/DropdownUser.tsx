@@ -45,9 +45,14 @@ const DropdownUser = () => {
 
 
   const logoutHhandler = ()=>{
-Cookies.remove('2guysAdminToken');
-Cookies.remove('getSuperAdminHandler');
-    router.push('/dashboard/auth/Admin-login')
+    try{
+      Cookies.remove('2guysAdminToken');
+      Cookies.remove('superAdminToken');
+          router.push('/dashboard/auth/Admin-login')
+
+    }catch(err){
+      console.log(err)
+    }
 
   }
   return (

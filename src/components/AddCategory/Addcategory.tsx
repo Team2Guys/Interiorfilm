@@ -35,13 +35,9 @@ const FormLayout = ({
   let CategoryName =
     editCategory && editCategory.name ? { name: editCategory.name } : null;
   let CategorImageUrl = editCategory && editCategory.posterImageUrl;
-  const [posterimageUrl, setposterimageUrl] = useState<
-    any[] | null | undefined
-  >(CategorImageUrl ? [CategorImageUrl] : null);
+  const [posterimageUrl, setposterimageUrl] = useState<any[] | null | undefined>(CategorImageUrl ? [CategorImageUrl] : null);
   const [loading, setloading] = useState<boolean>(false);
-  const [editCategoryName, setEditCategoryName] = useState<
-    editCategoryNameType | null | undefined
-  >(CategoryName);
+  const [editCategoryName, setEditCategoryName] = useState<editCategoryNameType | null | undefined>(CategoryName);
 
   const onSubmit = async (values: Category, { resetForm }: any) => {
     try {
@@ -56,9 +52,8 @@ const FormLayout = ({
       let addProductUrl = updateFlag
         ? `/api/updateCategory/${editCategory._id} `
         : null;
-      let url = `${process.env.NEXT_PUBLIC_BASE_URL}${
-        updateFlag ? addProductUrl : "/api/AddCategory"
-      }`;
+      let url = `${process.env.NEXT_PUBLIC_BASE_URL}${updateFlag ? addProductUrl : "/api/AddCategory"
+        }`;
 
       const response = await axios.post(url, newValue);
       console.log(response, "response");
@@ -152,11 +147,10 @@ const FormLayout = ({
                           onChange={formik.handleChange}
                           value={formik.values.name}
                           placeholder="Title"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                            formik.touched.name && formik.errors.name
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
                               ? "border-red-500"
                               : ""
-                          }`}
+                            }`}
                         />
                         {formik.touched.name && formik.errors.name ? (
                           <div className="text-red-500 text-sm">

@@ -27,7 +27,13 @@ const Wishlist = () => {
           <Link className='underline' href={"/"}>Continue Shopping</Link>
           <Link className='underline' href={"/cart"}>Go to Cart</Link>
         </div>
-        <Table wishlistdata={WishlistItems} cartdata={[]} onCartChange={handleCartChange} />
+        { WishlistItems.length === 0 ? (
+          <div className="flex flex-col justify-center items-center space-y-3">
+            <p className='text-2xl'>Your Wishlist is empty.</p>
+          </div>
+        ) : (
+          <Table wishlistdata={WishlistItems} cartdata={[]} onCartChange={handleCartChange} />
+        )}
       </Container>
     </>
   );
