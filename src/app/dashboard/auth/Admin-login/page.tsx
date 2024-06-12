@@ -113,14 +113,6 @@ const DashboardLogin = () => {
     },
   ];
 
-  const selecthandleChange = (value: string) => {
-    // Handle the selected value directly
-    console.log(`selected ${value}`);
-  };
-
-
-
-
 
   return (
     <>

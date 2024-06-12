@@ -7,7 +7,7 @@ import ProtectedRoute from "hooks/AuthHookAdmin";
 import { useState } from "react";
 import Addcategory from "components/AddCategory/Addcategory";
 
-const category = () => {
+const Category = () => {
 
   const [menuType, setMenuType] = useState<string>("Categories")
 
@@ -29,4 +29,4 @@ const category = () => {
   );
 };
 
-export default  ProtectedRoute(category);
+export default  ProtectedRoute(Category);

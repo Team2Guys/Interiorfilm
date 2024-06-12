@@ -17,6 +17,8 @@ const Settings = () => {
   const { loggedInUser }: any = useAppSelector(state => state.usersSlice);
   const token = Cookies.get('2guysAdminToken');
   const dispatch = useAppDispatch();
+  let AdminType= loggedInUser && loggedInUser.role =="super-Admin"
+  console.log(AdminType,"AdminType")
 
   const initialFormData = {
     fullname: loggedInUser ? `${loggedInUser.fullname}` : "",
@@ -150,10 +152,10 @@ const Settings = () => {
                         Edit your photo
                       </span>
                       <span className="flex gap-2.5">
-                        <button className="text-sm hover:text-primary text-black dark:text-white" type="button">
+                        <button className="text-sm hover:text-primary text-black dark:text-white" type="button" disabled={AdminType}>
                           Delete
                         </button>
-                        <button className="text-sm hover:text-primary text-black dark:text-white" type="button">
+                        <button className="text-sm hover:text-primary text-black dark:text-white" type="button" disabled={AdminType}>
                           Update
                         </button>
                       </span>
@@ -161,6 +163,7 @@ const Settings = () => {
                   </div>
                   <div className="relative mb-4 h-36 rounded-md border-dashed border-stroke dark:border-strokedark bg-gray dark:bg-meta-4">
                     <input
+                    disabled={AdminType}
                       type="file"
                       accept="image/*"
                       onChange={handlePhotoChange}
@@ -208,6 +211,7 @@ const Settings = () => {
                       Full Name
                     </label>
                     <input
+                    disabled={AdminType}
                       className="w-full rounded border border-stroke bg-gray px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       type="text"
                       name="fullname"

@@ -1,7 +1,27 @@
 'use client'
 import { ApexOptions } from "apexcharts";
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import Cookies from 'js-cookie';
+import axios from "axios";
+import { useAppSelector } from "components/Others/HelperRedux";
+
+
+
+
+
+const getMonthNamesUpToCurrent = () => {
+  const monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+  
+  const today = new Date();
+  const currentMonth = today.getMonth(); // 0-based index (0 = January)
+
+  // Return the month names from January to the current month
+  return monthNames.slice(0, currentMonth + 1);
+};
 
 const options: ApexOptions = {
   legend: {
@@ -84,20 +104,7 @@ const options: ApexOptions = {
   },
   xaxis: {
     type: "category",
-    categories: [
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-    ],
+    categories: getMonthNamesUpToCurrent(),
     axisBorder: {
       show: false,
     },
@@ -124,26 +131,67 @@ interface ChartOneState {
 }
 
 const ChartOne: React.FC = () => {
-  const [state, setState] = useState<ChartOneState>({
-    series: [
-      {
-        name: "Product One",
-        data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30, 45],
-      },
+  const { loggedInUser }: any = useAppSelector(state => state.usersSlice);
 
-      {
-        name: "Product Two",
-        data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39, 51],
-      },
-    ],
-  });
+  let AdminType= loggedInUser && loggedInUser.role =="super-Admin"
+  const [state, setState] = useState<ChartOneState | undefined>();
 
   const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState,
-    }));
-  };
-  handleReset;
+    setState((prevState): ChartOneState => {
+        if (prevState) {
+            return { ...prevState };
+        } else {
+            return { series: [] }; // Return an empty object or default state
+        }
+    });
+};
+
+  // handleReset;
+
+interface PRODUCTTYPE {
+name:string, 
+data:number[]
+}
+  
+const getMonthlyRecord = async () => {
+  try {
+    const token = Cookies.get('2guysAdminToken');
+    const superAdmintoken = Cookies.get('superAdminToken');
+    const finalToken = token ? token : superAdmintoken;
+
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/getMonthlySales`, {
+      headers: {
+        "token": finalToken
+      }
+    });
+
+    const reports = response.data;
+    console.log(reports);
+
+    const keys = ["Revenue","Sales"];
+    if (AdminType) {
+      keys.unshift("Profit");
+  }
+
+    const defaultArray = keys.map(key => {
+      return {
+        name: key,
+        data: reports.map((report:any) => report[key] || 0) 
+      };
+    });
+
+    console.log(defaultArray, "defaultArray");
+
+    setState({ series: defaultArray });
+  } catch (err) {
+    console.error("Error fetching monthly record:", err);
+  }
+};
+
+
+useLayoutEffect(()=>{
+  getMonthlyRecord()
+},[])
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
@@ -154,8 +202,7 @@ const ChartOne: React.FC = () => {
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-primary"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-primary">Total Revenue</p>
-              <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>
+              <p className="font-semibold text-primary">Monthly Record</p>
             </div>
           </div>
           <div className="flex min-w-47.5">
@@ -164,18 +211,12 @@ const ChartOne: React.FC = () => {
             </span>
             <div className="w-full">
               <p className="font-semibold text-secondary">Total Sales</p>
-              <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>
             </div>
           </div>
         </div>
         <div className="flex w-full max-w-45 justify-end">
           <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">
-            <button className="rounded bg-white px-3 py-1 text-xs font-medium text-black shadow-card hover:bg-white hover:shadow-card dark:bg-boxdark dark:text-white dark:hover:bg-boxdark">
-              Day
-            </button>
-            <button className="rounded px-3 py-1 text-xs font-medium text-black hover:bg-white hover:shadow-card dark:text-white dark:hover:bg-boxdark">
-              Week
-            </button>
+      
             <button className="rounded px-3 py-1 text-xs font-medium text-black hover:bg-white hover:shadow-card dark:text-white dark:hover:bg-boxdark">
               Month
             </button>
@@ -185,6 +226,8 @@ const ChartOne: React.FC = () => {
 
       <div>
         <div id="chartOne" className="-ml-5">
+
+          {state && 
           <ReactApexChart
             options={options}
             series={state.series}
@@ -192,6 +235,8 @@ const ChartOne: React.FC = () => {
             height={350}
             width={"100%"}
           />
+          
+          }
         </div>
       </div>
     </div>
