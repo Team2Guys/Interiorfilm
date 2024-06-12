@@ -12,6 +12,7 @@ import USRcomponent from 'components/userComponent/userComponent'
 import { IoIosLock, IoMdMail } from "react-icons/io";
 import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";;
 import { Select } from 'antd';
+import NoneAuth from 'hooks/None-AuthHook'
 
 const { Option } = Select;
 
@@ -147,4 +148,5 @@ const DashboardLogin = () => {
   );
 };
 
-export default DashboardLogin;
+export default NoneAuth (DashboardLogin)
+

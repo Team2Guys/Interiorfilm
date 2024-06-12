@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; 
 import Loader from "components/Loader/Loader";
+import Cookies from 'js-cookie';
+
 
 
 function ProtectedRoute(WrappedComponent:any) {
@@ -11,11 +13,12 @@ function ProtectedRoute(WrappedComponent:any) {
     const [loading, setLoading] = useState<boolean>(true);
    
     useEffect(() => {
-      let token = localStorage.getItem("superAdminToken"); 
-      console.log(token, "token")
+      const token = Cookies.get('2guysAdminToken');
+      const superAdmintoken  = Cookies.get('superAdminToken');
+      let Finaltoken = superAdmintoken ? superAdmintoken : token
 
-      if (!token) {
-        router.push("/superAdminlogin");
+      if (Finaltoken) {
+        router.push("/dashboard");
       } else {
         setLoading(false);
       }

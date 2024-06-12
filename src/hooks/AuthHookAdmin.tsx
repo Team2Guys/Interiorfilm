@@ -36,6 +36,7 @@ function ProtectedRoute(WrappedComponent: any) {
       const token = Cookies.get('2guysAdminToken');
       const superAdmintoken  = Cookies.get('superAdminToken');
       let Finaltoken = superAdmintoken ? superAdmintoken : token
+      
 console.log(Finaltoken)
       if (!Finaltoken) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
