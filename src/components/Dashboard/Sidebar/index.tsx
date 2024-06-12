@@ -18,7 +18,7 @@ interface SidebarProps {
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
-  let superAdmin = loggedInUser && loggedInUser.role !=='Admin'
+  let superAdmin = loggedInUser && loggedInUser.role !== "Admin";
 
   const pathname = usePathname();
 
@@ -121,19 +121,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
             <ul className="mb-6 flex flex-col gap-1.5">
               {/* <!-- Menu Item Dashboard --> */}
-              <SidebarLinkGroup
-                activeCondition={
-                  pathname === "/dashboard" 
-                }
-              >
+              <SidebarLinkGroup activeCondition={pathname === "/dashboard"}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
                       <Link
                         href="/dashboard"
                         className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === "/dashboard" 
-                          ) &&
+                          pathname === "/dashboard" &&
                           "bg-graydark dark:bg-meta-4"
                         }`}
                         onClick={(e) => {
@@ -179,7 +174,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === "/dashboard/Add_Category/AddNewCategory" 
+                  pathname === "/dashboard/category"
                 }
               >
                 {(handleClick, open) => {
@@ -188,9 +183,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <Link
                         href="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === "/dashboard/Add_Category/AddNewCategory" 
-          
-                          ) &&
+                          pathname ===
+                            "/dashboard/category" &&
                           "bg-graydark dark:bg-meta-4"
                         }`}
                         onClick={(e) => {
@@ -216,8 +210,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }`}
                       >
                         <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
-                          <li>
-                            <Link
+                          {/* <Link
                               href="/dashboard/Add_Category/AddNewCategory"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
                                 pathname ===
@@ -226,18 +219,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               } `}
                             >
                               Add Categories
+                            </Link> */}
+                          <li>
+                            <Link
+                              href="/dashboard/category"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white mt-2.5 ${
+                                pathname === "/dashboard/category" &&
+                                "text-white"
+                              }`}
+                            >
+                              View Categories
                             </Link>
-                            <li>
-                              <Link
-                                href="/dashboard/category"
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white mt-2.5 ${
-                                  pathname === "/dashboard/category" &&
-                                  "text-white"
-                                }`}
-                              >
-                                View Categories
-                              </Link>
-                            </li>
                           </li>
                         </ul>
                       </div>
@@ -246,11 +238,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   );
                 }}
               </SidebarLinkGroup>
-              
+
               <SidebarLinkGroup
-                activeCondition={
-                  pathname === "/dashboard/products" 
-                }
+                activeCondition={pathname === "/dashboard/products"}
               >
                 {(handleClick, open) => {
                   return (
@@ -258,7 +248,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <Link
                         href="/dashboard"
                         className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === "/dashboard/products" ) &&
+                          pathname === "/dashboard/products" &&
                           "bg-graydark dark:bg-meta-4"
                         }`}
                         onClick={(e) => {
@@ -284,7 +274,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }`}
                       >
                         <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
-                      
                           <li>
                             <Link
                               href="/dashboard/products"
@@ -303,23 +292,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   );
                 }}
               </SidebarLinkGroup>
-{
-  superAdmin ? 
-              <li>
-                <Link
-                  href="/dashboard/super-admin"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("super-admin") &&
-                    "bg-graydark dark:bg-meta-4"
-                  }`}
-                >
-                 <GrUserAdmin size={20} />
-
-                  Admin
-                </Link>
-              </li> : null
-}
-
+              {superAdmin ? (
+                <li>
+                  <Link
+                    href="/dashboard/super-admin"
+                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes("super-admin") &&
+                      "bg-graydark dark:bg-meta-4"
+                    }`}
+                  >
+                    <GrUserAdmin size={20} />
+                    Admin
+                  </Link>
+                </li>
+              ) : null}
 
               <li>
                 <Link
@@ -329,8 +315,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                <IoSettingsOutline size={20} />
-
+                  <IoSettingsOutline size={20} />
                   Settings
                 </Link>
               </li>
