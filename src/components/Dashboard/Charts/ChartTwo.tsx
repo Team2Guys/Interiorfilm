@@ -124,7 +124,7 @@ let finaltoken = token ? token: superAdmintoken
         <div>
           <div className="relative z-20 inline-block">
 
-            <p className="inline-flex appearance-none bg-transparent py-1 pl-3 pr-8 text-sm font-medium outline-none"> Previous Week</p>
+            <p className="inline-flex appearance-none bg-transparent py-1 pl-3 pr-8 text-sm font-medium outline-none text-black dark:text-white"> Previous Week</p>
 
           </div>
         </div>

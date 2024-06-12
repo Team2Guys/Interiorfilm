@@ -14,10 +14,19 @@ import { MdOutlineHome,  } from 'react-icons/md';
 import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu';
 import Button from 'components/ui/Button/Button';
 import { useRouter } from 'next/navigation';
-import {  Popover } from 'antd';
+import {  Modal, Popover } from 'antd';
 import Megamanu from './Megamanu/Megamanu';
 import Mobiletab from 'components/ui/Tabs/Mobiletab/Mobiletab';
+import { generateSlug } from 'data/Data';
+import axios from 'axios';
 
+interface Product {
+  name: string;
+  description: string;
+  posterImageUrl: {
+    imageUrl: string;
+  };
+}
 
 const Header= () => {
 
@@ -25,7 +34,38 @@ const Header= () => {
   const [category, setcategory] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [WishlistItems, setWishlistItems] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [products, setProducts] = useState<Product[]>([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
+        setProducts(response.data.products);
+      } catch (error) {
+        console.log('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   useEffect(() => {
     const existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
     setWishlistItems(existingWishlist);
@@ -97,7 +137,14 @@ const Header= () => {
       window.removeEventListener("cartChanged", handleCartChange);
     };
   }, []);
-
+const truncateText = (text:any, maxLength:any) => {
+  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+};
+const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  if (event.key === 'Enter') {
+    showModal();
+  }
+};
 
 
   return (
@@ -136,8 +183,48 @@ const Header= () => {
            
             <div className='border border-gray w-3/6 lg:w-full max-w-screen-md flex'>
               
-              <input className='w-full px-4 focus:outline-none active:border-none focus:border-none border-white' type="text" placeholder='Search Product Here...' />
-              <Button className='rounded-l-md px-2 md:px-4' title={<IoSearch size={25} />} />
+              <input className='w-full px-4 focus:outline-none active:border-none focus:border-none border-white' value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)} type="text" placeholder='Search Product Here...' onKeyPress={handleKeyPress} />
+
+              <Button className='rounded-l-md px-2 md:px-4' onClick={showModal} title={<IoSearch size={25} />} />
+              <Modal title="" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer="" width={800}>
+                <>
+                  <div className='mt-8 space-y-3 mb-3'>
+                    <input
+                      className='w-full px-4 border h-14 rounded-md'
+                      type="text"
+                      placeholder='Search Product Here...'
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                  </div>
+
+                  {searchTerm && ( // Render products only when there is a search term
+                  <div className="max-h-[400px] overflow-y-scroll  pr-2 bg-white rounded-md p-2">
+                  {filteredProducts.length > 0 ? (
+                    filteredProducts.map((product, index) => (
+                      <Link
+                        key={index}
+                        href={{ pathname: `/detail/${generateSlug(product.name)}` }}
+                        onClick={() => setIsModalOpen(false)}
+                        className='shadow p-2 flex gap-2 mt-2 rounded-md border text-black hover:text-black border-gray hover:border-primary'
+                      >
+                        {product.posterImageUrl && (
+                          <Image className='rounded-md' width={100} height={100} src={product.posterImageUrl.imageUrl} alt='image' />
+                        )}
+                        <div>
+                          <p className='font-semibold text-lg md:text-xl'>{product.name}</p>
+                          <p>{truncateText(product.description, 160)}</p>
+                        </div>
+                      </Link>
+                    ))
+                  ) : (
+                    <p>No products found</p>
+                  )}
+                   </div>
+      )}
+                </>
+              </Modal>
             </div>
             <DrawerMenu
             showDrawer={showDrawer}

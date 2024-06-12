@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Script from 'next/script'
-
 import "./globals.css";
 import PathnameWrapper from "components/PathnameWrapper";
 import { ToastContainer } from 'react-toastify';
@@ -30,7 +29,7 @@ export default function RootLayout({
     <Providers>
 
     <html lang="en">
-    <head>
+        <head>
       <Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZNPK8S2CW7"></Script>
       <Script id="google-analytics">
             {

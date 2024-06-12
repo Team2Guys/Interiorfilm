@@ -186,6 +186,7 @@ function Admins({ setselecteMenu }: any) {
               <Button
                 type="primary"
                 onClick={() => setselecteMenu("Add Admin")}
+                className="cursor-pointer p-2 text-black dark:text-white bg-inherit hover:bg-slate-300 dark:border-strokedark dark:bg-boxdark flex justify-center"
               >
                 Add new Admin
               </Button>
