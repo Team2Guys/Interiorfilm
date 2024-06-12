@@ -61,7 +61,6 @@ const ECommerce: React.FC = () => {
   return (
 
     <>
-      <button onClick={getAllAdmins}> handler button</button>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
       <CardDataStats title="Admins" total={records?.totalAdmins ? records?.totalAdmins : ''}>
           <svg
