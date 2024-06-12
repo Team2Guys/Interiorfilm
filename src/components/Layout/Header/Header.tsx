@@ -152,6 +152,7 @@ const Header= () => {
               
               <input className='w-full px-4 focus:outline-none active:border-none focus:border-none border-white' type="text" placeholder='Search Product Here...' />
               <Button className='rounded-l-md px-2 md:px-4' title={<IoSearch size={25} />} />
+              
             </div>
             <DrawerMenu
             showDrawer={showDrawer}
