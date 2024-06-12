@@ -183,7 +183,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
         <>
           <div className="flex justify-between mb-4 items-center flex-wrap text-black dark:text-white">
             <input
-              className="peer lg:p-3 p-2 block outline-none border rounded-md border-gray-200 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+              className="peer lg:p-3 p-2 block outline-none border rounded-md border-gray-200 dark:bg-boxdark dark:drop-shadow-none text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
               type="search"
               placeholder="Search Product"
               value={searchTerm}
@@ -192,7 +192,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
             <div>
               <p
                 className={`${canAddProduct && 'cursor-pointer'
-                  } p-2 ${canAddProduct && 'hover:bg-slate-300'} flex justify-center ${!canAddProduct && 'cursor-not-allowed text-slate-300'
+                  } p-2 ${canAddProduct && 'hover:bg-slate-300'} dark:border-strokedark dark:bg-boxdark flex justify-center ${!canAddProduct && 'cursor-not-allowed text-slate-300'
                   }`}
                 onClick={() => {
                   if (canAddProduct) {
@@ -206,7 +206,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
             </div>
           </div>
           {filteredProducts && filteredProducts.length > 0 ? (
-            <Table className="overflow-x-scroll" dataSource={filteredProducts} columns={columns} rowKey="_id" pagination={false} />
+            <Table className="lg:overflow-hidden overflow-x-scroll !dark:border-strokedark !dark:bg-boxdark !bg-transparent" dataSource={filteredProducts} columns={columns} rowKey="_id" pagination={false} />
           ) : (
             "No Products found"
           )}

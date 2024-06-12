@@ -62,7 +62,7 @@ Cookies.remove('getSuperAdminHandler');
           <span className="block text-sm font-medium text-black dark:text-white">
       {loggedInUser ? loggedInUser.fullname : null }
           </span>
-          <span className="block text-xs">{loggedInUser?.role}</span>
+          <span className="block text-xs text-black dark:text-white">{loggedInUser?.role}</span>
         </span>
 
 
