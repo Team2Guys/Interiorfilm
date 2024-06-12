@@ -14,7 +14,7 @@ const TabsData = ({category,carDetail}:any) => {
             <div className='flex justify-center items-center'>
                 <div className=' px-8 w-3/6'>
                     <h1 className='text-[22px] font-semibold md:text-4xl md:font-bold'>23% off in All Product</h1>
-                    <Link className='underline' href={"/"}>Shop Now</Link>
+                    <Link className='underline' href={"/product"}>Shop Now</Link>
                 </div>
                 <div className='w-full  md:w-3/6'>
                     <Image className='w-full' width={300} height={300} src={img1} alt='image'/>
@@ -25,7 +25,7 @@ const TabsData = ({category,carDetail}:any) => {
     
     </div>
     <div className=' text-center mt-10 mb-7'>
-        <Link className='bg-primary rounded-md py-3 px-10 text-white hover:text-white' href={"./productlist"}>View All</Link>
+        <Link className='bg-primary rounded-md py-3 px-10 text-white hover:text-white' href={"./product"}>View All</Link>
         </div>
     </>
 

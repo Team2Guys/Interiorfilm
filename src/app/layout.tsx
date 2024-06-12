@@ -30,6 +30,18 @@ export default function RootLayout({
     <Providers>
 
     <html lang="en">
+    <head>
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZNPK8S2CW7"></Script>
+      <Script id="google-analytics">
+            {
+              `window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-ZNPK8S2CW7'); `
+              }
+        </Script>
+      </head>
       <body className={`
         ${optimaFont.className}`}>
       <PathnameWrapper>

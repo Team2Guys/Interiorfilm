@@ -35,6 +35,8 @@ const Product = () => {
   const [inStockOnly, setInStockOnly] = useState<boolean>(false)
   const [outOfStockOnly, setOutOfStockOnly] = useState<boolean>(false)
 
+
+  console.log(totalProducts, "totalProducts")
   const handleInStockChange: CheckboxProps['onChange'] = (e) => {
     setInStockOnly(e.target.checked)
     setOutOfStockOnly(false)
@@ -84,9 +86,6 @@ const Product = () => {
     console.log(categories, "categories categories")
     setCategory(categories)
     
-    if (categories.length > 0) {
-      setActiveLink(categories[0].name)
-    }
   }
 
   useLayoutEffect(() => {
@@ -167,7 +166,7 @@ const Product = () => {
                   <ul className="px-1 pt-2 space-y-1 ">
                     {category?.map((item, index) => (
                       <li className='flex flex-col w-full' key={index} >
-                        <Link className={activeLink === item.name ? "bg-primary px-2 text-white rounded-md w-full h-8 flex items-center" : "hover:bg-primary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center"} onClick={() => handleCategoryClick(item.name)} href={"/"}>{item.name}</Link>
+                        <div className={activeLink === item.name ? "bg-primary px-2 text-white rounded-md w-full h-8 flex items-center cursor-pointer" : "hover:bg-primary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center cursor-pointer"} onClick={() => handleCategoryClick(item.name)} href={"/"}>{item.name}</div>
                       </li>
                     ))}
                   </ul>
