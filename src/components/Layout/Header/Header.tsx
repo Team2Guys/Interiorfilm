@@ -17,21 +17,7 @@ import { useRouter } from 'next/navigation';
 import {  Popover } from 'antd';
 import Megamanu from './Megamanu/Megamanu';
 import Mobiletab from 'components/ui/Tabs/Mobiletab/Mobiletab';
-import Menucard from 'components/ui/Card/Menucard/Menucard';
-import { menudata } from 'data/Data';
 
-
-const tabData = [
-  { key: '1', tab: 'Cement Gray Series', content: <><Menucard 
-    menudata={menudata}
-  /></> },
-  { key: '2', tab: 'Skin Texture Series', content: <><Menucard/></> },
-  { key: '3', tab: 'Wood Grain Series', content: <><Menucard menudata={menudata}/></> },
-  { key: '4', tab: 'Fabric Series', content: <><Menucard/></> },
-  { key: '5', tab: 'Marble Serie', content: <><Menucard menudata={menudata}/></> },
-  { key: '6', tab: 'Plain Series', content: <><Menucard menudata={menudata}/></> },
-
-];
 
 const Header= () => {
 

@@ -3,7 +3,6 @@
 import { usePathname } from 'next/navigation';
 import Header from 'components/Layout/Header/Header';
 import Footer from './Layout/Footer/Footer';
-import {withoutHeaderPages} from 'data/Data'
 
 const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();

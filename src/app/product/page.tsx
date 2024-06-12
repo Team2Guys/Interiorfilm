@@ -1,4 +1,4 @@
-//@ts-nocheck
+
 'use client'
 import Container from 'components/Layout/Container/Container'
 import Overlay from 'components/widgets/Overlay/Overlay'
@@ -12,11 +12,25 @@ import { IoFunnelOutline } from 'react-icons/io5'
 import Pagintaion from 'components/Pagination/Pagintaion'
 import PRODUCTS_TYPES from 'types/interfaces'
 import Loader from "components/Loader/Loader";
-import type { RadioChangeEvent } from 'antd';
+import type { CheckboxProps, RadioChangeEvent } from 'antd';
 import { Radio } from 'antd';
 
 import { getPaginatedproducts, getPRODUCTS} from 'utils/helperFunctions'
 import Input from 'components/Common/regularInputs'
+import axios from 'axios'
+
+interface category {
+  posterImageUrl: {
+        public_id: string,
+        imageUrl: string
+    },
+    _id: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    __v:any
+
+}
 
 const Product = () => {
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
@@ -27,16 +41,15 @@ const Product = () => {
   const [colorName, setColorName] = useState<string>()
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [sortOption, setSortOption] = useState<string>("Default")
-  const [category, setCategory] = useState<any[]>()
+  const [category, setCategory] = useState<any[]>([])
   const [open, setOpen] = useState(false)
-  const [priceRange, setPriceRange] = useState({ from: "", to: Infinity })
+  const [priceRange, setPriceRange] = useState({ from: 0, to: Infinity })
   const [value, setValue] = useState(1)
-  const [activeLink, setActiveLink] = useState("")
+  const [activeLink, setActiveLink] = useState<category | undefined>()
   const [inStockOnly, setInStockOnly] = useState<boolean>(false)
   const [outOfStockOnly, setOutOfStockOnly] = useState<boolean>(false)
 
 
-  console.log(totalProducts, "totalProducts")
   const handleInStockChange: CheckboxProps['onChange'] = (e) => {
     setInStockOnly(e.target.checked)
     setOutOfStockOnly(false)
@@ -76,25 +89,39 @@ const Product = () => {
     setOpen(false)
   }
 
-  useLayoutEffect(() => {
-    getPRODUCTS(setTotalProducts, setError, setLoading, 1, setTotalPage, setTotalProductscount)
-  }, [])
 
-  const CategoryHandler = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`)
-    const categories = await response.json()
-    console.log(categories, "categories categories")
-    setCategory(categories)
-    
+  console.log(activeLink, 
+    "activeLink"
+  )
+
+
+
+  let productHandler = async()=>{
+    try{
+      setLoading(true)
+      const CategoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`)
+      const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`)
+
+    const [categoryResponse, products] = await Promise.all([CategoryRequest,productRequest]);
+    setTotalProducts(products.data.products)
+    console.log(categoryResponse.data, "Category Data")
+    setActiveLink(categoryResponse.data[0])
+    setCategory(categoryResponse.data)
+ 
+    }catch(err){
+      console.log(err, "err")
+
+    }finally{
+      setLoading(false)
+
+    }
   }
 
   useLayoutEffect(() => {
-    CategoryHandler()
+    productHandler()
   }, [])
 
-  const getProductsHandler = (page: number) => {
-    getPRODUCTS(setTotalProducts, setError, setLoading, page)
-  }
+
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
@@ -103,19 +130,26 @@ const Product = () => {
   const handleSortChange = (value: string) => {
     setSortOption(value)
   }
+  const handlePriceChange = (field:any, value:any) => {
+    setPriceRange(prevRange => ({
+      ...prevRange,
+      [field]: isNaN(value) ? null : value // Handle NaN to set to null
+    }));
+  };
 
-  const handlePriceChange = (key: string, value: number) => {
-    setPriceRange(prev => ({ ...prev, [key]: value }))
-  }
-
-  const filteredProducts = totalProducts
-    .filter(product =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (!colorName || product.colors.some(color => color.colorName === colorName)) &&
-      (product.salePrice >= priceRange.from && product.salePrice <= priceRange.to) &&
-      (!inStockOnly || product.totalStockQuantity > 0) &&
-      (!outOfStockOnly || product.totalStockQuantity === 0 || !product.totalStockQuantity)
-    )
+  const filteredProductsByCategory = activeLink ? totalProducts.filter(product => product.category === activeLink._id) : totalProducts;
+  const filteredProducts = filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
+    if (!product) return true; // Keep the product if it's null
+  
+    const priceMatch = (!priceRange.from || product.salePrice >= priceRange.from) && product.salePrice <= priceRange.to;
+    const nameMatch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const colorMatch = !colorName || (product.colors && product.colors.some(color => color.colorName === colorName));
+    const inStockMatch = !inStockOnly || product.totalStockQuantity && product.totalStockQuantity > 0;
+    const outOfStockMatch = !outOfStockOnly || product.totalStockQuantity === 0 || !product.totalStockQuantity
+  
+    return nameMatch && colorMatch && priceMatch && inStockMatch && outOfStockMatch ;
+  });
+  
 
   const sortedProducts = filteredProducts.sort((a, b) => {
     if (sortOption === "Low to High") {
@@ -127,9 +161,12 @@ const Product = () => {
     }
   })
 
-  const handleCategoryClick = (categoryName: string) => {
+  const handleCategoryClick = (categoryName: category) => {
     setActiveLink(categoryName)
   }
+
+
+
 
   return (
     <>
@@ -164,12 +201,14 @@ const Product = () => {
               <div className="p-2 bg-secondary">
                 <Collapse title="All Categories">
                   <ul className="px-1 pt-2 space-y-1 ">
-                    {category?.map((item, index) => (
+
+                    {loading ?   <div className="flex justify-center items-center"><Loader /></div> :  category && category?.map((item, index) => (
                       <li className='flex flex-col w-full' key={index} >
-                        <div className={activeLink === item.name ? "bg-primary px-2 text-white rounded-md w-full h-8 flex items-center cursor-pointer" : "hover:bg-primary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center cursor-pointer"} onClick={() => handleCategoryClick(item.name)} href={"/"}>{item.name}</div>
+                        <div className={activeLink?.name === item.name ? "bg-primary px-2 text-white rounded-md w-full h-8 flex items-center cursor-pointer" : "hover:bg-primary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center cursor-pointer"} onClick={() => handleCategoryClick(item)}>{item.name}</div>
                       </li>
                     ))}
                   </ul>
+
                 </Collapse>
               </div>
               <div className="p-2 bg-secondary">
@@ -191,14 +230,14 @@ const Product = () => {
                       placeholder='From'
                       type='number'
                       value={priceRange.from === Infinity ? '' : priceRange.from}
-                      onChange={(e) => handlePriceChange('from', Number(e.target.value))}
+                      onChange={(e:any) => handlePriceChange('from', Number(e.target.value))}
                     />
                     <Input
                     className='h-10'
                       placeholder='To'
                       type='number'
                       value={priceRange.to === Infinity ? '' : priceRange.to}
-                      onChange={(e) => handlePriceChange('to', Number(e.target.value))}
+                      onChange={(e:any) => handlePriceChange('to', Number(e.target.value))}
                     />
                   </div>
                 </Collapse>
@@ -250,14 +289,14 @@ const Product = () => {
                         placeholder='From'
                         type='number'
                         value={priceRange.from === Infinity ? '' : priceRange.from}
-                        onChange={(e) => handlePriceChange('from', Number(e.target.value))}
+                        onChange={(e:React.ChangeEvent<HTMLInputElement>) => handlePriceChange('from', Number(e.target.value))}
                       />
                       <Input
                         className='h-10'
                         placeholder='To'
                         type='number'
                         value={priceRange.to === Infinity ? '' : priceRange.to}
-                        onChange={(e) => handlePriceChange('to', Number(e.target.value))}
+                        onChange={(e:React.ChangeEvent<HTMLInputElement>) => handlePriceChange('to', Number(e.target.value))}
                       />
                     </div>
                   </Collapse>
@@ -277,11 +316,12 @@ const Product = () => {
                     <Card ProductCard={sortedProducts} /> 
                   </div>
                 )}
+{/*                 
                 <Pagintaion
                   setTotalPage={totalPage}
                   totalSize={totalProductscount ? Number(totalProductscount) : 5}
                   handlerChange={getProductsHandler}
-                />
+                /> */}
               </>
             )}
           </div>
