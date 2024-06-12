@@ -48,7 +48,7 @@ const DropdownUser = () => {
     try{
       Cookies.remove('2guysAdminToken');
       Cookies.remove('superAdminToken');
-          router.push('/dashboard/auth/Admin-login')
+          router.push('/dashboard/Admin-login')
 
     }catch(err){
       console.log(err)

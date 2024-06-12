@@ -17,7 +17,7 @@ const ProductData: React.FC<cardprops> = ({ productcard }) => {
   return (
     <Container className='mt-20 mb-10'>
       {
-        productcard.map((array, index) => (
+        productcard && productcard.map((array, index) => (
           <div className=' shadow hover:shadow-xl rounded-md p-4 bg-white mt-5' key={index}>
             <div className={`flex flex-wrap md:flex-nowrap md:gap-5 ${index % 2 === 0 ? '' : 'md:flex-row-reverse'}`}>
               <div className='w-full md:w-3/6'>

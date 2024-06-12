@@ -1,8 +1,5 @@
 "use client";
 import React, { SetStateAction, useState } from "react";
-import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
-
-import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
 import Imageupload from "components/ImageUpload/Imageupload";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
@@ -16,6 +13,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 
 import { categoryInitialValues, categoryValidationSchema } from "data/Data";
 import ProtectedRoute from "hooks/AuthHookAdmin";
+import Loader from "components/Loader/Loader";
 
 interface editCategoryNameType {
   name: string;
@@ -27,13 +25,8 @@ interface editCategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>;
 }
 
-const FormLayout = ({
-  seteditCategory,
-  editCategory,
-  setMenuType,
-}: editCategoryProps) => {
-  let CategoryName =
-    editCategory && editCategory.name ? { name: editCategory.name } : null;
+const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategoryProps) => {
+  let CategoryName = editCategory && editCategory.name ? { name: editCategory.name } : null;
   let CategorImageUrl = editCategory && editCategory.posterImageUrl;
   const [posterimageUrl, setposterimageUrl] = useState<any[] | null | undefined>(CategorImageUrl ? [CategorImageUrl] : null);
   const [loading, setloading] = useState<boolean>(false);
@@ -42,8 +35,6 @@ const FormLayout = ({
   const onSubmit = async (values: Category, { resetForm }: any) => {
     try {
       setloading(true);
-
-      console.log("function triggered");
       let posterImageUrl = posterimageUrl && posterimageUrl[0];
       if (!posterImageUrl) throw new Error("Please select relevant Images");
       let newValue = { ...values, posterImageUrl };
@@ -73,6 +64,10 @@ const FormLayout = ({
       setloading(false);
     }
   };
+
+
+
+
   return (
     <>
       <p
@@ -85,9 +80,7 @@ const FormLayout = ({
       </p>
 
       <Formik
-        initialValues={
-          editCategoryName ? editCategoryName : categoryInitialValues
-        }
+        initialValues={editCategoryName ? editCategoryName : categoryInitialValues}
         validationSchema={categoryValidationSchema}
         onSubmit={onSubmit}
       >
@@ -148,8 +141,8 @@ const FormLayout = ({
                           value={formik.values.name}
                           placeholder="Title"
                           className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
-                              ? "border-red-500"
-                              : ""
+                            ? "border-red-500"
+                            : ""
                             }`}
                         />
                         {formik.touched.name && formik.errors.name ? (
@@ -167,7 +160,7 @@ const FormLayout = ({
                   type="submit"
                   className="mt-4 px-8 py-2 bg-blue-500 text-white rounded"
                 >
-                  Submit
+                  {loading ? <Loader /> : "Submit"}
                 </button>
               </div>
             </Form>

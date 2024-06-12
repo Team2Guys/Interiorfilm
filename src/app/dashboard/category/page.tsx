@@ -6,10 +6,12 @@ import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
 import ProtectedRoute from "hooks/AuthHookAdmin";
 import { useState } from "react";
 import Addcategory from "components/AddCategory/Addcategory";
+import {CategoriesType} from 'types/interfaces'
 
-const Category = () => {
+const AddCategory = () => {
 
   const [menuType, setMenuType] = useState<string>("Categories")
+  const [editCategory, seteditCategory] = useState<CategoriesType | undefined | null>()
 
   return (
     <DefaultLayout>
@@ -18,15 +20,15 @@ const Category = () => {
         menuType === "Categories" ?
       <div className="flex flex-col gap-10">
 
-        <TableTwo  setMenuType={setMenuType}/>
+        <TableTwo  setMenuType={setMenuType} seteditCategory={seteditCategory} editCategory={editCategory}/>
 
       </div>
       
-      : <Addcategory setMenuType={setMenuType}/>
+      : <Addcategory setMenuType={setMenuType} seteditCategory={seteditCategory} editCategory={editCategory} />
       }
 
     </DefaultLayout>
   );
 };
 
-export default  ProtectedRoute(Category);
+export default  ProtectedRoute(AddCategory);

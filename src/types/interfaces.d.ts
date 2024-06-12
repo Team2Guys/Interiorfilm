@@ -47,13 +47,23 @@ export interface USRPROPS {
     name: string;
   
   }
-  
+
+  interface CategoriesType {
+    posterImageUrl: IMAGE_INTERFACE
+  }
+  export interface CategoriesType extends  Category {}
   
   interface CloudinaryImage {
     public_id: string | undefined;
     imageUrl: string | undefined; 
     _id: string | undefined;
   }
+
+  export interface IMAGE_INTERFACE {
+    public_id: string;
+    imageUrl: string;
+  }
+
   interface Images {
     posterImageUrl: string | undefined,
     hoverImageUrl:string | undefined, 
@@ -77,14 +87,13 @@ export interface USRPROPS {
     sizes: string[];
     category: string
     code:string
+    totalStockQuantity: number;
+    variantStockQuantities: { variant: string; quantity: number }[]
   
   }
 
 
-export interface IMAGE_INTERFACE {
-  public_id: string;
-  imageUrl: string;
-}
+
 
 interface Color {
   colorName?: string;
@@ -122,3 +131,11 @@ interface PRODUCTS_TYPES {
 export default PRODUCTS_TYPES;
 
   
+
+export interface ADDPRODUCTFORMPROPS {
+  setselecteMenu: any
+  EditInitialValues?: any | undefined,
+  EditProductValue?: Product | undefined
+  setEditProduct?: any
+
+}

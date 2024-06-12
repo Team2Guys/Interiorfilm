@@ -35,7 +35,7 @@ export default function UserComponent({
   const router = useRouter();
   const pathname = usePathname()
 
-  let adminFlag = pathname === "/dashboard/auth/Admin-login";
+  let adminFlag = pathname === "/dashboard/Admin-login";
 
   const selecthandleChange = (value: string) => {
     setadminType && setadminType(value)

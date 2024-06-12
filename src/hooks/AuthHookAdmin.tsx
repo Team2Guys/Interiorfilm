@@ -40,7 +40,7 @@ function ProtectedRoute(WrappedComponent: any) {
 console.log(Finaltoken)
       if (!Finaltoken) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        router.push("/dashboard/auth/Admin-login");
+        router.push("/dashboard/Admin-login");
       } else {
         AddminProfileTriggerHandler( Finaltoken, superAdmintoken ? true : false)
         setLoading(false);

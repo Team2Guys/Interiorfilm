@@ -1,12 +1,6 @@
-import img from "../../public/images/img-14.png"
-import img2 from "../../public/images/img-15.png"
-import img3 from "../../public/images/img-10.png";
-import img4 from "../../public/images/img-11.png";
-import img5 from "../../public/images/img-12.png";
-import img6 from "../../public/images/img-13.png";
-import img7 from "../../public/images/img-14.png";
-import img8 from "../../public/images/img-15.png";
-import img9 from "../../public/images/img-16.png";
+
+import * as Yup from 'yup';
+import {Product, Category,FormValues} from 'types/interfaces'
 
 export const validateForm = (formData: { fullName: string; email: string; password: string; confirmpassword: string }) => {
     if (formData.password !== formData.confirmpassword) {
@@ -39,8 +33,6 @@ export const validateForm = (formData: { fullName: string; email: string; passwo
   ]
 
 
-  import * as Yup from 'yup';
-  import {Product, Category} from 'types/interfaces'
 
 
 export const inputFields = [
@@ -121,44 +113,60 @@ export  const generateSlug = (text:string) => {
     .replace(/\-\-+/g, '-'); 
 };
 
+// @ts-nocheck
+export const AddProductvalidationSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  description: Yup.string().required('Required'),
+  salePrice: Yup.number()
+    .min(1, "Minimum sales price must be at least 1")
+    .required('Required'),
+  purchasePrice: Yup.number()
+    .min(1, "Must be at least 1")
+    .required('Required'),
+  discountPrice: Yup.number().nullable(), 
+  starRating: Yup.number()
+    .min(1, "Rating must be at least 1")
+    .max(5, 'Star Rating should be a maximum of 5')
+    .nullable(),
+  reviews: Yup.string().nullable(),
+  colors: Yup.array().of(Yup.object().shape({
+    colorName: Yup.string().nullable(),
+  })),
+  modelDetails: Yup.array().of(Yup.object().shape({
+    name: Yup.string().nullable(),
+    detail: Yup.string().nullable(),
+  })),
+  spacification: Yup.array().of(Yup.object().shape({
+    specsDetails: Yup.string().nullable()
+  })),
+  sizes: Yup.array().of(Yup.string().nullable()),
+  category: Yup.string().required('Category is required'),
+  totalStockQuantity: Yup.number().nullable(),
+  variantStockQuantities: Yup.array().of(Yup.object().shape({
+    variant: Yup.string().nullable(),
+    quantity: Yup.number().nullable(),
+  })),
+});
 
- export const productdata =[
-    {image:img,title:"Lorem ipsum",description:"Lorem ipsum dolor consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius nunc id varius adipiscing elit. Phasellus blandit massa enim."},
-    {image:img2,title:"Lorem ipsum",description:"Lorem ipsum dolor consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius nunc id varius adipiscing elit. Phasellus blandit massa enim."},
-    {image:img2,title:"Lorem ipsum",description:"Lorem ipsum dolor consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius nunc id varius adipiscing elit. Phasellus blandit massa enim."},
-    {image:img,title:"Lorem ipsum",description:"Lorem ipsum dolor consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius nunc id varius adipiscing elit. Phasellus blandit massa enim."},
-  ]
 
-  
+export const AddproductsinitialValues: FormValues = {
+  name: '',
+  description: '',
+  salePrice: '',
+  purchasePrice: '',
+  discountPrice: '',
+  starRating: '',
+  reviews: '',
+  colors: [],
+  variantStockQuantities: [],
+  totalStockQuantity:0,
+  modelDetails: [],
+  spacification: [],
+  sizes: [],
+  category: "",
+  code: ""
 
-  export const menuSlide =[
-    {image: img3,title: "CA-13089",},
-    { image: img4,title: "CA-13050",},
-    {image: img5,title: "CA-13067",},
-    {image: img6,title: "CA-13324",},
-    {image: img7,title: "CA-12324",},
-    {image: img8,title: "CA-12524", },
-  ]
-
-  export const menudata =[
-    {image: img3,title: "CA-13089",},
-    { image: img4,title: "CA-13050",},
-    {image: img5,title: "CA-13067",},
-    {image: img6,title: "CA-13324",},
-    {image: img7,title: "CA-12324",},
-    {image: img8,title: "CA-12524", },
-    {image: img3,title: "CA-13089",},
-    { image: img4,title: "CA-13050",},
-    {image: img5,title: "CA-13067",},
-    {image: img6,title: "CA-13324",},
-    {image: img7,title: "CA-12324",},
-    {image: img8,title: "CA-12524", },
-    {image: img3,title: "CA-13089",},
-    { image: img4,title: "CA-13050",},
-    {image: img5,title: "CA-13067",},
-    {image: img6,title: "CA-13324",},
-    {image: img7,title: "CA-12324",},
-    {image: img8,title: "CA-12524", },
-  ]
-
-  
+};

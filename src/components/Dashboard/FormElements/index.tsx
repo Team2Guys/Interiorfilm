@@ -1,59 +1,22 @@
 //@ts-nocheck
 "use client";
 
-import React, { useState, DragEvent, SetStateAction, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Formik, FieldArray, FormikErrors, Form, ErrorMessage, Field } from 'formik';
-import * as Yup from 'yup';
-import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
+
 import SelectGroupTwo from "components/Dashboard/SelectGroup/SelectGroupTwo";
 import Imageupload from 'components/ImageUpload/Imageupload';
 import { RxCross2 } from "react-icons/rx";
 import Image from 'next/image';
 import { ImageRemoveHandler } from 'utils/helperFunctions';
-import { Product, FormValues } from "types/interfaces";
+import {FormValues,ADDPRODUCTFORMPROPS } from "types/interfaces";
 import Toaster from "components/Toaster/Toaster";
 import axios from 'axios';
 import { IoMdArrowRoundBack } from "react-icons/io";
 import Loader from 'components/Loader/Loader';
-import { usePathname } from 'next/navigation';
-import { withoutVariation } from 'data/Data';
-
-interface ADDPRODUCTFORMPROPS {
-  setselecteMenu: any
-  EditInitialValues?: any | undefined,
-  EditProductValue?: Product | undefined
-  setEditProduct?: any
-
-}
-
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required('Required'),
-  description: Yup.string().required('Required'),
-  salePrice: Yup.number().required('Required'),
-  purchasePrice: Yup.number().required('Required'),
-  discountPrice: Yup.number(),
-  starRating: Yup.string(),
-  reviews: Yup.string(),
-  colors: Yup.array().of(Yup.object({
-    colorName: Yup.string(),
-  })),
-  modelDetails: Yup.array().of(Yup.object({
-    name: Yup.string(),
-    detail: Yup.string(),
-  })),
-  spacification: Yup.array().of(Yup.object({
-    specsDetails: Yup.string().required('Required'),
-  })),
-  sizes: Yup.array().of(Yup.string()),
-  category: Yup.string().required('Required'),
-
-});
-
+import { withoutVariation ,AddProductvalidationSchema,AddproductsinitialValues} from 'data/Data';
 
 const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProductValue, setselecteMenu, setEditProduct }) => {
-
-  const pathname = usePathname()
-
 
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
@@ -69,32 +32,11 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
   const handleOptionChange = (e: any) => {
     setVariationOption(e.target.value);
-    setQuantity('');
-    setColor('');
+
   };
 
   const changeTextColor = () => {
     setIsOptionSelected(true);
-  };
-
-
-
-  const initialValues: FormValues = {
-    name: '',
-    description: '',
-    salePrice: '',
-    purchasePrice: '',
-    discountPrice: '',
-    starRating: '',
-    reviews: '',
-    colors: [],
-    variantStockQuantities:[],
-    modelDetails: [],
-    spacification: [],
-    sizes: [],
-    category: "",
-    code: ""
-
   };
 
 
@@ -151,7 +93,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
       const response = await axios.post(url, newValue);
       console.log(response, "response");
       Toaster("success", updateFlag ? "Product has been sucessufully Updated !" : "Product has been sucessufully Created !");
-      setProductInitialValue(initialValues)
+      setProductInitialValue(AddproductsinitialValues)
       resetForm();
       setloading(false)
       sethoverImage(null)
@@ -203,7 +145,6 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
 
 
-
   return (
 
     <>
@@ -217,11 +158,11 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
         <IoMdArrowRoundBack /> Back
       </p>
 
-        
+
       <Formik
         enableReinitialize
-        initialValues={productInitialValue ? productInitialValue : initialValues}
-        validationSchema={validationSchema}
+        initialValues={productInitialValue ? productInitialValue : AddproductsinitialValues}
+        validationSchema={AddProductvalidationSchema}
         onSubmit={onSubmit}
 
       >
@@ -281,6 +222,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                           type="text"
                           name="name"
                           onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                           value={formik.values.name}
                           placeholder="Title"
                           className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name ? 'border-red-500' : ''
@@ -307,6 +249,51 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                           <div className="text-red text-sm">{formik.errors.description as FormikErrors<FormValues['description']>}</div>
                         ) : null}
                       </div>
+
+
+                      <div className='flex gap-4'>
+
+
+
+<div className="w-2/4">
+  <label className="mb-3 block text-sm font-medium text-black dark:text-dark">
+    Star Rating
+  </label>
+  <input
+    type="number"
+    name="starRating"
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
+    value={formik.values.starRating}
+    placeholder="Star Rating"
+    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.starRating && formik.errors.starRating ? 'border-red-500' : ''
+      }`}
+  />
+  {formik.touched.starRating && formik.errors.starRating ? (
+    <div className="text-red text-sm">{formik.errors.starRating as String}</div>
+  ) : null}
+</div>
+
+<div className="w-2/4">
+  <label className="mb-3 block text-sm font-medium text-black dark:text-dark">
+    Reviews
+  </label>
+  <input
+    type="text"
+    name="reviews"
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
+    value={formik.values.reviews}
+    placeholder="Reviews"
+    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.reviews && formik.errors.reviews ? 'border-red-500' : ''
+      }`}
+  />
+  {formik.touched.reviews && formik.errors.reviews ? (
+    <div className="text-red text-sm">{formik.errors.reviews as String}</div>
+  ) : null}
+</div>
+
+</div>
 
                       <div className="flex full gap-4">
                         <div className="w-[33%]">
@@ -419,10 +406,15 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                         onBlur={formik.handleBlur}
                                         value={formik.values.colors[index].colorName}
                                         placeholder="Color Name"
+
+                                        
                                         className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.colors?.[index]?.colorName && (formik.errors.modelDetails as FormikErrors<FormValues['colors']>)?.[index]?.colorName
                                           ? 'border-red-500'
                                           : ''
                                           }`}
+
+
+
                                       />
                                       <button
                                         type="button"
@@ -508,156 +500,114 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
 
                 <div className="flex flex-col gap-5">
-                  <div className='flex gap-4'>
-
-
-
-                    <div className="w-2/4">
-                      <label className="mb-3 block text-sm font-medium text-black dark:text-dark">
-                        Star Rating
-                      </label>
-                      <input
-                        type="text"
-                        name="starRating"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.starRating}
-                        placeholder="Star Rating"
-                        className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.starRating && formik.errors.starRating ? 'border-red-500' : ''
-                          }`}
-                      />
-                      {formik.touched.starRating && formik.errors.starRating ? (
-                        <div className="text-red text-sm">{formik.errors.starRating as String}</div>
-                      ) : null}
-                    </div>
-
-                    <div className="w-2/4">
-                      <label className="mb-3 block text-sm font-medium text-black dark:text-dark">
-                        Reviews
-                      </label>
-                      <input
-                        type="text"
-                        name="reviews"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.reviews}
-                        placeholder="Reviews"
-                        className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.reviews && formik.errors.reviews ? 'border-red-500' : ''
-                          }`}
-                      />
-                      {formik.touched.reviews && formik.errors.reviews ? (
-                        <div className="text-red text-sm">{formik.errors.reviews as String}</div>
-                      ) : null}
-                    </div>
-
-                  </div>
+            
 
                   <div>
 
-<div className="mb-4">
-  <label className="block text-sm font-medium text-gray-700 mb-2">
-    Add stock Quantity
-  </label>
-  <Field
-    id="variationSelect" value={VariationOption} onChange={handleOptionChange}
-    as="select"
-    name="category"
-    className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent bg-white"
-  >
-    <option value="" className="text-gray-500">
-      Select a Variation
-    </option>
-    <option value="withoutVariation">Without Variation</option>
-    <option value="withVariation">With Variation</option>
-  </Field>
-</div>
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Add stock Quantity
+                      </label>
+                      <Field
+                        id="variationSelect" value={VariationOption} onChange={handleOptionChange}
+                        as="select"
+                        name="category"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent bg-white"
+                      >
+                        <option value="" className="text-gray-500">
+                          Select a Variation
+                        </option>
+                        <option value="withoutVariation">Without Variation</option>
+                        <option value="withVariation">With Variation</option>
+                      </Field>
+                    </div>
 
-{VariationOption === 'withoutVariation' && (
-  <>
-    {withoutVariation.map((inputField, index) => (
-      <div key={index} className="mb-4">
-        <label className="block text-sm font-medium mb-1">
-          {inputField.name.charAt(0).toLocaleUpperCase() +
-            inputField.name.slice(1)}
-        </label>
-        <Field
-          type={inputField.type}
-          name={inputField.name}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-        />
-        <ErrorMessage
-          name={inputField.name}
-          component="div"
-          className="text-red-500"
-        />
-      </div>
-    ))}
-  </>
-)}
+                    {VariationOption === 'withoutVariation' && (
+                      <>
+                        {withoutVariation.map((inputField, index) => (
+                          <div key={index} className="mb-4">
+                            <label className="block text-sm font-medium mb-1">
+                              {inputField.name.charAt(0).toLocaleUpperCase() +
+                                inputField.name.slice(1)}
+                            </label>
+                            <Field
+                              type={inputField.type}
+                              name={inputField.name}
+                              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                            />
+                            <ErrorMessage
+                              name={inputField.name}
+                              component="div"
+                              className="text-red-500"
+                            />
+                          </div>
+                        ))}
+                      </>
+                    )}
 
-{VariationOption === 'withVariation' && (
-  <>
-    <FieldArray name="variantStockQuantities">
-      {({ push, remove }) => (
-        <div>
-          {formik.values.variantStockQuantities.map((model, index) => (
-            <div
-              key={index}
-              className="flex flex-col md:flex-row md:items-center mb-4"
-            >
-              <div className="md:flex-1 md:mr-4 mb-4 md:mb-0">
-                <Field
-                  type="text"
-                  name={`variantStockQuantities[${index}].Variant`}
-                  placeholder="Variant"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-                />
-                <ErrorMessage
-                  name={`variantStockQuantities[${index}].Variant`}
-                  component="div"
-                  className="text-red-500 mt-1"
-                />
-              </div>
-              <div className="md:flex-1 md:mr-4 mb-4 md:mb-0">
-                <Field
-                  type="number"
-                  name={`variantStockQuantities[${index}].Quantity`}
+                    {VariationOption === 'withVariation' && (
+                      <>
+                        <FieldArray name="variantStockQuantities">
+                          {({ push, remove }) => (
+                            <div>
+                              {formik.values.variantStockQuantities && formik.values.variantStockQuantities.map((model:any, index:any) => (
+                                <div
+                                  key={index}
+                                  className="flex flex-col md:flex-row md:items-center mb-4"
+                                >
+                                  <div className="md:flex-1 md:mr-4 mb-4 md:mb-0">
+                                    <Field
+                                      type="text"
+                                      name={`variantStockQuantities[${index}].variant`}
+                                      placeholder="Variant"
+                                      className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                                    />
+                                    <ErrorMessage
+                                      name={`variantStockQuantities[${index}].variant`}
+                                      component="div"
+                                      className="text-red-500 mt-1"
+                                    />
+                                  </div>
+                                  <div className="md:flex-1 md:mr-4 mb-4 md:mb-0">
+                                    <Field
+                                      type="number"
+                                      name={`variantStockQuantities[${index}].quantity`}
 
-                  placeholder="Quantity"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-                />
-                <ErrorMessage
-                  name={`variantStockQuantities[${index}].Quantity`}
-                  component="div"
-                  className="text-red-500 mt-1"
-                />
-              </div>
-              <div className="md:flex-none text-right">
-                <button
-                  type="button"
-                  onClick={() => remove(index)}
-                  className="text-red-500 hover:text-red-700"
-                >
-                  Remove
-                </button>
-              </div>
-            </div>
-          ))}
-          <div className="text-left">
-            <button
-              type="button"
-              onClick={() => push({ name: "", detail: "" })}
-              className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
-            >
-              Add Variation
-            </button>
-          </div>
-        </div>
-      )}
-    </FieldArray>
-  </>
-)}
-</div>
+                                      placeholder="Quantity"
+                                      className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                                    />
+                                    <ErrorMessage
+                                      name={`variantStockQuantities[${index}].quantity`}
+                                      component="div"
+                                      className="text-red-500 mt-1"
+                                    />
+                                  </div>
+                                  <div className="md:flex-none text-right">
+                                    <button
+                                      type="button"
+                                      onClick={() => remove(index)}
+                                      className="text-red-500 hover:text-red-700"
+                                    >
+                                      Remove
+                                    </button>
+                                  </div>
+                                </div>
+                              ))}
+                              <div className="text-left">
+                                <button
+                                  type="button"
+                                  onClick={() => push({ name: "", detail: "" })}
+                                  className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
+                                >
+                                  Add Variation
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </FieldArray>
+                      </>
+                    )}
+                  </div>
 
                   <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
@@ -795,7 +745,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                 className="cursor-pointer"
                                 width={30}
                                 height={30}
-                                src={item.imageUrl}
+                                src={item?.imageUrl ? item?.imageUrl : "" }
                                 alt={`productImage-${index}`}
                               />
                             </div>
@@ -830,7 +780,8 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                 <RxCross2
                                   className="cursor-pointer"
                                   onClick={() => {
-                                    console.log('function called')
+                                    console.log("funciton called")
+                                    ImageRemoveHandler(item.public_id, setImagesUrl);
                                   }}
                                 />
                               </div>
