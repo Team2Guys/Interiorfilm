@@ -18,7 +18,7 @@ interface SidebarProps {
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
-  let superAdmin = loggedInUser && loggedInUser.role !=='Admin'
+  let superAdmin = loggedInUser && loggedInUser.role !== 'Admin'
 
   const pathname = usePathname();
 
@@ -70,9 +70,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
-        sidebarOpen ? "translate-x-0" : "-translate-x-full"
-      }`}
+      className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
@@ -123,7 +122,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Dashboard --> */}
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === "/dashboard" 
+                  pathname === "/dashboard"
                 }
               >
                 {(handleClick, open) => {
@@ -131,11 +130,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <React.Fragment>
                       <Link
                         href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === "/dashboard" 
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === "/dashboard"
                           ) &&
                           "bg-graydark dark:bg-meta-4"
-                        }`}
+                          }`}
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded
@@ -147,24 +145,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         Dashboard
                         <MdOutlineKeyboardArrowDown
                           size={30}
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${
-                            open && "rotate-180"
-                          }`}
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${open && "rotate-180"
+                            }`}
                         />
                       </Link>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
-                        className={`translate transform overflow-hidden ${
-                          !open && "hidden"
-                        }`}
+                        className={`translate transform overflow-hidden ${!open && "hidden"
+                          }`}
                       >
                         <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
                           <li>
                             <Link
                               href="/dashboard"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/dashboard" && "text-white"
-                              }`}
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === "/dashboard" && "text-white"
+                                }`}
                             >
                               eCommerce
                             </Link>
@@ -179,7 +174,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === "/dashboard/Add_Category/AddNewCategory" 
+                  pathname === "/dashboard/Add_Category/AddNewCategory"
                 }
               >
                 {(handleClick, open) => {
@@ -187,12 +182,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <React.Fragment>
                       <Link
                         href="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === "/dashboard/Add_Category/AddNewCategory" 
-          
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === "/dashboard/Add_Category/AddNewCategory"
+
                           ) &&
                           "bg-graydark dark:bg-meta-4"
-                        }`}
+                          }`}
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded
@@ -204,36 +198,32 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         Category
                         <MdOutlineKeyboardArrowDown
                           size={30}
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${
-                            open && "rotate-180"
-                          }`}
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${open && "rotate-180"
+                            }`}
                         />
                       </Link>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
-                        className={`translate transform overflow-hidden ${
-                          !open && "hidden"
-                        }`}
+                        className={`translate transform overflow-hidden ${!open && "hidden"
+                          }`}
                       >
                         <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
                           <li>
                             <Link
                               href="/dashboard/Add_Category/AddNewCategory"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname ===
-                                  "dashboard/Add_Category/AddNewCategory" &&
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname ===
+                                "dashboard/Add_Category/AddNewCategory" &&
                                 "text-white"
-                              } `}
+                                } `}
                             >
                               Add Categories
                             </Link>
                             <li>
                               <Link
                                 href="/dashboard/category"
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white mt-2.5 ${
-                                  pathname === "/dashboard/category" &&
+                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white mt-2.5 ${pathname === "/dashboard/category" &&
                                   "text-white"
-                                }`}
+                                  }`}
                               >
                                 View Categories
                               </Link>
@@ -246,10 +236,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   );
                 }}
               </SidebarLinkGroup>
-              
+
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === "/dashboard/products" 
+                  pathname === "/dashboard/products"
                 }
               >
                 {(handleClick, open) => {
@@ -257,10 +247,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <React.Fragment>
                       <Link
                         href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === "/dashboard/products" ) &&
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === "/dashboard/products") &&
                           "bg-graydark dark:bg-meta-4"
-                        }`}
+                          }`}
                         onClick={(e) => {
                           e.preventDefault(); // Prevent default link behavior
                           sidebarExpanded
@@ -272,26 +261,23 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         Products
                         <MdOutlineKeyboardArrowDown
                           size={30}
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${
-                            open && "rotate-180"
-                          }`}
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${open && "rotate-180"
+                            }`}
                         />
                       </Link>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
-                        className={`translate transform overflow-hidden ${
-                          !open && "hidden"
-                        }`}
+                        className={`translate transform overflow-hidden ${!open && "hidden"
+                          }`}
                       >
                         <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
-                      
+
                           <li>
                             <Link
                               href="/dashboard/products"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "dashboard/products" &&
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === "dashboard/products" &&
                                 "text-white"
-                              } `}
+                                } `}
                             >
                               View Products
                             </Link>
@@ -303,33 +289,31 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   );
                 }}
               </SidebarLinkGroup>
-{
-  superAdmin ? 
-              <li>
-                <Link
-                  href="/dashboard/super-admin"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("super-admin") &&
-                    "bg-graydark dark:bg-meta-4"
-                  }`}
-                >
-                 <GrUserAdmin size={20} />
+              {
+                superAdmin ?
+                  <li>
+                    <Link
+                      href="/dashboard/super-admin"
+                      className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("super-admin") &&
+                        "bg-graydark dark:bg-meta-4"
+                        }`}
+                    >
+                      <GrUserAdmin size={20} />
 
-                  Admin
-                </Link>
-              </li> : null
-}
+                      Admin
+                    </Link>
+                  </li> : null
+              }
 
 
               <li>
                 <Link
                   href="/dashboard/settings"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("settings") &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("settings") &&
                     "bg-graydark dark:bg-meta-4"
-                  }`}
+                    }`}
                 >
-                <IoSettingsOutline size={20} />
+                  <IoSettingsOutline size={20} />
 
                   Settings
                 </Link>
@@ -349,9 +333,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <Link
                   href="/dashboard/chart"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("chart") && "bg-graydark dark:bg-meta-4"
-                  }`}
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("chart") && "bg-graydark dark:bg-meta-4"
+                    }`}
                 >
                   <svg
                     className="fill-current"
