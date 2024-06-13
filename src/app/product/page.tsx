@@ -43,7 +43,7 @@ const Product = () => {
   const [sortOption, setSortOption] = useState<string>("Default")
   const [category, setCategory] = useState<any[]>([])
   const [open, setOpen] = useState(false)
-  const [priceRange, setPriceRange] = useState({ from: 0, to: Infinity })
+  const [priceRange, setPriceRange] = useState({ from: '', to: '' })
   const [value, setValue] = useState(1)
   const [activeLink, setActiveLink] = useState<category | undefined>()
   const [inStockOnly, setInStockOnly] = useState<boolean>(false)
@@ -130,18 +130,24 @@ const Product = () => {
   const handleSortChange = (value: string) => {
     setSortOption(value)
   }
+
   const handlePriceChange = (field:any, value:any) => {
     setPriceRange(prevRange => ({
       ...prevRange,
-      [field]: isNaN(value) ? null : value // Handle NaN to set to null
+      [field]: value === '' ? '' : Number(value) // Handle empty string for clearing input
     }));
   };
+
+  const resetPriceFilter = () => {
+    setPriceRange({ from: '', to: '' })
+  }
 
   const filteredProductsByCategory = activeLink ? totalProducts.filter(product => product.category === activeLink._id) : totalProducts;
   const filteredProducts = filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
     if (!product) return true; // Keep the product if it's null
   
-    const priceMatch = (!priceRange.from || product.salePrice >= priceRange.from) && product.salePrice <= priceRange.to;
+    const price = product.discountPrice ?? product.salePrice;
+    const priceMatch = (priceRange.from === '' || price >= priceRange.from) && (priceRange.to === '' || price <= priceRange.to);
     const nameMatch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
     const colorMatch = !colorName || (product.colors && product.colors.some(color => color.colorName === colorName));
     const inStockMatch = !inStockOnly || product.totalStockQuantity && product.totalStockQuantity > 0;
@@ -150,16 +156,17 @@ const Product = () => {
     return nameMatch && colorMatch && priceMatch && inStockMatch && outOfStockMatch ;
   });
   
-
   const sortedProducts = filteredProducts.sort((a, b) => {
+    const getPrice = (product: PRODUCTS_TYPES) => product.discountPrice ?? product.salePrice;
+
     if (sortOption === "Low to High") {
-      return a.salePrice - b.salePrice
+      return getPrice(a) - getPrice(b);
     } else if (sortOption === "High to Low") {
-      return b.salePrice - a.salePrice
+      return getPrice(b) - getPrice(a);
     } else {
-      return 0
+      return 0;
     }
-  })
+  });
 
   const handleCategoryClick = (categoryName: category) => {
     setActiveLink(categoryName)
@@ -223,23 +230,24 @@ const Product = () => {
                 </Collapse>
               </div>
               <div className="p-2 bg-secondary">
-                <Collapse title="Filter Price">
+              <Collapse title="Filter Price">
                   <div className='flex gap-2'>
                     <Input 
                     className='h-10'
                       placeholder='From'
                       type='number'
-                      value={priceRange.from === Infinity ? '' : priceRange.from}
-                      onChange={(e:any) => handlePriceChange('from', Number(e.target.value))}
+                      value={priceRange.from}
+                      onChange={(e:any) => handlePriceChange('from', e.target.value)}
                     />
                     <Input
                     className='h-10'
                       placeholder='To'
                       type='number'
-                      value={priceRange.to === Infinity ? '' : priceRange.to}
-                      onChange={(e:any) => handlePriceChange('to', Number(e.target.value))}
+                      value={priceRange.to}
+                      onChange={(e:any) => handlePriceChange('to', e.target.value)}
                     />
                   </div>
+                  <div className='text-end pt-2 underline cursor-pointer' onClick={resetPriceFilter}>Reset Price</div>
                 </Collapse>
               </div>
             </div>
@@ -263,11 +271,11 @@ const Product = () => {
                 <div className="p-2 bg-secondary">
                   <Collapse title="All Categories">
                     <ul className="px-1 pt-2 space-y-1">
-                      {category?.map((item, index) => (
-                        <li key={index}>
-                          <Link href={"/"}>{item.name}</Link>
-                        </li>
-                      ))}
+                    {loading ?   <div className="flex justify-center items-center"><Loader /></div> :  category && category?.map((item, index) => (
+                      <li className='flex flex-col w-full' key={index} onClick={onClose}>
+                        <div className={activeLink?.name === item.name ? "bg-primary px-2 text-white rounded-md w-full h-8 flex items-center cursor-pointer" : "hover:bg-primary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center cursor-pointer"} onClick={() => handleCategoryClick(item)}>{item.name}</div>
+                      </li>
+                    ))}
                     </ul>
                   </Collapse>
                 </div>
@@ -282,24 +290,25 @@ const Product = () => {
                   </Collapse>
                 </div>
                 <div className="p-2 bg-secondary">
-                  <Collapse title="Filter Price">
-                    <div className='flex gap-2'>
-                      <Input
-                        className='h-10'
-                        placeholder='From'
-                        type='number'
-                        value={priceRange.from === Infinity ? '' : priceRange.from}
-                        onChange={(e:React.ChangeEvent<HTMLInputElement>) => handlePriceChange('from', Number(e.target.value))}
-                      />
-                      <Input
-                        className='h-10'
-                        placeholder='To'
-                        type='number'
-                        value={priceRange.to === Infinity ? '' : priceRange.to}
-                        onChange={(e:React.ChangeEvent<HTMLInputElement>) => handlePriceChange('to', Number(e.target.value))}
-                      />
-                    </div>
-                  </Collapse>
+                <Collapse title="Filter Price">
+                  <div className='flex gap-2'>
+                    <Input 
+                    className='h-10'
+                      placeholder='From'
+                      type='number'
+                      value={priceRange.from}
+                      onChange={(e:any) => handlePriceChange('from', e.target.value)}
+                    />
+                    <Input
+                    className='h-10'
+                      placeholder='To'
+                      type='number'
+                      value={priceRange.to}
+                      onChange={(e:any) => handlePriceChange('to', e.target.value)}
+                    />
+                  </div>
+                  <div className='text-end pt-2 underline cursor-pointer' onClick={resetPriceFilter}>Reset Price</div>
+                </Collapse>
                 </div>
               </div>
             }
