@@ -1,4 +1,5 @@
-import React,{useState,useEffect} from 'react';
+//@ts-nocheck
+import React,{useState,useEffect, useLayoutEffect} from 'react';
 import Container from '../Container/Container';
 import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
 import Link from 'next/link';
@@ -19,6 +20,7 @@ import Megamanu from './Megamanu/Megamanu';
 import Mobiletab from 'components/ui/Tabs/Mobiletab/Mobiletab';
 import { generateSlug } from 'data/Data';
 import axios from 'axios';
+import PRODUCTS_TYPES, { Category } from 'types/interfaces';
 
 interface Product {
   name: string;
@@ -37,6 +39,35 @@ const Header= () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
+  const [activeLink, setActiveLink] = useState<Category | undefined>();
+  const [Categories, setCategories] = useState<Category[]>([]);
+
+  const productHandler = async () => {
+    try {
+      setLoading(true);
+      const categoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+      const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
+      const [categoryResponse, products] = await Promise.all([categoryRequest, productRequest]);
+
+      setTotalProducts(products.data.products);
+      setActiveLink(categoryResponse.data[0]);
+      setCategories(categoryResponse.data);
+    } catch (err) {
+      console.log(err, "err");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useLayoutEffect(() => {
+    productHandler();
+  }, []);
+
+  const handleCategoryClick = (category: Category) => {
+    setActiveLink(category);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -286,7 +317,10 @@ const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
       <div className='bg-primary py-4 hidden lg:block'>
         <ul className='flex justify-center gap-12 text-white'>
           <li><Link className='link-underline' href="/">Home</Link></li>
-          <li><Popover className='cursor-pointer link-underline' placement="bottom" trigger="hover" content={Megamanu} title="">
+          <li><Popover className='cursor-pointer link-underline'  placement="bottom" trigger="hover" content={<Megamanu  Categories={Categories} 
+                          loading={loading} 
+                          activeLink={activeLink} 
+                          handleCategoryClick={handleCategoryClick} />} title="">
             Product
           </Popover></li>
           <li><Link className='link-underline' href="/about">About</Link></li>
