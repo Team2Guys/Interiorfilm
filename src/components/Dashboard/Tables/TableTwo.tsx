@@ -1,3 +1,4 @@
+
 import React, { SetStateAction, useLayoutEffect, useState } from "react";
 import { Table, Button } from "antd";
 import Image from "next/image";
@@ -5,25 +6,26 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
 import Loader from "components/Loader/Loader";
 import { LiaEdit } from "react-icons/lia";
-import { CategoriesType } from 'types/interfaces'
+import {CategoriesType} from 'types/interfaces'
 import { useAppSelector } from "components/Others/HelperRedux";
-import useColorMode from "hooks/useColorMode";
+
+
 
 interface CategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>
-  seteditCategory?: React.Dispatch<SetStateAction<CategoriesType | undefined | null>>
+  seteditCategory?:React.Dispatch<SetStateAction<CategoriesType | undefined | null>>
   editCategory?: CategoriesType | undefined | null
 }
 
-function TableTwo({ setMenuType, seteditCategory, editCategory }: CategoryProps) {
-  const [category, setCategory] = useState<any[]>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [colorMode] = useColorMode();
+function TableTwo({setMenuType,seteditCategory,editCategory}: CategoryProps) {
+const [category, setCategory] = useState<any[]>();
+const [loading, setLoading] = useState<boolean>(false);
 
-  const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
+const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
 
-  let canAddCategory = loggedInUser && (loggedInUser.canAddCategory && loggedInUser.role === 'Admin');
-  let canDeleteCategory = loggedInUser && (loggedInUser.canDeleteCategory && loggedInUser.role =='Admin');
+let canAddCategory= loggedInUser && loggedInUser.canAddCategory 
+let canDeleteCategory=loggedInUser && loggedInUser.canDeleteCategory
+
 
   useLayoutEffect(() => {
     const CategoryHandler = async () => {
@@ -42,7 +44,12 @@ function TableTwo({ setMenuType, seteditCategory, editCategory }: CategoryProps)
     };
 
     CategoryHandler();
+
   }, []);
+
+
+
+
 
   const handleDelete = async (key: any) => {
     try {
@@ -96,7 +103,9 @@ function TableTwo({ setMenuType, seteditCategory, editCategory }: CategoryProps)
         const formattedTime = `${String(createdAt.getHours()).padStart(
           2,
           "0"
-        )}:${String(createdAt.getMinutes()).padStart(2, "0")}`;
+        )}:${String(createdAt.getMinutes()).padStart(2, "0")}
+  
+        `;
         return <span>{formattedTime}</span>;
       },
     },
@@ -114,6 +123,7 @@ function TableTwo({ setMenuType, seteditCategory, editCategory }: CategoryProps)
         />
       ),
     },
+
     {
       title: "Action",
       key: "action",
@@ -122,6 +132,7 @@ function TableTwo({ setMenuType, seteditCategory, editCategory }: CategoryProps)
           className={`cursor-pointer ${canDeleteCategory && "text-red-500"} ${
             !canDeleteCategory && "cursor-not-allowed text-gray-400"
           }`}
+          // className="cursor-pointer text-red-500"
           size={20}
           onClick={() => {
             if (canDeleteCategory) {
@@ -134,14 +145,14 @@ function TableTwo({ setMenuType, seteditCategory, editCategory }: CategoryProps)
   ];
 
   return (
-    <div className={colorMode === "dark" ? "dark" : ""}>
+    <div>
       {loading ? (
         <div className="flex justify-center mt-10">
           <Loader />
         </div>
       ) : (
         <>
-          <div className="flex justify-between mb-4 items-center text-black dark:text-white">
+          <div className="flex justify-between mb-4 items-center text-dark dark:text-white">
             <p>Categories</p>
             <div>
               <p
@@ -165,7 +176,7 @@ function TableTwo({ setMenuType, seteditCategory, editCategory }: CategoryProps)
           </div>
           {category && category.length > 0 ? (
             <Table
-              className="overflow-x-scroll lg:overflow-auto "
+              className="overflow-x-scroll lg:overflow-auto"
               dataSource={category}
               columns={columns}
               pagination={false}
