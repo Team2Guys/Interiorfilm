@@ -1,24 +1,24 @@
 //@ts-nocheck
 "use client";
-import React, { useState, useLayoutEffect, useEffect, useRef } from 'react'
+import React, { useState, useLayoutEffect, useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
-
 import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import Card from 'components/ui/Card/Card';
 import axios from 'axios';
 import { generateSlug } from 'data/Data';
 import Loader from 'components/Loader/Loader';
+import PRODUCTS_TYPES from 'types/interfaces';
 
 interface PRODUCT_SLIDER_PRPS {
   Productname?: string | null;
+  categoryId?: string;
 }
 
-const ProductSlider: React.FC<PRODUCT_SLIDER_PRPS> = ({ Productname }) => {
+const ProductSlider: React.FC<PRODUCT_SLIDER_PRPS> = ({ Productname, categoryId }) => {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<any>(null);
@@ -44,6 +44,12 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PRPS> = ({ Productname }) => {
 
       let response: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
       let products = response.data.products;
+      console.log(products, "products")
+
+      if (categoryId) {
+        products = products.filter((product: PRODUCTS_TYPES) => product.category === categoryId);
+      }
+
       if (Productname && products) {
         let filteredProducts = products.filter((item) => generateSlug(item.name) !== Productname);
         setTotalProducts(filteredProducts);
@@ -66,7 +72,7 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PRPS> = ({ Productname }) => {
 
   useLayoutEffect(() => {
     getallProducts();
-  }, [Productname]);
+  }, [Productname, categoryId]);
 
   return (
     loading ? <div className='flex justify-center items-center h-[20vh]'><Loader /></div> :
@@ -114,7 +120,7 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PRPS> = ({ Productname }) => {
           <button ref={nextRef} className='p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
             <MdArrowForwardIos size={15} />
           </button>
-        </div> 
+        </div>
       </div>
   );
 };
