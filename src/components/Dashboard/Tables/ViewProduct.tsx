@@ -186,7 +186,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
               className="peer lg:p-3 p-2 block outline-none border rounded-md border-gray-200 dark:bg-boxdark dark:drop-shadow-none text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
               type="search"
               placeholder="Search Product"
-              value={searchTerm}
+              value={searchTerm} 
               onChange={handleSearchChange}
             />
             <div>

@@ -1,28 +1,25 @@
-'use client'
-
-import { useEffect } from "react";
-import useLocalStorage from "./useLocalStorage";
+import { useEffect, useState } from 'react';
 
 const useColorMode = () => {
-  const [colorMode, setColorMode] = useLocalStorage("color-theme", "light");
+  const [colorMode, setColorMode] = useState<'light' | 'dark'>('light');
 
-  const darkModehandler =()=>{
-    const className = "dark";
-    const ISSERVER = typeof window === "undefined"
-if(!ISSERVER){
-  const bodyClass = window.document.body.classList;
-
-  colorMode === "dark" ? bodyClass.add(className) : bodyClass.remove(className);
-
-}
-  }
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Read color mode from localStorage
+    const savedColorMode = localStorage.getItem('colorMode');
+    if (savedColorMode) {
+      setColorMode(savedColorMode as 'light' | 'dark');
+      document.documentElement.classList.add(savedColorMode);
+    }
+  }, []);
 
-    darkModehandler()
-  }, [colorMode]);
+  const setMode = (mode: 'light' | 'dark') => {
+    setColorMode(mode);
+    localStorage.setItem('colorMode', mode);
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(mode);
+  };
 
-  return [colorMode, setColorMode];
+  return [colorMode, setMode] as const;
 };
 
 export default useColorMode;
