@@ -250,7 +250,7 @@ const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
                       </Link>
                     ))
                   ) : (
-                    <p>No products found</p>
+                    <p className='text-dark dark:text-white' >No products found</p>
                   )}
                    </div>
       )}

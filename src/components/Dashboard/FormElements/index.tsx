@@ -594,7 +594,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                         onChange={handleOptionChange}
                         as="select"
                         name="category"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent focus:border-primary active:border-primary text-black dark:text-white bg-white dark:border-strokedark dark:bg-boxdark"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md  focus:outline-none focus:ring-2 dark:focus:border-primary shadow-none focus:border-transparent focus:border-primary active:border-primary text-black dark:text-white bg-white dark:border-strokedark dark:bg-boxdark"
                       >
                         <option
                           value=""
