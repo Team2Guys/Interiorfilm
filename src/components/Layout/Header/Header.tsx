@@ -277,7 +277,7 @@ const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
                       open={category}
                         title={"product"}
                         content={<>
-                          <Mobiletab className='color-white' />
+                          <Mobiletab staticConatiner='hidden' className='color-white' />
                         </>}
                       /></li>
                   <li><Link className='text-base font-semibold text-black hover:text-black ' onClick={onClose} href="/about">About Us</Link></li>

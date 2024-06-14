@@ -89,7 +89,7 @@ const Footer: React.FC = () => {
               <ul className={`space-y-2 transition-all duration-300 overflow-hidden ${isCategoriesOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}>
                 {category && category.map((category, index) => (
                   <li key={index}>
-                    <Link href="/" className='hover:text-primary link-footer'>{category.name}</Link>
+                    <Link href="/product" className='hover:text-primary link-footer'>{category.name}</Link>
                   </li>
                 ))}
               </ul>

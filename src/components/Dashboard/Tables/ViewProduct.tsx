@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 import { FaRegEye } from "react-icons/fa";
 import { LiaEdit } from "react-icons/lia";
 import { useAppSelector } from "components/Others/HelperRedux";
+import { notification } from 'antd';
+
 
 
 import { generateSlug } from 'data/Data';
@@ -58,7 +60,6 @@ const ViewProduct: React.FC<CategoryProps> = ({
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   ) || [];
 
-  console.log(filteredProducts ,"filteredProducts")
   const handleDelete = async (key: string) => {
     try {
       let response = await axios.delete(
@@ -66,8 +67,21 @@ const ViewProduct: React.FC<CategoryProps> = ({
       );
       console.log("Deleted", response);
       setCategory((prev: Product[]) => prev.filter((item) => item._id !== key));
+      console.log("Removed", response);
+  
+      notification.success({
+        message: 'Product Deleted',
+        description: 'The product has been successfully deleted.',
+        placement: 'topRight',
+      });
     } catch (err) {
       console.log("Deleting record with key:", err);
+  
+      notification.error({
+        message: 'Deletion Failed',
+        description: 'There was an error deleting the product.',
+        placement: 'topRight',
+      });
     }
   };
 
