@@ -221,3 +221,15 @@
 .ant-pagination-next {
   color: var(--antd-text-color);
 }
+
+
+
+.dark .ant-table-cell{
+  background-color: #24303f !important;
+  color: #ffff !important;
+  border: 1px solid #fff; 
+}
+.dark .apexcharts-tooltip{
+  background-color: #24303f !important;
+  color: #ffff !important;
+}

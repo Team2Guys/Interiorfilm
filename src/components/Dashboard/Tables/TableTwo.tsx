@@ -1,6 +1,6 @@
 
 import React, { SetStateAction, useLayoutEffect, useState } from "react";
-import { Table, Button } from "antd";
+import { Table, Button, notification } from 'antd';
 import Image from "next/image";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
@@ -48,18 +48,25 @@ let canDeleteCategory=loggedInUser && loggedInUser.canDeleteCategory
   }, []);
 
 
-
-
-
   const handleDelete = async (key: any) => {
     try {
-      let reponse = await axios.delete(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteCategory/${key}`
-      );
-      console.log("Deleted", reponse);
+      let response = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteCategory/${key}`);
+      console.log("Deleted", response);
       setCategory((prev: any) => prev.filter((item: any) => item._id != key));
+
+      notification.success({
+        message: 'Category Deleted',
+        description: 'The category has been successfully deleted.',
+        placement: 'topRight',
+      });
     } catch (err) {
       console.log("Deleting record with key:", err);
+
+      notification.error({
+        message: 'Deletion Failed',
+        description: 'There was an error deleting the category.',
+        placement: 'topRight',
+      });
     }
   };
 
@@ -175,13 +182,16 @@ let canDeleteCategory=loggedInUser && loggedInUser.canDeleteCategory
             </div>
           </div>
           {category && category.length > 0 ? (
-            <Table
-              className="overflow-x-scroll lg:overflow-auto"
-              dataSource={category}
-              columns={columns}
-              pagination={false}
-              rowKey="_id"
-            />
+            <div className="w-full">
+              <Table
+                className="overflow-x-scroll lg:overflow-auto"
+                dataSource={category}
+                columns={columns}
+                pagination={false}
+                rowKey="_id"
+              />
+              
+            </div>
           ) : (
             "No Categories found"
           )}
