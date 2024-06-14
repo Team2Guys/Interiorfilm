@@ -1,9 +1,7 @@
-import axios from 'axios';
 import ProductSlider from 'components/Carousel/ProductSlider/ProductSlider';
 import Loader from 'components/Loader/Loader';
 import Link from 'next/link';
-import React, { useLayoutEffect, useState } from 'react';
-import PRODUCTS_TYPES from 'types/interfaces';
+import React from 'react';
 
 interface Categories {
   posterImageUrl: {
