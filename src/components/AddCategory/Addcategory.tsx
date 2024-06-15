@@ -97,13 +97,17 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
                         </h3>
                       </div>
                       {posterimageUrl && posterimageUrl.length > 0 ? (
-                        <div className="flex gap-2 border-3 flex-wrap ">
+                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
                           {posterimageUrl.map((item: any, index) => {
                             return (
-                              <div className="group p-4" key={index}>
-                                <div className="flex justify-end invisible group-hover:visible ">
+                              <div
+                              className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                              key={index}
+                            >
+                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
                                   <RxCross2
-                                    className="cursor-pointer"
+                                    className="cursor-pointer text-red-500 hover:text-red-700"
+                                    size={17}
                                     onClick={() => {
                                       ImageRemoveHandler(
                                         item.public_id,
@@ -114,9 +118,9 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
                                 </div>
                                 <Image
                                   key={index}
-                                  className="cursor-pointer"
-                                  width={30}
-                                  height={30}
+                                  className="object-cover w-full h-full"
+                                  width={300}
+                                  height={200}
                                   src={item.imageUrl}
                                   alt={`productImage-${index}`}
                                 />

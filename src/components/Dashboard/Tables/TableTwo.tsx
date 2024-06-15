@@ -134,7 +134,7 @@ const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps)
       key: 'Edit',
       render: (text: any, record: any) => (
         <LiaEdit
-          className={`cursor-pointer ${canEditCategory && "text-black"} ${!canEditCategory && "cursor-not-allowed text-slate-300"}`}
+          className={`cursor-pointer ${canEditCategory && "text-black dark:text-white"} ${!canEditCategory && "cursor-not-allowed text-slate-300"}`}
           size={20}
           onClick={() => handleEdit(record)}
         />
@@ -172,7 +172,7 @@ const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps)
             <div>
               <p
                 className={`${canAddCategory && "cursor-pointer"
-                  } lg:p-2 md:p-2 ${canAddCategory && "hover:bg-slate-300"
+                  } lg:p-2 md:p-2 ${canAddCategory && "dark:border-strokedark dark:bg-slate-500 bg-slate-300"
                   } flex justify-center ${!canAddCategory && "cursor-not-allowed "
                   }`}
                 onClick={() => {

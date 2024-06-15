@@ -204,8 +204,8 @@ const ViewProduct: React.FC<CategoryProps> = ({
                 className={`${
                   canAddProduct && "cursor-pointer"
                 } p-2 ${
-                  canAddProduct && "hover:bg-slate-300"
-                } dark:border-strokedark dark:bg-boxdark flex justify-center ${
+                  canAddProduct && "bg-slate-300"
+                } dark:border-strokedark  flex justify-center dark:bg-slate-500 ${
                   !canAddProduct && "cursor-not-allowed text-slate-300"
                 }`}
                 onClick={() => {
