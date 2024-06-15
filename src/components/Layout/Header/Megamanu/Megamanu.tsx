@@ -2,23 +2,14 @@ import ProductSlider from 'components/Carousel/ProductSlider/ProductSlider';
 import Loader from 'components/Loader/Loader';
 import Link from 'next/link';
 import React from 'react';
+import {Categories_Types} from 'types/interfaces'
 
-interface Categories {
-  posterImageUrl: {
-    public_id: string,
-    imageUrl: string
-  };
-  _id: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: any;
-}
+
 interface MegamanuProps {
   loading: boolean;
-  Categories: Categories[];
+  Categories: Categories_Types[];
   activeLink: any;
-  handleCategoryClick: (Categories: Categories) => void;
+  handleCategoryClick: (Categories: Categories_Types) => void;
 }
 const Megamanu: React.FC<MegamanuProps> = ({ loading, Categories, activeLink, handleCategoryClick }) => {
 

@@ -44,12 +44,13 @@ const ViewProduct: React.FC<CategoryProps> = ({
 
   const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
 
-  const canAddProduct =
-    loggedInUser && (loggedInUser.role == "Admin" ? loggedInUser.canAddProduct : true);
-  const canDeleteProduct =
-    loggedInUser && (loggedInUser.role == "Admin" ? loggedInUser.canDeleteProduct : true);
-  const canEditproduct =
-    loggedInUser && (loggedInUser.role == "Admin" ? loggedInUser.canEditProduct : true);
+  const canAddProduct=loggedInUser && (loggedInUser.role =='Admin' ?   loggedInUser.canAddProduct : true ) 
+  const canDeleteProduct=loggedInUser && (loggedInUser.role =='Admin' ?  loggedInUser.canDeleteProduct : true )
+  const canEditproduct = loggedInUser && (loggedInUser.role =='Admin'  ? loggedInUser.canEditproduct : true )  
+
+
+  console.log(canDeleteProduct, "canAddProduct"
+  )
 
   const filteredProducts: Product[] =
     Categories?.filter((product: any) =>

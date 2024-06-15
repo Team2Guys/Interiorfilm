@@ -21,8 +21,7 @@ const TabsData = ({category,carDetail,staticConatiner}:any) => {
                 </div>
             </div>
         </div>
-
-        <Card categoryId ={CategoryId} carDetail={carDetail} />
+        <Card categoryId ={category} carDetail={carDetail} />
     
     </div>
     <div className=' text-center mt-10 mb-7'>

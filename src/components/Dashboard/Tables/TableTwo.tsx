@@ -20,9 +20,9 @@ interface Product {
 }
 
 interface CategoryProps {
-  setMenuType: React.Dispatch<SetStateAction<string>>;
-  seteditCategory?: React.Dispatch<SetStateAction<CategoriesType | undefined | null>>;
-  editCategory?: CategoriesType | undefined | null;
+  setMenuType: React.Dispatch<SetStateAction<string>>
+  seteditCategory?: React.Dispatch<SetStateAction<CategoriesType | undefined | null>>
+  editCategory?: CategoriesType | undefined | null
 }
 
 const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps) => {
@@ -32,8 +32,11 @@ const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps)
 
   const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
 
-  const canAddCategory = loggedInUser && loggedInUser.canAddCategory;
-  const canDeleteCategory = loggedInUser && loggedInUser.canDeleteCategory;
+  const canAddCategory = loggedInUser && (loggedInUser.role == 'Admin' ? loggedInUser.canAddCategory : true)
+  const canDeleteCategory = loggedInUser && (loggedInUser.role == 'Admin' ? loggedInUser.canDeleteCategory : true)
+  const canEditCategory = loggedInUser && (loggedInUser.role == 'Admin' ? loggedInUser.canEditCategory : true)
+
+
 
   useLayoutEffect(() => {
     const CategoryHandler = async () => {
@@ -131,7 +134,7 @@ const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps)
       key: 'Edit',
       render: (text: any, record: any) => (
         <LiaEdit
-          className="cursor-pointer"
+          className={`cursor-pointer ${canEditCategory && "text-black"} ${!canEditCategory && "cursor-not-allowed text-slate-300"}`}
           size={20}
           onClick={() => handleEdit(record)}
         />
@@ -142,7 +145,9 @@ const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps)
       key: 'action',
       render: (text: any, record: any) => (
         <RiDeleteBin6Line
-          className={`cursor-pointer ${canDeleteCategory ? 'text-red-500' : 'cursor-not-allowed text-gray-400'}`}
+          className={`cursor-pointer ${canDeleteCategory && "text-red"} ${!canDeleteCategory && "cursor-not-allowed text-slate-300"
+            }`}
+          // className="cursor-pointer text-red-500"
           size={20}
           onClick={() => {
             if (canDeleteCategory) {
@@ -166,9 +171,10 @@ const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps)
             <p>Categories</p>
             <div>
               <p
-                className={`${canAddCategory ? 'cursor-pointer' : ''} lg:p-2 md:p-2 ${
-                  canAddCategory ? 'hover:bg-gray-200' : 'cursor-not-allowed text-gray-400'
-                } flex justify-center`}
+                className={`${canAddCategory && "cursor-pointer"
+                  } lg:p-2 md:p-2 ${canAddCategory && "hover:bg-slate-300"
+                  } flex justify-center ${!canAddCategory && "cursor-not-allowed "
+                  }`}
                 onClick={() => {
                   seteditCategory && seteditCategory(null);
                   if (canAddCategory) {

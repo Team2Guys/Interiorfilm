@@ -10,7 +10,9 @@ import { IMAGE_INTERFACE } from 'types/interfaces'
 import axios from "axios";
 import Cookies from 'js-cookie';
 import { useAppDispatch } from "components/Others/HelperRedux";
-import { loggedInUserAction } from '../../../redux/slices/AdminsSlice';
+import { loggedInAdminAction } from '../../../redux/slices/AdminsSlice';
+import { ImageRemoveHandler } from 'utils/helperFunctions';
+
 
 
 const Settings = () => {
@@ -18,7 +20,6 @@ const Settings = () => {
   const token = Cookies.get('2guysAdminToken');
   const dispatch = useAppDispatch();
   let AdminType= loggedInUser && loggedInUser.role =="super-Admin"
-  console.log(AdminType,"AdminType")
 
   const initialFormData = {
     fullname: loggedInUser ? `${loggedInUser.fullname}` : "",
@@ -29,7 +30,7 @@ const Settings = () => {
   };
   const [formData, setFormData] = useState(initialFormData);
 
-  const [profilePhoto, setProfilePhoto] = useState<IMAGE_INTERFACE | undefined>();
+  const [profilePhoto, setProfilePhoto] = useState<IMAGE_INTERFACE[]>([]);
   console.log(loggedInUser, "loggedInUser")
 
   const handlePhotoChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +38,7 @@ const Settings = () => {
     if (file) {
       let imageUrl: any = await uploadPhotosToBackend([file])
 
-      imageUrl ? setProfilePhoto(imageUrl[0]) : null
+      imageUrl ? setProfilePhoto(imageUrl) : null
 
     }
   };
@@ -48,18 +49,26 @@ const Settings = () => {
       let initialFormData = {
         email: loggedInUser.email,
         fullname: formData.fullname,
-        profilePhoto: profilePhoto,
+        profilePhoto: profilePhoto[0],
       };
 
       if (loggedInUser) {
         let { fullname, profilePhoto, ...extractedData } = loggedInUser;
         console.log(extractedData, "extractedData");
 
-        // Combine initialFormData and extractedData into one object
+if(profilePhoto.length > 0){
+  initialFormData ={
+    ...initialFormData,
+    profilePhoto: profilePhoto[0]
+  }
+}
+
         let combinedData = {
           ...initialFormData,
           ...extractedData
         };
+
+
 
         let response: any = await axios.put(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/editAdmin/${loggedInUser._id}`, combinedData, {
@@ -103,7 +112,7 @@ const Settings = () => {
           "token": token
         }
       })
-      dispatch(loggedInUserAction(user.data.user))
+      dispatch(loggedInAdminAction(user.data.user))
     } catch (err: any) {
       console.log(err, "err")
     }
@@ -119,7 +128,8 @@ const Settings = () => {
 
   useEffect(() => {
     if (loggedInUser && loggedInUser.profilePhoto) {
-      Object.keys(loggedInUser.profilePhoto).length > 0 ? setProfilePhoto(loggedInUser.profilePhoto) : null
+      console.log(loggedInUser.profilePhoto, "loggedInUser.profilePhoto")
+      Object.keys(loggedInUser.profilePhoto).length > 0 ? setProfilePhoto([loggedInUser.profilePhoto]) :null
     }
   }, [loggedInUser]);
 
@@ -139,7 +149,47 @@ const Settings = () => {
               <div className="px-7 py-5">
                 <div>
                   <div className="mb-4 flex items-center gap-3">
-                    <div className="h-14 w-14 rounded-full overflow-hidden">
+
+                  {
+                  profilePhoto.map((profilePhoto) => {
+                    return (
+                      <>
+
+                        <div className="h-14 w-14 rounded-full overflow-hidden">
+                          <Image
+                            src={(profilePhoto && profilePhoto.imageUrl) ? profilePhoto.imageUrl : '/images/dummy-avatar.jpg'}
+                            width={55}
+                            height={55}
+                            alt="User"
+                          />
+                        </div>
+
+
+                        <div>
+                          <span className="mb-1.5 text-black dark:text-white">
+                            Edit your photo
+                          </span>
+                          <span className="flex gap-2.5">
+                            <button className="text-sm hover:text-primary text-black dark:text-white" type="button" onClick={() => ImageRemoveHandler(profilePhoto?.public_id ? profilePhoto?.public_id : '', setProfilePhoto)}>
+                              Delete
+                            </button>
+                            <button className="text-sm hover:text-primary text-black dark:text-white" type="button" >
+                              Update
+                            </button>
+                          </span>
+                        </div>
+
+                      </>
+
+                    )
+
+                  })
+
+                }
+
+
+
+                    {/* <div className="h-14 w-14 rounded-full overflow-hidden">
                       <Image
                         src={profilePhoto ? profilePhoto.imageUrl : '/images/dummy-avatar.jpg'}
                         width={55}
@@ -159,7 +209,8 @@ const Settings = () => {
                           Update
                         </button>
                       </span>
-                    </div>
+                    </div> */}
+
                   </div>
                   <div className="relative mb-4 h-36 rounded-md border-dashed border-stroke dark:border-strokedark bg-gray dark:bg-meta-4">
                     <input
@@ -184,7 +235,11 @@ const Settings = () => {
                   </div>
             
                 </div>
+
+                
               </div>
+
+
             </div>
           </div>
 
@@ -268,12 +323,7 @@ const Settings = () => {
                   </div>
 
                   <div className="flex justify-end gap-4.5">
-                    <button
-                      className="flex justify-center rounded border border-stroke px-6 py-2 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                      type="button"
-                    >
-                      Cancel
-                    </button>
+                    
                     <button
                       className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
                       type="submit"
