@@ -76,7 +76,7 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PRPS> = ({ Productname, categoryId 
 
   return (
     loading ? <div className='flex justify-center items-center h-[20vh]'><Loader /></div> :
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center w-full">
         <div className='w-1/12'>
           <button ref={prevRef} className='p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
             <MdArrowBackIos size={15} />
@@ -98,7 +98,7 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PRPS> = ({ Productname, categoryId 
               spaceBetween: 10,
             },
             1024: {
-              slidesPerView: 3.5,
+              slidesPerView: 4,
               spaceBetween: 20,
             },
           }}

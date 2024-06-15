@@ -31,12 +31,21 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
 
   const getallProducts = async () => {
     try {
-      if (pathname.startsWith("/product") || slider) return;
+      if (pathname.startsWith("/product" ) || slider) return;
       setLoading(true);
-
       let response: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
       let products = response.data.products;
-      setTotalProducts(products);
+      if (CategoryId != "demo" && CategoryId) {
+        let filtered = products.filter((item:any) => {
+          return item.category === CategoryId;
+        });
+  
+        setTotalProducts(filtered);
+      }else {
+
+        setTotalProducts(products);
+      }
+      
       if (products.length > 0 && products[0].colors && products[0].colors.length > 0) {
         setSelectedValue(products[0].colors[0]);
       }
@@ -55,17 +64,20 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
   }
 
   const ProductFilterHandler = () => {
-    if (CategoryId != "demo") {
-      let filtered = totalProducts.filter((item) => {
+    if (CategoryId != "demo" && CategoryId) {
+      console.log("condition is working ", CategoryId, 
+      )
+      let products = totalProducts
+      let filtered = products.filter((item) => {
         return item.category === CategoryId;
       });
-      let newArray = filtered.length > 6 ? filtered.slice(0, 6) : filtered;
-      console.log(newArray, 'newArray'
-      )
-      setTotalProducts(newArray);
+
+      setTotalProducts(filtered);
     }
   }
 
+  console.log(totalProducts, "setTotalProducts"
+  )
   useEffect(() => {
     getallProducts();
   }, []);
@@ -73,8 +85,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
   useEffect(() => {
     ProductFilterHandler();
   }, [carDetail]);
-console.log(carDetail, 'carDetail', CategoryId, "CategoryId", categoryId, "categoryId"
-)
+
 
   const handleAddToCart = (product: any) => {
     const colorToAdd = selectedValue || (product.colors && product.colors[0]);
@@ -243,6 +254,7 @@ console.log(carDetail, 'carDetail', CategoryId, "CategoryId", categoryId, "categ
       {ProductCard && (ProductCard.length > 0 && !loading) ? (
         ProductCard.map(renderProduct)
       ) : (
+
         (productsToRender.length > 0) ? productsToRender.map(renderProduct) :  !loading ? <div className='flex justify-center'>No Product Found</div> : <div className='flex justify-center'><Loader/></div> 
       )}
     </>
