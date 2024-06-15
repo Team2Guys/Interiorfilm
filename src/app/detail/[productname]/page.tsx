@@ -271,7 +271,7 @@ const Detail = ({ params }: { params: { productname: string } }) => {
                       <button className='bg-primary rounded-md py-3 px-3 text-white' onClick={() => handleAddToWishlist(productDetail)}><GoHeart size={25} /></button>
                     </div>
                   )}
-                  <div className='flex items-center gap-2'>
+                  <div className='flex items-center gap-2 text-black dark:text-white'>
                     <p className='font-medium text-lg'>Categories: </p>
                     <p className='text-dark'>All, Featured, Shoes</p>
                   </div>

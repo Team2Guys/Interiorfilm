@@ -141,3 +141,17 @@ export interface ADDPRODUCTFORMPROPS {
   setEditProduct?: any
 
 }
+
+
+
+export interface Categories_Types {
+  posterImageUrl: {
+    public_id: string,
+    imageUrl: string
+  };
+  _id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: any;
+}

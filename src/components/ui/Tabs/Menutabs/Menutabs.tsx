@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState, ReactNode } from 'react';
 
 interface Tab  {
-  label: string;
+  label: any;
   content: ReactNode;
 };
 

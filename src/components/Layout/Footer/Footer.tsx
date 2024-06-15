@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
     <div className='bg-white pt-10'>
     <Container>
       <div className='flex flex-wrap md:flex-nowrap justify-between'>
-        <div className='flex items-center gap-2 w-full md:w-2/6'>
+        <div className='flex items-center gap-2 w-full md:w-2/6 text-black dark:text-white'>
         <SlEnvolopeLetter className='text-primary' size={35} />
         <p className='lg:text-base text-sm '><span className='text-primary '>$90 OFF*</span> YOUR ORDER! SUBSCRBE TO OUR NEWSLETTER TODAY.</p>
         </div>
@@ -89,7 +89,7 @@ const Footer: React.FC = () => {
               <ul className={`space-y-2 transition-all duration-300 overflow-hidden ${isCategoriesOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}>
                 {category && category.map((category, index) => (
                   <li key={index}>
-                    <Link href="/" className='hover:text-primary link-footer'>{category.name}</Link>
+                    <Link href="/product" className='hover:text-primary link-footer'>{category.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -141,7 +141,7 @@ const Footer: React.FC = () => {
             <div className='text-white lg:order-1 order-2'>
               <p className='text-xs'>© Interior Film - All Rights Reserved</p>
             </div>
-            <div className='flex items-center gap-2 py-2 lg:order-2 order-1'>
+            <div className='flex items-center gap-2 py-2 lg:order-2 order-1 text-black dark:text-white'>
               {bottomImages.map((image, index) => (
                 <Image
                   key={index}

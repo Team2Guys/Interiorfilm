@@ -71,7 +71,7 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
   return (
     <>
       <p
-        className="text-2xl font-black mb-4 flex items-center justify-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer"
+        className="text-lg font-black mb-4 flex items-center justify-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer text-black dark:text-white"
         onClick={() => {
           setMenuType("Categories");
         }}

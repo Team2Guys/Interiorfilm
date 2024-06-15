@@ -3,6 +3,19 @@
 @tailwind utilities;
 
 
+:root {
+  --antd-body-bg: #ffffff;
+  --antd-text-color: #000000;
+  --antd-border-color: #d9d9d9;
+}
+
+.dark :root {
+  --antd-body-bg: #1f1f1f;
+  --antd-text-color: #ffffff;
+  --antd-border-color: #434343;
+}
+ 
+
 .borderless-select.ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
     border: none !important;
 }
@@ -133,6 +146,7 @@
 }
 
 
+
 @media screen and (max-width: 768px) {
   .color-black.ant-tabs .ant-tabs-tab{
     color: black !important;
@@ -171,4 +185,51 @@
 .ant-radio-wrapper .ant-radio-checked .ant-radio-inner{
   border-color: #C72031 !important;
     background-color: #C72031 !important;;
+}
+
+.ant-table {
+  background: var(--antd-body-bg);
+  color: var(--antd-text-color);
+}
+
+.ant-table-thead > tr > th {
+  background: var(--antd-body-bg);
+  color: var(--antd-text-color);
+  border-color: var(--antd-border-color);
+}
+
+.ant-table-tbody > tr > td {
+  background: var(--antd-body-bg);
+  color: var(--antd-text-color);
+  border-color: var(--antd-border-color);
+}
+
+.ant-pagination {
+  background: var(--antd-body-bg);
+  color: var(--antd-text-color);
+}
+
+.ant-pagination-item {
+  border-color: var(--antd-border-color);
+}
+
+.ant-pagination-item-active {
+  border-color: var(--antd-text-color);
+}
+
+.ant-pagination-prev,
+.ant-pagination-next {
+  color: var(--antd-text-color);
+}
+
+
+
+.dark .ant-table-cell{
+  background-color: #24303f !important;
+  color: #ffff !important;
+  border: 1px solid #fff; 
+}
+.dark .apexcharts-tooltip, .dark .ant-modal-content, .dark .ant-modal-confirm-title, .dark .ant-modal-confirm-content{
+  background-color: #24303f !important;
+  color: #ffff !important;
 }

@@ -24,11 +24,14 @@ import Cookies from 'js-cookie';
 import { loggedInUserAction } from '../../../redux/slices/userSlice';
 import { useAppDispatch } from "components/Others/HelperRedux";
 import Profile from 'components/user_profile/Profile'
+import {Categories_Types} from 'types/interfaces'
 
 
 
 
 
+
+import PRODUCTS_TYPES, { Category } from 'types/interfaces';
 
 interface Product {
   name: string;
@@ -67,6 +70,35 @@ const Header = () => {
   }
 
  
+  const [loading, setLoading] = useState<boolean>(false);
+  const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
+  const [activeLink, setActiveLink] = useState<Category | undefined>();
+  const [Categories, setCategories] = useState<Categories_Types[]>([]);
+
+  const productHandler = async () => {
+    try {
+      setLoading(true);
+      const categoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+      const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
+      const [categoryResponse, products] = await Promise.all([categoryRequest, productRequest]);
+
+      setTotalProducts(products.data.products);
+      setActiveLink(categoryResponse.data[0]);
+      setCategories(categoryResponse.data);
+    } catch (err) {
+      console.log(err, "err");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useLayoutEffect(() => {
+    productHandler();
+  }, []);
+
+  const handleCategoryClick = (category: Category) => {
+    setActiveLink(category);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -253,7 +285,7 @@ const Header = () => {
                           </Link>
                         ))
                       ) : (
-                        <p>No products found</p>
+                        <p className='text-dark dark:text-white' >No products found</p>
                       )}
                     </div>
                   )}
@@ -272,17 +304,17 @@ const Header = () => {
                 <ul className='space-y-2'>
                   <li><Link className='text-base font-semibold text-black hover:text-black' onClick={onClose} href="/">Home</Link></li>
                   <li><DrawerMenu
-                    classDrawer=' back-transparent  backdrop-blur-md p-2 shadow-none'
-                    className='text-base font-semibold text-black hover:text-black cursor-pointer'
-                    width={500}
-                    showDrawer={CategoryHandler}
-                    onClose={CategoryHandlerclose}
-                    open={category}
-                    title={"product"}
-                    content={<>
-                      <Mobiletab className='color-white' />
-                    </>}
-                  /></li>
+                      classDrawer=' back-transparent  backdrop-blur-md p-2 shadow-none'
+                        className='text-base font-semibold text-black hover:text-black cursor-pointer'
+                      width={500}
+                      showDrawer={CategoryHandler}
+                      onClose={CategoryHandlerclose}
+                      open={category}
+                        title={"product"}
+                        content={<>
+                          <Mobiletab staticConatiner='hidden' className='color-white' />
+                        </>}
+                      /></li>
                   <li><Link className='text-base font-semibold text-black hover:text-black ' onClick={onClose} href="/about">About Us</Link></li>
                   <li><Link className='text-base font-semibold text-black hover:text-black' onClick={onClose} href="/contact">Contact Us</Link></li>
                 </ul>
@@ -333,7 +365,10 @@ const Header = () => {
       <div className='bg-primary py-4 hidden lg:block'>
         <ul className='flex justify-center gap-12 text-white'>
           <li><Link className='link-underline' href="/">Home</Link></li>
-          <li><Popover className='cursor-pointer link-underline' placement="bottom" trigger="hover" content={Megamanu} title="">
+          <li><Popover className='cursor-pointer link-underline'  placement="bottom" trigger="hover" content={<Megamanu  Categories={Categories} 
+                          loading={loading} 
+                          activeLink={activeLink} 
+                          handleCategoryClick={handleCategoryClick} />} title="">
             Product
           </Popover></li>
           <li><Link className='link-underline' href="/about">About</Link></li>

@@ -5,12 +5,12 @@ import img1 from "../../../../public/images/CA101.png"
 import Card from 'components/ui/Card/Card'
 
 
-const TabsData = ({category,carDetail}:any) => {
-   
+const TabsData = ({category,carDetail,staticConatiner}:any) => {
+    let CategoryId = category._id ? category._id : 'demo'
   return (
     <>
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center sm:gap-2 md:gap-4 mt-10'>
-        <div className='sm:col-span-2 bg-secondary p-2 w-full'>
+        <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center gap-2 md:gap-4 mt-10'>
+        <div className={`sm:col-span-2 bg-secondary p-2 w-full ${staticConatiner}`}>
             <div className='flex justify-center items-center'>
                 <div className=' px-8 w-3/6'>
                     <h1 className='text-[22px] font-semibold md:text-4xl md:font-bold'>23% off in All Product</h1>

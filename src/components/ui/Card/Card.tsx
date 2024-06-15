@@ -198,13 +198,13 @@ console.log(carDetail, 'carDetail', CategoryId, "CategoryId", categoryId, "categ
           </button>
         </div>
         <div
-          className="cursor-pointer custom-shadow transition-all my-3"
+          className="cursor-pointer custom-shadow transition-all my-3 bg-white"
           onClick={() => router.push(`/detail/${generateSlug(product.name)}`)}
         >
           <div className="">
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
               <Image
-                className="bg-contain h-full md:h-72"
+                className="bg-contain h-32 w-full md:h-72"
                 width={300}
                 height={300}
                 src={product.posterImageUrl.imageUrl}
@@ -229,7 +229,7 @@ console.log(carDetail, 'carDetail', CategoryId, "CategoryId", categoryId, "categ
             {product.starRating !== undefined && (
               <div className="flex gap-1 justify-center">
                 <Rate className="text-sm gap-0" disabled allowHalf defaultValue={Number(product.starRating)} />
-                <p>{product.reviews}</p>
+                <p className='text-sm'>({product.reviews})</p>
               </div>
             )}
           </div>
