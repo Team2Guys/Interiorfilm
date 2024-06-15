@@ -1,13 +1,23 @@
-import React, { SetStateAction, useLayoutEffect, useState } from 'react';
-import { Table, Modal, notification } from 'antd';
-import Image from 'next/image';
-import { RiDeleteBin6Line } from 'react-icons/ri';
-import axios from 'axios';
-import Loader from 'components/Loader/Loader';
-import { LiaEdit } from 'react-icons/lia';
-import { CategoriesType } from 'types/interfaces';
-import { useAppSelector } from 'components/Others/HelperRedux';
-import useColorMode from 'hooks/useColorMode';
+"use client";
+
+import React, { SetStateAction, useLayoutEffect, useState } from "react";
+import { Table, notification, Modal } from "antd";
+import Image from "next/image";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import axios from "axios";
+import Loader from "components/Loader/Loader";
+import { LiaEdit } from "react-icons/lia";
+import { CategoriesType } from "types/interfaces";
+import { useAppSelector } from "components/Others/HelperRedux";
+import useColorMode from "hooks/useColorMode";
+
+interface Product {
+  _id: string;
+  name: string;
+  category: string;
+  posterImageUrl: { imageUrl: string };
+  createdAt: string;
+}
 
 interface CategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>;
@@ -45,7 +55,7 @@ const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps)
   const confirmDelete = (key: any) => {
     Modal.confirm({
       title: 'Are you sure you want to delete this category?',
-      content: 'Once deleted, the product cannot be recovered.',
+      content: 'Once deleted, the category cannot be recovered.',
       onOk: () => handleDelete(key),
       okText: 'Yes',
       cancelText: 'No',
@@ -55,22 +65,25 @@ const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps)
   const handleDelete = async (key: any) => {
     try {
       const response = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteCategory/${key}`);
-      console.log("Deleted", response);
       setCategory((prev: any) => prev.filter((item: any) => item._id != key));
-
       notification.success({
         message: 'Category Deleted',
         description: 'The category has been successfully deleted.',
         placement: 'topRight',
       });
     } catch (err) {
-      console.log("Deleting record with key:", err);
-
       notification.error({
         message: 'Deletion Failed',
         description: 'There was an error deleting the category.',
         placement: 'topRight',
       });
+    }
+  };
+
+  const handleEdit = (record: any) => {
+    if (seteditCategory) {
+      seteditCategory(record); // Ensure the category to edit is being set correctly
+      setMenuType("CategoryForm"); // Switch to the category form
     }
   };
 
@@ -120,10 +133,7 @@ const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps)
         <LiaEdit
           className="cursor-pointer"
           size={20}
-          onClick={() => {
-            seteditCategory && seteditCategory(record);
-            setMenuType('CategoryForm');
-          }}
+          onClick={() => handleEdit(record)}
         />
       ),
     },
