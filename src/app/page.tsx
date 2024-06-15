@@ -1,15 +1,4 @@
-import Tabs from "components/ui/Tabs/Tabs";
-import TabsData from "components/widgets/TabsData/TabsData";
-import img2 from "../../public/images/img-1.png";
-import img3 from "../../public/images/img-10.png";
-import img4 from "../../public/images/img-11.png";
-import img5 from "../../public/images/img-12.png";
-import img6 from "../../public/images/img-13.png";
-import img7 from "../../public/images/img-14.png";
-import img143 from "../../public/images/CA143.png";
-import img003 from "../../public/images/KH9003.png";
-import img107 from "../../public/images/CA107.png";
-import CollectiveProduct from "components/widgets/CollectiveProduct/CollectiveProduct";
+
 import HeroSlider from "components/Carousel/HeroSlider/HeroSlider";
 import Offer from "components/widgets/Offer/Offer";
 import { SlDiamond } from "react-icons/sl";
@@ -20,14 +9,6 @@ import Testimonial from "components/widgets/Testimonial/Testimonial";
 import ProductSlider from "components/Carousel/ProductSlider/ProductSlider";
 import Container from "components/Layout/Container/Container";
 import Mobiletab from "components/ui/Tabs/Mobiletab/Mobiletab";
-
-
-
-const products = [
-  { image: img143, category: "Realistic Woodgrain" },
-  { image: img003, category: "Realistic Marbles" },
-  { image: img107, category: "Realistic Matte" },
-];
 
 const offers = [
   {
@@ -59,6 +40,8 @@ const offers = [
 ];
 export default function Home() {
  
+
+ 
   return (
     <>
       <HeroSlider />
@@ -66,7 +49,6 @@ export default function Home() {
       <Container className="mt-10">
       <Mobiletab className="color-black" />
       </Container>
-      {/* <CollectiveProduct products={products} /> */}
       <Container className="mt-20">
         <h1 className="lg:text-5xl md:text-3xl font-semibold text-xl text-center mb-5">Feature Product</h1>
         

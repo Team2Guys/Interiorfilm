@@ -1,29 +1,53 @@
 
 'use client'
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useRouter } from "next/navigation"; 
 import Loader from "components/Loader/Loader";
+import Cookies from 'js-cookie';
+import axios from "axios";
+
+import { useAppSelector } from "components/Others/HelperRedux";
+import { loggedInUserAction } from '../redux/slices/userSlice';
+import { useAppDispatch } from "components/Others/HelperRedux";
+
+
+
 
 
 
 function ProtectedRoute(WrappedComponent:any) {
   const Wrapper=(props: any) => {
     const router = useRouter();
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
 
-   
-    useEffect(() => {
-      let token = localStorage.getItem("2guysToken"); 
-      console.log(token, "token")
+  const dispatch = useAppDispatch()
 
-      if (!token) {
-        // Redirect to login page if token is not present
-        router.push("/login");
-      } else {
-        setLoading(false);
+    const AddminProfileTriggerHandler = async (token: string | undefined | null) => {
+      try {
+        if (!token) return null
+
+        setLoading(true)
+        let user: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/getuserHandler`, {
+          headers: {
+            "token": token
+          }
+        })
+        dispatch(loggedInUserAction(user.data.user))
+  
+      } catch (err: any) {
+        console.log(err, "err")
+      } finally{
+        setLoading(false)
       }
-    }, [router]);
-
+    }
+  
+    useLayoutEffect(() => {
+      let token = Cookies.get("user_token");
+  
+      if (token) {
+        AddminProfileTriggerHandler(token)
+      }
+    }, []);
     if (loading) {
       return (
         <div

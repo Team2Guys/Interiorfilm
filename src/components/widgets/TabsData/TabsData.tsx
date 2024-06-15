@@ -6,7 +6,7 @@ import Card from 'components/ui/Card/Card'
 
 
 const TabsData = ({category,carDetail}:any) => {
-    let CategoryId = category._id ? category._id : 'demo'
+   
   return (
     <>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center sm:gap-2 md:gap-4 mt-10'>
@@ -21,7 +21,7 @@ const TabsData = ({category,carDetail}:any) => {
                 </div>
             </div>
         </div>
-        <Card categoryId ={CategoryId} carDetail={carDetail} />
+        <Card categoryId ={category} carDetail={carDetail} />
     
     </div>
     <div className=' text-center mt-10 mb-7'>

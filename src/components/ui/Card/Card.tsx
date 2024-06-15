@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import PRODUCTS_TYPES from 'types/interfaces';
 import axios from 'axios';
 import { generateSlug } from 'data/Data';
+import Loader from 'components/Loader/Loader';
 
 interface CardProps {
   ProductCard?: PRODUCTS_TYPES[];
@@ -24,10 +25,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [count, setCount] = useState<any>(1);
 
-
-  const handleChange = (e: any) => {
-    setSelectedValue(e.target.value);
-  };
   const pathname = usePathname();
 
   let CategoryId = categoryId ? categoryId : 'demo';
@@ -43,7 +40,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
       if (products.length > 0 && products[0].colors && products[0].colors.length > 0) {
         setSelectedValue(products[0].colors[0]);
       }
-      console.log(response.data.products, "setTotalProducts");
     } catch (err: any) {
       console.log(err, "err");
       if (err.response && err.response.data && err.response.data.message) {
@@ -60,12 +56,12 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
 
   const ProductFilterHandler = () => {
     if (CategoryId != "demo") {
-      console.log("CategoryId:", CategoryId);
       let filtered = totalProducts.filter((item) => {
-        console.log("Item Category:", item.category);
-        return item.category == CategoryId;
+        return item.category === CategoryId;
       });
       let newArray = filtered.length > 6 ? filtered.slice(0, 6) : filtered;
+      console.log(newArray, 'newArray'
+      )
       setTotalProducts(newArray);
     }
   }
@@ -75,10 +71,10 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
   }, []);
 
   useEffect(() => {
-    console.log('function called');
     ProductFilterHandler();
   }, [carDetail]);
-
+console.log(carDetail, 'carDetail', CategoryId, "CategoryId", categoryId, "categoryId"
+)
 
   const handleAddToCart = (product: any) => {
     const colorToAdd = selectedValue || (product.colors && product.colors[0]);
@@ -103,9 +99,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
     };
   
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    console.log("existingCart", existingCart)
-    console.log("product", product)
-
     const existingItemIndex = existingCart.findIndex((item: any) => item.id === product._id);
   
 
@@ -142,9 +135,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
       return;
     }
 
-console.log(selectedValue, "selectedValue")
-    console.log("Product added to wishlist:", product);
-  
     const newWishlistItem = {
       id: product._id,
       name: product.name,
@@ -157,8 +147,6 @@ console.log(selectedValue, "selectedValue")
     };
   
     let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
-    console.log("existingWishlist", existingWishlist)
-    console.log("product", product)
 
     const existingItemIndex = existingWishlist.findIndex((item: any) => item.id === product._id);
   
@@ -252,10 +240,10 @@ console.log(selectedValue, "selectedValue")
 
   return (
     <>
-      {ProductCard && ProductCard.length > 0 ? (
+      {ProductCard && (ProductCard.length > 0 && !loading) ? (
         ProductCard.map(renderProduct)
       ) : (
-        productsToRender.length > 0 ? productsToRender.map(renderProduct) : <div className='flex justify-center'>No Product Found</div>
+        (productsToRender.length > 0) ? productsToRender.map(renderProduct) :  !loading ? <div className='flex justify-center'>No Product Found</div> : <div className='flex justify-center'><Loader/></div> 
       )}
     </>
   );

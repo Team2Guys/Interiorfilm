@@ -56,8 +56,8 @@ const Mobiletab: React.FC<tabData> = ({className}) => {
           {
             categories.map((category, index)=>{
               return (
-                <TabPane   className='z-20' tab={category.name} key={index}  >
-                <TabsData category={category} carDetail={Card}/>
+                <TabPane   className='z-20' tab={category.name} key={index} >
+                <TabsData category={category._id} carDetail={Card}/>
               </TabPane>
               )
             })

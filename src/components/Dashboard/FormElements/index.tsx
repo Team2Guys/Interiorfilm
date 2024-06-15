@@ -9,12 +9,12 @@ import Imageupload from 'components/ImageUpload/Imageupload';
 import { RxCross2 } from "react-icons/rx";
 import Image from 'next/image';
 import { ImageRemoveHandler } from 'utils/helperFunctions';
-import {FormValues,ADDPRODUCTFORMPROPS } from "types/interfaces";
+import { FormValues, ADDPRODUCTFORMPROPS } from "types/interfaces";
 import Toaster from "components/Toaster/Toaster";
 import axios from 'axios';
 import { IoMdArrowRoundBack } from "react-icons/io";
 import Loader from 'components/Loader/Loader';
-import { withoutVariation ,AddProductvalidationSchema,AddproductsinitialValues} from 'data/Data';
+import { withoutVariation, AddProductvalidationSchema, AddproductsinitialValues } from 'data/Data';
 
 const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProductValue, setselecteMenu, setEditProduct }) => {
 
@@ -255,45 +255,45 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
 
 
-<div className="w-2/4">
-  <label className="mb-3 block text-sm font-medium text-black dark:text-dark">
-    Star Rating
-  </label>
-  <input
-    type="number"
-    name="starRating"
-    onChange={formik.handleChange}
-    onBlur={formik.handleBlur}
-    value={formik.values.starRating}
-    placeholder="Star Rating"
-    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.starRating && formik.errors.starRating ? 'border-red-500' : ''
-      }`}
-  />
-  {formik.touched.starRating && formik.errors.starRating ? (
-    <div className="text-red text-sm">{formik.errors.starRating as String}</div>
-  ) : null}
-</div>
+                        <div className="w-2/4">
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-dark">
+                            Star Rating
+                          </label>
+                          <input
+                            type="number"
+                            name="starRating"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.starRating}
+                            placeholder="Star Rating"
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.starRating && formik.errors.starRating ? 'border-red-500' : ''
+                              }`}
+                          />
+                          {formik.touched.starRating && formik.errors.starRating ? (
+                            <div className="text-red text-sm">{formik.errors.starRating as String}</div>
+                          ) : null}
+                        </div>
 
-<div className="w-2/4">
-  <label className="mb-3 block text-sm font-medium text-black dark:text-dark">
-    Reviews
-  </label>
-  <input
-    type="text"
-    name="reviews"
-    onChange={formik.handleChange}
-    onBlur={formik.handleBlur}
-    value={formik.values.reviews}
-    placeholder="Reviews"
-    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.reviews && formik.errors.reviews ? 'border-red-500' : ''
-      }`}
-  />
-  {formik.touched.reviews && formik.errors.reviews ? (
-    <div className="text-red text-sm">{formik.errors.reviews as String}</div>
-  ) : null}
-</div>
+                        <div className="w-2/4">
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-dark">
+                            Reviews
+                          </label>
+                          <input
+                            type="text"
+                            name="reviews"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.reviews}
+                            placeholder="Reviews"
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.reviews && formik.errors.reviews ? 'border-red-500' : ''
+                              }`}
+                          />
+                          {formik.touched.reviews && formik.errors.reviews ? (
+                            <div className="text-red text-sm">{formik.errors.reviews as String}</div>
+                          ) : null}
+                        </div>
 
-</div>
+                      </div>
 
                       <div className="flex full gap-4">
                         <div className="w-[33%]">
@@ -407,7 +407,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                         value={formik.values.colors[index].colorName}
                                         placeholder="Color Name"
 
-                                        
+
                                         className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.colors?.[index]?.colorName && (formik.errors.modelDetails as FormikErrors<FormValues['colors']>)?.[index]?.colorName
                                           ? 'border-red-500'
                                           : ''
@@ -500,7 +500,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
 
                 <div className="flex flex-col gap-5">
-            
+
 
                   <div>
 
@@ -550,7 +550,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                         <FieldArray name="variantStockQuantities">
                           {({ push, remove }) => (
                             <div>
-                              {formik.values.variantStockQuantities && formik.values.variantStockQuantities.map((model:any, index:any) => (
+                              {formik.values.variantStockQuantities && formik.values.variantStockQuantities.map((model: any, index: any) => (
                                 <div
                                   key={index}
                                   className="flex flex-col md:flex-row md:items-center mb-4"
@@ -745,7 +745,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                 className="cursor-pointer"
                                 width={30}
                                 height={30}
-                                src={item?.imageUrl ? item?.imageUrl : "" }
+                                src={item?.imageUrl ? item?.imageUrl : ""}
                                 alt={`productImage-${index}`}
                               />
                             </div>
