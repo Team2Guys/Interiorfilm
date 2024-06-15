@@ -7,9 +7,6 @@ import axios from "axios";
 import { useAppSelector } from "components/Others/HelperRedux";
 
 
-
-
-
 const getMonthNamesUpToCurrent = () => {
   const monthNames = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -23,13 +20,14 @@ const getMonthNamesUpToCurrent = () => {
   return monthNames.slice(0, currentMonth + 1);
 };
 
+let baseColorArray =  ["#80CAEE", "#3C50E0",]
 const options: ApexOptions = {
   legend: {
     show: false,
     position: "top",
     horizontalAlign: "left",
   },
-  colors: ["#3C50E0", "#80CAEE"],
+  colors: baseColorArray,
   chart: {
     fontFamily: "Satoshi, sans-serif",
     height: 335,
@@ -166,11 +164,15 @@ const getMonthlyRecord = async () => {
     });
 
     const reports = response.data;
+  
+    let chartColors = [...baseColorArray];
     console.log(reports);
 
     const keys = ["Revenue","Sales"];
     if (AdminType) {
       keys.unshift("Profit");
+      chartColors.unshift("#336699")
+
   }
 
     const defaultArray = keys.map(key => {
@@ -180,7 +182,7 @@ const getMonthlyRecord = async () => {
       };
     });
 
-    console.log(defaultArray, "defaultArray");
+    options.colors = chartColors;
 
     setState({ series: defaultArray });
   } catch (err) {

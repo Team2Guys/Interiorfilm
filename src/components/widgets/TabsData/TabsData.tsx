@@ -6,7 +6,6 @@ import Card from 'components/ui/Card/Card'
 
 
 const TabsData = ({category,carDetail,staticConatiner}:any) => {
-    let CategoryId = category._id ? category._id : 'demo'
   return (
     <>
         <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center gap-2 md:gap-4 mt-10'>

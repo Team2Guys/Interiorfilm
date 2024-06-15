@@ -6,10 +6,10 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import Cookies from 'js-cookie';
 import { useAppSelector } from "components/Others/HelperRedux";
-let colorArray =  ["#80CAEE", "#3C50E0",]
+let baseColorArray =  ["#80CAEE", "#3C50E0",]
 
 const options: ApexOptions = {
-  colors:colorArray ,
+  colors:baseColorArray ,
   chart: {
     fontFamily: "Satoshi, sans-serif",
     type: "bar",
@@ -86,9 +86,6 @@ const ChartTwo: React.FC = () => {
   const [state, setState] = useState<ChartTwoState | undefined>();
   let AdminType= loggedInUser && loggedInUser.role =="super-Admin"
 
-  if(AdminType){
-    colorArray.unshift("#336699")
-  }
 
   const getWeeklySales = async () => {
     try {
@@ -104,9 +101,12 @@ const ChartTwo: React.FC = () => {
   
       let reports = response.data.WeeklyRecord;
       const keys = ["Revenue", "Sales"];
-  
+      let chartColors = [...baseColorArray];
+
       if (AdminType) {
         keys.unshift("Profit");
+        chartColors.unshift("#336699")
+
       }
   
       let defaultArray = reports.map((item: any) => {
@@ -123,18 +123,24 @@ const ChartTwo: React.FC = () => {
         }
       });
   
+      
       // Filter out null entries if AdminType is false (to exclude "Profit")
       defaultArray = defaultArray.filter((item:any) => item !== null);
   
+      options.colors = chartColors;
       setState({ series: defaultArray });
+      
     } catch (err: any) {
       console.log(err, "err");
     }
   }
+
+
   
   useLayoutEffect(()=>{
   getWeeklySales()
 },[])
+
 
 
   return (
