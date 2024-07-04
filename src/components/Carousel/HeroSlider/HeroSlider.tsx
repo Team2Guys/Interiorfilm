@@ -2,7 +2,9 @@
 import React from 'react';
 import Slider from 'components/ui/Slider/Slider'; // Import the Slider component
 
+
 const HeroSlider = () => {
+
   const slides = [
     {
       image: '/images/slider1.png',

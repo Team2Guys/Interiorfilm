@@ -229,7 +229,7 @@
   color: #ffff !important;
   border: 1px solid #fff; 
 }
-.dark .apexcharts-tooltip{
+.dark .apexcharts-tooltip, .dark .ant-modal-content, .dark .ant-modal-confirm-title, .dark .ant-modal-confirm-content{
   background-color: #24303f !important;
   color: #ffff !important;
 }

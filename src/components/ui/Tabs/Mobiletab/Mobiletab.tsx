@@ -1,5 +1,5 @@
 "use client"
-import React,{useEffect, useState} from 'react'
+import React,{useEffect, useLayoutEffect, useState} from 'react'
 import { Tabs } from 'antd';
 import TabsData from "components/widgets/TabsData/TabsData";
 
@@ -24,7 +24,7 @@ const Mobiletab: React.FC<tabData> = ({className,staticConatiner}) => {
   const [Card, setCard] = useState<string>("card 0");
   
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const CategoryHandler = async () => {
       try {
         setLoading(true)
@@ -58,7 +58,7 @@ const Mobiletab: React.FC<tabData> = ({className,staticConatiner}) => {
             categories.map((category, index)=>{
               return (
                 <TabPane   className='z-20' tab={category.name} key={index}  >
-                <TabsData staticConatiner={staticConatiner} category={category} carDetail={Card}/>
+                <TabsData staticConatiner={staticConatiner} category={category._id} carDetail={Card}/>
               </TabPane>
               )
             })

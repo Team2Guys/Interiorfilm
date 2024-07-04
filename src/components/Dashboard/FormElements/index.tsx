@@ -185,13 +185,17 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                         </h3>
                       </div>
                       {posterimageUrl && posterimageUrl.length > 0 ? (
-                        <div className="flex gap-2 border-3 flex-wrap ">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
                           {posterimageUrl.map((item: any, index) => {
                             return (
-                              <div className="group p-4" key={index}>
-                                <div className="flex justify-end invisible group-hover:visible ">
+                              <div
+                                className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                                key={index}
+                              >
+                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
                                   <RxCross2
-                                    className="cursor-pointer"
+                                    className="cursor-pointer text-red-500 hover:text-red-700"
+                                    size={17}
                                     onClick={() => {
                                       ImageRemoveHandler(
                                         item.public_id,
@@ -202,9 +206,9 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                                 </div>
                                 <Image
                                   key={index}
-                                  className="cursor-pointer"
-                                  width={30}
-                                  height={30}
+                                  className="object-cover w-full h-full"
+                                  width={300}
+                                  height={400}
                                   src={item.imageUrl}
                                   alt={`productImage-${index}`}
                                 />
@@ -506,7 +510,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                                   <button
                                     type="button"
                                     onClick={() => push({ colorName: "" })}
-                                    className="mt-2 text-blue-500 align-start w-fit"
+                                    className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
                                   >
                                     Add Color
                                   </button>
@@ -568,7 +572,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                                   <button
                                     type="button"
                                     onClick={() => push("")}
-                                    className="mt-2 text-blue-500 w-fit"
+                                    className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
                                   >
                                     Add Size
                                   </button>
@@ -583,8 +587,8 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                 </div>
 
                 <div className="flex flex-col gap-5">
-                  <div>
-                    <div className="mb-4 rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark py-4 px-6.5 text-black dark:text-white">
+                  <div className="py-4 px-6.5 rounded-sm border border-stroke">
+                    <div className="mb-4  bg-white dark:border-strokedark dark:bg-boxdark  text-black dark:text-white">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Add stock Quantity
                       </label>
@@ -594,7 +598,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                         onChange={handleOptionChange}
                         as="select"
                         name="category"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent focus:border-primary active:border-primary text-black dark:text-white bg-white dark:border-strokedark dark:bg-boxdark"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md  focus:outline-none focus:ring-2 dark:focus:border-primary shadow-none focus:border-transparent focus:border-primary active:border-primary text-black dark:text-white bg-white dark:border-strokedark dark:bg-boxdark"
                       >
                         <option
                           value=""
@@ -613,14 +617,14 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                       <>
                         {withoutVariation.map((inputField, index) => (
                           <div key={index} className="mb-4">
-                            <label className="block text-sm font-medium mb-1">
+                            <label className="block text-sm font-medium mb-1 text-dark dark:text-white">
                               {inputField.name.charAt(0).toLocaleUpperCase() +
                                 inputField.name.slice(1)}
                             </label>
                             <Field
                               type={inputField.type}
                               name={inputField.name}
-                              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary "
                             />
                             <ErrorMessage
                               name={inputField.name}
@@ -649,7 +653,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                                           type="text"
                                           name={`variantStockQuantities[${index}].variant`}
                                           placeholder="Variant"
-                                          className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary "
                                         />
                                         <ErrorMessage
                                           name={`variantStockQuantities[${index}].variant`}
@@ -662,7 +666,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                                           type="number"
                                           name={`variantStockQuantities[${index}].quantity`}
                                           placeholder="Quantity"
-                                          className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary "
                                         />
                                         <ErrorMessage
                                           name={`variantStockQuantities[${index}].quantity`}
@@ -670,7 +674,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                                           className="text-red-500 mt-1"
                                         />
                                       </div>
-                                      <div className="md:flex-none text-right">
+                                      <div className="md:flex-none text-right text-red dark:text-red ">
                                         <button
                                           type="button"
                                           onClick={() => remove(index)}
@@ -758,7 +762,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                                   <button
                                     type="button"
                                     onClick={() => remove(index)}
-                                    className="ml-2 text-red"
+                                    className="ml-2 text-red "
                                   >
                                     <RxCross2 className="text-red" size={25} />
                                   </button>
@@ -768,7 +772,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                             <button
                               type="button"
                               onClick={() => push({ name: "", detail: "" })}
-                              className="mt-2 text-blue-500 w-fit"
+                              className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
                             >
                               Add Model
                             </button>
@@ -827,7 +831,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                             <button
                               type="button"
                               onClick={() => push({ specsDetails: "" })}
-                              className="mt-2 text-blue-500 w-fit"
+                              className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
                             >
                               Add Specification
                             </button>
@@ -845,13 +849,17 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                     </div>
 
                     {hoverImage && hoverImage.length > 0 ? (
-                      <div className="flex gap-2 border-3 flex-wrap ">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
                         {hoverImage.map((item: any, index) => {
                           return (
-                            <div className="group p-4" key={index}>
-                              <div className="flex justify-end invisible group-hover:visible ">
+                            <div
+                              className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                              key={index}
+                            >
+                              <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
                                 <RxCross2
-                                  className="cursor-pointer"
+                                  className="cursor-pointer text-red-500 hover:text-red-700"
+                                  size={17}
                                   onClick={() => {
                                     ImageRemoveHandler(
                                       item.public_id,
@@ -862,9 +870,9 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                               </div>
                               <Image
                                 key={index}
-                                className="cursor-pointer"
-                                width={30}
-                                height={30}
+                                className="object-cover w-full h-full"
+                                width={100}
+                                height={100}
                                 src={item?.imageUrl ? item?.imageUrl : ""}
                                 alt={`productImage-${index}`}
                               />
@@ -887,13 +895,17 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                     <Imageupload setImagesUrl={setImagesUrl} />
 
                     {imagesUrl && imagesUrl.length > 0 ? (
-                      <div className="flex gap-2 border-3 flex-wrap   ">
+                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
                         {imagesUrl.map((item: any, index) => {
                           return (
-                            <div className="group pl-4 pb-4" key={index}>
-                              <div className="flex justify-end invisible group-hover:visible ">
+                            <div
+                            className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                            key={index}
+                          >
+                              <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
                                 <RxCross2
-                                  className="cursor-pointer"
+                                 className="cursor-pointer text-red-500 hover:text-red-700"
+                                 size={17}
                                   onClick={() => {
                                     console.log("funciton called");
                                     ImageRemoveHandler(
@@ -905,9 +917,9 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                               </div>
                               <Image
                                 key={index}
-                                className="cursor-pointer"
-                                width={30}
-                                height={30}
+                                className="object-cover w-full h-full"
+                                width={300}
+                                height={200}
                                 src={item.imageUrl}
                                 alt={`productImage-${index}`}
                               />
@@ -928,7 +940,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
 
               <button
                 type="submit"
-                className="mt-4  px-8 py-2 bg-blue-500 text-white rounded"
+                className="px-10 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
               >
                 {loading ? <Loader /> : "Submit"}
               </button>

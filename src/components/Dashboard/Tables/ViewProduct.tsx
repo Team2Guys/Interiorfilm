@@ -1,8 +1,7 @@
 "use client";
 
-
 import React, { useState } from "react";
-import { Table } from "antd";
+import { Table, notification, Modal } from "antd";
 import Image from "next/image";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
@@ -11,11 +10,7 @@ import { useRouter } from "next/navigation";
 import { FaRegEye } from "react-icons/fa";
 import { LiaEdit } from "react-icons/lia";
 import { useAppSelector } from "components/Others/HelperRedux";
-import { notification } from 'antd';
-
-
-
-import { generateSlug } from 'data/Data';
+import { generateSlug } from "data/Data";
 
 interface Product {
   _id: string;
@@ -38,7 +33,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
   setCategory,
   setselecteMenu,
   loading,
-  setEditProduct
+  setEditProduct,
 }) => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -46,41 +41,48 @@ const ViewProduct: React.FC<CategoryProps> = ({
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
+
   const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
 
   const canAddProduct=loggedInUser && (loggedInUser.role =='Admin' ?   loggedInUser.canAddProduct : true ) 
   const canDeleteProduct=loggedInUser && (loggedInUser.role =='Admin' ?  loggedInUser.canDeleteProduct : true )
-  const canEditproduct = loggedInUser && (loggedInUser.role =='Admin'  ? loggedInUser.canDeleteProduct : true )  
+  const canEditproduct = loggedInUser && (loggedInUser.role =='Admin'  ? loggedInUser.canEditproduct : true )  
 
 
   console.log(canDeleteProduct, "canAddProduct"
   )
 
-  const filteredProducts: Product[] = Categories?.filter((product: any) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
-  ) || [];
+  const filteredProducts: Product[] =
+    Categories?.filter((product: any) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    ) || [];
+
+  const confirmDelete = (key: any) => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this product?",
+      content: "Once deleted, the product cannot be recovered.",
+      onOk: () => handleDelete(key),
+      okText: "Yes",
+      cancelText: "No",
+    });
+  };
 
   const handleDelete = async (key: string) => {
     try {
-      let response = await axios.delete(
+      const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteProduct/${key}`
       );
-      console.log("Deleted", response);
       setCategory((prev: Product[]) => prev.filter((item) => item._id !== key));
-      console.log("Removed", response);
-  
       notification.success({
-        message: 'Product Deleted',
-        description: 'The product has been successfully deleted.',
-        placement: 'topRight',
+        message: "Product Deleted",
+        description: "The product has been successfully deleted.",
+        placement: "topRight",
       });
     } catch (err) {
-      console.log("Deleting record with key:", err);
-  
       notification.error({
-        message: 'Deletion Failed',
-        description: 'There was an error deleting the product.',
-        placement: 'topRight',
+        message: "Deletion Failed",
+        description: "There was an error deleting the product.",
+        placement: "topRight",
       });
     }
   };
@@ -109,7 +111,6 @@ const ViewProduct: React.FC<CategoryProps> = ({
       dataIndex: "totalStockQuantity",
       key: "totalStockQuantity",
     },
-
     {
       title: "Date",
       dataIndex: "createdAt",
@@ -128,10 +129,9 @@ const ViewProduct: React.FC<CategoryProps> = ({
       key: "time",
       render: (text: any, record: Product) => {
         const createdAt = new Date(record.createdAt);
-        const formattedTime = `${String(createdAt.getHours()).padStart(
-          2,
-          "0"
-        )}:${String(createdAt.getMinutes()).padStart(2, "0")}`;
+        const formattedTime = `${String(createdAt.getHours()).padStart(2, "0")}:${String(
+          createdAt.getMinutes()
+        ).padStart(2, "0")}`;
         return <span>{formattedTime}</span>;
       },
     },
@@ -140,10 +140,8 @@ const ViewProduct: React.FC<CategoryProps> = ({
       key: "Preview",
       render: (text: any, record: Product) => {
         const handleClick = () => {
-          console.log(record, "record");
-
           const url = `/detail/${generateSlug(record.name)}`;
-          window.open(url, '_blank');
+          window.open(url, "_blank");
         };
         return <FaRegEye className="cursor-pointer" onClick={handleClick} />;
       },
@@ -153,15 +151,14 @@ const ViewProduct: React.FC<CategoryProps> = ({
       key: "Edit",
       render: (text: any, record: Product) => (
         <LiaEdit
-  
-          className={`${canEditproduct ? "cursor-pointer" : ""} ${!canEditproduct ? "cursor-not-allowed text-slate-200" : ""
-            }`}
+          className={`${canEditproduct ? "cursor-pointer" : ""} ${
+            !canEditproduct ? "cursor-not-allowed text-slate-200" : ""
+          }`}
           size={20}
           onClick={() => {
-   if(canEditproduct)           {
-     setEditProduct(record);
-     setselecteMenu("Add Products");
-
+            if (canEditproduct) {
+              setEditProduct(record);
+              setselecteMenu("Add Products");
             }
           }}
         />
@@ -172,20 +169,19 @@ const ViewProduct: React.FC<CategoryProps> = ({
       key: "action",
       render: (text: any, record: Product) => (
         <RiDeleteBin6Line
-          className={`${canDeleteProduct ? "text-red cursor-pointer" : ""} ${!canDeleteProduct ? "cursor-not-allowed text-slate-200" : ""
-            }`}
+          className={`${canDeleteProduct ? "text-red cursor-pointer" : ""} ${
+            !canDeleteProduct ? "cursor-not-allowed text-slate-200" : ""
+          }`}
           size={20}
           onClick={() => {
             if (canDeleteProduct) {
-              handleDelete(record._id);
-              
+              confirmDelete(record._id);
             }
           }}
         />
       ),
     },
   ];
-
 
   return (
     <div>
@@ -197,17 +193,21 @@ const ViewProduct: React.FC<CategoryProps> = ({
         <>
           <div className="flex justify-between mb-4 items-center flex-wrap text-black dark:text-white">
             <input
-              className="peer lg:p-3 p-2 block outline-none border rounded-md border-gray-200 dark:bg-boxdark dark:drop-shadow-none text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+              className="peer lg:p-3 p-2 block outline-none border rounded-md border-gray-200 dark:bg-boxdark dark:drop-shadow-none text-sm dark:focus:border-primary focus:border-dark focus:ring-dark-500 disabled:opacity-50 disabled:pointer-events-none"
               type="search"
               placeholder="Search Product"
-              value={searchTerm} 
+              value={searchTerm}
               onChange={handleSearchChange}
             />
             <div>
               <p
-                className={`${canAddProduct && 'cursor-pointer'
-                  } p-2 ${canAddProduct && 'hover:bg-slate-300'} dark:border-strokedark dark:bg-boxdark flex justify-center ${!canAddProduct && 'cursor-not-allowed text-slate-300'
-                  }`}
+                className={`${
+                  canAddProduct && "cursor-pointer"
+                } p-2 ${
+                  canAddProduct && "bg-slate-300"
+                } dark:border-strokedark  flex justify-center dark:bg-slate-500 ${
+                  !canAddProduct && "cursor-not-allowed text-slate-300"
+                }`}
                 onClick={() => {
                   if (canAddProduct) {
                     setselecteMenu("Add Products");
@@ -220,9 +220,15 @@ const ViewProduct: React.FC<CategoryProps> = ({
             </div>
           </div>
           {filteredProducts && filteredProducts.length > 0 ? (
-            <Table className="lg:overflow-hidden overflow-x-scroll !dark:border-strokedark !dark:bg-boxdark !bg-transparent" dataSource={filteredProducts} columns={columns} rowKey="_id" pagination={false} />
-          ) : (
-            "No Products found"
+            <Table
+              className="lg:overflow-hidden overflow-x-scroll !dark:border-strokedark !dark:bg-boxdark !bg-transparent"
+              dataSource={filteredProducts}
+              columns={columns}
+              rowKey="_id"
+              pagination={false}
+            />
+          ) : ( 
+            <p className='text-dark dark:text-white' >No products found</p>
           )}
         </>
       )}

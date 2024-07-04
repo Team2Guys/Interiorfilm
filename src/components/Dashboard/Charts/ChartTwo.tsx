@@ -5,10 +5,11 @@ import axios from "axios";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import Cookies from 'js-cookie';
-import { report } from "process";
+import { useAppSelector } from "components/Others/HelperRedux";
+let baseColorArray =  ["#80CAEE", "#3C50E0",]
 
 const options: ApexOptions = {
-  colors: ["#3C50E0", "#80CAEE"],
+  colors:baseColorArray ,
   chart: {
     fontFamily: "Satoshi, sans-serif",
     type: "bar",
@@ -80,38 +81,66 @@ interface ChartTwoState {
 }
 
 const ChartTwo: React.FC = () => {
+  const { loggedInUser }: any = useAppSelector(state => state.usersSlice);
+
   const [state, setState] = useState<ChartTwoState | undefined>();
+  let AdminType= loggedInUser && loggedInUser.role =="super-Admin"
+
 
   const getWeeklySales = async () => {
     try {
       const token = Cookies.get('2guysAdminToken');
       const superAdmintoken = Cookies.get('superAdminToken');
-let finaltoken = token ? token: superAdmintoken
+      let finaltoken = token ? token : superAdmintoken;
+  
       let response: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/getWeeklySales`, {
         headers: {
           "token": finaltoken
         }
       });
+  
       let reports = response.data.WeeklyRecord;
+      const keys = ["Revenue", "Sales"];
+      let chartColors = [...baseColorArray];
 
+      if (AdminType) {
+        keys.unshift("Profit");
+        chartColors.unshift("#336699")
+
+      }
+  
       let defaultArray = reports.map((item: any) => {
-        let nameFlag = item.name == 'Sales' ? "totalProductCount" : "totalProfit"
-        return {
-          name: item.name,
-          data: item.data.map((count: any) => count[nameFlag])
+        let nameFlag = item.name === 'Sales' ? "totalProductCount" : item.name === 'Profit' ? "totalProfit" : "totalRevenue";
+  
+        // Only include "Profit" if AdminType is true
+        if (item.name === 'Profit' && !AdminType) {
+          return null; // Skip this item
+        } else {
+          return {
+            name: item.name,
+            data: item.data.map((count: any) => count[nameFlag])
+          };
         }
-
-      })
-
+      });
+  
+      
+      // Filter out null entries if AdminType is false (to exclude "Profit")
+      defaultArray = defaultArray.filter((item:any) => item !== null);
+  
+      options.colors = chartColors;
       setState({ series: defaultArray });
+      
     } catch (err: any) {
       console.log(err, "err");
     }
   }
 
+
+  
   useLayoutEffect(()=>{
   getWeeklySales()
 },[])
+
 
 
   return (
@@ -119,7 +148,9 @@ let finaltoken = token ? token: superAdmintoken
       <div className="mb-4 justify-between gap-4 sm:flex">
         <div>
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Sales and Revenue          </h4>
+         
+            {AdminType ? "Sales, Revenue and Profit " : "Sales And Revenue "}
+               </h4>
         </div>
         <div>
           <div className="relative z-20 inline-block">

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "components/Loader/Loader";
 import { useAppDispatch } from "components/Others/HelperRedux";
-import { loggedInUserAction } from '../redux/slices/AdminsSlice';
+import { loggedInAdminAction } from '../redux/slices/AdminsSlice';
 import axios from 'axios'
 import Cookies from 'js-cookie';
 import { useAppSelector } from "components/Others/HelperRedux";
@@ -25,7 +25,7 @@ function ProtectedRoute(WrappedComponent: any) {
             "token": token
           }
         })
-        dispatch(loggedInUserAction(user.data.user))
+        dispatch(loggedInAdminAction(user.data.user))
       } catch (err: any) {
         console.log(err, "err")
       }

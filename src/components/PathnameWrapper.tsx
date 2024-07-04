@@ -3,6 +3,8 @@
 import { usePathname } from 'next/navigation';
 import Header from 'components/Layout/Header/Header';
 import Footer from './Layout/Footer/Footer';
+import Authhook from 'hooks/AuthHook'
+
 
 const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
@@ -29,4 +31,4 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default PathnameWrapper;
+export default Authhook( PathnameWrapper)

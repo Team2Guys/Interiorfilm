@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import PRODUCTS_TYPES from 'types/interfaces';
 import axios from 'axios';
 import { generateSlug } from 'data/Data';
+import Loader from 'components/Loader/Loader';
 
 interface CardProps {
   ProductCard?: PRODUCTS_TYPES[];
@@ -24,26 +25,30 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [count, setCount] = useState<any>(1);
 
-
-  const handleChange = (e: any) => {
-    setSelectedValue(e.target.value);
-  };
   const pathname = usePathname();
 
   let CategoryId = categoryId ? categoryId : 'demo';
 
   const getallProducts = async () => {
     try {
-      if (pathname.startsWith("/product") || slider) return;
+      if (pathname.startsWith("/product" ) || slider) return;
       setLoading(true);
-
       let response: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
       let products = response.data.products;
-      setTotalProducts(products);
+      if (CategoryId != "demo" && CategoryId) {
+        let filtered = products.filter((item:any) => {
+          return item.category === CategoryId;
+        });
+  
+        setTotalProducts(filtered);
+      }else {
+
+        setTotalProducts(products);
+      }
+      
       if (products.length > 0 && products[0].colors && products[0].colors.length > 0) {
         setSelectedValue(products[0].colors[0]);
       }
-      console.log(response.data.products, "setTotalProducts");
     } catch (err: any) {
       console.log(err, "err");
       if (err.response && err.response.data && err.response.data.message) {
@@ -59,23 +64,25 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
   }
 
   const ProductFilterHandler = () => {
-    if (CategoryId != "demo") {
-      console.log("CategoryId:", CategoryId);
-      let filtered = totalProducts.filter((item) => {
-        console.log("Item Category:", item.category);
-        return item.category == CategoryId;
+    if (CategoryId != "demo" && CategoryId) {
+      console.log("condition is working ", CategoryId, 
+      )
+      let products = totalProducts
+      let filtered = products.filter((item) => {
+        return item.category === CategoryId;
       });
-      let newArray = filtered.length > 6 ? filtered.slice(0, 6) : filtered;
-      setTotalProducts(newArray);
+
+      setTotalProducts(filtered);
     }
   }
 
+  console.log(totalProducts, "setTotalProducts"
+  )
   useEffect(() => {
     getallProducts();
   }, []);
 
   useEffect(() => {
-    console.log('function called');
     ProductFilterHandler();
   }, [carDetail]);
 
@@ -103,9 +110,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
     };
   
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    console.log("existingCart", existingCart)
-    console.log("product", product)
-
     const existingItemIndex = existingCart.findIndex((item: any) => item.id === product._id);
   
 
@@ -142,9 +146,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
       return;
     }
 
-console.log(selectedValue, "selectedValue")
-    console.log("Product added to wishlist:", product);
-  
     const newWishlistItem = {
       id: product._id,
       name: product.name,
@@ -157,8 +158,6 @@ console.log(selectedValue, "selectedValue")
     };
   
     let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
-    console.log("existingWishlist", existingWishlist)
-    console.log("product", product)
 
     const existingItemIndex = existingWishlist.findIndex((item: any) => item.id === product._id);
   
@@ -197,7 +196,7 @@ console.log(selectedValue, "selectedValue")
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
       <div className='relative group ' key={index}>
-        <div className="space-y-3 absolute w-full top-6 right-4 translate-x-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 overflow-hidden transition ease-in-out duration-400 hidden md:block">
+        <div className="space-y-3 absolute w-full top-6 right-4 -translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-8 overflow-hidden transition ease-in-out duration-400 hidden md:block">
           <button onClick={() => handleAddToCart(product)}
             className="flex justify-center items-center z-10"
           >
@@ -252,10 +251,11 @@ console.log(selectedValue, "selectedValue")
 
   return (
     <>
-      {ProductCard && ProductCard.length > 0 ? (
+      {ProductCard && (ProductCard.length > 0 && !loading) ? (
         ProductCard.map(renderProduct)
       ) : (
-        productsToRender.length > 0 ? productsToRender.map(renderProduct) : <div className='flex justify-center'>No Product Found</div>
+
+        (productsToRender.length > 0) ? productsToRender.map(renderProduct) :  !loading ? <div className='flex justify-center'>No Product Found</div> : <div className='flex justify-center'><Loader/></div> 
       )}
     </>
   );

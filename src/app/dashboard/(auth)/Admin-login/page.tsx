@@ -7,7 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Toaster from "components/Toaster/Toaster";
 import { useAppDispatch } from "components/Others/HelperRedux";
-import { loggedInUserAction } from '../../../../redux/slices/AdminsSlice';
+import { loggedInAdminAction } from '../../../../redux/slices/AdminsSlice';
 import USRcomponent from 'components/userComponent/userComponent'
 import { IoIosLock, IoMdMail } from "react-icons/io";
 import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";;
@@ -65,7 +65,7 @@ const DashboardLogin = () => {
       !ISSERVER ? Cookies.set(adminType == "Admin" ? '2guysAdminToken' : "superAdminToken", user.data.token, { expires: 1 }) : null
       console.log(user.data, "user")
       setloading(false)
-      dispatch(loggedInUserAction(user.data.user))
+      dispatch(loggedInAdminAction(user.data.user))
       setFormData(intialvalue)
       Toaster("success", "You have sucessfully login")
       setTimeout(() => {
