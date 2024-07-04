@@ -26,11 +26,10 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
   return (
     <div className="w-full mx-auto">
       <Swiper
-        pagination={{
-          dynamicBullets: true,
-        }}
+       
         navigation={true}
-        modules={[Navigation, Pagination]}
+        loop={true}
+        modules={[Navigation]}
         className="mySwiper"
       >
         {slides.map((slide, index) => (

@@ -12,6 +12,12 @@ const HeroSlider = () => {
       subtitle: 'Makeovers',
       description: 'Quickly and cleanly transform your kitchen using our proven self adhesive.',
     },
+    {
+      image: '/images/slider1.png',
+      title: 'Quality Products',
+      subtitle: 'Makeovers',
+      description: 'Get free Quality Products for your interior design project.',
+    },
     // Add more slides as needed
   ];
 
