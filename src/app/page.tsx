@@ -63,7 +63,7 @@ export default function Home() {
         Discover Our Product Ranges
       </h1>
       <Container className="mt-10">
-        <Mobiletab className="color-black" />
+        <Mobiletab className="color-black" staticConatiner={"hidden md:block"} />
       </Container>
       <Container className="mt-20">
         <h1 className="lg:text-5xl md:text-3xl font-semibold text-xl text-center mb-5">

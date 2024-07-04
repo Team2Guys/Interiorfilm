@@ -15,9 +15,10 @@ interface CardProps {
   slider?: boolean;
   categoryId?: string;
   carDetail?: string;
+  cardClass?: string;
 }
 
-const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail }) => {
+const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,cardClass }) => {
   const router = useRouter();
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [error, setError] = useState<any>();
@@ -195,7 +196,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail 
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
-      <div className='relative group ' key={index}>
+      <div className={`relative group ${cardClass}`} key={index}>
         <div className="space-y-3 absolute w-full top-6 right-4 -translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-8 overflow-hidden transition ease-in-out duration-400 hidden md:block">
           <button onClick={() => handleAddToCart(product)}
             className="flex justify-center items-center z-10"

@@ -5,7 +5,7 @@ import img1 from "../../../../public/images/CA101.png"
 import Card from 'components/ui/Card/Card'
 
 
-const TabsData = ({category,carDetail,staticConatiner}:any) => {
+const TabsData = ({category,carDetail,staticConatiner,cardClass}:any) => {
   return (
     <>
         <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center gap-2 md:gap-4 mt-10'>
@@ -20,7 +20,7 @@ const TabsData = ({category,carDetail,staticConatiner}:any) => {
                 </div>
             </div>
         </div>
-        <Card categoryId ={category} carDetail={carDetail} />
+        <Card cardClass={cardClass} categoryId ={category} carDetail={carDetail} />
     
     </div>
     <div className=' text-center mt-10 mb-7'>

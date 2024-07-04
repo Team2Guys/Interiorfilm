@@ -15,10 +15,11 @@ interface TabData {
 interface tabData{
   className?: string;
   staticConatiner?: string;
+  cardClass?:string;
 }
 
 
-const Mobiletab: React.FC<tabData> = ({className,staticConatiner}) => {
+const Mobiletab: React.FC<tabData> = ({className,staticConatiner,cardClass}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [categories, setCategories] = useState<any[]>([]);
   const [Card, setCard] = useState<string>("card 0");
@@ -58,7 +59,7 @@ const Mobiletab: React.FC<tabData> = ({className,staticConatiner}) => {
             categories.map((category, index)=>{
               return (
                 <TabPane   className='z-20' tab={category.name} key={index}  >
-                <TabsData staticConatiner={staticConatiner} category={category._id} carDetail={Card}/>
+                <TabsData cardClass={cardClass} staticConatiner={staticConatiner} category={category._id} carDetail={Card}/>
               </TabPane>
               )
             })
