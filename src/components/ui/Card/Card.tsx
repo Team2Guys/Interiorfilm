@@ -196,8 +196,8 @@ console.log(selectedValue, "selectedValue")
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
-      <div className='relative group' key={index}>
-        <div className="space-y-3 absolute top-6 right-4 translate-x-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 overflow-hidden transition ease-in-out duration-400 hidden md:block">
+      <div className='relative group ' key={index}>
+        <div className="space-y-3 absolute w-full top-6 right-4 translate-x-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 overflow-hidden transition ease-in-out duration-400 hidden md:block">
           <button onClick={() => handleAddToCart(product)}
             className="flex justify-center items-center z-10"
           >

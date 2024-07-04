@@ -98,7 +98,7 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PRPS> = ({ Productname, categoryId 
               spaceBetween: 10,
             },
             1024: {
-              slidesPerView: 3.5,
+              slidesPerView: 3,
               spaceBetween: 20,
             },
           }}
