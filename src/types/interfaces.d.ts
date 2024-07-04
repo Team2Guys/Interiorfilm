@@ -127,6 +127,7 @@ interface PRODUCTS_TYPES {
   reviews?: string;
   totalStockQuantity?: number;
   sizes?: string[];
+  isFeatured?:any;
   
 }
 

@@ -365,10 +365,7 @@ const Header = () => {
       <div className='bg-primary py-4 hidden lg:block'>
         <ul className='flex justify-center gap-12 text-white'>
           <li><Link className='link-underline' href="/">Home</Link></li>
-          <li><Popover className='cursor-pointer link-underline'  placement="bottom" trigger="hover" content={<Megamanu  Categories={Categories} 
-                          loading={loading} 
-                          activeLink={activeLink} 
-                          handleCategoryClick={handleCategoryClick} />} title="">
+          <li><Popover className='cursor-pointer link-underline'  placement="bottom" trigger="hover" content={<Megamanu />} title="">
             Product
           </Popover></li>
           <li><Link className='link-underline' href="/about">About</Link></li>

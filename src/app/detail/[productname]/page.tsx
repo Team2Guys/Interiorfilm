@@ -13,13 +13,14 @@ import PRODUCTS_TYPES from 'types/interfaces'
 import { Tabs } from 'antd';
 import Loader from 'components/Loader/Loader'
 
-
 const Detail = ({ params }: { params: { productname: string } }) => {
   const parsedProduct = params.productname ? params.productname : null;
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [productDetail, setProductDetail] = useState<PRODUCTS_TYPES | null>(null);
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<PRODUCTS_TYPES[]>([]);
+  const [relatedProductsLoading, setRelatedProductsLoading] = useState<boolean>(false);
 
   const handleAddToCart = (product: any) => {
     const colorToAdd = selectedValue || (product.colors && product.colors[0]);
@@ -136,7 +137,9 @@ const Detail = ({ params }: { params: { productname: string } }) => {
           console.log(slicedProducts, "slicedProducts")
           for (let key of response.data.products)
             if (generateSlug(key.name) === parsedProduct) {
-              return setProductDetail(key)
+              setProductDetail(key);
+              fetchRelatedProducts(key.category); // Fetch related products based on category
+              return;
             }
 
         }
@@ -144,7 +147,19 @@ const Detail = ({ params }: { params: { productname: string } }) => {
         console.log('Error fetching data:', error);
       } finally {
         setProductsLoading(false)
+      }
+    };
 
+    const fetchRelatedProducts = async (categoryId: string) => {
+      try {
+        setRelatedProductsLoading(true);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
+        const relatedProducts = response.data.products.filter((product: any) => product.category === categoryId && generateSlug(product.name) !== parsedProduct);
+        setRelatedProducts(relatedProducts.slice(0, 4)); // Limit to 4 related products
+      } catch (error) {
+        console.log('Error fetching related products:', error);
+      } finally {
+        setRelatedProductsLoading(false);
       }
     };
 
@@ -252,49 +267,48 @@ const Detail = ({ params }: { params: { productname: string } }) => {
                       <div className='flex flex-wrap gap-2'>
                         {productDetail.colors && productDetail.colors.map((color, index) => {
                           return (
-                            <div className={`rounded-full p-1 ${color.colorName === colorName                          ? " border-2 border-primary" : ""}`} key={index}>
-                            <div className={`space-x-2 h-4 w-4 cursor-pointer rounded-full `} style={{ backgroundColor: `#${color.colorName}` }} onClick={() => { setColorName(color.colorName) }}>
+                            <div className={`rounded-full p-1 ${color.colorName === colorName ? " border-2 border-primary" : ""}`} key={index}>
+                              <div className={`space-x-2 h-4 w-4 cursor-pointer rounded-full `} style={{ backgroundColor: `#${color.colorName}` }} onClick={() => { setColorName(color.colorName) }}>
+                              </div>
                             </div>
-                          </div>
-                        )
-                      })}
+                          )
+                        })}
+                      </div>
                     </div>
-                  </div>
 
-                  <p>{productDetail.description}</p>
+                    <p>{productDetail.description}</p>
 
-                  {productDetail.totalStockQuantity == null ? (
-                    <p className="text-primary text-center text-2xl">Product is out of stock</p>
-                  ) : (
-                    <div className='flex gap-2'>
-                      <button className='bg-primary rounded-md py-3 px-8 text-white' onClick={() => handleAddToCart(productDetail)} >Add To Cart</button>
-                      <button className='bg-primary rounded-md py-3 px-3 text-white' onClick={() => handleAddToWishlist(productDetail)}><GoHeart size={25} /></button>
+                    {productDetail.totalStockQuantity == null ? (
+                      <p className="text-primary text-center text-2xl">Product is out of stock</p>
+                    ) : (
+                      <div className='flex gap-2'>
+                        <button className='bg-primary rounded-md py-3 px-8 text-white' onClick={() => handleAddToCart(productDetail)} >Add To Cart</button>
+                        <button className='bg-primary rounded-md py-3 px-3 text-white' onClick={() => handleAddToWishlist(productDetail)}><GoHeart size={25} /></button>
+                      </div>
+                    )}
+                    <div className='flex items-center gap-2 text-black dark:text-white'>
+                      <p className='font-medium text-lg'>Categories: </p>
+                      <p className='text-dark'>All, Featured, Shoes</p>
                     </div>
-                  )}
-                  <div className='flex items-center gap-2 text-black dark:text-white'>
-                    <p className='font-medium text-lg'>Categories: </p>
-                    <p className='text-dark'>All, Featured, Shoes</p>
                   </div>
                 </div>
               </div>
-            </div>
-          </Container>
-
-          <div className='bg-secondary mt-20'>
-            <Container>
-              <Tabs items={tabData} />
             </Container>
-          </div>
-        </>
-        : null
-    }
-    <Container className='mt-20'>
-      <h1 className='text-lg md:text-3xl mb-5=-'>Related Product</h1>
-      <ProductSlider Productname={parsedProduct} />
-    </Container>
-  </>
-)
+
+            <div className='bg-secondary mt-20'>
+              <Container>
+                <Tabs items={tabData} />
+              </Container>
+            </div>
+          </>
+          : null
+      }
+      <Container className='mt-20'>
+        <h1 className='text-lg md:text-3xl mb-5=-'>Related Products</h1>
+        <ProductSlider products={relatedProducts} loading={relatedProductsLoading} />
+      </Container>
+    </>
+  )
 }
 
 export default Detail;
-
