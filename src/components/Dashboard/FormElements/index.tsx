@@ -44,9 +44,10 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
   >(EditProductValue);
   const [imgError, setError] = useState<string | null | undefined>();
   const [Categories, setCategories] = useState<any[]>();
-  const [VariationOption, setVariationOption] = useState<string>("");
+  const [VariationOption, setVariationOption] = useState<string>("withoutVariation");
 
   const handleOptionChange = (e: any) => {
+    console.log(e);
     setVariationOption(e.target.value);
   };
 
@@ -60,7 +61,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
         if (!EditInitialValues) return;
         const {
           posterImageUrl,
-          hoverImageUrl,
+          // hoverImageUrl,
           imageUrl,
           _id,
           createdAt,
@@ -83,16 +84,16 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
     try {
       setError(null);
       let posterImageUrl = posterimageUrl && posterimageUrl[0];
-      let hoverImageUrl = hoverImage && hoverImage[0];
+      // let hoverImageUrl = hoverImage && hoverImage[0];
       let createdAt = Date.now();
-      if (!posterImageUrl || !hoverImageUrl || !(imagesUrl.length > 0)) {
+      if (!posterImageUrl || !(imagesUrl.length > 0)) {
         throw new Error("Please select relevant Images");
       }
       let newValue = {
         ...values,
         posterImageUrl,
         imageUrl: imagesUrl,
-        hoverImageUrl,
+        // hoverImageUrl,
         createdAt,
       };
       setloading(true);
@@ -274,7 +275,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                         ) : null}
                       </div>
 
-                      <div className="flex gap-4">
+                      {/* <div className="flex gap-4">
                         <div className="w-2/4">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-dark">
                             Star Rating
@@ -324,7 +325,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                             </div>
                           ) : null}
                         </div>
-                      </div>
+                      </div> */}
 
                       <div className="flex full gap-4">
                         <div className="w-[33%]">
@@ -457,7 +458,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                         </div>
                       </div>
 
-                      <div className="flex gap-4">
+                      {/* <div className="flex gap-4">
                         <div className="rounded-sm border border-stroke bg-white w-2/4 dark:border-strokedark dark:bg-boxdark">
                           <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                             <h3 className="font-medium text-black dark:text-white">
@@ -520,7 +521,6 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                           </div>
                         </div>
 
-                        {/* Sizes */}
                         <div className="rounded-sm border border-stroke bg-white w-2/4 dark:border-strokedark dark:bg-boxdark">
                           <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
                             <h3 className="font-medium text-black dark:text-white">
@@ -581,7 +581,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                             </FieldArray>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -590,9 +590,9 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                   <div className="py-4 px-6.5 rounded-sm border border-stroke">
                     <div className="mb-4  bg-white dark:border-strokedark dark:bg-boxdark  text-black dark:text-white">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Add stock Quantity
+                      Without Variation
                       </label>
-                      <Field
+                      {/* <Field
                         id="variationSelect"
                         value={VariationOption}
                         onChange={handleOptionChange}
@@ -609,21 +609,23 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                         <option value="withoutVariation">
                           Without Variation
                         </option>
+                       
                         <option value="withVariation">With Variation</option>
-                      </Field>
+                      </Field> */}
                     </div>
 
                     {VariationOption === "withoutVariation" && (
                       <>
                         {withoutVariation.map((inputField, index) => (
                           <div key={index} className="mb-4">
-                            <label className="block text-sm font-medium mb-1 text-dark dark:text-white">
+                            {/* <label className="block text-sm font-medium mb-1 text-dark dark:text-white">
                               {inputField.name.charAt(0).toLocaleUpperCase() +
                                 inputField.name.slice(1)}
-                            </label>
+                            </label> */}
                             <Field
                               type={inputField.type}
                               name={inputField.name}
+                             
                               className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary "
                             />
                             <ErrorMessage
@@ -636,7 +638,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                       </>
                     )}
 
-                    {VariationOption === "withVariation" && (
+                    {/* {VariationOption === "withVariation" && (
                       <>
                         <FieldArray name="variantStockQuantities">
                           {({ push, remove }) => (
@@ -699,9 +701,9 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                           )}
                         </FieldArray>
                       </>
-                    )}
+                    )} */}
                   </div>
-
+                 
                   <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
                       <h3 className="font-medium text-black dark:text-white">
@@ -841,7 +843,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                     </div>
                   </div>
 
-                  <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
+                  {/* <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                       <h3 className="font-medium text-black dark:text-white">
                         Add Hover Image
@@ -883,7 +885,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                     ) : (
                       <Imageupload sethoverImage={sethoverImage} />
                     )}
-                  </div>
+                  </div> */}
 
                   <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
