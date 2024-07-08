@@ -76,9 +76,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       setTotalProducts(filtered);
     }
   }
-
-  console.log(totalProducts, "setTotalProducts"
-  )
+ 
   useEffect(() => {
     getallProducts();
   }, []);
@@ -96,7 +94,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       return;
     }
   
-    console.log("Product added to cart:", product);
   
     const newCartItem = {
       id: product._id,

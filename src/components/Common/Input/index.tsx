@@ -9,7 +9,7 @@ interface InputProps {
   name: string;
   placeholder: string;
   onChange: any,
-  Icons: any,
+  Icons?: any,
   iconClassName?:string
   id?:any
   value?: any

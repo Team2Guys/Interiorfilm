@@ -12,8 +12,9 @@ import { generateSlug } from 'data/Data'
 import PRODUCTS_TYPES from 'types/interfaces'
 import { Tabs } from 'antd';
 import Loader from 'components/Loader/Loader'
+import Review from 'components/Common/Review'
 
-const Detail = ({ params }: { params: { productname: string } }) => {
+const Detail = ({ params }: { params: { productname: string} }) => {
   const parsedProduct = params.productname ? params.productname : null;
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [productDetail, setProductDetail] = useState<PRODUCTS_TYPES | null>(null);
@@ -21,6 +22,24 @@ const Detail = ({ params }: { params: { productname: string } }) => {
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [relatedProductsLoading, setRelatedProductsLoading] = useState<boolean>(false);
+  const [reviews, setReviews] = useState([]);
+
+  
+  useEffect(() => {
+    if (productDetail?.id) {
+      fetchReviews(productDetail.id);
+    }
+  }, [productDetail]);
+
+  const fetchReviews = async (productDetail: string) => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productDetail}`);
+      setReviews(response.data.reviews);
+      console.log(response.data);
+    } catch (err) {
+      console.error("get review data failed");
+    }
+  };
 
   const handleAddToCart = (product: any) => {
     const colorToAdd = selectedValue || (product.colors && product.colors[0]);
@@ -30,7 +49,6 @@ const Detail = ({ params }: { params: { productname: string } }) => {
       return;
     }
 
-    console.log("Product added to cart:", product);
 
     const newCartItem = {
       id: product._id,
@@ -45,8 +63,7 @@ const Detail = ({ params }: { params: { productname: string } }) => {
     };
 
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    console.log("existingCart", existingCart)
-    console.log("product", product)
+
 
     const existingItemIndex = existingCart.findIndex((item: any) => item.id === product._id);
 
@@ -61,7 +78,6 @@ const Detail = ({ params }: { params: { productname: string } }) => {
         }
         return item;
       });
-      console.log(updatedCart)
       localStorage.setItem("cart", JSON.stringify(updatedCart));
 
     } else {
@@ -71,7 +87,6 @@ const Detail = ({ params }: { params: { productname: string } }) => {
 
     message.success('Product added to cart successfully!');
     window.dispatchEvent(new Event("cartChanged"));
-    console.log(existingCart, "existingCart")
   };
 
   const handleAddToWishlist = (product: any) => {
@@ -82,8 +97,6 @@ const Detail = ({ params }: { params: { productname: string } }) => {
       return;
     }
 
-    console.log(selectedValue, "selectedValue")
-    console.log("Product added to wishlist:", product);
 
     const newWishlistItem = {
       id: product._id,
@@ -97,8 +110,6 @@ const Detail = ({ params }: { params: { productname: string } }) => {
     };
 
     let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
-    console.log("existingWishlist", existingWishlist)
-    console.log("product", product)
 
     const existingItemIndex = existingWishlist.findIndex((item: any) => item.id === product._id);
 
@@ -113,7 +124,6 @@ const Detail = ({ params }: { params: { productname: string } }) => {
         }
         return item;
       });
-      console.log(updatedWishlist)
       localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
 
     } else {
@@ -123,7 +133,6 @@ const Detail = ({ params }: { params: { productname: string } }) => {
 
     message.success('Product added to Wishlist successfully!');
     window.dispatchEvent(new Event("WishlistChanged"));
-    console.log(existingWishlist, "existingWishlist")
   };
 
   useEffect(() => {
@@ -134,7 +143,6 @@ const Detail = ({ params }: { params: { productname: string } }) => {
         if (parsedProduct && (response.data.products && response.data.products.length > 0)) {
           let slicedProducts = response.data.products.length > 4 ? response.data.products.filter((item: any) => generateSlug(item.name) !== parsedProduct).slice(0, 4) : response.data.products.filter((item: any) => generateSlug(item.name) !== parsedProduct)
           setProducts(slicedProducts);
-          console.log(slicedProducts, "slicedProducts")
           for (let key of response.data.products)
             if (generateSlug(key.name) === parsedProduct) {
               setProductDetail(key);
@@ -166,7 +174,6 @@ const Detail = ({ params }: { params: { productname: string } }) => {
     fetchData();
   }, [parsedProduct]);
 
-  const [colorName, setColorName] = useState<string>()
   let [count, setCount] = useState(0);
 
   function incrementCount() {
@@ -178,16 +185,6 @@ const Detail = ({ params }: { params: { productname: string } }) => {
     setCount(count);
   }
 
-  let colorsArray = [
-    { colorName: '000' },
-    { colorName: '153' },
-    { colorName: '343' },
-    { colorName: 'e22' },
-    { colorName: 'ht3' },
-    { colorName: '7f3' },
-  ]
-
-  console.log(productDetail, "productDetail")
 
   const tabData = [
     {
@@ -219,13 +216,9 @@ const Detail = ({ params }: { params: { productname: string } }) => {
     {
       key: "3",
       label: 'Review',
-      children: <></>
+      children: <><Review reviews={reviews} productId={productDetail?.id} fetchReviews={fetchReviews} /></>
     },
-    {
-      key: "4",
-      label: 'Video',
-      children: <></>
-    },
+ 
   ];
 
   return (
@@ -262,19 +255,6 @@ const Detail = ({ params }: { params: { productname: string } }) => {
                     </div>
                     <p><span className='font-medium text-lg'>Available Quantity: </span> {productDetail.totalStockQuantity ?? "0"} </p>
 
-                    <div className='flex gap-2'>
-                      <p className='font-medium text-lg'>Color: </p>
-                      <div className='flex flex-wrap gap-2'>
-                        {productDetail.colors && productDetail.colors.map((color, index) => {
-                          return (
-                            <div className={`rounded-full p-1 ${color.colorName === colorName ? " border-2 border-primary" : ""}`} key={index}>
-                              <div className={`space-x-2 h-4 w-4 cursor-pointer rounded-full `} style={{ backgroundColor: `#${color.colorName}` }} onClick={() => { setColorName(color.colorName) }}>
-                              </div>
-                            </div>
-                          )
-                        })}
-                      </div>
-                    </div>
 
                     <p>{productDetail.description}</p>
 
