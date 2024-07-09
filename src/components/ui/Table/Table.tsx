@@ -137,7 +137,6 @@ const Table: React.FC<TableProps> = ({ cartdata, wishlistdata, onCartChange }) =
                           </div>
                           <div className='p-2'>
                             <h1 className='text-sm md:text-base font-medium'>{typeof product.name === 'string' ? product.name : ''}</h1>
-                            <p className='text-xs md:text-sm text-gray-500'>Color: <span>{typeof product.color === 'string' ? product.color : ''}</span></p>
                           </div>
                         </div>
                       </td>
@@ -186,7 +185,6 @@ const Table: React.FC<TableProps> = ({ cartdata, wishlistdata, onCartChange }) =
               <div className='space-y-1 w-8/12'>
                 <h1 className='text-14 font-semibold'>{typeof product.name === 'string' ? product.name : ''}</h1>
                 <h2 className='text-12 font-medium'>Dhs. <span>{product.price}</span>.00 AED</h2>
-                <h2 className='text-12 font-medium'>Color: <span>{typeof product.color === 'string' ? product.color : ''}</span></h2>
                 <div className='flex'>
                   <div onClick={() => decrement(index)} className='h-7 w-7 rounded-md bg-white border border-gray flex justify-center items-center'>
                     <RxMinus size={20} />

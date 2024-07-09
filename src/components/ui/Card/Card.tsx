@@ -87,12 +87,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
 
 
   const handleAddToCart = (product: any) => {
-    const colorToAdd = selectedValue || (product.colors && product.colors[0]);
   
-    if (!colorToAdd) {
-      message.error('Please select a color.');
-      return;
-    }
   
   
     const newCartItem = {
@@ -137,12 +132,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   
   
   const handleAddToWishlist = (product: any) => {
-    const colorToAdd = selectedValue || (product.colors && product.colors[0]);
-  
-    if (!colorToAdd) {
-      message.error('Please select a color.');
-      return;
-    }
+   
 
     const newWishlistItem = {
       id: product._id,

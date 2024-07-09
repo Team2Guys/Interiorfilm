@@ -45,13 +45,7 @@ const Detail = ({ params }: { params: { productname: string} }) => {
   };
 
   const handleAddToCart = (product: any) => {
-    const colorToAdd = selectedValue || (product.colors && product.colors[0]);
-
-    if (!colorToAdd) {
-      message.error('Please select a color.');
-      return;
-    }
-
+  
 
     const newCartItem = {
       id: product._id,
@@ -59,7 +53,6 @@ const Detail = ({ params }: { params: { productname: string} }) => {
       price: product.salePrice,
       imageUrl: product.posterImageUrl?.imageUrl,
       discountPrice: product.discountPrice,
-      color: selectedValue,
       count: 1,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
       purchasePrice: product.purchasePrice
@@ -93,21 +86,13 @@ const Detail = ({ params }: { params: { productname: string} }) => {
   };
 
   const handleAddToWishlist = (product: any) => {
-    const colorToAdd = selectedValue || (product.colors && product.colors[0]);
-
-    if (!colorToAdd) {
-      message.error('Please select a color.');
-      return;
-    }
-
-
+ 
     const newWishlistItem = {
       id: product._id,
       name: product.name,
       price: product.salePrice,
       imageUrl: product.posterImageUrl?.imageUrl,
       discountPrice: product.discountPrice,
-      color: selectedValue,
       count: 1,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
     };
