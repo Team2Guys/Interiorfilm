@@ -11,6 +11,10 @@ import Pagination from '../Pagination';
 
 const ITEMS_PER_PAGE = 4;
 
+
+
+
+
 interface ReviewProps {
   reviews: any[];
   productId: string;
