@@ -55,8 +55,8 @@ const Detail = ({ params }: { params: { productname: string } }) => {
   };
 
   useEffect(() => {
-    if (productDetail?.id) {
-      fetchReviews(productDetail.id);
+    if (productDetail?._id) {
+      fetchReviews(productDetail._id);
     }
   }, [productDetail]);
 
@@ -70,6 +70,7 @@ const Detail = ({ params }: { params: { productname: string } }) => {
   const fetchReviews = async (productId: string) => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`);
+      console.log("productDetail", productDetail)
       setReviews(response.data.reviews);
     } catch (err) {
       console.error("Failed to fetch reviews:", err);
@@ -145,12 +146,17 @@ const Detail = ({ params }: { params: { productname: string } }) => {
         if (parsedProduct && (response.data.products && response.data.products.length > 0)) {
           let slicedProducts = response.data.products.length > 4 ? response.data.products.filter((item: any) => generateSlug(item.name) !== parsedProduct).slice(0, 4) : response.data.products.filter((item: any) => generateSlug(item.name) !== parsedProduct)
           setProducts(slicedProducts);
-          for (let key of response.data.products)
+          for (let key of response.data.products){
+console.log(key, "key")
             if (generateSlug(key.name) === parsedProduct) {
               setProductDetail(key);
               fetchRelatedProducts(key.category); // Fetch related products based on category
               return;
             }
+          }
+
+
+
         }
       } catch (error) {
         console.log('Error fetching data:', error);
@@ -205,7 +211,7 @@ const Detail = ({ params }: { params: { productname: string } }) => {
     {
       key: "3",
       label: 'Review',
-      children: <Review reviews={reviews} productId={productDetail?.id} fetchReviews={fetchReviews} />
+      children: <><Review reviews={reviews} productId={productDetail?._id} fetchReviews={fetchReviews} /></>
     },
   ];
 

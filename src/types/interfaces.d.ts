@@ -108,7 +108,7 @@ interface Specification {
 }
 
 interface PRODUCTS_TYPES {
-  id: any;
+  _id: any;
   name: string;
   posterImageUrl: Image;
   hoverImageUrl?: Image;

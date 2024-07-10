@@ -11,6 +11,10 @@ import Pagination from '../Pagination';
 
 const ITEMS_PER_PAGE = 4;
 
+
+
+
+
 interface ReviewProps {
   reviews: any[];
   productId: string;
@@ -34,9 +38,7 @@ const Review: React.FC<ReviewProps> = ({ reviews, productId, fetchReviews }) => 
     setCurrentPage(page);
   };
 
-  const currentItems = reviews.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
+  const currentItems = reviews.slice( (currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -45,13 +47,15 @@ const Review: React.FC<ReviewProps> = ({ reviews, productId, fetchReviews }) => 
   };
 
   const handleStarChange = (value: number) => {
+    console.log(value, "value")
     setFormData({ ...formData, star: value });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true); // Set loading to true when form submission starts
+    if(formData.star ==0) return  message.error("Please select the start rating");
     try {
+      setLoading(true); 
       const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/addReview`, formData);
       message.success('Review submitted successfully!');
       console.log(response.data);
@@ -63,8 +67,10 @@ const Review: React.FC<ReviewProps> = ({ reviews, productId, fetchReviews }) => 
         star: 0,
       });
       // Fetch updated reviews after successful submission
-      await fetchReviews(productId); // Ensure fetchReviews is called with the productId argument
+      await fetchReviews(productId); 
     } catch (error) {
+      console.log(error, "error"
+      )
       message.error("Error submitting the form:");
     } finally {
       setLoading(false); // Set loading to false when form submission ends
@@ -76,18 +82,25 @@ const Review: React.FC<ReviewProps> = ({ reviews, productId, fetchReviews }) => 
       <div className="w-full md:w-4/6">
         {currentItems.length > 0 ? (
           <>
-            {currentItems.map((array: any, index: any) => (
+            {currentItems.map((array: any, index: any) => {
+            console.log(array.star, 
+            "star"
+            )
+              return (
               <div className="space-y-2 rounded-md p-2 mt-4 shadow" key={index}>
                 <div className="flex items-center gap-2">
                   <Image src={feedback} width={50} height={50} alt="feedback" />
                   <div>
                     <HeadingH6 title={array.name} />
-                    <Rate className='reviewstar' disabled defaultValue={array.star} />
+                    <Rate className='reviewstar' disabled value={array.star} />
                   </div>
                 </div>
                 <p>{array.description}</p>
               </div>
-            ))}
+
+              )
+
+})}
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -102,7 +115,7 @@ const Review: React.FC<ReviewProps> = ({ reviews, productId, fetchReviews }) => 
       </div>
       <div className="w-full md:w-2/6">
         <div className="bg-slate-200 p-2 md:p-4 space-y-3">
-          <HeadingH3 title={"Add A Review"} />
+          <HeadingH3 title={"Add a Review"} />
           <p>Your Email Address Will Not Be Published. Required Fields Are Marked *</p>
           <Rate onChange={handleStarChange} value={formData.star} />
 
@@ -116,7 +129,7 @@ const Review: React.FC<ReviewProps> = ({ reviews, productId, fetchReviews }) => 
               className="bg-black text-white py-3 px-4 rounded-none flex items-center gap-2"
               disabled={loading} // Disable button when loading
             >
-              {loading ? <Loader color="#00000" /> : <><IoIosSend size={25} /> Submit Review</>}
+              {loading ? <Loader color="#fff" /> : <><IoIosSend size={25} /> Submit Review</>}
             </button>
           </form>
         </div>

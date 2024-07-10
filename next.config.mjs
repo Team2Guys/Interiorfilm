@@ -25,6 +25,9 @@ const nextConfig = {
     compiler: {
       removeConsole:  process.env.NEXT_PUBLIC_ENV =='production' ? true : false,
     },
+    images: {
+      unoptimized: true,
+    },
   };
   
   
