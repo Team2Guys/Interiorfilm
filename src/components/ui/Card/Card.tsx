@@ -97,6 +97,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       imageUrl: product.posterImageUrl?.imageUrl,
       discountPrice: product.discountPrice,
       color: selectedValue,
+      length:1,
       count: 1,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
       purchasePrice: product.purchasePrice
@@ -142,6 +143,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       discountPrice: product.discountPrice,
       color: selectedValue,
       count: 1,
+      length:1,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
     };
   

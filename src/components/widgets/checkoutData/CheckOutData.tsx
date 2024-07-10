@@ -51,8 +51,8 @@ const CheckoutData: React.FC = () => {
           <p className="text-gray-900">£381.00</p>
         </div>
       </div>
-      <Link href="/checkout" passHref legacyBehavior>
-        <a className="w-full bg-red-600 text-white py-3 mt-6 rounded-md text-center block">Proceed To Checkout</a>
+      <Link href="/checkout"className="w-full bg-red-600 text-white py-3 mt-6 rounded-md text-center block">
+        Proceed To Checkout
       </Link>
     </div>
   );

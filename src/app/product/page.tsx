@@ -325,12 +325,7 @@ const Product = () => {
                     <Card ProductCard={sortedProducts} /> 
                   </div>
                 )}
-{/*                 
-                <Pagintaion
-                  setTotalPage={totalPage}
-                  totalSize={totalProductscount ? Number(totalProductscount) : 5}
-                  handlerChange={getProductsHandler}
-                /> */}
+
               </>
             )}
           </div>

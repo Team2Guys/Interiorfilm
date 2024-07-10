@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'components/Common/Button';
 import Container from 'components/Layout/Container/Container';
-import Table from 'components/ui/Table/Table';
+import Table from 'components/ui/Table/Table'; // Update with correct path to your Table component
 import Overlay from 'components/widgets/Overlay/Overlay';
 import Link from 'next/link';
 
@@ -22,7 +22,7 @@ const Cart = () => {
   const calculateTotals = (items) => {
     const sub = items.reduce((acc, item) => {
       const price = item.discountPrice ? item.discountPrice : item.price;
-      return acc + (price * item.count);
+      return acc + (price * item.count * item.length); // Adjusted to calculate total price considering item count and length
     }, 0);
     setSubtotal(sub);
     const shipping = sub < 100 ? 30 : 0;
@@ -43,7 +43,7 @@ const Cart = () => {
           <div className="flex flex-col justify-center items-center space-y-3">
             <p className='text-2xl'>Your cart is empty.</p>
             <div>
-            <Link className='underline' href={"/product"}>Continue Shopping</Link>
+              <Link className='underline' href={"/product"}>Continue Shopping</Link>
             </div>
           </div>
         ) : (

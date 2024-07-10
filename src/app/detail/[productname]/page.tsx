@@ -1,124 +1,141 @@
 "use client"
-import Thumbnail from 'components/Carousel/Thumbnail/Thumbnail'
-import Container from 'components/Layout/Container/Container'
-import Overlay from 'components/widgets/Overlay/Overlay'
-import React, { useState, useEffect } from 'react'
-import { Rate, message } from 'antd'
+import Thumbnail from 'components/Carousel/Thumbnail/Thumbnail';
+import Container from 'components/Layout/Container/Container';
+import Overlay from 'components/widgets/Overlay/Overlay';
+import React, { useState, useEffect } from 'react';
+import { Rate, message, Tabs } from 'antd';
+import { GoHeart } from 'react-icons/go';
+import ProductSlider from 'components/Carousel/ProductSlider/ProductSlider';
+import axios from 'axios';
+import Loader from 'components/Loader/Loader';
+import Review from 'components/Common/Review';
+import { IoIosClose } from 'react-icons/io';
+import { RxMinus, RxPlus } from 'react-icons/rx';
+import { generateSlug } from 'data/Data';
+import PRODUCTS_TYPES from 'types/interfaces';
 
-import { GoHeart } from 'react-icons/go'
-import ProductSlider from 'components/Carousel/ProductSlider/ProductSlider'
-import axios from 'axios'
-import { generateSlug } from 'data/Data'
-import PRODUCTS_TYPES from 'types/interfaces'
-import { Tabs } from 'antd';
-import Loader from 'components/Loader/Loader'
-import Review from 'components/Common/Review'
+const { TabPane } = Tabs;
 
-const Detail = ({ params }: { params: { productname: string} }) => {
+const Detail = ({ params }: { params: { productname: string } }) => {
   const parsedProduct = params.productname ? params.productname : null;
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [productDetail, setProductDetail] = useState<PRODUCTS_TYPES | null>(null);
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
-  const [selectedValue, setSelectedValue] = useState<string | null>(null);
+  const [totalPrice, setTotalPrice] = useState<number | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [relatedProductsLoading, setRelatedProductsLoading] = useState<boolean>(false);
   const [reviews, setReviews] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const [length, setLength] = useState<number>(1);
 
-  
+  const handleLengthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    if (isNaN(value) || value < 1 || value > 100) {
+      message.error('Please select a length between 1 and 100.');
+    } else {
+      message.destroy(); // clear any previous messages
+      setLength(value);
+    }
+  };
+
+  const handleIncrement = () => {
+    if (quantity < 100) {
+      setQuantity(quantity + 1);
+    } else {
+      message.error('Quantity cannot exceed 100.');
+    }
+  };
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    } else {
+      message.error('Quantity cannot be less than 1.');
+    }
+  };
+
   useEffect(() => {
     if (productDetail?.id) {
       fetchReviews(productDetail.id);
     }
   }, [productDetail]);
 
-  const fetchReviews = async (productDetail: string) => {
+  useEffect(() => {
+    if (productDetail) {
+      const price = productDetail.discountPrice || productDetail.salePrice;
+      setTotalPrice((price * length) * quantity);
+    }
+  }, [length, quantity, productDetail]);
+
+  const fetchReviews = async (productId: string) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productDetail}`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`);
       setReviews(response.data.reviews);
-      console.log(response.data);
     } catch (err) {
-      console.error("get review data failed");
+      console.error("Failed to fetch reviews:", err);
     }
   };
 
   const handleAddToCart = (product: any) => {
-  
-
     const newCartItem = {
       id: product._id,
       name: product.name,
       price: product.salePrice,
       imageUrl: product.posterImageUrl?.imageUrl,
       discountPrice: product.discountPrice,
-      count: 1,
-      totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
+      count: quantity,
+      length: length,
+      totalPrice: (product.discountPrice || product.salePrice) * length * quantity,
       purchasePrice: product.purchasePrice
     };
-
+  
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-
-
     const existingItemIndex = existingCart.findIndex((item: any) => item.id === product._id);
-
+  
     if (existingItemIndex !== -1) {
-      const updatedCart = existingCart.map((item: any, index: number) => {
-        if (index === existingItemIndex) {
-          return {
-            ...item,
-            count: item.count + 1,
-            totalPrice: (item.count + 1) * (item.discountPrice ? item.discountPrice : item.price),
-          };
-        }
-        return item;
-      });
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-
+      // Update length and quantity
+      existingCart[existingItemIndex].length += length;
+      existingCart[existingItemIndex].count += quantity;
+      existingCart[existingItemIndex].totalPrice += (product.discountPrice || product.salePrice) * length * quantity;
     } else {
       existingCart.push(newCartItem);
-      localStorage.setItem("cart", JSON.stringify(existingCart));
     }
-
+  
+    localStorage.setItem("cart", JSON.stringify(existingCart));
     message.success('Product added to cart successfully!');
     window.dispatchEvent(new Event("cartChanged"));
   };
+  
 
   const handleAddToWishlist = (product: any) => {
- 
     const newWishlistItem = {
       id: product._id,
       name: product.name,
       price: product.salePrice,
       imageUrl: product.posterImageUrl?.imageUrl,
       discountPrice: product.discountPrice,
-      count: 1,
-      totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
+      count: quantity,
+      length: length,
+      totalPrice: (product.discountPrice || product.salePrice) * length * quantity,
     };
-
+  
     let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
-
     const existingItemIndex = existingWishlist.findIndex((item: any) => item.id === product._id);
-
+  
     if (existingItemIndex !== -1) {
-      const updatedWishlist = existingWishlist.map((item: any, index: number) => {
-        if (index === existingItemIndex) {
-          return {
-            ...item,
-            count: item.count + 1,
-            totalPrice: (item.count + 1) * (item.discountPrice ? item.discountPrice : item.price),
-          };
-        }
-        return item;
-      });
-      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
-
+      // Update length and quantity
+      existingWishlist[existingItemIndex].length += length;
+      existingWishlist[existingItemIndex].count += quantity;
+      existingWishlist[existingItemIndex].totalPrice += (product.discountPrice || product.salePrice) * length * quantity;
     } else {
       existingWishlist.push(newWishlistItem);
-      localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
     }
-
+  
+    localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
     message.success('Product added to Wishlist successfully!');
     window.dispatchEvent(new Event("WishlistChanged"));
   };
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -134,7 +151,6 @@ const Detail = ({ params }: { params: { productname: string} }) => {
               fetchRelatedProducts(key.category); // Fetch related products based on category
               return;
             }
-
         }
       } catch (error) {
         console.log('Error fetching data:', error);
@@ -159,18 +175,6 @@ const Detail = ({ params }: { params: { productname: string} }) => {
     fetchData();
   }, [parsedProduct]);
 
-  let [count, setCount] = useState(0);
-
-  function incrementCount() {
-    count = count + 1;
-    setCount(count);
-  }
-  function decrementCount() {
-    count = count - 1;
-    setCount(count);
-  }
-
-
   const tabData = [
     {
       key: "1",
@@ -190,7 +194,7 @@ const Detail = ({ params }: { params: { productname: string} }) => {
         <div className='space-y-3'>
           <div>
             <ul className='px-6'>
-              {productDetail?.spacification?.map((item, index) => (
+              {productDetail?.spacification?.map((item: any, index: number) => (
                 <li className='list-disc' key={index}>{item.specsDetails}</li>
               ))}
             </ul>
@@ -201,9 +205,8 @@ const Detail = ({ params }: { params: { productname: string} }) => {
     {
       key: "3",
       label: 'Review',
-      children: <><Review reviews={reviews} productId={productDetail?.id} fetchReviews={fetchReviews} /></>
+      children: <Review reviews={reviews} productId={productDetail?.id} fetchReviews={fetchReviews} />
     },
- 
   ];
 
   return (
@@ -216,11 +219,7 @@ const Detail = ({ params }: { params: { productname: string} }) => {
               <div className='shadow p- bg-white'>
                 <div className='grid grid-cols-1 md:grid-cols-2 mt-2 p-2 gap-4'>
                   <div className='w-full'>
-                    <Thumbnail
-                      thumbs={
-                        productDetail.imageUrl
-                      }
-                    />
+                    <Thumbnail thumbs={productDetail.imageUrl} />
                   </div>
                   <div className='py-5 px-8 space-y-4 md:space-y-8'>
                     <h1 className='text-3xl'>{productDetail.name}</h1>
@@ -238,10 +237,35 @@ const Detail = ({ params }: { params: { productname: string} }) => {
                         </p>
                         : null}
                     </div>
-                    <p><span className='font-medium text-lg'>Available Quantity: </span> {productDetail.totalStockQuantity ?? "0"} </p>
-
-
-                    <p>{productDetail.description}</p>
+                    <p><span className='font-bold text-base'>Available Quantity: </span> {productDetail.totalStockQuantity ?? "0"} </p>
+                    <div className='flex gap-2 items-center'>
+                      <p className='font-bold text-base'>Quantity :</p>
+                      <div className='flex'>
+                        <div className='h-7 w-7 rounded-md bg-white border border-gray flex justify-center items-center' onClick={handleDecrement}>
+                          <RxMinus size={20} />
+                        </div>
+                        <div className='h-7 w-7 rounded-md bg-white flex justify-center items-center'>
+                          <input
+                            className="h-8 w-8 text-center border border-gray rounded-md"
+                            type="text"
+                            min={1}
+                            max={100}
+                            disabled
+                            value={quantity}
+                          />
+                        </div>
+                        <div className='h-7 w-7 rounded-md bg-white border border-gray flex justify-center items-center' onClick={handleIncrement}>
+                          <RxPlus size={20} />
+                        </div>
+                      </div>
+                    </div>
+                    <div className='flex gap-2 items-center'>
+                      <p className='font-bold text-base'>Dimension : 1.22</p> <IoIosClose size={20} />
+                      <input min={1} max={100} type='number' value={length} onChange={handleLengthChange} name='length' placeholder='Enter Length' className={`peer px-3 py-2 block  border rounded-md border-gray-200 text-sm placeholder:text-slate-400 disabled:opacity-50 disabled:pointer-events-none autofill:pb-2`} />
+                    </div>
+                    <p className='text-primary'>
+                      <span className='font-bold text-base text-black'>Total Price :</span> Dhs. <span>{totalPrice}</span>.00
+                    </p>
 
                     {productDetail.totalStockQuantity == null ? (
                       <p className="text-primary text-center text-2xl">Product is out of stock</p>
@@ -262,14 +286,20 @@ const Detail = ({ params }: { params: { productname: string} }) => {
 
             <div className='bg-secondary mt-20'>
               <Container>
-                <Tabs items={tabData} />
+                <Tabs defaultActiveKey="1">
+                  {tabData.map(tab => (
+                    <TabPane tab={tab.label} key={tab.key}>
+                      {tab.children}
+                    </TabPane>
+                  ))}
+                </Tabs>
               </Container>
             </div>
           </>
           : null
       }
       <Container className='mt-20'>
-        <h1 className='text-lg md:text-3xl mb-5=-'>Related Products</h1>
+        <h1 className='text-lg md:text-3xl mb-5'>Related Products</h1>
         <ProductSlider products={relatedProducts} loading={relatedProductsLoading} />
       </Container>
     </>

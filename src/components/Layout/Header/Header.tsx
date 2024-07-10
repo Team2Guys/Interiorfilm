@@ -128,6 +128,7 @@ const Header = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  
   useEffect(() => {
     const existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
     setWishlistItems(existingWishlist);

@@ -2,10 +2,10 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { IoIosClose, IoMdCloseCircleOutline } from 'react-icons/io';
 import { RxMinus, RxPlus } from 'react-icons/rx';
 import { usePathname } from 'next/navigation';
-import { Modal } from 'antd';
+import { message, Modal } from 'antd';
 import Button from '../Button/Button';
 import PRODUCTS_TYPES from 'types/interfaces';
 interface TableProps {
@@ -41,11 +41,15 @@ const Table: React.FC<TableProps> = ({ cartdata, wishlistdata, onCartChange }) =
 
   const increment = (index: number) => {
     const newCounts = { ...counts };
-    newCounts[index] = (newCounts[index] || 1) + 1;
-    setCounts(newCounts);
-    updateTotalPrice(index, newCounts[index]);
-    window.dispatchEvent(new Event("cartChanged"));
-    window.dispatchEvent(new Event("WishlistChanged"));
+    if (newCounts[index] < 100) {
+      newCounts[index] = (newCounts[index] || 1) + 1;
+      setCounts(newCounts);
+      updateTotalPrice(index, newCounts[index]);
+      window.dispatchEvent(new Event("cartChanged"));
+      window.dispatchEvent(new Event("WishlistChanged"));
+    } else {
+      message.error('Quantity cannot be more than 100.');
+    }
   };
 
   const decrement = (index: number) => {
@@ -56,6 +60,8 @@ const Table: React.FC<TableProps> = ({ cartdata, wishlistdata, onCartChange }) =
       updateTotalPrice(index, newCounts[index]);
       window.dispatchEvent(new Event("cartChanged"));
       window.dispatchEvent(new Event("WishlistChanged"));
+    } else {
+      message.error('Quantity cannot be less than 1.');
     }
   };
 
@@ -96,17 +102,58 @@ const Table: React.FC<TableProps> = ({ cartdata, wishlistdata, onCartChange }) =
 
   const addToCart = (product: PRODUCTS_TYPES, index: number) => {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    cart.push({
-      ...product,
-      count: counts[index] || 1,
-      totalPrice: (product.discountPrice ? product.discountPrice : product.price) * (counts[index] || 1),
-    });
+  
+    // Check if the product already exists in cart
+    const existingIndex = cart.findIndex(item => item.id === product.id);
+  
+    if (existingIndex !== -1) {
+      // Update quantity and length
+      cart[existingIndex].count += counts[index] || 1;
+      cart[existingIndex].length = product.length;
+      cart[existingIndex].totalPrice = (product.discountPrice || product.price) * cart[existingIndex].count * product.length;
+    } else {
+      // Add new item to cart
+      const totalPrice = (product.discountPrice || product.price) * (counts[index] || 1) * product.length;
+      cart.push({
+        ...product,
+        count: counts[index] || 1,
+        totalPrice: totalPrice,
+      });
+    }
+  
+    // Update local storage
     localStorage.setItem("cart", JSON.stringify(cart));
+  
+    // Remove item from wishlist if added to cart
     removeItemFromCart(index);
-    setChangeId(index);
+  
+    // Trigger cart changed event
     window.dispatchEvent(new Event("cartChanged"));
   };
+  
 
+  const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    if (isNaN(value) || value < 1 || value > 100) {
+      message.error('Please select a quantity between 1 and 100.');
+    } else {
+      setCounts({ ...counts, [index]: value });
+      updateTotalPrice(index, value);
+      window.dispatchEvent(new Event("cartChanged"));
+      window.dispatchEvent(new Event("WishlistChanged"));
+    }
+  };
+  const handleLengthChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    if (isNaN(value) || value < 1 || value > 100) {
+      message.error('Please select a length between 1 and 100.');
+    } else {
+      const updatedData = [...data];
+      updatedData[index].length = value; // Update the length in your data
+      setData(updatedData); // Update the state with the new data
+    }
+  };
+  
   return (
     <>
       <div className="hidden md:flex flex-col">
@@ -136,9 +183,22 @@ const Table: React.FC<TableProps> = ({ cartdata, wishlistdata, onCartChange }) =
                             </div>
                           </div>
                           <div className='p-2'>
-                            <h1 className='text-sm md:text-base font-medium'>{typeof product.name === 'string' ? product.name : ''}</h1>
+                            <h1 className='text-sm md:text-base font-bold'>{typeof product.name === 'string' ? product.name : ''}</h1>
+                                <div className='flex gap-2 items-center'>
+                              <p className='font-bold text-base'>Dimension : 1.22</p> <IoIosClose size={20} />
+                              <input
+                                  min={1}
+                                  max={100}
+                                  type='number'
+                                  value={product.length} // Ensure this is bound to the correct property ('length')
+                                  onChange={(e) => handleLengthChange(index, e)} // Pass index to handleLengthChange
+                                  name='length'
+                                  placeholder='Enter Length'
+                                  className={`peer px-3 py-2 block border rounded-md border-gray-200 text-sm placeholder:text-slate-400 disabled:opacity-50 disabled:pointer-events-none autofill:pb-2`}
+                                />
+                            </div>
                           </div>
-                        </div>
+                      </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base"><p>AED <span>{pathName === "/wishlist" ? (product.discountPrice ? product.discountPrice * (counts[index] || 1) : product.price * (counts[index] || 1)) : (product.discountPrice ? product.discountPrice : product.price)}</span>.00</p></td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base">
@@ -146,8 +206,17 @@ const Table: React.FC<TableProps> = ({ cartdata, wishlistdata, onCartChange }) =
                           <div onClick={() => decrement(index)} className='h-8 w-8 rounded-md bg-white border border-gray flex justify-center items-center'>
                             <RxMinus size={20} />
                           </div>
-                          <div className='h-8 w-8 rounded-md bg-white flex justify-center items-center'>
-                            {counts[index] || 1}
+                          <div className='h-8 w-14 rounded-md bg-white flex justify-center items-center'>
+                          <input
+                          className="h-8 w-8 text-center border border-gray rounded-md"
+                          type="text"
+                          min={1}
+                          max={100}
+                          disabled
+                          value={counts[index] || 1}
+                          onChange={(e) => handleChange(index, e)}
+                        />
+                            
                           </div>
                           <div onClick={() => increment(index)} className='h-8 w-8 rounded-md bg-white border border-gray flex justify-center items-center'>
                             <RxPlus size={20} />
@@ -155,9 +224,11 @@ const Table: React.FC<TableProps> = ({ cartdata, wishlistdata, onCartChange }) =
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-end text-sm md:text-base">
-                        {pathName === "/wishlist" ? <Button onClick={() => addToCart(product, index)} className='px-4 rounded-md' title={"Add To Cart"} /> :
-                          <p>AED <span> {product.discountPrice ? product.discountPrice * (counts[index] || 1) : product.price * (counts[index] || 1)}</span>.00</p>
-                        }
+                      {pathName === "/wishlist" ? (
+                            <Button onClick={() => addToCart(product, index)} className='px-4 rounded-md' title={"Add To Cart"} />
+                          ) : (
+                            <p>AED <span>{product.discountPrice ? product.discountPrice * (counts[index] || 1) * product.length : product.price * (counts[index] || 1) * product.length}</span>.00</p>
+                          )}
                       </td> 
                     </tr>
                   ))}
@@ -190,7 +261,15 @@ const Table: React.FC<TableProps> = ({ cartdata, wishlistdata, onCartChange }) =
                     <RxMinus size={20} />
                   </div>
                   <div className='h-7 w-7 rounded-md bg-white flex justify-center items-center'>
-                    {counts[index] || 1}
+                  <input
+                          className="h-8 w-8 text-center border border-gray rounded-md"
+                          type="text"
+                          min={1}
+                          max={100}
+                          disabled
+                          value={counts[index] || 1}
+                          onChange={(e) => handleChange(index, e)}
+                        />
                   </div>
                   <div onClick={() => increment(index)} className='h-7 w-7 rounded-md bg-white border border-gray flex justify-center items-center'>
                     <RxPlus size={20} />
