@@ -68,7 +68,7 @@ const Table: React.FC<TableProps> = ({ cartdata, wishlistdata, onCartChange }) =
   const updateTotalPrice = (index: number, newCount: number) => {
     const updatedData = [...data];
     updatedData[index].count = newCount;
-    updatedData[index].totalPrice = updatedData[index].price * newCount;
+    updatedData[index].totalPrice = (updatedData[index].discountPrice || updatedData[index].price) * newCount * updatedData[index].length;
     setData(updatedData);
     localStorage.setItem(pathName === "/wishlist" ? "wishlist" : "cart", JSON.stringify(updatedData));
     const sub = updatedData.reduce((total: number, item: any) => total + item.totalPrice, 0);
@@ -151,6 +151,12 @@ const Table: React.FC<TableProps> = ({ cartdata, wishlistdata, onCartChange }) =
       const updatedData = [...data];
       updatedData[index].length = value; // Update the length in your data
       setData(updatedData); // Update the state with the new data
+  
+      // Update the total price and subtotal
+      updateTotalPrice(index, counts[index] || 1);
+  
+      // Call onCartChange to ensure the parent component updates the subtotal
+      onCartChange(updatedData);
     }
   };
   
