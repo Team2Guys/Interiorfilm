@@ -1,35 +1,29 @@
-
 'use client'
 import Container from 'components/Layout/Container/Container'
 import Overlay from 'components/widgets/Overlay/Overlay'
-import React, { useState,useLayoutEffect } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import Card from 'components/ui/Card/Card'
-import Link from 'next/link'
 import Collapse from 'components/ui/Collapse/Collapse'
 import { Select, Space } from 'antd'
 import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu'
 import { IoFunnelOutline } from 'react-icons/io5'
-import Pagintaion from 'components/Pagination/Pagintaion'
 import PRODUCTS_TYPES from 'types/interfaces'
 import Loader from "components/Loader/Loader";
 import type { CheckboxProps, RadioChangeEvent } from 'antd';
 import { Radio } from 'antd';
-
-import { getPaginatedproducts, getPRODUCTS} from 'utils/helperFunctions'
 import Input from 'components/Common/regularInputs'
 import axios from 'axios'
 
 interface category {
   posterImageUrl: {
-        public_id: string,
-        imageUrl: string
-    },
-    _id: string,
-    name: string,
-    createdAt: string,
-    updatedAt: string,
-    __v:any
-
+    public_id: string,
+    imageUrl: string
+  },
+  _id: string,
+  name: string,
+  createdAt: string,
+  updatedAt: string,
+  __v: any
 }
 
 const Product = () => {
@@ -48,7 +42,7 @@ const Product = () => {
   const [activeLink, setActiveLink] = useState<category | undefined>()
   const [inStockOnly, setInStockOnly] = useState<boolean>(false)
   const [outOfStockOnly, setOutOfStockOnly] = useState<boolean>(false)
-
+  const [productsToShow, setProductsToShow] = useState<number>(9)
 
   const handleInStockChange: CheckboxProps['onChange'] = (e) => {
     setInStockOnly(e.target.checked)
@@ -89,39 +83,26 @@ const Product = () => {
     setOpen(false)
   }
 
-
-  console.log(activeLink, 
-    "activeLink"
-  )
-
-
-
-  let productHandler = async()=>{
-    try{
+  let productHandler = async () => {
+    try {
       setLoading(true)
       const CategoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`)
       const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`)
 
-    const [categoryResponse, products] = await Promise.all([CategoryRequest,productRequest]);
-    setTotalProducts(products.data.products)
-    console.log(categoryResponse.data, "Category Data")
-    setActiveLink(categoryResponse.data[0])
-    setCategory(categoryResponse.data)
- 
-    }catch(err){
+      const [categoryResponse, products] = await Promise.all([CategoryRequest, productRequest]);
+      setTotalProducts(products.data.products)
+      setActiveLink(categoryResponse.data[0])
+      setCategory(categoryResponse.data)
+    } catch (err) {
       console.log(err, "err")
-
-    }finally{
+    } finally {
       setLoading(false)
-
     }
   }
 
   useLayoutEffect(() => {
     productHandler()
   }, [])
-
-
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
@@ -131,7 +112,7 @@ const Product = () => {
     setSortOption(value)
   }
 
-  const handlePriceChange = (field:any, value:any) => {
+  const handlePriceChange = (field: any, value: any) => {
     setPriceRange(prevRange => ({
       ...prevRange,
       [field]: value === '' ? '' : Number(value) // Handle empty string for clearing input
@@ -145,17 +126,17 @@ const Product = () => {
   const filteredProductsByCategory = activeLink ? totalProducts.filter(product => product.category === activeLink._id) : totalProducts;
   const filteredProducts = filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
     if (!product) return true; // Keep the product if it's null
-  
+
     const price = product.discountPrice ?? product.salePrice;
     const priceMatch = (priceRange.from === '' || price >= priceRange.from) && (priceRange.to === '' || price <= priceRange.to);
     const nameMatch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
     const colorMatch = !colorName || (product.colors && product.colors.some(color => color.colorName === colorName));
     const inStockMatch = !inStockOnly || product.totalStockQuantity && product.totalStockQuantity > 0;
     const outOfStockMatch = !outOfStockOnly || product.totalStockQuantity === 0 || !product.totalStockQuantity
-  
-    return nameMatch && colorMatch && priceMatch && inStockMatch && outOfStockMatch ;
+
+    return nameMatch && colorMatch && priceMatch && inStockMatch && outOfStockMatch;
   });
-  
+
   const sortedProducts = filteredProducts.sort((a, b) => {
     const getPrice = (product: PRODUCTS_TYPES) => product.discountPrice ?? product.salePrice;
 
@@ -170,10 +151,12 @@ const Product = () => {
 
   const handleCategoryClick = (categoryName: category) => {
     setActiveLink(categoryName)
+    setProductsToShow(9); // Reset productsToShow when category changes
   }
 
-
-
+  const loadMoreProducts = () => {
+    setProductsToShow(prevCount => prevCount + 9)
+  }
 
   return (
     <>
@@ -208,43 +191,41 @@ const Product = () => {
               <div className="p-2 bg-secondary">
                 <Collapse title="All Categories">
                   <ul className="px-1 pt-2 space-y-1 ">
-
-                    {loading ?   <div className="flex justify-center items-center"><Loader /></div> :  category && category?.map((item, index) => (
+                    {loading ? <div className="flex justify-center items-center"><Loader /></div> : category && category?.map((item, index) => (
                       <li className='flex flex-col w-full' key={index} >
                         <div className={activeLink?.name === item.name ? "bg-primary px-2 text-white rounded-md w-full h-8 flex items-center cursor-pointer" : "hover:bg-primary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center cursor-pointer"} onClick={() => handleCategoryClick(item)}>{item.name}</div>
                       </li>
                     ))}
                   </ul>
-
                 </Collapse>
               </div>
               <div className="p-2 bg-secondary">
                 <Collapse title="Availability">
-                <Radio.Group onChange={onChange} value={value}>
-                <Space direction="vertical">
-                <Radio  value={1}>All Product</Radio>
-                  <Radio checked={inStockOnly} onChange={handleInStockChange} value={2}>In Stock</Radio>
-                  <Radio checked={outOfStockOnly} onChange={handleOutOfStockChange} value={3}>Out Of Stock</Radio>
-                  </Space>
-                </Radio.Group>
+                  <Radio.Group onChange={onChange} value={value}>
+                    <Space direction="vertical">
+                      <Radio value={1}>All Product</Radio>
+                      <Radio checked={inStockOnly} onChange={handleInStockChange} value={2}>In Stock</Radio>
+                      <Radio checked={outOfStockOnly} onChange={handleOutOfStockChange} value={3}>Out Of Stock</Radio>
+                    </Space>
+                  </Radio.Group>
                 </Collapse>
               </div>
               <div className="p-2 bg-secondary">
-              <Collapse title="Filter Price">
+                <Collapse title="Filter Price">
                   <div className='flex gap-2'>
-                    <Input 
-                    className='h-10'
+                    <Input
+                      className='h-10'
                       placeholder='From'
                       type='number'
                       value={priceRange.from}
-                      onChange={(e:any) => handlePriceChange('from', e.target.value)}
+                      onChange={(e: any) => handlePriceChange('from', e.target.value)}
                     />
                     <Input
-                    className='h-10'
+                      className='h-10'
                       placeholder='To'
                       type='number'
                       value={priceRange.to}
-                      onChange={(e:any) => handlePriceChange('to', e.target.value)}
+                      onChange={(e: any) => handlePriceChange('to', e.target.value)}
                     />
                   </div>
                   <div className='text-end pt-2 underline cursor-pointer' onClick={resetPriceFilter}>Reset Price</div>
@@ -271,44 +252,44 @@ const Product = () => {
                 <div className="p-2 bg-secondary">
                   <Collapse title="All Categories">
                     <ul className="px-1 pt-2 space-y-1">
-                    {loading ?   <div className="flex justify-center items-center"><Loader /></div> :  category && category?.map((item, index) => (
-                      <li className='flex flex-col w-full' key={index} onClick={onClose}>
-                        <div className={activeLink?.name === item.name ? "bg-primary px-2 text-white rounded-md w-full h-8 flex items-center cursor-pointer" : "hover:bg-primary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center cursor-pointer"} onClick={() => handleCategoryClick(item)}>{item.name}</div>
-                      </li>
-                    ))}
+                      {loading ? <div className="flex justify-center items-center"><Loader /></div> : category && category?.map((item, index) => (
+                        <li className='flex flex-col w-full' key={index} onClick={onClose}>
+                          <div className={activeLink?.name === item.name ? "bg-primary px-2 text-white rounded-md w-full h-8 flex items-center cursor-pointer" : "hover:bg-primary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center cursor-pointer"} onClick={() => handleCategoryClick(item)}>{item.name}</div>
+                        </li>
+                      ))}
                     </ul>
                   </Collapse>
                 </div>
-                  <div className="p-2 bg-secondary">
+                <div className="p-2 bg-secondary">
                   <Collapse title="Availability">
-                  <Radio.Group onChange={onChange} value={value}>
-                  <Space direction="vertical">
-                    <Radio checked={inStockOnly} onChange={handleInStockChange} value={1}>In Stock</Radio>
-                    <Radio checked={outOfStockOnly} onChange={handleOutOfStockChange} value={2}>Out Of Stock</Radio>
-                    </Space>
-                  </Radio.Group>
+                    <Radio.Group onChange={onChange} value={value}>
+                      <Space direction="vertical">
+                        <Radio checked={inStockOnly} onChange={handleInStockChange} value={1}>In Stock</Radio>
+                        <Radio checked={outOfStockOnly} onChange={handleOutOfStockChange} value={2}>Out Of Stock</Radio>
+                      </Space>
+                    </Radio.Group>
                   </Collapse>
                 </div>
                 <div className="p-2 bg-secondary">
-                <Collapse title="Filter Price">
-                  <div className='flex gap-2'>
-                    <Input 
-                    className='h-10'
-                      placeholder='From'
-                      type='number'
-                      value={priceRange.from}
-                      onChange={(e:any) => handlePriceChange('from', e.target.value)}
-                    />
-                    <Input
-                    className='h-10'
-                      placeholder='To'
-                      type='number'
-                      value={priceRange.to}
-                      onChange={(e:any) => handlePriceChange('to', e.target.value)}
-                    />
-                  </div>
-                  <div className='text-end pt-2 underline cursor-pointer' onClick={resetPriceFilter}>Reset Price</div>
-                </Collapse>
+                  <Collapse title="Filter Price">
+                    <div className='flex gap-2'>
+                      <Input
+                        className='h-10'
+                        placeholder='From'
+                        type='number'
+                        value={priceRange.from}
+                        onChange={(e: any) => handlePriceChange('from', e.target.value)}
+                      />
+                      <Input
+                        className='h-10'
+                        placeholder='To'
+                        type='number'
+                        value={priceRange.to}
+                        onChange={(e: any) => handlePriceChange('to', e.target.value)}
+                      />
+                    </div>
+                    <div className='text-end pt-2 underline cursor-pointer' onClick={resetPriceFilter}>Reset Price</div>
+                  </Collapse>
                 </div>
               </div>
             }
@@ -322,11 +303,18 @@ const Product = () => {
                   <div className="flex justify-center items-center h-2/3"><Loader /></div>
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                    <Card ProductCard={sortedProducts} /> 
+                    <Card ProductCard={sortedProducts.slice(0, productsToShow)} />
                   </div>
                 )}
-
               </>
+            )}
+            {productsToShow < sortedProducts.length && (
+              <button
+                className='px-5 py-2 bg-primary text-white rounded-md flex items-center mx-auto'
+                onClick={loadMoreProducts}
+              >
+                Load More
+              </button>
             )}
           </div>
         </div>
