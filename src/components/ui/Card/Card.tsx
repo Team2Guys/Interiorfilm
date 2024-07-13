@@ -202,7 +202,10 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
           className="cursor-pointer custom-shadow transition-all my-3 bg-white"
           onClick={() => router.push(`/detail/${generateSlug(product.name)}`)}
         >
-          <div className="">
+          <div className='absolute z-10 left-22 bottom-32 translate-y-14 opacity-0 group-hover:translate-y-0  group-hover:opacity-100 transition ease-in-out duration-400 '>
+              <button className=' bg-white z-10 px-4 py-2 '>Order Now</button>
+            </div>
+          <div className="  text-center">
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
               <Image
                 className="bg-contain h-32 w-full md:h-72"
@@ -212,6 +215,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
                 alt="Image"
               />
             )}
+            
           </div>
           <div className="text-center space-y-1 pt-3 pb-5 group-hover:bg-primary">
             <h1 className="lg:text-lg text-sm text-center text-dark group-hover:text-white  font-semibold">
