@@ -19,6 +19,7 @@ interface review{
   name: string;
   detail: string;
   star?: number;
+  designation?:string;
 }
 
 
@@ -54,7 +55,7 @@ const Slider: React.FC<Reviewprops> = ({Reviews}) => {
           <MdArrowForwardIos size={25} />
         </button> */}
         <div className='text-center mb-10'>
-          <h2 className='lg:text-5xl md:text-3xl font-semibold text-xl lg:w-96 leading-10 mx-auto '>What Say Our Top Clients</h2>
+          <h2 className='lg:text-5xl md:text-3xl font-medium text-xl lg:w-96 leading-10 mx-auto text-heading '>What Say Our Top Clients</h2>
         </div>
       </div>
       
@@ -87,7 +88,7 @@ const Slider: React.FC<Reviewprops> = ({Reviews}) => {
         {
           Reviews.map((array,index)=>(
             <SwiperSlide key={index}>
-            <div className='p-3 bg-white w-full group shadow-md mb-2 rounded-md'>
+            <div className='p-3 bg-white w-full group shadow-md mb-2 rounded-md h-72 '>
               <FaQuoteLeft className='text-light group-hover:text-primary transition duration-500' size={25} />
               <div className='flex gap-6 mt-5'>
                 <div className='w-1/6'>
@@ -96,12 +97,13 @@ const Slider: React.FC<Reviewprops> = ({Reviews}) => {
                   </div>
                 </div>
                 <div className='w-5/6 space-y-2'>
+                <div>
                   <h1 className='font-semibold underline'>{array.name}</h1>
+                  <h2 className='font-medium text-xs text-para'>{array.designation}</h2>
+                </div>
                  <div className='block'>
-                 {/* <FaQuoteLeft className='text-light group-hover:text-primary' size={18} /> */}
-                  <p className='text-start'><span className='text-xl'></span> {array.detail} <span className='text-xl'></span>
+                  <p className='text-start line-clamp-4'><span className='text-xl'></span> {array.detail} <span className='text-xl'></span>
                   </p>
-                  {/* <FaQuoteRight className=' text-light group-hover:text-primary' size={18} /> */}
                  </div>
                     <div className="flex gap-1 justify-start">
                       <Rate disabled defaultValue={array.star} className="text-sm gap-0"  />

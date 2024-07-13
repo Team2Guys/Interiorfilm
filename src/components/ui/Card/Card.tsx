@@ -186,7 +186,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
       <div className={`relative group ${cardClass}`} key={index}>
-        <div className="space-y-3 absolute w-full top-6 right-4 -translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-8 overflow-hidden transition ease-in-out duration-400 hidden md:block">
+        <div className="space-y-3 absolute top-6 right-4 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0  overflow-hidden transition ease-in-out duration-400 hidden md:block">
           <button onClick={() => handleAddToCart(product)}
             className="flex justify-center items-center z-10"
           >
@@ -213,16 +213,16 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
               />
             )}
           </div>
-          <div className="mt-2 text-center space-y-1 pt-3 pb-5">
-            <h1 className="lg:text-lg text-sm text-center text-dark group-hover:text-primary transition-all font-semibold">
+          <div className="text-center space-y-1 pt-3 pb-5 group-hover:bg-primary">
+            <h1 className="lg:text-lg text-sm text-center text-dark group-hover:text-white  font-semibold">
               Code : <span>{product.name}</span>
             </h1>
             <div className="flex gap-2 justify-center text-sm py-1 mt-0">
-              <p className="text-primary group-hover:text-dark transition-all font-bold">
+              <p className="text-primary group-hover:text-white  font-bold">
                 Dhs. <span>{product.discountPrice ? product.discountPrice : product.salePrice}</span>.00
               </p>
               {product.discountPrice && (
-                <p className="line-through text-light">
+                <p className="line-through group-hover:text-white">
                   Dhs. <span>{product.salePrice}</span>.00
                 </p>
               )}
@@ -230,7 +230,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
             {product.starRating !== undefined && (
               <div className="flex gap-1 justify-center">
                 <Rate className="text-sm gap-0" disabled allowHalf defaultValue={Number(product.starRating)} />
-                <p className='text-sm'>({product.reviews})</p>
+                <p className='text-sm group-hover:text-white'>( ({product.reviews}) )</p>
               </div>
             )}
           </div>

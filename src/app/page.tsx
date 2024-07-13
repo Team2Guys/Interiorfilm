@@ -12,6 +12,7 @@ import Container from "components/Layout/Container/Container";
 import Mobiletab from "components/ui/Tabs/Mobiletab/Mobiletab";
 import axios from 'axios';
 import PRODUCTS_TYPES from "types/interfaces";
+import OfferProduct from "components/OfferProduct/OfferProduct";
 
 const offers = [
   {
@@ -56,20 +57,23 @@ export default function Home() {
     fetchAllProducts();
   }, []);
 
+  const featuredProducts = allProducts.slice(0, 10);
+
   return (
     <>
       <HeroSlider />
-      <h1 className="lg:text-5xl md:text-3xl text-lg font-semibold text-center mt-10">
+      <h1 className="lg:text-[55px] md:text-3xl text-lg font- md:font-black text-center mt-20 text-heading">
         Discover Our Product Ranges
       </h1>
       <Container className="mt-10">
         <Mobiletab className="color-black" staticConatiner={"hidden md:block"} />
       </Container>
+      <OfferProduct/>
       <Container className="mt-20">
-        <h1 className="lg:text-5xl md:text-3xl font-semibold text-xl text-center mb-5">
+        <h1 className="lg:text-5xl md:text-3xl font-semibold text-xl text-center mb-5 text-heading">
           Feature Products
         </h1>
-        <ProductSlider products={allProducts} loading={loading} />
+        <ProductSlider products={featuredProducts} loading={loading} />
       </Container>
       <Offer Offers={offers} />
       <Testimonial />

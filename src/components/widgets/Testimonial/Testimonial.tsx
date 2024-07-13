@@ -8,8 +8,8 @@ const Testimonial:React.FC = () => {
         <Container className='pt-20'>
         <Slider
         Reviews={[
-            { name: "Abdur Razzak", detail: "I recently had the pleasure of working with Interior Film, and I am beyond impressed.", star:4 },
-            { name: "Aisha Malik", detail: "Interior Film transformed my home beautifully. Their respect for cultural preferences and outstanding quality exceeded my expectations. Highly recommend!", star:5  },
+            { name: "Abdur Razzak", detail: "I recently had the pleasure of working with Interior Film, and I am beyond impressed.", star:4, designation:"Ui Ux" },
+            { name: "Aisha Malik", detail: "Interior Film transformed my home beautifully. Their respect for cultural preferences and outstanding quality exceeded my expectations. Highly recommend!", star:5, designation:"Frontend Developer"  },
             { name: "Tariq Noor", detail: "Interior Film did an amazing job on my living room. Their attention to detail and respect for my preferences were outstanding. Highly recommend!", star:3  },
             { name: "Bilal Ahmed", detail: "Exceptional service from Interior Film! They transformed our home with great care and precision. The team's professionalism was truly impressive. JazakAllah Khair", star:4  },
             { name: "Zayd Malik", detail: "Interior Film exceeded my expectations. Their creativity and commitment to customer satisfaction were evident in every aspect of the project. Wonderful experience", star:5  },

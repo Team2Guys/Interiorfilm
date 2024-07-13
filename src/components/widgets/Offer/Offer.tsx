@@ -27,8 +27,8 @@ interface Offer {
                     <div className='w-16 h-16 rounded-full bg-white group-hover:bg-primary transition duration-500 ease-in-out flex justify-center items-center'>
                         {array.icon}
                     </div>
-                    <h1 className='font-medium text-center'>{array.title}</h1>
-                    <p className='text-center text-sm md:text-base text-gray-400 group-hover:text-gray-950'>{array.detail}</p>
+                    <h1 className='font-medium text-center text-heading'>{array.title}</h1>
+                    <p className='text-center text-sm md:text-base text-para'>{array.detail}</p>
                  </div>
                  </div>
                  

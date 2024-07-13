@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import Card from 'components/ui/Card/Card';
 import Loader from 'components/Loader/Loader';
@@ -30,21 +30,33 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) =>
       swiper.navigation.update();
     }
   }, [products]);
-
+  const pagination = {
+    clickable: true,
+    renderBullet: function (index:any, className:any) {
+      return '<span class="' + className + '">' + (index + 1) + '</span>';
+    },
+  };
   return (
     loading ? <div className='flex justify-center items-center h-[20vh]'><Loader /></div> :
       <div className="flex items-center justify-center w-full">
-        <div className='w-1/12'>
+        <div className='w-1/12 hidden md:block'>
           <button ref={prevRef} className='p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
             <MdArrowBackIos size={15} />
           </button>
         </div>
         <Swiper
           ref={swiperRef}
-          slidesPerView={1}
-          spaceBetween={20}
+     
           loop={true}
           breakpoints={{
+            320: {
+              slidesPerView: 1.3,
+              spaceBetween: 20,
+            },
+            370: {
+              slidesPerView: 1.8,
+              spaceBetween: 20,
+            },
             640: {
               slidesPerView: 2,
               spaceBetween: 20,
@@ -58,20 +70,19 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) =>
               spaceBetween: 20,
             },
           }}
-          modules={[Navigation]}
+          
+          modules={[Navigation, Pagination]}
+          pagination={pagination}
           className="mySwiper"
-          navigation={{
-            prevEl: prevRef.current,
-            nextEl: nextRef.current,
-          }}
+         
         >
           {products && products.map((product, index) => (
-            <SwiperSlide key={index}>
+            <SwiperSlide key={index} className='mb-10'>
               <Card ProductCard={[product]} />
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className='w-1/12'>
+        <div className='w-1/12 hidden md:block'>
           <button ref={nextRef} className='p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
             <MdArrowForwardIos size={15} />
           </button>

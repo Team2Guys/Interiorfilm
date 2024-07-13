@@ -14,6 +14,7 @@ import maestrocard from "../../../../public/images/maestrocard.jpg";
 import Container from '../Container/Container';
 import { SlEnvolopeLetter } from 'react-icons/sl';
 import Button from 'components/ui/Button/Button';
+import axios from 'axios';
 
 const { Footer: AntFooter } = Layout;
 
@@ -32,17 +33,14 @@ const Footer: React.FC = () => {
   const bottomImages = [paypal, visacard, mastercard, maestrocard];
 
   const CategoryHandler = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
-    );
-    const Categories = await response.json();
-    setCategory(Categories);
+
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+    setCategory(response.data);
   };
   
   useLayoutEffect(() => {
     CategoryHandler();
   }, []);
-  
   return (
     <>
     <div className='bg-white pt-10'>
@@ -134,12 +132,12 @@ const Footer: React.FC = () => {
         </div>
       </Container>
       </div>
-      <div className="bg-primary">
-      <Container className='lg:py-0 py-3 lg:mt-0 lg:mb-0 mb-6'>
+      <div className="bg-primary py-2 lg:py-2 lg:mt-0 lg:mb-0 pb-20 mb:pb-0 ">
+      <Container className=''>
         <div className='container mx-auto'>
           <div className="flex items-center flex-wrap lg:justify-between justify-center">
             <div className='text-white lg:order-1 order-2'>
-              <p className='text-xs'>© Interior Film - All Rights Reserved</p>
+              <p className='text-[19px]'>© Interior Film - All Rights Reserved</p>
             </div>
             <div className='flex items-center gap-2 py-2 lg:order-2 order-1 text-black dark:text-white'>
               {bottomImages.map((image, index) => (

@@ -1,14 +1,12 @@
+//@ts-nocheck
 'use client'
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
-
-// Import Swiper styles
+import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import Image from 'next/image';
-import Button from '../Button/Button';
 import Link from 'next/link';
 
 interface Slide {
@@ -21,20 +19,27 @@ interface Slide {
 interface SliderProps {
   slides: Slide[];
 }
+const pagination = {
+  clickable: true,
+  renderBullet: function (index, className) {
+    return '<span class="' + className + '">' + (index + 1) + '</span>';
+  },
+};
 
 const Slider: React.FC<SliderProps> = ({ slides }) => {
   return (
     <div className="w-full mx-auto">
       <Swiper
        
-        navigation={true}
+       
         loop={true}
-        modules={[Navigation]}
+        pagination={pagination}
+        modules={[Pagination]}
         className="mySwiper"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
-            <div className="relative lg:h-[80vh] h-96 flex items-center justify-start">
+            <div className="relative lg:h-[60vh] h-96 flex items-center justify-start">
               <Image
                 src={slide.image}
                 alt="Interior Film"
@@ -50,7 +55,7 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
                 </div>
                 <div className="flex items-center justify-start mt-6">
                   <Link href={"/product"} className="border border-primary py-2 px-4 md:px-8 rounded-md hover:bg-primary hover:text-white transition-all ">
-                    View More
+                    Order Now
                   </Link>
                   {/* <Button title={"Order Now"} /> */}
                 </div>
