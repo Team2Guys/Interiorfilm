@@ -49,10 +49,6 @@ const Mobiletab: React.FC<tabData> = ({className,staticConatiner,cardClass}) => 
   ;
   }, []);
 
-  console.log(categories, 
-    "categories"
-  )
-
   return (
       <Tabs className={`z-20 text-xl ${className}`} defaultActiveKey="1" onChange={(card )=>setCard(card)}>
           {

@@ -30,6 +30,7 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) =>
       swiper.navigation.update();
     }
   }, [products]);
+  
 
   return (
     loading ? <div className='flex justify-center items-center h-[20vh]'><Loader /></div> :
@@ -39,6 +40,7 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) =>
             <MdArrowBackIos size={15} />
           </button>
         </div>
+
         <Swiper
           ref={swiperRef}
           slidesPerView={1}
@@ -67,7 +69,7 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) =>
         >
           {products && products.map((product, index) => (
             <SwiperSlide key={index}>
-              <Card ProductCard={[product]} />
+              <Card ProductCard={[product]} slider={true} />
             </SwiperSlide>
           ))}
         </Swiper>

@@ -33,6 +33,8 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const getallProducts = async () => {
     try {
       if (pathname.startsWith("/product" ) || slider) return;
+      console.log('slider false')
+      
       setLoading(true);
       let response: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
       let products = response.data.products;
