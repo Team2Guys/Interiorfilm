@@ -8,7 +8,7 @@ import Image from 'next/image';
 import logo from "../../../../public/images/logo.png";
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { PiBag } from 'react-icons/pi';
-import { FaRegUser } from 'react-icons/fa';
+import { FaRegUser, FaUser } from 'react-icons/fa';
 import { RiMenuFold3Fill } from 'react-icons/ri';
 import { MdOutlineHome, } from 'react-icons/md';
 import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu';
@@ -128,6 +128,7 @@ const Header = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  
   useEffect(() => {
     const existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
     setWishlistItems(existingWishlist);
@@ -217,11 +218,11 @@ const Header = () => {
           <div className='flex justify-between flex-wrap lg:flex-nowrap gap-2 p-2 items-center'>
             <div className='flex gap-4 mx-auto md:mx-0'>
               <div className='flex gap-1 text-sm md:text-base lg:text-lg items-center '>
-                <HiOutlineDevicePhoneMobile className='text-primary' />
+                <HiOutlineDevicePhoneMobile  className='text-primary text-base md:text-2xl' />
                 <Link href="tel:+971505974495">+971 50 597 4495</Link>
               </div>
               <div className='flex gap-1 text-sm md:text-base lg:text-lg items-center '>
-                <IoMailOutline className='text-primary' />
+                <IoMailOutline  className='text-primary text-base md:text-2xl' />
                 <Link href="mailto:cs@avenue39.com">cs@avenue39.com</Link>
               </div>
             </div>
@@ -230,7 +231,7 @@ const Header = () => {
             </div>
             <div className='flex gap-2 items-center mx-auto md:mx-0'>
               <div className='flex gap-2 items-center text-sm md:text-base lg:text-lg'>
-                <CiGlobe className='text-primary' />
+                <FaUser  className='text-primary text-base md:text-2xl' />
                 {loggedInUser ? loggedInUser.fullName :
                   <p className='text-sm md:text-base'><span className='cursor-pointer' onClick={() => router.push('/login')}>Login</span>/<span className='cursor-pointer' onClick={() => router.push('/register')}>Register</span></p>
                 }

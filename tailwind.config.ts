@@ -24,6 +24,8 @@ const config: Config = {
         ...defaultTheme.screens,
       },
       colors: {
+        para:"#A4A5BF",
+        heading:"#3A393C",
         current: "currentColor",
         transparent: "transparent",
         white: "#FFFFFF",
@@ -235,6 +237,7 @@ const config: Config = {
         video: "url('../images/video/video.png')",
         'client': "url('/images/Clints.png')",
         'overlay': "url('/images/overlay.png')",
+        'Offer': "url('/images/back.png')",
       },
       content: {
         "icon-copy": 'url("../images/icon/icon-copy-alt.svg")',

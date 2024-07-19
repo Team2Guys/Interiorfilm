@@ -1,0 +1,21 @@
+import Image from 'next/image'
+import React from 'react'
+import front from "../../../public/images/front.png"
+import Link from 'next/link'
+const OfferProduct = () => {
+  return (
+    <div className='flex flex-wrap md:gap-10 md:flex-nowrap bg-Offer bg-no-repeat justify-center items-center pb-10 px-2 md:px-20 mt-20'>
+        <div className='w-full md:w-4/12'>
+            <Image className='w-full h-full  bg-no-repeat' height={400} width={400} src={front} alt='front' /> 
+        </div>
+        <div className='w-full md:w-7/12 '>
+            <p className='text-xl md:text-[56px] leading-snug font-medium text-heading mb-4 text-center md:text-justify'>Unique Colorful Of latest & Trending Products</p>
+            <div className='text-center md:text-start'>
+            <Link className='bg-primary text-white px-6 py-3 rounded-md' href={"/product"}>View All</Link>
+            </div>
+        </div>
+    </div>
+  )
+}
+
+export default OfferProduct
