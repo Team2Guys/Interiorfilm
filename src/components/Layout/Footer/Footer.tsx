@@ -2,7 +2,7 @@
 
 import React, { useState,useLayoutEffect } from 'react';
 import { Layout } from 'antd';
-import { FaFacebookF, FaTwitter, FaInstagram, FaPinterest, FaAngleDown, FaAngleUp } from 'react-icons/fa';
+import {FaAngleDown, FaAngleUp } from 'react-icons/fa';
 import Link from 'next/link';
 import logo from "../../../../public/images/logo.png";
 import Image from 'next/image';
@@ -15,6 +15,7 @@ import Container from '../Container/Container';
 import { SlEnvolopeLetter } from 'react-icons/sl';
 import Button from 'components/ui/Button/Button';
 import axios from 'axios';
+import {CategoriesType} from 'types/interfaces'
 
 const { Footer: AntFooter } = Layout;
 
@@ -22,7 +23,8 @@ const Footer: React.FC = () => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isCustomerCareOpen, setIsCustomerCareOpen] = useState(false);
   const [isPagesOpen, setIsPagesOpen] = useState(false);
-  const [category, setCategory] = useState<any[]>();
+  const [category, setCategory] = useState<CategoriesType[]>([]);
+
 ;
 
 
@@ -33,9 +35,15 @@ const Footer: React.FC = () => {
   const bottomImages = [paypal, visacard, mastercard, maestrocard];
 
   const CategoryHandler = async () => {
+try{
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+  console.log(response, "response")
+  setCategory(response.data);
+}catch(err){
+  console.log(err, "err")
 
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
-    setCategory(response.data);
+}
+
   };
   
   useLayoutEffect(() => {
@@ -85,7 +93,7 @@ const Footer: React.FC = () => {
                 </span>
               </h3>
               <ul className={`space-y-2 transition-all duration-300 overflow-hidden ${isCategoriesOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}>
-                {category && category.map((category, index) => (
+                {category?.length > 0 && category.slice(0,4).map((category, index) => (
                   <li key={index}>
                     <Link href="/product" className='hover:text-primary link-footer'>{category.name}</Link>
                   </li>

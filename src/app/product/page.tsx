@@ -26,6 +26,19 @@ interface category {
   __v: any
 }
 
+const StaticCategory = {
+  posterImageUrl: {
+    public_id: 'string',
+    imageUrl:"string"
+  },
+  _id: "all",
+  name: "View All",
+  createdAt: "string",
+  updatedAt: "string",
+  __v: "any"
+}
+
+
 const Product = () => {
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
   const [totalPage, setTotalPage] = useState<string | undefined>()
@@ -42,7 +55,7 @@ const Product = () => {
   const [activeLink, setActiveLink] = useState<category | undefined>()
   const [inStockOnly, setInStockOnly] = useState<boolean>(false)
   const [outOfStockOnly, setOutOfStockOnly] = useState<boolean>(false)
-  const [productsToShow, setProductsToShow] = useState<number>(9)
+  // const [productsToShow, setProductsToShow] = useState<number>(9)
 
   const handleInStockChange: CheckboxProps['onChange'] = (e) => {
     setInStockOnly(e.target.checked)
@@ -90,9 +103,10 @@ const Product = () => {
       const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`)
 
       const [categoryResponse, products] = await Promise.all([CategoryRequest, productRequest]);
+      let category = categoryResponse.data
       setTotalProducts(products.data.products)
       setActiveLink(categoryResponse.data[0])
-      setCategory(categoryResponse.data)
+      setCategory([StaticCategory,...category])
     } catch (err) {
       console.log(err, "err")
     } finally {
@@ -123,7 +137,14 @@ const Product = () => {
     setPriceRange({ from: '', to: '' })
   }
 
-  const filteredProductsByCategory = activeLink ? totalProducts.filter(product => product.category === activeLink._id) : totalProducts;
+  const filteredProductsByCategory = activeLink ? totalProducts.filter(product => {
+    if(activeLink._id ==="all") {
+      return product;
+    }
+
+   return product.category === activeLink._id}) : totalProducts;
+
+  console.log()
   const filteredProducts = filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
     if (!product) return true; // Keep the product if it's null
 
@@ -151,12 +172,12 @@ const Product = () => {
 
   const handleCategoryClick = (categoryName: category) => {
     setActiveLink(categoryName)
-    setProductsToShow(9); // Reset productsToShow when category changes
+    // setProductsToShow(9); // Reset productsToShow when category changes
   }
 
-  const loadMoreProducts = () => {
-    setProductsToShow(prevCount => prevCount + 9)
-  }
+  // const loadMoreProducts = () => {
+  //   setProductsToShow(prevCount => prevCount + 9)
+  // }
 
   return (
     <>
@@ -241,7 +262,7 @@ const Product = () => {
             width={300}
             title={
               <>
-                <div className="flex md:hidden mt-5 underline gap-2 items-center">
+                <div className="flex md:hidden mt-5 underline gap-2 items-center cursor-pointer">
                   <IoFunnelOutline size={20} />
                   Filters{" "}
                 </div>
@@ -303,19 +324,19 @@ const Product = () => {
                   <div className="flex justify-center items-center h-2/3"><Loader /></div>
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                    <Card ProductCard={sortedProducts.slice(0, productsToShow)} />
+                    <Card ProductCard={sortedProducts} />
                   </div>
                 )}
               </>
             )}
-            {productsToShow < sortedProducts.length && (
+            {/* {productsToShow < sortedProducts.length && (
               <button
                 className='px-5 py-2 bg-primary text-white rounded-md flex items-center mx-auto'
                 onClick={loadMoreProducts}
               >
                 Load More
               </button>
-            )}
+            )} */}
           </div>
         </div>
       </Container>

@@ -1,5 +1,5 @@
 "use client"
-import React,{useEffect, useLayoutEffect, useState} from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { Tabs } from 'antd';
 import TabsData from "components/widgets/TabsData/TabsData";
 
@@ -15,7 +15,7 @@ interface TabData {
 interface TabDataProps{
   className?: string;
   staticConatiner?: string;
-  cardClass?:string;
+  cardClass?: string;
 }
 
 
@@ -44,7 +44,7 @@ const Mobiletab: React.FC<TabDataProps> = ({className,staticConatiner,cardClass}
   }, []);
 
   return (
-      <Tabs className={`z-20 text-xl ${className}`} defaultActiveKey="1" onChange={(card )=>setCard(card)}>
+      <Tabs className={`z-20 text-xl p-1 ${className}`} defaultActiveKey="1" onChange={(card )=>setCard(card)}>
           {
             categories.map((category, index)=>{
               return (
@@ -56,7 +56,7 @@ const Mobiletab: React.FC<TabDataProps> = ({className,staticConatiner,cardClass}
           }
 
 
-      </Tabs>
+    </Tabs>
   );
 };
 

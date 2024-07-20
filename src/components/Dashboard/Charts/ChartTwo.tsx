@@ -99,6 +99,7 @@ const ChartTwo: React.FC = () => {
       });
 
       let reports = response.data.WeeklyRecord;
+
       const keys = ["Revenue", "Sales"];
       let chartColors = [...baseColorArray];
 
@@ -111,8 +112,9 @@ const ChartTwo: React.FC = () => {
         let nameFlag = item.name === 'Sales' ? "totalProductCount" : item.name === 'Profit' ? "totalProfit" : "totalRevenue";
 
         // Only include "Profit" if AdminType is true
+  
         if (item.name === 'Profit' && !AdminType) {
-          return null; // Skip this item
+          return null;
         } else {
           return {
             name: item.name,
