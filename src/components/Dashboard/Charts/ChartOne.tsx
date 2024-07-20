@@ -5,14 +5,14 @@ import ReactApexChart from "react-apexcharts";
 import Cookies from 'js-cookie';
 import axios from "axios";
 import { useAppSelector } from "components/Others/HelperRedux";
-
+import { Skeleton } from "antd";
 
 const getMonthNamesUpToCurrent = () => {
   const monthNames = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   ];
-  
+
   const today = new Date();
   const currentMonth = today.getMonth(); // 0-based index (0 = January)
 
@@ -20,7 +20,7 @@ const getMonthNamesUpToCurrent = () => {
   return monthNames.slice(0, currentMonth + 1);
 };
 
-let baseColorArray =  ["#80CAEE", "#3C50E0",]
+let baseColorArray = ["#80CAEE", "#3C50E0"];
 const options: ApexOptions = {
   legend: {
     show: false,
@@ -40,7 +40,6 @@ const options: ApexOptions = {
       left: 0,
       opacity: 0.1,
     },
-
     toolbar: {
       show: false,
     },
@@ -67,10 +66,6 @@ const options: ApexOptions = {
     width: [2, 2],
     curve: "straight",
   },
-  // labels: {
-  //   show: false,
-  //   position: "top",
-  // },
   grid: {
     xaxis: {
       lines: {
@@ -131,71 +126,53 @@ interface ChartOneState {
 const ChartOne: React.FC = () => {
   const { loggedInUser }: any = useAppSelector(state => state.usersSlice);
 
-  let AdminType= loggedInUser && loggedInUser.role =="super-Admin"
+  let AdminType = loggedInUser && loggedInUser.role === "super-Admin";
   const [state, setState] = useState<ChartOneState | undefined>();
+  const [loading, setLoading] = useState(true); // Added loading state
 
-  const handleReset = () => {
-    setState((prevState): ChartOneState => {
-        if (prevState) {
-            return { ...prevState };
-        } else {
-            return { series: [] }; // Return an empty object or default state
+  const getMonthlyRecord = async () => {
+    try {
+      const token = Cookies.get('2guysAdminToken');
+      const superAdmintoken = Cookies.get('superAdminToken');
+      const finalToken = token ? token : superAdmintoken;
+
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/getMonthlySales`, {
+        headers: {
+          "token": finalToken
         }
-    });
-};
+      });
 
-  // handleReset;
+      const reports = response.data;
 
-interface PRODUCTTYPE {
-name:string, 
-data:number[]
-}
-  
-const getMonthlyRecord = async () => {
-  try {
-    const token = Cookies.get('2guysAdminToken');
-    const superAdmintoken = Cookies.get('superAdminToken');
-    const finalToken = token ? token : superAdmintoken;
+      let chartColors = [...baseColorArray];
+      console.log(reports);
 
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/getMonthlySales`, {
-      headers: {
-        "token": finalToken
+      const keys = ["Revenue", "Sales"];
+      if (AdminType) {
+        keys.unshift("Profit");
+        chartColors.unshift("#336699");
       }
-    });
 
-    const reports = response.data;
-  
-    let chartColors = [...baseColorArray];
-    console.log(reports);
+      const defaultArray = keys.map(key => {
+        return {
+          name: key,
+          data: reports.map((report: any) => report[key] || 0)
+        };
+      });
 
-    const keys = ["Revenue","Sales"];
-    if (AdminType) {
-      keys.unshift("Profit");
-      chartColors.unshift("#336699")
+      options.colors = chartColors;
 
-  }
+      setState({ series: defaultArray });
+    } catch (err) {
+      console.error("Error fetching monthly record:", err);
+    } finally {
+      setLoading(false); // Set loading to false after data is fetched
+    }
+  };
 
-    const defaultArray = keys.map(key => {
-      return {
-        name: key,
-        data: reports.map((report:any) => report[key] || 0) 
-      };
-    });
-
-    options.colors = chartColors;
-
-    setState({ series: defaultArray });
-  } catch (err) {
-    console.error("Error fetching monthly record:", err);
-  }
-};
-
-
-
-
-useLayoutEffect(()=>{
-  getMonthlyRecord()
-},[])
+  useLayoutEffect(() => {
+    getMonthlyRecord();
+  }, []);
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
@@ -220,7 +197,6 @@ useLayoutEffect(()=>{
         </div>
         <div className="flex w-full max-w-45 justify-end">
           <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">
-      
             <button className="rounded px-3 py-1 text-xs font-medium text-black hover:bg-white hover:shadow-card dark:text-white dark:hover:bg-boxdark">
               Month
             </button>
@@ -230,17 +206,19 @@ useLayoutEffect(()=>{
 
       <div>
         <div id="chartOne" className="-ml-5">
-
-          {state && 
-          <ReactApexChart
-            options={options}
-            series={state.series}
-            type="area"
-            height={350}
-            width={"100%"}
-          />
-          
-          }
+          {loading ? (
+            <Skeleton active />
+          ) : (
+            state && (
+              <ReactApexChart
+                options={options}
+                series={state.series}
+                type="area"
+                height={350}
+                width={"100%"}
+              />
+            )
+          )}
         </div>
       </div>
     </div>

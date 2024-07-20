@@ -48,7 +48,7 @@ const Mobiletab: React.FC<TabDataProps> = ({className,staticConatiner,cardClass}
           {
             categories.map((category, index)=>{
               return (
-                <TabPane   className='z-20' tab={category.name} key={index}  >
+                <TabPane className='z-20 discover' tab={category.name} key={index}  >
                 <TabsData cardClass={cardClass} staticConatiner={staticConatiner} category={category._id} carDetail={Card} loading={loading}/>
               </TabPane>
               )

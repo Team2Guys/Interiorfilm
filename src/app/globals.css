@@ -121,15 +121,8 @@
     width: 900px;
   }
 }
-.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
-  color:white !important;
-}
-.ant-tabs .ant-tabs-tab:hover{
-  color:black !important;
-}
-.ant-tabs .ant-tabs-ink-bar{
-  background: none !important;
-}
+
+
 
 .back-transparent{
   background: transparent !important;
@@ -141,47 +134,7 @@
   height: 30px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
 }
-.ant-tabs .ant-tabs-tab{
-  color: black !important;
-  padding: 4px 10px 4px 10px !important;
-  border: 1px solid #C72031 !important;
-  border-radius: 4px !important;
-  transition: none !important;
-  transition-duration: none !important;
-}
-.ant-tabs .ant-tabs-tab:hover{
-  color: black !important;
-  background: #C72031 !important;
-  transition: none !important;
-  transition-duration: none !important;
-  
-}
-.ant-tabs .ant-tabs-tab-active{
-  color: black !important;
-  background: #C72031 !important;
-  
-}
-.ant-tabs .ant-tabs-tab-btn:focus:not(:focus-visible), .ant-tabs .ant-tabs-tab-remove:focus:not(:focus-visible), .ant-tabs .ant-tabs-tab-btn:active, .ant-tabs .ant-tabs-tab-remove:active{
-  color: black !important;
-}
-.color-black.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
-  color:white !important;
-  border-bottom: #C72031 !important;
-  background: #C72031 !important;
 
-}
-
-.color-black.ant-tabs .ant-tabs-tab:hover{
-  color:white !important;
-  border-bottom: #C72031 !important
-}
-.ant-tabs-top >.ant-tabs-nav::before, .ant-tabs-bottom >.ant-tabs-nav::before, .ant-tabs-top >div>.ant-tabs-nav::before, .ant-tabs-bottom >div>.ant-tabs-nav::before{
-  position: absolute; 
-    right: 0;
-    left: 0;
-    border-bottom: 0px solid #ffffff !important;
-    content: '';
-}
 
 
 
@@ -297,3 +250,65 @@
 .swiper-pagination::-webkit-scrollbar-thumb:hover {
   background: transparent;
 }
+
+/* .discover */
+
+
+.ant-tabs .ant-tabs-tab:hover{
+  color: white !important;
+  background-color: #C72031 !important;
+  padding: 8px 10px 8px 10px !important;
+  border-radius: 4px !important;
+}
+.ant-tabs .ant-tabs-tab{
+  border: 1px solid #C72031 !important;
+  background-color: transparent !important;
+  color: black !important;
+  padding: 8px 10px 8px 10px !important;
+  border-radius: 4px !important;
+}
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active {
+  color: white !important;
+  background-color: #C72031 !important;
+  
+}
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+  color: white !important;
+}
+.ant-tabs .ant-tabs-ink-bar{
+  background-color: transparent !important;
+  border: none !important;
+}
+.ant-tabs-top >.ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-bottom >.ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-top >div>.ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-bottom >div>.ant-tabs-nav .ant-tabs-ink-bar {
+  height: 0px !important;
+}
+.ant-tabs .ant-tabs-tab-btn:focus:not(:focus-visible), .ant-tabs .ant-tabs-tab-remove:focus:not(:focus-visible), .ant-tabs .ant-tabs-tab-btn:active, .ant-tabs .ant-tabs-tab-remove:active{
+  color: #ffffff  !important;
+}
+.ant-tabs .ant-tabs-tab-btn {
+  outline: none;
+  transition: none !important;
+}
+/* 
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+  color: white !important;
+  background-color: #C72031 !important;
+  padding: 8px 10px 8px 10px !important;
+  border-radius: 4px !important;
+
+}
+.ant-tabs .ant-tabs-ink-bar{
+  display: hidden !important;
+  background-color: white !important;
+}
+.ant-tabs .ant-tabs-tab:hover{
+  color: black !important;
+  transition: none !important;
+  transform: none !important;
+
+}
+
+.ant-tabs >.ant-tabs-nav .ant-tabs-nav-list, .ant-tabs >div>.ant-tabs-nav .ant-tabs-nav-list{
+ transition: none !important;
+ transform: none !important;
+} */
