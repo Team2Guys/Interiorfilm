@@ -12,41 +12,35 @@ interface TabData {
   content: any;
 }
 
-interface tabData{
+interface TabDataProps{
   className?: string;
   staticConatiner?: string;
   cardClass?:string;
 }
 
 
-const Mobiletab: React.FC<tabData> = ({className,staticConatiner,cardClass}) => {
+const Mobiletab: React.FC<TabDataProps> = ({className,staticConatiner,cardClass}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [categories, setCategories] = useState<any[]>([]);
   const [Card, setCard] = useState<string>("card 0");
-  
 
   useLayoutEffect(() => {
     const CategoryHandler = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
         );
         const Categories = await response.json();
         setCategories(Categories);
-        setLoading(false)
-  
+        setLoading(false);
       } catch (err) {
-        console.log('err', err)
-        setLoading(false)
-  
-  
+        console.log('err', err);
+        setLoading(false);
       }
-  
     };
-  
+
     CategoryHandler();
-  ;
   }, []);
 
   return (
@@ -55,7 +49,7 @@ const Mobiletab: React.FC<tabData> = ({className,staticConatiner,cardClass}) => 
             categories.map((category, index)=>{
               return (
                 <TabPane   className='z-20' tab={category.name} key={index}  >
-                <TabsData cardClass={cardClass} staticConatiner={staticConatiner} category={category._id} carDetail={Card}/>
+                <TabsData cardClass={cardClass} staticConatiner={staticConatiner} category={category._id} carDetail={Card} loading={loading}/>
               </TabPane>
               )
             })

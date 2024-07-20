@@ -249,20 +249,51 @@
 .swiper{
   width: 100% !important;
 }
-
-
 .swiper-pagination-bullet {
   width: 30px !important;
   height: 20px;
   border-radius: 4px !important;
   text-align: center;
   line-height: 20px;
-  font-size: 0px !important; 
+  font-size: 0px !important;
   opacity: 1 !important;
   background: #d6d6d6 !important;
+  margin-right: 5px;
 }
 
 .swiper-pagination-bullet-active {
   color: #fff !important;
   background: #C72031 !important;
+}
+
+.swiper-pagination {
+  position: absolute !important;
+  top: 100% ; /* Adjust this to position the pagination below the slider */
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  max-width: 300px !important;
+  margin: 0 auto;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+
+
+.swiper-pagination::-webkit-scrollbar {
+  width: 0px;
+}
+
+.swiper-pagination::-webkit-scrollbar-track {
+  background: f1f1f1;
+  border-radius: 0px;
+}
+
+.swiper-pagination::-webkit-scrollbar-thumb {
+  
+  border-radius: 1px;
+  border: 0px solid transparent; 
+}
+
+.swiper-pagination::-webkit-scrollbar-thumb:hover {
+  background: transparent;
 }

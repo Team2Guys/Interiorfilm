@@ -30,16 +30,14 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
   return (
     <div className="w-full mx-auto">
       <Swiper
-       
-       
         loop={true}
         pagination={pagination}
-        modules={[Pagination]}
-        className="mySwiper"
+        modules={[Pagination]}                                                       
+        className="mySwiper "
       >
         {slides.map((slide, index) => (
-          <SwiperSlide key={index}>
-            <div className="relative lg:h-[60vh] h-96 flex items-center justify-start">
+          <SwiperSlide className='' key={index}>
+            <div className="relative lg:h-[60vh] h-96 flex items-center justify-start z-10">
               <Image
                 src={slide.image}
                 alt="Interior Film"
@@ -57,7 +55,6 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
                   <Link href={"/product"} className="border border-primary py-2 px-4 md:px-8 rounded-md hover:bg-primary hover:text-white transition-all ">
                     Order Now
                   </Link>
-                  {/* <Button title={"Order Now"} /> */}
                 </div>
               </div>
             </div>

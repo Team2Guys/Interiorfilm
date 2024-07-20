@@ -188,8 +188,8 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
-      <div className={`relative group ${cardClass}`} key={index}>
-        <div className="space-y-3 absolute top-6 right-4 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0  overflow-hidden transition ease-in-out duration-400 hidden md:block">
+      <div className={`relative group  ${cardClass}`} key={index}>
+        <div className="space-y-3  absolute top-6 right-4 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0  overflow-hidden transition ease-in-out duration-400 hidden md:block">
           <button onClick={() => handleAddToCart(product)}
             className="flex justify-center items-center z-10"
           >
@@ -201,14 +201,15 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
             <GoHeart className="p-2 rounded-full bg-white hover:bg-primary text-primary hover:text-white" size={40} />
           </button>
         </div>
+        
         <div
           className="cursor-pointer custom-shadow transition-all my-3 bg-white"
           onClick={() => router.push(`/detail/${generateSlug(product.name)}`)}
         >
-          <div className='absolute z-10 left-22 bottom-32 translate-y-14 opacity-0 group-hover:translate-y-0  group-hover:opacity-100 transition ease-in-out duration-400 '>
-            <button className=' bg-white z-10 px-4 py-2 '>Order Now</button>
-          </div>
           <div className="  text-center">
+          <div className='absolute top-60 translate-y-20 z-10 w-full flex justify-center  opacity-0 group-hover:translate-y-0  group-hover:opacity-100 transition ease-in-out duration-400 '>
+            <button className=' bg-white z-10 px-4 py-1 '>Order Now</button>
+          </div>
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
               <Image
                 className="bg-contain h-32 w-full md:h-72"
@@ -252,30 +253,24 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
         ProductCard.map(renderProduct)
       ) : (
 
-        (productsToRender.length > 0) ? productsToRender.map(renderProduct) : !loading ? <div className='flex justify-center'>No Product Found</div> : <div className='flex justify-center'>  
-        
-    <Loader/>    
-        {/* <div className="flex items-center justify-center gap-5  md:flex-wrap">
-    
-        {Array.from({ length: 2 }).map((_, index) => (
+        (productsToRender.length > 0) ? productsToRender.map(renderProduct) : !loading ? <div className='flex justify-center'>No Product Found</div> : <>  
       
-            <div key={index} className='w-[20%] min-w-[200px] '>
-              <SkeletonLoading 
-                avatar={{ shape: 'square', size: 200 }} 
-                title={false} 
-                paragraph={{ rows: 3}}  
-                style={{ display: 'flex', flexDirection: 'column', gap: '10px', }} 
-                className='w-full'
-                active	={true}
-              />
-            </div>
-        ))}
-      </div> */}
+        {Array.from({ length: 4 }).map((_, index) => (
+      
+              <div key={index}>
+                <SkeletonLoading 
+                  avatar={{ shape: 'square', size: 250 }} 
+                  title={false} 
+                  paragraph={{ rows: 3}}  
+                  style={{ display: 'flex', flexDirection: 'column', gap: '10px', }} 
+                  className='w-full'
+                  active={true}
+                />
+              </div>
+          ))}
 
-  
 
-
-      </div>
+      </>
   
       )}
     </>
