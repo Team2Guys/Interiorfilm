@@ -36,7 +36,7 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) =>
   const pagination = {
     clickable: true,
     renderBullet: function (index:any, className:any) {
-      return '<span class="' + className + '">' + (index + 1) + '</span>';
+      return '<span class=" custom-pag ' + className + '">' + (index + 1) + '</span>';
     },
   };
 
@@ -65,12 +65,7 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) =>
 
 
   return (
-      <div className="flex items-center justify-center w-full">
-        <div className='w-1/12 hidden md:block'>
-          {/* <button ref={prevRef} className='p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
-            <MdArrowBackIos size={15} />
-          </button> */}
-        </div>
+    <>
 
         <Swiper
           ref={swiperRef}
@@ -86,7 +81,7 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) =>
               spaceBetween: 20,
             },
             640: {
-              slidesPerView: 2,
+              slidesPerView: 2.5,
               spaceBetween: 20,
             },
             768: {
@@ -94,29 +89,25 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) =>
               spaceBetween: 10,
             },
             1024: {
-              slidesPerView: 3.5,
+              slidesPerView: 3.9,
               spaceBetween: 20,
             },
           }}
           
           modules={[Navigation, Pagination]}
           pagination={pagination}
-          className="mySwiper"
+          className="mySwiper custom"
          
         >
           {products && products.map((product, index) => (
-            <SwiperSlide key={index} className='mb-10'>
+            <SwiperSlide key={index} className='mb-10 custom'>
               <Card ProductCard={[product]} slider={true} />
 
             </SwiperSlide>
           ))}
         </Swiper>
-        {/* <div className='w-1/12 hidden md:block'>
-          <button ref={nextRef} className='p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
-            <MdArrowForwardIos size={15} />
-          </button>
-        </div> */}
-      </div>
+  
+      </>
   );
 };
 

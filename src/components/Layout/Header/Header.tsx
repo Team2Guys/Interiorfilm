@@ -313,7 +313,7 @@ const Header = () => {
                       open={category}
                         title={"product"}
                         content={<>
-                          <Mobiletab staticConatiner='hidden bg-white p-2'  cardClass='p-2 rounded-md bg-white' className='color-white' />
+                          <Mobiletab staticConatiner='hidden bg-white'  cardClass=' rounded-md bg-white' className='color-white' />
                         </>}
                       /></li>
                   <li><Link className='text-base font-semibold text-black hover:text-black ' onClick={onClose} href="/about">About Us</Link></li>
@@ -345,11 +345,6 @@ const Header = () => {
                 }
               </Link>
 
-              {/* <Link className='text-base lg:text-lg' href="/profile"><FaRegUser size={25} className='text-primary' /></Link> */}
-
-
-      
-            
             {loggedInUser  ?
             <Profile/>
             :
@@ -400,9 +395,6 @@ const Header = () => {
             }
           </Link>
 
-         
-
-            :
 
             <Link className='text-base lg:text-lg' href="/profile">
             
