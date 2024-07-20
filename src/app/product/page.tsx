@@ -206,8 +206,8 @@ const Product = () => {
           />
         </div>
 
-        <div className="flex flex-wrap md:flex-nowrap gap-10">
-          <div className="w-full md:w-3/12 space-y-3 hidden md:block relative">
+        <div className="flex flex-wrap lg:flex-nowrap gap-2 space-y-4">
+          <div className="w-full lg:w-3/12 space-y-3 hidden lg:block relative">
             <div className="sticky top-20">
               <div className="p-2 bg-secondary">
                 <Collapse title="All Categories">
@@ -262,7 +262,7 @@ const Product = () => {
             width={300}
             title={
               <>
-                <div className="flex md:hidden mt-5 underline gap-2 items-center cursor-pointer">
+                <div className="flex lg:hidden mt-5 underline gap-2 items-center cursor-pointer">
                   <IoFunnelOutline size={20} />
                   Filters{" "}
                 </div>
@@ -315,7 +315,7 @@ const Product = () => {
               </div>
             }
           />
-          <div className="w-full md:w-9/12">
+          <div className="w-full lg:w-9/12">
             {error ? (
               <div className="text-red flex justify-center items-center">{error}</div>
             ) : (
@@ -323,7 +323,7 @@ const Product = () => {
                 {loading ? (
                   <div className="flex justify-center items-center h-2/3"><Loader /></div>
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-2">
                     <Card ProductCard={sortedProducts} />
                   </div>
                 )}
