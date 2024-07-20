@@ -188,7 +188,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
-      <div className={`relative group  ${cardClass}`} key={index}>
+      <div className={`relative group mb-5 ${cardClass}`} key={index}>
         <div className="space-y-3  absolute top-6 right-4 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0  overflow-hidden transition ease-in-out duration-400 hidden md:block">
           <button onClick={() => handleAddToCart(product)}
             className="flex justify-center items-center z-10"
@@ -203,11 +203,11 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
         </div>
         
         <div
-          className="cursor-pointer custom-shadow transition-all my-3 bg-white"
+          className="cursor-pointer custom-shadow transition-all m-1 bg-white"
           onClick={() => router.push(`/detail/${generateSlug(product.name)}`)}
         >
           <div className="  text-center">
-          <div className='absolute top-60 translate-y-20 z-10 w-full flex justify-center  opacity-0 group-hover:translate-y-0  group-hover:opacity-100 transition ease-in-out duration-400 '>
+          <div className='absolute top-60 hidden mk translate-y-20 z-10 w-full md:flex justify-center  opacity-0 group-hover:translate-y-0  group-hover:opacity-100 transition ease-in-out duration-400 '>
             <button className=' bg-white z-10 px-4 py-1 '>Order Now</button>
           </div>
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
@@ -221,7 +221,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
             )}
 
           </div>
-          <div className="text-center space-y-1 pt-3 pb-5 group-hover:bg-primary">
+          <div className="text-center space-y-1 pt-3 pb-5 p-1 group-hover:bg-primary">
             <h1 className="lg:text-lg text-sm text-center text-dark group-hover:text-white  font-semibold">
               Code : <span>{product.name}</span>
             </h1>
@@ -257,7 +257,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       
         {Array.from({ length: 4 }).map((_, index) => (
       
-              <div key={index}>
+              <div key={index} className='gap-4'>
                 <SkeletonLoading 
                   avatar={{ shape: 'square', size: 250 }} 
                   title={false} 

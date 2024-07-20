@@ -271,7 +271,7 @@
   top: 100% ; /* Adjust this to position the pagination below the slider */
   left: 50% !important;
   transform: translateX(-50%) !important;
-  max-width: 300px !important;
+  max-width: 200px !important;
   margin: 0 auto;
   overflow-x: auto;
   white-space: nowrap;

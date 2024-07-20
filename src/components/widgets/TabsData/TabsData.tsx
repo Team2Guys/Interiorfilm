@@ -8,7 +8,7 @@ import Card from 'components/ui/Card/Card'
 const TabsData = ({category,carDetail,staticConatiner,cardClass}:any) => {
   return (
     <>
-        <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center gap-2 md:gap-4 mt-10 '>
+        <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-4 mt-10 '>
         <div className={`md:col-span-2 bg-secondary p-2 w-full ${staticConatiner}`}>
             
             <div className='flex justify-center items-center text-heading'>

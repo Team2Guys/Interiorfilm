@@ -62,7 +62,7 @@ export default function Home() {
   return (
     <>
       <HeroSlider />
-      <h1 className="lg:text-[55px] md:text-3xl text-lg font- md:font-black text-center mt-20 text-heading">
+      <h1 className="lg:text-[55px] md:text-3xl text-xl font-bold md:font-black text-center mt-20 text-heading">
         Discover Our Product Ranges
       </h1>
       <Container className="mt-10">

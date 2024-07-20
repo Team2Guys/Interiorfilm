@@ -81,7 +81,7 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) =>
               spaceBetween: 20,
             },
             640: {
-              slidesPerView: 2,
+              slidesPerView: 2.5,
               spaceBetween: 20,
             },
             768: {
