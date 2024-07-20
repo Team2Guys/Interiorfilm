@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Image from "next/image";
-import { Rate, message } from "antd";
+import { Modal, Rate, message } from "antd";
 import { LuShoppingCart } from "react-icons/lu";
 import { GoHeart } from "react-icons/go";
 import { usePathname, useRouter } from "next/navigation";
@@ -10,6 +10,7 @@ import axios from 'axios';
 import { generateSlug } from 'data/Data';
 import Loader from 'components/Loader/Loader';
 import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading';
+import { FiZoomIn } from 'react-icons/fi';
 
 interface CardProps {
   ProductCard?: PRODUCTS_TYPES[];
@@ -26,6 +27,19 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [count, setCount] = useState<any>(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const pathname = usePathname();
 
@@ -189,61 +203,58 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
       <div className={`relative group mb-5 ${cardClass}`} key={index}>
-        <div className="space-y-3  absolute top-6 right-4 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0  overflow-hidden transition ease-in-out duration-400 hidden md:block">
-          <button onClick={() => handleAddToCart(product)}
-            className="flex justify-center items-center z-10"
-          >
-            <LuShoppingCart className="p-2 rounded-full bg-white hover:bg-primary text-primary hover:text-white" size={40} />
-          </button>
-          <button onClick={() => handleAddToWishlist(product)}
-            className="flex justify-center items-center z-10"
-          >
-            <GoHeart className="p-2 rounded-full bg-white hover:bg-primary text-primary hover:text-white" size={40} />
-          </button>
+      <div className="space-y-3 absolute top-6 right-4 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 overflow-hidden transition ease-in-out duration-400 hidden md:block">
+        <button onClick={() => handleAddToCart(product)} className="flex justify-center items-center z-10">
+          <LuShoppingCart className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />
+        </button>
+        <button onClick={() => handleAddToWishlist(product)} className="flex justify-center items-center z-10">
+          <GoHeart className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />
+        </button>
+        <button onClick={showModal} className="flex justify-center items-center z-10">
+          <FiZoomIn className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />
+        </button>
+      </div>
+      
+      <div className="cursor-pointer custom-shadow transition-all m-1 bg-white" onClick={() => router.push(`/detail/${generateSlug(product.name)}`)}>
+        <div className="text-center">
+          <div className='absolute top-60 hidden mk translate-y-20 z-10 w-full md:flex justify-center opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition ease-in-out duration-400'>
+            <button className='bg-white z-10 px-4 py-1'>Order Now</button>
+          </div>
+          {product.posterImageUrl && product.posterImageUrl.imageUrl && (
+            <Image className="bg-contain h-32 w-full md:h-72" width={300} height={300} src={product.posterImageUrl.imageUrl} alt="Image" />
+          )}
         </div>
-        
-        <div
-          className="cursor-pointer custom-shadow transition-all m-1 bg-white"
-          onClick={() => router.push(`/detail/${generateSlug(product.name)}`)}
-        >
-          <div className="  text-center">
-          <div className='absolute top-60 hidden mk translate-y-20 z-10 w-full md:flex justify-center  opacity-0 group-hover:translate-y-0  group-hover:opacity-100 transition ease-in-out duration-400 '>
-            <button className=' bg-white z-10 px-4 py-1 '>Order Now</button>
-          </div>
-            {product.posterImageUrl && product.posterImageUrl.imageUrl && (
-              <Image
-                className="bg-contain h-32 w-full md:h-72"
-                width={300}
-                height={300}
-                src={product.posterImageUrl.imageUrl}
-                alt="Image"
-              />
-            )}
-
-          </div>
-          <div className="text-center space-y-1 pt-3 pb-5 p-1 group-hover:bg-primary">
-            <h1 className="lg:text-lg text-sm text-center text-dark group-hover:text-white  font-semibold">
-              Code : <span>{product.name}</span>
-            </h1>
-            <div className="flex gap-2 justify-center text-sm py-1 mt-0">
-              <p className="text-primary group-hover:text-white  font-bold">
-                Dhs. <span>{product.discountPrice ? product.discountPrice : product.salePrice}</span>.00
+        <div className="text-center space-y-1 pt-3 pb-5 p-1 group-hover:bg-primary">
+          <h1 className="lg:text-lg text-sm text-center text-dark group-hover:text-white font-semibold">
+            Code : <span>{product.name}</span>
+          </h1>
+          <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
+            <p className="text-primary group-hover:text-white font-bold">
+              Dhs. <span className=''>{product.discountPrice ? product.discountPrice : product.salePrice}</span>.00
+            </p>
+            {product.discountPrice && (
+              <p className="line-through text-para group-hover:text-white text-xs font-extrabold">
+                Dhs.<span>{product.salePrice}</span>.00
               </p>
-              {product.discountPrice && (
-                <p className="line-through group-hover:text-white">
-                  Dhs. <span>{product.salePrice}</span>.00
-                </p>
-              )}
-            </div>
-            {product.starRating !== undefined && (
-              <div className="flex gap-1 justify-center">
-                <Rate className="text-sm gap-0" disabled allowHalf defaultValue={Number(product.starRating)} />
-                <p className='text-sm group-hover:text-white'>( ({product.reviews}) )</p>
-              </div>
             )}
           </div>
+          {product.starRating && (
+            <div className="flex gap-1 justify-center">
+              <Rate className="text-sm gap-0" disabled allowHalf defaultValue={Number(product.starRating)} />
+              <p className='text-sm group-hover:text-white'>( ({product.reviews}) )</p>
+            </div>
+          )}
         </div>
       </div>
+
+      <Modal title={<h1 className="lg:text-xl text-sm text-dark group-hover:text-white font-bold">
+            Code : <span>{product.name}</span>
+          </h1>} open={isModalOpen}  width={700} onOk={handleOk} onCancel={handleCancel} footer={""}>
+        {product.posterImageUrl && product.posterImageUrl.imageUrl && (
+          <Image className='mt-5 object-contain w-full h-full' width={1000} height={1000} src={product.posterImageUrl.imageUrl} alt="Image" />
+        )}
+      </Modal>
+    </div>
     );
   };
 

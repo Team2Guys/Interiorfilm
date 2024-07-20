@@ -251,10 +251,10 @@
 }
 .swiper-pagination-bullet {
   width: 30px !important;
-  height: 20px;
+  height: 7px !important;
   border-radius: 4px !important;
   text-align: center;
-  line-height: 20px;
+  line-height: 25px;
   font-size: 0px !important;
   opacity: 1 !important;
   background: #d6d6d6 !important;
