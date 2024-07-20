@@ -19,7 +19,7 @@ const Settings = () => {
   const { loggedInUser }: any = useAppSelector(state => state.usersSlice);
   const token = Cookies.get('2guysAdminToken');
   const dispatch = useAppDispatch();
-  let AdminType= loggedInUser && loggedInUser.role =="super-Admin"
+  let AdminType = loggedInUser && loggedInUser.role == "super-Admin"
 
   const initialFormData = {
     fullname: loggedInUser ? `${loggedInUser.fullname}` : "",
@@ -56,12 +56,12 @@ const Settings = () => {
         let { fullname, profilePhoto, ...extractedData } = loggedInUser;
         console.log(extractedData, "extractedData");
 
-if(profilePhoto.length > 0){
-  initialFormData ={
-    ...initialFormData,
-    profilePhoto: profilePhoto[0]
-  }
-}
+        if (profilePhoto.length > 0) {
+          initialFormData = {
+            ...initialFormData,
+            profilePhoto: profilePhoto[0]
+          }
+        }
 
         let combinedData = {
           ...initialFormData,
@@ -129,7 +129,7 @@ if(profilePhoto.length > 0){
   useEffect(() => {
     if (loggedInUser && loggedInUser.profilePhoto) {
       console.log(loggedInUser.profilePhoto, "loggedInUser.profilePhoto")
-      Object.keys(loggedInUser.profilePhoto).length > 0 ? setProfilePhoto([loggedInUser.profilePhoto]) :null
+      Object.keys(loggedInUser.profilePhoto).length > 0 ? setProfilePhoto([loggedInUser.profilePhoto]) : null
     }
   }, [loggedInUser]);
 
@@ -139,7 +139,7 @@ if(profilePhoto.length > 0){
       <div className="mx-auto max-w-270">
         <Breadcrumb pageName="Settings" />
         <div className="flex flex-col gap-8">
-        <div className="col-span-5 xl:col-span-2">
+          <div className="col-span-5 xl:col-span-2">
             <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
               <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
                 <h3 className="font-medium text-black dark:text-white">
@@ -150,42 +150,42 @@ if(profilePhoto.length > 0){
                 <div>
                   <div className="mb-4 flex items-center gap-3">
 
-                  {
-                  profilePhoto.map((profilePhoto) => {
-                    return (
-                      <>
+                    {
+                      profilePhoto.map((profilePhoto) => {
+                        return (
+                          <>
 
-                        <div className="h-14 w-14 rounded-full overflow-hidden">
-                          <Image
-                            src={(profilePhoto && profilePhoto.imageUrl) ? profilePhoto.imageUrl : '/images/dummy-avatar.jpg'}
-                            width={55}
-                            height={55}
-                            alt="User"
-                          />
-                        </div>
+                            <div className="h-14 w-14 rounded-full overflow-hidden">
+                              <Image
+                                src={(profilePhoto && profilePhoto.imageUrl) ? profilePhoto.imageUrl : '/images/dummy-avatar.jpg'}
+                                width={55}
+                                height={55}
+                                alt="User"
+                              />
+                            </div>
 
 
-                        <div>
-                          <span className="mb-1.5 text-black dark:text-white">
-                            Edit your photo
-                          </span>
-                          <span className="flex gap-2.5">
-                            <button className="text-sm hover:text-primary text-black dark:text-white" type="button" onClick={() => ImageRemoveHandler(profilePhoto?.public_id ? profilePhoto?.public_id : '', setProfilePhoto)}>
-                              Delete
-                            </button>
-                            <button className="text-sm hover:text-primary text-black dark:text-white" type="button" >
-                              Update
-                            </button>
-                          </span>
-                        </div>
+                            <div>
+                              <span className="mb-1.5 text-black dark:text-white">
+                                Edit your photo
+                              </span>
+                              <span className="flex gap-2.5">
+                                <button className="text-sm hover:text-primary text-black dark:text-white" type="button" onClick={() => ImageRemoveHandler(profilePhoto?.public_id ? profilePhoto?.public_id : '', setProfilePhoto)}>
+                                  Delete
+                                </button>
+                                <button className="text-sm hover:text-primary text-black dark:text-white" type="button" >
+                                  Update
+                                </button>
+                              </span>
+                            </div>
 
-                      </>
+                          </>
 
-                    )
+                        )
 
-                  })
+                      })
 
-                }
+                    }
 
 
 
@@ -214,7 +214,7 @@ if(profilePhoto.length > 0){
                   </div>
                   <div className="relative mb-4 h-36 rounded-md border-dashed border-stroke dark:border-strokedark bg-gray dark:bg-meta-4">
                     <input
-                    disabled={AdminType}
+                      disabled={AdminType}
                       type="file"
                       accept="image/*"
                       onChange={handlePhotoChange}
@@ -233,10 +233,10 @@ if(profilePhoto.length > 0){
                       <p className="text-black dark:text-white text-sm">(max, 800 X 800px)</p>
                     </div>
                   </div>
-            
+
                 </div>
 
-                
+
               </div>
 
 
@@ -266,7 +266,7 @@ if(profilePhoto.length > 0){
                       Full Name
                     </label>
                     <input
-                    disabled={AdminType}
+                      disabled={AdminType}
                       className="w-full rounded border border-stroke bg-gray px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       type="text"
                       name="fullname"
@@ -323,7 +323,7 @@ if(profilePhoto.length > 0){
                   </div>
 
                   <div className="flex justify-end gap-4.5">
-                    
+
                     <button
                       className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
                       type="submit"
@@ -335,7 +335,7 @@ if(profilePhoto.length > 0){
               </div>
             </div>
           </div>
-    
+
         </div>
       </div>
     </DefaultLayout>

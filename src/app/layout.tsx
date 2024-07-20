@@ -50,7 +50,7 @@ export default function RootLayout({
           </PathnameWrapper>
 
         </body>
-      
+
 
       </html>
     </Providers>

@@ -100,6 +100,7 @@ const ChartTwo: React.FC = () => {
       });
   
       let reports = response.data.WeeklyRecord;
+
       const keys = ["Revenue", "Sales"];
       let chartColors = [...baseColorArray];
 
@@ -112,9 +113,8 @@ const ChartTwo: React.FC = () => {
       let defaultArray = reports.map((item: any) => {
         let nameFlag = item.name === 'Sales' ? "totalProductCount" : item.name === 'Profit' ? "totalProfit" : "totalRevenue";
   
-        // Only include "Profit" if AdminType is true
         if (item.name === 'Profit' && !AdminType) {
-          return null; // Skip this item
+          return null;
         } else {
           return {
             name: item.name,
@@ -123,10 +123,11 @@ const ChartTwo: React.FC = () => {
         }
       });
   
-      
-      // Filter out null entries if AdminType is false (to exclude "Profit")
+ 
       defaultArray = defaultArray.filter((item:any) => item !== null);
+console.log(defaultArray, "defaultArray"
   
+)
       options.colors = chartColors;
       setState({ series: defaultArray });
       
