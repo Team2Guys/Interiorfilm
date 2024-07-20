@@ -266,15 +266,15 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
 
         (productsToRender.length > 0) ? productsToRender.map(renderProduct) : !loading ? <div className='flex justify-center'>No Product Found</div> : <>  
       
-        {Array.from({ length: 4 }).map((_, index) => (
+        {Array.from({ length: 3 }).map((_, index) => (
       
-              <div key={index} className='gap-4'>
+              <div key={index} className='gap-10 flex flex-col'>
                 <SkeletonLoading 
-                  avatar={{ shape: 'square', size: 250 }} 
+                  avatar={{ shape: 'square', size:150, className: "w-full flex flex-col" }} 
                   title={false} 
+                  style={{flexDirection: 'column'}}
                   paragraph={{ rows: 3}}  
-                  style={{ display: 'flex', flexDirection: 'column', gap: '10px', }} 
-                  className='w-full'
+                  className='gap-10 flex'
                   active={true}
                 />
               </div>
