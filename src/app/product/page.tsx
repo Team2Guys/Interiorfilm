@@ -13,6 +13,7 @@ import type { CheckboxProps, RadioChangeEvent } from 'antd';
 import { Radio } from 'antd';
 import Input from 'components/Common/regularInputs'
 import axios from 'axios'
+import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading'
 
 interface category {
   posterImageUrl: {
@@ -212,13 +213,38 @@ const Product = () => {
             <div className="sticky top-20">
               <div className="p-2 bg-secondary">
                 <Collapse title="All Categories">
-                  <ul className="px-1 pt-2 space-y-1 ">
-                    {loading ? <div className="flex justify-center items-center"><Loader /></div> : category && category?.map((item, index) => (
-                      <li className='flex flex-col w-full' key={index} >
-                        <div className={activeLink?.name === item.name ? "bg-primary px-2 text-white rounded-md w-full h-8 flex items-center cursor-pointer" : "hover:bg-primary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center cursor-pointer"} onClick={() => handleCategoryClick(item)}>{item.name}</div>
-                      </li>
-                    ))}
-                  </ul>
+                <ul className="px-1 pt-2 space-y-1">
+      {loading ? (
+        <div className="flex flex-col space-y-1">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div key={index} className=' flex flex-col mt-3 w-full'>
+            <SkeletonLoading
+              title={false} 
+              style={{ flexDirection: 'column' }}
+              paragraph={{ rows: 1 }}  
+              className='flex w-full'
+              active={true}
+              />
+          </div>
+          ))}
+        </div>
+      ) : (
+        category && category.map((item, index) => (
+          <li className='flex flex-col w-full' key={index}>
+            <div
+              className={
+                activeLink?.name === item.name
+                  ? "bg-primary px-2 text-white rounded-md w-full h-8 flex items-center cursor-pointer"
+                  : "hover:bg-primary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center cursor-pointer"
+              }
+              onClick={() => handleCategoryClick(item)}
+            >
+              {item.name}
+            </div>
+          </li>
+        ))
+      )}
+    </ul>
                 </Collapse>
               </div>
               <div className="p-2 bg-secondary">
@@ -317,19 +343,32 @@ const Product = () => {
             }
           />
           <div className="w-full lg:w-9/12">
-            {error ? (
-              <div className="text-red flex justify-center items-center">{error}</div>
-            ) : (
-              <>
-                {loading ? (
-                  <div className="flex justify-center items-center h-2/3"><Loader /></div>
-                ) : (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-2">
-                    <Card ProductCard={sortedProducts} />
-                  </div>
-                )}
-              </>
-            )}
+  {error ? (
+    <div className="text-red flex justify-center items-center">{error}</div>
+  ) : (
+    <>
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-2">
+
+      {loading ? (
+        
+        Array.from({ length: 9 }).map((_, index) => (
+          <div key={index} className='gap-10 flex flex-col mt-3'>
+            <SkeletonLoading
+              avatar={{ shape: 'square', size: 150, className: "w-full flex flex-col" }} 
+              title={false} 
+              style={{ flexDirection: 'column' }}
+              paragraph={{ rows: 3 }}  
+              className='gap-10 flex'
+              active={true}
+              />
+          </div>
+        ))
+      ) : (   
+          <Card ProductCard={sortedProducts} /> 
+      )}
+      </div>
+    </>
+  )}
             {/* {productsToShow < sortedProducts.length && (
               <button
                 className='px-5 py-2 bg-primary text-white rounded-md flex items-center mx-auto'
