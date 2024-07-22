@@ -270,7 +270,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       
               <div key={index} className='gap-10 flex flex-col'>
                 <SkeletonLoading 
-                  avatar={{ shape: 'square', size:150, className: "w-full flex flex-col" }} 
+                  avatar={{ shape: 'square', size:280, className: "w-full flex flex-col" }} 
                   title={false} 
                   style={{flexDirection: 'column'}}
                   paragraph={{ rows: 3}}  
