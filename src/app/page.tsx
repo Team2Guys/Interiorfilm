@@ -76,7 +76,7 @@ export default function Home() {
         <ProductSlider products={featuredProducts} loading={loading} />
       </Container>
       <Offer Offers={offers} />
-      <Testimonial />
+      {/* <Testimonial /> */}
     </>
   );
 }

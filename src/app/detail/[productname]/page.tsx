@@ -147,7 +147,6 @@ const Detail = ({ params }: { params: { productname: string } }) => {
           let slicedProducts = response.data.products.length > 4 ? response.data.products.filter((item: any) => generateSlug(item.name) !== parsedProduct).slice(0, 4) : response.data.products.filter((item: any) => generateSlug(item.name) !== parsedProduct)
           setProducts(slicedProducts);
           for (let key of response.data.products){
-console.log(key, "key")
             if (generateSlug(key.name) === parsedProduct) {
               setProductDetail(key);
               fetchRelatedProducts(key.category); // Fetch related products based on category
@@ -225,9 +224,9 @@ console.log(key, "key")
               <div className='shadow p- bg-white'>
                 <div className='grid grid-cols-1 md:grid-cols-2 mt-2 p-2 gap-4'>
                   <div className='w-full'>
-                    <Thumbnail thumbs={productDetail.imageUrl} />
+                    <Thumbnail  thumbs={productDetail.imageUrl} />
                   </div>
-                  <div className='py-5 px-8 space-y-4 md:space-y-8'>
+                  <div className='py-5 px-8 space-y-4 md:space-y-8 z-10'>
                     <h1 className='text-3xl'>{productDetail.name}</h1>
                     <div className='flex gap-2'>
                       <Rate disabled allowHalf defaultValue={3.5} />
