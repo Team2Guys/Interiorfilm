@@ -223,7 +223,7 @@ const Header = () => {
               </div>
               <div className='flex gap-1 text-sm md:text-base lg:text-lg items-center '>
                 <IoMailOutline  className='text-primary text-base md:text-2xl' />
-                <Link href="mailto:cs@avenue39.com" target="_blank">cs@avenue39.com</Link>
+                <Link href="mailto:cs@interiorfilm.ae" target="_blank">cs@interiorfilm.ae</Link>
               </div>
             </div>
             <div className='hidden lg:flex gap-2 mx-auto md:mx-0 '>

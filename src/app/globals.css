@@ -302,3 +302,11 @@
 .cursor-zoom-in {
   cursor: zoom-in;
 }
+.ant-btn-primary{
+  background: #C72031 !important;
+}
+.ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+  color: #C72031 !important;
+  border-color: #C72031 !important;
+  /* background: #ffffff; */
+}

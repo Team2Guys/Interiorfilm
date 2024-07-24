@@ -18,7 +18,7 @@ interface Offer {
   const Offer: React.FC<OffersProps> = ({ Offers = [] }) => {
   return (
     <Container className='mt-20'>
-        <h1 className=' font-semibold text-lg lg:text-5xl text-center'>What Interior Offer!</h1>
+        <h1 className=' font-semibold text-lg lg:text-5xl text-center capitalize'>What does interior Film offer you!</h1>
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-10 gap-2 md:gap-4'>
             {
                 Offers.map((array,index)=>(

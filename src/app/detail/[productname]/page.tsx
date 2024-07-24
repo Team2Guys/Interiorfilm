@@ -13,6 +13,7 @@ import { IoIosClose } from 'react-icons/io';
 import { RxMinus, RxPlus } from 'react-icons/rx';
 import { generateSlug } from 'data/Data';
 import PRODUCTS_TYPES from 'types/interfaces';
+import VisibleCard from 'components/widgets/visibleCard/visibleCard';
 
 const { TabPane } = Tabs;
 
