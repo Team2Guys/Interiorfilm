@@ -8,19 +8,12 @@ import Image from 'next/image';
 import axios from 'axios';
 import Loader from 'components/Loader/Loader';
 import Pagination from '../Pagination';
-
 const ITEMS_PER_PAGE = 4;
-
-
-
-
-
 interface ReviewProps {
   reviews: any[];
   productId: string;
   fetchReviews: (productId: string) => Promise<void>;
 }
-
 const Review: React.FC<ReviewProps> = ({ reviews, productId, fetchReviews }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [formData, setFormData] = useState({
@@ -30,7 +23,7 @@ const Review: React.FC<ReviewProps> = ({ reviews, productId, fetchReviews }) => 
     description: '',
     star: 0,
   });
-  const [loading, setLoading] = useState(false); // State to manage loading
+  const [loading, setLoading] = useState(false);
 
   const totalPages = Math.ceil(reviews.length / ITEMS_PER_PAGE);
 
@@ -66,14 +59,13 @@ const Review: React.FC<ReviewProps> = ({ reviews, productId, fetchReviews }) => 
         description: '',
         star: 0,
       });
-      // Fetch updated reviews after successful submission
       await fetchReviews(productId); 
     } catch (error) {
       console.log(error, "error"
       )
       message.error("Error submitting the form:");
     } finally {
-      setLoading(false); // Set loading to false when form submission ends
+      setLoading(false); 
     }
   };
 
@@ -127,7 +119,7 @@ const Review: React.FC<ReviewProps> = ({ reviews, productId, fetchReviews }) => 
             <button
               type="submit"
               className="bg-black text-white py-3 px-4 rounded-none flex items-center gap-2"
-              disabled={loading} // Disable button when loading
+              disabled={loading}
             >
               {loading ? <Loader color="#fff" /> : <><IoIosSend size={25} /> Submit Review</>}
             </button>

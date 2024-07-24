@@ -310,3 +310,27 @@
   border-color: #C72031 !important;
   /* background: #ffffff; */
 }
+.custom-scrollbar {
+  overflow-y: scroll;
+  /* Optional: Adding padding, margin, and other styles */
+}
+
+/* Custom scrollbar styling */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px; /* Width of the entire scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the scrollbar track */
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #C72031; /* Color of the scrollbar thumb */
+  border-radius: 4px;
+  border: 3px solid #C72031; /* Padding around the thumb */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #C72031; /* Color when hovering over the scrollbar thumb */
+}

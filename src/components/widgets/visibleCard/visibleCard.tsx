@@ -108,7 +108,7 @@ const VisibleCard = () => {
             className={`max-w-screen-xl mx-auto right-0 sm:right-5 mt-2 fixed  z-50 hidden md:block ${topClass}`}
             ref={cartRef}
           >
-          <div className="border sm:w-96 bg-white p-2">
+          <div className="border border-primary sm:w-96 bg-white p-2">
             <div className="flex items-center justify-between">
               <p className="font-bold text-md-h6">SHOPPING CART</p>
               <IoIosClose
@@ -134,7 +134,7 @@ const VisibleCard = () => {
                     alt="image"
                   />
                   <div className="w-52">
-                    <p className="text-[12px]">{product.name}</p>
+                    <p className="text-[14px] font-bold">{product.name}</p>
                     <p className="text-12 font-bold">
                       <span>{product.count}</span> X
                     </p>
@@ -159,12 +159,12 @@ const VisibleCard = () => {
             <div className="w-full mt-2 space-y-1">
               <Link
                 href="/cart"
-                className="w-full block text-center bg-black text-white py-1"
+                className="w-full block text-center bg-primary text-white py-1"
               >
                 View Cart
               </Link>
               <button
-                className="border w-full border-black hover:bg-black hover:text-white transition duration-300 py-1"
+                className="border w-full border-primary text-primary hover:bg-primary hover:text-white transition duration-300 py-1"
                 onClick={() => setCartVisible(false)}
               >
                 Continue Shopping

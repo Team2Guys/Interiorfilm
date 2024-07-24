@@ -12,9 +12,9 @@ const OfferProduct = () => {
             <Image className='md:w-full w-64 h-64 md:h-full object-contain mx-auto md:mx-0  bg-no-repeat' height={400} width={400} src={front} alt='front' /> 
         </div>
         <div className='w-full md:w-7/12  '>
-            <p className='w-full md:w-[80%] text-base md:text-[30px] lg:text-[56px] leading-snug font-medium text-heading mb-4 text-center md:text-justify capitalize'>Stunning collection of options to transform your home</p>
-            <div className='text-center md:text-start'>
-            <Link className='bg-primary text-white px-6 py-3 rounded-md' href={"/product"}>View All</Link>
+            <span className='w-full  text-base md:text-[30px] lg:text-[56px] leading-snug font-medium text-heading mb-4 text-center  capitalize'>Stunning collection of options to transform your home</span>
+            <div className='text-center md:text-start  mt-5'>
+            <Link className='bg-primary text-white px-6 py-3  rounded-md' href={"/product"}>View All</Link>
             </div>
         </div>
     </div>

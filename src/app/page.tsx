@@ -6,7 +6,6 @@ import { SlDiamond } from "react-icons/sl";
 import { CgBulb } from "react-icons/cg";
 import { GiPayMoney } from "react-icons/gi";
 import { RiCustomerService2Line } from "react-icons/ri";
-import Testimonial from "components/widgets/Testimonial/Testimonial";
 import ProductSlider from "components/Carousel/ProductSlider/ProductSlider";
 import Container from "components/Layout/Container/Container";
 import Mobiletab from "components/ui/Tabs/Mobiletab/Mobiletab";
