@@ -107,6 +107,10 @@
   box-shadow: 0px 3px 21px #3737D512;
 }
 
+.ant-popover .ant-popover-inner{
+  margin-left: 100px !important;
+}
+
 .ant-popover-content{
   width: 1280px;
 }

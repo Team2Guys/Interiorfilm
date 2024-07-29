@@ -8,8 +8,8 @@ import Image from 'next/image';
 import logo from "../../../../public/images/logo.png";
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { PiBag } from 'react-icons/pi';
-import { FaRegUser, FaUser } from 'react-icons/fa';
-import { RiMenuFold3Fill } from 'react-icons/ri';
+import { FaRegUser, FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa';
+import { RiMenuFold3Fill, RiShoppingBag2Line } from 'react-icons/ri';
 import { MdOutlineHome, } from 'react-icons/md';
 import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu';
 import Button from 'components/ui/Button/Button';
@@ -43,7 +43,6 @@ interface Product {
 
 const Header = () => {
   const dispatch = useAppDispatch()
-
   const [open, setOpen] = useState(false);
   const [category, setcategory] = useState(false);
   const [cartItems, setCartItems] = useState([]);
@@ -213,35 +212,37 @@ const Header = () => {
 
   return (
     <>
-      <div className='bg-secondary sticky top-1 border-b border-gray  w-full'>
-        <Container>
-          <div className='flex justify-between flex-wrap lg:flex-nowrap gap-2 p-2 items-center'>
-            <div className='flex gap-4 mx-auto md:mx-0'>
-              <div className='flex gap-1 text-sm md:text-base lg:text-lg items-center '>
-                <HiOutlineDevicePhoneMobile  className='text-primary text-base md:text-2xl' />
-                <Link href="tel:+971505974495">+971 50 597 4495</Link>
-              </div>
-              <div className='flex gap-1 text-sm md:text-base lg:text-lg items-center '>
-                <IoMailOutline  className='text-primary text-base md:text-2xl' />
-                <Link href="mailto:cs@interiorfilm.ae" target="_blank">cs@interiorfilm.ae</Link>
-              </div>
+      <div className='bg-black  border-b py-2 border-black  w-full z-50 relative'>
+       <p className='uppercase text-white text-center text-14'>Free Shipping on orders over 10 meters</p>
+      </div>
+      <nav className=" text-white   mx-auto flex justify-between items-center relative z-50 w-full p-2 px-10">
+      <div className="flex items-center space-x-4">
+      <Link href={"/"}>
+              <Image className='w-14 lg:w-24' src={logo} alt="logo" width={100} height={100} />
+          </Link>
+      </div>
+      <ul className='flex-1 space-x-10 text-18  px-6'>
+          <Link className='link-underline' href="/">Home</Link>
+          <Popover className='cursor-pointer link-underline'  placement="bottom" trigger="click" content={<Megamanu />} title="">
+            Product
+          </Popover>
+          <Link className='link-underline' href="/about">About</Link>
+          <Link className='link-underline' href="/contact">Contact</Link>
+        </ul>
+    
+          <div className="flex space-x-6">
+            <FaRegUser size={25} className=" cursor-pointer" />
+            <FaSearch size={25} className=" cursor-pointer" />
+            <div className='relative'>
+            <RiShoppingBag2Line size={25} className=" cursor-pointer" />
+            <div className='w-5 h-5 rounded-full flex justify-center items-center bg-white text-black absolute left-3 top-3'>
+              <span className='font-medium'>1</span>
             </div>
-            <div className='hidden lg:flex gap-2 mx-auto md:mx-0 '>
-              <p className='text-sm md:text-base text-center lg:text-start'>Get Up To 20% off in your first order</p>
-            </div>
-            <div className='flex gap-2 items-center mx-auto md:mx-0'>
-              <div className='flex gap-2 items-center text-sm md:text-base lg:text-lg'>
-                <FaUser  className='text-primary text-base md:text-2xl' />
-                {loggedInUser ? loggedInUser.fullName :
-                  <p className='text-sm md:text-base'><span className='cursor-pointer' onClick={() => router.push('/login')}>Login</span>/<span className='cursor-pointer' onClick={() => router.push('/register')}>Register</span></p>
-                }
-
-              </div>
             </div>
           </div>
-        </Container>
-      </div>
-      <div className='sticky top-0 z-50'>
+        </nav>
+
+      <div className='sticky top-0 z-50 hidden'>
 
      
       <div className='bg-secondary  w-full py-3  '>

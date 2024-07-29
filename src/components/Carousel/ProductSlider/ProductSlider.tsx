@@ -60,20 +60,7 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) =>
 
   return (
     <div className="relative mt-2">
-      <div className='float-end flex gap-2 mb-5'>
-      <button
-        ref={prevRef}
-        className=" border-0 hover:border hover:border-primary hover:scale-110 transition duration-300 ease-in-out bg-primary hover:bg-transparent text-white h-8 w-8 hover:text-black p-2 rounded-full flex justify-center items-center z-10"
-      >
-        <MdArrowBackIos size={20} />
-      </button>
-      <button
-        ref={nextRef}
-        className=" border-0 hover:border hover:border-primary hover:scale-110 transition duration-300 ease-in-out bg-primary hover:bg-transparent text-white h-8 w-8 hover:text-black p-2 rounded-full flex justify-center items-center z-10"
-      >
-        <MdArrowForwardIos size={20} />
-      </button>
-      </div>
+     
       <Swiper
         ref={swiperRef}
         autoplay={{
@@ -117,7 +104,20 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) =>
           </SwiperSlide>
         ))}
       </Swiper>
-
+      <div className='float-end flex gap-2 mb-5'>
+      <button
+        ref={prevRef}
+        className=" border-0 hover:border hover:border-primary hover:scale-110 transition duration-300 ease-in-out bg-primary hover:bg-transparent text-white h-8 w-8 hover:text-black p-2 rounded-full flex justify-center items-center z-10"
+      >
+        <MdArrowBackIos size={20} />
+      </button>
+      <button
+        ref={nextRef}
+        className=" border-0 hover:border hover:border-primary hover:scale-110 transition duration-300 ease-in-out bg-primary hover:bg-transparent text-white h-8 w-8 hover:text-black p-2 rounded-full flex justify-center items-center z-10"
+      >
+        <MdArrowForwardIos size={20} />
+      </button>
+      </div>
     </div>
   );
 };

@@ -1,9 +1,9 @@
-import ProductSlider from 'components/Carousel/ProductSlider/ProductSlider';
 import Loader from 'components/Loader/Loader';
 import Link from 'next/link';
 import React, { useLayoutEffect, useState } from 'react';
 import axios from 'axios';
 import PRODUCTS_TYPES from 'types/interfaces';
+import MenuSlider from 'components/Carousel/menuSlider/menuSlider';
 
 const Megamanu: React.FC = () => {
   const [loadingCategories, setLoadingCategories] = useState<boolean>(false);
@@ -63,7 +63,7 @@ const Megamanu: React.FC = () => {
   };
 
   return (
-    <div className='flex'>
+    <div className='flex '>
       <div className={`w-2/12 space-y-1`}>
         <h1 className='text-2xl font-semibold mb-4'>All Categories</h1>
         <ul className="px-1 pt-2 space-y-1">
@@ -88,7 +88,7 @@ const Megamanu: React.FC = () => {
           <h1 className='text-2xl font-semibold mb-4'>{selectedCategory ? categories.find(cat => cat._id === selectedCategory)?.name : "All Products"}</h1>
           <Link className='hover:underline hover:text-black' href={"/product"}>View All</Link>
         </div>
-        <ProductSlider products={products} loading={!selectedCategory || loadingCategories} />
+        <MenuSlider products={products} loading={!selectedCategory || loadingCategories} />
       </div>
     </div>
   );
