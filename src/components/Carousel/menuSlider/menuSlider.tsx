@@ -5,7 +5,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
-import Card from 'components/ui/Card/Card';
 import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import PRODUCTS_TYPES from 'types/interfaces';

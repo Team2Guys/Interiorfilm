@@ -1,0 +1,110 @@
+"use client";
+import React, { useEffect, useRef, useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
+import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading';
+import { Autoplay, Navigation } from 'swiper/modules';
+import CategoryCard from './card';
+
+const CategorySlider: React.FC = () => {
+  const prevRef = useRef<HTMLButtonElement>(null);
+  const nextRef = useRef<HTMLButtonElement>(null);
+  const swiperRef = useRef<any>(null);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      const swiper = swiperRef.current.swiper;
+      swiper.params.navigation.prevEl = prevRef.current;
+      swiper.params.navigation.nextEl = nextRef.current;
+      swiper.navigation.destroy();
+      swiper.navigation.init();
+      swiper.navigation.update();
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+        const data = await response.json();
+        setCategories(data);
+      } catch (err) {
+        console.log(err, "err");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  return (
+    <div className="px-2 md:px-4 flex items-center relative">
+      <button
+        ref={prevRef}
+        className="relative left-4 bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
+      >
+        <MdArrowBackIos size={20} />
+      </button>
+      <Swiper
+        ref={swiperRef}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        loop={true}
+        breakpoints={{
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          640: {
+            slidesPerView: 2.5,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 2.5,
+            spaceBetween: 10,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          },
+        }}
+        modules={[Autoplay, Navigation]}
+        navigation={{
+          prevEl: prevRef.current,
+          nextEl: nextRef.current,
+        }}
+        className="mySwiper custom"
+      >
+        {loading ? (
+          <SkeletonLoading />
+        ) : (
+          categories.map((category) => (
+            <SwiperSlide key={category._id}>
+              <CategoryCard
+                name={category.name}
+                posterImageUrl={category.posterImageUrl.imageUrl}
+                categoryId={category._id}
+              />
+            </SwiperSlide>
+          ))
+        )}
+      </Swiper>
+      <button
+        ref={nextRef}
+        className="relative right-4 bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
+      >
+        <MdArrowForwardIos size={20} />
+      </button>
+    </div>
+  );
+};
+
+export default CategorySlider;

@@ -12,7 +12,7 @@ import Image from 'next/image';
 import { IMAGE_INTERFACE } from 'types/interfaces';
 
 interface ThumbProps {
-  thumbs: IMAGE_INTERFACE[];
+  thumbs?: IMAGE_INTERFACE[];
 }
 
 const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
@@ -20,7 +20,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
   const [backgroundPosition, setBackgroundPosition] = useState<string>('0% 0%');
 
-  const handleMouseEnter = (imageUrl: string) => {
+  const handleMouseEnter = (imageUrl: any) => {
     setHoveredImage(imageUrl);
   };
 

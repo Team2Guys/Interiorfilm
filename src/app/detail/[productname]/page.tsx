@@ -310,7 +310,7 @@ const Detail = ({ params }: { params: { productname: string } }) => {
       }
       <Container className='mt-20'>
         <h1 className='text-lg md:text-3xl mb-5'>Related Products</h1>
-        <ProductSlider products={relatedProducts} loading={relatedProductsLoading} />
+        <ProductSlider />
       </Container>
     </>
   )

@@ -23,10 +23,8 @@ interface CardProps {
 const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail, cardClass }) => {
   const router = useRouter();
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
-  const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
-  const [count, setCount] = useState<any>(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -43,69 +41,8 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDet
 
   const pathname = usePathname();
 
-  let CategoryId = categoryId ? categoryId : 'demo';
-
-  const getallProducts = async () => {
-    try {
-      if (pathname.startsWith("/product") || slider) return;
-      console.log('slider false')
-
-      setLoading(true);
-      let response: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
-      let products = response.data.products;
-      if (CategoryId != "demo" && CategoryId) {
-        let filtered = products.filter((item: any) => {
-          return item.category === CategoryId;
-        });
-
-        setTotalProducts(filtered);
-      } else {
-
-        setTotalProducts(products);
-      }
-
-      if (products.length > 0 && products[0].colors && products[0].colors.length > 0) {
-        setSelectedValue(products[0].colors[0]);
-      }
-    } catch (err: any) {
-      console.log(err, "err");
-      if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
-      } else if (err.message) {
-        setError(err.message);
-      } else {
-        setError('An unexpected error occurred.');
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  const ProductFilterHandler = () => {
-    if (CategoryId != "demo" && CategoryId) {
-      console.log("condition is working ", CategoryId,
-      )
-      let products = totalProducts
-      let filtered = products.filter((item) => {
-        return item.category === CategoryId;
-      });
-
-      setTotalProducts(filtered);
-    }
-  }
-
-  useEffect(() => {
-    getallProducts();
-  }, []);
-
-  useEffect(() => {
-    ProductFilterHandler();
-  }, [carDetail]);
-
 
   const handleAddToCart = (product: any) => {
-
-
 
     const newCartItem = {
       id: product._id,
@@ -210,9 +147,7 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDet
         <button onClick={() => handleAddToWishlist(product)} className="flex justify-center items-center z-10">
           <GoHeart className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />
         </button>
-        <button onClick={showModal} className="flex justify-center items-center z-10">
-          <FiZoomIn className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />
-        </button>
+
       </div>
       
       <div className="cursor-pointer  transition-all m-1 " onClick={() => router.push(`/detail/${generateSlug(product.name)}`)}>
@@ -230,14 +165,6 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDet
           </h1>
         </div>
       </div>
-
-      <Modal title={<h1 className="lg:text-xl text-sm text-dark font-bold">
-            Code : <span>{product.name}</span>
-          </h1>} open={isModalOpen}  width={700} onOk={handleOk} onCancel={handleCancel} footer={""}>
-        {product.posterImageUrl && product.posterImageUrl.imageUrl && (
-          <Image className='mt-5 object-contain w-full h-full' width={1000} height={1000} src={product.posterImageUrl.imageUrl} alt="Image" />
-        )}
-      </Modal>
     </div>
     );
   };

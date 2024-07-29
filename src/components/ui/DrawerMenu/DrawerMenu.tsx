@@ -12,16 +12,18 @@ interface drawerprops {
   className?:string;
   width?:number;
   classDrawer? : string;
+  headtitle?:any;
+  onClick?:any;
 }
 
-const DrawerMenu:React.FC<drawerprops> = ({title,content,className,width,classDrawer,showDrawer,onClose,open}) => {
+const DrawerMenu:React.FC<drawerprops> = ({title,content,className,width,classDrawer,showDrawer,onClose,open,headtitle,onClick}) => {
 
   return (
     <>
       <div className={`${className}`} onClick={showDrawer}>
       {title}
       </div>
-      <Drawer className={`${classDrawer}`}  onClose={onClose} open={open} width={width}>
+      <Drawer title={headtitle} className={`${classDrawer}`} onClick={onClick}  onClose={onClose} open={open} width={width}>
         {content}
       </Drawer>
     </>
