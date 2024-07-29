@@ -40,6 +40,8 @@ const config: Config = {
         secondary: "#000",
         stroke: "#E2E8F0",
         gray: "#EFF4FB",
+        text: "#535353",
+        footer_text : "#BBBBBB",
         graydark: "#333A48",
         "gray-2": "#F7F9FC",
         "gray-3": "#FAFAFA",
