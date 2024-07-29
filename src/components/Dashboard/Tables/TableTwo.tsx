@@ -172,7 +172,7 @@ const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps)
             <div>
               <p
                 className={`${canAddCategory && "cursor-pointer"
-                  } lg:p-2 md:p-2 ${canAddCategory && "dark:border-strokedark dark:bg-slate-500 bg-slate-300"
+                  } lg:p-2 md:p-2 ${canAddCategory && "dark:border-strokedark dark:bg-slate-500 bg-black text-white rounded-md border hover:bg-transparent hover:border-black hover:text-black"
                   } flex justify-center ${!canAddCategory && "cursor-not-allowed "
                   }`}
                 onClick={() => {
@@ -180,7 +180,7 @@ const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps)
                   if (canAddCategory) {
                     setMenuType('Add Category');
                   }
-                }}
+                }} 
               >
                 Add Category
               </p>

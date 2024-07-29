@@ -28,17 +28,19 @@ const About = () => {
             </div>
 
             <div className='p-2 sm:p-4 md:p-8 space-y-3'>
-                <h1 className='text-3xl'>Know About Our Ecomemrce Business,History</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. consequuntur quib dam enim expedita sed nesciunt incidunt accusamus adipisci officia libero laboriosam! Proin gravida nibh vel velit auctor aliquet. nec sagittis sem nib elit. Duis sed odio sit amet nibh vultate cursus a sit amet mauris.</p>
-                <div className='pt-3'>
-                <Link className='bg-primary py-3 px-4 rounded-md text-white ' href={"/contact"}>Contact us</Link>
-                </div>
+                <p>Interiorfilm.ae is a venture born from Yellowzone General Trading’s passion for the vinyl wrapping industry. Based in Oud Metha, Dubai, we are a growing business, dedicated to bringing you the very best vinyl wrapping solutions available. </p>
+                <p>Having spent years buying from distributors and selling to the public, we now source directly from the factory to cut out the middleman. This has several benefits, from price reductions (which are then passed on to you) as well as being involved in the quality control process.</p>
+                <p>Those years of experience made it easy for us to have one of the global leaders in the vinyl wrapping industry by our side. With a strong foothold in the industry and already manufacturing for major household names, their trusted expertise was shared with us at a fraction of the cost.</p>
+                <p>Having such a close relationship with the factory allows us to share our feedback and ensure that the latest trends reach our shelves in record time. </p>
             </div>
         </div>
-
+        <div className='mt-5'>
+        <p>Our range is now a stunning collection of over 150 designs, from elegant marble vinyl and sleek metallic finishes to rich textured fabrics and luxurious leather vinyl looks. </p>
+        <p>Our customers are the most important element of our journey to success. Hand in hand, we have transformed 1000’s of homes in Dubai and the wider UAE areas and hope to continue this for many years to come. We would love to hear any feedback from you about our products or services. Listening is what we are best at and has played a massive role in taking us to where are today. </p>
+        </div>
     <Offer Offers={offers}/>
     </Container>
-      <Testimonial/>
+      {/* <Testimonial/> */}
     </>
   )
 }

@@ -56,7 +56,7 @@ try{
       <div className='flex flex-wrap md:flex-nowrap justify-between'>
         <div className='flex items-center gap-2 w-full md:w-2/6 text-black dark:text-white'>
         <SlEnvolopeLetter className='text-primary' size={35} />
-        <p className='lg:text-base text-sm '><span className='text-primary '>$90 OFF*</span> YOUR ORDER! SUBSCRBE TO OUR NEWSLETTER TODAY.</p>
+        <p className='lg:text-base text-sm capitalize '>YOUR ORDER! SUBSCRBE TO OUR NEWSLETTER TODAY.</p>
         </div>
         <div className='flex items-center justify-center mt-5 md:mt-0 rounded-none'>
           <input className='bg-secondary rounded-none h-8 px-2 outline-primary w-4/6 md:w-auto' type='email' placeholder='Enter Email Address'/>
@@ -71,7 +71,7 @@ try{
           <div className="mb-8 md:mb-0">
             <Image width={100} height={100} src={logo} alt="Interior Film" className="w-32 mb-4" />
             <p>Contact Info</p>
-            <p className='w-2/3 '>17 Princess Road, London, Greater London NW1 8JR, UK</p>
+            <p className='w-2/3 '>Yellowzone Trading, Al Nabooda Tower A ,Shop 6, Oud Metha, Dubai, UAE</p>
             <div className="flex space-x-4 mt-4">
               {socialLinks.map((link, index) => (
                 <Link key={index} href={link.href} className='hover:text-primary link-footer'>

@@ -13,6 +13,7 @@ import { IoIosClose } from 'react-icons/io';
 import { RxMinus, RxPlus } from 'react-icons/rx';
 import { generateSlug } from 'data/Data';
 import PRODUCTS_TYPES from 'types/interfaces';
+import VisibleCard from 'components/widgets/visibleCard/visibleCard';
 
 const { TabPane } = Tabs;
 
@@ -24,7 +25,7 @@ const Detail = ({ params }: { params: { productname: string } }) => {
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [relatedProductsLoading, setRelatedProductsLoading] = useState<boolean>(false);
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [length, setLength] = useState<number>(1);
 
@@ -70,12 +71,18 @@ const Detail = ({ params }: { params: { productname: string } }) => {
   const fetchReviews = async (productId: string) => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`);
-      console.log("productDetail", productDetail)
       setReviews(response.data.reviews);
     } catch (err) {
       console.error("Failed to fetch reviews:", err);
     }
   };
+
+  const calculateAverageRating = () => {
+    if (reviews.length === 0) return 0;
+    const totalRating = reviews.reduce((sum, review) => sum + review.star, 0);
+    return totalRating / reviews.length;
+  };
+
 
   const handleAddToCart = (product: any) => {
     const newCartItem = {
@@ -147,16 +154,12 @@ const Detail = ({ params }: { params: { productname: string } }) => {
           let slicedProducts = response.data.products.length > 4 ? response.data.products.filter((item: any) => generateSlug(item.name) !== parsedProduct).slice(0, 4) : response.data.products.filter((item: any) => generateSlug(item.name) !== parsedProduct)
           setProducts(slicedProducts);
           for (let key of response.data.products){
-console.log(key, "key")
             if (generateSlug(key.name) === parsedProduct) {
               setProductDetail(key);
               fetchRelatedProducts(key.category); // Fetch related products based on category
               return;
             }
           }
-
-
-
         }
       } catch (error) {
         console.log('Error fetching data:', error);
@@ -214,6 +217,7 @@ console.log(key, "key")
       children: <><Review reviews={reviews} productId={productDetail?._id} fetchReviews={fetchReviews} /></>
     },
   ];
+  const averageRating = calculateAverageRating();
 
   return (
     <>
@@ -225,13 +229,13 @@ console.log(key, "key")
               <div className='shadow p- bg-white'>
                 <div className='grid grid-cols-1 md:grid-cols-2 mt-2 p-2 gap-4'>
                   <div className='w-full'>
-                    <Thumbnail thumbs={productDetail.imageUrl} />
+                    <Thumbnail  thumbs={productDetail.imageUrl} />
                   </div>
-                  <div className='py-5 px-8 space-y-4 md:space-y-8'>
+                  <div className='py-5 px-8 space-y-4 md:space-y-8 z-10'>
                     <h1 className='text-3xl'>{productDetail.name}</h1>
                     <div className='flex gap-2'>
-                      <Rate disabled allowHalf defaultValue={3.5} />
-                      <p>(24)</p>
+                      <Rate value={averageRating} disabled />
+                      <p>({reviews.length} Reviews)</p>
                     </div>
                     <div className='flex gap-2'>
                       <p className='text-primary'>
@@ -243,7 +247,7 @@ console.log(key, "key")
                         </p>
                         : null}
                     </div>
-                    <p><span className='font-bold text-base'>Available Quantity: </span> {productDetail.totalStockQuantity ?? "0"} </p>
+                    <p><span className='font-bold text-base'>Available Quantity: </span> {"In Stock" ?? "Out Of Stock"} </p>
                     <div className='flex gap-2 items-center'>
                       <p className='font-bold text-base'>Quantity :</p>
                       <div className='flex'>

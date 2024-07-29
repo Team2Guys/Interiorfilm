@@ -213,7 +213,7 @@ const Header = () => {
 
   return (
     <>
-      <div className='bg-secondary border-b border-gray  w-full'>
+      <div className='bg-secondary sticky top-1 border-b border-gray  w-full'>
         <Container>
           <div className='flex justify-between flex-wrap lg:flex-nowrap gap-2 p-2 items-center'>
             <div className='flex gap-4 mx-auto md:mx-0'>
@@ -223,10 +223,10 @@ const Header = () => {
               </div>
               <div className='flex gap-1 text-sm md:text-base lg:text-lg items-center '>
                 <IoMailOutline  className='text-primary text-base md:text-2xl' />
-                <Link href="mailto:cs@avenue39.com" target="_blank">cs@avenue39.com</Link>
+                <Link href="mailto:cs@interiorfilm.ae" target="_blank">cs@interiorfilm.ae</Link>
               </div>
             </div>
-            <div className='hidden lg:flex gap-2 mx-auto md:mx-0'>
+            <div className='hidden lg:flex gap-2 mx-auto md:mx-0 '>
               <p className='text-sm md:text-base text-center lg:text-start'>Get Up To 20% off in your first order</p>
             </div>
             <div className='flex gap-2 items-center mx-auto md:mx-0'>
@@ -241,7 +241,10 @@ const Header = () => {
           </div>
         </Container>
       </div>
-      <div className='bg-secondary  w-full py-3'>
+      <div className='sticky top-0 z-50'>
+
+     
+      <div className='bg-secondary  w-full py-3  '>
         <Container>
           <div className='flex justify-between flex-wrap lg:flex-nowrap gap-0 md:gap-2 items-center'>
             <Link href={"/"}>
@@ -367,6 +370,7 @@ const Header = () => {
           <li><Link className='link-underline' href="/about">About</Link></li>
           <li><Link className='link-underline' href="/contact">Contact</Link></li>
         </ul>
+      </div>
       </div>
       <div className='bg-primary p-3 fixed w-full bottom-0 block lg:hidden z-50'>
         <div className='flex justify-evenly gap-4'>

@@ -66,11 +66,11 @@ const Slider: React.FC<Reviewprops> = ({Reviews}) => {
         loop={true}
         breakpoints={{
           320: {
-            slidesPerView: 1.3,
+            slidesPerView: 1.1,
             spaceBetween: 20,
           },
           370: {
-            slidesPerView: 1.8,
+            slidesPerView: 1.3,
             spaceBetween: 20,
           },
           640: {

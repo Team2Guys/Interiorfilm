@@ -14,6 +14,7 @@
     "@reduxjs/toolkit": "^2.2.5",
     "antd": "^5.17.3",
     "axios": "^1.7.2",
+    "easy-magnify": "^1.1.4",
     "flatpickr": "^4.6.13",
     "formik": "^2.4.6",
     "googleapis": "^139.0.0",
