@@ -21,8 +21,9 @@ const contact_us_Validation = Yup.object().shape({
         .min(2, 'Too Short!')
         .max(50, 'Too Long!')
         .required('Name is Required'),
-    commit: Yup.string().required('Comment is Required'),
+    comment: Yup.string().required('Comment is Required'),
     user_email: Yup.string().email('Invalid email').required('Email is Required'),
+    user_phone: Yup.number().required('Phone Number is Required'),
 });
 
 const Contact = () => {
@@ -31,7 +32,8 @@ const Contact = () => {
     const initialValues = {
         user_email: '',
         user_name: '',
-        commit: ''
+        user_phone: '',
+        comment: ''
     }
 
     const submitHandler = async (values: any, resetForm: any) => {
@@ -102,15 +104,22 @@ const Contact = () => {
                                 value={formik.values.user_email}
 
                             />
-
                             {formik.errors.user_email && formik.touched.user_email && <div className='text-primary pb-4'>{formik.errors.user_email}</div>}
+
+                            <LabelInput label='Phone Number' placeholder='Enter Phone Number' type='number' id='user_phone' name='user_phone'
+                                onChange={formik.handleChange}
+                                value={formik.values.user_phone}
+
+                            />
+
+                            {formik.errors.user_phone && formik.touched.user_phone && <div className='text-primary pb-4'>{formik.errors.user_phone}</div>}
 
                             <div className="w-full px-3 mb-10">
                                 <label className="block uppercase tracking-wide text-dark text-sm font-bold mb-2">
                                     Comment
                                 </label>
-                                <textarea onChange={formik.handleChange} value={formik.values.commit} name='commit' className="appearance-none block w-full bg-gray-200 text-dark border border-gray mt-4 border-gray-200 rounded py-5 px-5 leading-tight focus:outline-none focus:bg-white focus:border-dark outline-dark" placeholder={"Enter Comment"} />
-                                {formik.errors.commit && formik.touched.commit && <div className='text-primary pt-4'>{formik.errors.commit}</div>}
+                                <textarea onChange={formik.handleChange} value={formik.values.comment} name='comment' className="appearance-none block w-full bg-gray-200 text-dark border border-gray mt-4 border-gray-200 rounded py-5 px-5 leading-tight focus:outline-none focus:bg-white focus:border-dark outline-dark" placeholder={"Enter Comment"} />
+                                {formik.errors.comment && formik.touched.comment && <div className='text-primary pt-4'>{formik.errors.comment}</div>}
 
                                 <Button className='text-center w-full bg-primary py-3 text-white mt-5' type="submit" title={loading ? <Loader /> : "Submit Now"} disable={loading} />
                             </div>

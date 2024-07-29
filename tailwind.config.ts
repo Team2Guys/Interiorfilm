@@ -14,7 +14,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         optima: ["var(--font-optima)"],
-      satoshi: ["Satoshi", "sans-serif"],
+        Montserrat: ["Montserrat", "sans-serif"],
 
       },
       screens: {
@@ -36,8 +36,8 @@ const config: Config = {
         bodydark: "#AEB7C0",
         bodydark1: "#DEE4EE",
         bodydark2: "#8A99AF",
-        primary: "#C72031",
-        secondary: "#FFFCF5",
+        primary: "#FF914E",
+        secondary: "#000",
         stroke: "#E2E8F0",
         gray: "#EFF4FB",
         graydark: "#333A48",
