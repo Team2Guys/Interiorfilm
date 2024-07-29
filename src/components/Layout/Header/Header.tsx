@@ -337,10 +337,9 @@ const Header = () => {
               width={250}
               title={
                 <>
-                  <div className="text-20 md:text-2xl">
+                  <div className="text-20 md:text-2xl ">
                     <FaBars />
-                  </div>
-                </>
+                  </div> </>
               }
               content={
                 <>
