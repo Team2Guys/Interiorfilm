@@ -25,7 +25,7 @@ const CategorySlider: React.FC = () => {
       swiper.navigation.init();
       swiper.navigation.update();
     }
-  }, []);
+  }, [loading]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -34,7 +34,7 @@ const CategorySlider: React.FC = () => {
         const data = await response.json();
         setCategories(data);
       } catch (err) {
-        console.log(err, "err");
+        console.error("Error fetching categories:", err);
       } finally {
         setLoading(false);
       }
@@ -84,7 +84,20 @@ const CategorySlider: React.FC = () => {
         className="mySwiper custom"
       >
         {loading ? (
-          <SkeletonLoading />
+          <div className="flex flex-wrap items-center justify-center gap-5 md:flex-wrap mt-5">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <div key={index} className="w-[20%] min-w-[250px] flex gap-2">
+                <SkeletonLoading
+                  avatar={{ shape: 'square', size: 250 }}
+                  title={false}
+                  paragraph={{ rows: 3 }}
+                  style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+                  className="w-full"
+                  active={true}
+                />
+              </div>
+            ))}
+          </div>
         ) : (
           categories.map((category) => (
             <SwiperSlide key={category._id}>

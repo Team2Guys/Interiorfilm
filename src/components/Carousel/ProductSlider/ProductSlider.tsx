@@ -60,7 +60,7 @@ const ProductSlider: React.FC = () => {
   if (loading) {
     const skeletonIcons = Array.from({ length: 4 });
     return (
-      <div className="flex flex-wrap items-center justify-center gap-5 md:flex-wrap">
+      <div className="flex flex-wrap items-center justify-center gap-5 md:flex-wrap mt-5">
         {skeletonIcons.map((_, index) => (
           <div key={index} className="w-[20%] min-w-[250px]">
             <SkeletonLoading
