@@ -9,6 +9,7 @@ import Card from 'components/ui/Card/Card';
 import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import PRODUCTS_TYPES from 'types/interfaces';
+import Menucard from 'components/ui/Card/Menucard/Menucard';
 
 interface PRODUCT_SLIDER_PROPS {
   products: PRODUCTS_TYPES[];
@@ -93,7 +94,7 @@ const MenuSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) => {
       >
         {products && products.map((product, index) => (
           <SwiperSlide key={index} className="custom">
-            <Card ProductCard={[product]} slider={true} />
+            <Menucard ProductCard={[product]} slider={true}/>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -104,6 +105,7 @@ const MenuSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) => {
       >
         <MdArrowBackIos size={20} />
       </button>
+
       <button
         ref={nextRef}
         className="  hover:scale-110 transition duration-300 ease-in-out bg-white hover:bg-transparent text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10"

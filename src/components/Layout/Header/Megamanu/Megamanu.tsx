@@ -63,17 +63,17 @@ const Megamanu: React.FC = () => {
   };
 
   return (
-    <div className='flex '>
+    <div className='flex px-6 pt-4'>
       <div className={`w-2/12 space-y-1`}>
         <h1 className='text-2xl font-semibold mb-4'>All Categories</h1>
-        <ul className="px-1 pt-2 space-y-1">
+        <ul className=" space-y-1">
           {loadingCategories ? (
             <div className="flex justify-center items-center"><Loader /></div>
           ) : (
             categories.map((item, index) => (
               <li className='flex flex-col w-full' key={index}>
                 <div
-                  className={item._id === selectedCategory ? "border-s-4 border-primary px-2 text-dark h-7 w-full flex items-center cursor-pointer" : "border-primary text-dark px-2 hover:text-dark h-7 w-full flex items-center cursor-pointer"}
+                  className={item._id === selectedCategory ? "border-s-4 border-primary px-2 text-primary h-7 w-full flex items-center cursor-pointer" : "border-primary text-dark px-2 hover:text-dark h-7 w-full flex items-center cursor-pointer"}
                   onClick={() => handleCategoryClick(item._id)}
                 >
                   {item.name}
