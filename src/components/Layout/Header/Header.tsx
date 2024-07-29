@@ -337,8 +337,8 @@ const Header = () => {
               width={250}
               title={
                 <>
-                  <div>
-                    <FaBars size={25} />
+                  <div className="text-20 md:text-2xl">
+                    <FaBars />
                   </div>
                 </>
               }
