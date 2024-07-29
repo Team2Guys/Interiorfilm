@@ -103,11 +103,11 @@ const ProductSlider: React.FC = () => {
         breakpoints={{
           320: {
             slidesPerView: 1.3,
-            spaceBetween: 20,
+            spaceBetween: 10,
           },
           370: {
-            slidesPerView: 1.8,
-            spaceBetween: 20,
+            slidesPerView: 2,
+            spaceBetween: 10,
           },
           640: {
             slidesPerView: 2.5,
