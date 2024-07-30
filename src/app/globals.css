@@ -36,15 +36,15 @@
 .swiper-button-next::after,
 .swiper-button-prev::after {
   font-size: 20px !important;
-  color: rgb(199 32 49) !important;
+  color: #FF914E !important;
 }
 /* Custom styles for Swiper pagination dots */
 .swiper-pagination-bullet {
-    background: rgb(199 32 49) !important;
+    background: #FF914E !important;
   }
   
   .swiper-pagination-bullet-active {
-    background: rgb(199 32 49) !important;
+    background: #FF914E !important;
   }
   
   .ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector{
@@ -60,7 +60,7 @@
 
   .ant-pagination .ant-pagination-item-active a{
     color: #ffffff !important;
-    background-color: #C72031;
+    background-color: #FF914E;
     border-radius: 50px !important;
 
 
@@ -95,7 +95,7 @@
     transition: transform 0.3s ease-out;
 }
 .link-footer:after{
-  background-color: #C72031 !important;
+  background-color: #FF914E !important;
 }
 
 .link-underline:hover::after, .link-footer:hover::after {
@@ -110,6 +110,10 @@
 }
 .ant-pagination-item {
   box-shadow: 0px 3px 21px #3737D512;
+}
+
+.ant-popover .ant-popover-inner{
+  margin-left: 100px !important;
 }
 
 .ant-popover-content{
@@ -154,8 +158,8 @@
 }
 
 .ant-radio-wrapper .ant-radio-checked .ant-radio-inner{
-  border-color: #C72031 !important;
-    background-color: #C72031 !important;;
+  border-color: #FF914E !important;
+    background-color: #FF914E !important;;
 }
 
 .ant-table {
@@ -221,7 +225,7 @@
 
 .swiper-pagination-bullet-active {
   color: #fff !important;
-  background: #C72031 !important;
+  background: #FF914E !important;
 }
 
 .swiper-pagination {
@@ -261,12 +265,12 @@
 
 .ant-tabs .ant-tabs-tab:hover{
   color: white !important;
-  background-color: #C72031 !important;
+  background-color: #FF914E !important;
   padding: 8px 10px 8px 10px !important;
   border-radius: 4px !important;
 }
 .ant-tabs .ant-tabs-tab{
-  border: 1px solid #C72031 !important;
+  border: 1px solid #FF914E !important;
   background-color: transparent !important;
   color: black !important;
   padding: 8px 10px 8px 10px !important;
@@ -274,7 +278,7 @@
 }
 .ant-tabs .ant-tabs-tab.ant-tabs-tab-active {
   color: white !important;
-  background-color: #C72031 !important;
+  background-color: #FF914E !important;
   
 }
 .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
@@ -308,11 +312,11 @@
   cursor: zoom-in;
 }
 .ant-btn-primary{
-  background: #C72031 !important;
+  background: #FF914E !important;
 }
 .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
-  color: #C72031 !important;
-  border-color: #C72031 !important;
+  color: #FF914E !important;
+  border-color: #FF914E !important;
   /* background: #ffffff; */
 }
 .custom-scrollbar {
@@ -322,22 +326,23 @@
 
 /* Custom scrollbar styling */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 5px; /* Width of the entire scrollbar */
+  width: 1px; /* Width of the entire scrollbar */
+  height: 2px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Color of the scrollbar track */
-  border-radius: 4px;
+  background: white; /* Color of the scrollbar track */
+  border-radius: 0px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #C72031; /* Color of the scrollbar thumb */
-  border-radius: 4px;
-  border: 3px solid #C72031; /* Padding around the thumb */
+  background-color: white; /* Color of the scrollbar thumb */
+  border-radius: 0px;
+  border: 0px solid white; /* Padding around the thumb */
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #C72031; /* Color when hovering over the scrollbar thumb */
+  background: #FF914E; /* Color when hovering over the scrollbar thumb */
 }
 
 .column-swipper .swiper-wrapper{

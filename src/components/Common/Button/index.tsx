@@ -23,7 +23,7 @@ const Button: React.FC<ButtonProps> = ({
   disable
 }) => {
   return (
-    <button  onClick={onClick} value={value} type={type} disabled={disable ? true : false} className={`${className}  p-2  rounded-md`}>
+    <button  onClick={onClick} value={value} type={type} disabled={disable ? true : false} className={`${className}  p-2  text-black bg-white px-20`}>
       {title}{icon}
     </button>
   );

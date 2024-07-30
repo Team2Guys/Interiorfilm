@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -9,16 +9,35 @@ import Card from 'components/ui/Card/Card';
 import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import PRODUCTS_TYPES from 'types/interfaces';
+import axios from 'axios';
 
-interface PRODUCT_SLIDER_PROPS {
-  products: PRODUCTS_TYPES[];
-  loading: boolean;
-}
 
-const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) => {
+
+const ProductSlider: React.FC = () => {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<any>(null);
+
+  const [allProducts, setAllProducts] = useState<PRODUCTS_TYPES[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchAllProducts = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
+        setAllProducts(response.data.products);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAllProducts();
+  }, []);
+
+  const featuredProducts = allProducts.slice(0, 10);
 
   useEffect(() => {
     if (swiperRef.current && swiperRef.current.swiper) {
@@ -29,7 +48,7 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) =>
       swiper.navigation.init();
       swiper.navigation.update();
     }
-  }, [products]);
+  }, [featuredProducts]);
 
   const pagination = {
     clickable: true,
@@ -60,16 +79,16 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) =>
 
   return (
     <div className="relative mt-2">
-      <div className='float-end flex gap-2 mb-5'>
+          <div className='float-end flex gap-2 mb-5'>
       <button
         ref={prevRef}
-        className=" border-0 hover:border hover:border-primary hover:scale-110 transition duration-300 ease-in-out bg-primary hover:bg-transparent text-white h-8 w-8 hover:text-black p-2 rounded-full flex justify-center items-center z-10"
+        className=" bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
       >
         <MdArrowBackIos size={20} />
       </button>
       <button
         ref={nextRef}
-        className=" border-0 hover:border hover:border-primary hover:scale-110 transition duration-300 ease-in-out bg-primary hover:bg-transparent text-white h-8 w-8 hover:text-black p-2 rounded-full flex justify-center items-center z-10"
+        className=" bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
       >
         <MdArrowForwardIos size={20} />
       </button>
@@ -111,13 +130,13 @@ const ProductSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) =>
         }}
         className="mySwiper custom"
       >
-        {products && products.map((product, index) => (
+        {featuredProducts && featuredProducts.map((product, index) => (
           <SwiperSlide key={index} className="mb-10 custom">
             <Card ProductCard={[product]} slider={true} />
           </SwiperSlide>
         ))}
       </Swiper>
-
+ 
     </div>
   );
 };

@@ -12,7 +12,7 @@ import Image from 'next/image';
 import { IMAGE_INTERFACE } from 'types/interfaces';
 
 interface ThumbProps {
-  thumbs: IMAGE_INTERFACE[];
+  thumbs?: IMAGE_INTERFACE[];
 }
 
 const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {

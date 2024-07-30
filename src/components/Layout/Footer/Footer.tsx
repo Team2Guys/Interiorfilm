@@ -4,7 +4,7 @@ import React, { useState,useLayoutEffect } from 'react';
 import { Layout } from 'antd';
 import {FaAngleDown, FaAngleUp } from 'react-icons/fa';
 import Link from 'next/link';
-import logo from "../../../../public/images/logo.png";
+import logo from "../../../../public/images/new/logo.png";
 import Image from 'next/image';
 import { socialLinks, categories, customerCare, pages } from 'data/FooterData';
 import paypal from "../../../../public/images/paypal.jpg";
@@ -24,16 +24,10 @@ const Footer: React.FC = () => {
   const [isCustomerCareOpen, setIsCustomerCareOpen] = useState(false);
   const [isPagesOpen, setIsPagesOpen] = useState(false);
   const [category, setCategory] = useState<CategoriesType[]>([]);
-
-;
-
-
-
   const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
   const toggleCustomerCare = () => setIsCustomerCareOpen(!isCustomerCareOpen);
   const togglePages = () => setIsPagesOpen(!isPagesOpen);
   const bottomImages = [paypal, visacard, mastercard, maestrocard];
-
   const CategoryHandler = async () => {
 try{
   const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
@@ -43,45 +37,55 @@ try{
   console.log(err, "err")
 
 }
-
   };
   
   useLayoutEffect(() => {
     CategoryHandler();
   }, []);
   return (
-    <>
-    <div className='bg-white pt-10'>
-    <Container>
-      <div className='flex flex-wrap md:flex-nowrap justify-between'>
-        <div className='flex items-center gap-2 w-full md:w-2/6 text-black dark:text-white'>
-        <SlEnvolopeLetter className='text-primary' size={35} />
-        <p className='lg:text-base text-sm capitalize '>YOUR ORDER! SUBSCRBE TO OUR NEWSLETTER TODAY.</p>
-        </div>
-        <div className='flex items-center justify-center mt-5 md:mt-0 rounded-none'>
-          <input className='bg-secondary rounded-none h-8 px-2 outline-primary w-4/6 md:w-auto' type='email' placeholder='Enter Email Address'/>
-          <Button className='text-sm px-5' title={"SUBSCRBE"}/>
-        </div>
-      </div>
-    </Container>
-    </div>
-    <div className="bg-secondary">
-      <Container className="text-gray-800 lg:py-8 pt-8 pb-0 px-0  mt-10">
-        <div className="container lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row justify-between">
-          <div className="mb-8 md:mb-0">
-            <Image width={100} height={100} src={logo} alt="Interior Film" className="w-32 mb-4" />
-            <p>Contact Info</p>
-            <p className='w-2/3 '>Yellowzone Trading, Al Nabooda Tower A ,Shop 6, Oud Metha, Dubai, UAE</p>
-            <div className="flex space-x-4 mt-4">
+    <div className='bg-secondary text-white pt-10 px-8 pb-20'>
+      <div className='flex flex-wrap md:flex-nowrap justify-between border-b pb-10'>
+        <div className='w-4/12 flex flex-wrap items-center md:flex-nowrap md:gap-4 mx-auto md:mx-0 space-y-3 md:space-y-0'>
+          <Image width={200} height={200} src={logo} alt="Interior Film"/>
+          <div className="flex space-x-4">
               {socialLinks.map((link, index) => (
                 <Link key={index} href={link.href} className='hover:text-primary link-footer'>
                   {React.createElement(require('react-icons/fa')[link.icon], { className: "text-lg hover:text-primary link-footer" })}
                 </Link>
               ))}
             </div>
+        </div>
+        <div className='flex flex-wrap md:*:flex-nowrap items-center justify-end gap-2 w-full md:w-8/12 text-white mt-4 md:mt-0'>
+        <SlEnvolopeLetter className='text-primary' size={35} />
+        <p className='lg:text-base text-sm capitalize text-white'>YOUR ORDER! SUBSCRBE TO OUR NEWSLETTER TODAY.</p>
+        <div className='flex items-center justify-center mt-5 md:mt-0 rounded-none'>
+          <input className='bg-secondary rounded-none h-8 px-2 outline-none w-4/6 md:w-auto' type='email' placeholder='Enter Email Address'/>
+          <Button className='text-sm px-5' title={"SUBSCRBE"}/>
+        </div>
+        </div>
+     
+      </div>
+    <div className=" text-white px-8">
+
+        <div className=" lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row justify-between mt-10">
+          <div className="mb-8 md:mb-0">
+            
+            <p className='text-17 font-semibold'>Contact us</p>
+            <p className='w-full md:w-2/3 '>Yellowzone Trading, Al Nabooda Tower A ,Shop 6, Oud Metha, Dubai, UAE</p>
+            <div className='flex items-center gap-2 py-2 lg:order-2 order-1 text-black dark:text-white'>
+              {bottomImages.map((image, index) => (
+                <Image
+                  key={index}
+                  width={100}
+                  height={0}
+                  src={image}
+                  alt="Interior Film"
+                  className="w-10"
+                />
+              ))}
+            </div> 
           </div>
           <hr className='lg:hidden bg-primary mb-5' />
-          <div className="flex flex-col md:flex-row md:space-y-0 md:space-x-24">
             <div className='lg:pb-0 pb-3'>
               <h3 
                 className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
@@ -136,35 +140,9 @@ try{
                 ))}
               </ul>
             </div>
-          </div>
         </div>
-      </Container>
       </div>
-      <div className="bg-primary py-2 lg:py-2 lg:mt-0 lg:mb-0 pb-20 mb:pb-0 ">
-      <Container className=''>
-        <div className='container mx-auto'>
-          <div className="flex items-center flex-wrap lg:justify-between justify-center">
-            <div className='text-white lg:order-1 order-2'>
-              <p className='text-[19px]'>© Interior Film - All Rights Reserved</p>
-            </div>
-            <div className='flex items-center gap-2 py-2 lg:order-2 order-1 text-black dark:text-white'>
-              {bottomImages.map((image, index) => (
-                <Image
-                  key={index}
-                  width={100}
-                  height={0}
-                  src={image}
-                  alt="Interior Film"
-                  className="w-10"
-                />
-              ))}
-            </div> 
-
-          </div>  
-        </div>
-      </Container>
-      </div>
-    </>
+    </div>
   );
 };
 

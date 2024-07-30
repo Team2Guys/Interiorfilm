@@ -12,6 +12,7 @@ const config: Config = {
 
   theme: {
     extend: {
+    
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
       },
@@ -78,6 +79,21 @@ const config: Config = {
         "title-sm": ["20px", "26px"],
         "title-sm2": ["22px", "28px"],
         "title-xsm": ["18px", "24px"],
+        "10" : "10px",
+        "11" : "11px",
+        "12" : "12px",
+        "13" : "13px",
+        "14" : "14px",
+        "15" : "15px",
+        "16" : "16px",
+        "17" : "17px",
+        "18" : "18px",
+        "19" : "19px",
+        "20" : "20px",
+        "21" : "21px",
+        "22" : "22px",
+        "23" : "23px",
+
       },
       spacing: {
         4.5: "1.125rem",
@@ -238,6 +254,7 @@ const config: Config = {
         'client': "url('/images/Clints.png')",
         'overlay': "url('/images/overlay.png')",
         'Offer': "url('/images/back.png')",
+        'hero': "url('/images/herohead.jpg')",
       },
       content: {
         "icon-copy": 'url("../images/icon/icon-copy-alt.svg")',

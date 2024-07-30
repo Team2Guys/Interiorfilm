@@ -60,8 +60,9 @@ export interface USRPROPS {
   }
 
   export interface IMAGE_INTERFACE {
-    public_id: string;
-    imageUrl: string;
+    public_id?: string;
+    imageUrl?: string;
+    name?: string;
   }
 
   interface Images {
@@ -108,15 +109,15 @@ interface Specification {
 }
 
 interface PRODUCTS_TYPES {
-  _id: any;
+  _id?: any;
   name: string;
-  posterImageUrl: Image;
+  posterImageUrl?: Image;
   hoverImageUrl?: Image;
-  description: string;
-  salePrice: number;
-  purchasePrice: number;
-  category: string; 
-  imageUrl: IMAGE_INTERFACE[];
+  description?: string;
+  salePrice?: number;
+  purchasePrice?: number;
+  category?: string; 
+  imageUrl?: IMAGE_INTERFACE[];
   discountPrice?: any;
   colors?: Color[];
   modelDetails?: ModelDetail[];
@@ -127,11 +128,11 @@ interface PRODUCTS_TYPES {
   reviews?: string;
   totalStockQuantity?: number;
   sizes?: string[];
-  isFeatured?:any;
-  
+  isFeatured?: any;
 }
 
 export default PRODUCTS_TYPES;
+
 
   
 
