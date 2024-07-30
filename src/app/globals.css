@@ -368,3 +368,29 @@ flex-direction: column !important;
 border: 1px solid green;
 gap: 10px;
 } */
+
+.custom-scrollbar1 {
+  overflow-y: scroll;
+  /* Optional: Adding padding, margin, and other styles */
+}
+
+/* Custom scrollbar styling */
+.custom-scrollbar1::-webkit-scrollbar {
+  width: 3px; /* Width of the entire scrollbar */
+  height: 7px;
+}
+
+.custom-scrollbar1::-webkit-scrollbar-track {
+  background: rgb(178, 170, 170); /* Color of the scrollbar track */
+  border-radius: 3px;
+}
+
+.custom-scrollbar1::-webkit-scrollbar-thumb {
+  background-color: rgb(183, 170, 170); /* Color of the scrollbar thumb */
+  border-radius: 3px;
+  border: 5px solid black; /* Padding around the thumb */
+}
+
+.custom-scrollbar1::-webkit-scrollbar-thumb:hover {
+  background: #FF914E; /* Color when hovering over the scrollbar thumb */
+}

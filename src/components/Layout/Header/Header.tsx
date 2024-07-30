@@ -240,7 +240,7 @@ const Header = () => {
         <Link href="/">
       <Image
         className="w-24 h-14 md:w-50 md:h-10 "
-        src={isHomePage ? (isScrolled ? blacklogo : whitelogo) : whitelogo}
+        src={isHomePage ? (isScrolled ? blacklogo : whitelogo) : blacklogo}
         alt="logo"
         width={500}
         height={500}
@@ -432,7 +432,7 @@ const Header = () => {
                 filteredProducts.map((product, index) => (
                   <Link
                     key={index}
-                    href={{ pathname: `/detail/${generateSlug(product.name)}` }}
+                    href={{ pathname: `/Product/${generateSlug(product.name)}` }}
                     onClick={() => setIsModalOpen(false)}
                     className="shadow p-2 flex gap-2 mt-2 rounded-md border text-black hover:text-black border-gray hover:border-primary"
                   >

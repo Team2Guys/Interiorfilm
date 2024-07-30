@@ -6,6 +6,7 @@ interface CategoryCardProps {
   name: string;
   posterImageUrl: string;
   categoryId: string; // Add categoryId to navigate to the specific category
+  onClick?:any; 
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ name, posterImageUrl, categoryId }) => {
