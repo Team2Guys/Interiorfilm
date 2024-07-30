@@ -173,7 +173,7 @@ const Detail = ({ params }: { params: { productname: string } }) => {
         setRelatedProductsLoading(true);
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
         const relatedProducts = response.data.products.filter((product: any) => product.category === categoryId && generateSlug(product.name) !== parsedProduct);
-        setRelatedProducts(relatedProducts.slice(0, 4)); // Limit to 4 related products
+        setRelatedProducts(relatedProducts.slice(0, 4));
       } catch (error) {
         console.log('Error fetching related products:', error);
       } finally {
@@ -216,6 +216,12 @@ const Detail = ({ params }: { params: { productname: string } }) => {
       label: 'Review',
       children: <><Review reviews={reviews} productId={productDetail?._id} fetchReviews={fetchReviews} /></>
     },
+
+    {
+      key: "4",
+      label: 'Video',
+      children: <><Review reviews={reviews} productId={productDetail?._id} fetchReviews={fetchReviews} /></>
+    },
   ];
   const averageRating = calculateAverageRating();
 
@@ -236,10 +242,12 @@ const Detail = ({ params }: { params: { productname: string } }) => {
                   <div className='py-3 px-8 space-y-2 md:space-y-8 '>
                     <h1 className='text-3xl'>{productDetail.name}</h1>
 
+{(reviews.length && reviews.length > 0) ?
                     <div className='flex gap-2'>
                       <Rate className='text-primary product_starts' value={averageRating} disabled />
                       <p className='flex items-center h-[30x] w-[30x]'>({reviews.length})</p>
                     </div>
+ : null}
 
 
 
@@ -305,7 +313,7 @@ const Detail = ({ params }: { params: { productname: string } }) => {
               </div>
             </Container>
 
-            <div className='bg-secondary mt-20'>
+            <div className='bg-white mt-20'>
               <Container>
                 <Tabs defaultActiveKey="1">
                   {tabData.map(tab => (
@@ -320,7 +328,10 @@ const Detail = ({ params }: { params: { productname: string } }) => {
           : null
       }
       <Container className='mt-20'>
-        <h1 className='text-lg md:text-3xl mb-5'>Related Products</h1>
+<div className='flex justify-center items-center'>
+      <h1 className='w-fit text-center text-lg border-b-2 border-[#FF914E] md:text-3xl mb-5 up'>FEATURE PRODUCT</h1>
+
+</div>
         <ProductSlider />
       </Container>
     </>

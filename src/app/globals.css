@@ -264,25 +264,50 @@
 
 
 .ant-tabs .ant-tabs-tab:hover{
-  color: white !important;
-  background-color: #FF914E !important;
-  padding: 8px 10px 8px 10px !important;
-  border-radius: 4px !important;
+  color: black !important;
+  padding: 8px 10px 8px 2px !important;
+  border-bottom: 2px solid #FF914E !important;
+
 }
 .ant-tabs .ant-tabs-tab{
-  border: 1px solid #FF914E !important;
   background-color: transparent !important;
-  color: black !important;
-  padding: 8px 10px 8px 10px !important;
-  border-radius: 4px !important;
+  color: #8F8F8F !important;
+  padding: 8px 10px 8px 2px !important;
+  border-bottom: 2px solid transparent !important;
+  font-family: 'Poppins', sans-serif !important ;
+  letter-spacing: 0px !important;
+  font-size: 20px !important;
+  line-height: 52px !important;
+
+
+  
+
 }
 .ant-tabs .ant-tabs-tab.ant-tabs-tab-active {
-  color: white !important;
-  background-color: #FF914E !important;
+  color:black !important;
+  border-bottom: 2px solid #FF914E !important;
+  position: relative;
+
   
 }
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active::after {
+  content: '•'; 
+  color: #FF914E; 
+  position: absolute;
+  right: -10px; 
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 30px;
+}
+
+
+.ant-tabs >.ant-tabs-nav::before{
+  border-bottom: 0px solid red !important;
+}
+
 .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
-  color: white !important;
+  color: black !important;
 }
 .ant-tabs .ant-tabs-ink-bar{
   background-color: transparent !important;
@@ -291,9 +316,8 @@
 .ant-tabs-top >.ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-bottom >.ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-top >div>.ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-bottom >div>.ant-tabs-nav .ant-tabs-ink-bar {
   height: 0px !important;
 }
-.ant-tabs .ant-tabs-tab-btn:focus:not(:focus-visible), .ant-tabs .ant-tabs-tab-remove:focus:not(:focus-visible), .ant-tabs .ant-tabs-tab-btn:active, .ant-tabs .ant-tabs-tab-remove:active{
-  color: #ffffff  !important;
-}
+
+
 .ant-tabs .ant-tabs-tab-btn {
   outline: none;
   transition: none !important;
@@ -365,8 +389,5 @@ width: 100% !important;
   }
 }
 
-/* .swiper-wrapper{
-flex-direction: column !important;
-border: 1px solid green;
-gap: 10px;
-} */
+
+
