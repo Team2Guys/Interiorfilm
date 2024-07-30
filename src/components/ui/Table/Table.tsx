@@ -298,13 +298,13 @@ const Table: React.FC<TableProps> = ({
                         <div className="flex">
                           <div
                             onClick={() => decrement(index)}
-                            className="h-8 w-8  bg-[#E7E7EF] border border-gray flex justify-center items-center"
+                            className="h-8 w-8    bg-[#E7E7EF] hover:bg-[#F0EFF2] flex justify-center items-center"
                           >
                             <RxMinus size={20} />
                           </div>
-                          <div className="h-8 w-14  bg-[#F0EFF2] flex justify-center items-center">
+                          <div className="h-8 w-14  bg-[#F0EFF2] hover:bg-[#E7E7EF] flex justify-center items-center">
                             <input
-                              className="h-8 w-14 text-center border border-[#F0EFF2] "
+                              className="h-8 w-14 text-center "
                               type="text"
                               min={1}
                               max={100}
@@ -315,7 +315,7 @@ const Table: React.FC<TableProps> = ({
                           </div>
                           <div
                             onClick={() => increment(index)}
-                            className="h-8 w-8  bg-[#E7E7EF] border border-gray flex justify-center items-center"
+                            className="h-8 w-8  bg-[#E7E7EF] hover:bg-[#F0EFF2]  flex justify-center items-center"
                           >
                             <RxPlus size={20} />
                           </div>
@@ -399,13 +399,13 @@ const Table: React.FC<TableProps> = ({
                 <div className="flex">
                   <div
                     onClick={() => decrement(index)}
-                    className="h-7 w-7  bg-[#E7E7EF] border border-gray flex justify-center items-center"
+                    className="h-7 w-7  bg-[#E7E7EF] hover:bg-[#F0EFF2]  flex justify-center items-center"
                   >
                     <RxMinus size={20} />
                   </div>
-                  <div className="h-7 w-7  bg-[#F0EFF2] flex justify-center items-center">
+                  <div className="h-7 w-7  bg-[#F0EFF2] hover:bg-[#E7E7EF]  flex justify-center items-center">
                     <input
-                      className="h-7 w-8 text-center border border-gray "
+                      className="h-7 w-8 text-center   "
                       type="text"
                       min={1}
                       max={100}
@@ -416,7 +416,7 @@ const Table: React.FC<TableProps> = ({
                   </div>
                   <div
                     onClick={() => increment(index)}
-                    className="h-7 w-7  bg-[#E7E7EF] border border-gray flex justify-center items-center"
+                    className="h-7 w-7  bg-[#E7E7EF]  hover:bg-[#F0EFF2] flex justify-center items-center"
                   >
                     <RxPlus size={20} />
                   </div>
