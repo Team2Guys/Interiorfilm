@@ -15,9 +15,14 @@ interface SelectListProps {
   onChange: (value: string) => void;
 }
 
+const onSearch = (value: string) => {
+  console.log('search:', value);
+};
 const SelectList: React.FC<SelectListProps> = ({ options, className, defaultValue, onChange }) => {
   return (
     <Select
+      showSearch
+      onSearch={onSearch}
       className={className}
       defaultValue={defaultValue}
       onChange={onChange}

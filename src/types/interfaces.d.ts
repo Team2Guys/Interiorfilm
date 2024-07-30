@@ -129,6 +129,7 @@ interface PRODUCTS_TYPES {
   totalStockQuantity?: number;
   sizes?: string[];
   isFeatured?: any;
+  price?: number;
 }
 
 export default PRODUCTS_TYPES;
