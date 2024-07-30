@@ -14,7 +14,11 @@
   --antd-text-color: #ffffff;
   --antd-border-color: #434343;
 }
- 
+
+.font-poppins-light {
+  font-family: 'Poppins', sans-serif;
+}
+
 
 .borderless-select.ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
     border: none !important;
@@ -44,12 +48,13 @@
   }
   
   .ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector{
-    border-color: #C72031 !important;
+    border-color: #000000 !important;
     color: black !important;
-
+    border-radius: 0px !important;
   }
   .ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector{
-    border-color: #C72031 !important;
+    border-color: #000000 !important;
+    border-radius: 0px !important;
 
   }
 
@@ -140,11 +145,11 @@
 
 
 .ant-checkbox-checked .ant-checkbox-inner{
-  background-color: #C72031 !important;
-  border-color: #C72031 !important;
+  background-color: #000000 !important;
+  border-color: #000000 !important;
 }
 .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner, .ant-checkbox:not(.ant-checkbox-disabled):hover .ant-checkbox-inner{
-  border-color: #C72031 !important;
+  border-color: #000000 !important;
 
 }
 
@@ -334,3 +339,29 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #C72031; /* Color when hovering over the scrollbar thumb */
 }
+
+.column-swipper .swiper-wrapper{
+flex-direction: column !important;
+width: 100% !important;
+
+}
+
+.column-swiper-slider {
+  width: 100% !important
+}
+
+
+.product_starts{
+  display: flex !important;
+  gap: 15px !important;
+  svg{
+    width: 33px;
+    height: 30px;;
+  }
+}
+
+/* .swiper-wrapper{
+flex-direction: column !important;
+border: 1px solid green;
+gap: 10px;
+} */
