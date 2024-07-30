@@ -14,9 +14,7 @@ const config: Config = {
     extend: {
     
       fontFamily: {
-        optima: ["var(--font-optima)"],
-        Montserrat: ["Montserrat", "sans-serif"],
-
+        poppins: ["Poppins", "sans-serif"],
       },
       screens: {
         "2xsm": "375px",
