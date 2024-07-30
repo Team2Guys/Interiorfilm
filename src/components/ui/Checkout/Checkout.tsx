@@ -1,29 +1,58 @@
+"use client"
 import CheckoutData from 'components/widgets/checkoutData/CheckOutData';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Checkbox } from 'antd';
+import type { CheckboxProps } from 'antd';
 
+const onChangeCheck: CheckboxProps['onChange'] = (e) => {
+  console.log(`checked = ${e.target.checked}`);
+};
 const CheckOut: React.FC = () => {
+  const [cartItems, setCartItems] = useState([]);
+  const [subtotal, setSubtotal] = useState(0);
+  const [shippingCharges, setShippingCharges] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  const onChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
+
+  useEffect(() => {
+    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    setCartItems(existingCart);
+    calculateTotals(existingCart);
+  }, []);
+
+  const calculateTotals = (items:any) => {
+    const sub = items.reduce((acc:any, item:any) => {
+      const price = item.discountPrice ? item.discountPrice : item.price;
+      return acc + (price * item.count * item.length); // Adjusted to calculate total price considering item count and length
+    }, 0);
+    setSubtotal(sub);
+    const shipping = sub < 100 ? 30 : 0;
+    setShippingCharges(shipping);
+    setTotal(sub + shipping);
+  };
+
+  const handleCartChange = (updatedCart:any) => {
+    setCartItems(updatedCart);
+    calculateTotals(updatedCart);
+  };
   return (
-    <div className="min-h-screen flex justify-center lg:py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl w-full space-y-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="md:col-span-2 bg-white p-6 shadow-md">
+    <div className="lg:py-12 px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
+          <div className="md:col-span-2 bg-white p-6 shadow-2 border border-shade rounded-md space-y-10 px-8 ">
             <div className="flex justify-between flex-wrap">
-              <h2 className="lg:text-lg text-base font-medium text-gray-900 lg:mb-4">Contact Information</h2>
+              <h2 className="lg:text-[25px] text-base font-medium text-[#3A393C] lg:mb-4">Contact Information</h2>
             </div>
-            <div className="mb-6">
               <input
                 type="text"
                 placeholder="Email or mobile phone number"
                 className="w-full border border-gray border-t-0 border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2"
               />
-              <div className="flex items-center mt-2">
-                <input type="checkbox" id="news" className="mr-2" />
-                <label htmlFor="news" className="text-sm text-gray-600">
-                  Keep me up to date on news and exclusive offers
-                </label>
-              </div>
-            </div>
-            <h2 className="text-lg font-medium text-gray-900 mb-4 lg:mt-16">Shipping address</h2>
+             <Checkbox onChange={onChangeCheck}>Keep me up to date on news and exclusive offers</Checkbox>
+
+            <h2 className="text-[25px] font-medium text-[#3A393C] mb-4 pt-5 lg:pt-20">Shipping address</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="text"
@@ -64,9 +93,12 @@ const CheckOut: React.FC = () => {
               />
             </div>
           </div>
-          <CheckoutData/>
+          <div>
+
+          <CheckoutData cartdata={cartItems} onCartChange={handleCartChange}/>
         </div>
-      </div>
+          
+        </div>
     </div>
   );
 };

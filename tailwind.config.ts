@@ -30,6 +30,7 @@ const config: Config = {
         current: "currentColor",
         transparent: "transparent",
         white: "#FFFFFF",
+        shade:"#EFEFEF",
         // black: "#1C2434",
         red: "#FB5454",
         // "black-2": "#010101",

@@ -43,14 +43,13 @@
     background: #FF914E !important;
   }
   
-  .ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector{
-    border-color: #FF914E !important;
-    color: black !important;
-
-  }
-  .ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector{
-    border-color: #FF914E !important;
-
+ 
+  .shipment.ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector{
+    border-color: none !important;
+    border: none !important;
+    background: transparent !important;
+    border-radius: 0px !important;
+    box-shadow:none !important;
   }
 
   .ant-pagination .ant-pagination-item-active a{
