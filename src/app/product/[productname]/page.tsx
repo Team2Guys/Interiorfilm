@@ -18,7 +18,7 @@ import SelectList from 'components/ui/Select/Select';
 
 const { TabPane } = Tabs;
 
-const Detail = ({ params }: { params: { productname: string } }) => {
+const Product = ({ params }: { params: { productname: string } }) => {
   const parsedProduct = params.productname ? params.productname : null;
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [productDetail, setProductDetail] = useState<PRODUCTS_TYPES | null>(null);
@@ -352,4 +352,4 @@ const Detail = ({ params }: { params: { productname: string } }) => {
   )
 }
 
-export default Detail;
+export default Product;

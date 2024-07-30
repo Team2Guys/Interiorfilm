@@ -17,6 +17,7 @@ const CheckoutData: React.FC<TableProps> = ({ cartdata, onCartChange }) => {
   const [data, setData] = useState<PRODUCTS_TYPES[]>([]);
   const [counts, setCounts] = useState<{ [key: number]: number }>({});
   const [subtotal, setSubtotal] = useState(0);
+  const [totalCount, setTotalCount] = useState(0); // New state variable for total count
   const [changeId, setChangeId] = useState<number | null>(null);
 
   const ProductHandler = () => {
@@ -24,17 +25,21 @@ const CheckoutData: React.FC<TableProps> = ({ cartdata, onCartChange }) => {
     if (Products && JSON.parse(Products).length > 0) {
       const items = JSON.parse(Products || "[]");
       setData(items);
-      setCounts(
-        items.reduce((acc: any, item: any, index: number) => {
-          acc[index] = item.count || 1;
-          return acc;
-        }, {})
-      );
+      const itemCounts = items.reduce((acc: any, item: any, index: number) => {
+        acc[index] = item.count || 1;
+        return acc;
+      }, {});
+      setCounts(itemCounts);
+
       const sub = items.reduce(
         (total: number, item: any) => total + item.totalPrice,
         0
       );
       setSubtotal(sub);
+
+      // Calculate total count of products
+      const total = items.reduce((sum: number, item: any) => sum + (item._id || 1), 0);
+      setTotalCount(total);
     }
   };
 
@@ -67,7 +72,8 @@ const CheckoutData: React.FC<TableProps> = ({ cartdata, onCartChange }) => {
 
   return (
     <div className="bg-white p-6 border border-shade rounded-md ">
-      <div className="space-y-4">
+      <h2 className="text-16 font-medium  text-end mb-4">*total <span className='text-primary'>{totalCount}</span> Items</h2>
+      <div className="space-y-4 max-h-64 overflow-y-scroll custom-scrollbar1">
         {data.map((product, index) => (
           <div className="p-2 rounded-md mt-5 bg-white shadow " key={index}>
               <div className="flex gap-3 justify-between">

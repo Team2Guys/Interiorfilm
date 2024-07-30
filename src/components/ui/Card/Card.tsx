@@ -215,7 +215,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
         </button>
       </div>
       
-      <div className="cursor-pointer custom-shadow transition-all m-1 bg-white" onClick={() => router.push(`/detail/${generateSlug(product.name)}`)}>
+      <div className="cursor-pointer  transition-all m-1 " onClick={() => router.push(`/Product/${generateSlug(product.name)}`)}>
         <div className="text-center">
           <div className='absolute top-60 hidden mk translate-y-20 z-10 w-full md:flex justify-center opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition ease-in-out duration-400'>
             <button className='bg-white z-10 px-4 py-1'>Order Now</button>
@@ -224,16 +224,16 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
             <Image className="bg-contain h-32 w-full md:h-72" width={300} height={300} src={product.posterImageUrl.imageUrl} alt="Image" />
           )}
         </div>
-        <div className="text-center space-y-1 pt-3 pb-5 p-1 group-hover:bg-primary">
-          <h1 className="lg:text-lg text-sm text-center text-dark group-hover:text-white font-semibold">
+        <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
+          <h1 className="lg:text-lg text-sm text-center text-dark  font-semibold">
             Code : <span>{product.name}</span>
           </h1>
           <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
-            <p className="text-primary group-hover:text-white font-bold">
+            <p className="text-black  font-bold">
               Dhs. <span className=''>{product.discountPrice ? product.discountPrice : product.salePrice}</span>.00
             </p>
             {product.discountPrice && (
-              <p className="line-through text-para group-hover:text-white text-xs font-extrabold">
+              <p className="line-through text-para  text-xs font-bold">
                 Dhs.<span>{product.salePrice}</span>.00
               </p>
             )}

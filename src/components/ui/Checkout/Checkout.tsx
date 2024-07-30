@@ -3,6 +3,8 @@ import CheckoutData from 'components/widgets/checkoutData/CheckOutData';
 import React, { useEffect, useState } from 'react';
 import { Checkbox } from 'antd';
 import type { CheckboxProps } from 'antd';
+import SelectList from '../Select/Select';
+import { options } from 'data/Data';
 
 const onChangeCheck: CheckboxProps['onChange'] = (e) => {
   console.log(`checked = ${e.target.checked}`);
@@ -56,12 +58,12 @@ const CheckOut: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="text"
-                placeholder="First name (optional)"
+                placeholder="Full Name (optional)"
                 className="border border-t-0 border-gray border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2"
               />
               <input
-                type="text"
-                placeholder="Last name"
+                type="tel"
+                placeholder="Number"
                 className="border border-t-0 border-gray border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2"
               />
             </div>
@@ -75,23 +77,19 @@ const CheckOut: React.FC = () => {
               placeholder="Apartment, suite, etc (optional)"
               className="w-full border border-t-0 border-gray border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2 mt-6"
             />
-            <input
-              type="text"
-              placeholder="City"
-              className="w-full border border-t-0 border-gray border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2 mt-6"
-            />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-              <input
-                type="text"
-                placeholder="Bangladesh"
-                className="border border-t-0 border-gray border-l-0 border-r-0 shadow-0 outline-0 border-b border-gray-300 p-2"
-              />
-              <input
-                type="text"
-                placeholder="Postal Code"
-                className="border-t-0 border-gray border-l-0 border-r-0 border-b border-gray-300 shadow-0 outline-0 p-2"
-              />
-            </div>
+            <SelectList
+                className='w-full h-10 border-b outline-none shipment  border-gray text-4xl '
+                onChange={onChange}
+                options={options}
+                  defaultValue={"Enter Country"}
+                />
+             <SelectList
+                className='w-full h-10 border-b outline-none shipment text-20 border-gray '
+                onChange={onChange}
+                options={options}
+                defaultValue={"Enter City"}
+                />
+        
           </div>
           <div>
 
