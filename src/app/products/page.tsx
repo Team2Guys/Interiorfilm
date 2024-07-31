@@ -42,7 +42,7 @@ const StaticCategory = {
 }
 
 
-const Product = () => {
+const Products = () => {
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
   const [totalPage, setTotalPage] = useState<string | undefined>()
   const [totalProductscount, setTotalProductscount] = useState<number | undefined>()
@@ -399,4 +399,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Products;

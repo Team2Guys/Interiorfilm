@@ -26,7 +26,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
-  const [count, setCount] = useState<any>(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {

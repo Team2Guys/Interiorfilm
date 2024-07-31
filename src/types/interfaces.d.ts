@@ -112,6 +112,7 @@ interface sizes {
   sizesDetails?: string;
 }
 
+
 interface PRODUCTS_TYPES {
   _id?: any;
   name: string;
@@ -134,6 +135,9 @@ interface PRODUCTS_TYPES {
   sizes?: sizes[];
   isFeatured?: any;
   price?: number;
+  count?: any;
+  length?: any;
+  totalPrice?:any;
 }
 
 export default PRODUCTS_TYPES;

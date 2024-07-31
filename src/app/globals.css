@@ -456,3 +456,23 @@ gap: 10px;
 .custom-scrollbar1::-webkit-scrollbar-thumb:hover {
   background: #FF914E; /* Color when hovering over the scrollbar thumb */
 }
+.avatar {
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.ant-dropdown{
+  padding-top: 4px !important;
+}
+.ant-dropdown .ant-dropdown-menu, .ant-dropdown-menu-submenu .ant-dropdown-menu{
+  padding: 10px;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important; 
+}
+.ant-drawer{
+  z-index: 999999 !important;
+}
+.ant-select-dropdown{
+  z-index: 999999 !important;
+}
