@@ -294,20 +294,10 @@ const Table: React.FC<TableProps> = ({
                                 className='w-full h-10 border outline-none shipment text-20'
                                 onChange={(value)=>handleLengthChange(index, value)}
                                 options={options}
-                                defaultValue="Select Size"
                                 defaultValue={product.length}
 
                               />
-                              {/* <input
-                                min={1}
-                                max={100}
-                                type="number"
-                                value={product.length} // Ensure this is bound to the correct property ('length')
-                                onChange={(e) => handleLengthChange(index, e)}
-                                name="length"
-                                placeholder="Enter Length"
-                                className={`peer px-3 py-2 block border rounded-md border-gray-200 text-sm placeholder:text-slate-400 disabled:opacity-50 disabled:pointer-events-none autofill:pb-2`}
-                              /> */}
+                  
                             </div>
                           </div>
                         </div>
@@ -455,18 +445,14 @@ const Table: React.FC<TableProps> = ({
                   </div>
                 </div>
                 <div className="flex gap-2 items-center">
-                  <p className="font-semibold text-base">Dimension : 1.22</p>{" "}
-                  <IoIosClose size={20} />
-                  <input
-                    min={1}
-                    max={100}
-                    type="number"
-                    value={product.length}
-                    onChange={(e) => handleLengthChange(index, e)}
-                    name="length"
-                    placeholder="Enter Length"
-                    className={`peer px-2 py-1 block border rounded-md border-gray-200 text-sm placeholder:text-slate-400 disabled:opacity-50 disabled:pointer-events-none autofill:pb-2`}
-                  />
+                <SelectList
+                                className='w-full h-10 border outline-none shipment text-20'
+                                onChange={(value)=>handleLengthChange(index, value)}
+                                options={options}
+                          
+                                defaultValue={product.length}
+
+                              />
                 </div>
               </div>
             </div>
