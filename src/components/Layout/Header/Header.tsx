@@ -353,7 +353,7 @@ const Header = () => {
                           <div className="float-end ">
                             <Link
                               className="hover:text-black hover:underline"
-                              href={"/product"}
+                              href={"/products"}
                             >
                               View All
                             </Link>
