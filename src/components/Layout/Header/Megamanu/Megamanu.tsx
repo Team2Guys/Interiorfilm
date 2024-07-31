@@ -17,7 +17,7 @@ const Megamanu: React.FC<MegamanuProps> = ({ Categories, products }) => {
 
   useEffect(() => {
     if (Categories.length > 0) {
-      setSelectedCategory(Categories[0]._id); // Set the first category as the default selected category
+      setSelectedCategory(Categories[0]._id);
     }
   }, [Categories]);
 

@@ -11,9 +11,10 @@ import Loader from 'components/Loader/Loader';
 import Review from 'components/Common/Review';
 import { IoIosClose } from 'react-icons/io';
 import { RxMinus, RxPlus } from 'react-icons/rx';
-import { generateSlug } from 'data/Data';
+import { generateSlug, options } from 'data/Data';
 import PRODUCTS_TYPES from 'types/interfaces';
 import VisibleCard from 'components/widgets/visibleCard/visibleCard';
+import SelectList from 'components/ui/Select/Select';
 
 const { TabPane } = Tabs;
 
@@ -173,7 +174,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
         setRelatedProductsLoading(true);
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
         const relatedProducts = response.data.products.filter((product: any) => product.category === categoryId && generateSlug(product.name) !== parsedProduct);
-        setRelatedProducts(relatedProducts.slice(0, 4)); // Limit to 4 related products
+        setRelatedProducts(relatedProducts.slice(0, 4));
       } catch (error) {
         console.log('Error fetching related products:', error);
       } finally {
@@ -216,8 +217,19 @@ const Product = ({ params }: { params: { productname: string } }) => {
       label: 'Review',
       children: <><Review reviews={reviews} productId={productDetail?._id} fetchReviews={fetchReviews} /></>
     },
+
+    {
+      key: "4",
+      label: 'Video',
+      children: <><Review reviews={reviews} productId={productDetail?._id} fetchReviews={fetchReviews} /></>
+    },
   ];
   const averageRating = calculateAverageRating();
+
+  const onChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
+
 
   return (
     <>
@@ -236,10 +248,12 @@ const Product = ({ params }: { params: { productname: string } }) => {
                   <div className='py-3 px-8 space-y-2 md:space-y-8 '>
                     <h1 className='text-3xl'>{productDetail.name}</h1>
 
-                    <div className='flex gap-2'>
-                      <Rate className='text-primary product_starts' value={averageRating} disabled />
-                      <p className='flex items-center h-[30x] w-[30x]'>({reviews.length})</p>
-                    </div>
+                    {(reviews.length && reviews.length > 0) ?
+                      <div className='flex gap-2'>
+                        <Rate className='text-primary product_starts' value={averageRating} disabled />
+                        <p className='flex items-center h-[30x] w-[30x]'>({reviews.length})</p>
+                      </div>
+                      : null}
 
 
 
@@ -276,10 +290,18 @@ const Product = ({ params }: { params: { productname: string } }) => {
                         </div>
                       </div>
                     </div>
-                    <div className='flex gap-2 items-center'>
-                      <p className='font-font-semibold text-text'>Dimension : 1.22</p> <IoIosClose size={20} />
-                      <input min={1} max={100} type='number' value={length} onChange={handleLengthChange} name='length' placeholder='Enter Length' className={`peer px-3 py-2 block  border  border-gray-200 text-sm focus:outline-none placeholder:text-slate-400 disabled:opacity-50 disabled:pointer-events-none autofill:pb-2`} />
+                    <div className='flex gap-2 items-center w-[70%]'>
+
+                      <SelectList
+                        className='w-full h-10 border-b outline-none shipment text-20'
+                        onChange={onChange}
+                        options={options}
+                        defaultValue="Select Size"
+                      />
+
                     </div>
+
+
                     <p className='text-secondary font-bold'>
                       <span className='font-font-semibold	 text-text'>Total Price :</span> Dhs. <span>{totalPrice}</span>.00
                     </p>
@@ -305,7 +327,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
               </div>
             </Container>
 
-            <div className='bg-secondary mt-20'>
+            <div className='bg-white mt-20'>
               <Container>
                 <Tabs defaultActiveKey="1">
                   {tabData.map(tab => (
@@ -320,7 +342,10 @@ const Product = ({ params }: { params: { productname: string } }) => {
           : null
       }
       <Container className='mt-20'>
-        <h1 className='text-lg md:text-3xl mb-5'>Related Products</h1>
+        <div className='flex justify-center items-center'>
+          <h1 className='w-fit text-center text-lg border-b-2 border-[#FF914E] md:text-3xl mb-5 up'>FEATURE PRODUCT</h1>
+
+        </div>
         <ProductSlider />
       </Container>
     </>

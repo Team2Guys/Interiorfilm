@@ -12,9 +12,6 @@ import "../css/style.css";
 
 import {Poppins} from 'next/font/google'
 
-// const optimaFont = localFont({
-//   src: "../../public/font/OPTIMA.woff",
-// })
 const poppinsFont = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"], 

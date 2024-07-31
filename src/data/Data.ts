@@ -73,6 +73,7 @@ export const inputFields = [
 
   export const categoryValidationSchema = Yup.object({
     name: Yup.string().required('Required'),
+    description: Yup.string().required('required')
 
   });
 
@@ -92,7 +93,8 @@ export const inputFields = [
   };
 
   export const categoryInitialValues: Category = {
-    name: ''
+    name: '',
+    description: ""
   };
 
   

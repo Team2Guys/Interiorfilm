@@ -44,13 +44,6 @@ const Products = () => {
   const [selecteMenu, setselecteMenu] = useState<string>("Add All Products");
   const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
   
-
-
-
-
-
-
-
   useEffect(() => {
 
     const productHandler = async () => {

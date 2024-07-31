@@ -1,162 +1,169 @@
-'use client'
-import Container from 'components/Layout/Container/Container'
-import Overlay from 'components/widgets/Overlay/Overlay'
-import React, { useState, useLayoutEffect } from 'react'
-import Card from 'components/ui/Card/Card'
-import Collapse from 'components/ui/Collapse/Collapse'
-import { Select, Space } from 'antd'
-import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu'
-import { IoFunnelOutline } from 'react-icons/io5'
-import PRODUCTS_TYPES from 'types/interfaces'
-import Loader from "components/Loader/Loader";
+'use client';
+import { useState, useLayoutEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import axios from 'axios';
+import Container from 'components/Layout/Container/Container';
+import Overlay from 'components/widgets/Overlay/Overlay';
+import Card from 'components/ui/Card/Card';
+import Collapse from 'components/ui/Collapse/Collapse';
+import { Select, Space } from 'antd';
+import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu';
+import { IoFunnelOutline } from 'react-icons/io5';
+import PRODUCTS_TYPES from 'types/interfaces';
+import Loader from 'components/Loader/Loader';
 import type { CheckboxProps, RadioChangeEvent } from 'antd';
 import { Radio } from 'antd';
-import Input from 'components/Common/regularInputs'
-import axios from 'axios'
-import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading'
+import Input from 'components/Common/regularInputs';
+import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading';
 import { Checkbox } from 'antd';
-import { IoIosSearch } from 'react-icons/io'
+import { IoIosSearch } from 'react-icons/io';
 
-interface category {
+interface Category {
   posterImageUrl: {
-    public_id: string,
-    imageUrl: string
-  },
-  _id: string,
-  name: string,
-  createdAt: string,
-  updatedAt: string,
-  __v: any
+    public_id: string;
+    imageUrl: string;
+  };
+  _id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: any;
 }
 
 const StaticCategory = {
   posterImageUrl: {
     public_id: 'string',
-    imageUrl: "string"
+    imageUrl: 'string',
   },
-  _id: "all",
-  name: "View All",
-  createdAt: "string",
-  updatedAt: "string",
-  __v: "any"
-}
-
+  _id: 'all',
+  name: 'View All',
+  createdAt: 'string',
+  updatedAt: 'string',
+  __v: 'any',
+};
 
 const Products = () => {
-  const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
-  const [totalPage, setTotalPage] = useState<string | undefined>()
-  const [totalProductscount, setTotalProductscount] = useState<number | undefined>()
-  const [error, setError] = useState<any>()
-  const [loading, setLoading] = useState<boolean>(false)
-  const [colorName, setColorName] = useState<string>()
-  const [searchTerm, setSearchTerm] = useState<string>("")
-  const [sortOption, setSortOption] = useState<string>("Default")
-  const [category, setCategory] = useState<any[]>([])
-  const [open, setOpen] = useState(false)
-  const [priceRange, setPriceRange] = useState({ from: '', to: '' })
-  const [value, setValue] = useState(1)
-  const [activeLink, setActiveLink] = useState<category | undefined>()
-  const [inStockOnly, setInStockOnly] = useState<boolean>(true)
-  const [outOfStockOnly, setOutOfStockOnly] = useState<boolean>(false)
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const categoryId = searchParams.get('id');
+  
+  const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
+  const [totalPage, setTotalPage] = useState<string | undefined>();
+  const [totalProductscount, setTotalProductscount] = useState<number | undefined>();
+  const [error, setError] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [colorName, setColorName] = useState<string>();
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [sortOption, setSortOption] = useState<string>('Default');
+  const [category, setCategory] = useState<Category[]>([]);
+  const [open, setOpen] = useState(false);
+  const [priceRange, setPriceRange] = useState({ from: '', to: '' });
+  const [value, setValue] = useState(1);
+  const [activeLink, setActiveLink] = useState<Category | undefined>();
+  const [inStockOnly, setInStockOnly] = useState<boolean>(true);
+  const [outOfStockOnly, setOutOfStockOnly] = useState<boolean>(false);
 
   const handleInStockChange: CheckboxProps['onChange'] = (e) => {
-    setInStockOnly(e.target.checked)
-    setOutOfStockOnly(false)
-    setValue(2)
-  }
+    setInStockOnly(e.target.checked);
+    setOutOfStockOnly(false);
+    setValue(2);
+  };
 
   const handleOutOfStockChange: CheckboxProps['onChange'] = (e) => {
-    setOutOfStockOnly(e.target.checked)
-    setInStockOnly(false)
-    setValue(3)
-  }
+    setOutOfStockOnly(e.target.checked);
+    setInStockOnly(false);
+    setValue(3);
+  };
 
   const handleAllProductsChange = () => {
-    setInStockOnly(false)
-    setOutOfStockOnly(false)
-    setValue(1)
-  }
+    setInStockOnly(false);
+    setOutOfStockOnly(false);
+    setValue(1);
+  };
 
   const onChange = (e: RadioChangeEvent) => {
-    setValue(e.target.value)
+    setValue(e.target.value);
     if (e.target.value === 1) {
-      handleAllProductsChange()
+      handleAllProductsChange();
     } else if (e.target.value === 2) {
-      setInStockOnly(true)
-      setOutOfStockOnly(false)
+      setInStockOnly(true);
+      setOutOfStockOnly(false);
     } else if (e.target.value === 3) {
-      setOutOfStockOnly(true)
-      setInStockOnly(false)
+      setOutOfStockOnly(true);
+      setInStockOnly(false);
     }
-  }
+  };
 
   const showDrawer = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   const onClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
-  let productHandler = async () => {
+  const productHandler = async () => {
     try {
-      setLoading(true)
-      const CategoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`)
-      const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`)
+      setLoading(true);
+      const categoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+      const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
 
-      const [categoryResponse, products] = await Promise.all([CategoryRequest, productRequest]);
-      let category = categoryResponse.data
-      setTotalProducts(products.data.products)
-      setActiveLink(categoryResponse.data[0])
-      setCategory([StaticCategory, ...category])
+      const [categoryResponse, products] = await Promise.all([categoryRequest, productRequest]);
+      const categories = categoryResponse.data;
+      setTotalProducts(products.data.products);
+
+      const activeCategory = categories.find((cat: Category) => cat._id === categoryId);
+      setActiveLink(activeCategory ? activeCategory : categories[0]);
+      setCategory([StaticCategory, ...categories]);
     } catch (err) {
-      console.log(err, "err")
+      console.log(err, 'err');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useLayoutEffect(() => {
-    productHandler()
-  }, [])
+    productHandler();
+  }, [categoryId]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value)
-  }
+    setSearchTerm(event.target.value);
+  };
 
   const handleSortChange = (value: string) => {
-    setSortOption(value)
-  }
+    setSortOption(value);
+  };
 
   const handlePriceChange = (field: any, value: any) => {
-    setPriceRange(prevRange => ({
+    setPriceRange((prevRange) => ({
       ...prevRange,
-      [field]: value === '' ? '' : Number(value)
+      [field]: value === '' ? '' : Number(value),
     }));
   };
 
   const resetPriceFilter = () => {
-    setPriceRange({ from: '', to: '' })
-  }
+    setPriceRange({ from: '', to: '' });
+  };
 
-  const filteredProductsByCategory = activeLink ? totalProducts.filter(product => {
-    if (activeLink._id === "all") {
-      return product;
-    }
+  const filteredProductsByCategory = activeLink
+    ? totalProducts.filter((product) => {
+        if (activeLink._id === 'all') {
+          return product;
+        }
+        return product.category === activeLink._id;
+      })
+    : totalProducts;
 
-    return product.category === activeLink._id
-  }) : totalProducts;
-
-  console.log()
   const filteredProducts = filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
-    if (!product) return true; // Keep the product if it's null
+    if (!product) return true;
 
     const price = product.discountPrice ?? product.salePrice;
-    const priceMatch = (priceRange.from === '' || price >= priceRange.from) && (priceRange.to === '' || price <= priceRange.to);
+    const priceMatch =
+      (priceRange.from === '' || price >= priceRange.from) && (priceRange.to === '' || price <= priceRange.to);
     const nameMatch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const colorMatch = !colorName || (product.colors && product.colors.some(color => color.colorName === colorName));
-    const inStockMatch = !inStockOnly || product.totalStockQuantity && product.totalStockQuantity > 0;
-    const outOfStockMatch = !outOfStockOnly || product.totalStockQuantity === 0 || !product.totalStockQuantity
+    const colorMatch = !colorName || (product.colors && product.colors.some((color) => color.colorName === colorName));
+    const inStockMatch = !inStockOnly || (product.totalStockQuantity && product.totalStockQuantity > 0);
+    const outOfStockMatch = !outOfStockOnly || product.totalStockQuantity === 0 || !product.totalStockQuantity;
 
     return nameMatch && colorMatch && priceMatch && inStockMatch && outOfStockMatch;
   });
@@ -164,23 +171,20 @@ const Products = () => {
   const sortedProducts = filteredProducts.sort((a, b) => {
     const getPrice = (product: PRODUCTS_TYPES) => product.discountPrice ?? product.salePrice;
 
-    if (sortOption === "Low to High") {
+    if (sortOption === 'Low to High') {
       return getPrice(a) - getPrice(b);
-    } else if (sortOption === "High to Low") {
+    } else if (sortOption === 'High to Low') {
       return getPrice(b) - getPrice(a);
     } else {
       return 0;
     }
   });
 
-  const handleCategoryClick = (categoryName: category) => {
-    setActiveLink(categoryName)
-    // setProductsToShow(9); // Reset productsToShow when category changes
-  }
+  const handleCategoryClick = (categoryName: Category) => {
+    setActiveLink(categoryName);
+    router.push(`/products?${categoryName._id}`);
+  };
 
-  // const loadMoreProducts = () => {
-  //   setProductsToShow(prevCount => prevCount + 9)
-  // }
 
   return (
     <>

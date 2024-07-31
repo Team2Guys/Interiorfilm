@@ -14,7 +14,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ name, posterImageUrl, categ
 
   const handleButtonClick = () => {
     // Navigate to the product page, you can customize the URL based on your routing structure
-    router.push(`/product`);
+    router.push(`/categories`);
     // router.push(`/products/${categoryId}`);
   };
 
