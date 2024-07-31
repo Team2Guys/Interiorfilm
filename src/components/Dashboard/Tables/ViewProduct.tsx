@@ -140,7 +140,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
       key: "Preview",
       render: (text: any, record: Product) => {
         const handleClick = () => {
-          const url = `/Product/${generateSlug(record.name)}`;
+          const url = `/product/${generateSlug(record.name)}`;
           window.open(url, "_blank");
         };
         return <FaRegEye className="cursor-pointer" onClick={handleClick} />;

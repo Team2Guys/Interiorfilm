@@ -4,12 +4,10 @@ import {IoSearch } from "react-icons/io5";
 import Image from "next/image";
 import whitelogo from "../../../../public/images/logowhite.png";
 import blacklogo from "../../../../public/images/logoblack.png";
-import { IoMdHeartEmpty } from "react-icons/io";
-import {
-  FaBars,
-  FaRegUser,
+import { IoIosSearch, IoMdHeartEmpty } from "react-icons/io";
+import { FaBars,} from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa6";
 
-} from "react-icons/fa";
 import { RiShoppingBag2Line } from "react-icons/ri";
 import DrawerMenu from "components/ui/DrawerMenu/DrawerMenu";
 import { useRouter } from "next/navigation";
@@ -28,6 +26,7 @@ import PRODUCTS_TYPES, { Category } from "types/interfaces";
 import MobileMenu from "./Megamanu/mobile-menu";
 import whatsapp from "../../../../public/images/whatsapp.png"
 import { SlHandbag } from "react-icons/sl";
+import CartDrawer from "components/cart-drawer/cart-drawer";
 
 // interface Product {
 //   name?: string;
@@ -222,13 +221,13 @@ const Header = () => {
 
   return (
     <>
-      <div className="bg-black  border-b py-2 border-black  w-full z-999999 relative">
+      <div className="bg-black  border-b py-2 border-black  w-full z-99 relative">
         <p className="uppercase text-white text-center text-xs md:text-14">
           Free Shipping on orders over 10 meters
         </p>
       </div>
       <nav
-        className={` text-white  sticky top-0  mx-auto flex justify-between items-center z-999999 w-full p-2 md:px-10   ${
+        className={` text-white  sticky top-0  mx-auto flex justify-between items-center z-9999 w-full p-2 md:px-10   ${
           isHomePage
             ? isScrolled
               ? "bg-white text-black"
@@ -276,7 +275,7 @@ const Header = () => {
           </Link>
         </ul>
         <div
-          className={`flex space-x-3 md:space-x-6  ${
+          className={`flex space-x-3 md:space-x-6 items-center ${
             isHomePage
               ? isScrolled
                 ? "bg-white text-black"
@@ -292,13 +291,13 @@ const Header = () => {
             </Link>
           )}
           <div className=" cursor-pointer text-20 md:text-2xl" onClick={showModal}>
-            <IoSearch  />
+            <IoIosSearch />
           </div>
-        
+          <CartDrawer/>
           <Link href={"/cart"} className="relative text-20 md:text-2xl">
             <IoMdHeartEmpty  className=" cursor-pointer" />
             {cartItems.length > 0 ? (
-              <div className="md:w-5 md:h-5 w-3 h-3 rounded-full flex justify-center items-center bg-white text-black absolute left-3 top-3">
+              <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center bg-white text-black absolute left-3 top-3">
                 <span className="font-medium text-12 md:text-18">
                 {WishlistItems.reduce((count: any, item: any) => count + item.count, 0)}
                 </span>
@@ -310,8 +309,8 @@ const Header = () => {
           <Link href={"/cart"} className="relative  text-20 md:text-2xl">
             <SlHandbag  className=" cursor-pointer" />
             {cartItems.length > 0 ? (
-              <div className="md:w-5 md:h-5 w-3 h-3 rounded-full flex justify-center items-center bg-white text-black absolute left-3 top-3">
-                <span className="font-medium text-12 md:text-18">
+              <div className="md:w-5 md:h-5 w-3 h-3 z-50 rounded-full flex justify-center items-center bg-white text-black absolute left-3 top-3">
+                <span className="font-medium text-12 md:text-18 z-50">
                   {" "}
                   {cartItems.reduce(
                     (count: any, item: any) => count + item.count,
@@ -394,14 +393,16 @@ const Header = () => {
                         Contact Us
                       </Link>
                     </li>
+               
                   </ul>
+
                 </>
               }
             />
           </div>
         </div>
       </nav>
-      <div className="fixed top-[100px] right-0 z-999999 ">
+      <div className="fixed top-[100px] right-0 z-999 ">
       <Link target="_blank" href={"https://wa.link/mb359y"} className="sticky top-1 ">
           <Image width={200} height={200} src={whatsapp} alt="whatsappo"/>
         </Link>
@@ -417,7 +418,7 @@ const Header = () => {
         <>
           <div className="mt-8 space-y-3 mb-3">
             <input
-              className="w-full px-4 border h-14 rounded-md outl"
+              className="w-full px-4 border h-14 rounded-md outline-none"
               type="text"
               placeholder="Search Product Here..."
               value={searchTerm}
@@ -431,7 +432,7 @@ const Header = () => {
                 filteredProducts.map((product, index) => (
                   <Link
                     key={index}
-                    href={{ pathname: `/Product/${generateSlug(product.name)}` }}
+                    href={{ pathname: `/product/${generateSlug(product.name)}` }}
                     onClick={() => setIsModalOpen(false)}
                     className="shadow p-2 flex gap-2 mt-2 rounded-md border text-black hover:text-black border-gray hover:border-primary"
                   >
@@ -459,7 +460,7 @@ const Header = () => {
           )}
         </>
       </Modal>
-           
+   
     </>
   );
 };
