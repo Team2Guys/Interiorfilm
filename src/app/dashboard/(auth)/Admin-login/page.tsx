@@ -1,4 +1,5 @@
 
+
 'use client'
 
 import React, { useState } from "react";
@@ -11,11 +12,7 @@ import { loggedInAdminAction } from '../../../../redux/slices/AdminsSlice';
 import USRcomponent from 'components/userComponent/userComponent'
 import { IoIosLock, IoMdMail } from "react-icons/io";
 import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";;
-import { Select } from 'antd';
 import NoneAuth from 'hooks/None-AuthHook'
-
-const { Option } = Select;
-
 
 import Cookies from 'js-cookie';
 

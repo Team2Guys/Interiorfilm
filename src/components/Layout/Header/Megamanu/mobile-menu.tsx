@@ -81,7 +81,7 @@ const MobileMenu: React.FC<MegamanuProps> = ({ Categories, products, onClick }) 
                             className='gap-2 space-y-2 bg-white shadow-10 p-2 rounded-md'
                             onClick={() => {
                                 onClick(); // Call the onClick prop to close the drawer
-                                router.push(`/Product/${generateSlug(product.name)}`);
+                                router.push(`/product/${generateSlug(product.name)}`);
                             }}
                         >
                             <Image width={100} height={100} src={product.posterImageUrl.imageUrl} alt={product.name} className='w-full rounded-md' />

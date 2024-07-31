@@ -108,6 +108,9 @@ interface ModelDetail {
 interface Specification {
   specsDetails?: string;
 }
+interface sizes {
+  sizesDetails?: string;
+}
 
 interface PRODUCTS_TYPES {
   _id?: any;
@@ -128,7 +131,7 @@ interface PRODUCTS_TYPES {
   starRating?: string;
   reviews?: string;
   totalStockQuantity?: number;
-  sizes?: string[];
+  sizes?: sizes[];
   isFeatured?: any;
   price?: number;
 }
@@ -158,4 +161,29 @@ export interface Categories_Types {
   createdAt: string;
   updatedAt: string;
   __v: any;
+}
+
+
+export interface product {
+  posterImageUrl: { public_id: string, imageUrl: string };
+  hoverImageUrl: { public_id: string, imageUrl: string };
+  _id: string;
+  name: string;
+  description: string;
+  salePrice: number;
+  purchasePrice: number;
+  category: string;
+  imageUrl: Array<{ public_id: string, imageUrl: string, _id: string }>;
+  discountPrice: number;
+  colors: Array<{ colorName: string, _id: string }>;
+  modelDetails: Array<{ name: string, detail: string, _id: string }>;
+  spacification: Array<{ specsDetails: string, _id: string }>;
+  createdAt: string;
+  starRating: string;
+  reviews: string;
+  sizes: Array<string>;
+  updatedAt: string;
+  price: string;
+  __v: number;
+  code: string
 }

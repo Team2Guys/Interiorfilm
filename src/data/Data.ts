@@ -144,7 +144,9 @@ export const AddProductvalidationSchema = Yup.object().shape({
   spacification: Yup.array().of(Yup.object().shape({
     specsDetails: Yup.string().nullable()
   })),
-  sizes: Yup.array().of(Yup.string().nullable()),
+  sizes: Yup.array().of(Yup.object().shape({
+    sizesDetails: Yup.string().nullable()
+  })),
   category: Yup.string().required('Category is required'),
   totalStockQuantity: Yup.number().nullable(),
   variantStockQuantities: Yup.array().of(Yup.object().shape({

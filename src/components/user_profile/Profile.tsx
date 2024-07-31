@@ -34,7 +34,7 @@ const Profile = () => {
         return () => document.removeEventListener("click", clickHandler);
     });
 
- 
+
     useEffect(() => {
         const keyHandler = ({ keyCode }: KeyboardEvent) => {
             if (!dropdownOpen || keyCode !== 27) return;
@@ -43,7 +43,6 @@ const Profile = () => {
         document.addEventListener("keydown", keyHandler);
         return () => document.removeEventListener("keydown", keyHandler);
     });
-console.log(loggedInUser, "loggedInUser")
 
     const logoutHhandler = () => {
         try {

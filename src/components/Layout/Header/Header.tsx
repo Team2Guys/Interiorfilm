@@ -295,7 +295,7 @@ const Header = () => {
             <IoSearch  />
           </div>
         
-          <Link href={"/cart"} className="relative text-20 md:text-2xl">
+          <Link href={"/wishlist"} className="relative text-20 md:text-2xl">
             <IoMdHeartEmpty  className=" cursor-pointer" />
             {cartItems.length > 0 ? (
               <div className="md:w-5 md:h-5 w-3 h-3 rounded-full flex justify-center items-center bg-white text-black absolute left-3 top-3">
@@ -432,7 +432,7 @@ const Header = () => {
                 filteredProducts.map((product, index) => (
                   <Link
                     key={index}
-                    href={{ pathname: `/Product/${generateSlug(product.name)}` }}
+                    href={{ pathname: `/product/${generateSlug(product.name)}` }}
                     onClick={() => setIsModalOpen(false)}
                     className="shadow p-2 flex gap-2 mt-2 rounded-md border text-black hover:text-black border-gray hover:border-primary"
                   >

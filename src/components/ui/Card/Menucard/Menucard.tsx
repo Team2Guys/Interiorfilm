@@ -54,7 +54,8 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDet
       length: 1,
       count: 1,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
-      purchasePrice: product.purchasePrice
+      purchasePrice: product.purchasePrice,
+      sizes: product.sizes
     };
 
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -150,7 +151,7 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDet
 
       </div>
       
-      <div className="cursor-pointer  transition-all m-1 " onClick={() => router.push(`/Product/${generateSlug(product.name)}`)}>
+      <div className="cursor-pointer  transition-all m-1 " onClick={() => router.push(`/product/${generateSlug(product.name)}`)}>
         <div className="text-center">
           <div className='absolute top-50 hidden  translate-y-20 z-10 w-full md:flex justify-center opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition ease-in-out duration-400'>
             <button className='bg-white z-10 px-4 py-1'>Order Now</button>

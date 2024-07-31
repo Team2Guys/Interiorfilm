@@ -5,6 +5,8 @@ import { Checkbox } from 'antd';
 import type { CheckboxProps } from 'antd';
 import SelectList from '../Select/Select';
 import { options } from 'data/Data';
+import { Select } from 'antd';
+
 
 const onChangeCheck: CheckboxProps['onChange'] = (e) => {
   console.log(`checked = ${e.target.checked}`);
@@ -14,6 +16,24 @@ const CheckOut: React.FC = () => {
   const [subtotal, setSubtotal] = useState(0);
   const [shippingCharges, setShippingCharges] = useState(0);
   const [total, setTotal] = useState(0);
+  const { Option } = Select;
+  const [shipmentFee, setShipmentFee] = useState<number | string>(0);
+
+
+  const [billingData, setBillingData] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone_number: '',
+    street: '-',
+    building: '-',
+    floor: '-',
+    apartment: '-',
+    state: 'Dubai',
+    city: '-',
+    country: 'United Arab Emirates',
+    address: '',
+  });
 
   const onChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -40,6 +60,55 @@ const CheckOut: React.FC = () => {
     setCartItems(updatedCart);
     calculateTotals(updatedCart);
   };
+
+  const selectoption = [
+    { title: 'Dubai' },
+    { title: 'Abu Dhabi' },
+    { title: 'Sharjah' },
+    { title: 'Ajman' },
+    { title: 'Ras Al Khaima' },
+    { title: 'Umm Al Quwain' },
+    { title: 'Fujairah' },
+  ];
+
+  const handleSelectChange = (value: string) => {
+    setBillingData({ ...billingData, state: value });
+  };
+
+
+  
+  const AddresAAray = [
+    {
+      state: 'dubai',
+      charges: 15,
+      discountCharges: 150
+    },
+    {
+      state: 'sharjah',
+      charges: 20,
+      discountCharges: 200
+    },
+    {
+      state: 'abu dhabi',
+      charges: 20,
+      discountCharges: 200
+    },
+
+  ]
+
+  useEffect(() => {
+    const calculateCharges = () => {
+      const matchingItem = AddresAAray.find(item => item.state.toLowerCase() === billingData.state.toLowerCase());
+
+      const charges = matchingItem ? (subtotal > matchingItem.discountCharges ? 'Free' : matchingItem.charges) : (subtotal > 250 ? 'Free' : 25);
+      setShipmentFee(charges);
+    };
+
+    calculateCharges();
+  }, [billingData.state, subtotal, AddresAAray]);
+
+
+
   return (
     <div className="lg:py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
@@ -83,17 +152,38 @@ const CheckOut: React.FC = () => {
                 options={options}
                   defaultValue={"Enter Country"}
                 />
-             <SelectList
+
+<Select
+      showSearch
+
+                     className='w-full h-10 border-b outline-none shipment text-20 border-gray '
+                  placeholder="Select you state"
+                  value={billingData.state}
+                  onChange={handleSelectChange}
+                >
+                  {selectoption.map((option, index) => (
+                    <Option value={option.title} key={index}>
+                      {option.title}
+                    </Option>
+                  ))}
+                </Select>
+
+             {/* <SelectList
                 className='w-full h-10 border-b outline-none shipment text-20 border-gray '
                 onChange={onChange}
                 options={options}
                 defaultValue={"Enter City"}
-                />
+                /> */}
         
           </div>
           <div>
 
-          <CheckoutData cartdata={cartItems} onCartChange={handleCartChange}/>
+          <CheckoutData cartdata={cartItems} onCartChange={handleCartChange}
+  
+          subtotal={subtotal} 
+          setSubtotal= {setSubtotal}
+          shipmentFee={shipmentFee}
+          />
         </div>
           
         </div>

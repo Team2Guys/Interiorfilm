@@ -1,7 +1,7 @@
 
 'use client'
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import Loader from "components/Loader/Loader";
 import Cookies from 'js-cookie';
 import axios from "axios";
@@ -15,12 +15,12 @@ import { useAppDispatch } from "components/Others/HelperRedux";
 
 
 
-function ProtectedRoute(WrappedComponent:any) {
-  const Wrapper=(props: any) => {
+function ProtectedRoute(WrappedComponent: any) {
+  const Wrapper = (props: any) => {
     const router = useRouter();
     const [loading, setLoading] = useState<boolean>(false);
 
-  const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch()
 
     const AddminProfileTriggerHandler = async (token: string | undefined | null) => {
       try {
@@ -33,20 +33,21 @@ function ProtectedRoute(WrappedComponent:any) {
           }
         })
         dispatch(loggedInUserAction(user.data.user))
-  
+
       } catch (err: any) {
         console.log(err, "err")
-      } finally{
+      } finally {
         setLoading(false)
       }
     }
-  
+
     useLayoutEffect(() => {
       let token = Cookies.get("user_token");
-  
+
       if (token) {
         AddminProfileTriggerHandler(token)
       }
+      
     }, []);
     if (loading) {
       return (
@@ -65,7 +66,7 @@ function ProtectedRoute(WrappedComponent:any) {
         </div>
       );
     } else {
-    
+
 
       return <WrappedComponent {...props} />;
     }
