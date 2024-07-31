@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { message, Modal } from "antd";
 import Button from "../Button/Button";
 import PRODUCTS_TYPES from "types/interfaces";
+import { IoCloseSharp } from "react-icons/io5";
 interface TableProps {
   cartdata: PRODUCTS_TYPES[];
   wishlistdata: PRODUCTS_TYPES[];
@@ -205,33 +206,33 @@ const Table: React.FC<TableProps> = ({
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-start text-xl font-optima text-dark"
+                      className="px-6 py-3 text-start text-[30px] font-optima text-dark"
                     >
                       Product
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-start text-xl font-medium text-dark"
+                      className="px-6 py-3 text-start text-[30px] font-medium text-dark"
                     >
                       Price
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-start text-xl font-medium text-dark"
+                      className="px-6 py-3 text-start text-[30px] font-medium text-dark"
                     >
                       Quantity
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-end text-xl font-medium text-dark"
+                      className="px-6 py-3 text-end text-[30px] font-medium text-dark"
                     >
                       {pathName === "/wishlist" ? "Action" : "Total"}
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="">
                   {data.map((product, index) => (
-                    <tr key={index}>
+                    <tr key={index} className="border-b border-[#EFEFEF]">
                       <td className="md:px-3 md:py-4 text-sm font-medium">
                         <div className="flex gap-1">
                           <div className="relative">
@@ -247,9 +248,9 @@ const Table: React.FC<TableProps> = ({
                             <div className="absolute -top-2 -right-2">
                               <div
                                 onClick={() => showDeleteConfirm(index)}
-                                className="bg-white shadow h-5 w-5 rounded-full cursor-pointer"
+                                className="bg-white shadow h-5  w-5 flex justify-center items-center  rounded-full cursor-pointer hover:text-white hover:bg-[#C62131]"
                               >
-                                <IoMdCloseCircleOutline size={20} />
+                                <IoCloseSharp size={18} />
                               </div>
                             </div>
                           </div>
@@ -297,13 +298,13 @@ const Table: React.FC<TableProps> = ({
                         <div className="flex">
                           <div
                             onClick={() => decrement(index)}
-                            className="h-8 w-8 rounded-md bg-white border border-gray flex justify-center items-center"
+                            className="h-8 w-8    bg-[#E7E7EF] hover:bg-[#F0EFF2] flex justify-center items-center"
                           >
                             <RxMinus size={20} />
                           </div>
-                          <div className="h-8 w-14 rounded-md bg-white flex justify-center items-center">
+                          <div className="h-8 w-14  bg-[#F0EFF2] hover:bg-[#E7E7EF] flex justify-center items-center">
                             <input
-                              className="h-8 w-8 text-center border border-gray rounded-md"
+                              className="h-8 w-14 text-center "
                               type="text"
                               min={1}
                               max={100}
@@ -314,7 +315,7 @@ const Table: React.FC<TableProps> = ({
                           </div>
                           <div
                             onClick={() => increment(index)}
-                            className="h-8 w-8 rounded-md bg-white border border-gray flex justify-center items-center"
+                            className="h-8 w-8  bg-[#E7E7EF] hover:bg-[#F0EFF2]  flex justify-center items-center"
                           >
                             <RxPlus size={20} />
                           </div>
@@ -374,7 +375,7 @@ const Table: React.FC<TableProps> = ({
                     onClick={() => showDeleteConfirm(index)}
                     className="bg-white shadow h-5 w-5 rounded-full cursor-pointer"
                   >
-                    <IoMdCloseCircleOutline size={20} />
+                    <IoCloseSharp size={20} />
                   </div>
                 </div>
               </div>
@@ -398,13 +399,13 @@ const Table: React.FC<TableProps> = ({
                 <div className="flex">
                   <div
                     onClick={() => decrement(index)}
-                    className="h-7 w-7 rounded-md bg-white border border-gray flex justify-center items-center"
+                    className="h-7 w-7  bg-[#E7E7EF] hover:bg-[#F0EFF2]  flex justify-center items-center"
                   >
                     <RxMinus size={20} />
                   </div>
-                  <div className="h-7 w-7 rounded-md bg-white flex justify-center items-center">
+                  <div className="h-7 w-7  bg-[#F0EFF2] hover:bg-[#E7E7EF]  flex justify-center items-center">
                     <input
-                      className="h-8 w-8 text-center border border-gray rounded-md"
+                      className="h-7 w-8 text-center   "
                       type="text"
                       min={1}
                       max={100}
@@ -415,7 +416,7 @@ const Table: React.FC<TableProps> = ({
                   </div>
                   <div
                     onClick={() => increment(index)}
-                    className="h-7 w-7 rounded-md bg-white border border-gray flex justify-center items-center"
+                    className="h-7 w-7  bg-[#E7E7EF]  hover:bg-[#F0EFF2] flex justify-center items-center"
                   >
                     <RxPlus size={20} />
                   </div>

@@ -14,9 +14,7 @@ const config: Config = {
     extend: {
     
       fontFamily: {
-        optima: ["var(--font-optima)"],
-        Montserrat: ["Montserrat", "sans-serif"],
-
+        poppins: ["Poppins", "sans-serif"],
       },
       screens: {
         "2xsm": "375px",
@@ -30,6 +28,7 @@ const config: Config = {
         current: "currentColor",
         transparent: "transparent",
         white: "#FFFFFF",
+        shade:"#EFEFEF",
         // black: "#1C2434",
         red: "#FB5454",
         // "black-2": "#010101",

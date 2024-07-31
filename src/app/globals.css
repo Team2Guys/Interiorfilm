@@ -14,7 +14,11 @@
   --antd-text-color: #ffffff;
   --antd-border-color: #434343;
 }
- 
+
+.font-poppins-light {
+  font-family: 'Poppins', sans-serif;
+}
+
 
 .borderless-select.ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
     border: none !important;
@@ -43,14 +47,13 @@
     background: #FF914E !important;
   }
   
-  .ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector{
-    border-color: #FF914E !important;
-    color: black !important;
-
-  }
-  .ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector{
-    border-color: #FF914E !important;
-
+ 
+  .shipment.ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector{
+    border-color: none !important;
+    border: none !important;
+    background: transparent !important;
+    border-radius: 0px !important;
+    box-shadow:none !important;
   }
 
   .ant-pagination .ant-pagination-item-active a{
@@ -144,11 +147,11 @@
 
 
 .ant-checkbox-checked .ant-checkbox-inner{
-  background-color: #FF914E !important;
-  border-color: #FF914E !important;
+  background-color: #000000 !important;
+  border-color: #000000 !important;
 }
 .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner, .ant-checkbox:not(.ant-checkbox-disabled):hover .ant-checkbox-inner{
-  border-color: #FF914E !important;
+  border-color: #000000 !important;
 
 }
 
@@ -337,5 +340,57 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #FF914E; /* Color when hovering over the scrollbar thumb */
+}
+
+.column-swipper .swiper-wrapper{
+flex-direction: column !important;
+width: 100% !important;
+
+}
+
+.column-swiper-slider {
+  width: 100% !important
+}
+
+
+.product_starts{
+  display: flex !important;
+  gap: 15px !important;
+  svg{
+    width: 33px;
+    height: 30px;;
+  }
+}
+
+/* .swiper-wrapper{
+flex-direction: column !important;
+border: 1px solid green;
+gap: 10px;
+} */
+
+.custom-scrollbar1 {
+  overflow-y: scroll;
+  /* Optional: Adding padding, margin, and other styles */
+}
+
+/* Custom scrollbar styling */
+.custom-scrollbar1::-webkit-scrollbar {
+  width: 3px; /* Width of the entire scrollbar */
+  height: 7px;
+}
+
+.custom-scrollbar1::-webkit-scrollbar-track {
+  background: rgb(178, 170, 170); /* Color of the scrollbar track */
+  border-radius: 3px;
+}
+
+.custom-scrollbar1::-webkit-scrollbar-thumb {
+  background-color: rgb(183, 170, 170); /* Color of the scrollbar thumb */
+  border-radius: 3px;
+  border: 5px solid black; /* Padding around the thumb */
+}
+
+.custom-scrollbar1::-webkit-scrollbar-thumb:hover {
   background: #FF914E; /* Color when hovering over the scrollbar thumb */
 }

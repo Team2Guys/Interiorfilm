@@ -8,16 +8,16 @@ interface OverlayProps {
 
 const Overlay: React.FC<OverlayProps> = ({ title }) => {
   return (
-    <div className="bg-overlay object-contain bg-cover w-full h-auto bg-no-repeat pt-20 text-center">
-      <h1 className="text-3xl font-medium leading-loose uppercase">{title}</h1>
+    <div className=" bg-[#EFEFEF] w-full h-auto bg-no-repeat py-5  text-center">
+      <h1 className="text-3xl font-medium text-[#535353] leading-loose uppercase">{title}</h1>
       <Breadcrumb
-        className="flex justify-center pb-20"
+        className="flex justify-center"
         items={[
           {
             title: <Link href="/">Home</Link>,
           },
           {
-            title: title,
+            title: <p className="text-primary">{title}</p>,
           },
         ]}
       />

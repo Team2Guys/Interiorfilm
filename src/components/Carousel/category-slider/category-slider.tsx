@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -42,6 +42,11 @@ const CategorySlider: React.FC = () => {
 
     fetchCategories();
   }, []);
+
+  const handleCategoryClick = (category:any) => {
+    localStorage.setItem('selectedCategory', JSON.stringify(category));
+    // Navigate to the products page if needed
+  };
 
   return (
     <div className="px-2 md:px-4 flex items-center relative">
@@ -105,6 +110,7 @@ const CategorySlider: React.FC = () => {
                 name={category.name}
                 posterImageUrl={category.posterImageUrl.imageUrl}
                 categoryId={category._id}
+                onClick={() => handleCategoryClick(category)}
               />
             </SwiperSlide>
           ))

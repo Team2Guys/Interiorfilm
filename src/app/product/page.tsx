@@ -14,6 +14,8 @@ import { Radio } from 'antd';
 import Input from 'components/Common/regularInputs'
 import axios from 'axios'
 import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading'
+import { Checkbox } from 'antd';
+import { IoIosSearch } from 'react-icons/io'
 
 interface category {
   posterImageUrl: {
@@ -30,7 +32,7 @@ interface category {
 const StaticCategory = {
   posterImageUrl: {
     public_id: 'string',
-    imageUrl:"string"
+    imageUrl: "string"
   },
   _id: "all",
   name: "View All",
@@ -40,7 +42,7 @@ const StaticCategory = {
 }
 
 
-const Product = () => {
+const Products = () => {
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
   const [totalPage, setTotalPage] = useState<string | undefined>()
   const [totalProductscount, setTotalProductscount] = useState<number | undefined>()
@@ -54,9 +56,8 @@ const Product = () => {
   const [priceRange, setPriceRange] = useState({ from: '', to: '' })
   const [value, setValue] = useState(1)
   const [activeLink, setActiveLink] = useState<category | undefined>()
-  const [inStockOnly, setInStockOnly] = useState<boolean>(false)
+  const [inStockOnly, setInStockOnly] = useState<boolean>(true)
   const [outOfStockOnly, setOutOfStockOnly] = useState<boolean>(false)
-  // const [productsToShow, setProductsToShow] = useState<number>(9)
 
   const handleInStockChange: CheckboxProps['onChange'] = (e) => {
     setInStockOnly(e.target.checked)
@@ -107,7 +108,7 @@ const Product = () => {
       let category = categoryResponse.data
       setTotalProducts(products.data.products)
       setActiveLink(categoryResponse.data[0])
-      setCategory([StaticCategory,...category])
+      setCategory([StaticCategory, ...category])
     } catch (err) {
       console.log(err, "err")
     } finally {
@@ -130,7 +131,7 @@ const Product = () => {
   const handlePriceChange = (field: any, value: any) => {
     setPriceRange(prevRange => ({
       ...prevRange,
-      [field]: value === '' ? '' : Number(value) // Handle empty string for clearing input
+      [field]: value === '' ? '' : Number(value)
     }));
   };
 
@@ -139,11 +140,12 @@ const Product = () => {
   }
 
   const filteredProductsByCategory = activeLink ? totalProducts.filter(product => {
-    if(activeLink._id ==="all") {
+    if (activeLink._id === "all") {
       return product;
     }
 
-   return product.category === activeLink._id}) : totalProducts;
+    return product.category === activeLink._id
+  }) : totalProducts;
 
   console.log()
   const filteredProducts = filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
@@ -189,7 +191,7 @@ const Product = () => {
             <h1>Sort By: </h1>
             <Select
               defaultValue="Default"
-              className='w-40 h-13'
+              className='w-40 h-10 rounded-none'
               onChange={handleSortChange}
               options={[
                 { value: "Default", label: "Default" },
@@ -198,85 +200,98 @@ const Product = () => {
               ]}
             />
           </div>
-          <input
-            className="px-2 border rounded-md border-primary outline-none w-3/6 md:w-auto" 
-            
-            type="search"
-            placeholder="Search"
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
+
+
+<div className="relative w-3/6 md:w-auto flex items-center border border-secondary" >
+      <input
+        className="px-2 py-2 rounded-none outline-none  w-[90%] border-sky-900"
+        type="search"
+        placeholder="Search"
+        value={searchTerm}
+        onChange={handleSearchChange}
+      />
+
+<IoIosSearch  className="inline-block absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"/>
+
+    </div>
         </div>
 
         <div className="flex flex-wrap lg:flex-nowrap gap-2 space-y-4">
-          <div className="w-full lg:w-3/12 space-y-3 hidden lg:block relative">
+          <div className="w-full lg:w-3/12 space-y-3 hidden lg:block relative " style={{boxShadow: "1px 0px 2px #00000029"}}>
             <div className="sticky top-20">
-              <div className="p-2 bg-secondary">
+              <div className="p-2 bg-white">
                 <Collapse title="All Categories">
-                <ul className="px-1 pt-2 space-y-1">
-      {loading ? (
-        <div className="flex flex-col space-y-1">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <div key={index} className=' flex flex-col mt-3 w-full'>
-            <SkeletonLoading
-              title={false} 
-              style={{ flexDirection: 'column' }}
-              paragraph={{ rows: 1 }}  
-              className='flex w-full'
-              active={true}
-              />
-          </div>
-          ))}
-        </div>
-      ) : (
-        category && category.map((item, index) => (
-          <li className='flex flex-col w-full' key={index}>
-            <div
-              className={
-                activeLink?.name === item.name
-                  ? "bg-primary px-2 text-white rounded-md w-full h-8 flex items-center cursor-pointer"
-                  : "hover:bg-primary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center cursor-pointer"
-              }
-              onClick={() => handleCategoryClick(item)}
-            >
-              {item.name}
-            </div>
-          </li>
-        ))
-      )}
-    </ul>
+                  <ul className="px-1 pt-2 space-y-1">
+                    {loading ? (
+                      <div className="flex flex-col space-y-1">
+                        {Array.from({ length: 5 }).map((_, index) => (
+                          <div key={index} className=' flex flex-col mt-3 w-full'>
+                            <SkeletonLoading
+                              title={false}
+                              style={{ flexDirection: 'column' }}
+                              paragraph={{ rows: 1 }}
+                              className='flex w-full'
+                              active={true}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      category && category.map((item, index) => {
+                        let viewAllflag = item.name == "View All"
+                        console.log(viewAllflag, "flag")
+                        return (
+                          <li className='flex flex-col w-full' key={index}>
+                            <div
+                              className={
+                                activeLink?.name === item.name
+                                  ? `bg-secondary px-2 text-white w-full h-8 flex tracking-[2px] items-center  cursor-pointer text-lg truncate
+`
+                                  : `hover:bg-secondary px-2 hover:text-white w-full h-8 flex items-center  cursor-pointer text-lg truncate text-text	
+`
+                              }
+                              onClick={() => handleCategoryClick(item)}
+                            >
+                              {item.name.toUpperCase()}
+                            </div>
+                          </li>
+
+                        )
+                      })
+                    )}
+                  </ul>
                 </Collapse>
               </div>
-              <div className="p-2 bg-secondary">
+              <div className="p-2 bg-white ">
                 <Collapse title="Availability">
                   <Radio.Group onChange={onChange} value={value}>
                     <Space direction="vertical">
-                      <Radio value={1}>All Product</Radio>
-                      <Radio checked={inStockOnly} onChange={handleInStockChange} value={2}>In Stock</Radio>
-                      <Radio checked={outOfStockOnly} onChange={handleOutOfStockChange} value={3}>Out Of Stock</Radio>
+
+                      <Checkbox checked={inStockOnly} onChange={handleInStockChange} value={2}>In Stock</Checkbox>
+                      <Checkbox checked={outOfStockOnly} onChange={handleOutOfStockChange} value={3}>Out Of Stock</Checkbox>
                     </Space>
                   </Radio.Group>
                 </Collapse>
               </div>
-              <div className="p-2 bg-secondary">
+              <div className="p-2 bg-white">
                 <Collapse title="Filter Price">
                   <div className='flex gap-2'>
                     <Input
-                      className='h-10'
-                      placeholder='From'
+                      className='h-10 border-black border-1 rounded-none'
+                      placeholder='FROM'
                       type='number'
                       value={priceRange.from}
                       onChange={(e: any) => handlePriceChange('from', e.target.value)}
                     />
                     <Input
-                      className='h-10'
-                      placeholder='To'
+                      className='h-10 border-black border-1 rounded-none'
+                      placeholder='TO'
                       type='number'
                       value={priceRange.to}
                       onChange={(e: any) => handlePriceChange('to', e.target.value)}
                     />
                   </div>
-                  <div className='text-end pt-2 underline cursor-pointer' onClick={resetPriceFilter}>Reset Price</div>
+                  <div className='text-end pt-2 underline cursor-pointer uppercase font-poppins- text-xs text-dark' onClick={resetPriceFilter}>Reset Price</div>
                 </Collapse>
               </div>
             </div>
@@ -302,7 +317,7 @@ const Product = () => {
                     <ul className="px-1 pt-2 space-y-1">
                       {loading ? <div className="flex justify-center items-center"><Loader /></div> : category && category?.map((item, index) => (
                         <li className='flex flex-col w-full' key={index} onClick={onClose}>
-                          <div className={activeLink?.name === item.name ? "bg-primary px-2 text-white rounded-md w-full h-8 flex items-center cursor-pointer" : "hover:bg-primary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center cursor-pointer"} onClick={() => handleCategoryClick(item)}>{item.name}</div>
+                          <div className={activeLink?.name === item.name ? "bg-secondary px-2 text-white rounded-md w-full h-8 flex items-center cursor-pointer font-poppins-light font-light" : "hover:bg-secondary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center cursor-pointer font-poppins-light"} onClick={() => handleCategoryClick(item)}>{item.name}</div>
                         </li>
                       ))}
                     </ul>
@@ -343,32 +358,32 @@ const Product = () => {
             }
           />
           <div className="w-full lg:w-9/12">
-  {error ? (
-    <div className="text-red flex justify-center items-center">{error}</div>
-  ) : (
-    <>
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-2">
+            {error ? (
+              <div className="text-red flex justify-center items-center">{error}</div>
+            ) : (
+              <>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-2">
 
-      {loading ? (
-        
-        Array.from({ length: 9 }).map((_, index) => (
-          <div key={index} className='gap-10 flex flex-col mt-3'>
-            <SkeletonLoading
-              avatar={{ shape: 'square', size: 150, className: "w-full flex flex-col" }} 
-              title={false} 
-              style={{ flexDirection: 'column' }}
-              paragraph={{ rows: 3 }}  
-              className='gap-10 flex'
-              active={true}
-              />
-          </div>
-        ))
-      ) : (   
-          <Card ProductCard={sortedProducts} /> 
-      )}
-      </div>
-    </>
-  )}
+                  {loading ? (
+
+                    Array.from({ length: 9 }).map((_, index) => (
+                      <div key={index} className='gap-10 flex flex-col mt-3'>
+                        <SkeletonLoading
+                          avatar={{ shape: 'square', size: 150, className: "w-full flex flex-col" }}
+                          title={false}
+                          style={{ flexDirection: 'column' }}
+                          paragraph={{ rows: 3 }}
+                          className='gap-10 flex'
+                          active={true}
+                        />
+                      </div>
+                    ))
+                  ) : (
+                    <Card ProductCard={sortedProducts} />
+                  )}
+                </div>
+              </>
+            )}
             {/* {productsToShow < sortedProducts.length && (
               <button
                 className='px-5 py-2 bg-primary text-white rounded-md flex items-center mx-auto'
@@ -384,4 +399,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Products;

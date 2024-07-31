@@ -17,7 +17,7 @@ import VisibleCard from 'components/widgets/visibleCard/visibleCard';
 
 const { TabPane } = Tabs;
 
-const Detail = ({ params }: { params: { productname: string } }) => {
+const Product = ({ params }: { params: { productname: string } }) => {
   const parsedProduct = params.productname ? params.productname : null;
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [productDetail, setProductDetail] = useState<PRODUCTS_TYPES | null>(null);
@@ -96,10 +96,10 @@ const Detail = ({ params }: { params: { productname: string } }) => {
       totalPrice: (product.discountPrice || product.salePrice) * length * quantity,
       purchasePrice: product.purchasePrice
     };
-  
+
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     const existingItemIndex = existingCart.findIndex((item: any) => item.id === product._id);
-  
+
     if (existingItemIndex !== -1) {
       // Update length and quantity
       existingCart[existingItemIndex].length += length;
@@ -108,12 +108,12 @@ const Detail = ({ params }: { params: { productname: string } }) => {
     } else {
       existingCart.push(newCartItem);
     }
-  
+
     localStorage.setItem("cart", JSON.stringify(existingCart));
     message.success('Product added to cart successfully!');
     window.dispatchEvent(new Event("cartChanged"));
   };
-  
+
 
   const handleAddToWishlist = (product: any) => {
     const newWishlistItem = {
@@ -126,10 +126,10 @@ const Detail = ({ params }: { params: { productname: string } }) => {
       length: length,
       totalPrice: (product.discountPrice || product.salePrice) * length * quantity,
     };
-  
+
     let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
     const existingItemIndex = existingWishlist.findIndex((item: any) => item.id === product._id);
-  
+
     if (existingItemIndex !== -1) {
       // Update length and quantity
       existingWishlist[existingItemIndex].length += length;
@@ -138,12 +138,12 @@ const Detail = ({ params }: { params: { productname: string } }) => {
     } else {
       existingWishlist.push(newWishlistItem);
     }
-  
+
     localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
     message.success('Product added to Wishlist successfully!');
     window.dispatchEvent(new Event("WishlistChanged"));
   };
-  
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -153,7 +153,7 @@ const Detail = ({ params }: { params: { productname: string } }) => {
         if (parsedProduct && (response.data.products && response.data.products.length > 0)) {
           let slicedProducts = response.data.products.length > 4 ? response.data.products.filter((item: any) => generateSlug(item.name) !== parsedProduct).slice(0, 4) : response.data.products.filter((item: any) => generateSlug(item.name) !== parsedProduct)
           setProducts(slicedProducts);
-          for (let key of response.data.products){
+          for (let key of response.data.products) {
             if (generateSlug(key.name) === parsedProduct) {
               setProductDetail(key);
               fetchRelatedProducts(key.category); // Fetch related products based on category
@@ -226,19 +226,25 @@ const Detail = ({ params }: { params: { productname: string } }) => {
         productsLoading ? <div className='flex justify-center items-center h-[20vh]'><Loader /></div> : productDetail ?
           <>
             <Container className='mt-10 mb-5'>
-              <div className='shadow p- bg-white'>
-                <div className='grid grid-cols-1 md:grid-cols-2 mt-2 p-2 gap-4'>
-                  <div className='w-full'>
-                    <Thumbnail  thumbs={productDetail.imageUrl} />
+              <div className='shadow  bg-white'>
+                <div className='grid grid-cols-2 md:grid-cols-3 mt-2 p-2 gap-4'>
+
+                  <div className='w-full col-span-2'>
+                    <Thumbnail thumbs={productDetail.imageUrl} />
                   </div>
-                  <div className='py-5 px-8 space-y-4 md:space-y-8 z-10'>
+
+                  <div className='py-3 px-8 space-y-2 md:space-y-8 '>
                     <h1 className='text-3xl'>{productDetail.name}</h1>
+
                     <div className='flex gap-2'>
-                      <Rate value={averageRating} disabled />
-                      <p>({reviews.length} Reviews)</p>
+                      <Rate className='text-primary product_starts' value={averageRating} disabled />
+                      <p className='flex items-center h-[30x] w-[30x]'>({reviews.length})</p>
                     </div>
+
+
+
                     <div className='flex gap-2'>
-                      <p className='text-primary'>
+                      <p className='text-secondary font-poppins text-[85] font-bold'>
                         Dhs. <span>{productDetail.discountPrice ? productDetail.discountPrice : productDetail.salePrice}</span>.00
                       </p>
                       {productDetail.discountPrice ?
@@ -247,9 +253,10 @@ const Detail = ({ params }: { params: { productname: string } }) => {
                         </p>
                         : null}
                     </div>
-                    <p><span className='font-bold text-base'>Available Quantity: </span> {"In Stock" ?? "Out Of Stock"} </p>
+                    <p><span className='text-text'>Available Quantity: </span> {productDetail.totalStockQuantity && productDetail.totalStockQuantity > 0 ? "In Stock" : "Out Of Stock"} </p>
+
                     <div className='flex gap-2 items-center'>
-                      <p className='font-bold text-base'>Quantity :</p>
+                      <p className='font-font-semibold	 text-text'>Quantity :</p>
                       <div className='flex'>
                         <div className='h-7 w-7 rounded-md bg-white border border-gray flex justify-center items-center' onClick={handleDecrement}>
                           <RxMinus size={20} />
@@ -270,19 +277,21 @@ const Detail = ({ params }: { params: { productname: string } }) => {
                       </div>
                     </div>
                     <div className='flex gap-2 items-center'>
-                      <p className='font-bold text-base'>Dimension : 1.22</p> <IoIosClose size={20} />
-                      <input min={1} max={100} type='number' value={length} onChange={handleLengthChange} name='length' placeholder='Enter Length' className={`peer px-3 py-2 block  border rounded-md border-gray-200 text-sm placeholder:text-slate-400 disabled:opacity-50 disabled:pointer-events-none autofill:pb-2`} />
+                      <p className='font-font-semibold text-text'>Dimension : 1.22</p> <IoIosClose size={20} />
+                      <input min={1} max={100} type='number' value={length} onChange={handleLengthChange} name='length' placeholder='Enter Length' className={`peer px-3 py-2 block  border  border-gray-200 text-sm focus:outline-none placeholder:text-slate-400 disabled:opacity-50 disabled:pointer-events-none autofill:pb-2`} />
                     </div>
-                    <p className='text-primary'>
-                      <span className='font-bold text-base text-black'>Total Price :</span> Dhs. <span>{totalPrice}</span>.00
+                    <p className='text-secondary font-bold'>
+                      <span className='font-font-semibold	 text-text'>Total Price :</span> Dhs. <span>{totalPrice}</span>.00
                     </p>
 
                     {productDetail.totalStockQuantity == null ? (
                       <p className="text-primary text-center text-2xl">Product is out of stock</p>
                     ) : (
                       <div className='flex gap-2'>
-                        <button className='bg-primary rounded-md py-3 px-8 text-white' onClick={() => handleAddToCart(productDetail)} >Add To Cart</button>
-                        <button className='bg-primary rounded-md py-3 px-3 text-white' onClick={() => handleAddToWishlist(productDetail)}><GoHeart size={25} /></button>
+
+                        <button className='bg-secondary truncate py-2 px-5 text-white' onClick={() => { }} >Order Now</button>
+                        <button className='bg-secondary  truncate py-2 px-5 text-white' onClick={() => handleAddToCart(productDetail)} >Add To Cart</button>
+                        <button className='bg-primary py-3 px-3 text-white' onClick={() => handleAddToWishlist(productDetail)}><GoHeart size={25} /></button>
                       </div>
                     )}
                     <div className='flex items-center gap-2 text-black dark:text-white'>
@@ -290,6 +299,8 @@ const Detail = ({ params }: { params: { productname: string } }) => {
                       <p className='text-dark'>All, Featured, Shoes</p>
                     </div>
                   </div>
+
+
                 </div>
               </div>
             </Container>
@@ -316,4 +327,4 @@ const Detail = ({ params }: { params: { productname: string } }) => {
   )
 }
 
-export default Detail;
+export default Product;

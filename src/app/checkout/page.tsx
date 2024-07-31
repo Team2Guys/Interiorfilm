@@ -8,9 +8,8 @@ const CheckOut = () => {
   return (
     <>
         <Overlay title='Checkout'/>
-        <Container className='mt-10'>
         <Checkout/>
-        </Container>
+      
     </>
   )
 }

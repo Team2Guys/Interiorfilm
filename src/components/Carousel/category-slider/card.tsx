@@ -6,6 +6,7 @@ interface CategoryCardProps {
   name: string;
   posterImageUrl: string;
   categoryId: string; // Add categoryId to navigate to the specific category
+  onClick?:any; 
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ name, posterImageUrl, categoryId }) => {
@@ -14,7 +15,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ name, posterImageUrl, categ
   const handleButtonClick = () => {
     // Navigate to the product page, you can customize the URL based on your routing structure
     router.push(`/product`);
-    // router.push(`/product/${categoryId}`);
+    // router.push(`/products/${categoryId}`);
   };
 
   return (

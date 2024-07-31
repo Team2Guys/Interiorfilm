@@ -170,3 +170,34 @@ export const AddproductsinitialValues: FormValues = {
   code: ""
 
 };
+
+export const options = [
+  {
+    value: 'abu_dhabi',
+    label: 'Abu Dhabi',
+  },
+  {
+    value: 'dubai',
+    label: 'Dubai',
+  },
+  {
+    value: 'sharjah',
+    label: 'Sharjah',
+  },
+  {
+    value: 'ajman',
+    label: 'Ajman',
+  },
+  {
+    value: 'umm_al_quwain',
+    label: 'Umm Al Quwain',
+  },
+  {
+    value: 'ras_al_khaimah',
+    label: 'Ras Al Khaimah',
+  },
+  {
+    value: 'fujairah',
+    label: 'Fujairah',
+  },
+];

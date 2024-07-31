@@ -1,59 +1,151 @@
+//@ts-nocheck
 import Image from 'next/image';
-import checkoutimg from '../../../../public/images/img-1.png';
-import React from 'react';
-import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+import { message, Modal } from 'antd';
+import { usePathname } from 'next/navigation';
+import { IoCloseSharp } from 'react-icons/io5';
+import PRODUCTS_TYPES from 'types/interfaces';
+import { IoIosClose } from 'react-icons/io';
 
-interface Item {
-  name: string;
-  price: string;
-  color: string;
-  size: string;
+interface TableProps {
+  cartdata: PRODUCTS_TYPES[];
+  onCartChange: (updatedCart: PRODUCTS_TYPES[]) => void;
 }
 
-export const items: Item[] = [
-  { name: "Basic Korean-style Bag", price: "£219.00", color: "Brown", size: "XL" },
-  { name: "Gray Italian Raincoat", price: "£321.00", color: "Brown", size: "XL" },
-  { name: "T-shirt & White Pant", price: "£119.00", color: "Brown", size: "XL" },
-  { name: "Italian Hanging Clock", price: "£213.00", color: "Brown", size: "XL" },
-  { name: "Bata Leather black Shoe", price: "£354.00", color: "Brown", size: "XL" },
-];
+const CheckoutData: React.FC<TableProps> = ({ cartdata, onCartChange }) => {
+  const pathName = usePathname();
+  const [data, setData] = useState<PRODUCTS_TYPES[]>([]);
+  const [counts, setCounts] = useState<{ [key: number]: number }>({});
+  const [subtotal, setSubtotal] = useState(0);
+  const [totalCount, setTotalCount] = useState(0); // New state variable for total count
+  const [changeId, setChangeId] = useState<number | null>(null);
 
-const CheckoutData: React.FC = () => {
+  const ProductHandler = () => {
+    const Products = localStorage.getItem("cart");
+    if (Products && JSON.parse(Products).length > 0) {
+      const items = JSON.parse(Products || "[]");
+      setData(items);
+      const itemCounts = items.reduce((acc: any, item: any, index: number) => {
+        acc[index] = item.count || 1;
+        return acc;
+      }, {});
+      setCounts(itemCounts);
+
+      const sub = items.reduce(
+        (total: number, item: any) => total + item.totalPrice,
+        0
+      );
+      setSubtotal(sub);
+
+      // Calculate total count of products
+      const total = items.reduce((sum: number, item: any) => sum + (item._id || 1), 0);
+      setTotalCount(total);
+    }
+  };
+
+  useEffect(() => {
+    ProductHandler();
+  }, [pathName, changeId]);
+
+  const removeItemFromCart = (index: number) => {
+    const updatedData = [...data];
+    updatedData.splice(index, 1);
+    setData(updatedData);
+    localStorage.setItem("cart", JSON.stringify(updatedData));
+    window.dispatchEvent(new Event("cartChanged"));
+    setChangeId(index);
+    onCartChange(updatedData);
+  };
+
+  const showDeleteConfirm = (index: number) => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this item?",
+      content: "This action cannot be undone.",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
+      onOk() {
+        removeItemFromCart(index);
+      },
+    });
+  };
+
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-lg font-medium text-gray-900 mb-4">Order Summary</h2>
-      <div className="space-y-4">
-        {items.map((item, index) => (
-          <div key={index} className="flex justify-between items-top border-b border-gray pb-2">
-            <div className="flex gap-2">
-              <Image width={10} height={10} src={checkoutimg} alt="Interior Film" className="w-14" />
-              <div>
-                <h3 className="font-medium text-gray-900 text-sm">{item.name}</h3>
-                <p className="text-sm text-gray-600 text-[12px]">Color: {item.color}</p>
-                <p className="text-sm text-gray-600 text-[12px]">Size: {item.size}</p>
+    <div className="bg-white p-6 border border-shade rounded-md ">
+      <h2 className="text-16 font-medium  text-end mb-4">*total <span className='text-primary'>{totalCount}</span> Items</h2>
+      <div className="space-y-4 max-h-64 overflow-y-scroll custom-scrollbar1">
+        {data.map((product, index) => (
+          <div className="p-2 rounded-md mt-5 bg-white shadow " key={index}>
+              <div className="flex gap-3 justify-between">
+                <div className=" w-8/12 flex gap-2">
+                    <Image
+                      className=""
+                      width={100}
+                      height={100}
+                      src={product.imageUrl[0].imageUrl || product.imageUrl}
+                      alt="Product"
+                    />
+                  <div>
+                <h1 className="text-14 font-semibold">
+                    {typeof product.name === "string" ? product.name : ""}
+                  </h1>
+                  <p>
+                    AED{" "}
+                    <span>
+                      {product.discountPrice
+                        ? product.discountPrice * (counts[index] || 1)
+                        : product.price * (counts[index] || 1)}
+                    </span>
+                    .00
+                  </p>
+                    <div className={` text-sm font-semibold`}>
+                    {counts[index] || 1}X
+                    </div>
+                  
+                  <div className="flex gap-2 items-center">
+                    <p className="font-semibold text-base">Dimension : 1.22</p>{" "}
+                    <IoIosClose size={20} />
+                    <div className={` text-sm font-semibold`}
+                    >{product.length}mm</div>
+                  </div>
+                  </div>
+                </div>
+                <div className="space-y-1 w-4/12">
+                <p className='float-end'>
+                  AED{" "}
+                  <span>
+                    {product.discountPrice
+                      ? product.discountPrice * (counts[index] || 1) * product.length
+                      : product.price * (counts[index] || 1) * product.length}
+                  </span>
+                  .00
+                </p>
+                </div>
               </div>
-            </div>
-            <p className="font-medium text-gray-900 text-sm">{item.price}</p>
+            
           </div>
         ))}
       </div>
-      <div className="mt-6 border-t border-gray pt-4">
-        <div className="flex justify-between mb-2">
-          <p className="text-gray-600">Subtotal:</p>
-          <p className="font-medium text-gray-900">£381.00</p>
+
+      <div className="w-full bg-[#EFEFEF] px-8 py-14 space-y-3 rounded-sm  mt-10">
+        <div className="flex justify-between items-center">
+          <h1 className="text-[27px] ">Subtotals:</h1>
+          <h1 className="text-[24px]  ">
+            AED <span>{subtotal}</span>.00
+          </h1>
         </div>
-        <div className="flex justify-between mb-2">
-          <p className="text-gray-600">Shipping:</p>
-          <p className="font-medium text-gray-900">Calculated at checkout</p>
+        <hr className="w-full mx-auto border-gray" />
+        <div className="flex justify-between items-center">
+          <h1 className="text-[27px] ">Total:</h1>
+          <h1 className="text-[24px] ">
+            AED <span>{subtotal}</span>.00
+          </h1>
         </div>
-        <div className="flex justify-between font-bold">
-          <p className="text-gray-900">Total:</p>
-          <p className="text-gray-900">£381.00</p>
+        <hr className="w-full mx-auto border-gray" />
+        <div className="flex justify-center items-center">
+          <button className="w-full bg-black hover:bg-dark text-white py-3">Confirm Order</button>
         </div>
       </div>
-      <Link href="/checkout"className="w-full bg-red-600 text-white py-3 mt-6 rounded-md text-center block">
-        Proceed To Checkout
-      </Link>
     </div>
   );
 };
