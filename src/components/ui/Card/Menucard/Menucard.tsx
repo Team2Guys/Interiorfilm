@@ -54,7 +54,8 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDet
       length: 1,
       count: 1,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
-      purchasePrice: product.purchasePrice
+      purchasePrice: product.purchasePrice,
+      sizes: product.sizes
     };
 
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");

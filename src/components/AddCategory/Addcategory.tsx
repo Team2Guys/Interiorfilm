@@ -98,13 +98,13 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
                         </h3>
                       </div>
                       {posterimageUrl && posterimageUrl.length > 0 ? (
-                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
                           {posterimageUrl.map((item: any, index) => {
                             return (
                               <div
-                              className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
-                              key={index}
-                            >
+                                className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                                key={index}
+                              >
                                 <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
                                   <RxCross2
                                     className="cursor-pointer text-red-500 hover:text-red-700"
@@ -137,7 +137,7 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <div>
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                        Category Title
+                          Category Title
                         </label>
                         <input
                           type="text"
@@ -163,7 +163,7 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
                           Category Description
                         </label>
                         <textarea
-                       
+
                           name="description"
                           onChange={formik.handleChange}
                           value={formik.values.description}
@@ -179,14 +179,7 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
                           </div>
                         ) : null}
                       </div>
-
-
-
-
                     </div>
-
-
-
 
                   </div>
                 </div>

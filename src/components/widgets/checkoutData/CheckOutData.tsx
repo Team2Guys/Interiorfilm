@@ -1,6 +1,6 @@
 //@ts-nocheck
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import { message, Modal } from 'antd';
 import { usePathname } from 'next/navigation';
 import { IoCloseSharp } from 'react-icons/io5';
@@ -10,13 +10,16 @@ import { IoIosClose } from 'react-icons/io';
 interface TableProps {
   cartdata: PRODUCTS_TYPES[];
   onCartChange: (updatedCart: PRODUCTS_TYPES[]) => void;
+  subtotal:number 
+    setSubtotal: React.Dispatch<SetStateAction<number>>
+    shipmentFee: number | string
 }
 
-const CheckoutData: React.FC<TableProps> = ({ cartdata, onCartChange }) => {
+const CheckoutData: React.FC<TableProps> = ({ cartdata, onCartChange,subtotal,setSubtotal,shipmentFee }) => {
   const pathName = usePathname();
   const [data, setData] = useState<PRODUCTS_TYPES[]>([]);
   const [counts, setCounts] = useState<{ [key: number]: number }>({});
-  const [subtotal, setSubtotal] = useState(0);
+
   const [totalCount, setTotalCount] = useState(0); // New state variable for total count
   const [changeId, setChangeId] = useState<number | null>(null);
 
@@ -70,23 +73,26 @@ const CheckoutData: React.FC<TableProps> = ({ cartdata, onCartChange }) => {
     });
   };
 
+
+
+
   return (
     <div className="bg-white p-6 border border-shade rounded-md ">
       <h2 className="text-16 font-medium  text-end mb-4">*total <span className='text-primary'>{totalCount}</span> Items</h2>
       <div className="space-y-4 max-h-64 overflow-y-scroll custom-scrollbar1">
         {data.map((product, index) => (
           <div className="p-2 rounded-md mt-5 bg-white shadow " key={index}>
-              <div className="flex gap-3 justify-between">
-                <div className=" w-8/12 flex gap-2">
-                    <Image
-                      className=""
-                      width={100}
-                      height={100}
-                      src={product.imageUrl[0].imageUrl || product.imageUrl}
-                      alt="Product"
-                    />
-                  <div>
-                <h1 className="text-14 font-semibold">
+            <div className="flex gap-3 justify-between">
+              <div className=" w-8/12 flex gap-2">
+                <Image
+                  className=""
+                  width={100}
+                  height={100}
+                  src={product.imageUrl[0].imageUrl || product.imageUrl}
+                  alt="Product"
+                />
+                <div>
+                  <h1 className="text-14 font-semibold">
                     {typeof product.name === "string" ? product.name : ""}
                   </h1>
                   <p>
@@ -98,19 +104,19 @@ const CheckoutData: React.FC<TableProps> = ({ cartdata, onCartChange }) => {
                     </span>
                     .00
                   </p>
-                    <div className={` text-sm font-semibold`}>
+                  <div className={` text-sm font-semibold`}>
                     {counts[index] || 1}X
-                    </div>
-                  
+                  </div>
+
                   <div className="flex gap-2 items-center">
                     <p className="font-semibold text-base">Dimension : 1.22</p>{" "}
                     <IoIosClose size={20} />
                     <div className={` text-sm font-semibold`}
-                    >{product.length}mm</div>
-                  </div>
+                    >{product.length} Meter</div>
                   </div>
                 </div>
-                <div className="space-y-1 w-4/12">
+              </div>
+              <div className="space-y-1 w-4/12">
                 <p className='float-end'>
                   AED{" "}
                   <span>
@@ -120,9 +126,9 @@ const CheckoutData: React.FC<TableProps> = ({ cartdata, onCartChange }) => {
                   </span>
                   .00
                 </p>
-                </div>
               </div>
-            
+            </div>
+
           </div>
         ))}
       </div>
@@ -135,12 +141,26 @@ const CheckoutData: React.FC<TableProps> = ({ cartdata, onCartChange }) => {
           </h1>
         </div>
         <hr className="w-full mx-auto border-gray" />
+
+        
+        <div className="flex justify-between items-center">
+          <h1 className="text-[27px] ">Shipment Fee:</h1>
+          <h1 className="text-[24px] ">
+            AED <span>{shipmentFee}</span>.00
+          </h1>
+        </div>
+        <hr className="w-full mx-auto border-gray" />
+
+
         <div className="flex justify-between items-center">
           <h1 className="text-[27px] ">Total:</h1>
           <h1 className="text-[24px] ">
-            AED <span>{subtotal}</span>.00
+            AED <span>{shipmentFee == "Free" ? subtotal : Number(shipmentFee)+subtotal}</span>.00
           </h1>
         </div>
+
+
+
         <hr className="w-full mx-auto border-gray" />
         <div className="flex justify-center items-center">
           <button className="w-full bg-black hover:bg-dark text-white py-3">Confirm Order</button>

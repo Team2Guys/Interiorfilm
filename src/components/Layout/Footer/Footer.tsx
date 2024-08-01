@@ -99,7 +99,7 @@ try{
               <ul className={`space-y-2 transition-all duration-300 overflow-hidden ${isCategoriesOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}>
                 {category?.length > 0 && category.slice(0,4).map((category, index) => (
                   <li key={index}>
-                    <Link href="/product" className='hover:text-primary link-footer'>{category.name}</Link>
+                    <Link href="/products" className='hover:text-primary link-footer'>{category.name}</Link>
                   </li>
                 ))}
               </ul>

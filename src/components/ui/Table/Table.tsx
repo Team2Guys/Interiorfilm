@@ -9,6 +9,7 @@ import { message, Modal } from "antd";
 import Button from "../Button/Button";
 import PRODUCTS_TYPES from "types/interfaces";
 import { IoCloseSharp } from "react-icons/io5";
+import SelectList from "../Select/Select";
 interface TableProps {
   cartdata: PRODUCTS_TYPES[];
   wishlistdata: PRODUCTS_TYPES[];
@@ -27,9 +28,7 @@ const Table: React.FC<TableProps> = ({
   const [changeId, setChangeId] = useState<number | null>(null);
 
   const ProductHandler = () => {
-    const Products = localStorage.getItem(
-      pathName === "/wishlist" ? "wishlist" : "cart"
-    );
+    const Products = localStorage.getItem(pathName === "/wishlist" ? "wishlist" : "cart");
     if (Products && JSON.parse(Products).length > 0) {
       const items = JSON.parse(Products || "[]");
       setData(items);
@@ -177,23 +176,51 @@ const Table: React.FC<TableProps> = ({
   };
   const handleLengthChange = (
     index: number,
-    e: React.ChangeEvent<HTMLInputElement>
+    value: number
   ) => {
-    const value = parseInt(e.target.value, 10);
-    if (isNaN(value) || value < 1 || value > 100) {
-      message.error("Please select a length between 1 and 100.");
-    } else {
-      const updatedData = [...data];
-      updatedData[index].length = value; // Update the length in your data
-      setData(updatedData); // Update the state with the new data
 
-      // Update the total price and subtotal
+      const updatedData = [...data];
+      updatedData[index].length = value;
+      setData(updatedData); 
+
+  
       updateTotalPrice(index, counts[index] || 1);
 
-      // Call onCartChange to ensure the parent component updates the subtotal
       onCartChange(updatedData);
-    }
+
   };
+
+  const onChange = (value: string) => {
+    setLength(Number(value))
+  };
+
+
+
+  let options: any = []
+
+
+
+
+  {
+
+
+    if (data) {
+      for (let key of data) {
+        console.log(key, 'key')
+
+        key.sizes && key.sizes.forEach((item: any) => {
+
+          console.log(item, "item")
+          let SizesArray = { label: "1.22" + "x" + item.sizesDetails + " METERS", value: item.sizesDetails }
+          options.push(SizesArray)
+        })
+      }
+    }
+
+  }
+
+
+  console.log(options, "options")
 
   return (
     <>
@@ -254,27 +281,23 @@ const Table: React.FC<TableProps> = ({
                               </div>
                             </div>
                           </div>
-                          <div className="p-2">
+
+                          <div className="p-2 w-full">
                             <h1 className="text-sm md:text-base font-bold">
                               {typeof product.name === "string"
                                 ? product.name
                                 : ""}
                             </h1>
-                            <div className="flex gap-2 items-center">
-                              <p className="font-bold text-base">
-                                Dimension : 1.22
-                              </p>{" "}
-                              <IoIosClose size={20} />
-                              <input
-                                min={1}
-                                max={100}
-                                type="number"
-                                value={product.length} // Ensure this is bound to the correct property ('length')
-                                onChange={(e) => handleLengthChange(index, e)} // Pass index to handleLengthChange
-                                name="length"
-                                placeholder="Enter Length"
-                                className={`peer px-3 py-2 block border rounded-md border-gray-200 text-sm placeholder:text-slate-400 disabled:opacity-50 disabled:pointer-events-none autofill:pb-2`}
+                            <div className="flex gap-2 items-center w-full">
+
+                              <SelectList
+                                className='w-full h-10 border outline-none shipment text-20'
+                                onChange={(value)=>handleLengthChange(index, value)}
+                                options={options}
+                                defaultValue={product.length}
+
                               />
+                  
                             </div>
                           </div>
                         </div>
@@ -288,8 +311,8 @@ const Table: React.FC<TableProps> = ({
                                 ? product.discountPrice * (counts[index] || 1)
                                 : product.price * (counts[index] || 1)
                               : product.discountPrice
-                              ? product.discountPrice
-                              : product.price}
+                                ? product.discountPrice
+                                : product.price}
                           </span>
                           .00
                         </p>
@@ -334,11 +357,11 @@ const Table: React.FC<TableProps> = ({
                             <span>
                               {product.discountPrice
                                 ? product.discountPrice *
-                                  (counts[index] || 1) *
-                                  product.length
+                                (counts[index] || 1) *
+                                product.length
                                 : product.price *
-                                  (counts[index] || 1) *
-                                  product.length}
+                                (counts[index] || 1) *
+                                product.length}
                             </span>
                             .00
                           </p>
@@ -391,8 +414,8 @@ const Table: React.FC<TableProps> = ({
                         ? product.discountPrice * (counts[index] || 1)
                         : product.price * (counts[index] || 1)
                       : product.discountPrice
-                      ? product.discountPrice
-                      : product.price}
+                        ? product.discountPrice
+                        : product.price}
                   </span>
                   .00
                 </p>
@@ -422,18 +445,14 @@ const Table: React.FC<TableProps> = ({
                   </div>
                 </div>
                 <div className="flex gap-2 items-center">
-                  <p className="font-semibold text-base">Dimension : 1.22</p>{" "}
-                  <IoIosClose size={20} />
-                  <input
-                    min={1}
-                    max={100}
-                    type="number"
-                    value={product.length}
-                    onChange={(e) => handleLengthChange(index, e)}
-                    name="length"
-                    placeholder="Enter Length"
-                    className={`peer px-2 py-1 block border rounded-md border-gray-200 text-sm placeholder:text-slate-400 disabled:opacity-50 disabled:pointer-events-none autofill:pb-2`}
-                  />
+                <SelectList
+                                className='w-full h-10 border outline-none shipment text-20'
+                                onChange={(value)=>handleLengthChange(index, value)}
+                                options={options}
+                          
+                                defaultValue={product.length}
+
+                              />
                 </div>
               </div>
             </div>
@@ -451,8 +470,8 @@ const Table: React.FC<TableProps> = ({
                   <span>
                     {product.discountPrice
                       ? product.discountPrice *
-                        (counts[index] || 1) *
-                        product.length
+                      (counts[index] || 1) *
+                      product.length
                       : product.price * (counts[index] || 1) * product.length}
                   </span>
                   .00

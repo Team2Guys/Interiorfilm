@@ -26,15 +26,7 @@ import PRODUCTS_TYPES, { Category } from "types/interfaces";
 import MobileMenu from "./Megamanu/mobile-menu";
 import whatsapp from "../../../../public/images/whatsapp.png"
 import { SlHandbag } from "react-icons/sl";
-import CartDrawer from "components/cart-drawer/cart-drawer";
 
-// interface Product {
-//   name?: string;
-//   description?: string;
-//   posterImageUrl?: {
-//     imageUrl?: string;
-//   };
-// }
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -293,8 +285,8 @@ const Header = () => {
           <div className=" cursor-pointer text-20 md:text-2xl" onClick={showModal}>
             <IoIosSearch />
           </div>
-          <CartDrawer/>
-          <Link href={"/cart"} className="relative text-20 md:text-2xl">
+        
+          <Link href={"/wishlist"} className="relative text-20 md:text-2xl">
             <IoMdHeartEmpty  className=" cursor-pointer" />
             {cartItems.length > 0 ? (
               <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center bg-white text-black absolute left-3 top-3">
@@ -353,7 +345,7 @@ const Header = () => {
                           <div className="float-end ">
                             <Link
                               className="hover:text-black hover:underline"
-                              href={"/product"}
+                              href={"/products"}
                             >
                               View All
                             </Link>

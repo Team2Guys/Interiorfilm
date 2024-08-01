@@ -1,24 +1,17 @@
 'use client'
 import React from 'react';
 import { Select } from 'antd';
+import { SelectProps } from 'antd';
 
-interface Option {
-  value: string;
-  label: string;
-  disabled?: boolean;
-}
-
-interface SelectListProps {
-  options: Option[];
-  className?: string;
-  defaultValue: any;
-  onChange: (value: string) => void;
+interface SelectListProps extends SelectProps {
+  value?:string | any,
+  label?:string |any
 }
 
 const onSearch = (value: string) => {
   console.log('search:', value);
 };
-const SelectList: React.FC<SelectListProps> = ({ options, className, defaultValue, onChange }) => {
+const SelectList: React.FC<SelectListProps> = ({ options, className, defaultValue, onChange}) => {
   return (
     <Select
       showSearch

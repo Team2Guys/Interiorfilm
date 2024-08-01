@@ -202,22 +202,22 @@ const Products = () => {
           </div>
 
 
-<div className="relative w-3/6 md:w-auto flex items-center border border-secondary" >
-      <input
-        className="px-2 py-2 rounded-none outline-none  w-[90%] border-sky-900"
-        type="search"
-        placeholder="Search"
-        value={searchTerm}
-        onChange={handleSearchChange}
-      />
+          <div className="relative w-3/6 md:w-auto flex items-center border border-secondary" >
+            <input
+              className="px-2 py-2 rounded-none outline-none  w-[90%] border-sky-900"
+              type="search"
+              placeholder="Search"
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
 
-<IoIosSearch  className="inline-block absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"/>
+            <IoIosSearch className="inline-block absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
 
-    </div>
+          </div>
         </div>
 
         <div className="flex flex-wrap lg:flex-nowrap gap-2 space-y-4">
-          <div className="w-full lg:w-3/12 space-y-3 hidden lg:block relative " style={{boxShadow: "1px 0px 2px #00000029"}}>
+          <div className="w-full lg:w-3/12 space-y-3 hidden lg:block relative " style={{ boxShadow: "1px 0px 2px #00000029" }}>
             <div className="sticky top-20">
               <div className="p-2 bg-white">
                 <Collapse title="All Categories">

@@ -9,11 +9,9 @@ import ProductSlider from 'components/Carousel/ProductSlider/ProductSlider';
 import axios from 'axios';
 import Loader from 'components/Loader/Loader';
 import Review from 'components/Common/Review';
-import { IoIosClose } from 'react-icons/io';
 import { RxMinus, RxPlus } from 'react-icons/rx';
-import { generateSlug, options } from 'data/Data';
+import { generateSlug } from 'data/Data';
 import PRODUCTS_TYPES from 'types/interfaces';
-import VisibleCard from 'components/widgets/visibleCard/visibleCard';
 import SelectList from 'components/ui/Select/Select';
 
 const { TabPane } = Tabs;
@@ -29,16 +27,6 @@ const Product = ({ params }: { params: { productname: string } }) => {
   const [reviews, setReviews] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [length, setLength] = useState<number>(1);
-
-  const handleLengthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value, 10);
-    if (isNaN(value) || value < 1 || value > 100) {
-      message.error('Please select a length between 1 and 100.');
-    } else {
-      message.destroy(); // clear any previous messages
-      setLength(value);
-    }
-  };
 
   const handleIncrement = () => {
     if (quantity < 100) {
@@ -65,6 +53,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
   useEffect(() => {
     if (productDetail) {
       const price = productDetail.discountPrice || productDetail.salePrice;
+
       setTotalPrice((price * length) * quantity);
     }
   }, [length, quantity, productDetail]);
@@ -95,14 +84,14 @@ const Product = ({ params }: { params: { productname: string } }) => {
       count: quantity,
       length: length,
       totalPrice: (product.discountPrice || product.salePrice) * length * quantity,
-      purchasePrice: product.purchasePrice
+      purchasePrice: product.purchasePrice,
+      sizes: product.sizes
     };
 
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     const existingItemIndex = existingCart.findIndex((item: any) => item.id === product._id);
 
     if (existingItemIndex !== -1) {
-      // Update length and quantity
       existingCart[existingItemIndex].length += length;
       existingCart[existingItemIndex].count += quantity;
       existingCart[existingItemIndex].totalPrice += (product.discountPrice || product.salePrice) * length * quantity;
@@ -157,7 +146,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
           for (let key of response.data.products) {
             if (generateSlug(key.name) === parsedProduct) {
               setProductDetail(key);
-              fetchRelatedProducts(key.category); // Fetch related products based on category
+              fetchRelatedProducts(key.category);
               return;
             }
           }
@@ -227,8 +216,23 @@ const Product = ({ params }: { params: { productname: string } }) => {
   const averageRating = calculateAverageRating();
 
   const onChange = (value: string) => {
-    console.log(`selected ${value}`);
+    setLength(Number(value))
   };
+
+
+
+  let options: any = []
+
+  {
+    ((productDetail && productDetail.sizes) && productDetail.sizes.length > 0) && productDetail.sizes.forEach((item: any) => {
+      let SizesArray = { label: "1.22" + "x" + item.sizesDetails + " METERS", value: item.sizesDetails }
+      options.push(SizesArray)
+
+      return null
+    })
+  }
+
+  
 
 
   return (
@@ -293,10 +297,11 @@ const Product = ({ params }: { params: { productname: string } }) => {
                     <div className='flex gap-2 items-center w-[70%]'>
 
                       <SelectList
-                        className='w-full h-10 border-b outline-none shipment text-20'
+                        className='w-full h-10 border outline-none shipment text-20'
                         onChange={onChange}
                         options={options}
                         defaultValue="Select Size"
+
                       />
 
                     </div>

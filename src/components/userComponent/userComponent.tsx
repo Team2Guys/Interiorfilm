@@ -55,7 +55,7 @@ export default function UserComponent({
                 className="rounded-full text-[#3A393C] text-sm cursor-pointer flex gap-2 items-center"
                 onClick={() => router.push("/")}
               >
-                <span className="rounded-full text-white p-1 bg-[#C72031]">
+                <span className="rounded-full text-white p-1 bg-primary">
                   <IoArrowBackSharp className="rounded-full text-white" />
                 </span>
                 Back to home
@@ -122,7 +122,7 @@ export default function UserComponent({
                     </p>
 
                     <Button
-                      className="bg-[#c62131] text-white lg:p-3 p-2 lg:w-full lg:md:w-28 w-full rounded-none lg:mt-10"
+                      className="bg-primary text-black lg:p-3 p-2 lg:w-full lg:md:w-28 w-full rounded-none lg:mt-10"
                       title={loading ? <Loader color="#fff" /> : buttonTitle}
                       type="submit"
                       disable={loading}
@@ -133,7 +133,7 @@ export default function UserComponent({
                         {
                           routingText &&
                           <Link
-                            className="underline text-sm text-[#c62131]"
+                            className="underline text-sm text-primary"
                             href={
                               title && title === "Sign In" ? "/register" : "/login"
                             }

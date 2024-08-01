@@ -27,21 +27,15 @@ import {
   AddproductsinitialValues,
 } from "data/Data";
 
-const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
-  EditInitialValues,
-  EditProductValue,
-  setselecteMenu,
-  setEditProduct,
+const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({EditInitialValues,EditProductValue,setselecteMenu,setEditProduct,
 }) => {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
   const [imagesUrl, setImagesUrl] = useState<any[]>([]);
-  const [posterimageUrl, setposterimageUrl] = useState<any[] | null>();
+  const [posterimageUrl, setposterimageUrl] = useState<any[] | null>( EditInitialValues && [EditInitialValues.posterImageUrl]);
   const [hoverImage, sethoverImage] = useState<any[] | null | undefined>();
   const [loading, setloading] = useState<boolean>(false);
-  const [productInitialValue, setProductInitialValue] = useState<
-    any | null | undefined
-  >(EditProductValue);
+  const [productInitialValue, setProductInitialValue] = useState<any | null | undefined>(EditProductValue);
   const [imgError, setError] = useState<string | null | undefined>();
   const [Categories, setCategories] = useState<any[]>();
   const [VariationOption, setVariationOption] = useState<string>("withoutVariation");
@@ -55,13 +49,14 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
     setIsOptionSelected(true);
   };
 
+console.log("posterimageUrl", posterimageUrl)
+  
   useLayoutEffect(() => {
     const CategoryHandler = async () => {
       try {
         if (!EditInitialValues) return;
         const {
-          posterImageUrl,
-          // hoverImageUrl,
+    
           imageUrl,
           _id,
           createdAt,
@@ -70,7 +65,6 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
           ...EditInitialProductValues
         } = EditInitialValues as any;
         imageUrl ? setImagesUrl(imageUrl) : null;
-        sethoverImage([hoverImageUrl]);
         posterImageUrl ? setposterimageUrl([posterImageUrl]) : null;
       } catch (err) {
         console.log(err, "err");
@@ -81,6 +75,8 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
   }, []);
 
   const onSubmit = async (values: any, { resetForm }: any) => {
+    console.log(values, "values")
+
     try {
       setError(null);
       let posterImageUrl = posterimageUrl && posterimageUrl[0];
@@ -105,6 +101,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
       let url = `${process.env.NEXT_PUBLIC_BASE_URL}${
         updateFlag ? addProductUrl : "/api/addProduct"
       }`;
+
 
       const response = await axios.post(url, newValue);
       console.log(response, "response");
@@ -153,6 +150,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
     CategoryHandler();
   }, []);
 
+
   return (
     <>
       <p
@@ -167,8 +165,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
 
       <Formik
         enableReinitialize
-        initialValues={
-          productInitialValue ? productInitialValue : AddproductsinitialValues
+        initialValues={productInitialValue ? productInitialValue : AddproductsinitialValues
         }
         validationSchema={AddProductvalidationSchema}
         onSubmit={onSubmit}
@@ -185,7 +182,9 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                           Add Product Images
                         </h3>
                       </div>
-                      {posterimageUrl && posterimageUrl.length > 0 ? (
+
+
+                      {(posterimageUrl?.length > 0 ) ? (
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
                           {posterimageUrl.map((item: any, index) => {
                             return (
@@ -210,7 +209,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                                   className="object-cover w-full h-full"
                                   width={300}
                                   height={400}
-                                  src={item.imageUrl}
+                                  src={item?.imageUrl}
                                   alt={`productImage-${index}`}
                                 />
                               </div>
@@ -274,58 +273,6 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                           </div>
                         ) : null}
                       </div>
-
-                      {/* <div className="flex gap-4">
-                        <div className="w-2/4">
-                          <label className="mb-3 block text-sm font-medium text-black dark:text-dark">
-                            Star Rating
-                          </label>
-                          <input
-                            type="number"
-                            name="starRating"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.starRating}
-                            placeholder="Star Rating"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                              formik.touched.starRating &&
-                              formik.errors.starRating
-                                ? "border-red-500"
-                                : ""
-                            }`}
-                          />
-                          {formik.touched.starRating &&
-                          formik.errors.starRating ? (
-                            <div className="text-red text-sm">
-                              {formik.errors.starRating as String}
-                            </div>
-                          ) : null}
-                        </div>
-
-                        <div className="w-2/4">
-                          <label className="mb-3 block text-sm font-medium text-black dark:text-dark">
-                            Reviews
-                          </label>
-                          <input
-                            type="text"
-                            name="reviews"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.reviews}
-                            placeholder="Reviews"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                              formik.touched.reviews && formik.errors.reviews
-                                ? "border-red-500"
-                                : ""
-                            }`}
-                          />
-                          {formik.touched.reviews && formik.errors.reviews ? (
-                            <div className="text-red text-sm">
-                              {formik.errors.reviews as String}
-                            </div>
-                          ) : null}
-                        </div>
-                      </div> */}
 
                       <div className="flex full gap-4">
                         <div className="w-[33%]">
@@ -458,130 +405,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                         </div>
                       </div>
 
-                      {/* <div className="flex gap-4">
-                        <div className="rounded-sm border border-stroke bg-white w-2/4 dark:border-strokedark dark:bg-boxdark">
-                          <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                            <h3 className="font-medium text-black dark:text-white">
-                              Colors
-                            </h3>
-                          </div>
-                          <div className="flex flex-col gap-4 p-4">
-                            <FieldArray name="colors">
-                              {({ push, remove }) => (
-                                <div className="flex flex-col gap-2">
-                                  {formik.values.colors.map(
-                                    (color: any, index: any) => (
-                                      <div key={index} className="flex">
-                                        <input
-                                          type="text"
-                                          name={`colors[${index}].colorName`}
-                                          onChange={formik.handleChange}
-                                          onBlur={formik.handleBlur}
-                                          value={
-                                            formik.values.colors[index]
-                                              .colorName
-                                          }
-                                          placeholder="Color Name"
-                                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                            formik.touched.colors?.[index]
-                                              ?.colorName &&
-                                            (
-                                              formik.errors
-                                                .modelDetails as FormikErrors<
-                                                FormValues["colors"]
-                                              >
-                                            )?.[index]?.colorName
-                                              ? "border-red-500"
-                                              : ""
-                                          }`}
-                                        />
-                                        <button
-                                          type="button"
-                                          onClick={() => remove(index)}
-                                          className="ml-2 text-red"
-                                        >
-                                          <RxCross2
-                                            className="text-red"
-                                            size={25}
-                                          />
-                                        </button>
-                                      </div>
-                                    )
-                                  )}
-                                  <button
-                                    type="button"
-                                    onClick={() => push({ colorName: "" })}
-                                    className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
-                                  >
-                                    Add Color
-                                  </button>
-                                </div>
-                              )}
-                            </FieldArray>
-                          </div>
-                        </div>
-
-                        <div className="rounded-sm border border-stroke bg-white w-2/4 dark:border-strokedark dark:bg-boxdark">
-                          <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-                            <h3 className="font-medium text-black dark:text-white">
-                              Sizes
-                            </h3>
-                          </div>
-                          <div className="flex flex-col gap-4 p-4">
-                            <FieldArray name="sizes">
-                              {({ push, remove }) => (
-                                <div className="flex flex-col gap-2">
-                                  {formik.values.sizes.map(
-                                    (size: any, index: any) => (
-                                      <div
-                                        key={index}
-                                        className="flex items-center"
-                                      >
-                                        <input
-                                          type="text"
-                                          name={`sizes[${index}]`}
-                                          onChange={formik.handleChange}
-                                          onBlur={formik.handleBlur}
-                                          value={formik.values.sizes[index]}
-                                          placeholder="Size"
-                                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                            (
-                                              formik.errors
-                                                .sizes as FormikErrors<
-                                                FormValues["sizes"]
-                                              >
-                                            )?.[index] &&
-                                            formik.errors.sizes?.[index]
-                                              ? "border-red-500"
-                                              : ""
-                                          }`}
-                                        />
-                                        <button
-                                          type="button"
-                                          onClick={() => remove(index)}
-                                          className="ml-2 text-red"
-                                        >
-                                          <RxCross2
-                                            className="text-red"
-                                            size={25}
-                                          />
-                                        </button>
-                                      </div>
-                                    )
-                                  )}
-                                  <button
-                                    type="button"
-                                    onClick={() => push("")}
-                                    className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
-                                  >
-                                    Add Size
-                                  </button>
-                                </div>
-                              )}
-                            </FieldArray>
-                          </div>
-                        </div>
-                      </div> */}
+                     
                     </div>
                   </div>
                 </div>
@@ -590,28 +414,9 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                   <div className="py-4 px-6.5 rounded-sm border border-stroke">
                     <div className="mb-4  bg-white dark:border-strokedark dark:bg-boxdark  text-black dark:text-white">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Without Variation
+                    Add Stock Quantity
                       </label>
-                      {/* <Field
-                        id="variationSelect"
-                        value={VariationOption}
-                        onChange={handleOptionChange}
-                        as="select"
-                        name="category"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md  focus:outline-none focus:ring-2 dark:focus:border-primary shadow-none focus:border-transparent focus:border-primary active:border-primary text-black dark:text-white bg-white dark:border-strokedark dark:bg-boxdark"
-                      >
-                        <option
-                          value=""
-                          className="text-gray-500 focus:border-primary active:border-primary"
-                        >
-                          Select a Variation
-                        </option>
-                        <option value="withoutVariation">
-                          Without Variation
-                        </option>
-                       
-                        <option value="withVariation">With Variation</option>
-                      </Field> */}
+                   
                     </div>
 
                     {VariationOption === "withoutVariation" && (
@@ -842,6 +647,68 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({
                       </FieldArray>
                     </div>
                   </div>
+
+
+                  <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Add Sizes in Length
+                      </h3>
+                    </div>
+                    <div className="flex flex-col gap-4 p-4">
+                      <FieldArray name="sizes">
+                        {({ push, remove }) => (
+                          <div className="flex flex-col gap-2">
+                            {formik.values.sizes.map(
+                              (spec: any, index: any) => (
+                                <div key={index} className="flex items-center">
+                                  <input
+                                    type="number"
+                                    name={`sizes[${index}].sizesDetails`}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={
+                                      formik.values.sizes[index]
+                                        .sizes
+                                    }
+                                    placeholder="Sizes"
+                                    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
+                                      formik.touched.spacification?.[index]
+                                        ?.sizesDetails &&
+                                      (
+                                        formik.errors
+                                          .sizes as FormikErrors<
+                                          FormValues["sizes"]
+                                        >
+                                      )?.[index]?.sizesDetails
+                                        ? "border-red-500"
+                                        : ""
+                                    }`}
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={() => remove(index)}
+                                    className="ml-2 text-red"
+                                  >
+                                    <RxCross2 className="text-red" size={25} />
+                                  </button>
+                                </div>
+                              )
+                            )}
+                            <button
+                              type="button"
+                              onClick={() => push({sizesDetails: ""})}
+                              className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
+                            >
+                              Add Sizes
+                            </button>
+                          </div>
+                        )}
+                      </FieldArray>
+                    </div>
+                  </div>
+
+
 
                   {/* <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
