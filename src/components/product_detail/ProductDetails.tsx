@@ -144,11 +144,11 @@ export default function ProductDetails({ productDetail }: productDetailsProps) {
             <div className='shadow  bg-white'>
                 <div className='grid grid-cols-2 md:grid-cols-3 mt-2 p-2 gap-4'>
 
-                    <div className='w-full col-span-2'>
+                    <div className='w-full col-span-3 md:col-span-2'>
                         <Thumbnail thumbs={productDetail.imageUrl} />
                     </div>
 
-                    <div className='py-3 px-8 space-y-2 md:space-y-8 '>
+                    <div className='py-3 px-2 md:px-8 space-y-2 md:space-y-8 col-span-3 md:col-span-1 '>
                         <h1 className='text-3xl'>{productDetail.name}</h1>
 
                         {(reviews.length && reviews.length > 0) ?
@@ -213,16 +213,16 @@ export default function ProductDetails({ productDetail }: productDetailsProps) {
                         {productDetail.totalStockQuantity == null ? (
                             <p className="text-primary text-center text-2xl">Product is out of stock</p>
                         ) : (
-                            <div className='flex gap-2'>
+                            <div className='flex flex-wrap gap-1 md:gap-2'>
 
-                                <button className='bg-secondary truncate py-2 px-5 text-white' onClick={() => { }} >Order Now</button>
-                                <button className='bg-secondary  truncate py-2 px-5 text-white' onClick={() => handleAddToCart(productDetail)} >Add To Cart</button>
-                                <button className='bg-primary py-3 px-3 text-white' onClick={() => handleAddToWishlist(productDetail)}><GoHeart size={25} /></button>
+                                <button className='bg-secondary text-12 md:text-16  py-2 px-3 md:px-5 text-white' onClick={() => { }} >Order Now</button>
+                                <button className='bg-secondary  text-12 md:text-16  py-2 px-3 md:px-5 text-white' onClick={() => handleAddToCart(productDetail)} >Add To Cart</button>
+                                <button className='bg-primary text-16 md:text-16  py-2 px-3 md:px-5 text-white' onClick={() => handleAddToWishlist(productDetail)}><GoHeart  /></button>
                             </div>
                         )}
                         <div className='flex items-center gap-2 text-black dark:text-white'>
-                            <p className='font-medium text-lg'>Categories: </p>
-                            <p className='text-dark'>All, Featured, Shoes</p>
+                            <p className='font-medium text-12 md:text-14'>Categories: </p>
+                            <p className='text-dark text-12 md:text-14'>All, Featured, Shoes</p>
                         </div>
                     </div>
 

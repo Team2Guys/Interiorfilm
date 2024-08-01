@@ -106,16 +106,16 @@ const Review: React.FC<ReviewProps> = ({ reviews, productId, fetchReviews }) => 
         )}
       </div>
       <div className="w-full md:w-2/6">
-        <div className="bg-slate-200 p-2 md:p-4 space-y-3">
+        <div className="bg-primary text-white p-2 md:p-4 space-y-3 rounded-md">
           <HeadingH3 title={"Add a Review"} />
           <p>Your Email Address Will Not Be Published. Required Fields Are Marked *</p>
           <Rate onChange={handleStarChange} value={formData.star} />
 
           <form className="space-y-3" onSubmit={handleSubmit}>
-            <input className={`peer p-4 block w-full border rounded-md border-gray-200 text-sm placeholder:text-slate-400 disabled:opacity-50 disabled:pointer-events-none autofill:pb-2`} type="text" name="name" placeholder="Your Name *" value={formData.name} onChange={handleChange} required />
+            <input className={`peer p-4 block w-full text-black  outline-none rounded-md  text-sm placeholder:text-slate-400 disabled:opacity-50 disabled:pointer-events-none autofill:pb-2`} type="text" name="name" placeholder="Your Name *" value={formData.name} onChange={handleChange} required />
             
-            <input className={`peer p-4 block w-full border rounded-md border-gray-200 text-sm placeholder:text-slate-400 disabled:opacity-50 disabled:pointer-events-none autofill:pb-2`} type="email" name="email" placeholder="Your Email *" value={formData.email} onChange={handleChange} required />
-            <textarea className="peer p-4 block w-full border rounded-md border-gray-200 text-sm placeholder:text-slate-400 disabled:opacity-50 disabled:pointer-events-none autofill:pb-2" placeholder="Your Review *" name="description" value={formData.description} onChange={handleChange} required />
+            <input className={`peer p-4 block w-full text-black  outline-none rounded-md  text-sm placeholder:text-slate-400 disabled:opacity-50 disabled:pointer-events-none autofill:pb-2`} type="email" name="email" placeholder="Your Email *" value={formData.email} onChange={handleChange} required />
+            <textarea className="peer p-4 block w-full text-black  outline-none rounded-md  text-sm placeholder:text-slate-400 disabled:opacity-50 disabled:pointer-events-none autofill:pb-2" placeholder="Your Review *" name="description" value={formData.description} onChange={handleChange} required />
             <button
               type="submit"
               className="bg-black text-white py-3 px-4 rounded-none flex items-center gap-2"
