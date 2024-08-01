@@ -49,7 +49,7 @@ const CategorySlider: React.FC = () => {
   };
 
   return (
-    <div className="px-0 md:px-4 flex items-center relative">
+    <div className="px-0 md:px-4 flex items-center relative mt-10">
       <button
         ref={prevRef}
         className="relative left-4 bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"

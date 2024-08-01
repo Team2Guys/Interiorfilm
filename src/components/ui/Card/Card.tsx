@@ -151,7 +151,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
     
     handleOpenDrawer();
 
-    // Automatically close the drawer after 5 seconds
+    // Automatically close the drawer after 3 seconds
     setTimeout(() => {
       handleCloseDrawer();
     }, 3000);

@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
