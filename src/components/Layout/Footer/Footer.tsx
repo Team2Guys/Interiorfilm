@@ -43,7 +43,9 @@ try{
     CategoryHandler();
   }, []);
   return (
-    <div className='bg-secondary text-white pt-10 px-8 pb-20'>
+
+    <>
+    <div className='bg-secondary text-white pt-10 px-8 pb-10'>
       <div className='flex flex-wrap md:flex-nowrap justify-between border-b pb-10'>
         <div className='w-4/12 flex flex-wrap items-center md:flex-nowrap md:gap-4 mx-auto md:mx-0 space-y-3 md:space-y-0'>
           <Image width={200} height={200} src={logo} alt="Interior Film"/>
@@ -143,6 +145,13 @@ try{
         </div>
       </div>
     </div>
+<div className='bg-white border flex justify-center items-center'>
+<p className='text-text h-16 flex items-center'>interior film © 2024. All Rights Reserved</p>
+</div>
+    </>
+
+
+
   );
 };
 

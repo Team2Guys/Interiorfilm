@@ -12,8 +12,6 @@ import { generateSlug } from 'data/Data';
 import PRODUCTS_TYPES from 'types/interfaces';
 import ProductDetails from 'components/product_detail/ProductDetails';
 
-import ProductDetails from 'components/product_detail/ProductDetails';
-
 const { TabPane } = Tabs;
 
 const Product = ({ params }: { params: { productname: string } }) => {

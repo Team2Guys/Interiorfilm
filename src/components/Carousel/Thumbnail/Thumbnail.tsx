@@ -40,9 +40,9 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
   return (
     <div className='relative'>
 
-      <div className='w-full flex gap-5'>
+      <div className='w-full flex justify-between'>
 
-        <div className='w-1/3'>
+        <div className='w-1/4 md:w-1/4 sm:max-w-1/4'>
           <Swiper
             onSwiper={setThumbsSwiper}
             loop={true}
@@ -51,16 +51,17 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
             freeMode={true}
             watchSlidesProgress={true}
             modules={[FreeMode, Navigation, Thumbs]}
-            className="mt-2 bg-contain bg-white rounded-md column-swipper"
+            className="bg-contain bg-white column-swipper"
           >
+
             <div>
               {thumbs.map((array, index) => (
-                <SwiperSlide key={index} className='w-full column-swiper-slider'>
+                <SwiperSlide key={index} className='w-full h-full column-swiper-slider md:h-5'>
                   <Image
-                    className='bg-contain p-2 bg-white shadow-md w-full md:h-50'
+                    className='bg-contain pb-2 bg-white md:h-46 md:w-67'
                     src={array.imageUrl}
-                    width={300}
-                    height={300}
+                    width={270}
+                    height={120}
                     alt='Image'
                   />
                 </SwiperSlide>
@@ -75,38 +76,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
 
 
 
-        {/* <div className='w-[65%]'>
-
-          <Swiper
-            style={{
-              '--swiper-navigation-color': '#ffffff',
-              '--swiper-pagination-color': '#ffffff',
-            } as React.CSSProperties}
-            loop={true}
-            spaceBetween={10}
-            thumbs={{ swiper: thumbsSwiper }}
-            modules={[FreeMode, Navigation, Thumbs]}
-            className='h-full'
-          >
-            {thumbs.map((array, index) => (
-              <SwiperSlide key={index}>
-                <div
-                  className="relative cursor-zoom-in h-full w-full"
-                  onMouseEnter={() => handleMouseEnter(array.imageUrl)}
-                  onMouseMove={handleMouseMove}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <Image className='bg-contain w-full h-full' src={array.imageUrl} width={400} height={400} alt='Image' />
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-
-
-        </div> */}
-
-
-<div className='w-[65%] relative'>
+<div className='w-[70%] relative md:max-h-550'>
       <Swiper
         style={{
           '--swiper-navigation-color': '#ffffff',
@@ -134,7 +104,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
             >
-              <Image className='bg-contain w-full h-full' src={array.imageUrl} width={400} height={400} alt='Image' />
+              <Image className='bg-contain w-full h-full max-h-[800px]' src={array.imageUrl} width={400} height={400} alt='Image' />
             </div>
           </SwiperSlide>
         ))}

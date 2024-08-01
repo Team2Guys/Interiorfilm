@@ -13,6 +13,7 @@ export default function Model({ children, centered, footer, productDetailModel, 
     <>
       <Modal
         title="Vertically centered modal dialog"
+        width={1200}
         centered={centered}
         open={productDetailModel}
         onCancel={() => { setproductDetailModel(false) }}
