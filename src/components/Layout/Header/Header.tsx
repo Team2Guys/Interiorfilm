@@ -41,6 +41,7 @@ const Header = () => {
   const pathname = usePathname(); // Get the current path
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
+
   const AddminProfileTriggerHandler = async (token: string) => {
     try {
       if (!token) return null;
@@ -276,10 +277,11 @@ const Header = () => {
               : "bg-white text-black"
           }`}
         >
+          
           {loggedInUser ? (
             <Profile />
           ) : (
-            <Link className=" text-20 md:text-2xl" href="/profile">
+            <Link className=" text-20 md:text-2xl" href="/login">
               <FaRegUser  className=" cursor-pointer" />
             </Link>
           )}

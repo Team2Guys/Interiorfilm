@@ -141,14 +141,14 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
       </Swiper>
 
 
-      <div ref={prevRef} className='swiper-prev absolute left-[-25px] top-1/2 transform -translate-y-1/2 z-10 cursor-pointer'>
+      <div ref={prevRef} className='swiper-prev absolute left-[-30px] md:left-[-25px] top-1/2 transform -translate-y-1/2 z-10 cursor-pointer'>
         
         <Image src='/images/arrows.png' width={51} height={55}/>
        
       </div>
 
 
-      <div ref={nextRef} className='swiper-button absolute right-[-25px] top-1/2 transform -translate-y-1/2 z-10 cursor-pointer'>
+      <div ref={nextRef} className='swiper-button absolute right-[-15px]  md:right-[-25px] top-1/2 transform -translate-y-1/2 z-10 cursor-pointer'>
       <Image src='/images/arrows.png' width={51} height={55} className='rotate-180'/>
       </div>
     </div>

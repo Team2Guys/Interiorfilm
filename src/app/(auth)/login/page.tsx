@@ -108,7 +108,6 @@ export default function Page() {
       navigationTxt="Forgot your password?"
     />
 
-
     </div>
   )
 }

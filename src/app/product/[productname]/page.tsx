@@ -10,6 +10,7 @@ import Loader from 'components/Loader/Loader';
 import Review from 'components/Common/Review';
 import { generateSlug } from 'data/Data';
 import PRODUCTS_TYPES from 'types/interfaces';
+import ProductDetails from 'components/product_detail/ProductDetails';
 
 import ProductDetails from 'components/product_detail/ProductDetails';
 
@@ -145,6 +146,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
       }
       <Container className='mt-20'>
         <div className='flex justify-center items-center'>
+          
           <h1 className='w-fit text-center text-lg border-b-2 border-[#FF914E] md:text-3xl mb-5 up'>FEATURE PRODUCT</h1>
 
         </div>
