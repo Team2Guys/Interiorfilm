@@ -301,6 +301,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
                         onChange={onChange}
                         options={options}
                         defaultValue="Select Size"
+
                       />
 
                     </div>
@@ -322,7 +323,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
                     )}
                     <div className='flex items-center gap-2 text-black dark:text-white'>
                       <p className='font-medium text-lg'>Categories: </p>
-                      <p className='text-dark'>All, Featured, Marble</p>
+                      <p className='text-dark'>All, Featured, Shoes</p>
                     </div>
                   </div>
 
