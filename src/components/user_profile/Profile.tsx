@@ -121,7 +121,7 @@ const Profile = () => {
           <Dropdown placement="bottom" menu={{ items }} trigger={['click']}>
           <button className="flex items-center gap-3 text-black dark:text-white z-50" > 
                         <Image
-                            className="avatar object-contain"
+                            className="align-middle md:w-10 w-6 h-6 md:h-10 rounded-full object-contain"
                             src={loggedInUser && loggedInUser.ProfilePhoto.imageUrl ? loggedInUser.ProfilePhoto.imageUrl : "/images/dummy-avatar.jpg"}
 
                             width={50}

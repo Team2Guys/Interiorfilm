@@ -231,7 +231,7 @@ const Header = () => {
         <div className="flex justify-between md:items-center space-x-4">
         <Link href="/">
       <Image
-        className="w-24 h-6 md:w-50 md:h-10 "
+        className="w-24 h-6 md:w-44 lg:w-50 md:h-8 lg:h-10 "
         src={isHomePage ? (isScrolled ? blacklogo : whitelogo) : blacklogo}
         alt="logo"
         width={500}
@@ -240,7 +240,7 @@ const Header = () => {
     </Link>
         </div>
         <ul
-          className={`hidden md:flex md:flex-1 space-x-10 text-18 py-4 px-6  ${
+          className={`hidden md:flex md:flex-1 space-x-4 lg:space-x-10 text-18 py-4 px-6  ${
             isHomePage
               ? isScrolled
                 ? "bg-white text-black"
@@ -268,7 +268,7 @@ const Header = () => {
           </Link>
         </ul>
         <div
-          className={`flex space-x-3 md:space-x-6 items-center ${
+          className={`flex space-x-3 lg:space-x-6 items-center ${
             isHomePage
               ? isScrolled
                 ? "bg-white text-black"
