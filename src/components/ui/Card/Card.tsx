@@ -154,7 +154,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
     // Automatically close the drawer after 5 seconds
     setTimeout(() => {
       handleCloseDrawer();
-    }, 5000);
+    }, 3000);
   };
 
   const handleAddToWishlist = (product: any) => {
