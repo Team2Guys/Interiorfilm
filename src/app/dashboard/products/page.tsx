@@ -50,6 +50,7 @@ const Products = () => {
     code: editProduct && editProduct.code,
     salePrice: editProduct && editProduct.salePrice,
     purchasePrice: editProduct && editProduct.purchasePrice,
+
   };
 
 

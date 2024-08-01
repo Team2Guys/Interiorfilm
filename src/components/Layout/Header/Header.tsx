@@ -26,15 +26,7 @@ import PRODUCTS_TYPES, { Category } from "types/interfaces";
 import MobileMenu from "./Megamanu/mobile-menu";
 import whatsapp from "../../../../public/images/whatsapp.png"
 import { SlHandbag } from "react-icons/sl";
-import CartDrawer from "components/cart-drawer/cart-drawer";
 
-// interface Product {
-//   name?: string;
-//   description?: string;
-//   posterImageUrl?: {
-//     imageUrl?: string;
-//   };
-// }
 
 const Header = () => {
   const dispatch = useAppDispatch();
