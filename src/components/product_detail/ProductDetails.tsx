@@ -142,7 +142,7 @@ export default function ProductDetails({ productDetail }: productDetailsProps) {
     return (
         <Container className='mt-10 mb-5'>
             <div className='shadow  bg-white'>
-                <div className='grid grid-cols-2 md:grid-cols-3 mt-2 p-2 gap-4'>
+                <div className='grid grid-cols-2 md:grid-cols-3 mt-2 p-2 gap-4 md:gap-10'>
 
                     <div className='w-full col-span-3 md:col-span-2'>
                         <Thumbnail thumbs={productDetail.imageUrl} />
@@ -193,6 +193,11 @@ export default function ProductDetails({ productDetail }: productDetailsProps) {
                                 </div>
                             </div>
                         </div>
+
+
+                        <p className='text-secondary font-bold'>
+                            <span className='font-font-semibold	 text-text'>Total Price :</span> Dhs. <span>{totalPrice}</span>.00
+                        </p>
                         <div className='flex gap-2 items-center w-[70%]'>
 
                             <SelectList
@@ -206,9 +211,7 @@ export default function ProductDetails({ productDetail }: productDetailsProps) {
                         </div>
 
 
-                        <p className='text-secondary font-bold'>
-                            <span className='font-font-semibold	 text-text'>Total Price :</span> Dhs. <span>{totalPrice}</span>.00
-                        </p>
+                      
 
                         {productDetail.totalStockQuantity == null ? (
                             <p className="text-primary text-center text-2xl">Product is out of stock</p>

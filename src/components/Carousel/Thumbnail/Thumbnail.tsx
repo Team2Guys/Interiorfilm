@@ -40,9 +40,9 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
   return (
     <div className='relative'>
 
-      <div className='w-full flex justify-between'>
+      <div className='w-full flex justify-between gap-5'>
 
-        <div className='w-1/4 md:w-1/4 sm:max-w-1/4'>
+        <div className='w-1/5 md:w-[150px] sm:max-w-[200px] md:min-w-[150px] '>
           <Swiper
             onSwiper={setThumbsSwiper}
             loop={true}
@@ -76,7 +76,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
 
 
 
-<div className='w-[70%] relative md:max-h-550'>
+<div className='w-[82%] relative md:max-h-550'>
       <Swiper
         style={{
           '--swiper-navigation-color': '#ffffff',

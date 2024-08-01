@@ -260,7 +260,10 @@ const Header = () => {
             trigger="click"
             content={<Megamanu Categories={Categories} products={products} />}
             title=""
+            
           >
+          
+          {/* <span onClick={()=>router.push('/categories')}>Category</span> */}
             Category
           </Popover>
           <Link className="link-underline" href="/about">
