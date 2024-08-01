@@ -13,7 +13,7 @@ const Hero = () => {
           <p className='text-14 font-medium'>SELF ADHESIVE ARCHITECTURAL VINYL</p>
           <p className='text-[25px]'>DON&apos;T REPLACE, UPGRADE</p>
           <div>
-            <Link className='bg-white px-8 py-2 text-black' href={"/product"}>
+            <Link className='bg-white px-8 py-2 text-black' href={"/products"}>
               SHOP OUR FULL RANGE
             </Link>
           </div>

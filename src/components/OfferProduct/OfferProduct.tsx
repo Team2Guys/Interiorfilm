@@ -14,7 +14,7 @@ const OfferProduct = () => {
         <div className='w-full md:w-7/12  '>
             <span className='w-full  text-base md:text-[30px] lg:text-[56px] leading-snug font-medium text-heading mb-4 text-center  capitalize'>Stunning collection of options to transform your home</span>
             <div className='text-center md:text-start  mt-5'>
-            <Link className='bg-primary text-white px-6 py-3  rounded-md' href={"/product"}>View All</Link>
+            <Link className='bg-primary text-white px-6 py-3  rounded-md' href={"/products"}>View All</Link>
             </div>
         </div>
     </div>

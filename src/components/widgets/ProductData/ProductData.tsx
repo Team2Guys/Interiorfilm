@@ -27,7 +27,7 @@ const ProductData: React.FC<cardprops> = ({ productcard }) => {
                 <h1 className='text-xl md:text-4xl font-semibold'>{array.title}</h1>
                 <p className='text-lg md:text-2xl'>{array.description}</p>
                 <div className='pt-2 md:pt-0'>
-                  <Link className='bg-primary rounded-md px-3 py-3 text-white' href={"/product"}>View All</Link>
+                  <Link className='bg-primary rounded-md px-3 py-3 text-white' href={"/products"}>View All</Link>
                 </div>
               </div>
             </div>

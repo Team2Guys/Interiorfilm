@@ -52,7 +52,7 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
                   <p className='text-base md:w-2/3 lg:w-3/5 w-3/4'>{slide.description}</p>
                 </div>
                 <div className="flex items-center justify-start mt-6">
-                  <Link href={"/product"} className="border border-primary py-2 px-4 md:px-8 rounded-md hover:bg-primary hover:text-white transition-all ">
+                  <Link href={"/products"} className="border border-primary py-2 px-4 md:px-8 rounded-md hover:bg-primary hover:text-white transition-all ">
                     Order Now
                   </Link>
                 </div>

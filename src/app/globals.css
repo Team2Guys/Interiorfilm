@@ -476,3 +476,6 @@ gap: 10px;
 .ant-select-dropdown{
   z-index: 999999 !important;
 }
+.ant-message{
+  z-index: 999999 !important;
+}

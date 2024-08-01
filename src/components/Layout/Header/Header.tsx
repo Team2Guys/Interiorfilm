@@ -26,6 +26,7 @@ import PRODUCTS_TYPES, { Category } from "types/interfaces";
 import MobileMenu from "./Megamanu/mobile-menu";
 import whatsapp from "../../../../public/images/whatsapp.png"
 import { SlHandbag } from "react-icons/sl";
+import CartDrawer from "components/cart-drawer/cart-drawer";
 
 
 const Header = () => {
@@ -219,7 +220,7 @@ const Header = () => {
         </p>
       </div>
       <nav
-        className={` text-white  sticky top-0  mx-auto flex justify-between items-center z-9999 w-full p-2 md:px-10   ${
+        className={` text-white  sticky top-0  mx-auto flex justify-between items-center z-99 w-full p-2 md:px-10   ${
           isHomePage
             ? isScrolled
               ? "bg-white text-black"
@@ -285,7 +286,7 @@ const Header = () => {
           <div className=" cursor-pointer text-20 md:text-2xl" onClick={showModal}>
             <IoIosSearch />
           </div>
-        
+       
           <Link href={"/wishlist"} className="relative text-20 md:text-2xl">
             <IoMdHeartEmpty  className=" cursor-pointer" />
             {cartItems.length > 0 ? (
@@ -298,22 +299,26 @@ const Header = () => {
               <></>
             )}
           </Link>
-          <Link href={"/cart"} className="relative  text-20 md:text-2xl">
-            <SlHandbag  className=" cursor-pointer" />
-            {cartItems.length > 0 ? (
-              <div className="md:w-5 md:h-5 w-3 h-3 z-50 rounded-full flex justify-center items-center bg-white text-black absolute left-3 top-3">
-                <span className="font-medium text-12 md:text-18 z-50">
-                  {" "}
-                  {cartItems.reduce(
-                    (count: any, item: any) => count + item.count,
-                    0
-                  )}
-                </span>
+          
+          <CartDrawer OpenDrawer={
+              <div className="relative  text-20 md:text-2xl cursor-pointer">
+              <SlHandbag  className=" cursor-pointer" />
+              {cartItems.length > 0 ? (
+                <div className="md:w-5 md:h-5 w-3 h-3 z-50 rounded-full flex justify-center items-center bg-white text-black absolute left-3 top-3">
+                  <span className="font-medium text-12 md:text-18 z-50">
+                    {" "}
+                    {cartItems.reduce(
+                      (count: any, item: any) => count + item.count,
+                      0
+                    )}
+                  </span>
+                </div>
+              ) : (
+                <></>
+              )}
               </div>
-            ) : (
-              <></>
-            )}
-          </Link>
+          }/>
+         
           <div className="px-3 block md:hidden">
             <DrawerMenu
               showDrawer={showDrawer}

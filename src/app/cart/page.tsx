@@ -48,7 +48,7 @@ const Cart = () => {
           <div className="flex flex-col justify-center items-center space-y-3">
             <p className='text-2xl'>Your cart is empty.</p>
             <div>
-              <Link className='underline' href={"/product"}>Continue Shopping</Link>
+              <Link className='underline' href={"/products"}>Continue Shopping</Link>
             </div>
           </div>
         ) : (
