@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import Link from "next/link";
-import {IoSearch } from "react-icons/io5";
 import Image from "next/image";
 import whitelogo from "../../../../public/images/logowhite.png";
 import blacklogo from "../../../../public/images/logoblack.png";
 import { IoIosSearch, IoMdHeartEmpty } from "react-icons/io";
 import { FaBars,} from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa6";
-
-import { RiShoppingBag2Line } from "react-icons/ri";
 import DrawerMenu from "components/ui/DrawerMenu/DrawerMenu";
 import { useRouter } from "next/navigation";
 import { Modal, Popover } from "antd";
@@ -64,6 +61,10 @@ const Header = () => {
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [activeLink, setActiveLink] = useState<Category | undefined>();
   const [Categories, setCategories] = useState<Categories_Types[]>([]);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const handleOpenDrawer = () => setDrawerOpen(true);
+  const handleCloseDrawer = () => setDrawerOpen(false);
 
   const productHandler = async () => {
     try {
@@ -302,8 +303,9 @@ const Header = () => {
             )}
           </Link>
           
-          <CartDrawer OpenDrawer={
-              <div className="relative  text-20 md:text-2xl cursor-pointer">
+          <CartDrawer  open={drawerOpen}
+           onClose={handleCloseDrawer}  OpenDrawer={
+              <div className="relative  text-20 md:text-2xl cursor-pointer" onClick={handleOpenDrawer} >
               <SlHandbag  className=" cursor-pointer" />
               {cartItems.length > 0 ? (
                 <div className="md:w-5 md:h-5 w-3 h-3 z-50 rounded-full flex justify-center items-center bg-white text-black absolute left-3 top-3">

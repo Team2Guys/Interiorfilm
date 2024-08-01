@@ -1,7 +1,6 @@
-
 //@ts-nocheck
 import React, { useEffect, useState } from "react";
-import { Drawer, message } from "antd";
+import { Drawer, message, Modal } from "antd";
 import Image from "next/image";
 import { IoCloseSharp } from "react-icons/io5";
 import { RxMinus, RxPlus } from "react-icons/rx";
@@ -10,11 +9,12 @@ import Link from "next/link";
 import PRODUCTS_TYPES from "types/interfaces";
 
 interface CartDrawerProps {
-  OpenDrawer: React.ReactNode;
+  open: boolean;
+  onClose: () => void;
+  OpenDrawer?: React.ReactNode; // Changed any to React.ReactNode for type safety
 }
 
-const CartDrawer: React.FC<CartDrawerProps> = ({ OpenDrawer }) => {
-  const [open, setOpen] = useState(false);
+const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose, OpenDrawer }) => {
   const [counts, setCounts] = useState<{ [key: number]: number }>({});
   const [cartItems, setCartItems] = useState<PRODUCTS_TYPES[]>([]);
   const [subtotal, setSubtotal] = useState(0);
@@ -33,6 +33,16 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ OpenDrawer }) => {
 
   useEffect(() => {
     fetchCartItems();
+
+    const handleCartChange = () => {
+      fetchCartItems();
+    };
+
+    window.addEventListener('cartChanged', handleCartChange);
+
+    return () => {
+      window.removeEventListener('cartChanged', handleCartChange);
+    };
   }, []);
 
   const calculateSubtotal = (items: PRODUCTS_TYPES[]) => {
@@ -41,14 +51,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ OpenDrawer }) => {
       return acc + price * (counts[item._id] || item.count);
     }, 0);
     setSubtotal(sub);
-  };
-
-  const showDrawer = () => {
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setOpen(false);
   };
 
   const increment = (index: number) => {
@@ -89,43 +91,54 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ OpenDrawer }) => {
   };
 
   const removeItem = (index: number) => {
-    const newCartItems = cartItems.filter((_, itemIndex) => itemIndex !== index);
-    setCartItems(newCartItems);
-    localStorage.setItem('cart', JSON.stringify(newCartItems));
-    calculateSubtotal(newCartItems);
-    message.success('Product removed from cart successfully!');
-    window.dispatchEvent(new Event("cartChanged"));
+    Modal.confirm({
+      title: 'Are you sure you want to remove this item?',
+      content: 'This action cannot be undone.',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: () => {
+        const newCartItems = cartItems.filter((_, itemIndex) => itemIndex !== index);
+        setCartItems(newCartItems);
+        localStorage.setItem('cart', JSON.stringify(newCartItems));
+        calculateSubtotal(newCartItems);
+        message.success('Product removed from cart successfully!');
+        window.dispatchEvent(new Event("cartChanged"));
+      },
+      onCancel: () => {
+        message.info('Item removal canceled');
+      }
+    });
   };
-  
-  let options: any = []
+
+  let options: any = [];
 
   {
     ((cartItems && cartItems.sizes) && cartItems.sizes.length > 0) && cartItems.sizes.forEach((item: any) => {
       let SizesArray = { label: "1.22" + "x" + item.sizesDetails + " METERS", value: item.sizesDetails }
-      options.push(SizesArray)
+      options.push(SizesArray);
 
-      return null
-    })
+      return null;
+    });
   }
-
 
   return (
     <>
-      <div onClick={showDrawer} className="z-999">
+      {OpenDrawer && <div className="relative text-20 md:text-2xl cursor-pointer" onClick={() => open ? onClose() : undefined}>
         {OpenDrawer}
-      </div>
-      <Drawer
-        title={
-          <>
-            <p className="text-23">
-              My Cart <span> ({cartItems.length})</span>
-            </p>
-          </>
-        }
-        className="z-9999 border-none"
-        onClose={onClose}
-        open={open}
-        width={500}
+      </div>}
+    <Drawer
+      title={
+        <>
+          <p className="text-23">
+            My Cart <span> ({cartItems.length})</span>
+          </p>
+        </>
+      }
+      className="z-99 border-none"
+      onClose={onClose}
+      open={open}
+      width={500}
         footer={
           <>
             <div className="flex justify-between px-2 font-semibold text-14 md:text-22">
