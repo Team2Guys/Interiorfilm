@@ -28,7 +28,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ name, posterImageUrl, categ
     >
       <div className='absolute bottom-8 md:bottom-16 right-8 md:right-16 space-y-5 text-end'>
         <p className='text-22 text-white font-bold tracking-widest'>{name}</p>
-        <Button title={"SEE ALL"} onClick={handleButtonClick} />
+        <Button className='bg-white' title={"SEE ALL"} onClick={handleButtonClick} />
       </div>
     </div>
   );
