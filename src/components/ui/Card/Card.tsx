@@ -32,9 +32,15 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
+  const handleOpenDrawer = () => {
+    setDrawerOpen(true);
+  };
 
-
+  const handleCloseDrawer = () => {
+    setDrawerOpen(false);
+  };
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -110,9 +116,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
 
 
   const handleAddToCart = (product: any) => {
-
-
-
     const newCartItem = {
       id: product._id,
       name: product.name,
@@ -126,11 +129,10 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       purchasePrice: product.purchasePrice,
       sizes: product.sizes
     };
-
+  
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     const existingItemIndex = existingCart.findIndex((item: any) => item.id === product._id);
-
-
+  
     if (existingItemIndex !== -1) {
       const updatedCart = existingCart.map((item: any, index: number) => {
         if (index === existingItemIndex) {
@@ -142,19 +144,22 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
         }
         return item;
       });
-      console.log(updatedCart)
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-
     } else {
       existingCart.push(newCartItem);
       localStorage.setItem("cart", JSON.stringify(existingCart));
     }
-
+  
     message.success('Product added to cart successfully!');
     window.dispatchEvent(new Event("cartChanged"));
-    console.log(existingCart, "existingCart")
-  };
+    
+    handleOpenDrawer();
 
+    // Automatically close the drawer after 3 seconds
+    setTimeout(() => {
+      handleCloseDrawer();
+    }, 3000);
+  };
 
   const handleAddToWishlist = (product: any) => {
 

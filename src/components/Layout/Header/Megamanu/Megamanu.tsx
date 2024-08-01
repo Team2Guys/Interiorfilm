@@ -10,7 +10,7 @@ interface MegamanuProps {
   products: PRODUCTS_TYPES[];
 }
 
-const Megamanu: React.FC<MegamanuProps> = ({ Categories, products }) => {
+const Megamanu: React.FC<MegamanuProps> = ({ Categories, products, }) => {
   const [loadingCategories, setLoadingCategories] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [filteredProducts, setFilteredProducts] = useState<PRODUCTS_TYPES[]>([]);

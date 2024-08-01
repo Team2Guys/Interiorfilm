@@ -122,7 +122,7 @@ export default function UserComponent({
                     </p>
 
                     <Button
-                      className="bg-primary text-black lg:p-3 p-2 lg:w-full lg:md:w-28 w-full rounded-none lg:mt-10"
+                      className="bg-primary text-white lg:p-3 p-2 lg:w-full lg:md:w-28 w-full rounded-none lg:mt-10"
                       title={loading ? <Loader color="#fff" /> : buttonTitle}
                       type="submit"
                       disable={loading}
