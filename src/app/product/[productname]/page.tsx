@@ -11,7 +11,7 @@ import Review from 'components/Common/Review';
 import { generateSlug } from 'data/Data';
 import PRODUCTS_TYPES from 'types/interfaces';
 
-import ProductDetails from 'components/product_detail/productDetails';
+import ProductDetails from 'components/product_detail/ProductDetails';
 
 const { TabPane } = Tabs;
 

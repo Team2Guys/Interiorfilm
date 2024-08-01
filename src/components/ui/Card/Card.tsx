@@ -11,6 +11,9 @@ import { generateSlug } from 'data/Data';
 import Loader from 'components/Loader/Loader';
 import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading';
 import { FiZoomIn } from 'react-icons/fi';
+import Model from 'components/ui/Modal/Model';
+import ProductDetails from 'components/product_detail/ProductDetails';
+
 
 interface CardProps {
   ProductCard?: PRODUCTS_TYPES[];
@@ -23,10 +26,14 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail, cardClass }) => {
   const router = useRouter();
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
+  const [productDetails, setproductDetails] = useState<PRODUCTS_TYPES | any>({});
+  const [productDetailModel, setProductDetailModel] = useState<boolean>(false);
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -203,87 +210,101 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
       <div className={`relative group mb-5 ${cardClass}`} key={index}>
-      <div className="space-y-3 absolute top-6 right-4 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 overflow-hidden transition ease-in-out duration-400 hidden md:block">
-        <button onClick={() => handleAddToCart(product)} className="flex justify-center items-center z-10">
-          <LuShoppingCart className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />
-        </button>
-        <button onClick={() => handleAddToWishlist(product)} className="flex justify-center items-center z-10">
-          <GoHeart className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />
-        </button>
-        <button onClick={showModal} className="flex justify-center items-center z-10">
-          <FiZoomIn className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />
-        </button>
-      </div>
-      
-      <div className="cursor-pointer  transition-all m-1 " onClick={() => router.push(`/product/${generateSlug(product.name)}`)}>
-        <div className="text-center">
-          <div className='absolute top-60 hidden mk translate-y-20 z-10 w-full md:flex gap-5 justify-center opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition ease-in-out duration-400'>
-            <button className='bg-white z-10 px-4 py-1' onClick={(e)=>{e.stopPropagation();handleAddToCart(product); router.push('/checkout')}}>Order Now</button>
-            <button className='bg-black z-10 text-white px-4 py-1' onClick={(e)=>e.stopPropagation()}>Quick View </button>
-          </div>
-          {product.posterImageUrl && product.posterImageUrl.imageUrl && (
-            <Image className="bg-contain h-32 w-full md:h-72" width={300} height={300} src={product.posterImageUrl.imageUrl} alt="Image" />
-          )}
+        <div className="space-y-3 absolute top-6 right-4 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 overflow-hidden transition ease-in-out duration-400 hidden md:block">
+          <button onClick={() => handleAddToCart(product)} className="flex justify-center items-center z-10">
+            <LuShoppingCart className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />
+          </button>
+          <button onClick={() => handleAddToWishlist(product)} className="flex justify-center items-center z-10">
+            <GoHeart className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />
+          </button>
+          <button onClick={showModal} className="flex justify-center items-center z-10">
+            <FiZoomIn className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />
+          </button>
         </div>
-        <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
-          <h1 className="lg:text-lg text-sm text-center text-dark  font-semibold">
-            Code : <span>{product.name}</span>
-          </h1>
-          <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
-            <p className="text-black  font-bold">
-              Dhs. <span className=''>{product.discountPrice ? product.discountPrice : product.salePrice}</span>.00
-            </p>
-            {product.discountPrice && (
-              <p className="line-through text-para  text-xs font-bold">
-                Dhs.<span>{product.salePrice}</span>.00
-              </p>
+
+        <div className="cursor-pointer  transition-all m-1 " onClick={() => router.push(`/product/${generateSlug(product.name)}`)}>
+          <div className="text-center">
+            <div className='absolute top-60 hidden mk translate-y-20 z-10 w-full md:flex gap-5 justify-center opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition ease-in-out duration-400'>
+              <button className='bg-white z-10 px-4 py-1' onClick={(e) => { e.stopPropagation(); handleAddToCart(product); router.push('/checkout') }}>Order Now</button>
+              <button className='bg-black z-10 text-white px-4 py-1' onClick={(e) => {
+                e.stopPropagation();
+                setproductDetails(product);
+                setProductDetailModel(true)
+              }}>Quick View </button>
+            </div>
+            {product.posterImageUrl && product.posterImageUrl.imageUrl && (
+              <Image className="bg-contain h-32 w-full md:h-72" width={300} height={300} src={product.posterImageUrl.imageUrl} alt="Image" />
             )}
           </div>
-          {product.starRating && (
-            <div className="flex gap-1 justify-center">
-              <Rate className="text-sm gap-0" disabled allowHalf defaultValue={Number(product.starRating)} />
-              <p className='text-sm group-hover:text-white'>( ({product.reviews}) )</p>
+          <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
+            <h1 className="lg:text-lg text-sm text-center text-dark  font-semibold">
+              Code : <span>{product.name}</span>
+            </h1>
+            <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
+              <p className="text-black  font-bold">
+                Dhs. <span className=''>{product.discountPrice ? product.discountPrice : product.salePrice}</span>.00
+              </p>
+              {product.discountPrice && (
+                <p className="line-through text-para  text-xs font-bold">
+                  Dhs.<span>{product.salePrice}</span>.00
+                </p>
+              )}
             </div>
-          )}
+            {product.starRating && (
+              <div className="flex gap-1 justify-center">
+                <Rate className="text-sm gap-0" disabled allowHalf defaultValue={Number(product.starRating)} />
+                <p className='text-sm group-hover:text-white'>( ({product.reviews}) )</p>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
 
-      <Modal title={<h1 className="lg:text-xl text-sm text-dark group-hover:text-white font-bold">
-            Code : <span>{product.name}</span>
-          </h1>} open={isModalOpen}  width={700} onOk={handleOk} onCancel={handleCancel} footer={""}>
-        {product.posterImageUrl && product.posterImageUrl.imageUrl && (
-          <Image className='mt-5 object-contain w-full h-full' width={1000} height={1000} src={product.posterImageUrl.imageUrl} alt="Image" />
-        )}
-      </Modal>
-    </div>
+        <Modal title={<h1 className="lg:text-xl text-sm text-dark group-hover:text-white font-bold">
+          Code : <span>{product.name}</span>
+        </h1>} open={isModalOpen} width={700} onOk={handleOk} onCancel={handleCancel} footer={""}>
+          {product.posterImageUrl && product.posterImageUrl.imageUrl && (
+            <Image className='mt-5 object-contain w-full h-full' width={1000} height={1000} src={product.posterImageUrl.imageUrl} alt="Image" />
+          )}
+        </Modal>
+      </div>
     );
   };
 
   return (
     <>
+
+<Model 
+        setproductDetailModel={setProductDetailModel}
+        productDetailModel={productDetailModel}
+        centered={true}
+        footer={null}
+      >
+        <ProductDetails productDetail={productDetails} />
+      </Model>
+
       {ProductCard && (ProductCard.length > 0 && !loading) ? (
         ProductCard.map(renderProduct)
       ) : (
 
-        (productsToRender.length > 0) ? productsToRender.map(renderProduct) : !loading ? <div className='flex justify-center'>No Product Found</div> : <>  
-      
-        {Array.from({ length: 3 }).map((_, index) => (
-      
-              <div key={index} className='gap-10 flex flex-col'>
-                <SkeletonLoading 
-                  avatar={{ shape: 'square', size:280, className: "w-full flex flex-col" }} 
-                  title={false} 
-                  style={{flexDirection: 'column'}}
-                  paragraph={{ rows: 3}}  
-                  className='gap-10 flex'
-                  active={true}
-                />
-              </div>
+        (productsToRender.length > 0) ? productsToRender.map(renderProduct) : !loading ? <div className='flex justify-center'>No Product Found</div> : <>
+
+          {Array.from({ length: 3 }).map((_, index) => (
+
+            <div key={index} className='gap-10 flex flex-col'>
+              <SkeletonLoading
+                avatar={{ shape: 'square', size: 280, className: "w-full flex flex-col" }}
+                title={false}
+                style={{ flexDirection: 'column' }}
+                paragraph={{ rows: 3 }}
+                className='gap-10 flex'
+                active={true}
+              />
+            </div>
           ))}
 
 
-      </>
-  
+        </>
+
       )}
     </>
   );
