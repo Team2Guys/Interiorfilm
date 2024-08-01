@@ -14,6 +14,7 @@ import { FiZoomIn } from 'react-icons/fi';
 import Model from 'components/ui/Modal/Model';
 import ProductDetails from 'components/product_detail/ProductDetails';
 
+import CartDrawer from 'components/cart-drawer/cart-drawer';
 
 interface CardProps {
   ProductCard?: PRODUCTS_TYPES[];
@@ -158,7 +159,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
     // Automatically close the drawer after 3 seconds
     setTimeout(() => {
       handleCloseDrawer();
-    }, 3000);
+    }, 2000);
   };
 
   const handleAddToWishlist = (product: any) => {
@@ -263,7 +264,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
             )}
           </div>
         </div>
-
+        <CartDrawer open={drawerOpen} onClose={handleCloseDrawer} />
         <Modal title={<h1 className="lg:text-xl text-sm text-dark group-hover:text-white font-bold">
           Code : <span>{product.name}</span>
         </h1>} open={isModalOpen} width={700} onOk={handleOk} onCancel={handleCancel} footer={""}>
