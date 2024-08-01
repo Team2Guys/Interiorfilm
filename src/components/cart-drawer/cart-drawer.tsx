@@ -1,14 +1,19 @@
+
+//@ts-nocheck
 import React, { useEffect, useState } from "react";
 import { Drawer, message } from "antd";
 import Image from "next/image";
 import { IoCloseSharp } from "react-icons/io5";
 import { RxMinus, RxPlus } from "react-icons/rx";
 import SelectList from "components/ui/Select/Select";
-import { options } from "data/Data";
 import Link from "next/link";
 import PRODUCTS_TYPES from "types/interfaces";
 
-const CartDrawer: React.FC = () => {
+interface CartDrawerProps {
+  OpenDrawer: React.ReactNode;
+}
+
+const CartDrawer: React.FC<CartDrawerProps> = ({ OpenDrawer }) => {
   const [open, setOpen] = useState(false);
   const [counts, setCounts] = useState<{ [key: number]: number }>({});
   const [cartItems, setCartItems] = useState<PRODUCTS_TYPES[]>([]);
@@ -91,11 +96,23 @@ const CartDrawer: React.FC = () => {
     message.success('Product removed from cart successfully!');
     window.dispatchEvent(new Event("cartChanged"));
   };
+  
+  let options: any = []
+
+  {
+    ((cartItems && cartItems.sizes) && cartItems.sizes.length > 0) && cartItems.sizes.forEach((item: any) => {
+      let SizesArray = { label: "1.22" + "x" + item.sizesDetails + " METERS", value: item.sizesDetails }
+      options.push(SizesArray)
+
+      return null
+    })
+  }
+
 
   return (
     <>
-      <div onClick={showDrawer} className="z-999999">
-        Open
+      <div onClick={showDrawer} className="z-999">
+        {OpenDrawer}
       </div>
       <Drawer
         title={
@@ -105,7 +122,7 @@ const CartDrawer: React.FC = () => {
             </p>
           </>
         }
-        className="z-999999"
+        className="z-9999 border-none"
         onClose={onClose}
         open={open}
         width={500}
@@ -119,13 +136,13 @@ const CartDrawer: React.FC = () => {
             </div>
             <div className="flex flex-col w-full justify-center space-y-3 mt-5">
               <Link
-                className="w-full p-4 text-16 bg-primary text-white text-center"
+                className="w-full p-4 text-16 bg-primary text-white hover:text-white text-center"
                 href="/cart"
               >
                 VIEW CART
               </Link>
               <Link
-                className="w-full p-4 text-16 bg-black text-white text-center"
+                className="w-full p-4 text-16 bg-black text-white hover:text-white text-center"
                 href="/checkout"
               >
                 CHECK OUT
@@ -187,11 +204,11 @@ const CartDrawer: React.FC = () => {
                     </div>
                   </div>
                   <SelectList
-                    className="w-32 h-8  outline-none  text-20"
-                    onChange={onChange}
-                    options={options}
-                    defaultValue="Select Size"
-                  />
+                        className='w-[50%] h-10 border outline-none shipment text-20'
+                        onChange={onChange}
+                        options={options}
+                        defaultValue="Select Size"
+                      />
                 </div>
               </div>
               <div className="flex gap-2 items-center ">

@@ -11,17 +11,18 @@ function Categories() {
   const [category, setCategory] = useState<CategoriesType[]>([]);
   const router = useRouter();
 
-  const handleButtonClick = (categoryId: string) => {
-    router.push(`/products?${categoryId}`);
+  const handleButtonClick =() => {
+    router.push(`/products`);
+
   };
 
   const CategoryHandler = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
-      console.log(response, "response");
+      console.log(response, "response")
       setCategory(response.data);
     } catch (err) {
-      console.log(err, "err");
+      console.log(err, "err")
     }
   };
 
@@ -29,7 +30,7 @@ function Categories() {
     CategoryHandler();
   }, []);
 
-  console.log(category, "category");
+  console.log(category, "category")
 
   return (
     <>
@@ -52,7 +53,7 @@ function Categories() {
                 <div className={`w-full md:w-2/5 flex justify-center flex-col md:min-w-80 ${EvenFlag ? "order-2 md:order-2" : 'order-1 md:order-1'}`}>
                   <h1 className='text-[#3A393C] font-bold font-poppins text-[30px] pb-5'>{item.name}</h1>
                   <p className='text-[#3A393C] text-[20px] leading-[45px] font-poppins pb-7'>{item.description}</p>
-                  <button onClick={() => handleButtonClick(item._id)} className='inline-block text-start border w-fit px-6 rounded-md border-[#535353] outline-none hover:bg-black hover:text-white font-poppins font-normal text-[15px] leading-[44px]'>View All</button>
+                  <button onClick={() => handleButtonClick} className='inline-block text-start border w-fit px-6 rounded-md border-[#535353] outline-none hover:bg-black hover:text-white font-poppins font-normal text-[15px] leading-[44px]'>View All</button>
                 </div>
               </div>
             );

@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <div className=" mt-[510px] md:mt-[910px]" />
+      <div className=" mt-[560px] sm:mt-[550px] md:mt-[800px] lg:mt-[910px]" />
       <CategorySlider/>
       <Container className="mt-10">
         <h1 className="text-[24px] text-heading text-center ">
