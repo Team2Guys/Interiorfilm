@@ -69,7 +69,7 @@ const CategorySlider: React.FC = () => {
             spaceBetween: 20,
           },
           640: {
-            slidesPerView: 2.5,
+            slidesPerView: 2,
             spaceBetween: 20,
           },
           768: {

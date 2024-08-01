@@ -136,13 +136,13 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ OpenDrawer }) => {
             </div>
             <div className="flex flex-col w-full justify-center space-y-3 mt-5">
               <Link
-                className="w-full p-4 text-16 bg-primary text-white text-center"
+                className="w-full p-4 text-16 bg-primary text-white hover:text-white text-center"
                 href="/cart"
               >
                 VIEW CART
               </Link>
               <Link
-                className="w-full p-4 text-16 bg-black text-white text-center"
+                className="w-full p-4 text-16 bg-black text-white hover:text-white text-center"
                 href="/checkout"
               >
                 CHECK OUT
