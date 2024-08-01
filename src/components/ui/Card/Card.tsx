@@ -217,8 +217,9 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       
       <div className="cursor-pointer  transition-all m-1 " onClick={() => router.push(`/product/${generateSlug(product.name)}`)}>
         <div className="text-center">
-          <div className='absolute top-60 hidden mk translate-y-20 z-10 w-full md:flex justify-center opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition ease-in-out duration-400'>
-            <button className='bg-white z-10 px-4 py-1'>Order Now</button>
+          <div className='absolute top-60 hidden mk translate-y-20 z-10 w-full md:flex gap-5 justify-center opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition ease-in-out duration-400'>
+            <button className='bg-white z-10 px-4 py-1' onClick={(e)=>{e.stopPropagation();handleAddToCart(product); router.push('/checkout')}}>Order Now</button>
+            <button className='bg-black z-10 text-white px-4 py-1' onClick={(e)=>e.stopPropagation()}>Quick View </button>
           </div>
           {product.posterImageUrl && product.posterImageUrl.imageUrl && (
             <Image className="bg-contain h-32 w-full md:h-72" width={300} height={300} src={product.posterImageUrl.imageUrl} alt="Image" />
