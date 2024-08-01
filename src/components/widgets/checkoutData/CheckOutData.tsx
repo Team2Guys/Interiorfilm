@@ -146,7 +146,7 @@ const CheckoutData: React.FC<TableProps> = ({ cartdata, onCartChange,subtotal,se
         <div className="flex justify-between items-center">
           <h1 className="text-[27px] ">Shipment Fee:</h1>
           <h1 className="text-[24px] ">
-            AED <span>{shipmentFee}</span>.00
+        <span>{shipmentFee}</span>.00
           </h1>
         </div>
         <hr className="w-full mx-auto border-gray" />
