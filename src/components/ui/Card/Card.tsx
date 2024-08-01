@@ -46,7 +46,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
 
   const getallProducts = async () => {
     try {
-      if (pathname.startsWith("/product") || slider) return;
+      if (pathname.startsWith("/products") || slider) return;
       console.log('slider false')
 
       setLoading(true);
