@@ -98,7 +98,7 @@ const Products = () => {
     setOpen(false)
   }
 
-  let productHandler = async () => {
+  let productHandler = async (categoryId: string | null) => {
     try {
       setLoading(true)
       const CategoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`)
@@ -107,7 +107,13 @@ const Products = () => {
       const [categoryResponse, products] = await Promise.all([CategoryRequest, productRequest]);
       let category = categoryResponse.data
       setTotalProducts(products.data.products)
-      setActiveLink(categoryResponse.data[0])
+
+      if (categoryId) {
+        const activeCategory = category.find((cat: category) => cat._id === categoryId) || StaticCategory;
+        setActiveLink(activeCategory);
+      } else {
+        setActiveLink(categoryResponse.data[0]);
+      }
       setCategory([StaticCategory, ...category])
     } catch (err) {
       console.log(err, "err")
@@ -117,7 +123,9 @@ const Products = () => {
   }
 
   useLayoutEffect(() => {
-    productHandler()
+    const queryParams = new URLSearchParams(window.location.search);
+    const categoryId = queryParams.get('category');
+    productHandler(categoryId);
   }, [])
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -173,15 +181,12 @@ const Products = () => {
     }
   });
 
-  const handleCategoryClick = (categoryName: category) => {
-    setActiveLink(categoryName)
-    // setProductsToShow(9); // Reset productsToShow when category changes
-  }
-
-  // const loadMoreProducts = () => {
-  //   setProductsToShow(prevCount => prevCount + 9)
-  // }
-
+  const handleCategoryClick = (category: category) => {
+    setActiveLink(category);
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.set('category', category._id);
+    window.history.pushState({}, '', newUrl.toString());
+  };
   return (
     <>
       <Overlay title="Product" />
@@ -312,18 +317,18 @@ const Products = () => {
             }
             content={
               <div className="space-y-2">
-                <div className="p-2 bg-secondary">
+                <div className="p-2 bg-white">
                   <Collapse title="All Categories">
                     <ul className="px-1 pt-2 space-y-1">
                       {loading ? <div className="flex justify-center items-center"><Loader /></div> : category && category?.map((item, index) => (
                         <li className='flex flex-col w-full' key={index} onClick={onClose}>
-                          <div className={activeLink?.name === item.name ? "bg-secondary px-2 text-white rounded-md w-full h-8 flex items-center cursor-pointer font-poppins-light font-light" : "hover:bg-secondary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center cursor-pointer font-poppins-light"} onClick={() => handleCategoryClick(item)}>{item.name}</div>
+                          <div className={activeLink?.name === item.name ? "bg-black px-2 text-white rounded-md w-full h-8 flex items-center cursor-pointer font-poppins-light font-light" : "hover:bg-secondary px-2 hover:text-white hover:rounded-md w-full h-8 flex items-center cursor-pointer font-poppins-light"} onClick={() => handleCategoryClick(item)}>{item.name}</div>
                         </li>
                       ))}
                     </ul>
                   </Collapse>
                 </div>
-                <div className="p-2 bg-secondary">
+                <div className="p-2 bg-white">
                   <Collapse title="Availability">
                     <Radio.Group onChange={onChange} value={value}>
                       <Space direction="vertical">
@@ -333,7 +338,7 @@ const Products = () => {
                     </Radio.Group>
                   </Collapse>
                 </div>
-                <div className="p-2 bg-secondary">
+                <div className="p-2 bg-white">
                   <Collapse title="Filter Price">
                     <div className='flex gap-2'>
                       <Input

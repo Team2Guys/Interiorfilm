@@ -43,7 +43,7 @@ export default function Home() {
     <>
       <Hero />
       <CategorySlider/>
-      <Container className="mt-10">
+      <Container className="mt-10 relative">
         <h1 className="text-[24px] text-heading text-center ">
         FEATURE PRODUCT
         </h1>

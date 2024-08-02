@@ -14,13 +14,17 @@ interface CartDrawerProps {
   OpenDrawer?: React.ReactNode; // Changed any to React.ReactNode for type safety
 }
 
-const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose, OpenDrawer }) => {
+const CartDrawer: React.FC<CartDrawerProps> = ({
+  open,
+  onClose,
+  OpenDrawer,
+}) => {
   const [counts, setCounts] = useState<{ [key: number]: number }>({});
   const [cartItems, setCartItems] = useState<PRODUCTS_TYPES[]>([]);
   const [subtotal, setSubtotal] = useState(0);
 
   const fetchCartItems = () => {
-    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     setCartItems(existingCart);
     setCounts(
       existingCart.reduce((acc: any, item: any, index: number) => {
@@ -38,10 +42,10 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose, OpenDrawer }) =>
       fetchCartItems();
     };
 
-    window.addEventListener('cartChanged', handleCartChange);
+    window.addEventListener("cartChanged", handleCartChange);
 
     return () => {
-      window.removeEventListener('cartChanged', handleCartChange);
+      window.removeEventListener("cartChanged", handleCartChange);
     };
   }, []);
 
@@ -80,9 +84,10 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose, OpenDrawer }) =>
   const updateTotalPrice = (index: any, newCount: any) => {
     const updatedData = [...cartItems];
     updatedData[index].count = newCount;
-    updatedData[index].totalPrice = (updatedData[index].discountPrice || updatedData[index].price) * newCount;
+    updatedData[index].totalPrice =
+      (updatedData[index].discountPrice || updatedData[index].price) * newCount;
     setCartItems(updatedData);
-    localStorage.setItem('cart', JSON.stringify(updatedData));
+    localStorage.setItem("cart", JSON.stringify(updatedData));
     calculateSubtotal(updatedData);
   };
 
@@ -92,53 +97,66 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose, OpenDrawer }) =>
 
   const removeItem = (index: number) => {
     Modal.confirm({
-      title: 'Are you sure you want to remove this item?',
-      content: 'This action cannot be undone.',
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
+      title: "Are you sure you want to remove this item?",
+      content: "This action cannot be undone.",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
       onOk: () => {
-        const newCartItems = cartItems.filter((_, itemIndex) => itemIndex !== index);
+        const newCartItems = cartItems.filter(
+          (_, itemIndex) => itemIndex !== index
+        );
         setCartItems(newCartItems);
-        localStorage.setItem('cart', JSON.stringify(newCartItems));
+        localStorage.setItem("cart", JSON.stringify(newCartItems));
         calculateSubtotal(newCartItems);
-        message.success('Product removed from cart successfully!');
+        message.success("Product removed from cart successfully!");
         window.dispatchEvent(new Event("cartChanged"));
       },
       onCancel: () => {
-        message.info('Item removal canceled');
-      }
+        message.info("Item removal canceled");
+      },
     });
   };
 
   let options: any = [];
 
   {
-    ((cartItems && cartItems.sizes) && cartItems.sizes.length > 0) && cartItems.sizes.forEach((item: any) => {
-      let SizesArray = { label: "1.22" + "x" + item.sizesDetails + " METERS", value: item.sizesDetails }
-      options.push(SizesArray);
+    cartItems &&
+      cartItems.sizes &&
+      cartItems.sizes.length > 0 &&
+      cartItems.sizes.forEach((item: any) => {
+        let SizesArray = {
+          label: "1.22" + "x" + item.sizesDetails + " METERS",
+          value: item.sizesDetails,
+        };
+        options.push(SizesArray);
 
-      return null;
-    });
+        return null;
+      });
   }
 
   return (
     <>
-      {OpenDrawer && <div className="relative text-20 md:text-2xl cursor-pointer" onClick={() => open ? onClose() : undefined}>
-        {OpenDrawer}
-      </div>}
-    <Drawer
-      title={
-        <>
-          <p className="text-23">
-            My Cart <span> ({cartItems.length})</span>
-          </p>
-        </>
-      }
-      className="z-99 border-none"
-      onClose={onClose}
-      open={open}
-      width={500}
+      {OpenDrawer && (
+        <div
+          className="relative text-20 md:text-2xl cursor-pointer"
+          onClick={() => (open ? onClose() : undefined)}
+        >
+          {OpenDrawer}
+        </div>
+      )}
+      <Drawer
+        title={
+          <>
+            <p className="text-23">
+              My Cart <span> ({cartItems.length})</span>
+            </p>
+          </>
+        }
+        className="z-99 border-none"
+        onClose={onClose}
+        open={open}
+        width={500}
         footer={
           <>
             <div className="flex justify-between px-2 font-semibold text-14 md:text-22">
@@ -149,12 +167,14 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose, OpenDrawer }) =>
             </div>
             <div className="flex flex-col w-full justify-center space-y-3 mt-5">
               <Link
+                onClick={onClose}
                 className="w-full p-4 text-16 bg-primary text-white hover:text-white text-center"
                 href="/cart"
               >
                 VIEW CART
               </Link>
               <Link
+                onClick={onClose}
                 className="w-full p-4 text-16 bg-black text-white hover:text-white text-center"
                 href="/checkout"
               >
@@ -164,7 +184,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose, OpenDrawer }) =>
           </>
         }
       >
-        {cartItems.map((item:any, index) => (
+        {cartItems.map((item: any, index) => (
           <div key={index} className="rounded-md shadow p-2 mt-5 bg-white">
             <div className="space-y-2">
               <div className="flex gap-3">
@@ -188,9 +208,15 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose, OpenDrawer }) =>
                   </div>
                 </div>
                 <div className="space-y-1 w-8/12">
-                  <h1 className="text-12 md:text-14 font-semibold">{item.name}</h1>
+                  <h1 className="text-12 md:text-14 font-semibold">
+                    {item.name}
+                  </h1>
                   <p className="text-12 md:text-14 ">
-                    AED<span>{item.discountPrice ? item.discountPrice : item.price}</span>.00
+                    AED
+                    <span>
+                      {item.discountPrice ? item.discountPrice : item.price}
+                    </span>
+                    .00
                   </p>
                   <div className="flex">
                     <div
@@ -217,17 +243,22 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose, OpenDrawer }) =>
                     </div>
                   </div>
                   <SelectList
-                        className='w-[50%] h-10 border outline-none shipment text-20'
-                        onChange={onChange}
-                        options={options}
-                        defaultValue="Select Size"
-                      />
+                    className="w-[50%] h-10 border outline-none shipment text-20"
+                    onChange={onChange}
+                    options={options}
+                    defaultValue="Select Size"
+                  />
                 </div>
               </div>
               <div className="flex gap-2 items-center ">
                 <h1 className="font-bold">Total: </h1>
                 <p>
-                  AED <span>{(item.discountPrice ? item.discountPrice : item.price) * (counts[index] || item.count)}</span>.00
+                  AED{" "}
+                  <span>
+                    {(item.discountPrice ? item.discountPrice : item.price) *
+                      (counts[index] || item.count)}
+                  </span>
+                  .00
                 </p>
               </div>
             </div>

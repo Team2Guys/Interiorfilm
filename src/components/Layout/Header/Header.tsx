@@ -223,12 +223,12 @@ const Header = () => {
         </p>
       </div>
       <nav
-        className={` text-white  sticky top-0  mx-auto flex justify-between items-center z-99 w-full p-2 md:px-10   ${
+        className={` text-white mx-auto flex justify-between items-center z-99 w-full p-2 md:px-10   ${
           isHomePage
             ? isScrolled
-              ? "bg-white text-black"
-              : "bg-transparent text-white"
-            : "bg-white text-black"
+              ? "bg-white text-black top-0 fixed"
+              : "bg-transparent text-white sticky top-0"
+            : "bg-white text-black sticky top-0 "
         }`}
       >
         <div className="flex justify-between md:items-center space-x-4">

@@ -73,15 +73,15 @@ const Contact = () => {
                         <div className='space-y-4'>
                             <div className='flex gap-2 items-center'>
                                 <TfiLocationPin size={20} />
-                                <p >Lorem ipsum dolor sit amet, consectetur adipiscing elit, eiusmod tempor.</p>
+                                <p >Yellowzone Trading, Al Nabooda Tower A ,Shop 6, Oud Metha, Dubai, UAE</p>
                             </div>
                             <div className='flex gap-2 items-center'>
                                 <FiPhone size={20} />
-                                <Link href={"tel:+1234567890"}>+1234567890</Link>
+                                <Link target='_blank' href={"tel:+971 052 1919 327"}>+971 052 1919 327</Link>
                             </div>
                             <div className='flex gap-2 items-center'>
                                 <FiMail size={20} />
-                                <Link href={"mailto:test@example.com"}>test@example.com</Link>
+                                <Link target='_blank' href={"mailto:orders@yzgroup.ae"}>orders@yzgroup.ae</Link>
                             </div>
                         </div>
                         <div>

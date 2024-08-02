@@ -7,10 +7,10 @@ import Link from 'next/link';
 import logo from "../../../../public/images/new/logo.png";
 import Image from 'next/image';
 import { socialLinks, categories, customerCare, pages } from 'data/FooterData';
-import paypal from "../../../../public/images/paypal.jpg";
-import visacard from "../../../../public/images/visacard.jpg";
-import mastercard from "../../../../public/images/mastercard.jpg";
-import maestrocard from "../../../../public/images/maestrocard.jpg";
+import card1 from "../../../../public/images/new/card1.png";
+import card2 from "../../../../public/images/new/card2.png";
+import card3 from "../../../../public/images/new/card3.png";
+import card4 from "../../../../public/images/new/card4.png";
 import Container from '../Container/Container';
 import { SlEnvolopeLetter } from 'react-icons/sl';
 import Button from 'components/ui/Button/Button';
@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
   const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
   const toggleCustomerCare = () => setIsCustomerCareOpen(!isCustomerCareOpen);
   const togglePages = () => setIsPagesOpen(!isPagesOpen);
-  const bottomImages = [paypal, visacard, mastercard, maestrocard];
+  const bottomImages = [card1, card2, card3,card4];
   const CategoryHandler = async () => {
 try{
   const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
@@ -59,9 +59,9 @@ try{
         </div>
         <div className='flex flex-wrap md:*:flex-nowrap items-center justify-end gap-2 w-full md:w-8/12 text-white mt-4 md:mt-0'>
         <SlEnvolopeLetter className='text-primary' size={35} />
-        <p className='lg:text-base text-sm capitalize text-white'>YOUR ORDER! SUBSCRBE TO OUR NEWSLETTER TODAY.</p>
+        <p className='lg:text-base text-sm capitalize text-white'>SUBSCRBE TO OUR NEWSLETTER.</p>
         <div className='flex items-center justify-center mt-5 md:mt-0 rounded-none'>
-          <input className='bg-secondary rounded-none h-8 px-2 outline-none w-4/6 md:w-auto' type='email' placeholder='Enter Email Address'/>
+          <input className='bg-secondary border border-r-0 py-4 rounded-none h-9 px-2 outline-none w-4/6 md:w-auto' type='email' placeholder='Enter Email Address'/>
           <Button className='text-sm px-5' title={"SUBSCRBE"}/>
         </div>
         </div>
@@ -145,12 +145,10 @@ try{
         </div>
       </div>
     </div>
-<div className='bg-white border flex justify-center items-center'>
-<p className='text-text h-16 flex items-center'>interior film © 2024. All Rights Reserved</p>
+<div className='bg-white  flex justify-center items-center'>
+<p className='text-text h-12 flex items-center'>interior film © 2024. All Rights Reserved</p>
 </div>
     </>
-
-
 
   );
 };
