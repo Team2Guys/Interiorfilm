@@ -11,10 +11,10 @@ import { GiPayMoney } from 'react-icons/gi'
 import { RiCustomerService2Line } from 'react-icons/ri'
 import Link from 'next/link'
 const offers = [
-    { icon:<SlDiamond className='text-primary  group-hover:text-white' size={40} /> ,title: 'Quality Products', detail: 'Get free Quality Products for your interior design project.' },
-    { icon:<CgBulb className='text-primary  group-hover:text-white' size={40} /> ,title: 'Reasonable Pricing', detail: 'We ensure the highest quality standards for your interiors.' },
-    { icon:<GiPayMoney className='text-primary  group-hover:text-white' size={40} /> ,title: 'Reasonable Pricing', detail: 'Competitive pricing for all our services.' },
-    { icon:<RiCustomerService2Line className='text-primary  group-hover:text-white' size={40} /> ,title: '24/7 Support', detail: 'Our support team is available 24/7 to assist you.' },
+    { icon:<SlDiamond className='text-primary  group-hover:text-white' size={40} /> ,title: 'Savings to your pocket', detail: 'We cut out the middle man, passing the savings on to you.' },
+    { icon:<CgBulb className='text-primary  group-hover:text-white' size={40} /> ,title: 'Fast Delivery ', detail: 'Fast Delivery – Choose your material, select quantity, check out and receive by the next working day.' },
+    { icon:<GiPayMoney className='text-primary  group-hover:text-white' size={40} /> ,title: 'Exclusive Collection', detail: 'We buy direct from the factory and are exclusive distributors for the .' },
+    { icon:<RiCustomerService2Line className='text-primary  group-hover:text-white' size={40} /> ,title: 'Service Promise', detail: 'Our professional team are on hand 365 days a year to help with any queries you may have.' },
   ];
 const About = () => {
   return (
