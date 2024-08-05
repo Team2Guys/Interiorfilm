@@ -7,7 +7,7 @@ import React from 'react';
 const Hero = () => {
   return (
     <>
-      <div className='bg-hero w-full h-[600px] md:h-screen bg-cover bg-no-repeat'>
+      <div className='bg-hero w-full h-[600px] md:h-screen bg-cover bg-no-repeat relative'>
       <Header/>
         <div className='absolute top-1/2 left-5 h-36 w-14 transform -translate-x-1/2 -translate-y-1/2 bg-black text-white p-2'>
           <p className='transform  mt-20  -rotate-90 whitespace-nowrap'>Get 10% Off!</p>

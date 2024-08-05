@@ -71,10 +71,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
 
           </Swiper>
 
-
         </div>
-
-
 
 <div className='w-[82%] relative md:max-h-550'>
       <Swiper
@@ -110,7 +107,6 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
         ))}
       </Swiper>
 
-
       <div ref={prevRef} className='swiper-prev absolute left-[-30px] md:left-[-25px] top-1/2 transform -translate-y-1/2 z-10 cursor-pointer'>
         
         <Image src='/images/arrows.png' width={51} height={55}/>
@@ -122,9 +118,6 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
       <Image src='/images/arrows.png' width={51} height={55} className='rotate-180'/>
       </div>
     </div>
-
-
-
 
       </div>
 

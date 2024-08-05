@@ -8,11 +8,11 @@ interface modelProps extends ModalFuncProps {
   productDetailModel: boolean
 }
 
-export default function Model({ children, centered, footer, productDetailModel, setproductDetailModel }: modelProps) {
+export default function Model({ children, centered, footer, productDetailModel, setproductDetailModel,title }: modelProps) {
   return (
     <>
       <Modal
-        title="Vertically centered modal dialog"
+        title={title}
         width={1200}
         centered={centered}
         open={productDetailModel}
