@@ -3,7 +3,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 
 interface LoaderProps {
-  color?: string; // Define color prop
+  color?: string; 
 }
 
 const Loader: React.FC<LoaderProps> = ({ color}) => (

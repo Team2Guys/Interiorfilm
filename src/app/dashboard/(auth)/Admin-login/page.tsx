@@ -114,11 +114,6 @@ const DashboardLogin = () => {
   return (
     <>
       <div>
-
-
-
-
-
         <USRcomponent handleSubmit={handleSubmit}
           error={error}
           loading={loading}

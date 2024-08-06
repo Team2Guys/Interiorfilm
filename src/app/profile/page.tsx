@@ -14,12 +14,7 @@ import { useAppDispatch } from "components/Others/HelperRedux";
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ImageRemoveHandler } from 'utils/helperFunctions';
-
-
-
-
-
-
+import UserprotectedRoute from 'hooks/AuthHook'
 
 
 const Profile: React.FC = () => {
@@ -31,9 +26,6 @@ const Profile: React.FC = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [profilePhoto, setProfilePhoto] = useState<IMAGE_INTERFACE[]>([]);
   const token = Cookies.get('user_token');
-
-  console.log(token, "token")
-
 
   const initialValue = {
     name: loggedInUser ? `${loggedInUser.email}` : "",
@@ -132,7 +124,6 @@ const Profile: React.FC = () => {
   const logoutHhandler = () => {
     try {
       Cookies.remove('user_token');
-
       router.push('/login')
 
     } catch (err) {
@@ -333,4 +324,4 @@ const Profile: React.FC = () => {
   );
 }
 
-export default Profile;
+export default UserprotectedRoute(Profile);

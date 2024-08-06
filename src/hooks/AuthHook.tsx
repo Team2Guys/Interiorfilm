@@ -1,6 +1,5 @@
-
 'use client'
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "components/Loader/Loader";
 import Cookies from 'js-cookie';
@@ -10,45 +9,42 @@ import { useAppSelector } from "components/Others/HelperRedux";
 import { loggedInUserAction } from '../redux/slices/userSlice';
 import { useAppDispatch } from "components/Others/HelperRedux";
 
-
-
-
-
-
-function ProtectedRoute(WrappedComponent: any) {
+function UserprotectedRoute(WrappedComponent: any) {
   const Wrapper = (props: any) => {
     const router = useRouter();
-    const [loading, setLoading] = useState<boolean>(false);
-
-    const dispatch = useAppDispatch()
+    const [loading, setLoading] = useState<boolean>(true);
+    const dispatch = useAppDispatch();
 
     const AddminProfileTriggerHandler = async (token: string | undefined | null) => {
       try {
-        if (!token) return null
-
-        setLoading(true)
+        if(!token) return
         let user: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/getuserHandler`, {
           headers: {
             "token": token
           }
-        })
-        dispatch(loggedInUserAction(user.data.user))
-
+        });
+        dispatch(loggedInUserAction(user.data.user));
       } catch (err: any) {
-        console.log(err, "err")
+        console.log(err, "err");
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
 
-    useLayoutEffect(() => {
-      let token = Cookies.get("user_token");
+    useEffect(() => {
+      const token = Cookies.get("user_token");
 
-      if (token) {
-        AddminProfileTriggerHandler(token)
+      if (!token) {
+        router.push("/login");
+        setTimeout(() => {
+          setLoading(false);
+          
+        }, 1000);
+      } else {
+        AddminProfileTriggerHandler(token);
       }
-      
-    }, []);
+    }, [router]);
+console.log(loading, "loading")
     if (loading) {
       return (
         <div
@@ -66,8 +62,6 @@ function ProtectedRoute(WrappedComponent: any) {
         </div>
       );
     } else {
-
-
       return <WrappedComponent {...props} />;
     }
   };
@@ -75,4 +69,4 @@ function ProtectedRoute(WrappedComponent: any) {
   return Wrapper;
 }
 
-export default ProtectedRoute;
+export default UserprotectedRoute;
