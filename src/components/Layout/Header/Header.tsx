@@ -28,7 +28,7 @@ import CartDrawer from "components/cart-drawer/cart-drawer";
 
 
 const Header = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();  
   const [open, setOpen] = useState(false);
   const [category, setcategory] = useState(false);
   const [cartItems, setCartItems] = useState([]);
