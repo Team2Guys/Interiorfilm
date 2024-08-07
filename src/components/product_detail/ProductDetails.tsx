@@ -142,13 +142,13 @@ export default function ProductDetails({ productDetail }: productDetailsProps) {
     return (
         <Container className='mt-10 mb-5'>
             <div className='shadow  bg-white'>
-                <div className='grid grid-cols-2 md:grid-cols-3 mt-2 p-2 gap-4 md:gap-10'>
+                <div className='grid grid-cols-2 md:grid-cols-3 mt-2 p-2 '>
 
                     <div className='w-full col-span-3 md:col-span-2'>
                         <Thumbnail thumbs={productDetail.imageUrl} />
                     </div>
 
-                    <div className='py-3 px-2 md:px-8 space-y-2 md:space-y-8 col-span-3 md:col-span-1 '>
+                    <div className='py-3 space-y-2 md:space-y-8 col-span-3 md:col-span-1 '>
                         <h1 className='text-3xl'>{productDetail.name}</h1>
 
                         {(reviews.length && reviews.length > 0) ?
