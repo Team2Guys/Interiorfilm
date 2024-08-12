@@ -4,12 +4,12 @@ import Overlay from 'components/widgets/Overlay/Overlay';
 import Link from 'next/link';
 import { ShipmentPolicydata } from 'data/Data';
 
-const ShipmentPolicy: React.FC = () => {
+const Trade: React.FC = () => {
   return (
     <>
-      <Overlay title='Shipment Policy'/>
+      <Overlay title='Trade Enquiries'/>
       <div className='px-2 sm:px-4 md:px-8 max-w-screen-xl mx-auto space-y-3 py-20'>
-        <h1 className='text-2xl font-bold'>Shipping policy</h1>
+        <h1 className='text-2xl font-bold'>Trade Enquiries </h1>
         {ShipmentPolicydata.map((item, index) => (
           <div key={index} className='space-y-3'>
             <h2 className='text-xl font-bold'>{item.title}</h2>
@@ -53,4 +53,4 @@ const ShipmentPolicy: React.FC = () => {
   );
 };
 
-export default ShipmentPolicy;
+export default Trade;

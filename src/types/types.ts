@@ -13,3 +13,14 @@ export type BRAND = {
     name: string;
     price:number
   };
+
+  export interface listItems {
+    listItem: any;
+  }
+
+
+  export interface PrivacyPolicyItem {
+    title?: string;
+    text?: any;
+    listItems?: any[];
+  }

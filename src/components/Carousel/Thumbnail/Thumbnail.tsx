@@ -40,9 +40,9 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
   return (
     <div className='relative'>
 
-      <div className='w-full flex justify-between gap-5'>
+      <div className='w-full flex gap-5'>
 
-        <div className='w-1/5 md:w-[150px] sm:max-w-[200px] md:min-w-[150px] '>
+        <div className='w-2/12 max-h-[550px] overflow-y-scroll  custom-scrollbar '>
           <Swiper
             onSwiper={setThumbsSwiper}
             loop={true}
@@ -73,7 +73,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
 
         </div>
 
-<div className='w-[82%] relative md:max-h-550'>
+<div className='w-8/12 relative md:max-h-550'>
       <Swiper
         style={{
           '--swiper-navigation-color': '#ffffff',
@@ -121,7 +121,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
 
       </div>
 
-      <div className="  absolute -right-10 top-1 hidden md:block">
+      <div className="  absolute right-20 top-1 hidden md:block">
         {hoveredImage && (
           <div
             className="magnified-image absolute left-0  z-50"
@@ -130,8 +130,8 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
               backgroundPosition: backgroundPosition,
               backgroundRepeat: 'no-repeat',
               backgroundSize: '200%',
-              width: '600px',
-              height: '600px',
+              width: '550px',
+              height: '550px',
             }}
           />
         )}
