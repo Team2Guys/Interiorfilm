@@ -138,6 +138,7 @@ interface PRODUCTS_TYPES {
   count?: any;
   length?: any;
   totalPrice?:any;
+  customOrder?: number;
 }
 
 export default PRODUCTS_TYPES;

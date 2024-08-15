@@ -474,3 +474,11 @@ gap: 10px;
 .ant-message{
   z-index: 999999 !important;
 }
+ .ant-select-selector{
+  border-color: #000000 !important;
+  border-radius: 1px !important;
+  box-shadow: #000000 !important;
+}
+.ant-select-selector:hover{
+  border-color: #000000 !important;
+}

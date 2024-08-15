@@ -98,15 +98,15 @@ const Products = () => {
     setOpen(false)
   }
 
-  let productHandler = async (categoryId: string | null) => {
+  const productHandler = async (categoryId: string | null) => {
     try {
-      setLoading(true)
-      const CategoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`)
-      const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`)
+      setLoading(true);
+      const CategoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+      const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
 
       const [categoryResponse, products] = await Promise.all([CategoryRequest, productRequest]);
-      let category = categoryResponse.data
-      setTotalProducts(products.data.products)
+      let category = categoryResponse.data;
+      setTotalProducts(products.data.products);
 
       if (categoryId) {
         const activeCategory = category.find((cat: category) => cat._id === categoryId) || StaticCategory;
@@ -114,11 +114,11 @@ const Products = () => {
       } else {
         setActiveLink(categoryResponse.data[0]);
       }
-      setCategory([StaticCategory, ...category])
+      setCategory([StaticCategory, ...category]);
     } catch (err) {
-      console.log(err, "err")
+      console.log(err, "err");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -151,11 +151,9 @@ const Products = () => {
     if (activeLink._id === "all") {
       return product;
     }
-
-    return product.category === activeLink._id
+    return product.category === activeLink._id;
   }) : totalProducts;
 
-  console.log()
   const filteredProducts = filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
     if (!product) return true; // Keep the product if it's null
 
@@ -164,22 +162,30 @@ const Products = () => {
     const nameMatch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
     const colorMatch = !colorName || (product.colors && product.colors.some(color => color.colorName === colorName));
     const inStockMatch = !inStockOnly || product.totalStockQuantity && product.totalStockQuantity > 0;
-    const outOfStockMatch = !outOfStockOnly || product.totalStockQuantity === 0 || !product.totalStockQuantity
+    const outOfStockMatch = !outOfStockOnly || product.totalStockQuantity === 0 || !product.totalStockQuantity;
 
     return nameMatch && colorMatch && priceMatch && inStockMatch && outOfStockMatch;
   });
 
-  const sortedProducts = filteredProducts.sort((a, b) => {
-    const getPrice = (product: PRODUCTS_TYPES) => product.discountPrice ?? product.salePrice;
-
-    if (sortOption === "Low to High") {
-      return getPrice(a) - getPrice(b);
+  const sortProducts = (products: PRODUCTS_TYPES[]) => {
+    if (sortOption === "Default") {
+      return products.sort((a, b) => {
+        const nameA = a.name.toUpperCase(); // Convert to uppercase for case-insensitive comparison
+        const nameB = b.name.toUpperCase();
+        return nameA.localeCompare(nameB, undefined, { numeric: true, sensitivity: 'base' });
+      });
+    } else if (sortOption === "Low to High") {
+      const getPrice = (product: PRODUCTS_TYPES) => product.discountPrice ?? product.salePrice;
+      return products.sort((a, b) => getPrice(a) - getPrice(b));
     } else if (sortOption === "High to Low") {
-      return getPrice(b) - getPrice(a);
+      const getPrice = (product: PRODUCTS_TYPES) => product.discountPrice ?? product.salePrice;
+      return products.sort((a, b) => getPrice(b) - getPrice(a));
     } else {
-      return 0;
+      return products; // Default case, no sorting
     }
-  });
+  };
+
+  const sortedProducts = sortProducts(filteredProducts);
 
   const handleCategoryClick = (category: category) => {
     setActiveLink(category);
