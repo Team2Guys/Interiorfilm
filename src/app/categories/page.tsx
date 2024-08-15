@@ -46,6 +46,7 @@ function Categories() {
                   <h1 className='text-[#3A393C] font-bold font-poppins text-[30px] pb-5'>{item.name}</h1>
                   <p className='text-[#3A393C] text-[20px] leading-[45px] font-poppins pb-7'>{item.description}</p>
                   <button onClick={() => handleButtonClick(item._id)} className='inline-block text-start border w-fit px-6 rounded-md border-[#535353] outline-none hover:bg-black hover:text-white font-poppins font-normal text-[15px] leading-[44px]'>View All</button>
+               
                 </div>
               </div>
             );

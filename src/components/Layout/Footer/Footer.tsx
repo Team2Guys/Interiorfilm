@@ -51,7 +51,7 @@ try{
           <Image width={200} height={200} src={logo} alt="Interior Film"/>
           <div className="flex space-x-4">
               {socialLinks.map((link, index) => (
-                <Link key={index} href={link.href} className='hover:text-primary link-footer'>
+                <Link key={index} href={link.href} target='_blank' className='hover:text-primary link-footer'>
                   {React.createElement(require('react-icons/fa')[link.icon], { className: "text-lg hover:text-primary link-footer" })}
                 </Link>
               ))}

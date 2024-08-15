@@ -13,9 +13,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ name, posterImageUrl, categ
   const router = useRouter();
 
   const handleButtonClick = () => {
-    // Navigate to the product page, you can customize the URL based on your routing structure
-    router.push(`/categories`);
-    // router.push(`/products/${categoryId}`);
+    router.push(`/products?category=${categoryId}`);
   };
 
   return (
@@ -25,6 +23,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ name, posterImageUrl, categ
         backgroundRepeat: 'no-repeat',
       }}
       className='w-full h-[400px] md:h-[603px] bg-cover bg-center relative'
+      onClick={handleButtonClick}
     >
       <div className='absolute bottom-8 md:bottom-16 right-8 md:right-16 space-y-5 text-end'>
         <p className='text-22 text-white font-bold tracking-widest'>{name}</p>

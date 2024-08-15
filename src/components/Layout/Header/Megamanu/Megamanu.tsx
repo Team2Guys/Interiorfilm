@@ -1,16 +1,16 @@
+import React, { useState, useEffect } from 'react';
 import MenuSlider from 'components/Carousel/menuSlider/menuSlider';
-// import ProductSlider from 'components/Carousel/ProductSlider/ProductSlider';
 import Loader from 'components/Loader/Loader';
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
 import PRODUCTS_TYPES from 'types/interfaces';
 
 interface MegamanuProps {
   Categories: { _id: string, name: string }[];
   products: PRODUCTS_TYPES[];
+  onProductClick: () => void; // Add a prop to close the popover on product click
 }
 
-const Megamanu: React.FC<MegamanuProps> = ({ Categories, products, }) => {
+const Megamanu: React.FC<MegamanuProps> = ({ Categories, products, onProductClick }) => {
   const [loadingCategories, setLoadingCategories] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [filteredProducts, setFilteredProducts] = useState<PRODUCTS_TYPES[]>([]);
@@ -60,7 +60,8 @@ const Megamanu: React.FC<MegamanuProps> = ({ Categories, products, }) => {
           <h1 className='text-2xl font-semibold mb-4'>{selectedCategory ? Categories.find(cat => cat._id === selectedCategory)?.name : "All Products"}</h1>
           <Link className='hover:underline hover:text-black' href={"/products"}>View All</Link>
         </div>
-        <MenuSlider products={filteredProducts} loading={loadingCategories} />
+        {/* Pass the onProductClick prop to MenuSlider */}
+        <MenuSlider products={filteredProducts} loading={loadingCategories} onProductClick={onProductClick} />
       </div>
     </div>
   );

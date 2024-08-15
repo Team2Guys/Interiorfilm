@@ -47,6 +47,7 @@ const CategorySlider: React.FC = () => {
     localStorage.setItem('selectedCategory', JSON.stringify(category));
     // Navigate to the products page if needed
   };
+  
 
   return (
     <div className="px-0 md:px-4 flex items-center relative mt-10">

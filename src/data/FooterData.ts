@@ -1,8 +1,8 @@
 export const socialLinks = [
-    { href: "https://facebook.com", icon: "FaFacebookF" },
-    { href: "https://twitter.com", icon: "FaTwitter" },
-    { href: "https://instagram.com", icon: "FaInstagram" },
-    { href: "https://pinterest.com", icon: "FaPinterest" },
+    { href: "https://www.facebook.com/InteriorFilm.ae", icon: "FaFacebookF" },
+    // { href: "https://twitter.com", icon: "FaTwitter" },
+    { href: "https://instagram.com/interiorfilm.ae/", icon: "FaInstagram" },
+    // { href: "https://pinterest.com", icon: "FaPinterest" },
   ];
   
   export const categories = [

@@ -63,6 +63,15 @@ const Header = () => {
   const [activeLink, setActiveLink] = useState<Category | undefined>();
   const [Categories, setCategories] = useState<Categories_Types[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  const handleVisibleChange = (visible: boolean) => {
+    setVisible(visible);
+  };
+
+  const closePopover = () => {
+    setVisible(false);
+  };
 
   const handleOpenDrawer = () => setDrawerOpen(true);
   const handleCloseDrawer = () => setDrawerOpen(false);
@@ -255,11 +264,13 @@ const Header = () => {
             Home
           </Link>
           <Popover
-            className="cursor-pointer link-underline"
-            placement="bottom"
-            trigger="click"
-            content={<Megamanu Categories={Categories} products={products} />}
-            title=""
+           className="cursor-pointer link-underline"
+           placement="bottom"
+           trigger="hover"
+           visible={visible}
+           onVisibleChange={handleVisibleChange}
+           content={<Megamanu Categories={Categories} products={products} onProductClick={closePopover} />}
+           title=""
             
           >
           

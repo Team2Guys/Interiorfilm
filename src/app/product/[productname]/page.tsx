@@ -1,5 +1,4 @@
 "use client"
-
 import Container from 'components/Layout/Container/Container';
 import Overlay from 'components/widgets/Overlay/Overlay';
 import React, { useState, useEffect } from 'react';
@@ -21,9 +20,11 @@ const Product = ({ params }: { params: { productname: string } }) => {
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
   const [relatedProducts, setRelatedProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [relatedProductsLoading, setRelatedProductsLoading] = useState<boolean>(false);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [categoryName, setCategoryName] = useState<string | null>(null);
   const [reviews, setReviews] = useState<any[]>([]);
 
-
+  // Fetch reviews for the product
   const fetchReviews = async (productId: string) => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`);
@@ -33,44 +34,59 @@ const Product = ({ params }: { params: { productname: string } }) => {
     }
   };
 
+  // Fetch categories and products
+  const productHandler = async () => {
+    try {
+      setProductsLoading(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setProductsLoading(true)
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
-        if (parsedProduct && (response.data.products && response.data.products.length > 0)) {
-          let slicedProducts = response.data.products.length > 4 ? response.data.products.filter((item: any) => generateSlug(item.name) !== parsedProduct).slice(0, 4) : response.data.products.filter((item: any) => generateSlug(item.name) !== parsedProduct)
-          setProducts(slicedProducts);
-          for (let key of response.data.products) {
-            if (generateSlug(key.name) === parsedProduct) {
-              setProductDetail(key);
-              fetchRelatedProducts(key.category);
-              return;
-            }
-          }
+      // Fetch categories and products concurrently
+      const categoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+      const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
+
+      const [categoryResponse, productResponse] = await Promise.all([categoryRequest, productRequest]);
+
+      setProducts(productResponse.data.products);
+      setCategories(categoryResponse.data);
+
+      // If parsedProduct is defined, find product details and related category
+      if (parsedProduct && productResponse.data.products.length > 0) {
+        const foundProduct = productResponse.data.products.find((item: any) => generateSlug(item.name) === parsedProduct);
+
+        if (foundProduct) {
+          setProductDetail(foundProduct);
+          fetchRelatedProducts(foundProduct.category);
+
+          // Find the category name based on the category ID
+          const foundCategory = categoryResponse.data.find((cat: any) => cat._id === foundProduct.category);
+          setCategoryName(foundCategory ? foundCategory.name : null);
         }
-      } catch (error) {
-        console.log('Error fetching data:', error);
-      } finally {
-        setProductsLoading(false)
       }
-    };
+    } catch (error) {
+      console.log('Error fetching data:', error);
+    } finally {
+      setProductsLoading(false);
+    }
+  };
 
-    const fetchRelatedProducts = async (categoryId: string) => {
-      try {
-        setRelatedProductsLoading(true);
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
-        const relatedProducts = response.data.products.filter((product: any) => product.category === categoryId && generateSlug(product.name) !== parsedProduct);
-        setRelatedProducts(relatedProducts.slice(0, 4));
-      } catch (error) {
-        console.log('Error fetching related products:', error);
-      } finally {
-        setRelatedProductsLoading(false);
-      }
-    };
+  // Fetch related products
+  const fetchRelatedProducts = async (categoryId: string) => {
+    try {
+      setRelatedProductsLoading(true);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
+      const relatedProducts = response.data.products.filter(
+        (product: any) => product.category === categoryId && generateSlug(product.name) !== parsedProduct
+      );
+      setRelatedProducts(relatedProducts.slice(0, 4));
+    } catch (error) {
+      console.log('Error fetching related products:', error);
+    } finally {
+      setRelatedProductsLoading(false);
+    }
+  };
 
-    fetchData();
+  // UseEffect to fetch products and categories on load
+  useEffect(() => {
+    productHandler();
   }, [parsedProduct]);
 
   const tabData = [
@@ -105,7 +121,6 @@ const Product = ({ params }: { params: { productname: string } }) => {
       label: 'Review',
       children: <><Review reviews={reviews} productId={productDetail?._id} fetchReviews={fetchReviews} /></>
     },
-
     {
       key: "4",
       label: 'Video',
@@ -113,15 +128,19 @@ const Product = ({ params }: { params: { productname: string } }) => {
     },
   ];
 
-
   return (
     <>
       <Overlay title='Product Detail' />
       {
-        productsLoading ? <div className='flex justify-center items-center h-[20vh]'><Loader /></div> : productDetail ?
+        productsLoading ? (
+          <div className='flex justify-center items-center h-[20vh]'><Loader /></div>
+        ) : productDetail ? (
           <>
-  
-          <ProductDetails productDetail={productDetail}/>
+            {/* Pass productDetail and categoryName as props */}
+            <ProductDetails 
+              productDetail={productDetail} 
+              categoryName={categoryName}  // Pass category name here
+            />
 
             <div className='bg-white mt-20'>
               <Container>
@@ -135,18 +154,16 @@ const Product = ({ params }: { params: { productname: string } }) => {
               </Container>
             </div>
           </>
-          : null
+        ) : null
       }
       <Container className='mt-20'>
         <div className='flex justify-center items-center'>
-          
           <h1 className='w-fit text-center text-lg border-b-2 border-[#FF914E] md:text-3xl mb-5 up'>FEATURE PRODUCT</h1>
-
         </div>
         <ProductSlider />
       </Container>
     </>
-  )
-}
+  );
+};
 
 export default Product;

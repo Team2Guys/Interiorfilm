@@ -18,9 +18,10 @@ interface CardProps {
   categoryId?: string;
   carDetail?: string;
   cardClass?: string;
+  onClick?: ()=>void;
 }
 
-const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail, cardClass }) => {
+const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail, cardClass ,onClick }) => {
   const router = useRouter();
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -140,7 +141,7 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDet
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
-      <div className={`relative group ${cardClass}`} key={index}>
+      <div className={`relative group ${cardClass}`} key={index} onClick={onClick}>
       <div className="space-y-3 absolute top-6 right-4 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 overflow-hidden transition ease-in-out duration-400 hidden md:block">
         <button onClick={() => handleAddToCart(product)} className="flex justify-center items-center z-10">
           <LuShoppingCart className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />

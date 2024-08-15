@@ -13,9 +13,10 @@ import Menucard from 'components/ui/Card/Menucard/Menucard';
 interface PRODUCT_SLIDER_PROPS {
   products: PRODUCTS_TYPES[];
   loading: boolean;
+  onProductClick : ()=>void;
 }
 
-const MenuSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) => {
+const MenuSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading,onProductClick  }) => {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<any>(null);
@@ -93,7 +94,7 @@ const MenuSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) => {
       >
         {products && products.map((product, index) => (
           <SwiperSlide key={index} className="custom">
-            <Menucard ProductCard={[product]} slider={true}/>
+            <Menucard ProductCard={[product]} slider={true} onClick={onProductClick}/>
           </SwiperSlide>
         ))}
       </Swiper>

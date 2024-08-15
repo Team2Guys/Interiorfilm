@@ -13,15 +13,17 @@ import PRODUCTS_TYPES from 'types/interfaces';
 
 interface productDetailsProps {
     productDetail : PRODUCTS_TYPES
+    categoryName?: any;
 }
 
-export default function ProductDetails({ productDetail }: productDetailsProps) {
+export default function ProductDetails({ productDetail,categoryName }: productDetailsProps) {
     const [totalPrice, setTotalPrice] = useState<number | null>(null);
     const [relatedProductsLoading, setRelatedProductsLoading] = useState<boolean>(false);
     const [reviews, setReviews] = useState<any[]>([]);
     const [quantity, setQuantity] = useState(1);
     const [length, setLength] = useState<number>(1);
 
+    console.log(categoryName, "categoryName productDetail")
 
     let options: any = []
 
@@ -170,10 +172,10 @@ export default function ProductDetails({ productDetail }: productDetailsProps) {
                                 </p>
                                 : null}
                         </div>
-                        <p><span className='text-text'>Available Quantity: </span> {productDetail.totalStockQuantity && productDetail.totalStockQuantity > 0 ? "In Stock" : "Out Of Stock"} </p>
+                        <p><span className='font-semibold text-text'>Available Quantity: </span> {productDetail.totalStockQuantity && productDetail.totalStockQuantity > 0 ? "In Stock" : "Out Of Stock"} </p>
 
                         <div className='flex gap-2 items-center'>
-                            <p className='font-font-semibold	 text-text'>Quantity :</p>
+                            <p className='font-semibold	 text-text'>Quantity :</p>
                             <div className='flex'>
                                 <div className='h-7 w-7 rounded-md bg-white border border-gray flex justify-center items-center' onClick={handleDecrement}>
                                     <RxMinus size={20} />
@@ -194,7 +196,7 @@ export default function ProductDetails({ productDetail }: productDetailsProps) {
                             </div>
                         </div>
 
-
+                        <p className='font-semibold text-text'>Width : <span className='text-blak font-normal'>1.22 mm</span></p>
                         <p className='text-secondary font-bold'>
                             <span className='font-font-semibold	 text-text'>Total Price :</span> Dhs. <span>{totalPrice}</span>.00
                         </p>
@@ -225,7 +227,7 @@ export default function ProductDetails({ productDetail }: productDetailsProps) {
                         )}
                         <div className='flex items-center gap-2 text-black dark:text-white'>
                             <p className='font-medium text-12 md:text-14'>Categories: </p>
-                            <p className='text-dark text-12 md:text-14'>All, Featured, Shoes</p>
+                            <p className='text-dark text-12 md:text-14'>{categoryName}</p>
                         </div>
                     </div>
 
