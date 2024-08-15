@@ -18,6 +18,8 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
 
   ]
 
+  console.log(pathname.split('/').includes('dashboard'), "pathname.split('/').includes('dashboard')")
+
   return (
     <>
       {
