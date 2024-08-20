@@ -386,3 +386,32 @@ export const Terms_Conditions: PrivacyPolicyItem[] = [
     text: "It is advised that users abide by these rules to avoid any legal consequences or violation of the terms of service.",
   }, 
 ];
+
+export const detaildot = [
+  {specsDetails:"Lorem ipsum dolor sit dsg"},
+  {specsDetails:"Aliquam tincidunt mau"},
+  {specsDetails:"Cras ornare tristique elit"},
+  {specsDetails:"Lorem ipsum dolor sit dsg"},
+  {specsDetails:"Fusce pellentesque"},
+  {specsDetails:"Cras iaculis ultricies nulla."},
+  {specsDetails:"Lorem ipsum dolor sit dsg"},
+  {specsDetails:"Aliquam tincidunt mau"},
+  {specsDetails:"Cras ornare tristique elit"},
+  {specsDetails:"Lorem ipsum dolor sit dsg"},
+  {specsDetails:"Fusce pellentesque"},
+  {specsDetails:"Cras iaculis ultricies nulla."},
+]
+export const collapseData = [
+  {
+    title: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR',
+    content: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR LOREM IPSUM DOLOR SIT AMET, CONSECTETUR...',
+  },
+  {
+    title: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR',
+    content: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR LOREM IPSUM DOLOR SIT AMET, CONSECTETUR...',
+  },
+  {
+    title: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR',
+    content: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR LOREM IPSUM DOLOR SIT AMET, CONSECTETUR...',
+  },
+];

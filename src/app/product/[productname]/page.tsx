@@ -10,6 +10,7 @@ import Review from 'components/Common/Review';
 import { generateSlug } from 'data/Data';
 import PRODUCTS_TYPES from 'types/interfaces';
 import ProductDetails from 'components/product_detail/ProductDetails';
+import Accordion from 'components/widgets/Accordion';
 
 const { TabPane } = Tabs;
 
@@ -89,45 +90,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
     productHandler();
   }, [parsedProduct]);
 
-  const tabData = [
-    {
-      key: "1",
-      label: 'Description',
-      children: (
-        <div className='space-y-3'>
-          <div>
-            <p>{productDetail?.description}</p>
-          </div>
-        </div>
-      )
-    },
-    {
-      key: "2",
-      label: 'Additional Info',
-      children: (
-        <div className='space-y-3'>
-          <div>
-            <ul className='px-6'>
-              {productDetail?.spacification?.map((item: any, index: number) => (
-                <li className='list-disc' key={index}>{item.specsDetails}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )
-    },
-    {
-      key: "3",
-      label: 'Review',
-      children: <><Review reviews={reviews} productId={productDetail?._id} fetchReviews={fetchReviews} /></>
-    },
-    {
-      key: "4",
-      label: 'Video',
-      children: <><Review reviews={reviews} productId={productDetail?._id} fetchReviews={fetchReviews} /></>
-    },
-  ];
-
+ 
   return (
     <>
       <Overlay title='Product Detail' />
@@ -136,26 +99,19 @@ const Product = ({ params }: { params: { productname: string } }) => {
           <div className='flex justify-center items-center h-[20vh]'><Loader /></div>
         ) : productDetail ? (
           <>
-            {/* Pass productDetail and categoryName as props */}
             <ProductDetails 
               productDetail={productDetail} 
               categoryName={categoryName}  // Pass category name here
             />
 
-            <div className='bg-white mt-20'>
-              <Container>
-                <Tabs defaultActiveKey="1">
-                  {tabData.map(tab => (
-                    <TabPane tab={tab.label} key={tab.key}>
-                      {tab.children}
-                    </TabPane>
-                  ))}
-                </Tabs>
-              </Container>
-            </div>
+         <Review reviews={reviews} productId={productDetail?._id} fetchReviews={fetchReviews} />
           </>
         ) : null
       }
+      <div className='block lg:hidden'>
+      <Accordion/>
+
+      </div>
       <Container className='mt-20'>
         <div className='flex justify-center items-center'>
           <h1 className='w-fit text-center text-lg border-b-2 border-[#FF914E] md:text-3xl mb-5 up'>FEATURE PRODUCT</h1>

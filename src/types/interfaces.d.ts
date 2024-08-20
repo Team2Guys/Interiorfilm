@@ -131,7 +131,7 @@ interface PRODUCTS_TYPES {
   updatedAt: Date;
   starRating?: string;
   reviews?: string;
-  totalStockQuantity?: number;
+  totalStockQuantity?: any;
   sizes?: sizes[];
   isFeatured?: any;
   price?: number;

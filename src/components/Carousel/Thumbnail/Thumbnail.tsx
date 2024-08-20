@@ -10,6 +10,9 @@ import 'swiper/css/thumbs';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import Image from 'next/image';
 import { IMAGE_INTERFACE } from 'types/interfaces';
+import Collapse from 'components/ui/Collapse/Collapse';
+import { collapseData } from 'data/Data';
+import Accordion from 'components/widgets/Accordion';
 
 interface ThumbProps {
   thumbs?: IMAGE_INTERFACE[];
@@ -38,11 +41,13 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
   };
 
   return (
-    <div className='relative'>
+    <div className='space-y-20'>
 
-      <div className='w-full flex gap-5'>
+    <div className='lg:relative w-full'>
 
-        <div className='w-2/12 max-h-[550px] overflow-y-scroll  custom-scrollbar '>
+      <div className='w-full flex flex-wrap lg:flex-nowrap flex-col-reverse lg:flex-row gap-5'>
+
+        <div className='w-full lg:w-2/12 lg:max-h-[798px] overflow-y-scroll  custom-scrollbar '>
           <Swiper
             onSwiper={setThumbsSwiper}
             loop={true}
@@ -56,9 +61,9 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
 
             <div>
               {thumbs.map((array, index) => (
-                <SwiperSlide key={index} className='w-full h-full column-swiper-slider md:h-5'>
+                <SwiperSlide key={index} className='w-full h-full column-swiper-slider custom-scrollbar  md:h-5'>
                   <Image
-                    className='bg-contain pb-2 bg-white md:h-46 md:w-67'
+                    className='bg-contain pb-2 bg-white md:h-[222px] md:w-67'
                     src={array.imageUrl}
                     width={270}
                     height={120}
@@ -73,7 +78,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
 
         </div>
 
-<div className='w-8/12 relative md:max-h-550'>
+<div className='w-full lg:w-8/12 relative lg::max-h-[798px]'>
       <Swiper
         style={{
           '--swiper-navigation-color': '#ffffff',
@@ -101,7 +106,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
             >
-              <Image className='bg-contain w-full h-full max-h-[800px]' src={array.imageUrl} width={400} height={400} alt='Image' />
+              <Image className='bg-contain w-full h-full lg:max-h-[798px]' src={array.imageUrl} width={800} height={800} alt='Image' />
             </div>
           </SwiperSlide>
         ))}
@@ -137,6 +142,12 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
         )}
       </div>
     </div>
+    <div className="lg:max-w-[1020px] hidden lg:block">
+      <Accordion/>
+    </div>
+
+    </div>
+
   );
 };
 

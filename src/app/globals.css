@@ -406,14 +406,27 @@
 .column-swipper .swiper-wrapper {
   flex-direction: column !important;
   width: 100% !important;
-
+}
+@media screen and (min-width: 1280px) {
+  .column-swipper .swiper-wrapper {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+  .column-swiper-slider {
+    width: 100% !important;
+  }
 }
 
-.column-swiper-slider {
-  width: 100% !important
+
+@media screen and (max-width: 1280px) {
+  .column-swipper .swiper-wrapper {
+    flex-direction: row !important;
+    width: 100% !important;
+  }
+  .column-swiper-slider {
+    width: 100px !important;
+  }
 }
-
-
 .product_starts {
   display: flex !important;
   gap: 15px !important;
