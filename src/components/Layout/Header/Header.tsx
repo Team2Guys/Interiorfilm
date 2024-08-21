@@ -325,7 +325,6 @@ const Header = () => {
               {cartItems.length > 0 ? (
                 <div className="md:w-5 md:h-5 w-3 h-3 z-50 rounded-full flex justify-center items-center bg-white text-black absolute left-3 top-3">
                   <span className="font-medium text-12 md:text-18 z-50">
-                    {" "}
                     {cartItems.reduce(
                       (count: any, item: any) => count + item.count,
                       0

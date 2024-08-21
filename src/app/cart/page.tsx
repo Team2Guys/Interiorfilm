@@ -12,21 +12,10 @@ import { useRouter } from 'next/navigation';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [subtotal, setSubtotal] = useState(0);
-  const [shippingCharges, setShippingCharges] = useState(0);
   const [total, setTotal] = useState(0);
-  const router = useRouter()
+  const router = useRouter();
 
-  const onChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
-
-  useEffect(() => {
-    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
-    setCartItems(existingCart);
-    calculateTotals(existingCart);
-  }, []);
-
+  // Function to calculate the total price
   const calculateTotals = (items) => {
     const sub = items.reduce((acc, item) => {
       const price = item.discountPrice ? item.discountPrice : item.price;
@@ -35,11 +24,18 @@ const Cart = () => {
     setTotal(sub);
   };
 
+  // Fetch cart items and calculate total when component mounts
+  useEffect(() => {
+    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    setCartItems(existingCart);
+    calculateTotals(existingCart);
+  }, []);
+
+  // Handle cart changes from the Table component
   const handleCartChange = (updatedCart) => {
     setCartItems(updatedCart);
     calculateTotals(updatedCart);
   };
-
   return (
     <>
       <Overlay title="Shopping Cart" />

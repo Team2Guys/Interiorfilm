@@ -20,10 +20,10 @@ const About = () => {
   return (
     <>
     <Overlay title='About'/>
-    <Container className='mt-20'>
-        <div className='grid grid-cols-1 md:grid-cols-2 mt-2 justify-items-center sm:gap-1 md:gap-10'>
-            <div className='relative bg-primary h-auto md:h-[275px] lg:h-auto rounded-lg'>
-                <Image className='w-full mb-4 ml-4' width={800} height={800} src={about} alt='about'/>
+    <Container className='mt-20 mb-20'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 mt-2 justify-items-center sm:gap-1 md:gap-10'>
+            <div className='relative'>
+             <Image className='w-full bg-primary rounded-lg p-2 lg:p-0 lg:pr-4 lg:pt-4' width={600} height={600} src={about} alt='about'/>
 
             </div>
 

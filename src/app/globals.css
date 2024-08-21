@@ -43,11 +43,11 @@
 
 /* Custom styles for Swiper pagination dots */
 .swiper-pagination-bullet {
-  background: #FF914E !important;
+  background: black !important;
 }
 
 .swiper-pagination-bullet-active {
-  background: #FF914E !important;
+  background: black !important;
 }
 
 
@@ -242,11 +242,12 @@
   opacity: 1 !important;
   background: #d6d6d6 !important;
   margin-right: 5px;
+  
 }
 
 .swiper-pagination-bullet-active {
   color: #fff !important;
-  background: #FF914E !important;
+  background: black !important;
 }
 
 .swiper-pagination {
@@ -259,6 +260,8 @@
   margin: 0 auto;
   overflow-x: auto;
   white-space: nowrap;
+  overflow: scroll !important;;
+
 }
 
 

@@ -118,6 +118,7 @@ console.log("posterimageUrl", posterimageUrl)
       setposterimageUrl(null);
       setImagesUrl([]);
       updateFlag ? setEditProduct && setEditProduct(undefined) : null;
+      setselecteMenu("Add All Products");
     } catch (err: any) {
       if (err.response && err.response.data && err.response.data.error) {
         setError(err.response.data.error);
@@ -159,10 +160,8 @@ console.log("posterimageUrl", posterimageUrl)
           setselecteMenu("Add All Products");
         }}
       >
-        {" "}
         <IoMdArrowRoundBack /> Back
       </p>
-
       <Formik
         enableReinitialize
         initialValues={productInitialValue ? productInitialValue : AddproductsinitialValues
@@ -182,8 +181,6 @@ console.log("posterimageUrl", posterimageUrl)
                           Add Product Images
                         </h3>
                       </div>
-
-
                       {(posterimageUrl?.length > 0 ) ? (
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
                           {posterimageUrl.map((item: any, index) => {
@@ -296,7 +293,6 @@ console.log("posterimageUrl", posterimageUrl)
                           {formik.touched.salePrice &&
                           formik.errors.salePrice ? (
                             <div className="text-red text-sm">
-                              {" "}
                               {
                                 formik.errors.salePrice as FormikErrors<
                                   FormValues["salePrice"]
@@ -404,8 +400,6 @@ console.log("posterimageUrl", posterimageUrl)
                           />
                         </div>
                       </div>
-
-                     
                     </div>
                   </div>
                 </div>
@@ -423,10 +417,7 @@ console.log("posterimageUrl", posterimageUrl)
                       <>
                         {withoutVariation.map((inputField, index) => (
                           <div key={index} className="mb-4">
-                            {/* <label className="block text-sm font-medium mb-1 text-dark dark:text-white">
-                              {inputField.name.charAt(0).toLocaleUpperCase() +
-                                inputField.name.slice(1)}
-                            </label> */}
+                        
                             <Field
                               type={inputField.type}
                               name={inputField.name}
@@ -443,70 +434,6 @@ console.log("posterimageUrl", posterimageUrl)
                       </>
                     )}
 
-                    {/* {VariationOption === "withVariation" && (
-                      <>
-                        <FieldArray name="variantStockQuantities">
-                          {({ push, remove }) => (
-                            <div>
-                              {formik.values.variantStockQuantities &&
-                                formik.values.variantStockQuantities.map(
-                                  (model: any, index: any) => (
-                                    <div
-                                      key={index}
-                                      className="flex flex-col md:flex-row md:items-center mb-4"
-                                    >
-                                      <div className="md:flex-1 md:mr-4 mb-4 md:mb-0">
-                                        <Field
-                                          type="text"
-                                          name={`variantStockQuantities[${index}].variant`}
-                                          placeholder="Variant"
-                                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary "
-                                        />
-                                        <ErrorMessage
-                                          name={`variantStockQuantities[${index}].variant`}
-                                          component="div"
-                                          className="text-red-500 mt-1"
-                                        />
-                                      </div>
-                                      <div className="md:flex-1 md:mr-4 mb-4 md:mb-0">
-                                        <Field
-                                          type="number"
-                                          name={`variantStockQuantities[${index}].quantity`}
-                                          placeholder="Quantity"
-                                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary "
-                                        />
-                                        <ErrorMessage
-                                          name={`variantStockQuantities[${index}].quantity`}
-                                          component="div"
-                                          className="text-red-500 mt-1"
-                                        />
-                                      </div>
-                                      <div className="md:flex-none text-right text-red dark:text-red ">
-                                        <button
-                                          type="button"
-                                          onClick={() => remove(index)}
-                                          className="text-red-500 hover:text-red-700"
-                                        >
-                                          Remove
-                                        </button>
-                                      </div>
-                                    </div>
-                                  )
-                                )}
-                              <div className="text-left">
-                                <button
-                                  type="button"
-                                  onClick={() => push({ name: "", detail: "" })}
-                                  className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
-                                >
-                                  Add Variation
-                                </button>
-                              </div>
-                            </div>
-                          )}
-                        </FieldArray>
-                      </>
-                    )} */}
                   </div>
                  
                   <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
@@ -707,62 +634,13 @@ console.log("posterimageUrl", posterimageUrl)
                       </FieldArray>
                     </div>
                   </div>
-
-
-
-                  {/* <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
-                    <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                      <h3 className="font-medium text-black dark:text-white">
-                        Add Hover Image
-                      </h3>
-                    </div>
-
-                    {hoverImage && hoverImage.length > 0 ? (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-                        {hoverImage.map((item: any, index) => {
-                          return (
-                            <div
-                              className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
-                              key={index}
-                            >
-                              <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
-                                <RxCross2
-                                  className="cursor-pointer text-red-500 hover:text-red-700"
-                                  size={17}
-                                  onClick={() => {
-                                    ImageRemoveHandler(
-                                      item.public_id,
-                                      sethoverImage
-                                    );
-                                  }}
-                                />
-                              </div>
-                              <Image
-                                key={index}
-                                className="object-cover w-full h-full"
-                                width={100}
-                                height={100}
-                                src={item?.imageUrl ? item?.imageUrl : ""}
-                                alt={`productImage-${index}`}
-                              />
-                            </div>
-                          );
-                        })}
-                      </div>
-                    ) : (
-                      <Imageupload sethoverImage={sethoverImage} />
-                    )}
-                  </div> */}
-
                   <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                       <h3 className="font-medium text-black dark:text-white">
                         Add Product Images
                       </h3>
                     </div>
-
                     <Imageupload setImagesUrl={setImagesUrl} />
-
                     {imagesUrl && imagesUrl.length > 0 ? (
                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
                         {imagesUrl.map((item: any, index) => {
@@ -811,7 +689,7 @@ console.log("posterimageUrl", posterimageUrl)
                 type="submit"
                 className="px-10 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
               >
-                {loading ? <Loader /> : "Submit"}
+                {loading ? <Loader color="white" /> : "Submit"}
               </button>
             </Form>
           );

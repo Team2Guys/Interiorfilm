@@ -183,10 +183,11 @@ export interface product {
   colors: Array<{ colorName: string, _id: string }>;
   modelDetails: Array<{ name: string, detail: string, _id: string }>;
   spacification: Array<{ specsDetails: string, _id: string }>;
+  totalStockQuantity: number;
   createdAt: string;
   starRating: string;
   reviews: string;
-  sizes: Array<string>;
+  sizes: any;
   updatedAt: string;
   price: string;
   __v: number;

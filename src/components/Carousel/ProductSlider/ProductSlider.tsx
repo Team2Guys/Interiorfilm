@@ -129,15 +129,19 @@ const ProductSlider: React.FC = () => {
             spaceBetween: 10,
           },
           640: {
-            slidesPerView: 2.5,
+            slidesPerView: 2.2,
             spaceBetween: 20,
           },
           768: {
-            slidesPerView: 3,
+            slidesPerView: 2.6,
             spaceBetween: 10,
           },
           1024: {
-            slidesPerView: 3.9,
+            slidesPerView: 3.2,
+            spaceBetween: 20,
+          },
+          1220: {
+            slidesPerView: 4,
             spaceBetween: 20,
           },
         }}

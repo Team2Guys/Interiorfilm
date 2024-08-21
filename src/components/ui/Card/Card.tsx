@@ -34,7 +34,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-
   const handleOpenDrawer = () => {
     setDrawerOpen(true);
   };
@@ -145,13 +144,14 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       name: product.name,
       price: product.salePrice,
       imageUrl: product.posterImageUrl?.imageUrl,
+      totalStockQuantity: product.totalStockQuantity, 
       discountPrice: product.discountPrice,
       color: selectedValue,
       length: 1,
       count: 1,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
       purchasePrice: product.purchasePrice,
-      sizes: product.sizes
+      sizes: product.sizes,
     };
   
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -178,33 +178,32 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
     window.dispatchEvent(new Event("cartChanged"));
     
     handleOpenDrawer();
-
+  
     // Automatically close the drawer after 3 seconds
     setTimeout(() => {
       handleCloseDrawer();
     }, 2000);
   };
+  
 
   const handleAddToWishlist = (product: any) => {
-
-
     const newWishlistItem = {
       id: product._id,
       name: product.name,
       price: product.salePrice,
       imageUrl: product.posterImageUrl?.imageUrl,
+      totalStockQuantity: product.totalStockQuantity, // Ensure totalStockQuantity is stored
       discountPrice: product.discountPrice,
       color: selectedValue,
       count: 1,
       length: 1,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
     };
-
+  
     let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
-
+  
     const existingItemIndex = existingWishlist.findIndex((item: any) => item.id === product._id);
-
-
+  
     if (existingItemIndex !== -1) {
       const updatedWishlist = existingWishlist.map((item: any, index: number) => {
         if (index === existingItemIndex) {
@@ -216,18 +215,16 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
         }
         return item;
       });
-      console.log(updatedWishlist)
       localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
-
     } else {
       existingWishlist.push(newWishlistItem);
       localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
     }
-
+  
     message.success('Product added to Wishlist successfully!');
     window.dispatchEvent(new Event("WishlistChanged"));
-    console.log(existingWishlist, "existingWishlist")
   };
+  
 
 
 
@@ -252,16 +249,16 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
 
         <div className="cursor-pointer  transition-all m-1 " onClick={() => router.push(`/product/${generateSlug(product.name)}`)}>
           <div className="text-center">
-            <div className='absolute top-60 hidden mk translate-y-20 z-10 w-full md:flex gap-5 justify-center opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition ease-in-out duration-400'>
-              <button className='bg-white z-10 px-4 py-1' onClick={(e) => { e.stopPropagation(); handleAddToCart(product); router.push('/checkout') }}>Order Now</button>
-              <button className='bg-black z-10 text-white px-4 py-1' onClick={(e) => {
+            <div className='absolute top-80 hidden mk translate-y-20 z-10 w-full md:flex gap-5 justify-center opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition ease-in-out duration-400'>
+              <button className='bg-white md:w-[106.45px] md:h-[34.29px] text-11 z-10  py-1' onClick={(e) => { e.stopPropagation(); handleAddToCart(product); router.push('/checkout') }}>Order Now</button>
+              <button className='bg-black z-10 md:w-[106.45px] md:h-[34.29px] text-11 text-white  py-1' onClick={(e) => {
                 e.stopPropagation();
                 setproductDetails(product);
                 setProductDetailModel(true)
               }}>Quick View </button>
             </div>
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
-              <Image className="bg-contain h-32 w-full md:h-72" width={300} height={300} src={product.posterImageUrl.imageUrl} alt="Image" />
+              <Image className="bg-contain  w-full md:h-[370px] md:w-[370px]" width={500} height={500} src={product.posterImageUrl.imageUrl} alt="Image" />
             )}
           </div>
           <div className="text-center space-y-1 pt-3 pb-5 p-1 ">

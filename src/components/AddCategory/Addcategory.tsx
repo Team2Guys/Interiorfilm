@@ -60,6 +60,7 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
       setposterimageUrl(null);
 
       resetForm();
+      setMenuType("Categories")
     } catch (err) {
       console.log("error occurred", err);
       setloading(false);
@@ -187,9 +188,9 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="mt-4 px-8 py-2 bg-blue-500 text-white rounded"
+                  className="mt-4 px-8 py-2 bg-black text-white rounded"
                 >
-                  {loading ? <Loader /> : "Submit"}
+                  {loading ? <Loader color="white" /> : "Submit"}
                 </button>
               </div>
             </Form>

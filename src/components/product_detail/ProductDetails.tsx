@@ -1,12 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-
-import Container from "components/Layout/Container/Container";
 import Thumbnail from "components/Carousel/Thumbnail/Thumbnail";
 import { Rate, message } from "antd";
 import { RxMinus, RxPlus } from "react-icons/rx";
-import SelectList from "components/ui/Select/Select";
 import { GoHeart } from "react-icons/go";
 import PRODUCTS_TYPES from "types/interfaces";
 import { detaildot } from "data/Data";
@@ -24,27 +21,25 @@ export default function ProductDetails({
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
   const [reviews, setReviews] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(1);
-  const [length, setLength] = useState<number>(1);
-  console.log(productDetail, "productDetail productDetail");
+  const [length, setLength] = useState<number>(1); // State to track selected length
 
-  let options: any = [];
+  const options = productDetail && productDetail.totalStockQuantity > 0
+  ? Array.from({ length: Math.floor(productDetail.totalStockQuantity) }, (_, i) => ({
+      label: `1.22 x ${i + 1} METERS`,
+      value: i + 1,
+    }))
+  : [];
 
-  if (productDetail && productDetail.totalStockQuantity > 0) {
-    for (let i = 1; i <= Math.floor(productDetail.totalStockQuantity); i++) {
-      let SizesArray = {
-        label: `1.22 x ${i} METERS`,
-        value: i, 
-      };
-      options.push(SizesArray);
-    }
-  }
-
+  // Calculate average rating
   const calculateAverageRating = () => {
     if (reviews.length === 0) return 0;
     const totalRating = reviews.reduce((sum, review) => sum + review.star, 0);
     return totalRating / reviews.length;
   };
 
+  const averageRating = calculateAverageRating();
+
+  // Increment quantity
   const handleIncrement = () => {
     if (quantity < 100) {
       setQuantity(quantity + 1);
@@ -53,6 +48,7 @@ export default function ProductDetails({
     }
   };
 
+  // Decrement quantity
   const handleDecrement = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
@@ -61,8 +57,6 @@ export default function ProductDetails({
     }
   };
 
-  const averageRating = calculateAverageRating();
-
   const handleAddToCart = (product: any) => {
     const newCartItem = {
       id: product._id,
@@ -70,21 +64,20 @@ export default function ProductDetails({
       price: product.salePrice,
       imageUrl: product.posterImageUrl?.imageUrl,
       discountPrice: product.discountPrice,
+      totalStockQuantity: product.totalStockQuantity,
       count: quantity,
-      length: length,
-      totalPrice:
-        (product.discountPrice || product.salePrice) * length * quantity,
+      length,  // Ensure length is added to the cart item
+      totalPrice: (product.discountPrice || product.salePrice) * length * quantity,
       purchasePrice: product.purchasePrice,
       sizes: product.sizes,
     };
 
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     const existingItemIndex = existingCart.findIndex(
-      (item: any) => item.id === product._id
+      (item: any) => item.id === product._id && item.length === length
     );
 
     if (existingItemIndex !== -1) {
-      existingCart[existingItemIndex].length += length;
       existingCart[existingItemIndex].count += quantity;
       existingCart[existingItemIndex].totalPrice +=
         (product.discountPrice || product.salePrice) * length * quantity;
@@ -104,42 +97,40 @@ export default function ProductDetails({
       price: product.salePrice,
       imageUrl: product.posterImageUrl?.imageUrl,
       discountPrice: product.discountPrice,
+      totalStockQuantity: product.totalStockQuantity,
       count: quantity,
-      length: length,
-      totalPrice:
-        (product.discountPrice || product.salePrice) * length * quantity,
+      length,  // Ensure length is added to the wishlist item
+      totalPrice: (product.discountPrice || product.salePrice) * length * quantity,
     };
 
     let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
     const existingItemIndex = existingWishlist.findIndex(
-      (item: any) => item.id === product._id
+      (item: any) => item.id === product._id && item.length === length
     );
 
     if (existingItemIndex !== -1) {
-      existingWishlist[existingItemIndex].length += length;
       existingWishlist[existingItemIndex].count += quantity;
       existingWishlist[existingItemIndex].totalPrice +=
         (product.discountPrice || product.salePrice) * length * quantity;
     } else {
       existingWishlist.push(newWishlistItem);
     }
+
     localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
     message.success("Product added to Wishlist successfully!");
     window.dispatchEvent(new Event("WishlistChanged"));
   };
-  const onChange = (value: string) => {
-    console.log(value, "value")
-    setLength(Number(value));
-  };
+
   useEffect(() => {
     if (productDetail) {
       const price = productDetail.discountPrice || productDetail.salePrice;
-
       setTotalPrice(price * length * quantity);
     }
   }, [length, quantity, productDetail]);
 
-  
+  const onChange = (value: number) => {
+    setLength(value);
+  };
 
   return (
       <div className="mt-10 mb-5 px-4 lg:px-10">
@@ -185,10 +176,7 @@ export default function ProductDetails({
               className="w-full h-10 border outline-none shipment text-20"
               onChange={onChange}
               options={options}
-              defaultValue="Select Size"
-              stockQuantity={productDetail.totalStockQuantity || 0} // Pass stock quantity to SelectList
-              length={length}
-              
+              value={length}
             />
             </div>
            
