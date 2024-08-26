@@ -266,7 +266,7 @@ const Header = () => {
           </Link>
           <Popover
            className="cursor-pointer link-underline"
-           onClick={()=> (router.push("/categories"),closePopover)}
+           onClick={()=> (router.push("/products?category=all"),closePopover)}
            placement="bottom"
            trigger="hover"
            visible={visible}
