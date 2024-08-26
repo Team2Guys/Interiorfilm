@@ -267,7 +267,6 @@ const Header = () => {
           </Link>
           <Popover
            className="cursor-pointer link-underline"
-           onClick={()=> closePopover}
            placement="bottom"
            trigger="hover"
            visible={visible}
