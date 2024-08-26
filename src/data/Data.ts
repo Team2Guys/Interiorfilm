@@ -206,6 +206,7 @@ export const options = [
     label: 'Fujairah',
   },
 ];
+
 export const privacyPolicyData: PrivacyPolicyItem[] = [
   {
     title: '',
