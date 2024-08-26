@@ -197,8 +197,8 @@ const Products = () => {
     <>
       <Overlay title="Product" />
       <Container className="mt-20">
-        <div className="flex justify-end gap-3">
-          <div className="flex gap-2 items-center w-3/6 md:w-auto">
+        <div className="flex justify-end items-end gap-3">
+          <div className="flex flex-wrap gap-2 items-center w-3/6 md:w-auto">
             <h1>Sort By: </h1>
             <Select
               defaultValue="Default"

@@ -106,9 +106,7 @@ const Header = () => {
     productHandler();
   }, []);
 
-  const handleCategoryClick = (category: Category) => {
-    setActiveLink(category);
-  };
+
 
   useEffect(() => {
     const fetchData = async () => {
