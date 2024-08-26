@@ -65,6 +65,7 @@ const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [visible, setVisible] = useState(false);
 
+  
 
   const handleVisibleChange = (visible: boolean) => {
     setVisible(visible);
@@ -266,7 +267,7 @@ const Header = () => {
           </Link>
           <Popover
            className="cursor-pointer link-underline"
-           onClick={()=> (router.push("/products?category=all"),closePopover)}
+           onClick={()=> closePopover}
            placement="bottom"
            trigger="hover"
            visible={visible}
@@ -274,9 +275,8 @@ const Header = () => {
            content={<Megamanu Categories={Categories} products={products} onProductClick={closePopover} />}
            title=""
           >
-          
-          {/* <span onClick={()=>router.push('/categories')}>Category</span> */}
-            Category
+          <span onClick={()=>router.push('/products?category=all')}>Category</span>
+            {/* Category */}
           </Popover>
           <Link className="link-underline" href="/about">
             About
