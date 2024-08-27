@@ -13,13 +13,65 @@ import axios from 'axios';
 
 
 
-const ProductSlider: React.FC = () => {
+
+const ProductSlider: React.FC = ({}) => {
+
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<any>(null);
 
   const [allProducts, setAllProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [categoryName, setCategoryName] = useState<string | any>(null);
+ console.log(categories,"categories categories")
+  // Fetch all products and categories concurrently
+  const getallProducts = async () => {
+    try {
+      setLoading(true);
+      
+      const [productResponse, categoryResponse] = await Promise.all([
+        axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
+        axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`)
+      ]);
+
+      const products = productResponse.data.products;
+      const categories = categoryResponse.data;
+  
+      setCategories(categories);
+
+      const CategoryId =  categories[4]._id;
+
+      let filteredProducts = products;
+  
+      // Filter products by category if a CategoryId is available
+      if (CategoryId && CategoryId !== "demo") {
+        filteredProducts = products.filter((product: any) => product.category === CategoryId);
+  
+        // Find and set the category name based on the CategoryId
+        const foundCategory = categories.find((cat: any) => cat._id === CategoryId);
+        if (foundCategory) {
+          setCategoryName(foundCategory.name);
+        } else {
+          setCategoryName(null);
+        }
+      } else {
+        setCategoryName(null);
+      }
+  
+      setAllProducts(filteredProducts);
+    } catch (err: any) {
+      console.error('Error fetching products or categories:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch all products and categories when the component mounts
+  useEffect(() => {
+    getallProducts();
+  }, []);
+  
 
   useEffect(() => {
     const fetchAllProducts = async () => {
@@ -155,7 +207,7 @@ const ProductSlider: React.FC = () => {
       >
         {featuredProducts && featuredProducts.map((product, index) => (
           <SwiperSlide key={index} className="mb-10 custom">
-            <Card ProductCard={[product]} slider={true} />
+            <Card categoryName={categoryName}  ProductCard={[product]} slider={true} />
           </SwiperSlide>
         ))}
       </Swiper>

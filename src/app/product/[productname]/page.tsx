@@ -22,7 +22,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
   const [relatedProducts, setRelatedProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [relatedProductsLoading, setRelatedProductsLoading] = useState<boolean>(false);
   const [categories, setCategories] = useState<any[]>([]);
-  const [categoryName, setCategoryName] = useState<string | null>(null);
+  const [categoryName, setCategoryName] = useState<string | any>(null);
   const [reviews, setReviews] = useState<any[]>([]);
 
   // Fetch reviews for the product

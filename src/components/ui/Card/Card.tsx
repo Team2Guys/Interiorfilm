@@ -22,9 +22,10 @@ interface CardProps {
   categoryId?: string;
   carDetail?: string;
   cardClass?: string;
+  categoryName?: string;
 }
 
-const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail, cardClass }) => {
+const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail, cardClass, categoryName }) => {
   const router = useRouter();
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [productDetails, setproductDetails] = useState<PRODUCTS_TYPES | any>({});
@@ -34,6 +35,8 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [populated_categoryName, setCategoryName] = useState<string | any>(null);
+
   const handleOpenDrawer = () => {
     setDrawerOpen(true);
   };
@@ -232,6 +235,25 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const slicedArray = Homepage && totalProducts ? totalProducts.slice(0, 6) : [];
   const productsToRender = slicedArray.length > 0 ? slicedArray : totalProducts;
 
+
+  const productHandler = async () => {
+    try {
+      const categoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+      const [categoryResponse] = await Promise.all([categoryRequest]);
+      if((categoryRequest && ProductCard) && categoryResponse.data.length > 0) {    
+        const foundCategory = categoryResponse.data.find((cat: any) => cat._id === productDetails.category);
+        setCategoryName(foundCategory ? foundCategory.name : null);
+      }
+    } catch (error) {
+      console.log('Error fetching data:', error);
+    } 
+  };
+
+  useEffect(() => {
+    productHandler();
+  }, [productDetails]);
+
+
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
       <div className={`relative group mb-5 ${cardClass}`} key={index}>
@@ -269,7 +291,8 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
               <p className="text-black  font-bold">
                 Dhs. <span className=''>{product.discountPrice ? product.discountPrice : product.salePrice}</span>.00
               </p>
-              {product.discountPrice && (
+
+              { product.discountPrice > 0 && (
                 <p className="line-through text-para  text-xs font-bold">
                   Dhs.<span>{product.salePrice}</span>.00
                 </p>
@@ -304,7 +327,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
         centered={true}
         footer={null}
       >
-        <ProductDetails productDetail={productDetails} />
+        <ProductDetails firstFlex='lg:w-8/12' secondFlex='lg:w-4/12' categoryName={populated_categoryName} productDetail={productDetails} />
       </Model>
 
       {ProductCard && (ProductCard.length > 0 && !loading) ? (

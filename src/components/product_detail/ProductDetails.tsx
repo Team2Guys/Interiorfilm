@@ -11,17 +11,23 @@ import ProductSelect from "components/ui/Select/ProductSelect";
 
 interface productDetailsProps {
   productDetail: PRODUCTS_TYPES;
-  categoryName?: any;
+  categoryName?: string;  
+  firstFlex?: string;
+  secondFlex?: string;
 }
 
 export default function ProductDetails({
   productDetail,
   categoryName,
+  firstFlex,
+  secondFlex,
 }: productDetailsProps) {
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
   const [reviews, setReviews] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [length, setLength] = useState<number>(1); // State to track selected length
+
+  console.log(categoryName , "categoryName categoryName")
 
   const options = productDetail && productDetail.totalStockQuantity > 0
   ? Array.from({ length: Math.floor(productDetail.totalStockQuantity) }, (_, i) => ({
@@ -133,13 +139,12 @@ export default function ProductDetails({
   };
 
   return (
-      <div className="mt-10 mb-5 px-4 lg:px-10">
-        <div className="flex flex-wrap lg:flex-nowrap gap-5  mt-2 p-2 ">
-          <div className="w-full lg:w-8/12">
+      <div className="mt-10 mb-5 px-4 xl:max-w-screen-2xl mx-auto">
+        <div className="flex flex-wrap lg:flex-nowrap lg:gap-5  mt-2 p-2 ">
+          <div className={`w-full lg:w-8/12 ${firstFlex}`}>
             <Thumbnail thumbs={productDetail.imageUrl} />
           </div>
-
-          <div className="w-full lg:w-4/12 py-3 space-y-2 md:space-y-4 lg:max-w-[400px] ">
+          <div className={`w-full lg:w-4/12 py-3 space-y-2 md:space-y-4 lg:max-w-[400px] ${secondFlex}`}>
             <h1 className="text-22 lg:text-[28px] text-[#535353] font-medium">{productDetail.name}</h1>
 
             {reviews.length && reviews.length > 0 ? (
@@ -155,7 +160,7 @@ export default function ProductDetails({
               </div>
             ) : null}
 
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
               <p className="text-secondary font-poppins text-[28px] font-bold">
                 Dhs.
                 <span>

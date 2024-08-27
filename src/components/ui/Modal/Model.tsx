@@ -13,7 +13,7 @@ export default function Model({ children, centered, footer, productDetailModel, 
     <>
       <Modal
         title={title}
-        width={1200}
+        width={1400}
         centered={centered}
         open={productDetailModel}
         onCancel={() => { setproductDetailModel(false) }}

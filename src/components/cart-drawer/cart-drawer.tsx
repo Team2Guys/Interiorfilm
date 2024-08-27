@@ -22,8 +22,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
   const [lengths, setLengths] = useState<{ [key: number]: number }>({});
   const [cartItems, setCartItems] = useState<PRODUCTS_TYPES[]>([]);
   const [subtotal, setSubtotal] = useState(0);
-
-  console.log(cartItems , "cartItemscartItems")
   useEffect(() => {
     fetchCartItems();
 
@@ -84,7 +82,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
   };
 
   const calculateSubtotal = (items: PRODUCTS_TYPES[]) => {
-    console.log("Calculating subtotal with items:", items);
     const sub = items.reduce((acc, item, index) => {
       const price = item.discountPrice || item.price;
       const length = lengths[index] || item.length;

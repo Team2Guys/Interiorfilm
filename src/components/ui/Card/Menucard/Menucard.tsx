@@ -21,25 +21,11 @@ interface CardProps {
   onClick?: ()=>void;
 }
 
-const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail, cardClass ,onClick }) => {
+const Menucard: React.FC<CardProps> = ({ ProductCard, cardClass ,onClick }) => {
   const router = useRouter();
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   const pathname = usePathname();
 
 
@@ -133,10 +119,6 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDet
     window.dispatchEvent(new Event("WishlistChanged"));
     console.log(existingWishlist, "existingWishlist")
   };
-
-
-
-
   const Homepage = pathname.startsWith('/');
   const slicedArray = Homepage && totalProducts ? totalProducts.slice(0, 6) : [];
   const productsToRender = slicedArray.length > 0 ? slicedArray : totalProducts;

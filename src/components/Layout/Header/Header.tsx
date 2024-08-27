@@ -30,6 +30,12 @@ import CartDrawer from "components/cart-drawer/cart-drawer";
 const Header = () => {
   const dispatch = useAppDispatch();  
   const [open, setOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [activeLink, setActiveLink] = useState<Category | undefined>();
+  const [Categories, setCategories] = useState<Categories_Types[]>([]);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [category, setcategory] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [WishlistItems, setWishlistItems] = useState([]);
@@ -37,8 +43,37 @@ const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const pathname = usePathname(); // Get the current path
+  
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
+
+  useEffect(() => {
+    const productHandler = async () => {
+      setLoading(true);
+      try {
+        setLoading(true);
+        const categoryRequest = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
+        );
+        const productRequest = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
+        );
+        const [categoryResponse, productResponse] = await Promise.all([
+          categoryRequest,
+          productRequest,
+        ]);
+        setCategories(categoryResponse.data);
+        setProducts(productResponse.data.products);
+        setActiveLink(categoryResponse.data[0]);
+      } catch (err) {
+        console.log(err, "err");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    productHandler();
+  }, []);
 
   const AddminProfileTriggerHandler = async (token: string) => {
     try {
@@ -57,15 +92,6 @@ const Header = () => {
     }
   };
 
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
-  const [activeLink, setActiveLink] = useState<Category | undefined>();
-  const [Categories, setCategories] = useState<Categories_Types[]>([]);
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [visible, setVisible] = useState(false);
-
-  
 
   const handleVisibleChange = (visible: boolean) => {
     setVisible(visible);
@@ -78,50 +104,9 @@ const Header = () => {
   const handleOpenDrawer = () => setDrawerOpen(true);
   const handleCloseDrawer = () => setDrawerOpen(false);
 
-  const productHandler = async () => {
-    try {
-      setLoading(true);
-      const categoryRequest = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
-      );
-      const productRequest = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
-      );
-      const [categoryResponse, products] = await Promise.all([
-        categoryRequest,
-        productRequest,
-      ]);
-
-      setTotalProducts(products.data.products);
-      setActiveLink(categoryResponse.data[0]);
-      setCategories(categoryResponse.data);
-    } catch (err) {
-      console.log(err, "err");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useLayoutEffect(() => {
-    productHandler();
-  }, []);
 
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
-        );
-        setProducts(response.data.products);
-      } catch (error) {
-        console.log("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -269,7 +254,7 @@ const Header = () => {
            trigger="hover"
            visible={visible}
            onVisibleChange={handleVisibleChange}
-           content={<Megamanu Categories={Categories} products={products} onProductClick={closePopover} />}
+           content={<Megamanu Categories={Categories} products={products} loading={loading} onProductClick={closePopover} />}
            title=""
           >
           <span onClick={()=>router.push('/products?category=all')}>Category</span>
