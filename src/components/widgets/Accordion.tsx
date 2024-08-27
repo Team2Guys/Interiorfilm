@@ -1,10 +1,15 @@
 
-import Collapse from 'components/ui/Collapse/Collapse'
 import ProductCollapse from 'components/ui/Collapse/productCollpase';
-import { collapseData } from 'data/Data'
 import React, { useState } from 'react'
+import PRODUCTS_TYPES from 'types/interfaces';
 
-const Accordion = () => {
+interface accordionprop {
+  detail?: PRODUCTS_TYPES[];
+}
+
+const Accordion:React.FC<accordionprop> = ({detail}:any)=> {
+
+  console.log(detail,"detaildetaildetail")
       // Track the index of the currently open Collapse item
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -13,12 +18,12 @@ const Accordion = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
   return (
-    <div>
-          {collapseData.map((item, index) => (
+    <div className='px-4 md:px-0'>
+          {detail.map((item:any, index:any) => (
         <React.Fragment key={index}>
           <ProductCollapse isOpen={openIndex === index}
-          onClick={() => handleToggle(index)} title={item.title} titleClass="text-13" className="border-t py-4 border-stone-200">
-            <p className="text-13">{item.content}</p>
+          onClick={() => handleToggle(index)} title={item.name} titleClass="text-13" className="border-t py-4 border-stone-200">
+            <p className="text-13">{item.detail}</p>
           </ProductCollapse>
         </React.Fragment>
       ))}

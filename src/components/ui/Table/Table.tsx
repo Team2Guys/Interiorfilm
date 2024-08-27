@@ -12,8 +12,8 @@ import SelectList from "../Select/Select";
 import ProductSelect from "../Select/ProductSelect";
 
 interface TableProps {
-  cartdata: PRODUCTS_TYPES[];
-  wishlistdata: PRODUCTS_TYPES[];
+  cartdata?: PRODUCTS_TYPES[];
+  wishlistdata?: PRODUCTS_TYPES[];
   onCartChange: (updatedCart: PRODUCTS_TYPES[]) => void;
 }
 

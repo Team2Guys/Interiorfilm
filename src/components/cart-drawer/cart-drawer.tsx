@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Drawer, message, Modal } from "antd";
 import Image from "next/image";
 import { IoCloseSharp } from "react-icons/io5";
@@ -6,6 +6,8 @@ import { RxMinus, RxPlus } from "react-icons/rx";
 import ProductSelect from "components/ui/Select/ProductSelect";
 import Link from "next/link";
 import PRODUCTS_TYPES from "types/interfaces";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { IoIosClose } from "react-icons/io";
 
 interface CartDrawerProps {
   open: boolean;
@@ -22,6 +24,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
   const [lengths, setLengths] = useState<{ [key: number]: number }>({});
   const [cartItems, setCartItems] = useState<PRODUCTS_TYPES[]>([]);
   const [subtotal, setSubtotal] = useState(0);
+
   useEffect(() => {
     fetchCartItems();
 
@@ -82,6 +85,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
   };
 
   const calculateSubtotal = (items: PRODUCTS_TYPES[]) => {
+    console.log("Calculating subtotal with items:", items);
     const sub = items.reduce((acc, item, index) => {
       const price = item.discountPrice || item.price;
       const length = lengths[index] || item.length;
@@ -91,29 +95,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
     setSubtotal(sub);
   };
 
-  const increment = (index: number) => {
-    const newCounts = { ...counts };
-    if (newCounts[index] < 100) {
-      newCounts[index] = (newCounts[index] || 1) + 1;
-      setCounts(newCounts);
-      updateTotalPrice(index, newCounts[index], lengths[index]);
-      window.dispatchEvent(new Event("cartChanged"));
-    } else {
-      message.error("Quantity cannot be more than 100.");
-    }
-  };
-
-  const decrement = (index: number) => {
-    if (counts[index] > 1) {
-      const newCounts = { ...counts };
-      newCounts[index] -= 1;
-      setCounts(newCounts);
-      updateTotalPrice(index, newCounts[index], lengths[index]);
-      window.dispatchEvent(new Event("cartChanged"));
-    } else {
-      message.error("Quantity cannot be less than 1.");
-    }
-  };
 
   const updateTotalPrice = (index: number, newCount: number, length: number) => {
     const updatedData = [...cartItems];
@@ -149,57 +130,23 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
       },
     });
   };
+ 
 
   return (
     <>
-      {OpenDrawer && (
-        <div
-          className="relative text-20 md:text-2xl cursor-pointer"
-          onClick={() => (open ? onClose() : undefined)}
-        >
-          {OpenDrawer}
-        </div>
-      )}
-      <Drawer
-        title={
-          <>
-            <p className="text-23">
-              My Cart <span> ({cartItems.length})</span>
-            </p>
-          </>
-        }
-        className="z-99 border-none"
-        onClose={onClose}
-        open={open}
-        width={500}
-        footer={
-          <>
-            <div className="flex justify-between px-2 font-semibold text-14 md:text-22">
-              <p className="">Subtotal</p>
-              <p>
-                AED<span>{subtotal.toFixed(2)}</span>
-              </p>
+    {open && (
+        <div className="  right-0 sm:right-5 top-20 mt-2 fixed z-999 ">
+          <div className="border sm:w-96  bg-white p-2">
+            <div className="flex items-center justify-between">
+              <p className="font-bold text-md-h6">SHOPPING CART</p>
+              <IoIosClose
+                className="cursor-pointer"
+                size={30}
+                onClick={() => onClose()} 
+              />
             </div>
-            <div className="flex flex-col w-full justify-center space-y-3 mt-5">
-              <Link
-                onClick={onClose}
-                className="w-full p-4 text-16 bg-primary text-white hover:text-white text-center"
-                href="/cart"
-              >
-                VIEW CART
-              </Link>
-              <Link
-                onClick={onClose}
-                className="w-full p-4 text-16 bg-black text-white hover:text-white text-center"
-                href="/checkout"
-              >
-                CHECK OUT
-              </Link>
-            </div>
-          </>
-        }
-      >
-         {cartItems.map((item: any, index: number) => {
+            <div className="max-h-52 border border-slate-100 overflow-y-scroll p-1 custom-scrollbar">
+            {cartItems.map((item: any, index: number) => {
           const options = lengthOptions(item.totalStockQuantity || 0);
 
           return (
@@ -236,32 +183,9 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
                       </span>
                       .00
                     </p>
-                    <div className="flex">
-                      <div
-                        className="h-5 w-5 bg-[#E7E7EF] hover:bg-[#F0EFF2] flex justify-center items-center"
-                        onClick={() => decrement(index)}
-                      >
-                        <RxMinus size={20} />
-                      </div>
-                      <div className="h-5 w-5 bg-[#F0EFF2] hover:bg-[#E7E7EF] flex justify-center items-center">
-                        <input
-                          className="h-5 w-5 text-center"
-                          type="text"
-                          min={1}
-                          max={100}
-                          disabled
-                          value={counts[index] || item.count}
-                        />
-                      </div>
-                      <div
-                        className="h-5 w-5 bg-[#E7E7EF] hover:bg-[#F0EFF2] flex justify-center items-center"
-                        onClick={() => increment(index)}
-                      >
-                        <RxPlus size={20} />
-                      </div>
-                    </div>
+                    <p className="font-semibold">{item.count}x</p>
                     <ProductSelect
-                      className="w-[70%] h-10 border outline-none shipment text-20"
+                      className="w-[70%] h-8 border outline-none shipment text-20"
                       onChange={(value) => onLengthChange(index, value)}
                       options={options}
                       defaultValue={`1.22 x ${lengths[index] || item.length} METERS`}
@@ -284,7 +208,31 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
             </div>
           );
         })}
-      </Drawer>
+            </div>
+            <div className="text-end mt-2 mb-2">
+              <p className="font-bold">
+                Total: AED <span>{subtotal}</span>.00
+              </p>
+            </div>
+            <p>*ALL ORDERS MAY TAKE 48 HOURS TO BE DELIVERED TO YOUR DOORSTEP</p>
+            <div className="w-full mt-2 space-y-1">
+              <Link
+                href="/cart"
+                className="w-full block text-center bg-black text-white py-1"
+              >
+                View Cart
+              </Link>
+              <button
+                className="border w-full border-black hover:bg-black hover:text-white transition duration-300 py-1"
+                onClick={() => onClose()} // Close cart section
+              >
+                Continue Shopping
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+   
     </>
   );
 };

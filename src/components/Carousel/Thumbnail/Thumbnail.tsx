@@ -16,9 +16,10 @@ import Accordion from 'components/widgets/Accordion';
 
 interface ThumbProps {
   thumbs?: IMAGE_INTERFACE[];
+  detail?:IMAGE_INTERFACE[];
 }
 
-const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
+const Thumbnail: React.FC<ThumbProps> = ({ thumbs,detail }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
   const [backgroundPosition, setBackgroundPosition] = useState<string>('0% 0%');
@@ -143,7 +144,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
       </div>
     </div>
     <div className="lg:max-w-[1020px] hidden lg:block">
-      <Accordion/>
+      <Accordion detail={detail}/>
     </div>
 
     </div>

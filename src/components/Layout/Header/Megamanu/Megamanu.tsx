@@ -74,8 +74,9 @@ useEffect(() => {
       <div className={`w-10/12 px-3 border-s-2 border-gray`}>
         <div className='flex justify-between'>
           <h1 className='text-2xl font-semibold mb-4'>{selectedCategory ? Categories.find(cat => cat._id === selectedCategory)?.name : "All Products"}</h1>
-          <Link className='hover:underline hover:text-black'   href={`/products?category=${selectedCategory}`} // Use the correct category ID
-            onClick={() => handleButtonClick(selectedCategory || '')}>View All</Link>
+          <Link className='hover:underline hover:text-black'   href={`/categories`}>View All</Link>
+          {/* <Link className='hover:underline hover:text-black'   href={`/products?category=${selectedCategory}`} // Use the correct category ID
+            onClick={() => handleButtonClick(selectedCategory || '')}>View All</Link> */}
         </div>
         {/* Pass the onProductClick prop to MenuSlider */}
         <MenuSlider products={filteredProducts} loading={loading} onProductClick={onProductClick} />

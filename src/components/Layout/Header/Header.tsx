@@ -124,6 +124,8 @@ const Header = () => {
     setIsModalOpen(false);
   };
 
+
+
   useEffect(() => {
     const existingWishlist = JSON.parse(
       localStorage.getItem("wishlist") || "[]"
@@ -148,12 +150,14 @@ const Header = () => {
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     setCartItems(existingCart);
+    
   }, []);
 
   useEffect(() => {
     const handleCartChange = () => {
       const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
       setCartItems(updatedCart);
+      
     };
 
     window.addEventListener("cartChanged", handleCartChange);
@@ -186,6 +190,7 @@ const Header = () => {
     const handleCartChange = () => {
       setcategory(false);
       setOpen(false);
+      
     };
 
     window.addEventListener("cartChanged", handleCartChange);
@@ -208,6 +213,37 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  useEffect(() => {
+  let previousCartItemCount = cartItems.reduce((count, item:any) => count + item.count, 0);
+
+  const handleCartChange = () => {
+    const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const updatedCartItemCount = updatedCart.reduce((count:number, item:any) => count + item.count, 0);
+
+    // Check if the cart count increased
+    if (updatedCartItemCount > previousCartItemCount) {
+      setCartItems(updatedCart);
+
+      // Open the cart drawer
+      setDrawerOpen(true);
+
+      // Automatically close the drawer after 2 seconds
+      setTimeout(() => {
+        setDrawerOpen(false);
+      }, 20000000);
+    }
+
+    // Update the previous cart count
+    previousCartItemCount = updatedCartItemCount;
+  };
+
+  window.addEventListener("cartChanged", handleCartChange);
+
+  return () => {
+    window.removeEventListener("cartChanged", handleCartChange);
+  };
+}, [cartItems]);
+
 
   return (
     <>
@@ -300,25 +336,25 @@ const Header = () => {
               <></>
             )}
           </Link>
-          
-          <CartDrawer  open={drawerOpen}
-           onClose={handleCloseDrawer}  OpenDrawer={
-              <div className="relative  text-20 md:text-2xl cursor-pointer" onClick={handleOpenDrawer} >
-              <SlHandbag  className=" cursor-pointer" />
-              {cartItems.length > 0 ? (
-                <div className="md:w-5 md:h-5 w-3 h-3 z-50 rounded-full flex justify-center items-center bg-white text-black absolute left-3 top-3">
-                  <span className="font-medium text-12 md:text-18 z-50">
-                    {cartItems.reduce(
-                      (count: any, item: any) => count + item.count,
-                      0
-                    )}
-                  </span>
-                </div>
-              ) : (
-                <></>
-              )}
+          <Link href={"/cart"} className="relative text-20 md:text-2xl">
+            <SlHandbag  className=" cursor-pointer" />
+            {cartItems.length > 0 ? (
+              <>
+              <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center bg-white text-black absolute left-3 top-3">
+                <span className="font-medium text-12 md:text-18">
+                {cartItems.reduce(
+                  (count: any, item: any) => count + item.count,
+                  0
+                )}
+                </span>
               </div>
-          }/>
+                
+                </>
+              
+            ) : (
+              <></>
+            )}
+          </Link>
          
           <div className="px-3 block md:hidden">
             <DrawerMenu
@@ -458,6 +494,7 @@ const Header = () => {
           )}
         </>
       </Modal>
+      <CartDrawer open={drawerOpen} onClose={handleCloseDrawer} />
    
     </>
   );

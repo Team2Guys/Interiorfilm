@@ -25,7 +25,6 @@ const Product = ({ params }: { params: { productname: string } }) => {
   const [categoryName, setCategoryName] = useState<string | any>(null);
   const [reviews, setReviews] = useState<any[]>([]);
 
-  // Fetch reviews for the product
   const fetchReviews = async (productId: string) => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`);
@@ -35,12 +34,10 @@ const Product = ({ params }: { params: { productname: string } }) => {
     }
   };
 
-  // Fetch categories and products
   const productHandler = async () => {
     try {
       setProductsLoading(true);
 
-      // Fetch categories and products concurrently
       const categoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
       const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
 
@@ -49,7 +46,6 @@ const Product = ({ params }: { params: { productname: string } }) => {
       setProducts(productResponse.data.products);
       setCategories(categoryResponse.data);
 
-      // If parsedProduct is defined, find product details and related category
       if (parsedProduct && productResponse.data.products.length > 0) {
         const foundProduct = productResponse.data.products.find((item: any) => generateSlug(item.name) === parsedProduct);
 
@@ -57,7 +53,6 @@ const Product = ({ params }: { params: { productname: string } }) => {
           setProductDetail(foundProduct);
           fetchRelatedProducts(foundProduct.category);
 
-          // Find the category name based on the category ID
           const foundCategory = categoryResponse.data.find((cat: any) => cat._id === foundProduct.category);
           setCategoryName(foundCategory ? foundCategory.name : null);
         }
@@ -69,7 +64,6 @@ const Product = ({ params }: { params: { productname: string } }) => {
     }
   };
 
-  // Fetch related products
   const fetchRelatedProducts = async (categoryId: string) => {
     try {
       setRelatedProductsLoading(true);
@@ -85,38 +79,46 @@ const Product = ({ params }: { params: { productname: string } }) => {
     }
   };
 
-  // UseEffect to fetch products and categories on load
   useEffect(() => {
     productHandler();
   }, [parsedProduct]);
 
- 
+  // Filter products for the current category
+  const filteredProducts = products.filter(product => product.category === productDetail?.category);
+
   return (
     <>
       <Overlay title='Product Detail' />
       {
         productsLoading ? (
-          <div className='flex justify-center items-center h-[20vh]'><Loader /></div>
+          <div className='flex justify-center items-center h-[20vh] '><Loader /></div>
         ) : productDetail ? (
           <>
             <ProductDetails 
               productDetail={productDetail} 
-              categoryName={categoryName}  // Pass category name here
+              categoryName={categoryName} 
             />
-
-         <Review reviews={reviews} productId={productDetail?._id} fetchReviews={fetchReviews} />
+            <Review reviews={reviews} productId={productDetail?._id} fetchReviews={fetchReviews} />
           </>
         ) : null
       }
-      <div className='block lg:hidden'>
-      <Accordion/>
-
+        {
+        productsLoading ? (
+          <div className='flex justify-center items-center h-[20vh]'><Loader /></div>
+        ) : productDetail ? (
+          <>
+          <div className='block lg:hidden mt-5'>
+        <Accordion detail={productDetail.modelDetails}/>
       </div>
+          </>
+        ) : null
+      }
+     
       <Container className='mt-20'>
         <div className='flex justify-center items-center'>
           <h1 className='w-fit text-center text-lg border-b-2 border-[#FF914E] md:text-3xl mb-5 up'>FEATURE PRODUCT</h1>
         </div>
-        <ProductSlider />
+        <ProductSlider products={filteredProducts} />
       </Container>
     </>
   );
