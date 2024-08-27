@@ -288,13 +288,13 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
               Code : <span>{product.name}</span>
             </h1>
             <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
-              <p className="text-black  font-bold">
-                Dhs. <span className=''>{product.discountPrice ? product.discountPrice : product.salePrice}</span>.00
+              <p className="text-black font-bold text-18">
+                AED <span className=''>{product.discountPrice ? product.discountPrice : product.salePrice}</span>
               </p>
 
               { product.discountPrice > 0 && (
-                <p className="line-through text-para  text-xs font-bold">
-                  Dhs.<span>{product.salePrice}</span>.00
+                <p className="line-through text-para text-xs font-medium">
+                  AED <span>{product.salePrice}</span>
                 </p>
               )}
             </div>

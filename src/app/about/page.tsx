@@ -13,7 +13,7 @@ import Link from 'next/link'
 const offers = [
     { icon:<SlDiamond className='text-primary  group-hover:text-white' size={40} /> ,title: 'Savings to your pocket', detail: 'We cut out the middle man, passing the savings on to you.' },
     { icon:<CgBulb className='text-primary  group-hover:text-white' size={40} /> ,title: 'Fast Delivery ', detail: 'Choose your material, select quantity, check out and receive by the next working day.' },
-    { icon:<GiPayMoney className='text-primary  group-hover:text-white' size={40} /> ,title: 'Exclusive Collection', detail: 'We buy direct from the factory and are exclusive distributors for the .' },
+    { icon:<GiPayMoney className='text-primary  group-hover:text-white' size={40} /> ,title: 'Exclusive Collection', detail: 'We buy direct from the factory and are exclusive distributors for the GCC.' },
     { icon:<RiCustomerService2Line className='text-primary  group-hover:text-white' size={40} /> ,title: 'Service Promise', detail: 'Our professional team are on hand 365 days a year to help with any queries you may have.' },
   ];
 const About = () => {

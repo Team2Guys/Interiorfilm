@@ -1,84 +1,99 @@
-import React, { useState, useEffect } from 'react';
-import MenuSlider from 'components/Carousel/menuSlider/menuSlider';
-import Loader from 'components/Loader/Loader';
-import Link from 'next/link';
-import PRODUCTS_TYPES from 'types/interfaces';
-import { useRouter } from 'next/navigation';
-import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading';
-import { Skeleton } from 'antd';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import PRODUCTS_TYPES, { Categories_Types } from "types/interfaces";
+import { Skeleton } from "antd";
 
 interface MegamanuProps {
-  Categories: { _id: string, name: string }[];
+  Categories: Categories_Types[];
   products: PRODUCTS_TYPES[];
   loading?: boolean;
-  onProductClick: () => void; // Add a prop to close the popover on product click
+  onProductClick: () => void;
 }
 
-const Megamanu: React.FC<MegamanuProps> = ({ Categories, products, onProductClick,loading }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+const Megamanu: React.FC<MegamanuProps> = ({
+  Categories,
+  products,
+  onProductClick,
+  loading,
+}) => {
   const router = useRouter();
-  const [filteredProducts, setFilteredProducts] = useState<PRODUCTS_TYPES[]>([]);
-
+  const [hoverCategory, setHoverCategory] = useState<Categories_Types | null>(
+    null
+  );
 
   useEffect(() => {
     if (Categories.length > 0) {
-        setSelectedCategory(Categories[0]._id);
+      setHoverCategory(Categories[0]);
     }
-}, [Categories]);
-
-useEffect(() => {
-    if (selectedCategory) {
-        const filtered = products.filter(product => product.category === selectedCategory);
-        setFilteredProducts(filtered);
-    } else {
-        setFilteredProducts(products);
-    }
-}, [selectedCategory, products]);
-
-  const handleCategoryClick = (categoryId: string) => {
-    setSelectedCategory(categoryId);
-  };
+  }, [Categories]);
 
   const handleButtonClick = (categoryId: string) => {
-    router.push(`/products?category=${categoryId}`);
-    
+    router.push(`/categories`);
+  };
+
+  const handleHoverImg = (category: Categories_Types) => {
+    setHoverCategory(category);
   };
 
   return (
-    <div className='flex'>
-      <div className={`w-2/12 space-y-1`}>
-        <h1 className='text-2xl font-semibold mb-4'>All Categories</h1>
-        <ul className="px-1 pt-2 space-y-1">
-          {loading ? (
-             <div className="flex flex-col space-y-1">
-             {Array.from({ length: 7 }).map((_, index) => (
-               <div key={index} className=' flex flex-col py-1 mt-3 w-full'>
-                  <Skeleton className='w-70' active title={false} paragraph={{ rows: 1 }} />
-               </div>
-             ))}
-           </div>
-          ) : (
-            Categories.map((item, index) => (
-              <li className='flex flex-col w-full' key={index}>
-                <div
-                  className={item._id === selectedCategory ? "border-s-4 border-primary px-2 text-primary h-7 w-full flex items-center cursor-pointer" : "border-primary text-dark px-2 hover:text-dark h-7 w-full flex items-center cursor-pointer"}
-                  onClick={() => handleCategoryClick(item._id)}
-                >
+    <div className="flex gap-4 xl:gap-8 p-3">
+      <div className={`w-6/12 grid grid-cols-3 gap-4 xl:gap-8`}>
+        {!loading
+          ? Categories.map((item) => (
+              <div
+                key={item._id}
+                className="category-wrapper text-center cursor-pointer"
+                onClick={() => handleButtonClick(item._id)}
+                onMouseEnter={() => handleHoverImg(item)}
+              >
+                <Image
+                  src={item.posterImageUrl.imageUrl}
+                  alt={item.name}
+                  width={200}
+                  height={200}
+                  className="mx-auto w-full"
+                />
+                <h3 className="link-underline after:bg-[#FF914E] font-semibold text-16">
                   {item.name}
-                </div>
-              </li>
+                </h3>
+              </div>
             ))
-          )}
-        </ul>
+          : Array.from({ length: 9 }).map((_, index) => (
+              <div key={index} className="category-wrapper text-center">
+                <Skeleton.Image
+                  active={true}
+                  style={{ width: 160, height: 150 }}
+                  className="skeleton-img"
+                />
+                <Skeleton.Input
+                  active={true}
+                  style={{ height: 20 , width: 100 }}
+                  className="mt-1 skeleton-input"
+                />
+              </div>
+            ))}
       </div>
-      <div className={`w-10/12 px-3 border-s-2 border-gray`}>
-        <div className='flex justify-between'>
-          <h1 className='text-2xl font-semibold mb-4'>{selectedCategory ? Categories.find(cat => cat._id === selectedCategory)?.name : "All Products"}</h1>
-          <Link className='hover:underline hover:text-black'   href={`/products?category=${selectedCategory}`} // Use the correct category ID
-            onClick={() => handleButtonClick(selectedCategory || '')}>View All</Link>
-        </div>
-        {/* Pass the onProductClick prop to MenuSlider */}
-        <MenuSlider products={filteredProducts} loading={loading} onProductClick={onProductClick} />
+      <div className={`w-6/12 relative category-hover-img-wrapper`}>
+        {!loading ? (
+          hoverCategory && (
+            <>
+              <Image
+                src={hoverCategory.posterImageUrl.imageUrl}
+                alt={hoverCategory.name}
+                width={500}
+                height={500}
+                className="w-full h-full cursor-pointer"
+                onClick={() => handleButtonClick(hoverCategory._id)}
+              />
+              <div className="bg-white w-50 h-12 flex justify-center items-center shadow-1 absolute bottom-5 left-1/2 -translate-x-1/2 font-medium text-18">
+                {hoverCategory.name}
+              </div>
+            </>
+          )
+        ) : (
+          <Skeleton.Image active={true} className="skeleton-img" />
+        )}
       </div>
     </div>
   );
