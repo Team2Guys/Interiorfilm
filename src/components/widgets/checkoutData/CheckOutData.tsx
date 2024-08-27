@@ -135,27 +135,27 @@ const CheckoutData: React.FC<TableProps> = ({ cartdata, onCartChange,subtotal,se
 
       <div className="w-full bg-[#EFEFEF] px-8 py-14 space-y-3 rounded-sm  mt-10">
         <div className="flex justify-between items-center">
-          <h1 className="text-[27px] ">Subtotals:</h1>
-          <h1 className="text-[24px]  ">
-            AED <span>{subtotal}</span>.00
+          <h1 className="text-[27px]">Subtotal</h1>
+          <h1 className="text-[24px]">
+            AED <span>{subtotal}</span>
           </h1>
         </div>
         <hr className="w-full mx-auto border-gray" />
 
         
         <div className="flex justify-between items-center">
-          <h1 className="text-[27px] ">Shipment Fee:</h1>
-          <h1 className="text-[24px] ">
-        <span>{shipmentFee}</span>.00
+          <h1 className="text-[27px]">Shipping</h1>
+          <h1 className="text-[24px]">
+        <span>{shipmentFee}</span>
           </h1>
         </div>
         <hr className="w-full mx-auto border-gray" />
 
 
         <div className="flex justify-between items-center">
-          <h1 className="text-[27px] ">Total:</h1>
-          <h1 className="text-[24px] ">
-            AED <span>{shipmentFee == "Free" ? subtotal : Number(shipmentFee)+subtotal}</span>.00
+          <h1 className="text-[27px]">Total:</h1>
+          <h1 className="text-[24px]">
+            AED <span>{shipmentFee == "Free" ? subtotal : Number(shipmentFee)+subtotal}</span>
           </h1>
         </div>
 

@@ -139,11 +139,11 @@ const Review: React.FC<ReviewProps> = ({
             ) : (
               <div>
                 {/* 5 Yellow Stars */}
-                <div className="flex jus  items-center gap-1">
+                {/* <div className="flex jus  items-center gap-1">
                   {[...Array(5)].map((_, i) => (
                     <MdStar key={i} className="text-yellow-500" size={24} />
                   ))}
-                </div>
+                </div> */}
                 <p className="mt-2">There Is No Reviews Available</p>
               </div>
             )}
