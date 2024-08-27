@@ -186,12 +186,12 @@ const onChange = (value: number) => {
               </p>
             ) : (
               <div className="flex flex-wrap gap-1 md:gap-2">
-                <button
+                {/* <button
                   className="bg-secondary text-12 md:text-16  py-2 px-3 md:px-5 text-white"
                  
                 >
                   Order Now
-                </button>
+                </button> */}
                 <button
                   className="bg-secondary  text-12 md:text-16  py-2 px-3 md:px-5 text-white"
                   onClick={() => handleAddToCart(productDetail)} 

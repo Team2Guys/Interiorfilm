@@ -273,7 +273,7 @@ const Header = () => {
     </Link>
         </div>
         <ul
-          className={`hidden md:flex md:flex-1 space-x-4 lg:space-x-10 text-18 py-4 px-6  ${
+          className={`hidden lg:flex lg:flex-1 space-x-4 lg:space-x-10 text-18 py-4 px-6  ${
             isHomePage
               ? isScrolled
                 ? "bg-white text-black"

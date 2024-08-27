@@ -13,8 +13,8 @@ const Hero = () => {
           <p className='transform  mt-20  -rotate-90 whitespace-nowrap'>Get 10% Off!</p>
         </div>
         <Container className='text-white text-end absolute bottom-10 md:bottom-20 right-1 md:right-20 space-y-5'>
-          <p className='text-14 font-medium'>SELF ADHESIVE ARCHITECTURAL VINYL</p>
-          <p className='text-[25px]'>DON&apos;T REPLACE, UPGRADE</p>
+          <p className='text-14 font-medium'>ARCHITECTURAL VINYL FILM WRAP</p>
+          <p className='text-[25px]'>FRESH START, FRACTION OF THE COST</p>
           <div>
             <Link className='bg-white px-8 py-2 text-black' href={"/products"}>
               SHOP OUR FULL RANGE

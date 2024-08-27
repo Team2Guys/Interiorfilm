@@ -138,9 +138,9 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, cardClass ,onClick }) => {
       
       <div className="cursor-pointer  transition-all m-1 " onClick={() => router.push(`/product/${generateSlug(product.name)}`)}>
         <div className="text-center">
-          <div className='absolute top-50 hidden  translate-y-20 z-10 w-full md:flex justify-center opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition ease-in-out duration-400'>
+          {/* <div className='absolute top-50 hidden  translate-y-20 z-10 w-full md:flex justify-center opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition ease-in-out duration-400'>
             <button className='bg-white z-10 px-4 py-1'>Order Now</button>
-          </div>
+          </div> */}
           {product.posterImageUrl && product.posterImageUrl.imageUrl && (
             <Image className="bg-contain h-32 w-full md:h-60 rounded-lg" width={300} height={300} src={product.posterImageUrl.imageUrl} alt="Image" />
           )}
