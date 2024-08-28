@@ -38,8 +38,8 @@ const Megamanu: React.FC<MegamanuProps> = ({
   };
 
   return (
-    <div className="flex gap-4 xl:gap-8 p-3 mt-2">
-      <div className={`w-6/12 grid grid-cols-3 gap-4 xl:gap-8`}>
+    <div className="flex flex-wrap md:flex-nowrap gap-4 xl:gap-8 p-3 mt-2 ">
+      <div className={`md:w-6/12 grid grid-cols-2 md:grid-cols-3 gap-4 xl:gap-8`}>
         {!loading
           ? Categories.map((item) => (
               <div
@@ -55,7 +55,7 @@ const Megamanu: React.FC<MegamanuProps> = ({
                   height={200}
                   className="mx-auto w-full"
                 />
-                <h3 className="link-underline after:bg-[#FF914E] font-semibold text-16">
+                <h3 className="link-underline after:bg-[#FF914E] font-semibold text-12 md:text-16">
                   {item.name}
                 </h3>
               </div>
@@ -75,7 +75,7 @@ const Megamanu: React.FC<MegamanuProps> = ({
               </div>
             ))}
       </div>
-      <div className={`w-6/12 relative category-hover-img-wrapper`}>
+      <div className={`md:w-6/12 relative category-hover-img-wrapper hidden md:block`}>
         {!loading ? (
           hoverCategory && (
             <>
