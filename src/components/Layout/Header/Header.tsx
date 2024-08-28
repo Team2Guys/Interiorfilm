@@ -5,7 +5,7 @@ import Image from "next/image";
 import whitelogo from "../../../../public/images/logowhite.png";
 import blacklogo from "../../../../public/images/logoblack.png";
 import { IoIosSearch, IoMdHeartEmpty } from "react-icons/io";
-import { FaBars,} from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa6";
 import DrawerMenu from "components/ui/DrawerMenu/DrawerMenu";
 import { useRouter } from "next/navigation";
@@ -22,13 +22,12 @@ import { Categories_Types } from "types/interfaces";
 import { usePathname } from "next/navigation";
 import PRODUCTS_TYPES, { Category } from "types/interfaces";
 import MobileMenu from "./Megamanu/mobile-menu";
-import whatsapp from "../../../../public/images/whatsapp.png"
+import whatsapp from "../../../../public/images/whatsapp.png";
 import { SlHandbag } from "react-icons/sl";
 import CartDrawer from "components/cart-drawer/cart-drawer";
 
-
 const Header = () => {
-  const dispatch = useAppDispatch();  
+  const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -278,7 +277,9 @@ const Header = () => {
            content={<Megamanu  Categories={Categories} products={products} loading={loading} onProductClick={closePopover} />}
            title=""
           >
-          <span onClick={()=>router.push('/products?category=all')}>Category</span>
+            <span onClick={() => router.push("/products?category=all")}>
+              Category
+            </span>
             {/* Category */}
           </Popover>
           <Link className="link-underline" href="/about">
@@ -297,24 +298,29 @@ const Header = () => {
               : "bg-white text-black"
           }`}
         >
-          
           {loggedInUser ? (
             <Profile />
           ) : (
             <Link className=" text-20 md:text-2xl" href="/login">
-              <FaRegUser  className=" cursor-pointer" />
+              <FaRegUser className=" cursor-pointer" />
             </Link>
           )}
-          <div className=" cursor-pointer text-20 md:text-2xl" onClick={showModal}>
+          <div
+            className=" cursor-pointer text-20 md:text-2xl"
+            onClick={showModal}
+          >
             <IoIosSearch />
           </div>
-       
+
           <Link href={"/wishlist"} className="relative text-20 md:text-2xl">
-            <IoMdHeartEmpty  className=" cursor-pointer" />
+            <IoMdHeartEmpty className=" cursor-pointer" />
             {cartItems.length > 0 ? (
               <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center bg-white text-black absolute left-3 top-3">
                 <span className="font-medium text-12 md:text-18">
-                {WishlistItems.reduce((count: any, item: any) => count + item.count, 0)}
+                  {WishlistItems.reduce(
+                    (count: any, item: any) => count + item.count,
+                    0
+                  )}
                 </span>
               </div>
             ) : (
@@ -351,7 +357,8 @@ const Header = () => {
                 <>
                   <div className="text-20 md:text-2xl ">
                     <FaBars />
-                  </div> </>
+                  </div>{" "}
+                </>
               }
               content={
                 <>
@@ -414,9 +421,7 @@ const Header = () => {
                         Contact Us
                       </Link>
                     </li>
-               
                   </ul>
-
                 </>
               }
             />
@@ -424,8 +429,12 @@ const Header = () => {
         </div>
       </nav>
       <div className="fixed top-[100px] right-0 z-999 ">
-      <Link target="_blank" href={"https://wa.link/mb359y"} className="sticky top-1 ">
-          <Image width={200} height={200} src={whatsapp} alt="whatsappo"/>
+        <Link
+          target="_blank"
+          href={"https://wa.link/mb359y"}
+          className="sticky top-1 "
+        >
+          <Image width={200} height={200} src={whatsapp} alt="whatsappo" />
         </Link>
       </div>
       <Modal
@@ -454,7 +463,9 @@ const Header = () => {
                 filteredProducts.map((product, index) => (
                   <Link
                     key={index}
-                    href={{ pathname: `/product/${generateSlug(product.name)}` }}
+                    href={{
+                      pathname: `/product/${generateSlug(product.name)}`,
+                    }}
                     onClick={() => setIsModalOpen(false)}
                     className="shadow p-2 flex gap-2 mt-2 rounded-md border text-black hover:text-black border-gray hover:border-primary"
                   >
