@@ -248,7 +248,7 @@ const Header = () => {
         <div className="flex justify-between md:items-center space-x-4">
         <Link href="/">
       <Image
-        className="w-24 h-6 md:w-44 lg:w-50 md:h-8 lg:h-10 "
+        className="w-24 h-6 md:w-44 lg:w-50 md:h-8 lg:h-10"
         src={isHomePage ? (isScrolled ? blacklogo : whitelogo) : blacklogo}
         alt="logo"
         width={500}
