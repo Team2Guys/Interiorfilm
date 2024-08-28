@@ -23,10 +23,10 @@ export const socialLinks = [
   ];
   
   export const pages = [
-    { name: "Privacy Policy", href: "./privacy-policy" },
-    { name: "Terms & Conditions", href: "terms-condition" },
-    { name: "Return and Refund", href: "./return-refund" },
-    { name: "Shipment Policy", href: "./shipment-policy#" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Terms & Conditions", href: "/terms-condition" },
+    { name: "Return and Refund", href: "/return-refund" },
+    { name: "Shipment Policy", href: "/shipment-policy" },
 
   ];
   

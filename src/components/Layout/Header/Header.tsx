@@ -1,11 +1,11 @@
-"use client"
+"use client";
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import whitelogo from "../../../../public/images/logowhite.png";
 import blacklogo from "../../../../public/images/logoblack.png";
 import { IoIosSearch, IoMdHeartEmpty } from "react-icons/io";
-import { FaBars,} from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa6";
 import DrawerMenu from "components/ui/DrawerMenu/DrawerMenu";
 import { useRouter } from "next/navigation";
@@ -22,13 +22,12 @@ import { Categories_Types } from "types/interfaces";
 import { usePathname } from "next/navigation";
 import PRODUCTS_TYPES, { Category } from "types/interfaces";
 import MobileMenu from "./Megamanu/mobile-menu";
-import whatsapp from "../../../../public/images/whatsapp.png"
+import whatsapp from "../../../../public/images/whatsapp.png";
 import { SlHandbag } from "react-icons/sl";
 import CartDrawer from "components/cart-drawer/cart-drawer";
 
-
 const Header = () => {
-  const dispatch = useAppDispatch();  
+  const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -43,7 +42,7 @@ const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const pathname = usePathname(); // Get the current path
-  
+
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
 
@@ -92,7 +91,6 @@ const Header = () => {
     }
   };
 
-
   const handleVisibleChange = (visible: boolean) => {
     setVisible(visible);
   };
@@ -103,10 +101,6 @@ const Header = () => {
 
   const handleOpenDrawer = () => setDrawerOpen(true);
   const handleCloseDrawer = () => setDrawerOpen(false);
-
-
-
-
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -213,7 +207,7 @@ const Header = () => {
     <>
       <div className="bg-black  border-b py-2 border-black  w-full z-99 relative">
         <p className="uppercase text-white text-center text-xs md:text-14">
-          Free Shipping on orders over 10 meters
+          SPEND ABOVE AED 250 FOR FREE DELIVERY IN UAE
         </p>
       </div>
       <nav
@@ -226,15 +220,17 @@ const Header = () => {
         }`}
       >
         <div className="flex justify-between md:items-center space-x-4">
-        <Link href="/">
-      <Image
-        className="w-24 h-6 md:w-44 lg:w-50 md:h-8 lg:h-10 "
-        src={isHomePage ? (isScrolled ? blacklogo : whitelogo) : blacklogo}
-        alt="logo"
-        width={500}
-        height={500}
-      />
-    </Link>
+          <Link href="/">
+            <Image
+              className="w-24 h-6 md:w-44 lg:w-50 md:h-8 lg:h-10 "
+              src={
+                isHomePage ? (isScrolled ? blacklogo : whitelogo) : blacklogo
+              }
+              alt="logo"
+              width={500}
+              height={500}
+            />
+          </Link>
         </div>
         <ul
           className={`hidden lg:flex lg:flex-1 space-x-4 lg:space-x-10 text-18 py-4 px-6  ${
@@ -249,15 +245,24 @@ const Header = () => {
             Home
           </Link>
           <Popover
-           className="cursor-pointer link-underline"
-           placement="bottom"
-           trigger="hover"
-           visible={visible}
-           onVisibleChange={handleVisibleChange}
-           content={<Megamanu Categories={Categories} products={products} loading={loading} onProductClick={closePopover} />}
-           title=""
+            className="cursor-pointer link-underline"
+            placement="bottom"
+            trigger="hover"
+            visible={visible}
+            onVisibleChange={handleVisibleChange}
+            content={
+              <Megamanu
+                Categories={Categories}
+                products={products}
+                loading={loading}
+                onProductClick={closePopover}
+              />
+            }
+            title=""
           >
-          <span onClick={()=>router.push('/products?category=all')}>Category</span>
+            <span onClick={() => router.push("/products?category=all")}>
+              Category
+            </span>
             {/* Category */}
           </Popover>
           <Link className="link-underline" href="/about">
@@ -276,50 +281,61 @@ const Header = () => {
               : "bg-white text-black"
           }`}
         >
-          
           {loggedInUser ? (
             <Profile />
           ) : (
             <Link className=" text-20 md:text-2xl" href="/login">
-              <FaRegUser  className=" cursor-pointer" />
+              <FaRegUser className=" cursor-pointer" />
             </Link>
           )}
-          <div className=" cursor-pointer text-20 md:text-2xl" onClick={showModal}>
+          <div
+            className=" cursor-pointer text-20 md:text-2xl"
+            onClick={showModal}
+          >
             <IoIosSearch />
           </div>
-       
+
           <Link href={"/wishlist"} className="relative text-20 md:text-2xl">
-            <IoMdHeartEmpty  className=" cursor-pointer" />
+            <IoMdHeartEmpty className=" cursor-pointer" />
             {cartItems.length > 0 ? (
               <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center bg-white text-black absolute left-3 top-3">
                 <span className="font-medium text-12 md:text-18">
-                {WishlistItems.reduce((count: any, item: any) => count + item.count, 0)}
+                  {WishlistItems.reduce(
+                    (count: any, item: any) => count + item.count,
+                    0
+                  )}
                 </span>
               </div>
             ) : (
               <></>
             )}
           </Link>
-          
-          <CartDrawer  open={drawerOpen}
-           onClose={handleCloseDrawer}  OpenDrawer={
-              <div className="relative  text-20 md:text-2xl cursor-pointer" onClick={handleOpenDrawer} >
-              <SlHandbag  className=" cursor-pointer" />
-              {cartItems.length > 0 ? (
-                <div className="md:w-5 md:h-5 w-3 h-3 z-50 rounded-full flex justify-center items-center bg-white text-black absolute left-3 top-3">
-                  <span className="font-medium text-12 md:text-18 z-50">
-                    {cartItems.reduce(
-                      (count: any, item: any) => count + item.count,
-                      0
-                    )}
-                  </span>
-                </div>
-              ) : (
-                <></>
-              )}
+
+          <CartDrawer
+            open={drawerOpen}
+            onClose={handleCloseDrawer}
+            OpenDrawer={
+              <div
+                className="relative  text-20 md:text-2xl cursor-pointer"
+                onClick={handleOpenDrawer}
+              >
+                <SlHandbag className=" cursor-pointer" />
+                {cartItems.length > 0 ? (
+                  <div className="md:w-5 md:h-5 w-3 h-3 z-50 rounded-full flex justify-center items-center bg-white text-black absolute left-3 top-3">
+                    <span className="font-medium text-12 md:text-18 z-50">
+                      {cartItems.reduce(
+                        (count: any, item: any) => count + item.count,
+                        0
+                      )}
+                    </span>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
-          }/>
-         
+            }
+          />
+
           <div className="px-3 block md:hidden">
             <DrawerMenu
               showDrawer={showDrawer}
@@ -330,7 +346,8 @@ const Header = () => {
                 <>
                   <div className="text-20 md:text-2xl ">
                     <FaBars />
-                  </div> </>
+                  </div>{" "}
+                </>
               }
               content={
                 <>
@@ -391,9 +408,7 @@ const Header = () => {
                         Contact Us
                       </Link>
                     </li>
-               
                   </ul>
-
                 </>
               }
             />
@@ -401,8 +416,12 @@ const Header = () => {
         </div>
       </nav>
       <div className="fixed top-[100px] right-0 z-999 ">
-      <Link target="_blank" href={"https://wa.link/mb359y"} className="sticky top-1 ">
-          <Image width={200} height={200} src={whatsapp} alt="whatsappo"/>
+        <Link
+          target="_blank"
+          href={"https://wa.link/mb359y"}
+          className="sticky top-1 "
+        >
+          <Image width={200} height={200} src={whatsapp} alt="whatsappo" />
         </Link>
       </div>
       <Modal
@@ -430,7 +449,9 @@ const Header = () => {
                 filteredProducts.map((product, index) => (
                   <Link
                     key={index}
-                    href={{ pathname: `/product/${generateSlug(product.name)}` }}
+                    href={{
+                      pathname: `/product/${generateSlug(product.name)}`,
+                    }}
                     onClick={() => setIsModalOpen(false)}
                     className="shadow p-2 flex gap-2 mt-2 rounded-md border text-black hover:text-black border-gray hover:border-primary"
                   >
@@ -458,7 +479,6 @@ const Header = () => {
           )}
         </>
       </Modal>
-   
     </>
   );
 };

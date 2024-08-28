@@ -318,11 +318,11 @@ export const return__refund: PrivacyPolicyItem[] = [
 export const ShipmentPolicydata: PrivacyPolicyItem[] = [
 
   {
-    title: 'Free Shipping On Orders Over 10 Meters',
-    text: 'If your order exceeds over 10 meters and you are located inside the UAE, you will be offered free standard delivery at checkout. ',
+    title: '*SPEND ABOVE AED 250 FOR FREE DELIVERY IN UAE*',
+    text: 'If your order exceeds AED 250 and you are located inside the UAE, you will be offered free standard delivery at checkout. ',
   },
   {
-    text: 'If your order is below 10 meters, we will offer standard delivery anywhere in the UAE for only AED 30. ',
+    text: 'If your order is below AED 250, we will offer standard delivery anywhere in the UAE for only AED30. ',
   },
   {
     text: "CASH ON DELIVERY: NOT AVAILABLE",
