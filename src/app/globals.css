@@ -130,7 +130,7 @@
 }
 
 .ant-popover-content {
-  width: 830px;
+  width: 630px;
 }
 @media only screen and (min-width: 1440px) {
   .ant-popover-content {
@@ -410,8 +410,8 @@
 }
 
 .category-wrapper .skeleton-img{
-  width: 80px !important;
-  height: 80px !important;
+  width: 60px !important;
+  height: 60px !important;
 }
 @media screen and (min-width: 1430px) {
   .category-wrapper .skeleton-img{
