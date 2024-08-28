@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -9,89 +9,20 @@ import Card from 'components/ui/Card/Card';
 import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import PRODUCTS_TYPES from 'types/interfaces';
-import axios from 'axios';
 
+interface ProductSliderProps {
+  products: PRODUCTS_TYPES[];
+}
 
-
-
-const ProductSlider: React.FC = ({}) => {
-
+const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<any>(null);
-
-  const [allProducts, setAllProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState<any[]>([]);
-  const [categoryName, setCategoryName] = useState<string | any>(null);
- console.log(categories,"categories categories")
-  // Fetch all products and categories concurrently
-  const getallProducts = async () => {
-    try {
-      setLoading(true);
-      
-      const [productResponse, categoryResponse] = await Promise.all([
-        axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
-        axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`)
-      ]);
 
-      const products = productResponse.data.products;
-      const categories = categoryResponse.data;
-  
-      setCategories(categories);
+  const featuredProducts = products.slice(0, 10);
 
-      const CategoryId =  categories[4]._id;
-
-      let filteredProducts = products;
-  
-      // Filter products by category if a CategoryId is available
-      if (CategoryId && CategoryId !== "demo") {
-        filteredProducts = products.filter((product: any) => product.category === CategoryId);
-  
-        // Find and set the category name based on the CategoryId
-        const foundCategory = categories.find((cat: any) => cat._id === CategoryId);
-        if (foundCategory) {
-          setCategoryName(foundCategory.name);
-        } else {
-          setCategoryName(null);
-        }
-      } else {
-        setCategoryName(null);
-      }
-  
-      setAllProducts(filteredProducts);
-    } catch (err: any) {
-      console.error('Error fetching products or categories:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Fetch all products and categories when the component mounts
-  useEffect(() => {
-    getallProducts();
-  }, []);
-  
-
-  useEffect(() => {
-    const fetchAllProducts = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
-        setAllProducts(response.data.products);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAllProducts();
-  }, []);
-
-  const featuredProducts = allProducts.slice(0, 10);
-
-  useEffect(() => {
+  const updateSwiperNavigation = useCallback(() => {
     if (swiperRef.current && swiperRef.current.swiper) {
       const swiper = swiperRef.current.swiper;
       swiper.params.navigation.prevEl = prevRef.current;
@@ -102,10 +33,14 @@ const ProductSlider: React.FC = ({}) => {
     }
   }, [featuredProducts]);
 
+  useEffect(() => {
+    updateSwiperNavigation();
+  }, [updateSwiperNavigation]);
+
   const pagination = {
     clickable: true,
-    renderBullet: function (index: any, className: any) {
-      return '<span class="custom-pag ' + className + '">' + (index + 1) + '</span>';
+    renderBullet: function (index: number, className: string) {
+      return `<span class="custom-pag ${className}">${index + 1}</span>`;
     },
   };
 
@@ -131,38 +66,34 @@ const ProductSlider: React.FC = ({}) => {
               className="w-full"
               active={true}
             />
-            {/* Conditional avatar sizing based on screen size */}
             <div
               className="avatar mx-auto bg-gray-300"
               style={{
                 width: '250px',
                 height: '250px',
               }}
-              // Apply larger size for larger screens
-             
             />
           </div>
         ))}
       </div>
     );
   }
-  
 
   return (
     <div className="relative mt-2">
-          <div className='float-end flex gap-2 mb-5'>
-      <button
-        ref={prevRef}
-        className=" bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
-      >
-        <MdArrowBackIos size={20} />
-      </button>
-      <button
-        ref={nextRef}
-        className=" bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
-      >
-        <MdArrowForwardIos size={20} />
-      </button>
+      <div className='float-end flex gap-2 mb-5'>
+        <button
+          ref={prevRef}
+          className="bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
+        >
+          <MdArrowBackIos size={20} />
+        </button>
+        <button
+          ref={nextRef}
+          className="bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
+        >
+          <MdArrowForwardIos size={20} />
+        </button>
       </div>
       <Swiper
         ref={swiperRef}
@@ -205,13 +136,12 @@ const ProductSlider: React.FC = ({}) => {
         }}
         className="mySwiper custom"
       >
-        {featuredProducts && featuredProducts.map((product, index) => (
+        {featuredProducts.map((product, index) => (
           <SwiperSlide key={index} className="mb-10 custom">
-            <Card categoryName={categoryName}  ProductCard={[product]} slider={true} />
+            <Card ProductCard={[product]} slider={true} />
           </SwiperSlide>
         ))}
       </Swiper>
- 
     </div>
   );
 };
