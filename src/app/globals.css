@@ -408,6 +408,18 @@
 .category-wrapper .skeleton-input{
   min-width: auto !important;
 }
+
+.category-wrapper .skeleton-img{
+  width: 80px !important;
+  height: 80px !important;
+}
+@media screen and (min-width: 1430px) {
+  .category-wrapper .skeleton-img{
+    width: 150px !important;
+    height: 150px !important;
+  }
+  
+}
 .category-hover-img-wrapper .skeleton-img{
   width: 100% !important;
   height: 100% !important;
