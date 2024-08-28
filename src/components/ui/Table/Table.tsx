@@ -318,7 +318,7 @@ const Table: React.FC<TableProps> = ({
                                 ? product.discountPrice
                                 : product.price}
                             </span>
-                            .00
+                            
                           </p>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base">
@@ -367,7 +367,7 @@ const Table: React.FC<TableProps> = ({
                                     (counts[index] || 1) *
                                     (lengths[index] || product.length)}
                               </span>
-                              .00
+                              
                             </p>
                           )}
                         </td>
@@ -426,7 +426,7 @@ const Table: React.FC<TableProps> = ({
                     ? product.discountPrice
                     : product.price}
                 </span>
-                .00
+                
               </p>
               <div className="flex">
                 <div
@@ -485,7 +485,7 @@ const Table: React.FC<TableProps> = ({
                       (counts[index] || 1) *
                       (lengths[index] || product.length)}
                 </span>
-                .00
+                
               </p>
             )}
           </div>
