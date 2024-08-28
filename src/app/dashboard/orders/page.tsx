@@ -48,8 +48,7 @@ const Orders = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="View Orders" />
-      {loading?(
-
+      {loading===false?(
         <FilterTableSkeleton/>
       ):(
         <FilterTable data={products} columns={ordercolumns} /> 
