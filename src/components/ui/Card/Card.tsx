@@ -22,10 +22,9 @@ interface CardProps {
   categoryId?: string;
   carDetail?: string;
   cardClass?: string;
-  categoryName?: string;
 }
 
-const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail, cardClass, categoryName }) => {
+const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail, cardClass, }) => {
   const router = useRouter();
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [productDetails, setproductDetails] = useState<PRODUCTS_TYPES | any>({});
@@ -34,16 +33,8 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const [populated_categoryName, setCategoryName] = useState<string | any>(null);
 
-  const handleOpenDrawer = () => {
-    setDrawerOpen(true);
-  };
-
-  const handleCloseDrawer = () => {
-    setDrawerOpen(false);
-  };
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -149,7 +140,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       imageUrl: product.posterImageUrl?.imageUrl,
       totalStockQuantity: product.totalStockQuantity, 
       discountPrice: product.discountPrice,
-      color: selectedValue,
       length: 1,
       count: 1,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
@@ -180,12 +170,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
     message.success('Product added to cart successfully!');
     window.dispatchEvent(new Event("cartChanged"));
     
-    handleOpenDrawer();
-  
-    // Automatically close the drawer after 3 seconds
-    setTimeout(() => {
-      handleCloseDrawer();
-    }, 2000);
+ 
   };
   
 
@@ -197,7 +182,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       imageUrl: product.posterImageUrl?.imageUrl,
       totalStockQuantity: product.totalStockQuantity, // Ensure totalStockQuantity is stored
       discountPrice: product.discountPrice,
-      color: selectedValue,
+
       count: 1,
       length: 1,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
@@ -256,6 +241,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
+      <>
       <div className={`relative group mb-5 ${cardClass}`} key={index}>
         <div className="space-y-3 absolute top-6 right-4 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 overflow-hidden transition ease-in-out duration-400 hidden md:block">
           <button onClick={() => handleAddToCart(product)} className="flex justify-center items-center z-10">
@@ -306,7 +292,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
             )}
           </div>
         </div>
-        <CartDrawer open={drawerOpen} onClose={handleCloseDrawer} />
         <Modal title={<h1 className="lg:text-xl text-sm text-dark group-hover:text-white font-bold">
           Code : <span>{product.name}</span>
         </h1>} open={isModalOpen} width={700} onOk={handleOk} onCancel={handleCancel} footer={""}>
@@ -315,13 +300,15 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
           )}
         </Modal>
       </div>
+      </>
+      
     );
   };
 
   return (
     <>
 
-<Model 
+        <Model 
         setproductDetailModel={setProductDetailModel}
         productDetailModel={productDetailModel}
         centered={true}
@@ -354,6 +341,8 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
         </>
 
       )}
+      <div className='absolute top-1'>
+    </div>
     </>
   );
 };

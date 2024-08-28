@@ -8,8 +8,11 @@ interface inputprops{
     name?:string
     onChange?: React.ChangeEventHandler<HTMLInputElement>
     value?:string | number
+    pattern?: number | any
+    inputMode?: string | any
+    maxLength?: number | any
   }
-const LabelInput:React.FC<inputprops> = ({label,placeholder,type,id,name,value,onChange}) => {
+const LabelInput:React.FC<inputprops> = ({label,placeholder,type,id,name,value,onChange,pattern,inputMode,maxLength}) => {
   return (
   <div className="w-full px-3 mb-10">
   <label className="block uppercase tracking-wide text-dark text-sm font-bold mb-2">
@@ -21,7 +24,10 @@ const LabelInput:React.FC<inputprops> = ({label,placeholder,type,id,name,value,o
    placeholder={placeholder}
   name={name} 
   value={value}
+  pattern={pattern}
   onChange={onChange}
+  inputMode={inputMode}
+  maxLength={maxLength}
   />
 
 </div>

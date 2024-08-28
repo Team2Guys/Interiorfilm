@@ -114,7 +114,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
                   className="w-[70%] h-10 border outline-none shipment text-20"
                   onChange={(value) => handleLengthChange(index, value)}
                   options={options}
-                  defaultValue={`1.22 x ${
+                  defaultValue={`${
                     lengths[index] || product.length
                   } METERS`}
                 />

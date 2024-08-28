@@ -3,19 +3,15 @@
 import React, { useEffect, useState } from "react";
 import Thumbnail from "components/Carousel/Thumbnail/Thumbnail";
 import { Rate, message } from "antd";
-import { RxMinus, RxPlus } from "react-icons/rx";
 import { GoHeart } from "react-icons/go";
 import PRODUCTS_TYPES from "types/interfaces";
-import { detaildot } from "data/Data";
 import ProductSelect from "components/ui/Select/ProductSelect";
-
 interface productDetailsProps {
   productDetail: PRODUCTS_TYPES;
   categoryName?: string;  
   firstFlex?: string;
   secondFlex?: string;
 }
-
 export default function ProductDetails({
   productDetail,
   categoryName,
@@ -26,123 +22,101 @@ export default function ProductDetails({
   const [reviews, setReviews] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [length, setLength] = useState<number>(1); // State to track selected length
-
-  console.log(categoryName , "categoryName categoryName")
-
   const options = productDetail && productDetail.totalStockQuantity > 0
   ? Array.from({ length: Math.floor(productDetail.totalStockQuantity) }, (_, i) => ({
-      label: `1.22 x ${i + 1} METERS`,
+      label: `${i + 1} METERS`,
       value: i + 1,
     }))
   : [];
-
+console.log(productDetail, "productDetailproductDetailproductDetailproductDetail")
   // Calculate average rating
   const calculateAverageRating = () => {
     if (reviews.length === 0) return 0;
     const totalRating = reviews.reduce((sum, review) => sum + review.star, 0);
     return totalRating / reviews.length;
   };
-
   const averageRating = calculateAverageRating();
 
-  // Increment quantity
-  const handleIncrement = () => {
-    if (quantity < 100) {
-      setQuantity(quantity + 1);
-    } else {
-      message.error("Quantity cannot exceed 100.");
-    }
+const handleAddToCart = (product: any) => {
+  const newCartItem = {
+    id: product._id,
+    name: product.name,
+    price: product.salePrice,
+    imageUrl: product.posterImageUrl?.imageUrl,
+    discountPrice: product.discountPrice,
+    totalStockQuantity: product.totalStockQuantity,
+    count: 1, // Default to 1 for new addition
+    length, // Ensure length is added to the cart item
+    totalPrice: (product.discountPrice || product.salePrice) * length, // Calculate total price based on length
+    purchasePrice: product.purchasePrice,
+    sizes: product.sizes,
   };
 
-  // Decrement quantity
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    } else {
-      message.error("Quantity cannot be less than 1.");
-    }
+  let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+  const existingItemIndex = existingCart.findIndex(
+    (item: any) => item.id === product._id && item.length === length
+  );
+
+  if (existingItemIndex !== -1) {
+    const existingItem = existingCart[existingItemIndex];
+    existingItem.count += 1;
+    existingItem.totalPrice = (product.discountPrice || product.salePrice) * existingItem.count * length;
+    existingCart[existingItemIndex] = existingItem;
+  } else {
+    existingCart.push(newCartItem);
+  }
+  localStorage.setItem("cart", JSON.stringify(existingCart));
+  message.success("Product added to cart successfully!");
+  window.dispatchEvent(new Event("cartChanged"));
+};
+
+const handleAddToWishlist = (product: any) => {
+  const newWishlistItem = {
+    id: product._id,
+    name: product.name,
+    price: product.salePrice,
+    imageUrl: product.posterImageUrl?.imageUrl,
+    discountPrice: product.discountPrice,
+    totalStockQuantity: product.totalStockQuantity,
+    count: 1, 
+    length, 
+    totalPrice: (product.discountPrice || product.salePrice) * length, 
   };
 
-  const handleAddToCart = (product: any) => {
-    const newCartItem = {
-      id: product._id,
-      name: product.name,
-      price: product.salePrice,
-      imageUrl: product.posterImageUrl?.imageUrl,
-      discountPrice: product.discountPrice,
-      totalStockQuantity: product.totalStockQuantity,
-      count: quantity,
-      length,  // Ensure length is added to the cart item
-      totalPrice: (product.discountPrice || product.salePrice) * length * quantity,
-      purchasePrice: product.purchasePrice,
-      sizes: product.sizes,
-    };
+  let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+  const existingItemIndex = existingWishlist.findIndex(
+    (item: any) => item.id === product._id && item.length === length
+  );
 
-    let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const existingItemIndex = existingCart.findIndex(
-      (item: any) => item.id === product._id && item.length === length
-    );
+  if (existingItemIndex !== -1) {
+    const existingItem = existingWishlist[existingItemIndex];
+    existingItem.count += 1; 
+    existingItem.totalPrice = (product.discountPrice || product.salePrice) * existingItem.count * length;
+    existingWishlist[existingItemIndex] = existingItem;
+  } else {
+    existingWishlist.push(newWishlistItem);
+  }
+  localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
+  message.success("Product added to Wishlist successfully!");
+  window.dispatchEvent(new Event("WishlistChanged"));
+};
 
-    if (existingItemIndex !== -1) {
-      existingCart[existingItemIndex].count += quantity;
-      existingCart[existingItemIndex].totalPrice +=
-        (product.discountPrice || product.salePrice) * length * quantity;
-    } else {
-      existingCart.push(newCartItem);
-    }
+useEffect(() => {
+  if (productDetail) {
+    const price = productDetail.discountPrice || productDetail.salePrice;
+    setTotalPrice(price * length); 
+  }
+}, [length, productDetail]);
 
-    localStorage.setItem("cart", JSON.stringify(existingCart));
-    message.success("Product added to cart successfully!");
-    window.dispatchEvent(new Event("cartChanged"));
-  };
-
-  const handleAddToWishlist = (product: any) => {
-    const newWishlistItem = {
-      id: product._id,
-      name: product.name,
-      price: product.salePrice,
-      imageUrl: product.posterImageUrl?.imageUrl,
-      discountPrice: product.discountPrice,
-      totalStockQuantity: product.totalStockQuantity,
-      count: quantity,
-      length,  // Ensure length is added to the wishlist item
-      totalPrice: (product.discountPrice || product.salePrice) * length * quantity,
-    };
-
-    let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
-    const existingItemIndex = existingWishlist.findIndex(
-      (item: any) => item.id === product._id && item.length === length
-    );
-
-    if (existingItemIndex !== -1) {
-      existingWishlist[existingItemIndex].count += quantity;
-      existingWishlist[existingItemIndex].totalPrice +=
-        (product.discountPrice || product.salePrice) * length * quantity;
-    } else {
-      existingWishlist.push(newWishlistItem);
-    }
-
-    localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
-    message.success("Product added to Wishlist successfully!");
-    window.dispatchEvent(new Event("WishlistChanged"));
-  };
-
-  useEffect(() => {
-    if (productDetail) {
-      const price = productDetail.discountPrice || productDetail.salePrice;
-      setTotalPrice(price * length * quantity);
-    }
-  }, [length, quantity, productDetail]);
-
-  const onChange = (value: number) => {
-    setLength(value);
-  };
+const onChange = (value: number) => {
+  setLength(value);
+};
 
   return (
       <div className="mt-10 mb-5 px-4 xl:max-w-screen-2xl mx-auto">
         <div className="flex flex-wrap lg:flex-nowrap lg:gap-5  mt-2 p-2 ">
           <div className={`w-full lg:w-8/12 ${firstFlex}`}>
-            <Thumbnail thumbs={productDetail.imageUrl} />
+            <Thumbnail detail={productDetail.modelDetails} thumbs={productDetail.imageUrl} />
           </div>
           <div className={`w-full lg:w-4/12 py-3 space-y-2 md:space-y-4 lg:max-w-[400px] ${secondFlex}`}>
             <h1 className="text-22 lg:text-[28px] text-[#535353] font-medium">{productDetail.name}</h1>
@@ -162,20 +136,22 @@ export default function ProductDetails({
 
             <div className="flex items-center gap-2">
               <p className="text-secondary font-poppins text-[28px] font-bold">
-                Dhs.
-                <span>
+                AED <span>
                   {productDetail.discountPrice
                     ? productDetail.discountPrice
                     : productDetail.salePrice}
                 </span>
-                .00
+                /m
               </p>
               {productDetail.discountPrice ? (
                 <p className="line-through text-light">
-                  Dhs. <span>{productDetail.salePrice}</span>.00
+                  AED <span>{productDetail.salePrice}</span>
                 </p>
               ) : null}
             </div>
+            <p className="font-medium text-16 text-text">
+              Width : <span className="text-blak font-normal">1.22 mm</span>
+            </p>
             <div className="flex gap-2 items-center w-[70%]">
             <ProductSelect
               className="w-full h-10 border outline-none shipment text-20"
@@ -183,35 +159,6 @@ export default function ProductDetails({
               options={options}
               value={length}
             />
-            </div>
-           
-            
-            <div className="space-y-3">
-              <p className="font-medium text-12">Quantity :</p>
-              <div className="flex justify-between border border-[#DDDDDD] w-26 p-1">
-                <div
-                  className="h-7 w-7  bg-white  border-gray flex justify-center items-center"
-                  onClick={handleDecrement}
-                >
-                  <RxMinus size={20} />
-                </div>
-                <div className="h-7 w-7  flex justify-center items-center">
-                  <input
-                    className="h-8 w-8 text-center  rounded-md"
-                    type="text"
-                    min={1}
-                    max={100}
-                    disabled
-                    value={quantity}
-                  />
-                </div>
-                <div
-                  className="h-7 w-7   border-gray flex justify-center items-center"
-                  onClick={handleIncrement}
-                >
-                  <RxPlus size={20} />
-                </div>
-              </div>
             </div>
 
             <div>
@@ -226,15 +173,11 @@ export default function ProductDetails({
             </p>
             </div>
 
-            <p className="font-medium text-16 text-text">
-              Width : <span className="text-blak font-normal">1.22 mm</span>
-            </p>
-
             <p className="  text-black text-21 font-bold ">
               <span className="font-medium 	text-[#535353]  mr-2">
                 Total Price :
               </span> 
-                 Dhs. <span>{totalPrice}</span>.00
+                 AED <span>{totalPrice}</span>
             </p>
           
             {productDetail.totalStockQuantity == null ? (
@@ -268,13 +211,13 @@ export default function ProductDetails({
               <p className="text-dark text-12 md:text-14">{categoryName}</p>
             </div>
             <div>
-              <p className="text-12 lg:text-14 text-[#707070] font-light">is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+              <p className="text-14 text-[#707070] font-light">{productDetail?.description}</p>
             </div>
             <div>
-              <ul className="px-6 space-y-2">
-                {detaildot.map(
+              <ul className="px-6">
+                {productDetail?.spacification?.map(
                   (item: any, index: number) => (
-                    <li className="list-disc text-12 lg:text-14 text-[#707070] font-light" key={index}>
+                    <li className="list-disc text-14 text-[#707070] font-light" key={index}>
                       {item.specsDetails}
                     </li>
                   )

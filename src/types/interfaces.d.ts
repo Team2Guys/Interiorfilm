@@ -116,7 +116,7 @@ interface sizes {
 
 interface PRODUCTS_TYPES {
   _id?: any;
-  name: string;
+  name: any;
   posterImageUrl?: Image;
   hoverImageUrl?: Image;
   description?: string;
@@ -126,7 +126,7 @@ interface PRODUCTS_TYPES {
   imageUrl?: IMAGE_INTERFACE[];
   discountPrice?: any;
   colors?: Color[];
-  modelDetails?: ModelDetail[];
+  modelDetails?: { name: string; detail: string }[]; 
   spacification?: Specification[];
   createdAt: Date;
   updatedAt: Date;
@@ -140,6 +140,8 @@ interface PRODUCTS_TYPES {
   length?: any;
   totalPrice?:any;
   customOrder?: number;
+  createdAt?:any;
+  updatedAt?: any;
 }
 
 export default PRODUCTS_TYPES;
