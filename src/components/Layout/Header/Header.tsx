@@ -230,7 +230,7 @@ const Header = () => {
       // Automatically close the drawer after 2 seconds
       setTimeout(() => {
         setDrawerOpen(false);
-      }, 20000000);
+      }, 2000);
     }
 
     // Update the previous cart count

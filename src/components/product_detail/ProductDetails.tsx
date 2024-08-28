@@ -24,7 +24,7 @@ export default function ProductDetails({
   const [length, setLength] = useState<number>(1); // State to track selected length
   const options = productDetail && productDetail.totalStockQuantity > 0
   ? Array.from({ length: Math.floor(productDetail.totalStockQuantity) }, (_, i) => ({
-      label: `1.22 x ${i + 1} METERS`,
+      label: `${i + 1} METERS`,
       value: i + 1,
     }))
   : [];

@@ -116,14 +116,11 @@ const Contact = () => {
                 Follow Us
               </h1>
               <div className="flex gap-5 mt-5">
-                <Link href={"/"}>
-                  <FaInstagram className="text-white" size={25} />
-                </Link>
-                <Link href={"/"}>
-                  <FaXTwitter className="text-white" size={25} />
-                </Link>
-                <Link href={"/"}>
+                <Link target="_blank" href={"https://www.facebook.com/InteriorFilm.ae"}>
                   <FaFacebookSquare className="text-white" size={25} />
+                </Link>
+                <Link target="_blank" href={"https://www.instagram.com/interiorfilm.ae/"}>
+                  <FaInstagram className="text-white" size={25} />
                 </Link>
               </div>
             </div>

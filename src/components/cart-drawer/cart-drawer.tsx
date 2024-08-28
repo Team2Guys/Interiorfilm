@@ -65,7 +65,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
     const options = [];
     for (let i = 1; i <= Math.floor(totalStockQuantity); i++) {
       options.push({
-        label: `1.22 x ${i} METERS`,
+        label: `${i} METERS`,
         value: i,
       });
     }
@@ -188,7 +188,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
                       className="w-[70%] h-8 border outline-none shipment text-20"
                       onChange={(value) => onLengthChange(index, value)}
                       options={options}
-                      defaultValue={`1.22 x ${lengths[index] || item.length} METERS`}
+                      defaultValue={`${lengths[index] || item.length} METERS`}
                     />
                   </div>
                 </div>
