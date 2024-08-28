@@ -4,7 +4,7 @@ import React, { useState,useLayoutEffect } from 'react';
 import { Layout } from 'antd';
 import {FaAngleDown, FaAngleUp } from 'react-icons/fa';
 import Link from 'next/link';
-import logo from "../../../../public/images/new/logo.png";
+import logo from "../../../../public/images/logowhite.png";
 import Image from 'next/image';
 import { socialLinks, customerCare, pages } from 'data/FooterData';
 import card1 from "../../../../public/images/new/card1.png";

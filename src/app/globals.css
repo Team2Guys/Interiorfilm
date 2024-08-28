@@ -130,11 +130,11 @@
 }
 
 .ant-popover-content {
-  width: 850px;
+  width: 830px;
 }
 @media only screen and (min-width: 1440px) {
   .ant-popover-content {
-    width: 1050px;
+    width: 1280px;
   }
 }
 
