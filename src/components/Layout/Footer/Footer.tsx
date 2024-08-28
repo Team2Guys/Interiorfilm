@@ -6,7 +6,7 @@ import {FaAngleDown, FaAngleUp } from 'react-icons/fa';
 import Link from 'next/link';
 import logo from "../../../../public/images/new/logo.png";
 import Image from 'next/image';
-import { socialLinks, categories, customerCare, pages } from 'data/FooterData';
+import { socialLinks, customerCare, pages } from 'data/FooterData';
 import card1 from "../../../../public/images/new/card1.png";
 import card2 from "../../../../public/images/new/card2.png";
 import card3 from "../../../../public/images/new/card3.png";
@@ -137,7 +137,7 @@ try{
               <ul className={`space-y-2 transition-all duration-300 overflow-hidden ${isPagesOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}>
                 {pages.map((page, index) => (
                   <li key={index}>
-                    <Link href={page.href} className='hover:text-primary link-footer'>{page.name}</Link>
+                    <Link href={`/${page.href}`} className='hover:text-primary link-footer'>{page.name}</Link>
                   </li>
                 ))}
               </ul>

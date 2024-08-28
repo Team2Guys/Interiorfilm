@@ -95,7 +95,7 @@ const Review: React.FC<ReviewProps> = ({
 
   return (
     <>
-      <div className="max-w-screen-lg mx-auto">
+      <div className="max-w-screen-lg mx-auto px-4 md:px-0">
         <h1 className="text-center font-medium text-16 lg:text-20">
           Customer Reviews
         </h1>
@@ -139,19 +139,19 @@ const Review: React.FC<ReviewProps> = ({
             ) : (
               <div>
                 {/* 5 Yellow Stars */}
-                <div className="flex jus  items-center gap-1">
+                {/* <div className="flex jus  items-center gap-1">
                   {[...Array(5)].map((_, i) => (
                     <MdStar key={i} className="text-yellow-500" size={24} />
                   ))}
-                </div>
+                </div> */}
                 <p className="mt-2">There Is No Reviews Available</p>
               </div>
             )}
           </div>
-          <div className="w-full lg:w-2/12 ">
+          <div className="hidden md:block w-full lg:w-2/12 ">
             <div className="border-l h-20 w-2 text-center mx-auto border-black" />
           </div>
-          <div className="w-full lg:w-5/12">
+          <div className="w-full lg:w-5/12 mt-2 md:mt-0">
             <button
               onClick={showModal}
               className="bg-black text-white py-2 px-6"

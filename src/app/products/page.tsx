@@ -44,8 +44,6 @@ const StaticCategory = {
 
 const Products = () => {
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
-  const [totalPage, setTotalPage] = useState<string | undefined>()
-  const [totalProductscount, setTotalProductscount] = useState<number | undefined>()
   const [error, setError] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
   const [colorName, setColorName] = useState<string>()
@@ -58,7 +56,6 @@ const Products = () => {
   const [activeLink, setActiveLink] = useState<category | undefined>()
   const [inStockOnly, setInStockOnly] = useState<boolean>(true)
   const [outOfStockOnly, setOutOfStockOnly] = useState<boolean>(false)
-
   const handleInStockChange: CheckboxProps['onChange'] = (e) => {
     setInStockOnly(e.target.checked)
     setOutOfStockOnly(false)
@@ -89,11 +86,9 @@ const Products = () => {
       setInStockOnly(false)
     }
   }
-
   const showDrawer = () => {
     setOpen(true)
   }
-
   const onClose = () => {
     setOpen(false)
   }
@@ -153,20 +148,16 @@ const Products = () => {
     }
     return product.category === activeLink._id;
   }) : totalProducts;
-
   const filteredProducts = filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
-    if (!product) return true; // Keep the product if it's null
-
+    if (!product) return true;
     const price = product.discountPrice ?? product.salePrice;
     const priceMatch = (priceRange.from === '' || price >= priceRange.from) && (priceRange.to === '' || price <= priceRange.to);
     const nameMatch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
     const colorMatch = !colorName || (product.colors && product.colors.some(color => color.colorName === colorName));
     const inStockMatch = !inStockOnly || product.totalStockQuantity && product.totalStockQuantity > 0;
     const outOfStockMatch = !outOfStockOnly || product.totalStockQuantity === 0 || !product.totalStockQuantity;
-
     return nameMatch && colorMatch && priceMatch && inStockMatch && outOfStockMatch;
   });
-
   const sortProducts = (products: PRODUCTS_TYPES[]) => {
     if (sortOption === "Default") {
       return products.sort((a, b) => {
@@ -184,15 +175,14 @@ const Products = () => {
       return products; // Default case, no sorting
     }
   };
-
   const sortedProducts = sortProducts(filteredProducts);
-
   const handleCategoryClick = (category: category) => {
     setActiveLink(category);
     const newUrl = new URL(window.location.href);
     newUrl.searchParams.set('category', category._id);
     window.history.pushState({}, '', newUrl.toString());
   };
+
   return (
     <>
       <Overlay title="Product" />
@@ -211,8 +201,6 @@ const Products = () => {
               ]}
             />
           </div>
-
-
           <div className="relative w-3/6 md:w-auto flex items-center border border-secondary" >
             <input
               className="px-2 py-2 rounded-none outline-none  w-[90%] border-sky-900"
@@ -221,9 +209,7 @@ const Products = () => {
               value={searchTerm}
               onChange={handleSearchChange}
             />
-
             <IoIosSearch className="inline-block absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-
           </div>
         </div>
 

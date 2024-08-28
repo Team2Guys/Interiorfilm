@@ -7,9 +7,11 @@ import FilterTable from 'components/Dashboard/Tables/FilterTable';
 import { ordercolumns, Orderdata } from 'data/table';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import FilterTableSkeleton from 'components/Skeleton-loading/FilterTableSkelton';
 
 const Orders = () => {
   const [ordersData, setOrdersData] = useState<any[]>([]);
+  const [loading,setLoading]=useState(false);
   const [products, setProducts] = useState<any[]>([]);
   const token = Cookies.get('2guysAdminToken');
 
@@ -23,7 +25,6 @@ const Orders = () => {
       });
       console.log(response.data, 'response');
       
-      // Store orders data
       setOrdersData(response.data);
       const allProducts = response.data.flatMap((order: any) => 
         order.products.map((product: any) => ({
@@ -32,9 +33,9 @@ const Orders = () => {
           userAddress: order.userAddress,
         }))
       );
-      setProducts(allProducts); // Set the products state with the filtered products
-      console.log("Products")
-      console.log(allProducts)
+      setProducts(allProducts);
+      setLoading(true)
+     
     } catch (error) {
       console.error('Error fetching orders:', error);
     }
@@ -47,7 +48,12 @@ const Orders = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="View Orders" />
-      <FilterTable data={products} columns={ordercolumns} /> 
+      {loading?(
+
+        <FilterTableSkeleton/>
+      ):(
+        <FilterTable data={products} columns={ordercolumns} /> 
+      )}
     </DefaultLayout>
   );
 };

@@ -32,7 +32,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
   const [imagesUrl, setImagesUrl] = useState<any[]>([]);
-  const [posterimageUrl, setposterimageUrl] = useState<any[] | null>(EditInitialValues && [EditInitialValues.posterImageUrl]);
+  const [posterimageUrl, setposterimageUrl] = useState<any[] | null>( EditInitialValues && [EditInitialValues.posterImageUrl]);
   const [hoverImage, sethoverImage] = useState<any[] | null | undefined>(EditInitialValues && [EditInitialValues.hoverImageUrl]);
   const [loading, setloading] = useState<boolean>(false);
   const [productInitialValue, setProductInitialValue] = useState<any | null | undefined>(EditProductValue);
@@ -81,7 +81,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
     try {
       setError(null);
       let posterImageUrl = posterimageUrl && posterimageUrl[0];
-      let hoverImageUrl = hoverImage && hoverImage[0];
+       let hoverImageUrl = hoverImage && hoverImage[0];
       let createdAt = Date.now();
       if (!posterImageUrl || !(imagesUrl.length > 0)) {
         throw new Error("Please select relevant Images");
@@ -158,6 +158,13 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
     setImagesUrl(updatedImagesUrl);
     console.log(updatedImagesUrl);
   };
+  const handleImageIndex = (index: number, newImageIndex: number) => {
+    const updatedImagesUrl = imagesUrl.map((item, i) =>
+      i === index ? { ...item, imageIndex: newImageIndex } : item
+    );
+    setImagesUrl(updatedImagesUrl);
+    console.log(updatedImagesUrl);
+  };
 
   return (
     <>
@@ -185,6 +192,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                     <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                       <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                         <h3 className="font-medium text-black dark:text-white">
+                          Poster Image
                           Poster Image
                         </h3>
                       </div>
@@ -229,6 +237,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                       <div>
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white ">
                           Product Name
+                          Product Name
                         </label>
                         <input
                           type="text"
@@ -251,6 +260,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
                       <div>
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                          Description{" "}
                           Description{" "}
                         </label>
                         <textarea

@@ -64,10 +64,6 @@ const MenuSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading,onProduc
      
       <Swiper
         ref={swiperRef}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
         loop={true}
         breakpoints={{
           320: {
