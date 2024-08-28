@@ -151,13 +151,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
     CategoryHandler();
   }, []);
 
-  const handleImageIndex = (index: number, newImageIndex: number) => {
-    const updatedImagesUrl = imagesUrl.map((item, i) =>
-      i === index ? { ...item, imageIndex: newImageIndex } : item
-    );
-    setImagesUrl(updatedImagesUrl);
-    console.log(updatedImagesUrl);
-  };
+
   const handleImageIndex = (index: number, newImageIndex: number) => {
     const updatedImagesUrl = imagesUrl.map((item, i) =>
       i === index ? { ...item, imageIndex: newImageIndex } : item
