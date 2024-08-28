@@ -108,15 +108,24 @@ const CheckoutData: React.FC<TableProps> = ({
                   <h1 className="text-16 sm:text-18 font-medium">
                     {typeof product.name === "string" ? product.name : ""}
                   </h1>
+                  <p>
+                    AED{" "}
+                    <span>
+                      {product.discountPrice
+                        ? product.discountPrice * (counts[index] || 1)
+                        : product.price * (counts[index] || 1)}
+                    </span>
+                    
+                  </p>
+                  <div className={` text-sm font-semibold`}>
+                    {counts[index] || 1}X
+                  </div>
 
-                  <div className="flex mt-1 xsm:mt-0 gap-0 items-center">
-                    <p className="font-normal text-14 sm:text-base text-lightdark text-nowrap">
-                      Size : 1.22
-                    </p>
-                    <IoIosClose size={25} className="text-lightdark" />
-                    <div className={`text-14 sm:text-base font-normal text-lightdark text-nowrap`}>
-                      {product.length} Meter
-                    </div>
+                  <div className="flex gap-2 items-center">
+                    <p className="font-semibold text-base">Dimension : 1.22</p>{" "}
+                    <IoIosClose size={20} />
+                    <div className={` text-sm font-semibold`}
+                    >{product.length} Meter</div>
                   </div>
                 </div>
               </div>
@@ -130,6 +139,7 @@ const CheckoutData: React.FC<TableProps> = ({
                         product.length
                       : product.price * (counts[index] || 1) * product.length}
                   </span>
+                  
                 </p>
               </div>
             </div>

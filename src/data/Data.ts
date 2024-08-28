@@ -318,11 +318,11 @@ export const return__refund: PrivacyPolicyItem[] = [
 export const ShipmentPolicydata: PrivacyPolicyItem[] = [
 
   {
-    title: '*SPEND ABOVE AED 250 FOR FREE DELIVERY IN UAE*',
-    text: 'If your order exceeds AED 250 and you are located inside the UAE, you will be offered free standard delivery at checkout. ',
+    title: 'Free Shipping On Orders Over AED 250 EVERYWHERE (WITHIN DUBAI CITY LIMITS. ) ',
+    text: 'If your order exceeds over AED 250 and you are located inside the UAE, you will be offered free standard delivery at checkout. ',
   },
   {
-    text: 'If your order is below AED 250, we will offer standard delivery anywhere in the UAE for only AED30. ',
+    text: 'If your order is below AED 250, we will offer standard delivery anywhere in the UAE for only AED 30. ',
   },
   {
     text: "CASH ON DELIVERY: NOT AVAILABLE",

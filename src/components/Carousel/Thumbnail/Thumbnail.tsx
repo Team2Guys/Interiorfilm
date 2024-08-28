@@ -16,9 +16,10 @@ import Accordion from 'components/widgets/Accordion';
 
 interface ThumbProps {
   thumbs?: IMAGE_INTERFACE[];
+  detail?:IMAGE_INTERFACE[];
 }
 
-const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
+const Thumbnail: React.FC<ThumbProps> = ({ thumbs,detail }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
   const [backgroundPosition, setBackgroundPosition] = useState<string>('0% 0%');
@@ -39,7 +40,12 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
   const handleMouseLeave = () => {
     setHoveredImage(null);
   };
-
+  const sortedThumbs = thumbs.slice().sort((a, b) => {
+    const indexA = a.imageIndex ?? Number.MAX_SAFE_INTEGER; 
+    const indexB = b.imageIndex ?? Number.MAX_SAFE_INTEGER;
+    return indexA - indexB;
+  });
+ 
   return (
     <div className='space-y-20'>
 
@@ -48,20 +54,24 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
       <div className='w-full flex flex-wrap lg:flex-nowrap flex-col-reverse lg:flex-row gap-5'>
 
         <div className='w-full lg:w-2/12 lg:max-h-[798px] overflow-y-scroll  custom-scrollbar '>
-          <Swiper
-            onSwiper={setThumbsSwiper}
-            loop={true}
-            spaceBetween={10}
-            slidesPerView={4}
-            freeMode={true}
-            watchSlidesProgress={true}
-            modules={[FreeMode, Navigation, Thumbs]}
-            className="bg-contain bg-white column-swipper"
-          >
+        <Swiper
+              onSwiper={setThumbsSwiper}
+              loop={false}
+              spaceBetween={10}
+              slidesPerView={4}
+              freeMode={true}
+              watchSlidesProgress={true}
+              modules={[FreeMode, Navigation, Thumbs]}
+              className="bg-contain bg-white column-swipper"
+            >
+              {thumbs.map((array,index)=>{
+                <div key={index} className='w-full h-full column-swiper-slider custom-scrollbar md:h-5 bg-red-'>
 
-            <div>
-              {thumbs.map((array, index) => (
-                <SwiperSlide key={index} className='w-full h-full column-swiper-slider custom-scrollbar  md:h-5'>
+                  index: {index}
+                </div>
+              })}
+              {sortedThumbs.map((array, index) => (
+                <SwiperSlide key={array.imageIndex ?? index} className='w-full h-full column-swiper-slider custom-scrollbar md:h-5'>
                   <Image
                     className='bg-contain pb-2 bg-white md:h-[222px] md:w-67'
                     src={array.imageUrl}
@@ -71,10 +81,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
                   />
                 </SwiperSlide>
               ))}
-            </div>
-
-
-          </Swiper>
+            </Swiper>
 
         </div>
 
@@ -143,7 +150,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
       </div>
     </div>
     <div className="lg:max-w-[1020px] hidden lg:block">
-      <Accordion/>
+      <Accordion detail={detail}/>
     </div>
 
     </div>

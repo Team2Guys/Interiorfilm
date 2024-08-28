@@ -1,13 +1,8 @@
-//@ts-nocheck
 "use client";
 import React, { useState, useEffect } from 'react';
-import Button from 'components/Common/Button';
-import Container from 'components/Layout/Container/Container';
 import Table from 'components/ui/Table/Table'; // Update with correct path to your Table component
 import Overlay from 'components/widgets/Overlay/Overlay';
 import Link from 'next/link';
-import SelectList from 'components/ui/Select/Select';
-import { options } from 'data/Data';
 import { useRouter } from 'next/navigation';
 
 const Cart = () => {
@@ -16,8 +11,8 @@ const Cart = () => {
   const router = useRouter();
 
   // Function to calculate the total price
-  const calculateTotals = (items) => {
-    const sub = items.reduce((acc, item) => {
+  const calculateTotals = (items:any) => {
+    const sub = items.reduce((acc:string, item:any) => {
       const price = item.discountPrice ? item.discountPrice : item.price;
       return acc + (price * item.count * item.length); 
     }, 0);
@@ -32,7 +27,7 @@ const Cart = () => {
   }, []);
 
   // Handle cart changes from the Table component
-  const handleCartChange = (updatedCart) => {
+  const handleCartChange = (updatedCart:any) => {
     setCartItems(updatedCart);
     calculateTotals(updatedCart);
   };

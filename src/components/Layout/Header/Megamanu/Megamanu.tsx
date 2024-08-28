@@ -30,6 +30,7 @@ const Megamanu: React.FC<MegamanuProps> = ({
 
   const handleButtonClick = (categoryId: string) => {
     router.push(`/categories`);
+    onProductClick();
   };
 
   const handleHoverImg = (category: Categories_Types) => {
@@ -37,14 +38,14 @@ const Megamanu: React.FC<MegamanuProps> = ({
   };
 
   return (
-    <div className="flex gap-4 xl:gap-8 p-3">
+    <div className="flex gap-4 xl:gap-8 p-3 mt-2">
       <div className={`w-6/12 grid grid-cols-3 gap-4 xl:gap-8`}>
         {!loading
           ? Categories.map((item) => (
               <div
                 key={item._id}
                 className="category-wrapper text-center cursor-pointer"
-                onClick={() => handleButtonClick(item._id)}
+                onClick={() => (handleButtonClick(item._id))}
                 onMouseEnter={() => handleHoverImg(item)}
               >
                 <Image

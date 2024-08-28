@@ -1,5 +1,5 @@
-"use client";
-import React, { useState, useEffect, useLayoutEffect } from "react";
+"use client"
+import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import whitelogo from "../../../../public/images/logowhite.png";
@@ -42,10 +42,9 @@ const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const pathname = usePathname(); // Get the current path
-
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
-
   useEffect(() => {
     const productHandler = async () => {
       setLoading(true);
@@ -90,7 +89,6 @@ const Header = () => {
       console.log(err, "err");
     }
   };
-
   const handleVisibleChange = (visible: boolean) => {
     setVisible(visible);
   };
@@ -98,10 +96,8 @@ const Header = () => {
   const closePopover = () => {
     setVisible(false);
   };
-
   const handleOpenDrawer = () => setDrawerOpen(true);
   const handleCloseDrawer = () => setDrawerOpen(false);
-
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -142,12 +138,14 @@ const Header = () => {
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     setCartItems(existingCart);
+    
   }, []);
 
   useEffect(() => {
     const handleCartChange = () => {
       const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
       setCartItems(updatedCart);
+      
     };
 
     window.addEventListener("cartChanged", handleCartChange);
@@ -180,6 +178,7 @@ const Header = () => {
     const handleCartChange = () => {
       setcategory(false);
       setOpen(false);
+      
     };
 
     window.addEventListener("cartChanged", handleCartChange);
@@ -189,6 +188,11 @@ const Header = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (isModalOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [isModalOpen]);
   const truncateText = (text: any, maxLength: any) => {
     return text.length > maxLength
       ? text.substring(0, maxLength) + "..."
@@ -202,12 +206,33 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  useEffect(() => {
+  let previousCartItemCount = cartItems.reduce((count, item:any) => count + item.count, 0);
 
+  const handleCartChange = () => {
+    const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const updatedCartItemCount = updatedCart.reduce((count:number, item:any) => count + item.count, 0);
+    if (updatedCartItemCount > previousCartItemCount) {
+      setCartItems(updatedCart);
+      setDrawerOpen(true);
+      setTimeout(() => {
+        setDrawerOpen(false);
+      }, 2000);
+    }
+    previousCartItemCount = updatedCartItemCount;
+  };
+
+  window.addEventListener("cartChanged", handleCartChange);
+
+  return () => {
+    window.removeEventListener("cartChanged", handleCartChange);
+  };
+}, [cartItems]);
   return (
     <>
       <div className="bg-black  border-b py-2 border-black  w-full z-99 relative">
         <p className="uppercase text-white text-center text-xs md:text-14">
-          SPEND ABOVE AED 250 FOR FREE DELIVERY IN UAE
+          Free Shipping on over AED 250 EVERYWHERE (WITHIN DUBAI CITY LIMITS. )
         </p>
       </div>
       <nav
@@ -245,20 +270,14 @@ const Header = () => {
             Home
           </Link>
           <Popover
-            className="cursor-pointer link-underline"
-            placement="bottom"
-            trigger="hover"
-            visible={visible}
-            onVisibleChange={handleVisibleChange}
-            content={
-              <Megamanu
-                Categories={Categories}
-                products={products}
-                loading={loading}
-                onProductClick={closePopover}
-              />
-            }
-            title=""
+           className="cursor-pointer link-underline"
+
+           placement="bottom"
+           trigger="hover"
+           visible={visible}
+           onVisibleChange={handleVisibleChange}
+           content={<Megamanu  Categories={Categories} products={products} loading={loading} onProductClick={closePopover} />}
+           title=""
           >
             <span onClick={() => router.push("/products?category=all")}>
               Category
@@ -310,33 +329,27 @@ const Header = () => {
               <></>
             )}
           </Link>
-
-          <CartDrawer
-            open={drawerOpen}
-            onClose={handleCloseDrawer}
-            OpenDrawer={
-              <div
-                className="relative  text-20 md:text-2xl cursor-pointer"
-                onClick={handleOpenDrawer}
-              >
-                <SlHandbag className=" cursor-pointer" />
-                {cartItems.length > 0 ? (
-                  <div className="md:w-5 md:h-5 w-3 h-3 z-50 rounded-full flex justify-center items-center bg-white text-black absolute left-3 top-3">
-                    <span className="font-medium text-12 md:text-18 z-50">
-                      {cartItems.reduce(
-                        (count: any, item: any) => count + item.count,
-                        0
-                      )}
-                    </span>
-                  </div>
-                ) : (
-                  <></>
+          <Link href={"/cart"} className="relative text-20 md:text-2xl">
+            <SlHandbag  className=" cursor-pointer" />
+            {cartItems.length > 0 ? (
+              <>
+              <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center bg-white text-black absolute left-3 top-3">
+                <span className="font-medium text-12 md:text-18">
+                {cartItems.reduce(
+                  (count: any, item: any) => count + item.count,
+                  0
                 )}
+                </span>
               </div>
-            }
-          />
-
-          <div className="px-3 block md:hidden">
+                
+                </>
+              
+            ) : (
+              <></>
+            )}
+          </Link>
+         
+          <div className="px-3 block lg:hidden">
             <DrawerMenu
               showDrawer={showDrawer}
               onClose={onClose}
@@ -437,6 +450,7 @@ const Header = () => {
             <input
               className="w-full px-4 border h-14 rounded-md outline-none"
               type="text"
+              ref={searchInputRef} // Assign the ref here
               placeholder="Search Product Here..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -479,6 +493,8 @@ const Header = () => {
           )}
         </>
       </Modal>
+      <CartDrawer open={drawerOpen} onClose={handleCloseDrawer} />
+   
     </>
   );
 };
