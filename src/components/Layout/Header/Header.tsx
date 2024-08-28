@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import whitelogo from "../../../../public/images/logowhite.png";
@@ -43,10 +43,9 @@ const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const pathname = usePathname(); // Get the current path
-  
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
-
   useEffect(() => {
     const productHandler = async () => {
       setLoading(true);
@@ -91,8 +90,6 @@ const Header = () => {
       console.log(err, "err");
     }
   };
-
-
   const handleVisibleChange = (visible: boolean) => {
     setVisible(visible);
   };
@@ -100,14 +97,8 @@ const Header = () => {
   const closePopover = () => {
     setVisible(false);
   };
-
   const handleOpenDrawer = () => setDrawerOpen(true);
   const handleCloseDrawer = () => setDrawerOpen(false);
-
-
-
-
-
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -123,8 +114,6 @@ const Header = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
-
 
   useEffect(() => {
     const existingWishlist = JSON.parse(
@@ -200,6 +189,11 @@ const Header = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (isModalOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [isModalOpen]);
   const truncateText = (text: any, maxLength: any) => {
     return text.length > maxLength
       ? text.substring(0, maxLength) + "..."
@@ -219,21 +213,13 @@ const Header = () => {
   const handleCartChange = () => {
     const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
     const updatedCartItemCount = updatedCart.reduce((count:number, item:any) => count + item.count, 0);
-
-    // Check if the cart count increased
     if (updatedCartItemCount > previousCartItemCount) {
       setCartItems(updatedCart);
-
-      // Open the cart drawer
       setDrawerOpen(true);
-
-      // Automatically close the drawer after 2 seconds
       setTimeout(() => {
         setDrawerOpen(false);
       }, 2000);
     }
-
-    // Update the previous cart count
     previousCartItemCount = updatedCartItemCount;
   };
 
@@ -243,8 +229,6 @@ const Header = () => {
     window.removeEventListener("cartChanged", handleCartChange);
   };
 }, [cartItems]);
-
-
   return (
     <>
       <div className="bg-black  border-b py-2 border-black  w-full z-99 relative">
@@ -286,11 +270,12 @@ const Header = () => {
           </Link>
           <Popover
            className="cursor-pointer link-underline"
+
            placement="bottom"
-           trigger="hover"
+           trigger="click"
            visible={visible}
            onVisibleChange={handleVisibleChange}
-           content={<Megamanu Categories={Categories} products={products} loading={loading} onProductClick={closePopover} />}
+           content={<Megamanu  Categories={Categories} products={products} loading={loading} onProductClick={closePopover} />}
            title=""
           >
           <span onClick={()=>router.push('/products?category=all')}>Category</span>
@@ -356,7 +341,7 @@ const Header = () => {
             )}
           </Link>
          
-          <div className="px-3 block md:hidden">
+          <div className="px-3 block lg:hidden">
             <DrawerMenu
               showDrawer={showDrawer}
               onClose={onClose}
@@ -454,6 +439,7 @@ const Header = () => {
             <input
               className="w-full px-4 border h-14 rounded-md outline-none"
               type="text"
+              ref={searchInputRef} // Assign the ref here
               placeholder="Search Product Here..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}

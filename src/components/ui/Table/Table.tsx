@@ -55,7 +55,6 @@ const Table: React.FC<TableProps> = ({
       setSubtotal(sub);
     }
   };
-  
 
   useEffect(() => {
     ProductHandler();
@@ -136,12 +135,12 @@ const Table: React.FC<TableProps> = ({
 
   const addToCart = (product: PRODUCTS_TYPES, index: number) => {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-  
+
     // Find index of existing product with the same ID and length
     const existingIndex = cart.findIndex(
       (item) => item.id === product.id && item.length === lengths[index]
     );
-  
+
     if (existingIndex !== -1) {
       // Update quantity and totalPrice if product with the same ID and length already exists
       cart[existingIndex].count += counts[index] || 1;
@@ -162,24 +161,21 @@ const Table: React.FC<TableProps> = ({
         totalPrice: totalPrice,
       });
     }
-  
+
     // Ensure all totalPrices are numbers
     cart.forEach((item) => {
       item.totalPrice = Number(item.totalPrice) || 0;
     });
-  
+
     // Update local storage
     localStorage.setItem("cart", JSON.stringify(cart));
-  
+
     // Remove item from wishlist if added to cart
     removeItemFromCart(index);
-  
+
     // Trigger cart changed event
     window.dispatchEvent(new Event("cartChanged"));
   };
-  
-  
-  
 
   const handleChange = (
     index: number,
@@ -242,12 +238,12 @@ const Table: React.FC<TableProps> = ({
                     >
                       Price
                     </th>
-                    <th
+                    {/* <th
                       scope="col"
                       className="px-6 py-3 text-start text-[30px] font-medium text-dark"
                     >
                       Quantity
-                    </th>
+                    </th> */}
                     <th
                       scope="col"
                       className="px-6 py-3 text-end text-[30px] font-medium text-dark"
@@ -291,6 +287,11 @@ const Table: React.FC<TableProps> = ({
                                   ? product.name
                                   : ""}
                               </h1>
+                              <div>
+                                <p className="text-16 font-semibold">
+                                  {counts[index] || 1}x
+                                </p>
+                              </div>
                               <div className="flex gap-2 items-center w-full">
                                 <ProductSelect
                                   className="w-[70%] h-10 border outline-none shipment text-20"
@@ -318,36 +319,9 @@ const Table: React.FC<TableProps> = ({
                                 ? product.discountPrice
                                 : product.price}
                             </span>
-                            
                           </p>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base">
-                          <div className="flex">
-                            <div
-                              onClick={() => decrement(index)}
-                              className="h-8 w-8 bg-[#E7E7EF] hover:bg-[#F0EFF2] flex justify-center items-center"
-                            >
-                              <RxMinus size={20} />
-                            </div>
-                            <div className="h-8 w-14 bg-[#F0EFF2] hover:bg-[#E7E7EF] flex justify-center items-center">
-                              <input
-                                className="h-8 w-14 text-center"
-                                type="text"
-                                min={1}
-                                max={100}
-                                disabled
-                                value={counts[index] || 1}
-                                onChange={(e) => handleChange(index, e)}
-                              />
-                            </div>
-                            <div
-                              onClick={() => increment(index)}
-                              className="h-8 w-8 bg-[#E7E7EF] hover:bg-[#F0EFF2] flex justify-center items-center"
-                            >
-                              <RxPlus size={20} />
-                            </div>
-                          </div>
-                        </td>
+
                         <td className="px-6 py-4 whitespace-nowrap text-end text-sm md:text-base">
                           {pathName === "/wishlist" ? (
                             <Button
@@ -367,7 +341,6 @@ const Table: React.FC<TableProps> = ({
                                     (counts[index] || 1) *
                                     (lengths[index] || product.length)}
                               </span>
-                              
                             </p>
                           )}
                         </td>
@@ -382,117 +355,93 @@ const Table: React.FC<TableProps> = ({
       </div>
 
       {data.map((product, index) => {
-       const options = lengthOptions(
-        product.totalStockQuantity || 0
-      );
-      return (
-        <div
-        className="p-2 rounded-md mt-5 bg-white shadow block md:hidden"
-        key={index}
-      >
-        <div className="space-y-2">
-          <div className="flex gap-3">
-            <div className="relative">
-              <div className="bg-gray p-1 rounded-md">
-                <Image
-                  className="w-20 h-20 bg-contain"
-                  width={80}
-                  height={80}
-                  src={product.imageUrl[0]?.imageUrl || product.imageUrl}
-                  alt="Product"
-                />
-              </div>
-              <div className="absolute -top-2 -right-2">
-                <div
-                  onClick={() => showDeleteConfirm(index)}
-                  className="bg-white shadow h-5 w-5 rounded-full cursor-pointer"
-                >
-                  <IoCloseSharp size={20} />
+        const options = lengthOptions(product.totalStockQuantity || 0);
+        return (
+          <div
+            className="p-2 rounded-md mt-5 bg-white shadow block md:hidden"
+            key={index}
+          >
+            <div className="space-y-2">
+              <div className="flex gap-3">
+                <div className="relative">
+                  <div className="bg-gray p-1 rounded-md">
+                    <Image
+                      className="w-20 h-20 bg-contain"
+                      width={80}
+                      height={80}
+                      src={product.imageUrl[0]?.imageUrl || product.imageUrl}
+                      alt="Product"
+                    />
+                  </div>
+                  <div className="absolute -top-2 -right-2">
+                    <div
+                      onClick={() => showDeleteConfirm(index)}
+                      className="bg-white shadow h-5 w-5 rounded-full cursor-pointer"
+                    >
+                      <IoCloseSharp size={20} />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="space-y-1 w-8/12">
-              <h1 className="text-14 font-semibold">
-                {typeof product.name === "string" ? product.name : ""}
-              </h1>
-              <p>
-                AED
-                <span>
-                  {pathName === "/wishlist"
-                    ? product.discountPrice
-                      ? product.discountPrice * (counts[index] || 1)
-                      : product.price * (counts[index] || 1)
-                    : product.discountPrice
-                    ? product.discountPrice
-                    : product.price}
-                </span>
-                
-              </p>
-              <div className="flex">
-                <div
-                  onClick={() => decrement(index)}
-                  className="h-7 w-7 bg-[#E7E7EF] hover:bg-[#F0EFF2] flex justify-center items-center"
-                >
-                  <RxMinus size={20} />
-                </div>
-                <div className="h-7 w-7 bg-[#F0EFF2] hover:bg-[#E7E7EF] flex justify-center items-center">
-                  <input
-                    className="h-7 w-8 text-center"
-                    type="text"
-                    min={1}
-                    max={100}
-                    disabled
-                    value={counts[index] || 1}
-                    onChange={(e) => handleChange(index, e)}
-                  />
-                </div>
-                <div
-                  onClick={() => increment(index)}
-                  className="h-7 w-7 bg-[#E7E7EF] hover:bg-[#F0EFF2] flex justify-center items-center"
-                >
-                  <RxPlus size={20} />
+                <div className="space-y-1 w-8/12">
+                  <h1 className="text-14 font-semibold">
+                    {typeof product.name === "string" ? product.name : ""}
+                  </h1>
+                  <p>
+                    AED
+                    <span>
+                      {pathName === "/wishlist"
+                        ? product.discountPrice
+                          ? product.discountPrice * (counts[index] || 1)
+                          : product.price * (counts[index] || 1)
+                        : product.discountPrice
+                        ? product.discountPrice
+                        : product.price}
+                    </span>
+                  </p>
+                  <div>
+                    <p className="text-16 font-semibold">
+                      {counts[index] || 1}x
+                    </p>
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <ProductSelect
+                      className="w-[70%] h-10 border outline-none shipment text-20"
+                      onChange={(value) => handleLengthChange(index, value)}
+                      options={options}
+                      defaultValue={`${
+                        lengths[index] || product.length
+                      } METERS`}
+                    />
+                  </div>
                 </div>
               </div>
               <div className="flex gap-2 items-center">
-                <ProductSelect
-                  className="w-[70%] h-10 border outline-none shipment text-20"
-                  onChange={(value) => handleLengthChange(index, value)}
-                  options={options}
-                  defaultValue={`${
-                    lengths[index] || product.length
-                  } METERS`}
-                />
+                <h1 className="font-bold">Total: </h1>
+                {pathName === "/wishlist" ? (
+                  <Button
+                    onClick={() => addToCart(product, index)}
+                    className="px-4 rounded-md"
+                    title={"Add To Cart"}
+                  />
+                ) : (
+                  <p>
+                    AED
+                    <span>
+                      {product.discountPrice
+                        ? product.discountPrice *
+                          (counts[index] || 1) *
+                          (lengths[index] || product.length)
+                        : product.price *
+                          (counts[index] || 1) *
+                          (lengths[index] || product.length)}
+                    </span>
+                  </p>
+                )}
               </div>
             </div>
           </div>
-          <div className="flex gap-2 items-center">
-            <h1 className="font-bold">Total: </h1>
-            {pathName === "/wishlist" ? (
-              <Button
-                onClick={() => addToCart(product, index)}
-                className="px-4 rounded-md"
-                title={"Add To Cart"}
-              />
-            ) : (
-              <p>
-                AED
-                <span>
-                  {product.discountPrice
-                    ? product.discountPrice *
-                      (counts[index] || 1) *
-                      (lengths[index] || product.length)
-                    : product.price *
-                      (counts[index] || 1) *
-                      (lengths[index] || product.length)}
-                </span>
-                
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-      );
-    })}
+        );
+      })}
     </>
   );
 };

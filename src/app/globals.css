@@ -132,20 +132,17 @@
 .ant-popover-content {
   width: 1280px;
 }
-
 @media screen and (max-width: 1390px) {
   .ant-popover-content {
     width: 1100px;
   }
-}
 
+}
 @media screen and (max-width: 1230px) {
   .ant-popover-content {
     width: 900px;
   }
 }
-
-
 
 .back-transparent {
   background: transparent !important;

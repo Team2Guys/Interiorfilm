@@ -157,9 +157,9 @@ const Contact = () => {
                 </div>
               )}
 
-<LabelInput
+            <LabelInput
                 label="Phone Number"
-                placeholder="Enter Phone Number"
+                placeholder="+971-XX-XXXXXXX"
                 type="text"
                 id="user_phone"
                 name="user_phone"
