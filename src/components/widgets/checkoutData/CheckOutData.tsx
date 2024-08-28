@@ -102,7 +102,7 @@ const CheckoutData: React.FC<TableProps> = ({ cartdata, onCartChange,subtotal,se
                         ? product.discountPrice * (counts[index] || 1)
                         : product.price * (counts[index] || 1)}
                     </span>
-                    .00
+                    
                   </p>
                   <div className={` text-sm font-semibold`}>
                     {counts[index] || 1}X
@@ -124,7 +124,7 @@ const CheckoutData: React.FC<TableProps> = ({ cartdata, onCartChange,subtotal,se
                       ? product.discountPrice * (counts[index] || 1) * product.length
                       : product.price * (counts[index] || 1) * product.length}
                   </span>
-                  .00
+                  
                 </p>
               </div>
             </div>
