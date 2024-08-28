@@ -52,7 +52,7 @@ const Products = () => {
     purchasePrice: editProduct && editProduct.purchasePrice,
     totalStockQuantity: editProduct && editProduct.totalStockQuantity,
 
-  };
+  };  
 
 
   let productFlag: boolean = selecteMenu === "Add All Products" ? true : false
