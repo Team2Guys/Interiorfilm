@@ -33,6 +33,10 @@ const Product = ({ params }: { params: { productname: string } }) => {
       console.error("Failed to fetch reviews:", err);
     }
   };
+   
+  useEffect(() => {
+    fetchReviews(productDetail?._id);
+  }, [productDetail]);
 
   const productHandler = async () => {
     try {
@@ -98,6 +102,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
               productDetail={productDetail} 
               categoryName={categoryName} 
             />
+            
             <Review reviews={reviews} productId={productDetail?._id} fetchReviews={fetchReviews} />
           </>
         ) : null

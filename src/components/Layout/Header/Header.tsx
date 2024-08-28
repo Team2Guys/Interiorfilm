@@ -231,8 +231,8 @@ const Header = () => {
   return (
     <>
       <div className="bg-black  border-b py-2 border-black  w-full z-99 relative">
-        <p className="uppercase text-white text-center text-xs md:text-14">
-          Free Shipping on over AED 250 EVERYWHERE (WITHIN DUBAI CITY LIMITS. )
+        <p className="uppercase text-white text-center text-[10px] sm:text-xs md:text-14">
+          Free Shipping on over AED 250 EVERYWHERE (WITHIN DUBAI CITY LIMITS.)
         </p>
       </div>
       <nav
@@ -245,17 +245,15 @@ const Header = () => {
         }`}
       >
         <div className="flex justify-between md:items-center space-x-4">
-          <Link href="/">
-            <Image
-              className="w-24 h-6 md:w-44 lg:w-50 md:h-8 lg:h-10 "
-              src={
-                isHomePage ? (isScrolled ? blacklogo : whitelogo) : blacklogo
-              }
-              alt="logo"
-              width={500}
-              height={500}
-            />
-          </Link>
+        <Link href="/">
+      <Image
+        className="w-24 h-6 md:w-44 lg:w-50 md:h-8 lg:h-10"
+        src={isHomePage ? (isScrolled ? blacklogo : whitelogo) : blacklogo}
+        alt="logo"
+        width={500}
+        height={500}
+      />
+    </Link>
         </div>
         <ul
           className={`hidden lg:flex lg:flex-1 space-x-4 lg:space-x-10 text-18 py-4 px-6  ${
@@ -380,6 +378,7 @@ const Header = () => {
                         headtitle={
                           <div className="float-end ">
                             <Link
+                              onClick={CategoryHandlerclose}
                               className="hover:text-black hover:underline"
                               href={"/products"}
                             >
@@ -394,11 +393,12 @@ const Header = () => {
                         title={"product"}
                         content={
                           <>
-                            <MobileMenu
+                          <Megamanu  Categories={Categories} products={products} loading={loading} onProductClick={CategoryHandlerclose} />
+                            {/* <MobileMenu
                               onClick={CategoryHandlerclose}
                               Categories={Categories}
                               products={products}
-                            />
+                            /> */}
                           </>
                         }
                       />
