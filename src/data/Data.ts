@@ -318,7 +318,7 @@ export const return__refund: PrivacyPolicyItem[] = [
 export const ShipmentPolicydata: PrivacyPolicyItem[] = [
 
   {
-    title: 'Free Shipping On Orders Over AED 250 ',
+    title: 'Free Shipping On Orders Over AED 250 EVERYWHERE (WITHIN DUBAI CITY LIMITS. ) ',
     text: 'If your order exceeds over AED 250 and you are located inside the UAE, you will be offered free standard delivery at checkout. ',
   },
   {
