@@ -38,7 +38,7 @@ const Megamanu: React.FC<MegamanuProps> = ({
   };
 
   return (
-    <div className="flex flex-wrap md:flex-nowrap gap-4 xl:gap-8 p-3 mt-2">
+    <div className="flex flex-wrap md:flex-nowrap gap-4 xl:gap-8 p-3 mt-2 ">
       <div className={`md:w-6/12 grid grid-cols-2 md:grid-cols-3 gap-4 xl:gap-8`}>
         {!loading
           ? Categories.map((item) => (

@@ -186,7 +186,7 @@ const Products = () => {
   return (
     <>
       <Overlay title="Product" />
-      <Container className="mt-20">
+      <Container className="mt-20 lg:overflow-hidden">
         <div className="flex justify-end items-end gap-3">
           <div className="flex flex-wrap gap-2 items-center w-3/6 md:w-auto">
             <h1>Sort By: </h1>
@@ -213,8 +213,8 @@ const Products = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap lg:flex-nowrap gap-2 space-y-4">
-          <div className="w-full lg:w-3/12 space-y-3 hidden lg:block relative " style={{ boxShadow: "1px 0px 2px #00000029" }}>
+        <div className="flex flex-wrap lg:flex-nowrap gap-2 space-y-4 ">
+          <div className="w-full lg:w-3/12 space-y-3 hidden lg:block  " style={{ boxShadow: "1px 0px 2px #00000029" }}>
             <div className="sticky top-20">
               <div className="p-2 bg-white">
                 <Collapse title="All Categories">
