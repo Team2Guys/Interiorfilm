@@ -33,7 +33,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({EditInitialValues,EditProd
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
   const [imagesUrl, setImagesUrl] = useState<any[]>([]);
   const [posterimageUrl, setposterimageUrl] = useState<any[] | null>( EditInitialValues && [EditInitialValues.posterImageUrl]);
-  const [hoverImage, sethoverImage] = useState<any[] | null | undefined>();
+  const [hoverImage, sethoverImage] = useState<any[] | null | undefined>(EditInitialValues && [EditInitialValues.hoverImageUrl]);
   const [loading, setloading] = useState<boolean>(false);
   const [productInitialValue, setProductInitialValue] = useState<any | null | undefined>(EditProductValue);
   const [imgError, setError] = useState<string | null | undefined>();
@@ -76,11 +76,12 @@ console.log("posterimageUrl", posterimageUrl)
 
   const onSubmit = async (values: any, { resetForm }: any) => {
     console.log(values, "values")
+    console.log(imagesUrl)
 
     try {
       setError(null);
       let posterImageUrl = posterimageUrl && posterimageUrl[0];
-      // let hoverImageUrl = hoverImage && hoverImage[0];
+       let hoverImageUrl = hoverImage && hoverImage[0];
       let createdAt = Date.now();
       if (!posterImageUrl || !(imagesUrl.length > 0)) {
         throw new Error("Please select relevant Images");
@@ -89,20 +90,20 @@ console.log("posterimageUrl", posterimageUrl)
         ...values,
         posterImageUrl,
         imageUrl: imagesUrl,
-        // hoverImageUrl,
+        hoverImageUrl,
         createdAt,
       };
       setloading(true);
 
       let updateFlag = EditProductValue && EditInitialValues ? true : false;
+    
       let addProductUrl = updateFlag
         ? `/api/updateProduct/${EditInitialValues._id} `
         : null;
       let url = `${process.env.NEXT_PUBLIC_BASE_URL}${
         updateFlag ? addProductUrl : "/api/addProduct"
       }`;
-
-
+     
       const response = await axios.post(url, newValue);
       console.log(response, "response");
       Toaster(
@@ -151,6 +152,13 @@ console.log("posterimageUrl", posterimageUrl)
     CategoryHandler();
   }, []);
 
+  const handleImageIndex = (index: number, newImageIndex: number) => {
+    const updatedImagesUrl = imagesUrl.map((item, i) =>
+      i === index ? { ...item, imageIndex: newImageIndex } : item
+    );
+    setImagesUrl(updatedImagesUrl);
+    console.log(updatedImagesUrl);
+  };
 
   return (
     <>
@@ -178,7 +186,7 @@ console.log("posterimageUrl", posterimageUrl)
                     <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                       <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                         <h3 className="font-medium text-black dark:text-white">
-                          Add Product Images
+                          Poster Image
                         </h3>
                       </div>
                       {(posterimageUrl?.length > 0 ) ? (
@@ -221,7 +229,7 @@ console.log("posterimageUrl", posterimageUrl)
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <div>
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white ">
-                          Product Title
+                          Product Name
                         </label>
                         <input
                           type="text"
@@ -229,7 +237,7 @@ console.log("posterimageUrl", posterimageUrl)
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                           value={formik.values.name}
-                          placeholder="Title"
+                          placeholder="name"
                           className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
                             formik.touched.name && formik.errors.name
                               ? "border-red-500"
@@ -245,7 +253,7 @@ console.log("posterimageUrl", posterimageUrl)
 
                       <div>
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                          description{" "}
+                          Description{" "}
                         </label>
                         <textarea
                           name="description"
@@ -400,43 +408,8 @@ console.log("posterimageUrl", posterimageUrl)
                           />
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-5">
-                  <div className="py-4 px-6.5 rounded-sm border border-stroke">
-                    <div className="mb-4  bg-white dark:border-strokedark dark:bg-boxdark  text-black dark:text-white">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Add Stock Quantity
-                      </label>
-                   
-                    </div>
-
-                    {VariationOption === "withoutVariation" && (
-                      <>
-                        {withoutVariation.map((inputField, index) => (
-                          <div key={index} className="mb-4">
-                        
-                            <Field
-                              type={inputField.type}
-                              name={inputField.name}
-                             
-                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary "
-                            />
-                            <ErrorMessage
-                              name={inputField.name}
-                              component="div"
-                              className="text-red-500"
-                            />
-                          </div>
-                        ))}
-                      </>
-                    )}
-
-                  </div>
-                 
-                  <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
+                      
+                      <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
                       <h3 className="font-medium text-black dark:text-white">
                         Model Details
@@ -515,6 +488,43 @@ console.log("posterimageUrl", posterimageUrl)
                       </FieldArray>
                     </div>
                   </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-5">
+                  <div className="py-4 px-6.5 rounded-sm border border-stroke">
+                    <div className="mb-4  bg-white dark:border-strokedark dark:bg-boxdark  text-black dark:text-white">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Add Stock Quantity
+                      </label>
+                   
+                    </div>
+
+                    {VariationOption === "withoutVariation" && (
+                      <>
+                        {withoutVariation.map((inputField, index) => (
+                          <div key={index} className="mb-4">
+                        
+                            <Field
+                              type={inputField.type}
+                              name={inputField.name}
+                             
+                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary "
+                            />
+                            <ErrorMessage
+                              name={inputField.name}
+                              component="div"
+                              className="text-red-500"
+                            />
+                          </div>
+                        ))}
+                      </>
+                    )}
+
+                  </div>
+                 
+              
 
                   <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
@@ -634,10 +644,54 @@ console.log("posterimageUrl", posterimageUrl)
                       </FieldArray>
                     </div>
                   </div>
+
+                  <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
+                      <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
+                        <h3 className="font-medium text-black dark:text-white">
+                          Hover Image
+                        </h3>
+                      </div>
+                      {(hoverImage?.length > 0 ) ? (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
+                          {hoverImage.map((item: any, index) => {
+                            return (
+                              <div
+                                className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                                key={index}
+                              >
+                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
+                                  <RxCross2
+                                    className="cursor-pointer text-red-500 hover:text-red-700"
+                                    size={17}
+                                    onClick={() => {
+                                      ImageRemoveHandler(
+                                        item.public_id,
+                                        sethoverImage
+                                      );
+                                    }}
+                                  />
+                                </div>
+                                <Image
+                                  key={index}
+                                  className="object-cover w-full h-full"
+                                  width={300}
+                                  height={400}
+                                  src={item?.imageUrl}
+                                  alt={`productImage-${index}`}
+                                />
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <Imageupload sethoverImage={sethoverImage} />
+                      )}
+                    </div>
+
                   <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                       <h3 className="font-medium text-black dark:text-white">
-                        Add Product Images
+                        Product Images
                       </h3>
                     </div>
                     <Imageupload setImagesUrl={setImagesUrl} />
@@ -662,14 +716,29 @@ console.log("posterimageUrl", posterimageUrl)
                                   }}
                                 />
                               </div>
+                              <div  key={index} >
+
                               <Image
-                                key={index}
+                               
                                 className="object-cover w-full h-full"
                                 width={300}
                                 height={200}
                                 src={item.imageUrl}
                                 alt={`productImage-${index}`}
-                              />
+                                />
+                               <input
+                          type="number"
+                          placeholder="Add Image Index"
+                          className=" rounded-b-md p-2 text-sm focus:outline-none w-full "
+                          value={item.imageIndex}
+                          
+                          // required
+                          onChange={(e) =>
+                            handleImageIndex(index, e.target.value)
+                          }
+                          />
+                          </div>
+                             
                             </div>
                           );
                         })}
@@ -687,7 +756,7 @@ console.log("posterimageUrl", posterimageUrl)
 
               <button
                 type="submit"
-                className="px-10 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
+                className="px-10 py-2 mt-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
               >
                 {loading ? <Loader color="white" /> : "Submit"}
               </button>
