@@ -64,6 +64,7 @@ export interface USRPROPS {
     public_id?: string;
     imageUrl?: string;
     name?: string;
+    imageIndex?:number;
   }
 
   interface Images {
