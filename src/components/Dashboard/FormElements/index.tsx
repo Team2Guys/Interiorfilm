@@ -27,12 +27,12 @@ import {
   AddproductsinitialValues,
 } from "data/Data";
 
-const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({EditInitialValues,EditProductValue,setselecteMenu,setEditProduct,
+const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProductValue, setselecteMenu, setEditProduct,
 }) => {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
   const [imagesUrl, setImagesUrl] = useState<any[]>([]);
-  const [posterimageUrl, setposterimageUrl] = useState<any[] | null>( EditInitialValues && [EditInitialValues.posterImageUrl]);
+  const [posterimageUrl, setposterimageUrl] = useState<any[] | null>(EditInitialValues && [EditInitialValues.posterImageUrl]);
   const [hoverImage, sethoverImage] = useState<any[] | null | undefined>(EditInitialValues && [EditInitialValues.hoverImageUrl]);
   const [loading, setloading] = useState<boolean>(false);
   const [productInitialValue, setProductInitialValue] = useState<any | null | undefined>(EditProductValue);
@@ -49,14 +49,14 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({EditInitialValues,EditProd
     setIsOptionSelected(true);
   };
 
-console.log("posterimageUrl", posterimageUrl)
-  
+  console.log("posterimageUrl", posterimageUrl)
+
   useLayoutEffect(() => {
     const CategoryHandler = async () => {
       try {
         if (!EditInitialValues) return;
         const {
-    
+
           imageUrl,
           _id,
           createdAt,
@@ -81,7 +81,7 @@ console.log("posterimageUrl", posterimageUrl)
     try {
       setError(null);
       let posterImageUrl = posterimageUrl && posterimageUrl[0];
-       let hoverImageUrl = hoverImage && hoverImage[0];
+      let hoverImageUrl = hoverImage && hoverImage[0];
       let createdAt = Date.now();
       if (!posterImageUrl || !(imagesUrl.length > 0)) {
         throw new Error("Please select relevant Images");
@@ -96,14 +96,13 @@ console.log("posterimageUrl", posterimageUrl)
       setloading(true);
 
       let updateFlag = EditProductValue && EditInitialValues ? true : false;
-    
+
       let addProductUrl = updateFlag
         ? `/api/updateProduct/${EditInitialValues._id} `
         : null;
-      let url = `${process.env.NEXT_PUBLIC_BASE_URL}${
-        updateFlag ? addProductUrl : "/api/addProduct"
-      }`;
-     
+      let url = `${process.env.NEXT_PUBLIC_BASE_URL}${updateFlag ? addProductUrl : "/api/addProduct"
+        }`;
+
       const response = await axios.post(url, newValue);
       console.log(response, "response");
       Toaster(
@@ -189,7 +188,7 @@ console.log("posterimageUrl", posterimageUrl)
                           Poster Image
                         </h3>
                       </div>
-                      {(posterimageUrl?.length > 0 ) ? (
+                      {(posterimageUrl?.length > 0) ? (
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
                           {posterimageUrl.map((item: any, index) => {
                             return (
@@ -238,11 +237,10 @@ console.log("posterimageUrl", posterimageUrl)
                           onBlur={formik.handleBlur}
                           value={formik.values.name}
                           placeholder="name"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                            formik.touched.name && formik.errors.name
-                              ? "border-red-500"
-                              : ""
-                          }`}
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                            ? "border-red-500"
+                            : ""
+                            }`}
                         />
                         {formik.touched.name && formik.errors.name ? (
                           <div className="text-red text-sm">
@@ -260,15 +258,14 @@ console.log("posterimageUrl", posterimageUrl)
                           onChange={formik.handleChange}
                           value={formik.values.description}
                           placeholder="description"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                            formik.touched.description &&
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.description &&
                             formik.errors.description
-                              ? "border-red-500"
-                              : ""
-                          }`}
+                            ? "border-red-500"
+                            : ""
+                            }`}
                         />
                         {formik.touched.description &&
-                        formik.errors.description ? (
+                          formik.errors.description ? (
                           <div className="text-red text-sm">
                             {
                               formik.errors.description as FormikErrors<
@@ -291,15 +288,14 @@ console.log("posterimageUrl", posterimageUrl)
                             onBlur={formik.handleBlur}
                             value={formik.values.salePrice}
                             placeholder="Sale Price"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                              formik.touched.salePrice &&
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.salePrice &&
                               formik.errors.salePrice
-                                ? "border-red-500"
-                                : ""
-                            }`}
+                              ? "border-red-500"
+                              : ""
+                              }`}
                           />
                           {formik.touched.salePrice &&
-                          formik.errors.salePrice ? (
+                            formik.errors.salePrice ? (
                             <div className="text-red text-sm">
                               {
                                 formik.errors.salePrice as FormikErrors<
@@ -321,15 +317,14 @@ console.log("posterimageUrl", posterimageUrl)
                             onBlur={formik.handleBlur}
                             value={formik.values.purchasePrice}
                             placeholder="Purchase Price"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                              formik.touched.purchasePrice &&
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.purchasePrice &&
                               formik.errors.purchasePrice
-                                ? "border-red-500"
-                                : ""
-                            }`}
+                              ? "border-red-500"
+                              : ""
+                              }`}
                           />
                           {formik.touched.purchasePrice &&
-                          formik.errors.purchasePrice ? (
+                            formik.errors.purchasePrice ? (
                             <div className="text-red text-sm">
                               {
                                 formik.errors.purchasePrice as FormikErrors<
@@ -350,15 +345,14 @@ console.log("posterimageUrl", posterimageUrl)
                             onBlur={formik.handleBlur}
                             value={formik.values.discountPrice}
                             placeholder="Discount Price"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                              formik.touched.discountPrice &&
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.discountPrice &&
                               formik.errors.discountPrice
-                                ? "border-red-500"
-                                : ""
-                            }`}
+                              ? "border-red-500"
+                              : ""
+                              }`}
                           />
                           {formik.touched.discountPrice &&
-                          formik.errors.discountPrice ? (
+                            formik.errors.discountPrice ? (
                             <div className="text-red text-sm">
                               {formik.errors.discountPrice as String}
                             </div>
@@ -377,11 +371,10 @@ console.log("posterimageUrl", posterimageUrl)
                             onChange={formik.handleChange}
                             value={formik.values.code}
                             placeholder="Product code"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                              formik.touched.name && formik.errors.name
-                                ? "border-red-500"
-                                : ""
-                            }`}
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                              ? "border-red-500"
+                              : ""
+                              }`}
                           />
                           {formik.touched.name && formik.errors.code ? (
                             <div className="text-red text-sm">
@@ -408,86 +401,84 @@ console.log("posterimageUrl", posterimageUrl)
                           />
                         </div>
                       </div>
-                      
+
                       <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
-                    <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-                      <h3 className="font-medium text-black dark:text-white">
-                        Model Details
-                      </h3>
-                    </div>
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                      <FieldArray name="modelDetails">
-                        {({ push, remove }) => (
-                          <div className="flex flex-col gap-2">
-                            {formik.values.modelDetails.map(
-                              (model: any, index: any) => (
-                                <div key={index} className="flex items-center">
-                                  <input
-                                    type="text"
-                                    name={`modelDetails[${index}].name`}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={
-                                      formik.values.modelDetails[index].name
-                                    }
-                                    placeholder="Model Name"
-                                    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                      formik.touched.modelDetails?.[index]
-                                        ?.name &&
-                                      (
-                                        formik.errors
-                                          .modelDetails as FormikErrors<
-                                          FormValues["modelDetails"]
-                                        >
-                                      )?.[index]?.name
-                                        ? "border-red-500"
-                                        : ""
-                                    }`}
-                                  />
-                                  <input
-                                    type="text"
-                                    name={`modelDetails[${index}].detail`}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={
-                                      formik.values.modelDetails[index].detail
-                                    }
-                                    placeholder="Model Detail"
-                                    className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                      formik.touched.modelDetails?.[index]
-                                        ?.detail &&
-                                      (
-                                        formik.errors
-                                          .modelDetails as FormikErrors<
-                                          FormValues["modelDetails"]
-                                        >
-                                      )?.[index]?.detail
-                                        ? "border-red-500"
-                                        : ""
-                                    }`}
-                                  />
-                                  <button
-                                    type="button"
-                                    onClick={() => remove(index)}
-                                    className="ml-2 text-red "
-                                  >
-                                    <RxCross2 className="text-red" size={25} />
-                                  </button>
-                                </div>
-                              )
+                        <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
+                          <h3 className="font-medium text-black dark:text-white">
+                            Model Details
+                          </h3>
+                        </div>
+                        <div className="flex flex-col gap-5.5 p-6.5">
+                          <FieldArray name="modelDetails">
+                            {({ push, remove }) => (
+                              <div className="flex flex-col gap-2">
+                                {formik.values.modelDetails.map(
+                                  (model: any, index: any) => (
+                                    <div key={index} className="flex items-center">
+                                      <input
+                                        type="text"
+                                        name={`modelDetails[${index}].name`}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={
+                                          formik.values.modelDetails[index].name
+                                        }
+                                        placeholder="Model Name"
+                                        className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.modelDetails?.[index]
+                                          ?.name &&
+                                          (
+                                            formik.errors
+                                              .modelDetails as FormikErrors<
+                                                FormValues["modelDetails"]
+                                              >
+                                          )?.[index]?.name
+                                          ? "border-red-500"
+                                          : ""
+                                          }`}
+                                      />
+                                      <input
+                                        type="text"
+                                        name={`modelDetails[${index}].detail`}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={
+                                          formik.values.modelDetails[index].detail
+                                        }
+                                        placeholder="Model Detail"
+                                        className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.modelDetails?.[index]
+                                          ?.detail &&
+                                          (
+                                            formik.errors
+                                              .modelDetails as FormikErrors<
+                                                FormValues["modelDetails"]
+                                              >
+                                          )?.[index]?.detail
+                                          ? "border-red-500"
+                                          : ""
+                                          }`}
+                                      />
+                                      <button
+                                        type="button"
+                                        onClick={() => remove(index)}
+                                        className="ml-2 text-red "
+                                      >
+                                        <RxCross2 className="text-red" size={25} />
+                                      </button>
+                                    </div>
+                                  )
+                                )}
+                                <button
+                                  type="button"
+                                  onClick={() => push({ name: "", detail: "" })}
+                                  className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
+                                >
+                                  Add Model
+                                </button>
+                              </div>
                             )}
-                            <button
-                              type="button"
-                              onClick={() => push({ name: "", detail: "" })}
-                              className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
-                            >
-                              Add Model
-                            </button>
-                          </div>
-                        )}
-                      </FieldArray>
-                    </div>
-                  </div>
+                          </FieldArray>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -496,20 +487,20 @@ console.log("posterimageUrl", posterimageUrl)
                   <div className="py-4 px-6.5 rounded-sm border border-stroke">
                     <div className="mb-4  bg-white dark:border-strokedark dark:bg-boxdark  text-black dark:text-white">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Add Stock Quantity
+                        Add Stock Quantity
                       </label>
-                   
+
                     </div>
 
                     {VariationOption === "withoutVariation" && (
                       <>
                         {withoutVariation.map((inputField, index) => (
                           <div key={index} className="mb-4">
-                        
+
                             <Field
                               type={inputField.type}
                               name={inputField.name}
-                             
+
                               className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary "
                             />
                             <ErrorMessage
@@ -523,8 +514,8 @@ console.log("posterimageUrl", posterimageUrl)
                     )}
 
                   </div>
-                 
-              
+
+
 
                   <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
@@ -549,18 +540,17 @@ console.log("posterimageUrl", posterimageUrl)
                                         .specsDetails
                                     }
                                     placeholder="Specification Details"
-                                    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                      formik.touched.spacification?.[index]
-                                        ?.specsDetails &&
+                                    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.spacification?.[index]
+                                      ?.specsDetails &&
                                       (
                                         formik.errors
                                           .spacification as FormikErrors<
-                                          FormValues["spacification"]
-                                        >
+                                            FormValues["spacification"]
+                                          >
                                       )?.[index]?.specsDetails
-                                        ? "border-red-500"
-                                        : ""
-                                    }`}
+                                      ? "border-red-500"
+                                      : ""
+                                      }`}
                                   />
                                   <button
                                     type="button"
@@ -609,18 +599,17 @@ console.log("posterimageUrl", posterimageUrl)
                                         .sizes
                                     }
                                     placeholder="Sizes"
-                                    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                      formik.touched.spacification?.[index]
-                                        ?.sizesDetails &&
+                                    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.spacification?.[index]
+                                      ?.sizesDetails &&
                                       (
                                         formik.errors
                                           .sizes as FormikErrors<
-                                          FormValues["sizes"]
-                                        >
+                                            FormValues["sizes"]
+                                          >
                                       )?.[index]?.sizesDetails
-                                        ? "border-red-500"
-                                        : ""
-                                    }`}
+                                      ? "border-red-500"
+                                      : ""
+                                      }`}
                                   />
                                   <button
                                     type="button"
@@ -634,7 +623,7 @@ console.log("posterimageUrl", posterimageUrl)
                             )}
                             <button
                               type="button"
-                              onClick={() => push({sizesDetails: ""})}
+                              onClick={() => push({ sizesDetails: "" })}
                               className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
                             >
                               Add Sizes
@@ -646,47 +635,47 @@ console.log("posterimageUrl", posterimageUrl)
                   </div>
 
                   <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
-                      <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                        <h3 className="font-medium text-black dark:text-white">
-                          Hover Image
-                        </h3>
-                      </div>
-                      {(hoverImage?.length > 0 ) ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
-                          {hoverImage.map((item: any, index) => {
-                            return (
-                              <div
-                                className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
-                                key={index}
-                              >
-                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
-                                  <RxCross2
-                                    className="cursor-pointer text-red-500 hover:text-red-700"
-                                    size={17}
-                                    onClick={() => {
-                                      ImageRemoveHandler(
-                                        item.public_id,
-                                        sethoverImage
-                                      );
-                                    }}
-                                  />
-                                </div>
-                                <Image
-                                  key={index}
-                                  className="object-cover w-full h-full"
-                                  width={300}
-                                  height={400}
-                                  src={item?.imageUrl}
-                                  alt={`productImage-${index}`}
+                    <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Hover Image
+                      </h3>
+                    </div>
+                    {(hoverImage?.length > 0) ? (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
+                        {hoverImage.map((item: any, index) => {
+                          return (
+                            <div
+                              className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                              key={index}
+                            >
+                              <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
+                                <RxCross2
+                                  className="cursor-pointer text-red-500 hover:text-red-700"
+                                  size={17}
+                                  onClick={() => {
+                                    ImageRemoveHandler(
+                                      item.public_id,
+                                      sethoverImage
+                                    );
+                                  }}
                                 />
                               </div>
-                            );
-                          })}
-                        </div>
-                      ) : (
-                        <Imageupload sethoverImage={sethoverImage} />
-                      )}
-                    </div>
+                              <Image
+                                key={index}
+                                className="object-cover w-full h-full"
+                                width={300}
+                                height={400}
+                                src={item?.imageUrl}
+                                alt={`productImage-${index}`}
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <Imageupload sethoverImage={sethoverImage} />
+                    )}
+                  </div>
 
                   <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
@@ -696,17 +685,17 @@ console.log("posterimageUrl", posterimageUrl)
                     </div>
                     <Imageupload setImagesUrl={setImagesUrl} />
                     {imagesUrl && imagesUrl.length > 0 ? (
-                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
                         {imagesUrl.map((item: any, index) => {
                           return (
                             <div
-                            className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
-                            key={index}
-                          >
+                              className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                              key={index}
+                            >
                               <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
                                 <RxCross2
-                                 className="cursor-pointer text-red-500 hover:text-red-700"
-                                 size={17}
+                                  className="cursor-pointer text-red-500 hover:text-red-700"
+                                  size={17}
                                   onClick={() => {
                                     console.log("funciton called");
                                     ImageRemoveHandler(
@@ -716,29 +705,29 @@ console.log("posterimageUrl", posterimageUrl)
                                   }}
                                 />
                               </div>
-                              <div  key={index} >
+                              <div key={index} className="bg-red  relative ">
+                                <div className="h-[100px] w-full overflow-hidden">
+                                  <Image
+                                    className="object-cover w-full h-full"
+                                    width={300}
+                                    height={200}
+                                    src={item.imageUrl}
+                                    alt={`productImage-${index}`}
+                                  />
+                                </div>
 
-                              <Image
-                               
-                                className="object-cover w-full h-full"
-                                width={300}
-                                height={200}
-                                src={item.imageUrl}
-                                alt={`productImage-${index}`}
+                                <input
+                                  type="number"
+                                  placeholder="Add Image Index"
+                                  className=" rounded-b-md p-2 text-sm focus:outline-none w-full "
+                                  value={item.imageIndex}
+                                  onChange={(e) =>
+                                    handleImageIndex(index, e.target.value)
+                                  }
                                 />
-                               <input
-                          type="number"
-                          placeholder="Add Image Index"
-                          className=" rounded-b-md p-2 text-sm focus:outline-none w-full "
-                          value={item.imageIndex}
-                          
-                          // required
-                          onChange={(e) =>
-                            handleImageIndex(index, e.target.value)
-                          }
-                          />
-                          </div>
-                             
+
+                              </div>
+
                             </div>
                           );
                         })}
