@@ -230,7 +230,7 @@ const Header = () => {
       // Automatically close the drawer after 2 seconds
       setTimeout(() => {
         setDrawerOpen(false);
-      }, 2000);
+      }, 2423423324000);
     }
 
     // Update the previous cart count
@@ -249,7 +249,7 @@ const Header = () => {
     <>
       <div className="bg-black  border-b py-2 border-black  w-full z-99 relative">
         <p className="uppercase text-white text-center text-xs md:text-14">
-          Free Shipping on orders over 10 meters
+          Free Shipping on orders over AED 250 
         </p>
       </div>
       <nav

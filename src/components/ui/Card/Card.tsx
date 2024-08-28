@@ -275,14 +275,14 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
             </h1>
             <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
               <p className="text-black font-bold text-18">
-                AED <span className=''>{product.discountPrice ? product.discountPrice : product.salePrice}</span>
+                AED <span className='text-red text-20'>{product.discountPrice ? product.discountPrice : product.salePrice}</span>
               </p>
 
               { product.discountPrice > 0 && (
                 <p className="line-through text-para text-xs font-medium">
-                  AED <span>{product.salePrice}</span>
+                  AED <span className=''>{product.discountPrice}</span>
                 </p>
-              )}
+               )}
             </div>
             {product.starRating && (
               <div className="flex gap-1 justify-center">
