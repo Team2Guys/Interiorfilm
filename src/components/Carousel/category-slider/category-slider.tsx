@@ -25,7 +25,7 @@ const CategorySlider: React.FC = () => {
       swiper.navigation.init();
       swiper.navigation.update();
     }
-  }, [loading]);
+  }, []);
 
   const fetchCategories = async () => {
     try {

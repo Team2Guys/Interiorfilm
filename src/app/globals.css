@@ -125,16 +125,20 @@
   box-shadow: 0px 3px 21px #3737D512;
 }
 
-.ant-popover .ant-popover-inner {
-  margin-left: 100px !important;
-}
+
 
 .ant-popover-content {
-  width: 630px;
+  width: 980px;
+}
+.ant-popover .ant-popover-inner {
+  margin-left: 50px !important;
 }
 @media only screen and (min-width: 1440px) {
   .ant-popover-content {
-    width: 1280px;
+    width: 1380px;
+  }
+  .ant-popover .ant-popover-inner {
+    margin-left: 100px !important;
   }
 }
 
