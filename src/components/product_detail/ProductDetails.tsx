@@ -24,7 +24,7 @@ export default function ProductDetails({
   const [length, setLength] = useState<number>(1); // State to track selected length
   const options = productDetail && productDetail.totalStockQuantity > 0
   ? Array.from({ length: Math.floor(productDetail.totalStockQuantity) }, (_, i) => ({
-      label: `${i + 1} METERS`,
+      label: `1.22m x ${i + 1} METERS`,
       value: i + 1,
     }))
   : [];
@@ -150,11 +150,14 @@ const onChange = (value: number) => {
               ) : null}
             </div>
             <p className="font-medium text-16 text-text">
-              Width : <span className="text-blak font-normal">1.22 mm</span>
+              Width : <span className="text-blak font-normal">1.22cm</span>
             </p>
-            <div className="flex gap-2 items-center w-[70%]">
+            <div className="flex items-center gap-2">
+            <p className="font-medium text-16 text-text">
+             Select Quantity:
+            </p>
             <ProductSelect
-              className="w-full h-10 border outline-none shipment text-20"
+              className="w-60 h-10 border outline-none shipment text-16"
               onChange={onChange}
               options={options}
               value={length}

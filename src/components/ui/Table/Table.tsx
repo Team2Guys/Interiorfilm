@@ -203,7 +203,7 @@ const Table: React.FC<TableProps> = ({
     const options = [];
     for (let i = 1; i <= Math.floor(totalStockQuantity); i++) {
       options.push({
-        label: `${i} METERS`,
+        label: `1.22cm x ${i} METERS`,
         value: i,
       });
     }
@@ -299,7 +299,7 @@ const Table: React.FC<TableProps> = ({
                                     handleLengthChange(index, value)
                                   }
                                   options={options}
-                                  defaultValue={`${
+                                  defaultValue={`1.22cm x ${
                                     lengths[index] || product.length
                                   } METERS`}
                                 />
@@ -309,7 +309,7 @@ const Table: React.FC<TableProps> = ({
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base">
                           <p>
-                            AED{" "}
+                            AED
                             <span>
                               {pathName === "/wishlist"
                                 ? product.discountPrice

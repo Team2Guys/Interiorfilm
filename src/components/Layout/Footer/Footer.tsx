@@ -65,8 +65,8 @@ const Footer: React.FC = () => {
           </div>
           <div className="flex flex-wrap md:*:flex-nowrap items-center justify-end gap-2 w-full md:w-8/12 text-white mt-4 md:mt-0">
             <SlEnvolopeLetter className="text-primary" size={35} />
-            <p className="lg:text-base text-sm capitalize text-white">
-              SUBSCRBE TO OUR NEWSLETTER.
+            <p className="lg:text-base text-sm uppercase text-white">
+              subscribe TO OUR NEWSLETTER.
             </p>
             <div className="flex items-center justify-center mt-5 md:mt-0 rounded-none">
               <input

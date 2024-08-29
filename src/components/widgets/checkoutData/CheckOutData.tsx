@@ -166,7 +166,7 @@ const CheckoutData: React.FC<TableProps> = ({
         <hr className="w-full mx-auto border-[#D2D2D2]" />
 
         <div className="flex justify-between items-center">
-          <h2 className="text-16 font-bold">TOTAL:</h2>
+          <h2 className="text-16 font-bold">TOTAL</h2>
           <h2 className="text-22 font-bold">
             AED{" "}
             <span>

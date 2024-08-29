@@ -54,11 +54,33 @@ const CheckOut: React.FC = () => {
     { state: "abu dhabi", charges: 20, discountCharges: 200 },
   ];
 
+
+  const formatPhoneNumber = (value: any) => {
+    const numbers = value.replace(/\D/g, '');
+    if (numbers.length <= 3) return `+${numbers}`;
+    if (numbers.length <= 5) return `+${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+    return `+${numbers.slice(0, 3)}-${numbers.slice(3, 5)}-${numbers.slice(5, 12)}`;
+  };
+
+  // Function to handle phone number change
+  const handlePhoneNumberChange = (e: any) => {
+    let value = e.target.value;
+    value = value.replace(/[^+\d]/g, "").slice(0, 13);
+    if (!value.startsWith("+")) {
+      value = "+" + value.replace(/^\+/, "");
+    }
+    setBillingData((prevData) => ({
+      ...prevData,
+      phone_number: formatPhoneNumber(value),
+    }));
+  };
+
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     setCartItems(existingCart);
     calculateTotals(existingCart);
   }, []);
+
   useEffect(() => {
     const updatedTotal = shipmentFee === "Free"
       ? subtotal
@@ -318,7 +340,7 @@ const CheckOut: React.FC = () => {
                   </div>
                   <div className="flex flex-col">
                     <label htmlFor="checkout" className="text-lightdark">
-                      Number <span className="text-red">*</span>{" "}
+                      Number <span className="text-red">*</span>
                       <span className="text-12 ms-2 text-headingdark font-medium">
                         For delivery-related queries
                       </span>
@@ -329,12 +351,7 @@ const CheckOut: React.FC = () => {
                       name="number"
                       id="checkout"
                       value={billingData.phone_number}
-                      onChange={(e) =>
-                        setBillingData({
-                          ...billingData,
-                          phone_number: e.target.value,
-                        })
-                      }
+                      onChange={handlePhoneNumberChange}
                     />
                     {errors.phone_number && (
                       <p className="text-red text-sm">{errors.phone_number}</p>
