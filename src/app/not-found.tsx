@@ -6,7 +6,7 @@ export default function NotFound() {
       <div className="flex flex-col items-center gap-4">
         <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-black">404</h1>
         <h2 className="text-2xl xsm:text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-black">
-          There's <span className="uppercase">Nothing</span> here ...
+          There&apos;s <span className="uppercase">Nothing</span> here ...
         </h2>
         <p className="text-center px-2 xsm:px-0 text-10 xsm:text-12 sm:text-base md:text-lg lg:text-xl">
           ...maybe the page you are looking for is not fount or never exited.
