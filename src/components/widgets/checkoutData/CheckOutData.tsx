@@ -88,7 +88,7 @@ const CheckoutData: React.FC<TableProps> = ({
   };
 
   return (
-    <div className="bg-transparent px-2 md:ps-6 py-10 md:pe-10">
+    <div className="bg-transparent px-2 lg:ps-6 py-10 lg:pe-10">
       <h2 className="text-16 font-medium  text-end mb-4">
         *total <span className="text-primary">{totalCount}</span> Items
       </h2>
@@ -98,7 +98,7 @@ const CheckoutData: React.FC<TableProps> = ({
             <div className="flex gap-2 sm:gap-4 justify-between items-center pe-1 sm:pe-6">
               <div className="w-10/12 flex gap-3 sm:gap-6 items-center">
                 <Image
-                  className="w-18 xsm:w-22 sm:w-32 h-18 xsm:h-22 sm:h-32"
+                  className="w-18 xsm:w-22 sm:w-24 h-18 xsm:h-22 sm:h-24"
                   width={100}
                   height={100}
                   src={product.imageUrl[0].imageUrl || product.imageUrl}
@@ -106,26 +106,19 @@ const CheckoutData: React.FC<TableProps> = ({
                 />
                 <div>
                   <h1 className="text-16 sm:text-18 font-medium">
-                    {typeof product.name === "string" ? product.name : ""}
+                  {counts[index] || 1}X ({typeof product.name === "string" ? product.name : ""})
                   </h1>
-                  <p>
-                    AED{" "}
-                    <span>
-                      {product.discountPrice
-                        ? product.discountPrice * (counts[index] || 1)
-                        : product.price * (counts[index] || 1)}
-                    </span>
-                    
-                  </p>
-                  <div className={` text-sm font-semibold`}>
-                    {counts[index] || 1}X
-                  </div>
 
-                  <div className="flex gap-2 items-center">
-                    <p className="font-semibold text-base">Dimension : 1.22</p>{" "}
-                    <IoIosClose size={20} />
-                    <div className={` text-sm font-semibold`}
-                    >{product.length} Meter</div>
+                  <div className="flex mt-1 xsm:mt-0 gap-0 items-center">
+                    <p className="font-normal text-14 sm:text-base text-lightdark text-nowrap">
+                      Size : 1.22
+                    </p>
+                    <IoIosClose size={25} className="text-lightdark" />
+                    <div
+                      className={`text-14 sm:text-base font-normal text-lightdark text-nowrap`}
+                    >
+                      {product.length} Meter
+                    </div>
                   </div>
                 </div>
               </div>
@@ -139,7 +132,6 @@ const CheckoutData: React.FC<TableProps> = ({
                         product.length
                       : product.price * (counts[index] || 1) * product.length}
                   </span>
-                  
                 </p>
               </div>
             </div>
@@ -147,7 +139,7 @@ const CheckoutData: React.FC<TableProps> = ({
         ))}
       </div>
 
-      <div className="w-full sm:w-3/4 lg:w-3/4 xl:w-2/3 mx-auto bg-white px-14 pt-10 py-14 space-y-3 rounded-sm mt-10">
+      <div className="w-full sm:w-3/4 md:w-11/12 lg:w-11/12 xl:w-10/12 2xl:w-3/4 mx-auto bg-white px-5 xl:px-14 pt-10 py-14 space-y-3 rounded-sm mt-10">
         <h2 className="text-23 font-bold tracking-wide">YOUR ORDER</h2>
         <div className="flex justify-between items-center">
           <h2 className="text-16 font-bold">SUBTOTAL</h2>
@@ -166,7 +158,7 @@ const CheckoutData: React.FC<TableProps> = ({
         <hr className="w-full mx-auto border-[#D2D2D2]" />
 
         <div className="flex justify-between items-center">
-          <h2 className="text-16 font-bold">TOTAL:</h2>
+          <h2 className="text-16 font-bold">TOTAL</h2>
           <h2 className="text-22 font-bold">
             AED{" "}
             <span>
@@ -177,12 +169,15 @@ const CheckoutData: React.FC<TableProps> = ({
           </h2>
         </div>
         <div className="flex gap-2 items-center">
-          <Checkbox className="custom-checkbox font-medium" >
+          <Checkbox className="custom-checkbox font-medium">
             Agree <span className="underline">Shipping and Returns</span> Policy
           </Checkbox>
         </div>
         <div className="flex justify-center items-center">
-          <button className="w-full bg-black hover:bg-dark text-white py-3" onClick={onClick}>
+          <button
+            className="w-full bg-black hover:bg-dark text-white py-3"
+            onClick={onClick}
+          >
             Confirm Order
           </button>
         </div>
