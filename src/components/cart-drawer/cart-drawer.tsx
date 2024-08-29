@@ -2,11 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { Drawer, message, Modal } from "antd";
 import Image from "next/image";
 import { IoCloseSharp } from "react-icons/io5";
-import { RxMinus, RxPlus } from "react-icons/rx";
 import ProductSelect from "components/ui/Select/ProductSelect";
 import Link from "next/link";
 import PRODUCTS_TYPES from "types/interfaces";
-import { FaRegTrashAlt } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
 
 interface CartDrawerProps {
@@ -65,7 +63,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
     const options = [];
     for (let i = 1; i <= Math.floor(totalStockQuantity); i++) {
       options.push({
-        label: `${i} METERS`,
+        label: `1.22m x ${i} METERS`,
         value: i,
       });
     }
@@ -188,7 +186,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
                       className="w-[70%] h-8 border outline-none shipment text-20"
                       onChange={(value) => onLengthChange(index, value)}
                       options={options}
-                      defaultValue={`${lengths[index] || item.length} METERS`}
+                      defaultValue={`1.22cm x ${lengths[index] || item.length} METERS`}
                     />
                   </div>
                 </div>
