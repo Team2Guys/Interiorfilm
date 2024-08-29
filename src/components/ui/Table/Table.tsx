@@ -284,11 +284,10 @@ const Table: React.FC<TableProps> = ({
                             </div>
                             <div className="p-2 w-full">
                               <h1 className="text-sm md:text-base font-bold">
-                                <span>{counts[index] || 1}</span>* (
-                                {typeof product.name === "string"
+                                <span>{counts[index] || 1}* </span>{typeof product.name === "string"
                                   ? product.name
-                                  : ""}{" "}
-                                )
+                                  : ""}
+                                
                               </h1>
                               <div>
                                 <p className="text-16 font-semibold">

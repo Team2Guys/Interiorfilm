@@ -182,10 +182,10 @@ export default function ProductDetails({
               ) : null}
             </div>
             <p className="font-medium text-16 text-text">
-              Width : <span className="text-blak font-normal">1.22cm</span>
+              Width : <span className="text-blak font-normal">1.22cm</span> 
             </p>
             <div className="flex items-center gap-2">
-            <p className="font-medium text-16 text-text">
+            <p className="font-medium text-16 whitespace-nowrap text-text">
              Select Quantity (m):
             </p>
             <ProductSelect
@@ -195,7 +195,7 @@ export default function ProductDetails({
               value={length}
             />
             </div>
-            <div className="flex border w-28 h-10 justify-between px-2">
+            {/* <div className="flex border w-28 h-10 justify-between px-2">
               <div
                 onClick={handleDecrement}
                 className="  flex justify-center items-center"
@@ -218,7 +218,7 @@ export default function ProductDetails({
               >
                 <RxPlus size={20} />
               </div>
-            </div>
+            </div> */}
             <div>
             <p className="text-16">
               <span className=" text-text font-medium text-16 mr-2">
