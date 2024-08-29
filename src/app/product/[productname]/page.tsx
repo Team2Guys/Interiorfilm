@@ -29,14 +29,23 @@ const Product = ({ params }: { params: { productname: string } }) => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`);
       setReviews(response.data.reviews);
+      console.log("+++++++++++++  Reviews +++++++++++");
+      console.log(response)
     } catch (err) {
-      console.error("Failed to fetch reviews:", err);
+      console.log("Failed to fetch reviews:", err);
     }
   };
    
   useEffect(() => {
-    fetchReviews(productDetail?._id);
+    
+
+      fetchReviews(productDetail?._id);
+   
+
   }, [productDetail]);
+
+  console.log("+++++++++++++++++++ Fetch Reviews ++++++++++++++++++++++")
+  console.log(productDetail)
 
   const productHandler = async () => {
     try {

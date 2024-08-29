@@ -139,21 +139,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail }) => {
         <div className="lg:max-w-[1020px] hidden lg:block">
           <Accordion />
         </div>
-        <div className="  absolute right-20 top-1 hidden md:block">
-          {hoveredImage && (
-            <div
-              className="magnified-image absolute left-0  z-50"
-              style={{
-                backgroundImage: `url(${hoveredImage})`,
-                backgroundPosition: backgroundPosition,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: '200%',
-                width: '550px',
-                height: '550px',
-              }}
-            />
-          )}
-        </div>
+       
       </div>
       <div className="lg:max-w-[1020px] hidden lg:block">
         <Accordion detail={detail} />
