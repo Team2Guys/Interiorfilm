@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState,useLayoutEffect } from 'react';
-import { Layout } from 'antd';
-import {FaAngleDown, FaAngleUp } from 'react-icons/fa';
-import Link from 'next/link';
+import React, { useState, useLayoutEffect } from "react";
+import { Layout } from "antd";
+import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+import Link from "next/link";
 import logo from "../../../../public/images/logowhite.png";
 import Image from 'next/image';
 import { socialLinks, customerCare, pages } from 'data/FooterData';
@@ -32,30 +32,36 @@ const Footer: React.FC = () => {
   const togglePages = () => setIsPagesOpen(!isPagesOpen);
   const bottomImages = [card1, card2, card3,card4,card5,card6,card7];
   const CategoryHandler = async () => {
-try{
-  const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
-  console.log(response, "response")
-  setCategory(response.data);
-}catch(err){
-  console.log(err, "err")
-
-}
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
+      );
+      console.log(response, "response");
+      setCategory(response.data);
+    } catch (err) {
+      console.log(err, "err");
+    }
   };
-  
   useLayoutEffect(() => {
     CategoryHandler();
   }, []);
   return (
-
     <>
-    <div className='bg-secondary text-white pt-10 px-8 pb-10'>
-      <div className='flex flex-wrap md:flex-nowrap justify-between border-b pb-10'>
-        <div className='w-4/12 flex flex-wrap items-center md:flex-nowrap md:gap-4 mx-auto md:mx-0 space-y-3 md:space-y-0'>
-          <Image width={200} height={200} src={logo} alt="Interior Film"/>
-          <div className="flex space-x-4">
+      <div className="bg-secondary text-white pt-10 px-8 pb-10">
+        <div className="flex flex-wrap md:flex-nowrap justify-between border-b pb-10">
+          <div className="w-4/12 flex flex-wrap items-center md:flex-nowrap md:gap-4 mx-auto md:mx-0 space-y-3 md:space-y-0">
+            <Image width={200} height={200} src={logo} alt="Interior Film" />
+            <div className="flex space-x-4">
               {socialLinks.map((link, index) => (
-                <Link key={index} href={link.href} target='_blank' className='hover:text-primary link-footer'>
-                  {React.createElement(require('react-icons/fa')[link.icon], { className: "text-lg hover:text-primary link-footer" })}
+                <Link
+                  key={index}
+                  href={link.href}
+                  target="_blank"
+                  className="hover:text-primary link-footer"
+                >
+                  {React.createElement(require("react-icons/fa")[link.icon], {
+                    className: "text-lg hover:text-primary link-footer",
+                  })}
                 </Link>
               ))}
             </div>
@@ -120,8 +126,8 @@ try{
 
 
             </div>
-            <div className='lg:pb-0 pb-3'>
-              <h3 
+            <div className="lg:pb-0 pb-3">
+              <h3
                 className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
                 onClick={toggleCustomerCare}
               >
@@ -130,16 +136,25 @@ try{
                   {isCustomerCareOpen ? <FaAngleUp /> : <FaAngleDown />}
                 </span>
               </h3>
-              <ul className={`space-y-2 transition-all duration-300 overflow-hidden ${isCustomerCareOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}>
+              <ul
+                className={`space-y-2 transition-all duration-300 overflow-hidden ${
+                  isCustomerCareOpen ? "max-h-96" : "max-h-0"
+                } md:max-h-none`}
+              >
                 {customerCare.map((item, index) => (
                   <li key={index}>
-                    <Link href={item.href} className='hover:text-primary link-footer'>{item.name}</Link>
+                    <Link
+                      href={item.href}
+                      className="hover:text-primary link-footer"
+                    >
+                      {item.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className='lg:pb-0 pb-3'>
-              <h3 
+            <div className="lg:pb-0 pb-3">
+              <h3
                 className="font-semibold mb-4 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
                 onClick={togglePages}
               >
@@ -148,22 +163,32 @@ try{
                   {isPagesOpen ? <FaAngleUp /> : <FaAngleDown />}
                 </span>
               </h3>
-              <ul className={`space-y-2 transition-all duration-300 overflow-hidden ${isPagesOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}>
+              <ul
+                className={`space-y-2 transition-all duration-300 overflow-hidden ${
+                  isPagesOpen ? "max-h-96" : "max-h-0"
+                } md:max-h-none`}
+              >
                 {pages.map((page, index) => (
                   <li key={index}>
-                    <Link href={`/${page.href}`} className='hover:text-primary link-footer'>{page.name}</Link>
+                    <Link
+                      href={`/${page.href}`}
+                      className="hover:text-primary link-footer"
+                    >
+                      {page.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
+          </div>
         </div>
       </div>
-    </div>
-<div className='bg-white  flex justify-center items-center'>
-<p className='text-text h-12 flex items-center'>interior film © 2024. All Rights Reserved</p>
-</div>
+      <div className="bg-white  flex justify-center items-center">
+        <p className="text-text h-12 flex items-center">
+          interior film © 2024. All Rights Reserved
+        </p>
+      </div>
     </>
-
   );
 };
 
