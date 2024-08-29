@@ -151,8 +151,11 @@ const CheckoutData: React.FC<TableProps> = ({
 
         <div className="flex justify-between items-center">
           <h2 className="text-16 font-bold">SHIPPING</h2>
+          {
+            shipmentFee === "Free"
+          }
           <h2 className="text-16">
-            AED <span>{shipmentFee}</span>
+            <span>{  shipmentFee === "Free" ?  shipmentFee : `AED ${shipmentFee}`}</span>
           </h2>
         </div>
         <hr className="w-full mx-auto border-[#D2D2D2]" />

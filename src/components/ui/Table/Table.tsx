@@ -230,8 +230,7 @@ const Table: React.FC<TableProps> = ({
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-start text-23 xl:text-[30px] font-medium text-dark"
-                    >
+                      className="px-6 py-3 text-start text-23 xl:text-[30px] font-medium text-dark">
                       Products
                     </th>
                     <th
@@ -293,7 +292,7 @@ const Table: React.FC<TableProps> = ({
                               </h1>
                               <div>
                                 <p className="text-16 font-semibold">
-                                  Width: <span>1.22cm (28in)</span>
+                                  Width: <span>1.22cm (28inch)</span>
                                 </p>
                               </div>
                               {/* <div className="flex gap-2 items-center w-full">
@@ -430,7 +429,7 @@ const Table: React.FC<TableProps> = ({
                   </p>
                   <div>
                                 <p className="text-12 font-medium">
-                                  Width: <span>1.22cm (28in)</span>
+                                  Width: <span>1.22cm (28inch)</span>
                                 </p>
                               </div>
                   <div className="flex border w-20 h-8 justify-between px-2 ">
