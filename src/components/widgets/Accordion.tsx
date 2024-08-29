@@ -19,7 +19,7 @@ const Accordion:React.FC<accordionprop> = ({detail}:any)=> {
   };
   return (
     <div className='px-4 md:px-0'>
-          {detail.map((item:any, index:any) => (
+          {detail?.map((item:any, index:any) => (
         <React.Fragment key={index}>
           <ProductCollapse isOpen={openIndex === index}
           onClick={() => handleToggle(index)} title={item.name} titleClass="text-13" className="border-t py-4 border-stone-200">
