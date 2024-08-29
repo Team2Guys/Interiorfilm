@@ -85,7 +85,7 @@ try{
                   height={0}
                   src={image}
                   alt="Interior Film"
-                  className="w-10"
+                  className="w-10 rounded-sm"
                 />
               ))}
             </div> 
