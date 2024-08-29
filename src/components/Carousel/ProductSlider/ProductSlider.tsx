@@ -37,19 +37,13 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
     updateSwiperNavigation();
   }, [updateSwiperNavigation]);
 
-  const pagination = {
-    clickable: true,
-    renderBullet: function (index: number, className: string) {
-      return `<span class="custom-pag ${className}">${index + 1}</span>`;
-    },
-  };
+ 
 
-  if (loading) {
-    const skeletonIcons = Array.from({ length: 4 });
-  
-    return (
+  return (
+<>
+{loading ? (
       <div className="flex flex-wrap items-center justify-center gap-5 md:flex-wrap mt-5 mb-5">
-        {skeletonIcons.map((_, index) => (
+       {Array.from({ length: 3 }).map((_, index) => (
           <div key={index} className="w-full sm:w-[48%] md:w-[20%] min-w-[250px]">
             <SkeletonLoading
               avatar={{
@@ -76,10 +70,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
           </div>
         ))}
       </div>
-    );
-  }
-
-  return (
+    ):(
     <div className="relative mt-2">
       <div className='float-end flex gap-2 mb-5'>
         <button
@@ -101,7 +92,6 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
           delay: 2500,
           disableOnInteraction: false,
         }}
-        loop={true}
         breakpoints={{
           320: {
             slidesPerView: 1.3,
@@ -129,7 +119,13 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
           },
         }}
         modules={[Autoplay, Pagination, Navigation]}
-        pagination={pagination}
+        pagination={{
+          dynamicBullets: true,
+          clickable: true,
+          renderBullet: function (index: number, className: string) {
+            return `<span class="custom-pag ${className}">${index + 1}</span>`;
+          },
+        }}
         navigation={{
           prevEl: prevRef.current,
           nextEl: nextRef.current,
@@ -143,6 +139,10 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
         ))}
       </Swiper>
     </div>
+    )}
+</>
+
+
   );
 };
 

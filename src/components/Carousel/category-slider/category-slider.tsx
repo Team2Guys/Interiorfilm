@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -16,7 +16,7 @@ const CategorySlider: React.FC = () => {
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
+  const updateSwiperNavigation = useCallback(() => {
     if (swiperRef.current && swiperRef.current.swiper) {
       const swiper = swiperRef.current.swiper;
       swiper.params.navigation.prevEl = prevRef.current;
@@ -25,9 +25,14 @@ const CategorySlider: React.FC = () => {
       swiper.navigation.init();
       swiper.navigation.update();
     }
-  }, []);
+  }, [categories]);
+
+  useEffect(() => {
+    updateSwiperNavigation();
+  }, [updateSwiperNavigation]);
 
   const fetchCategories = async () => {
+    
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
       const data = await response.json();
@@ -49,7 +54,25 @@ const CategorySlider: React.FC = () => {
   
 
   return (
-    <div className="px-0 md:px-4 flex items-center relative mt-10">
+<>
+
+    {loading ? (
+      <div className="flex flex-wrap items-center justify-center gap-5 md:flex-wrap mt-5">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <div key={index} className="w-[20%] min-w-[250px] flex gap-2">
+            <SkeletonLoading
+              avatar={{ shape: 'square', size: 250 }}
+              title={false}
+              paragraph={{ rows: 3 }}
+              style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+              className="w-full"
+              active={true}
+            />
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div className="px-0 md:px-4 flex items-center relative mt-10">
       <button
         ref={prevRef}
         className="relative left-4 bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
@@ -88,22 +111,7 @@ const CategorySlider: React.FC = () => {
         }}
         className="mySwiper custom"
       >
-        {loading ? (
-          <div className="flex flex-wrap items-center justify-center gap-5 md:flex-wrap mt-5">
-            {Array.from({ length: 3 }).map((_, index) => (
-              <div key={index} className="w-[20%] min-w-[250px] flex gap-2">
-                <SkeletonLoading
-                  avatar={{ shape: 'square', size: 250 }}
-                  title={false}
-                  paragraph={{ rows: 3 }}
-                  style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
-                  className="w-full"
-                  active={true}
-                />
-              </div>
-            ))}
-          </div>
-        ) : (
+        {
           categories.map((category) => (
             <SwiperSlide key={category._id}>
               <CategoryCard
@@ -114,7 +122,7 @@ const CategorySlider: React.FC = () => {
               />
             </SwiperSlide>
           ))
-        )}
+        }
       </Swiper>
       <button
         ref={nextRef}
@@ -123,6 +131,12 @@ const CategorySlider: React.FC = () => {
         <MdArrowForwardIos size={20} />
       </button>
     </div>
+    )}
+
+   
+
+</>
+  
   );
 };
 
