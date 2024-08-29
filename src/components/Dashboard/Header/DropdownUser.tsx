@@ -44,13 +44,13 @@ const DropdownUser = () => {
   });
 
 
-  const logoutHhandler = ()=>{
-    try{
+  const logoutHhandler = () => {
+    try {
       Cookies.remove('2guysAdminToken');
       Cookies.remove('superAdminToken');
-          router.push('/dashboard/Admin-login')
+      router.push('/dashboard/Admin-login')
 
-    }catch(err){
+    } catch (err) {
       console.log(err)
     }
 
@@ -65,25 +65,25 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-      {loggedInUser ? loggedInUser.fullname : null }
+            {loggedInUser ? loggedInUser.fullname : null}
           </span>
           <span className="block text-xs text-black dark:text-white">{loggedInUser?.role}</span>
         </span>
 
 
         <div className="mb-4 flex items-center gap-3">
-                    <div className="h-14 w-14 rounded-full overflow-hidden">
-                      <Image
-                  
-            src={loggedInUser && loggedInUser.profilePhoto ? loggedInUser.profilePhoto.imageUrl :"/images/dummy-avatar.jpg"}
+          <div className="h-14 w-14 rounded-full overflow-hidden">
+            <Image
 
-                        width={55}
-                        height={55}
-                        alt="User"
-                      />
-                    </div>
-          
-                  </div>
+              src={loggedInUser && loggedInUser.profilePhoto ? loggedInUser.profilePhoto.imageUrl : "/images/dummy-avatar.jpg"}
+
+              width={55}
+              height={55}
+              alt="User"
+            />
+          </div>
+
+        </div>
 
 
 
@@ -109,9 +109,8 @@ const DropdownUser = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark ${
-          dropdownOpen === true ? "block" : "hidden"
-        }`}
+        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark ${dropdownOpen === true ? "block" : "hidden"
+          }`}
       >
         <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
           <li>
@@ -139,7 +138,7 @@ const DropdownUser = () => {
               My Profile
             </Link>
           </li>
-    
+
         </ul>
         <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base text-black dark:text-white" onClick={logoutHhandler}>
           <svg

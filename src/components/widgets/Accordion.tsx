@@ -7,7 +7,7 @@ interface accordionprop {
   detail?: PRODUCTS_TYPES[];
 }
 
-const Accordion:React.FC<accordionprop> = ({detail}:any)=> {
+const Accordion:React.FC<accordionprop> = ({detail})=> {
 
   console.log(detail,"detaildetaildetail")
       // Track the index of the currently open Collapse item

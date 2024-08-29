@@ -135,11 +135,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail }) => {
               />
             )}
           </div>
-        </div>
-        <div className="lg:max-w-[1020px] hidden lg:block">
-          <Accordion />
-        </div>
-       
+        </div>       
       </div>
       <div className="lg:max-w-[1020px] hidden lg:block">
         <Accordion detail={detail} />

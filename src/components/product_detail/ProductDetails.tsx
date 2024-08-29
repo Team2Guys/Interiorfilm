@@ -225,20 +225,7 @@ const onChange = (value: number) => {
               </ul>
             </div>
 
-            {/* <div>
-              <p className="text-14 text-[#707070] font-light">{productDetail?.description}</p>
-            </div>
-            <div>
-              <ul className="px-6">
-                {productDetail?.spacification?.map(
-                  (item: any, index: number) => (
-                    <li className="list-disc text-14 text-[#707070] font-light" key={index}>
-                      {item.specsDetails}
-                    </li>
-                  )
-                )}
-              </ul>
-            </div> */}
+
           </div>
         </div>
       </div>
