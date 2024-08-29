@@ -230,8 +230,7 @@ const Table: React.FC<TableProps> = ({
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-start text-23 xl:text-[30px] font-medium text-dark"
-                    >
+                      className="px-6 py-3 text-start text-23 xl:text-[30px] font-medium text-dark">
                       Products
                     </th>
                     <th
