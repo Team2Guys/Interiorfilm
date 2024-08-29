@@ -92,7 +92,7 @@ const CheckoutData: React.FC<TableProps> = ({
       <h2 className="text-16 font-medium  text-end mb-4">
         *total <span className="text-primary">{totalCount}</span> Items
       </h2>
-      <div className="space-y-4 max-h-85 overflow-y-scroll custom-scrollbar1">
+      <div className="space-y-4 max-h-54 overflow-y-scroll custom-scrollbar1">
         {data.map((product, index) => (
           <div className="bg-transparent" key={index}>
             <div className="flex gap-2 sm:gap-4 justify-between items-center pe-1 sm:pe-6">
@@ -106,26 +106,19 @@ const CheckoutData: React.FC<TableProps> = ({
                 />
                 <div>
                   <h1 className="text-16 sm:text-18 font-medium">
-                    {typeof product.name === "string" ? product.name : ""}
+                  {counts[index] || 1}X ({typeof product.name === "string" ? product.name : ""})
                   </h1>
-                  <p>
-                    AED{" "}
-                    <span>
-                      {product.discountPrice
-                        ? product.discountPrice * (counts[index] || 1)
-                        : product.price * (counts[index] || 1)}
-                    </span>
-                    
-                  </p>
-                  <div className={` text-sm font-semibold`}>
-                    {counts[index] || 1}X
-                  </div>
 
-                  <div className="flex gap-2 items-center">
-                    <p className="font-semibold text-14 xl:text-base whitespace-nowrap">Dimension: 1.22</p>
-                    <IoIosClose size={14} />
-                    <div className={` text-14 xl:text-sm font-semibold whitespace-nowrap`}
-                    >{product.length} Meter</div>
+                  <div className="flex mt-1 xsm:mt-0 gap-0 items-center">
+                    <p className="font-normal text-14 sm:text-base text-lightdark text-nowrap">
+                      Size : 1.22
+                    </p>
+                    <IoIosClose size={25} className="text-lightdark" />
+                    <div
+                      className={`text-14 sm:text-base font-normal text-lightdark text-nowrap`}
+                    >
+                      {product.length} Meter
+                    </div>
                   </div>
                 </div>
               </div>
@@ -139,7 +132,6 @@ const CheckoutData: React.FC<TableProps> = ({
                         product.length
                       : product.price * (counts[index] || 1) * product.length}
                   </span>
-                  
                 </p>
               </div>
             </div>
@@ -177,12 +169,15 @@ const CheckoutData: React.FC<TableProps> = ({
           </h2>
         </div>
         <div className="flex gap-2 items-center">
-          <Checkbox className="custom-checkbox font-medium" >
+          <Checkbox className="custom-checkbox font-medium">
             Agree <span className="underline">Shipping and Returns</span> Policy
           </Checkbox>
         </div>
         <div className="flex justify-center items-center">
-          <button className="w-full bg-black hover:bg-dark text-white py-3" onClick={onClick}>
+          <button
+            className="w-full bg-black hover:bg-dark text-white py-3"
+            onClick={onClick}
+          >
             Confirm Order
           </button>
         </div>

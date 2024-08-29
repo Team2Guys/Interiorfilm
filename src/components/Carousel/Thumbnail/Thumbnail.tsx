@@ -111,11 +111,11 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail }) => {
 
               <div ref={prevRef} className='swiper-prev absolute left-[-30px] md:left-[-25px] top-1/2 transform -translate-y-1/2 z-10 cursor-pointer'>
 
-                <Image src='/images/arrows.png' width={51} height={55} />
+                <Image src='/images/arrows.png' width={51} height={55} alt='arrow' />
 
               </div>
               <div ref={nextRef} className='swiper-button absolute right-[-15px]  md:right-[-25px] top-1/2 transform -translate-y-1/2 z-10 cursor-pointer'>
-                <Image src='/images/arrows.png' width={51} height={55} className='rotate-180' />
+                <Image src='/images/arrows.png' width={51} height={55} className='rotate-180' alt='arrow' />
               </div>
             </div>
           </div>
@@ -135,11 +135,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail }) => {
               />
             )}
           </div>
-        </div>
-        <div className="lg:max-w-[1020px] hidden lg:block">
-          <Accordion />
-        </div>
-       
+        </div>       
       </div>
       <div className="lg:max-w-[1020px] hidden lg:block">
         <Accordion detail={detail} />

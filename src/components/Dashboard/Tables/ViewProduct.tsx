@@ -157,6 +157,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
           size={20}
           onClick={() => {
             if (canEditproduct) {
+              console.log(record, "canEditproduct")
               setEditProduct(record);
               setselecteMenu("Add Products");
             }

@@ -32,8 +32,8 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
   const [imagesUrl, setImagesUrl] = useState<any[]>([]);
-  const [posterimageUrl, setposterimageUrl] = useState<any[] | null>( EditInitialValues && [EditInitialValues.posterImageUrl]);
-  const [hoverImage, sethoverImage] = useState<any[] | null | undefined>(EditInitialValues && [EditInitialValues.hoverImageUrl]);
+  const [posterimageUrl, setposterimageUrl] = useState<any[] | null>( (EditInitialValues &&EditInitialValues.posterImageUrl) && [EditInitialValues.posterImageUrl]);
+  const [hoverImage, sethoverImage] = useState<any[] | null | undefined>((EditInitialValues && EditInitialValues.hoverImageUrl) && [EditInitialValues.hoverImageUrl]);
   const [loading, setloading] = useState<boolean>(false);
   const [productInitialValue, setProductInitialValue] = useState<any | null | undefined>(EditProductValue);
   const [imgError, setError] = useState<string | null | undefined>();
@@ -49,23 +49,26 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
     setIsOptionSelected(true);
   };
 
-  console.log("posterimageUrl", posterimageUrl)
+  console.log("hoverImage", hoverImage , hoverImage?.length, EditInitialValues.hoverImageUrl)
 
   useLayoutEffect(() => {
     const CategoryHandler = async () => {
       try {
         if (!EditInitialValues) return;
         const {
-
+          posterImageUrl,
           imageUrl,
           _id,
           createdAt,
           updatedAt,
           __v,
+          hoverImage,
           ...EditInitialProductValues
         } = EditInitialValues as any;
         imageUrl ? setImagesUrl(imageUrl) : null;
         posterImageUrl ? setposterimageUrl([posterImageUrl]) : null;
+        console.log(hoverImage, "EditInitialValues.hoverImageUrl")
+        hoverImage ? sethoverImage([hoverImage]) : null
       } catch (err) {
         console.log(err, "err");
       }
@@ -187,7 +190,6 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                       <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                         <h3 className="font-medium text-black dark:text-white">
                           Poster Image
-                          Poster Image
                         </h3>
                       </div>
                       {(posterimageUrl?.length > 0) ? (
@@ -231,7 +233,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                       <div>
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white ">
                           Product Name
-                          Product Name
+          
                         </label>
                         <input
                           type="text"
@@ -255,7 +257,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                       <div>
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                           Description{" "}
-                          Description{" "}
+                          
                         </label>
                         <textarea
                           name="description"
