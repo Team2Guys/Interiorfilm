@@ -7,10 +7,13 @@ import Link from 'next/link';
 import logo from "../../../../public/images/logowhite.png";
 import Image from 'next/image';
 import { socialLinks, customerCare, pages } from 'data/FooterData';
-import card1 from "../../../../public/images/new/card1.png";
-import card2 from "../../../../public/images/new/card2.png";
-import card3 from "../../../../public/images/new/card3.png";
-import card4 from "../../../../public/images/new/card4.png";
+import card6 from "../../../../public/images/payment-icons/Mastercard-Logo.png";
+import card2 from "../../../../public/images/payment-icons/applepay-logo.png";
+import card1 from "../../../../public/images/payment-icons/amex_82052.png";
+import card7 from "../../../../public/images/payment-icons/googlepay-logo.png";
+import card5 from "../../../../public/images/payment-icons/tabby-logo.png";
+import card3 from "../../../../public/images/payment-icons/tamara-logo.png";
+import card4 from "../../../../public/images/payment-icons/visacard-logo.png";
 import Container from '../Container/Container';
 import { SlEnvolopeLetter } from 'react-icons/sl';
 import Button from 'components/ui/Button/Button';
@@ -27,7 +30,7 @@ const Footer: React.FC = () => {
   const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
   const toggleCustomerCare = () => setIsCustomerCareOpen(!isCustomerCareOpen);
   const togglePages = () => setIsPagesOpen(!isPagesOpen);
-  const bottomImages = [card1, card2, card3,card4];
+  const bottomImages = [card1, card2, card3,card4,card5,card6,card7];
   const CategoryHandler = async () => {
 try{
   const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
@@ -82,13 +85,13 @@ try{
                   height={0}
                   src={image}
                   alt="Interior Film"
-                  className="w-10"
+                  className="w-10 rounded-sm"
                 />
               ))}
             </div> 
           </div>
           <hr className='lg:hidden bg-primary mb-5' />
-            <div className='lg:pb-0 pb-3'>
+            <div className='lg:pb-0 pb-3 '>
               <h3 
                 className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
                 onClick={toggleCategories}
@@ -97,14 +100,25 @@ try{
                 <span className="ml-2 md:hidden">
                   {isCategoriesOpen ? <FaAngleUp /> : <FaAngleDown />}
                 </span>
-              </h3>
-              <ul className={`space-y-2 transition-all duration-300 overflow-hidden ${isCategoriesOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}>
-                {category?.length > 0 && category.slice(0,4).map((category, index) => (
-                  <li key={index}>
-                    <Link href="/products" className='hover:text-primary link-footer'>{category.name}</Link>
-                  </li>
-                ))}
-              </ul>
+              </h3> 
+              <span className='flex gap-14'>
+  {category?.length > 0 && 
+    Array.from({ length: Math.ceil(category.length / 4) }).map((_, chunkIndex) => (
+      <ul 
+        key={chunkIndex} 
+        className={`space-y-2 transition-all duration-300 overflow-hidden ${isCategoriesOpen ? 'max-h-96' : 'max-h-0'} md:max-h-none`}
+      >
+        {category.slice(chunkIndex * 4, chunkIndex * 4 + 4).map((categoryItem, index) => (
+          <li key={index}>
+            <Link href="/products" className='hover:text-primary link-footer'>{categoryItem.name}</Link>
+          </li>
+        ))}
+      </ul>
+    ))
+  }
+</span>
+
+
             </div>
             <div className='lg:pb-0 pb-3'>
               <h3 
