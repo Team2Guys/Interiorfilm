@@ -225,7 +225,7 @@ const CheckOut: React.FC = () => {
                   </div>
                   <div className="flex flex-col">
                     <label htmlFor="checkout" className="text-lightdark">
-                      Country <span className="text-red">*</span>
+                      City <span className="text-red">*</span>
                     </label>
                     <Select
                       showSearch
