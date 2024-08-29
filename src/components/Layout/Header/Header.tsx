@@ -277,7 +277,7 @@ const Header = () => {
            content={<Megamanu  Categories={Categories} products={products} loading={loading} onProductClick={closePopover} />}
            title=""
           >
-            <span onClick={() => router.push("/products?category=all")}>
+            <span onClick={() => router.push("/categories")}>
               Category
             </span>
             {/* Category */}
@@ -380,7 +380,7 @@ const Header = () => {
                             <Link
                               onClick={CategoryHandlerclose}
                               className="hover:text-black hover:underline"
-                              href={"/products"}
+                              href={"/categories"}
                             >
                               View All
                             </Link>
