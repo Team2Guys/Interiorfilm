@@ -272,8 +272,10 @@ const Header = () => {
 
            placement="bottom"
            trigger="hover"
-           visible={visible}
-           onVisibleChange={handleVisibleChange}
+          //  visible={visible}
+          //  onVisibleChange={handleVisibleChange}
+           open={visible}
+           onOpenChange={handleVisibleChange}
            content={<Megamanu  Categories={Categories} products={products} loading={loading} onProductClick={closePopover} />}
            title=""
           >
