@@ -27,26 +27,26 @@ const CategorySlider: React.FC = () => {
     }
   }, [loading]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
-        const data = await response.json();
-        setCategories(data);
-      } catch (err) {
-        console.error("Error fetching categories:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+      const data = await response.json();
+      setCategories(data);
+    } catch (err) {
+      console.error("Error fetching categories:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchCategories();
   }, []);
 
   const handleCategoryClick = (category:any) => {
     localStorage.setItem('selectedCategory', JSON.stringify(category));
-    // Navigate to the products page if needed
   };
+  
 
   return (
     <div className="px-0 md:px-4 flex items-center relative mt-10">

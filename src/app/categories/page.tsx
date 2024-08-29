@@ -28,11 +28,11 @@ function Categories() {
   return (
     <>
       <Overlay title='Categories' />
-        <div className='w-full mt-20 px-2 md:px-8'>
+        <div className='w-full mt-10 md:mt-20 px-2 md:px-8'>
           {category.slice(0, 7).map((item: any, index) => {
             const EvenFlag = index % 2 === 0;
             return (
-              <div key={index} className='w-full flex flex-wrap md:flex-nowrap gap-12 mb-20'>
+              <div key={index} className='w-full flex flex-wrap md:flex-nowrap gap-12 mb-10 md:mb-20'>
                 <div className={`w-full md:w-3/6 ${EvenFlag ? "order-1 md:order-1" : 'order-1 md:order-2'} `}>
                   <Image
                     src={item.posterImageUrl.imageUrl}
@@ -43,9 +43,10 @@ function Categories() {
                   />
                 </div>
                 <div className={`w-full md:w-3/6 flex justify-center flex-col md:min-w-80 ${EvenFlag ? "order-2 md:order-2" : 'order-1 md:order-1'}`}>
-                  <h1 className='text-[#3A393C] font-bold font-poppins text-[30px] pb-5'>{item.name}</h1>
-                  <p className='text-[#3A393C] text-[20px] leading-[45px] font-poppins pb-7'>{item.description}</p>
+                  <h1 className='text-[#3A393C] font-bold font-poppins text-20 md:text-[30px] pb-5'>{item.name}</h1>
+                  <p className='text-[#3A393C] text-14 md:text-[20px] leading-[20px] md:leading-[45px] font-poppins pb-7'>{item.description}</p>
                   <button onClick={() => handleButtonClick(item._id)} className='inline-block text-start border w-fit px-6 rounded-md border-[#535353] outline-none hover:bg-black hover:text-white font-poppins font-normal text-[15px] leading-[44px]'>View All</button>
+               
                 </div>
               </div>
             );

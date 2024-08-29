@@ -206,6 +206,7 @@ export const options = [
     label: 'Fujairah',
   },
 ];
+
 export const privacyPolicyData: PrivacyPolicyItem[] = [
   {
     title: '',
@@ -317,11 +318,11 @@ export const return__refund: PrivacyPolicyItem[] = [
 export const ShipmentPolicydata: PrivacyPolicyItem[] = [
 
   {
-    title: '*SPEND ABOVE AED 250 FOR FREE DELIVERY IN UAE*',
-    text: 'If your order exceeds AED 250 and you are located inside the UAE, you will be offered free standard delivery at checkout. ',
+    title: 'Free Shipping On Orders Over AED 250 EVERYWHERE (WITHIN DUBAI CITY LIMITS. ) ',
+    text: 'If your order exceeds over AED 250 and you are located inside the UAE, you will be offered free standard delivery at checkout. ',
   },
   {
-    text: 'If your order is below AED 250, we will offer standard delivery anywhere in the UAE for only AED30. ',
+    text: 'If your order is below AED 250, we will offer standard delivery anywhere in the UAE for only AED 30. ',
   },
   {
     text: "CASH ON DELIVERY: NOT AVAILABLE",
@@ -385,4 +386,33 @@ export const Terms_Conditions: PrivacyPolicyItem[] = [
   {
     text: "It is advised that users abide by these rules to avoid any legal consequences or violation of the terms of service.",
   }, 
+];
+
+export const detaildot = [
+  {specsDetails:"Lorem ipsum dolor sit dsg"},
+  {specsDetails:"Aliquam tincidunt mau"},
+  {specsDetails:"Cras ornare tristique elit"},
+  {specsDetails:"Lorem ipsum dolor sit dsg"},
+  {specsDetails:"Fusce pellentesque"},
+  {specsDetails:"Cras iaculis ultricies nulla."},
+  {specsDetails:"Lorem ipsum dolor sit dsg"},
+  {specsDetails:"Aliquam tincidunt mau"},
+  {specsDetails:"Cras ornare tristique elit"},
+  {specsDetails:"Lorem ipsum dolor sit dsg"},
+  {specsDetails:"Fusce pellentesque"},
+  {specsDetails:"Cras iaculis ultricies nulla."},
+]
+export const collapseData = [
+  {
+    title: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR',
+    content: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR LOREM IPSUM DOLOR SIT AMET, CONSECTETUR...',
+  },
+  {
+    title: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR',
+    content: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR LOREM IPSUM DOLOR SIT AMET, CONSECTETUR...',
+  },
+  {
+    title: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR',
+    content: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR LOREM IPSUM DOLOR SIT AMET, CONSECTETUR...',
+  },
 ];

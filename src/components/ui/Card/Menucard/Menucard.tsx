@@ -18,27 +18,14 @@ interface CardProps {
   categoryId?: string;
   carDetail?: string;
   cardClass?: string;
+  onClick?: ()=>void;
 }
 
-const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail, cardClass }) => {
+const Menucard: React.FC<CardProps> = ({ ProductCard, cardClass ,onClick }) => {
   const router = useRouter();
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   const pathname = usePathname();
 
 
@@ -49,6 +36,7 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDet
       name: product.name,
       price: product.salePrice,
       imageUrl: product.posterImageUrl?.imageUrl,
+      totalStockQuantity: product.totalStockQuantity, 
       discountPrice: product.discountPrice,
       color: selectedValue,
       length: 1,
@@ -96,6 +84,7 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDet
       price: product.salePrice,
       imageUrl: product.posterImageUrl?.imageUrl,
       discountPrice: product.discountPrice,
+      totalStockQuantity: product.totalStockQuantity, 
       color: selectedValue,
       count: 1,
       length: 1,
@@ -130,17 +119,13 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDet
     window.dispatchEvent(new Event("WishlistChanged"));
     console.log(existingWishlist, "existingWishlist")
   };
-
-
-
-
   const Homepage = pathname.startsWith('/');
   const slicedArray = Homepage && totalProducts ? totalProducts.slice(0, 6) : [];
   const productsToRender = slicedArray.length > 0 ? slicedArray : totalProducts;
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
-      <div className={`relative group ${cardClass}`} key={index}>
+      <div className={`relative group ${cardClass}`} key={index} onClick={onClick}>
       <div className="space-y-3 absolute top-6 right-4 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 overflow-hidden transition ease-in-out duration-400 hidden md:block">
         <button onClick={() => handleAddToCart(product)} className="flex justify-center items-center z-10">
           <LuShoppingCart className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />
@@ -153,9 +138,9 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDet
       
       <div className="cursor-pointer  transition-all m-1 " onClick={() => router.push(`/product/${generateSlug(product.name)}`)}>
         <div className="text-center">
-          <div className='absolute top-50 hidden  translate-y-20 z-10 w-full md:flex justify-center opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition ease-in-out duration-400'>
+          {/* <div className='absolute top-50 hidden  translate-y-20 z-10 w-full md:flex justify-center opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition ease-in-out duration-400'>
             <button className='bg-white z-10 px-4 py-1'>Order Now</button>
-          </div>
+          </div> */}
           {product.posterImageUrl && product.posterImageUrl.imageUrl && (
             <Image className="bg-contain h-32 w-full md:h-60 rounded-lg" width={300} height={300} src={product.posterImageUrl.imageUrl} alt="Image" />
           )}

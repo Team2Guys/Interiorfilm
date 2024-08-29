@@ -12,10 +12,11 @@ import Menucard from 'components/ui/Card/Menucard/Menucard';
 
 interface PRODUCT_SLIDER_PROPS {
   products: PRODUCTS_TYPES[];
-  loading: boolean;
+  loading: any;
+  onProductClick : ()=>void;
 }
 
-const MenuSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) => {
+const MenuSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading,onProductClick  }) => {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<any>(null);
@@ -35,20 +36,26 @@ const MenuSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) => {
   if (loading) {
     const skeletonIcons = Array.from({ length: 4 });
     return (
-      <div className="flex flex-wrap items-center justify-center gap-5 md:flex-wrap">
+      <>
+      <div className="flex flex-wrap items-center gap-5 md:flex-nowrap overflow-hidden">
         {skeletonIcons.map((_, index) => (
           <div key={index} className="w-[20%] min-w-[250px]">
             <SkeletonLoading
               avatar={{ shape: 'square', size: 250 }}
               title={false}
-              paragraph={{ rows: 3 }}
+              paragraph={{ rows: 1 }}
               style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
               className="w-full"
               active={true}
-            />
+              />
           </div>
         ))}
       </div>
+      <div className='mt-10 mb-5 flex justify-end space-x-0 !gap-2'>
+      <SkeletonLoading className='w-20' active title={false} paragraph={{ rows: 1 }} />
+      <SkeletonLoading className='w-20' active title={false} paragraph={{ rows: 1 }} />
+      </div>
+        </>
     );
   }
 
@@ -57,10 +64,6 @@ const MenuSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) => {
      
       <Swiper
         ref={swiperRef}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
         loop={true}
         breakpoints={{
           320: {
@@ -93,7 +96,7 @@ const MenuSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading }) => {
       >
         {products && products.map((product, index) => (
           <SwiperSlide key={index} className="custom">
-            <Menucard ProductCard={[product]} slider={true}/>
+            <Menucard ProductCard={[product]} slider={true} onClick={onProductClick}/>
           </SwiperSlide>
         ))}
       </Swiper>

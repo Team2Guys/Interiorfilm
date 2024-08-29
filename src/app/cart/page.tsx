@@ -1,45 +1,36 @@
-//@ts-nocheck
 "use client";
 import React, { useState, useEffect } from 'react';
-import Button from 'components/Common/Button';
-import Container from 'components/Layout/Container/Container';
 import Table from 'components/ui/Table/Table'; // Update with correct path to your Table component
 import Overlay from 'components/widgets/Overlay/Overlay';
 import Link from 'next/link';
-import SelectList from 'components/ui/Select/Select';
-import { options } from 'data/Data';
 import { useRouter } from 'next/navigation';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [subtotal, setSubtotal] = useState(0);
-  const [shippingCharges, setShippingCharges] = useState(0);
   const [total, setTotal] = useState(0);
-  const router = useRouter()
+  const router = useRouter();
 
-  const onChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
-
-  useEffect(() => {
-    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
-    setCartItems(existingCart);
-    calculateTotals(existingCart);
-  }, []);
-
-  const calculateTotals = (items) => {
-    const sub = items.reduce((acc, item) => {
+  // Function to calculate the total price
+  const calculateTotals = (items:any) => {
+    const sub = items.reduce((acc:string, item:any) => {
       const price = item.discountPrice ? item.discountPrice : item.price;
       return acc + (price * item.count * item.length); 
     }, 0);
     setTotal(sub);
   };
 
-  const handleCartChange = (updatedCart) => {
+  // Fetch cart items and calculate total when component mounts
+  useEffect(() => {
+    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    setCartItems(existingCart);
+    calculateTotals(existingCart);
+  }, []);
+
+  // Handle cart changes from the Table component
+  const handleCartChange = (updatedCart:any) => {
     setCartItems(updatedCart);
     calculateTotals(updatedCart);
   };
-
   return (
     <>
       <Overlay title="Shopping Cart" />

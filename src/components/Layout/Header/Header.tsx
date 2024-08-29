@@ -1,11 +1,11 @@
 "use client"
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import whitelogo from "../../../../public/images/logowhite.png";
 import blacklogo from "../../../../public/images/logoblack.png";
 import { IoIosSearch, IoMdHeartEmpty } from "react-icons/io";
-import { FaBars,} from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa6";
 import DrawerMenu from "components/ui/DrawerMenu/DrawerMenu";
 import { useRouter } from "next/navigation";
@@ -22,14 +22,19 @@ import { Categories_Types } from "types/interfaces";
 import { usePathname } from "next/navigation";
 import PRODUCTS_TYPES, { Category } from "types/interfaces";
 import MobileMenu from "./Megamanu/mobile-menu";
-import whatsapp from "../../../../public/images/whatsapp.png"
+import whatsapp from "../../../../public/images/whatsapp.png";
 import { SlHandbag } from "react-icons/sl";
 import CartDrawer from "components/cart-drawer/cart-drawer";
 
-
 const Header = () => {
-  const dispatch = useAppDispatch();  
+  const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [activeLink, setActiveLink] = useState<Category | undefined>();
+  const [Categories, setCategories] = useState<Categories_Types[]>([]);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [category, setcategory] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [WishlistItems, setWishlistItems] = useState([]);
@@ -37,8 +42,36 @@ const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const pathname = usePathname(); // Get the current path
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
+  useEffect(() => {
+    const productHandler = async () => {
+      setLoading(true);
+      try {
+        setLoading(true);
+        const categoryRequest = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
+        );
+        const productRequest = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
+        );
+        const [categoryResponse, productResponse] = await Promise.all([
+          categoryRequest,
+          productRequest,
+        ]);
+        setCategories(categoryResponse.data);
+        setProducts(productResponse.data.products);
+        setActiveLink(categoryResponse.data[0]);
+      } catch (err) {
+        console.log(err, "err");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    productHandler();
+  }, []);
 
   const AddminProfileTriggerHandler = async (token: string) => {
     try {
@@ -56,64 +89,15 @@ const Header = () => {
       console.log(err, "err");
     }
   };
+  const handleVisibleChange = (visible: boolean) => {
+    setVisible(visible);
+  };
 
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
-  const [activeLink, setActiveLink] = useState<Category | undefined>();
-  const [Categories, setCategories] = useState<Categories_Types[]>([]);
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
+  const closePopover = () => {
+    setVisible(false);
+  };
   const handleOpenDrawer = () => setDrawerOpen(true);
   const handleCloseDrawer = () => setDrawerOpen(false);
-
-  const productHandler = async () => {
-    try {
-      setLoading(true);
-      const categoryRequest = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
-      );
-      const productRequest = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
-      );
-      const [categoryResponse, products] = await Promise.all([
-        categoryRequest,
-        productRequest,
-      ]);
-
-      setTotalProducts(products.data.products);
-      setActiveLink(categoryResponse.data[0]);
-      setCategories(categoryResponse.data);
-    } catch (err) {
-      console.log(err, "err");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useLayoutEffect(() => {
-    productHandler();
-  }, []);
-
-  const handleCategoryClick = (category: Category) => {
-    setActiveLink(category);
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
-        );
-        setProducts(response.data.products);
-      } catch (error) {
-        console.log("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -154,12 +138,14 @@ const Header = () => {
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     setCartItems(existingCart);
+    
   }, []);
 
   useEffect(() => {
     const handleCartChange = () => {
       const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
       setCartItems(updatedCart);
+      
     };
 
     window.addEventListener("cartChanged", handleCartChange);
@@ -192,6 +178,7 @@ const Header = () => {
     const handleCartChange = () => {
       setcategory(false);
       setOpen(false);
+      
     };
 
     window.addEventListener("cartChanged", handleCartChange);
@@ -201,6 +188,11 @@ const Header = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (isModalOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [isModalOpen]);
   const truncateText = (text: any, maxLength: any) => {
     return text.length > maxLength
       ? text.substring(0, maxLength) + "..."
@@ -214,12 +206,33 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  useEffect(() => {
+  let previousCartItemCount = cartItems.reduce((count, item:any) => count + item.count, 0);
 
+  const handleCartChange = () => {
+    const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const updatedCartItemCount = updatedCart.reduce((count:number, item:any) => count + item.count, 0);
+    if (updatedCartItemCount > previousCartItemCount) {
+      setCartItems(updatedCart);
+      setDrawerOpen(true);
+      setTimeout(() => {
+        setDrawerOpen(false);
+      }, 2000);
+    }
+    previousCartItemCount = updatedCartItemCount;
+  };
+
+  window.addEventListener("cartChanged", handleCartChange);
+
+  return () => {
+    window.removeEventListener("cartChanged", handleCartChange);
+  };
+}, [cartItems]);
   return (
     <>
       <div className="bg-black  border-b py-2 border-black  w-full z-99 relative">
-        <p className="uppercase text-white text-center text-xs md:text-14">
-          Free Shipping on orders over 10 meters
+        <p className="uppercase text-white text-center text-[10px] sm:text-xs md:text-14">
+          Free Shipping on over AED 250 EVERYWHERE (WITHIN DUBAI CITY LIMITS.)
         </p>
       </div>
       <nav
@@ -234,7 +247,7 @@ const Header = () => {
         <div className="flex justify-between md:items-center space-x-4">
         <Link href="/">
       <Image
-        className="w-24 h-6 md:w-44 lg:w-50 md:h-8 lg:h-10 "
+        className="w-24 h-6 md:w-44 lg:w-50 md:h-8 lg:h-10"
         src={isHomePage ? (isScrolled ? blacklogo : whitelogo) : blacklogo}
         alt="logo"
         width={500}
@@ -243,7 +256,7 @@ const Header = () => {
     </Link>
         </div>
         <ul
-          className={`hidden md:flex md:flex-1 space-x-4 lg:space-x-10 text-18 py-4 px-6  ${
+          className={`hidden lg:flex lg:flex-1 space-x-4 lg:space-x-10 text-18 py-4 px-6  ${
             isHomePage
               ? isScrolled
                 ? "bg-white text-black"
@@ -255,16 +268,19 @@ const Header = () => {
             Home
           </Link>
           <Popover
-            className="cursor-pointer link-underline"
-            placement="bottom"
-            trigger="click"
-            content={<Megamanu Categories={Categories} products={products} />}
-            title=""
-            
+           className="cursor-pointer link-underline"
+
+           placement="bottom"
+           trigger="hover"
+           visible={visible}
+           onVisibleChange={handleVisibleChange}
+           content={<Megamanu  Categories={Categories} products={products} loading={loading} onProductClick={closePopover} />}
+           title=""
           >
-          
-          {/* <span onClick={()=>router.push('/categories')}>Category</span> */}
-            Category
+            <span onClick={() => router.push("/products?category=all")}>
+              Category
+            </span>
+            {/* Category */}
           </Popover>
           <Link className="link-underline" href="/about">
             About
@@ -282,52 +298,56 @@ const Header = () => {
               : "bg-white text-black"
           }`}
         >
-          
           {loggedInUser ? (
             <Profile />
           ) : (
             <Link className=" text-20 md:text-2xl" href="/login">
-              <FaRegUser  className=" cursor-pointer" />
+              <FaRegUser className=" cursor-pointer" />
             </Link>
           )}
-          <div className=" cursor-pointer text-20 md:text-2xl" onClick={showModal}>
+          <div
+            className=" cursor-pointer text-20 md:text-2xl"
+            onClick={showModal}
+          >
             <IoIosSearch />
           </div>
-       
+
           <Link href={"/wishlist"} className="relative text-20 md:text-2xl">
-            <IoMdHeartEmpty  className=" cursor-pointer" />
+            <IoMdHeartEmpty className=" cursor-pointer" />
             {cartItems.length > 0 ? (
               <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center bg-white text-black absolute left-3 top-3">
                 <span className="font-medium text-12 md:text-18">
-                {WishlistItems.reduce((count: any, item: any) => count + item.count, 0)}
+                  {WishlistItems.reduce(
+                    (count: any, item: any) => count + item.count,
+                    0
+                  )}
                 </span>
               </div>
             ) : (
               <></>
             )}
           </Link>
-          
-          <CartDrawer  open={drawerOpen}
-           onClose={handleCloseDrawer}  OpenDrawer={
-              <div className="relative  text-20 md:text-2xl cursor-pointer" onClick={handleOpenDrawer} >
-              <SlHandbag  className=" cursor-pointer" />
-              {cartItems.length > 0 ? (
-                <div className="md:w-5 md:h-5 w-3 h-3 z-50 rounded-full flex justify-center items-center bg-white text-black absolute left-3 top-3">
-                  <span className="font-medium text-12 md:text-18 z-50">
-                    {" "}
-                    {cartItems.reduce(
-                      (count: any, item: any) => count + item.count,
-                      0
-                    )}
-                  </span>
-                </div>
-              ) : (
-                <></>
-              )}
+          <Link href={"/cart"} className="relative text-20 md:text-2xl">
+            <SlHandbag  className=" cursor-pointer" />
+            {cartItems.length > 0 ? (
+              <>
+              <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center bg-white text-black absolute left-3 top-3">
+                <span className="font-medium text-12 md:text-18">
+                {cartItems.reduce(
+                  (count: any, item: any) => count + item.count,
+                  0
+                )}
+                </span>
               </div>
-          }/>
+                
+                </>
+              
+            ) : (
+              <></>
+            )}
+          </Link>
          
-          <div className="px-3 block md:hidden">
+          <div className="px-3 block lg:hidden">
             <DrawerMenu
               showDrawer={showDrawer}
               onClose={onClose}
@@ -337,7 +357,8 @@ const Header = () => {
                 <>
                   <div className="text-20 md:text-2xl ">
                     <FaBars />
-                  </div> </>
+                  </div>{" "}
+                </>
               }
               content={
                 <>
@@ -357,6 +378,7 @@ const Header = () => {
                         headtitle={
                           <div className="float-end ">
                             <Link
+                              onClick={CategoryHandlerclose}
                               className="hover:text-black hover:underline"
                               href={"/products"}
                             >
@@ -371,11 +393,12 @@ const Header = () => {
                         title={"product"}
                         content={
                           <>
-                            <MobileMenu
+                          <Megamanu  Categories={Categories} products={products} loading={loading} onProductClick={CategoryHandlerclose} />
+                            {/* <MobileMenu
                               onClick={CategoryHandlerclose}
                               Categories={Categories}
                               products={products}
-                            />
+                            /> */}
                           </>
                         }
                       />
@@ -398,9 +421,7 @@ const Header = () => {
                         Contact Us
                       </Link>
                     </li>
-               
                   </ul>
-
                 </>
               }
             />
@@ -408,8 +429,12 @@ const Header = () => {
         </div>
       </nav>
       <div className="fixed top-[100px] right-0 z-999 ">
-      <Link target="_blank" href={"https://wa.link/mb359y"} className="sticky top-1 ">
-          <Image width={200} height={200} src={whatsapp} alt="whatsappo"/>
+        <Link
+          target="_blank"
+          href={"https://wa.link/mb359y"}
+          className="sticky top-1 "
+        >
+          <Image width={200} height={200} src={whatsapp} alt="whatsappo" />
         </Link>
       </div>
       <Modal
@@ -425,6 +450,7 @@ const Header = () => {
             <input
               className="w-full px-4 border h-14 rounded-md outline-none"
               type="text"
+              ref={searchInputRef} // Assign the ref here
               placeholder="Search Product Here..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -437,7 +463,9 @@ const Header = () => {
                 filteredProducts.map((product, index) => (
                   <Link
                     key={index}
-                    href={{ pathname: `/product/${generateSlug(product.name)}` }}
+                    href={{
+                      pathname: `/product/${generateSlug(product.name)}`,
+                    }}
                     onClick={() => setIsModalOpen(false)}
                     className="shadow p-2 flex gap-2 mt-2 rounded-md border text-black hover:text-black border-gray hover:border-primary"
                   >
@@ -465,6 +493,7 @@ const Header = () => {
           )}
         </>
       </Modal>
+      <CartDrawer open={drawerOpen} onClose={handleCloseDrawer} />
    
     </>
   );

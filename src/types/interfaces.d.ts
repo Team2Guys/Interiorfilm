@@ -64,6 +64,7 @@ export interface USRPROPS {
     public_id?: string;
     imageUrl?: string;
     name?: string;
+    imageIndex?:number;
   }
 
   interface Images {
@@ -115,7 +116,7 @@ interface sizes {
 
 interface PRODUCTS_TYPES {
   _id?: any;
-  name: string;
+  name: any;
   posterImageUrl?: Image;
   hoverImageUrl?: Image;
   description?: string;
@@ -125,19 +126,22 @@ interface PRODUCTS_TYPES {
   imageUrl?: IMAGE_INTERFACE[];
   discountPrice?: any;
   colors?: Color[];
-  modelDetails?: ModelDetail[];
+  modelDetails?: { name: string; detail: string }[]; 
   spacification?: Specification[];
   createdAt: Date;
   updatedAt: Date;
   starRating?: string;
   reviews?: string;
-  totalStockQuantity?: number;
+  totalStockQuantity?: any;
   sizes?: sizes[];
   isFeatured?: any;
   price?: number;
   count?: any;
   length?: any;
   totalPrice?:any;
+  customOrder?: number;
+  createdAt?:any;
+  updatedAt?: any;
 }
 
 export default PRODUCTS_TYPES;
@@ -182,10 +186,11 @@ export interface product {
   colors: Array<{ colorName: string, _id: string }>;
   modelDetails: Array<{ name: string, detail: string, _id: string }>;
   spacification: Array<{ specsDetails: string, _id: string }>;
+  totalStockQuantity: number;
   createdAt: string;
   starRating: string;
   reviews: string;
-  sizes: Array<string>;
+  sizes: any;
   updatedAt: string;
   price: string;
   __v: number;

@@ -44,8 +44,6 @@ const StaticCategory = {
 
 const Products = () => {
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
-  const [totalPage, setTotalPage] = useState<string | undefined>()
-  const [totalProductscount, setTotalProductscount] = useState<number | undefined>()
   const [error, setError] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
   const [colorName, setColorName] = useState<string>()
@@ -58,7 +56,6 @@ const Products = () => {
   const [activeLink, setActiveLink] = useState<category | undefined>()
   const [inStockOnly, setInStockOnly] = useState<boolean>(true)
   const [outOfStockOnly, setOutOfStockOnly] = useState<boolean>(false)
-
   const handleInStockChange: CheckboxProps['onChange'] = (e) => {
     setInStockOnly(e.target.checked)
     setOutOfStockOnly(false)
@@ -89,24 +86,22 @@ const Products = () => {
       setInStockOnly(false)
     }
   }
-
   const showDrawer = () => {
     setOpen(true)
   }
-
   const onClose = () => {
     setOpen(false)
   }
 
-  let productHandler = async (categoryId: string | null) => {
+  const productHandler = async (categoryId: string | null) => {
     try {
-      setLoading(true)
-      const CategoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`)
-      const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`)
+      setLoading(true);
+      const CategoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+      const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
 
       const [categoryResponse, products] = await Promise.all([CategoryRequest, productRequest]);
-      let category = categoryResponse.data
-      setTotalProducts(products.data.products)
+      let category = categoryResponse.data;
+      setTotalProducts(products.data.products);
 
       if (categoryId) {
         const activeCategory = category.find((cat: category) => cat._id === categoryId) || StaticCategory;
@@ -114,11 +109,11 @@ const Products = () => {
       } else {
         setActiveLink(categoryResponse.data[0]);
       }
-      setCategory([StaticCategory, ...category])
+      setCategory([StaticCategory, ...category]);
     } catch (err) {
-      console.log(err, "err")
+      console.log(err, "err");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -151,48 +146,49 @@ const Products = () => {
     if (activeLink._id === "all") {
       return product;
     }
-
-    return product.category === activeLink._id
+    return product.category === activeLink._id;
   }) : totalProducts;
-
-  console.log()
   const filteredProducts = filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
-    if (!product) return true; // Keep the product if it's null
-
+    if (!product) return true;
     const price = product.discountPrice ?? product.salePrice;
     const priceMatch = (priceRange.from === '' || price >= priceRange.from) && (priceRange.to === '' || price <= priceRange.to);
     const nameMatch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
     const colorMatch = !colorName || (product.colors && product.colors.some(color => color.colorName === colorName));
     const inStockMatch = !inStockOnly || product.totalStockQuantity && product.totalStockQuantity > 0;
-    const outOfStockMatch = !outOfStockOnly || product.totalStockQuantity === 0 || !product.totalStockQuantity
-
+    const outOfStockMatch = !outOfStockOnly || product.totalStockQuantity === 0 || !product.totalStockQuantity;
     return nameMatch && colorMatch && priceMatch && inStockMatch && outOfStockMatch;
   });
-
-  const sortedProducts = filteredProducts.sort((a, b) => {
-    const getPrice = (product: PRODUCTS_TYPES) => product.discountPrice ?? product.salePrice;
-
-    if (sortOption === "Low to High") {
-      return getPrice(a) - getPrice(b);
+  const sortProducts = (products: PRODUCTS_TYPES[]) => {
+    if (sortOption === "Default") {
+      return products.sort((a, b) => {
+        const nameA = a.name.toUpperCase(); // Convert to uppercase for case-insensitive comparison
+        const nameB = b.name.toUpperCase();
+        return nameA.localeCompare(nameB, undefined, { numeric: true, sensitivity: 'base' });
+      });
+    } else if (sortOption === "Low to High") {
+      const getPrice = (product: PRODUCTS_TYPES) => product.discountPrice ?? product.salePrice;
+      return products.sort((a, b) => getPrice(a) - getPrice(b));
     } else if (sortOption === "High to Low") {
-      return getPrice(b) - getPrice(a);
+      const getPrice = (product: PRODUCTS_TYPES) => product.discountPrice ?? product.salePrice;
+      return products.sort((a, b) => getPrice(b) - getPrice(a));
     } else {
-      return 0;
+      return products; // Default case, no sorting
     }
-  });
-
+  };
+  const sortedProducts = sortProducts(filteredProducts);
   const handleCategoryClick = (category: category) => {
     setActiveLink(category);
     const newUrl = new URL(window.location.href);
     newUrl.searchParams.set('category', category._id);
     window.history.pushState({}, '', newUrl.toString());
   };
+
   return (
     <>
       <Overlay title="Product" />
-      <Container className="mt-20">
-        <div className="flex justify-end gap-3">
-          <div className="flex gap-2 items-center w-3/6 md:w-auto">
+      <Container className="mt-20 lg:overflow-hidden">
+        <div className="flex justify-end items-end gap-3">
+          <div className="flex flex-wrap gap-2 items-center w-3/6 md:w-auto">
             <h1>Sort By: </h1>
             <Select
               defaultValue="Default"
@@ -205,8 +201,6 @@ const Products = () => {
               ]}
             />
           </div>
-
-
           <div className="relative w-3/6 md:w-auto flex items-center border border-secondary" >
             <input
               className="px-2 py-2 rounded-none outline-none  w-[90%] border-sky-900"
@@ -215,14 +209,12 @@ const Products = () => {
               value={searchTerm}
               onChange={handleSearchChange}
             />
-
             <IoIosSearch className="inline-block absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-
           </div>
         </div>
 
-        <div className="flex flex-wrap lg:flex-nowrap gap-2 space-y-4">
-          <div className="w-full lg:w-3/12 space-y-3 hidden lg:block relative " style={{ boxShadow: "1px 0px 2px #00000029" }}>
+        <div className="flex flex-wrap lg:flex-nowrap gap-2 space-y-4 ">
+          <div className="w-full lg:w-3/12 space-y-3 hidden lg:block  " style={{ boxShadow: "1px 0px 2px #00000029" }}>
             <div className="sticky top-20">
               <div className="p-2 bg-white">
                 <Collapse title="All Categories">
