@@ -696,9 +696,9 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                               className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
                               key={index}
                             >
-                              <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
+                              <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full z-10">
                                 <RxCross2
-                                  className="cursor-pointer text-red-500 hover:text-red-700"
+                                  className="cursor-pointer btext-red-500 hover:text-red-700"
                                   size={17}
                                   onClick={() => {
                                     console.log("funciton called");
@@ -709,7 +709,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                   }}
                                 />
                               </div>
-                              <div key={index} className="bg-red  relative ">
+                              <div key={index} className=" relative ">
                                 <div className="h-[100px] w-full overflow-hidden">
                                   <Image
                                     className="object-cover w-full h-full"
