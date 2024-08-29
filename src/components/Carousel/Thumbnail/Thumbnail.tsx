@@ -137,7 +137,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail }) => {
           </div>
         </div>       
       </div>
-      <div className="lg:max-w-[1020px] hidden lg:block">
+      <div className="lg:max-w-[1020px] hidden lg:block mt-5">
         <Accordion detail={detail} />
       </div>
     </Fragment>

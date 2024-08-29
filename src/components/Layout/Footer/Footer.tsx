@@ -158,7 +158,7 @@ const Footer: React.FC = () => {
                 className="font-semibold mb-4 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
                 onClick={togglePages}
               >
-                Pages
+                Policies
                 <span className="ml-2 md:hidden">
                   {isPagesOpen ? <FaAngleUp /> : <FaAngleDown />}
                 </span>
