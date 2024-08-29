@@ -92,7 +92,7 @@ const CheckoutData: React.FC<TableProps> = ({
       <h2 className="text-16 font-medium  text-end mb-4">
         *total <span className="text-primary">{totalCount}</span> Items
       </h2>
-      <div className="space-y-4 max-h-85 overflow-y-scroll custom-scrollbar1">
+      <div className="space-y-4 max-h-54 overflow-y-scroll custom-scrollbar1">
         {data.map((product, index) => (
           <div className="bg-transparent" key={index}>
             <div className="flex gap-2 sm:gap-4 justify-between items-center pe-1 sm:pe-6">
