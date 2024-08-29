@@ -238,12 +238,12 @@ const Table: React.FC<TableProps> = ({
                     >
                       Price
                     </th>
-                    {/* <th
+                    <th
                       scope="col"
                       className="px-6 py-3 text-start text-[30px] font-medium text-dark"
                     >
-                      Quantity
-                    </th> */}
+                      Quantity (M)
+                    </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-end text-[30px] font-medium text-dark"
@@ -282,17 +282,19 @@ const Table: React.FC<TableProps> = ({
                               </div>
                             </div>
                             <div className="p-2 w-full">
+
                               <h1 className="text-sm md:text-base font-bold">
+                                <span>{counts[index] || 1}</span>* (
                                 {typeof product.name === "string"
                                   ? product.name
-                                  : ""}
+                                  : ""} )
                               </h1>
                               <div>
                                 <p className="text-16 font-semibold">
-                                  {counts[index] || 1}x
+                                  Width: <span>1.22cm (28in)</span>
                                 </p>
                               </div>
-                              <div className="flex gap-2 items-center w-full">
+                              {/* <div className="flex gap-2 items-center w-full">
                                 <ProductSelect
                                   className="w-[70%] h-10 border outline-none shipment text-20"
                                   onChange={(value) =>
@@ -303,7 +305,7 @@ const Table: React.FC<TableProps> = ({
                                     lengths[index] || product.length
                                   } METERS`}
                                 />
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                         </td>
@@ -321,7 +323,11 @@ const Table: React.FC<TableProps> = ({
                             </span>
                           </p>
                         </td>
-
+                        <td>
+                        {
+                            lengths[index] || product.length
+                        }
+                        </td>
                         <td className="px-6 py-4 whitespace-nowrap text-end text-sm md:text-base">
                           {pathName === "/wishlist" ? (
                             <Button

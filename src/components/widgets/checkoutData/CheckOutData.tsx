@@ -88,7 +88,7 @@ const CheckoutData: React.FC<TableProps> = ({
   };
 
   return (
-    <div className="bg-transparent px-2 md:ps-6 py-10 md:pe-10">
+    <div className="bg-transparent px-2 lg:ps-6 py-10 lg:pe-10">
       <h2 className="text-16 font-medium  text-end mb-4">
         *total <span className="text-primary">{totalCount}</span> Items
       </h2>
@@ -98,7 +98,7 @@ const CheckoutData: React.FC<TableProps> = ({
             <div className="flex gap-2 sm:gap-4 justify-between items-center pe-1 sm:pe-6">
               <div className="w-10/12 flex gap-3 sm:gap-6 items-center">
                 <Image
-                  className="w-18 xsm:w-22 sm:w-32 h-18 xsm:h-22 sm:h-32"
+                  className="w-18 xsm:w-22 sm:w-24 h-18 xsm:h-22 sm:h-24"
                   width={100}
                   height={100}
                   src={product.imageUrl[0].imageUrl || product.imageUrl}
@@ -122,9 +122,9 @@ const CheckoutData: React.FC<TableProps> = ({
                   </div>
 
                   <div className="flex gap-2 items-center">
-                    <p className="font-semibold text-base">Dimension : 1.22</p>{" "}
-                    <IoIosClose size={20} />
-                    <div className={` text-sm font-semibold`}
+                    <p className="font-semibold text-14 xl:text-base whitespace-nowrap">Dimension: 1.22</p>
+                    <IoIosClose size={14} />
+                    <div className={` text-14 xl:text-sm font-semibold whitespace-nowrap`}
                     >{product.length} Meter</div>
                   </div>
                 </div>
@@ -147,7 +147,7 @@ const CheckoutData: React.FC<TableProps> = ({
         ))}
       </div>
 
-      <div className="w-full sm:w-3/4 lg:w-3/4 xl:w-2/3 mx-auto bg-white px-14 pt-10 py-14 space-y-3 rounded-sm mt-10">
+      <div className="w-full sm:w-3/4 md:w-11/12 lg:w-11/12 xl:w-10/12 2xl:w-3/4 mx-auto bg-white px-5 xl:px-14 pt-10 py-14 space-y-3 rounded-sm mt-10">
         <h2 className="text-23 font-bold tracking-wide">YOUR ORDER</h2>
         <div className="flex justify-between items-center">
           <h2 className="text-16 font-bold">SUBTOTAL</h2>

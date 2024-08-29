@@ -46,7 +46,6 @@ const Cart = () => {
           <div className="flex flex-wrap md:flex-nowrap md:gap-10">
             <div className="w-full md:w-9/12">
               <Table cartdata={cartItems} onCartChange={handleCartChange} />
-
               <div className='mt-4'><Link className='bg-dark p-3 text-white' href={"/"}>Continue Shopping</Link></div>
             </div>
             <div className="w-full md:w-3/12 mt-3">
