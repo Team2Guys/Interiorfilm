@@ -6,6 +6,7 @@ import { Rate, message } from "antd";
 import { GoHeart } from "react-icons/go";
 import PRODUCTS_TYPES from "types/interfaces";
 import ProductSelect from "components/ui/Select/ProductSelect";
+import { RxMinus, RxPlus } from "react-icons/rx";
 interface productDetailsProps {
   productDetail: PRODUCTS_TYPES;
   categoryName?: string;  
@@ -28,89 +29,120 @@ export default function ProductDetails({
       value: i + 1,
     }))
   : [];
-console.log(productDetail, "productDetailproductDetailproductDetailproductDetail")
+
   // Calculate average rating
   const calculateAverageRating = () => {
     if (reviews.length === 0) return 0;
     const totalRating = reviews.reduce((sum, review) => sum + review.star, 0);
     return totalRating / reviews.length;
   };
+
   const averageRating = calculateAverageRating();
-
-const handleAddToCart = (product: any) => {
-  const newCartItem = {
-    id: product._id,
-    name: product.name,
-    price: product.salePrice,
-    imageUrl: product.posterImageUrl?.imageUrl,
-    discountPrice: product.discountPrice,
-    totalStockQuantity: product.totalStockQuantity,
-    count: 1, // Default to 1 for new addition
-    length, // Ensure length is added to the cart item
-    totalPrice: (product.discountPrice || product.salePrice) * length, // Calculate total price based on length
-    purchasePrice: product.purchasePrice,
-    sizes: product.sizes,
+  const handleIncrement = () => {
+    if (quantity < 100) {
+      setQuantity(quantity + 1);
+    } else {
+      message.error('Quantity cannot exceed 100.');
+    }
   };
 
-  let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-  const existingItemIndex = existingCart.findIndex(
-    (item: any) => item.id === product._id && item.length === length
-  );
-
-  if (existingItemIndex !== -1) {
-    const existingItem = existingCart[existingItemIndex];
-    existingItem.count += 1;
-    existingItem.totalPrice = (product.discountPrice || product.salePrice) * existingItem.count * length;
-    existingCart[existingItemIndex] = existingItem;
-  } else {
-    existingCart.push(newCartItem);
-  }
-  localStorage.setItem("cart", JSON.stringify(existingCart));
-  message.success("Product added to cart successfully!");
-  window.dispatchEvent(new Event("cartChanged"));
-};
-
-const handleAddToWishlist = (product: any) => {
-  const newWishlistItem = {
-    id: product._id,
-    name: product.name,
-    price: product.salePrice,
-    imageUrl: product.posterImageUrl?.imageUrl,
-    discountPrice: product.discountPrice,
-    totalStockQuantity: product.totalStockQuantity,
-    count: 1, 
-    length, 
-    totalPrice: (product.discountPrice || product.salePrice) * length, 
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    } else {
+      message.error('Quantity cannot be less than 1.');
+    }
   };
 
-  let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
-  const existingItemIndex = existingWishlist.findIndex(
-    (item: any) => item.id === product._id && item.length === length
-  );
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    if (!isNaN(value) && value >= 1 && value <= 100) {
+      setQuantity(value);
+    } else {
+      message.error('Please enter a quantity between 1 and 100.');
+    }
+  };
 
-  if (existingItemIndex !== -1) {
-    const existingItem = existingWishlist[existingItemIndex];
-    existingItem.count += 1; 
-    existingItem.totalPrice = (product.discountPrice || product.salePrice) * existingItem.count * length;
-    existingWishlist[existingItemIndex] = existingItem;
-  } else {
-    existingWishlist.push(newWishlistItem);
-  }
-  localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
-  message.success("Product added to Wishlist successfully!");
-  window.dispatchEvent(new Event("WishlistChanged"));
-};
+  const handleAddToCart = (product: any) => {
+    const newCartItem = {
+      id: product._id,
+      name: product.name,
+      price: product.salePrice,
+      imageUrl: product.posterImageUrl?.imageUrl,
+      discountPrice: product.discountPrice,
+      totalStockQuantity: product.totalStockQuantity,
+      count: quantity, // Use the current quantity state
+      length, // Ensure length is added to the cart item
+      totalPrice: (product.discountPrice || product.salePrice) * length * quantity, // Calculate total price based on length and quantity
+      purchasePrice: product.purchasePrice,
+      sizes: product.sizes,
+    };
 
-useEffect(() => {
-  if (productDetail) {
-    const price = productDetail.discountPrice || productDetail.salePrice;
-    setTotalPrice(price * length); 
-  }
-}, [length, productDetail]);
+    let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existingItemIndex = existingCart.findIndex(
+      (item: any) => item.id === product._id && item.length === length
+    );
 
-const onChange = (value: number) => {
-  setLength(value);
-};
+    if (existingItemIndex !== -1) {
+      const existingItem = existingCart[existingItemIndex];
+      existingItem.count += quantity;
+      existingItem.totalPrice =
+        (product.discountPrice || product.salePrice) *
+        existingItem.count *
+        length;
+      existingCart[existingItemIndex] = existingItem;
+    } else {
+      existingCart.push(newCartItem);
+    }
+    localStorage.setItem('cart', JSON.stringify(existingCart));
+    message.success('Product added to cart successfully!');
+    window.dispatchEvent(new Event('cartChanged'));
+  };
+
+  const handleAddToWishlist = (product: any) => {
+    const newWishlistItem = {
+      id: product._id,
+      name: product.name,
+      price: product.salePrice,
+      imageUrl: product.posterImageUrl?.imageUrl,
+      discountPrice: product.discountPrice,
+      totalStockQuantity: product.totalStockQuantity,
+      count: quantity, // Use the current quantity state
+      length, // Ensure length is added to the wishlist item
+      totalPrice: (product.discountPrice || product.salePrice) * length * quantity, // Calculate total price based on length and quantity
+    };
+
+    let existingWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    const existingItemIndex = existingWishlist.findIndex(
+      (item: any) => item.id === product._id && item.length === length
+    );
+
+    if (existingItemIndex !== -1) {
+      const existingItem = existingWishlist[existingItemIndex];
+      existingItem.count += quantity; // Increment count based on quantity
+      existingItem.totalPrice =
+        (product.discountPrice || product.salePrice) *
+        existingItem.count *
+        length;
+      existingWishlist[existingItemIndex] = existingItem;
+    } else {
+      existingWishlist.push(newWishlistItem);
+    }
+    localStorage.setItem('wishlist', JSON.stringify(existingWishlist));
+    message.success('Product added to Wishlist successfully!');
+    window.dispatchEvent(new Event('WishlistChanged'));
+  };
+
+  useEffect(() => {
+    if (productDetail) {
+      const price = productDetail.discountPrice || productDetail.salePrice;
+      setTotalPrice(price * length * quantity); 
+    }
+  }, [length, quantity, productDetail]);
+
+  const onChange = (value: number) => {
+    setLength(value);
+  };
 
   return (
       <div className="mt-10 mb-5 px-4 xl:max-w-screen-2xl mx-auto">
@@ -163,7 +195,30 @@ const onChange = (value: number) => {
               value={length}
             />
             </div>
-
+            <div className="flex border w-28 h-10 justify-between px-2">
+              <div
+                onClick={handleDecrement}
+                className="  flex justify-center items-center"
+              >
+                <RxMinus size={20} />
+              </div>
+              <div className="  flex justify-center items-center">
+                <input
+                  className="h-7 w-8 text-center"
+                  type="text"
+                  min={1}
+                  max={100}
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                />
+              </div>
+              <div
+                onClick={handleIncrement}
+                className="  flex justify-center items-center"
+              >
+                <RxPlus size={20} />
+              </div>
+            </div>
             <div>
             <p className="text-16">
               <span className=" text-text font-medium text-16 mr-2">

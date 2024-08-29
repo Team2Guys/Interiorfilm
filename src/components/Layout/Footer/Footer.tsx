@@ -68,7 +68,7 @@ const Footer: React.FC = () => {
         </div>
         <div className='flex flex-wrap md:*:flex-nowrap items-center justify-end gap-2 w-full md:w-8/12 text-white mt-4 md:mt-0'>
         <SlEnvolopeLetter className='text-primary' size={35} />
-        <p className='lg:text-base text-sm capitalize text-white'>SUBSCRBE TO OUR NEWSLETTER.</p>
+        <p className='lg:text-base text-sm capitalize text-white'>SUBSCRIBE TO OUR NEWSLETTER.</p>
         <div className='flex items-center justify-center mt-5 md:mt-0 rounded-none'>
           <input className='bg-secondary border border-r-0 py-4 rounded-none h-9 px-2 outline-none w-4/6 md:w-auto' type='email' placeholder='Enter Email Address'/>
           <Button className='text-sm px-5' title={"SUBSCRBE"}/>
