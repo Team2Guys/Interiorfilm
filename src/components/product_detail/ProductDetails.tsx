@@ -186,7 +186,7 @@ export default function ProductDetails({
             </p>
             <div className="flex items-center gap-2">
             <p className="font-medium text-16 text-text">
-             Select Quantity:
+             Select Quantity (m):
             </p>
             <ProductSelect
               className="w-60 h-10 border outline-none shipment text-16"
