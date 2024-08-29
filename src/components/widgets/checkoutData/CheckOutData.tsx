@@ -7,7 +7,6 @@ import { IoCloseSharp } from "react-icons/io5";
 import PRODUCTS_TYPES from "types/interfaces";
 import { IoIosClose } from "react-icons/io";
 import { Checkbox } from "antd";
-
 interface TableProps {
   cartdata: PRODUCTS_TYPES[];
   onCartChange: (updatedCart: PRODUCTS_TYPES[]) => void;
@@ -17,7 +16,6 @@ interface TableProps {
   cartItems?: PRODUCTS_TYPES[];
   onClick?: MouseEvent<HTMLButtonElement>;
 }
-
 const CheckoutData: React.FC<TableProps> = ({
   cartdata,
   onCartChange,
@@ -59,7 +57,6 @@ const CheckoutData: React.FC<TableProps> = ({
       setTotalCount(total);
     }
   };
-
   useEffect(() => {
     ProductHandler();
   }, [pathName, changeId]);
