@@ -186,7 +186,7 @@ const Products = () => {
   return (
     <>
       <Overlay title="Product" />
-      <Container className="mt-20 lg:overflow-hidden">
+      <Container className="mt-20 md:overflow-hidden">
         <div className="flex justify-end items-end gap-3">
           <div className="flex flex-wrap gap-2 items-center w-3/6 md:w-auto">
             <h1>Sort By: </h1>

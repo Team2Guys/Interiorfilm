@@ -19,7 +19,7 @@ export default function Error({ error, reset }: ErrorProps) {
         <h2 className="text-2xl font-bold">Oops! Something went wrong.</h2>
         <p className="text-gray-700">{error.message}</p>
         <Link href='/contact'
-          className="w-35 sm:w-40 h-10 sm:h-12 text-14 sm:text-base flex justify-center items-center rounded-full bg-black text-white hover:bg-white border border-black hover:border-black hover:text-black transition"
+          className="w-35 sm:w-40 h-10 sm:h-12 text-14 sm:text-base flex justify-center items-center rounded-full bg-primary text-white hover:bg-white border border-primary hover:text-primary transition"
         >
           Contact Us
         </Link>

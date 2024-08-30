@@ -128,10 +128,17 @@
 
 
 .ant-popover-content {
-  width: 980px;
+  width: 780px;
+
 }
 .ant-popover .ant-popover-inner {
   margin-left: 50px !important;
+  max-height: 90vh;
+}
+@media only screen and (min-width: 1280px) {
+  .ant-popover-content {
+    width: 980px;
+  }
 }
 @media only screen and (min-width: 1440px) {
   .ant-popover-content {
@@ -139,6 +146,7 @@
   }
   .ant-popover .ant-popover-inner {
     margin-left: 100px !important;
+    max-height: 100vh;
   }
 }
 
