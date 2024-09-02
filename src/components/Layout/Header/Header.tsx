@@ -112,6 +112,7 @@ const Header = () => {
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    setSearchTerm('');
   };
 
   useEffect(() => {
