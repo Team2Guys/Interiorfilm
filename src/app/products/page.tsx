@@ -1,7 +1,7 @@
 'use client'
 import Container from 'components/Layout/Container/Container'
 import Overlay from 'components/widgets/Overlay/Overlay'
-import React, { useState, useLayoutEffect, useEffect } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import Card from 'components/ui/Card/Card'
 import Collapse from 'components/ui/Collapse/Collapse'
 import { Select, Space } from 'antd'
@@ -16,7 +16,6 @@ import axios from 'axios'
 import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading'
 import { Checkbox } from 'antd';
 import { IoIosSearch } from 'react-icons/io'
-import { useRouter } from 'next/navigation'
 
 interface category {
   posterImageUrl: {
@@ -44,8 +43,6 @@ const StaticCategory = {
 
 
 const Products = () => {
-  // const router = useRouter();
-  const [categoryNewId, setCategoryNewId] = useState(null);
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
   const [error, setError] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
@@ -120,26 +117,11 @@ const Products = () => {
     }
   }
 
-  // const queryParams = new URLSearchParams(window.location.search);
-  // const categoryId = queryParams.get('category');
-  // useEffect(() => {
-  //   console.log("Cat Id"+categoryId)
-  //   productHandler(categoryId);
-  // }, [router.query])
-  useEffect(() => {
+  useLayoutEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
-    const category = queryParams.get('category');
-    
-    if (category !== categoryNewId) {
-      //@ts-expect-error
-      setCategoryNewId(category);
-    }
-  }, [window.location.search]); // Dependency on URL change
-
-  useEffect(() => {
-      console.log("Category ID:", categoryNewId);
-      productHandler(categoryNewId); // Fetch products whenever categoryId changes
-  }, [categoryNewId]);
+    const categoryId = queryParams.get('category');
+    productHandler(categoryId);
+  }, [])
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
