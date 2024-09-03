@@ -224,8 +224,8 @@ const ProductPage = () => {
 
 
   return (
-        <Suspense>
-
+   
+<>
       <Overlay title="Product" />
       <Container className="mt-20 md:overflow-hidden">
         <div className="flex justify-end items-end gap-3">
@@ -433,7 +433,8 @@ const ProductPage = () => {
           </div>
         </div>
       </Container>
-      </Suspense>
+
+</>
 
   );
 };
