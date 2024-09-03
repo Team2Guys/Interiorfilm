@@ -43,14 +43,13 @@ const Cart = () => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-wrap md:flex-nowrap md:gap-10">
-            <div className="w-full md:w-9/12">
+          <div className="flex flex-wrap lg:flex-nowrap md:gap-10">
+            <div className="w-full lg:w-10/12 xl:w-9/12">
               <Table cartdata={cartItems} onCartChange={handleCartChange} />
-
               <div className='mt-4'><Link className='bg-dark p-3 text-white' href={"/"}>Continue Shopping</Link></div>
             </div>
-            <div className="w-full md:w-3/12 mt-3">
-            <p className='text-center text-[25px]'>Cart Totals</p>
+            <div className="w-full lg:w-5/12 xl:w-3/12 mt-3">
+            <p className='text-center uppercase text-[25px]'>Cart Total</p>
               <div className="w-full bg-[#EFEFEF] px-4 py-4 space-y-3 rounded-sm">
 
     

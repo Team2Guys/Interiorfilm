@@ -1,28 +1,29 @@
-'use client'; 
+"use client";
 
-import { useEffect } from 'react';
-
+import Link from "next/link";
+import { useEffect } from "react";
+import { ImNotification } from "react-icons/im";
 interface ErrorProps {
-    error: Error;
-    reset: () => void;
-  }
-export default function Error({ error, reset }:ErrorProps) {
+  error: Error;
+  reset: () => void;
+}
+export default function Error({ error, reset }: ErrorProps) {
   useEffect(() => {
     console.error(error);
   }, [error]);
-console.log(error, "error")
+  console.log(error, "error");
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-    <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-      <h2 className="text-2xl font-bold text-red-600 mb-4">Oops! Something went wrong.</h2>
-      <p className="text-gray-700 mb-6">{error.message}</p>
-      <button
-        onClick={() => reset()}
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-      >
-        Try Again
-      </button>
+    <div className="flex items-center justify-center h-[90vh]">
+      <div className="flex justify-center items-center flex-col gap-4">
+        <span className="flex justify-center items-center rounded-full w-30 h-30 text-white text-8xl bg-[#E41B22]">!</span>
+        <h2 className="text-2xl font-bold">Oops! Something went wrong.</h2>
+        <p className="text-gray-700">{error.message}</p>
+        <Link href='/contact'
+          className="w-35 sm:w-40 h-10 sm:h-12 text-14 sm:text-base flex justify-center items-center rounded-full bg-primary text-white hover:bg-white border border-primary hover:text-primary transition"
+        >
+          Contact Us
+        </Link>
+      </div>
     </div>
-  </div>
   );
 }

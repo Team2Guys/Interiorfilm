@@ -30,7 +30,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const [productDetails, setproductDetails] = useState<PRODUCTS_TYPES | any>({});
   const [productDetailModel, setProductDetailModel] = useState<boolean>(false);
   const [error, setError] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [populated_categoryName, setCategoryName] = useState<string | any>(null);
@@ -274,7 +274,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
             </h1>
             <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
               <p className="text-black font-bold text-18">
-                AED <span className='text-red text-20'>{product.discountPrice ? product.discountPrice : product.salePrice}</span>
+                AED <span className={` text-20 ${product.discountPrice ? "text-red" : ""}`}>{product.discountPrice ? product.discountPrice : product.salePrice}</span>
               </p>
 
               { product.discountPrice > 0 && (
@@ -319,7 +319,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
         
       ) : (
 
-        (productsToRender.length > 0) ? productsToRender.map(renderProduct) : !loading ? <div className='flex justify-center'>No Product Found</div> : <>
+        (productsToRender.length > 0) ? productsToRender.map(renderProduct) :  !loading ? <div className='flex justify-center'>No Product Found</div> : <>
 
           {Array.from({ length: 3 }).map((_, index) => (
 

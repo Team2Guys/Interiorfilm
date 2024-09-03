@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import PRODUCTS_TYPES, { Categories_Types } from "types/interfaces";
 import { Skeleton } from "antd";
+import { generateSlug } from "data/Data";
 
 interface MegamanuProps {
   Categories: Categories_Types[];
@@ -28,8 +29,9 @@ const Megamanu: React.FC<MegamanuProps> = ({
     }
   }, [Categories]);
 
-  const handleButtonClick = (categoryId: string) => {
-    router.push(`/products?category=${categoryId}`);
+  const handleButtonClick = (categoryName: string) => {
+    const slug = generateSlug(categoryName)
+    router.push(`/products?category=${slug}`);
     onProductClick();
   };
 
@@ -45,7 +47,7 @@ const Megamanu: React.FC<MegamanuProps> = ({
               <div
                 key={item._id}
                 className="category-wrapper text-center cursor-pointer"
-                onClick={() => (handleButtonClick(item._id))}
+                onClick={() => (handleButtonClick(item.name))}
                 onMouseEnter={() => handleHoverImg(item)}
               >
                 <Image
@@ -78,7 +80,7 @@ const Megamanu: React.FC<MegamanuProps> = ({
       <div className={`lg:w-6/12 category-hover-img-wrapper hidden lg:block`}>
         {!loading ? (
           hoverCategory && (
-            <div className="cursor-pointer relative w-full h-full" onClick={() => handleButtonClick(hoverCategory._id)}>
+            <div className="cursor-pointer relative w-full h-full" onClick={() => handleButtonClick(hoverCategory.name)}>
               <Image
                 src={hoverCategory.posterImageUrl.imageUrl}
                 alt={hoverCategory.name}

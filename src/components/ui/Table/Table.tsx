@@ -61,38 +61,38 @@ const Table: React.FC<TableProps> = ({
   }, [pathName, changeId]);
 
   const increment = (index: number) => {
-    const newCounts = { ...counts };
-    if (newCounts[index] < 100) {
-      newCounts[index] = (newCounts[index] || 1) + 1;
-      setCounts(newCounts);
-      updateTotalPrice(index, newCounts[index]);
+    const newLengths = { ...lengths };
+    if (newLengths[index] < 100) {
+      newLengths[index] = (newLengths[index] || 1) + 1;
+      setLengths(newLengths);
+      updateTotalPrice(index, newLengths[index]);
       window.dispatchEvent(new Event("cartChanged"));
       window.dispatchEvent(new Event("WishlistChanged"));
     } else {
-      message.error("Quantity cannot be more than 100.");
+      message.error("Length cannot be more than 100 meters.");
     }
   };
 
   const decrement = (index: number) => {
-    if (counts[index] > 1) {
-      const newCounts = { ...counts };
-      newCounts[index] -= 1;
-      setCounts(newCounts);
-      updateTotalPrice(index, newCounts[index]);
+    const newLengths = { ...lengths };
+    if (newLengths[index] > 1) {
+      newLengths[index] -= 1;
+      setLengths(newLengths);
+      updateTotalPrice(index, newLengths[index]);
       window.dispatchEvent(new Event("cartChanged"));
       window.dispatchEvent(new Event("WishlistChanged"));
     } else {
-      message.error("Quantity cannot be less than 1.");
+      message.error("Length cannot be less than 1 meter.");
     }
   };
 
-  const updateTotalPrice = (index: number, newCount: number) => {
+  const updateTotalPrice = (index: number, newLength: number) => {
     const updatedData = [...data];
-    updatedData[index].count = newCount;
+    updatedData[index].length = newLength;
     updatedData[index].totalPrice =
       (updatedData[index].discountPrice || updatedData[index].price) *
-      newCount *
-      (updatedData[index].length || 1);
+      (counts[index] || 1) *
+      newLength;
     setData(updatedData);
     localStorage.setItem(
       pathName === "/wishlist" ? "wishlist" : "cart",
@@ -105,6 +105,7 @@ const Table: React.FC<TableProps> = ({
     setSubtotal(sub);
     onCartChange(updatedData);
   };
+
 
   const removeItemFromCart = (index: number) => {
     const updatedData = [...data];
@@ -195,15 +196,16 @@ const Table: React.FC<TableProps> = ({
   const handleLengthChange = (index: number, value: number) => {
     const newLengths = { ...lengths, [index]: value };
     setLengths(newLengths);
-    updateTotalPrice(index, counts[index] || 1);
-    onCartChange(data);
+    updateTotalPrice(index, value);
+    window.dispatchEvent(new Event("cartChanged"));
+    window.dispatchEvent(new Event("WishlistChanged"));
   };
 
   const lengthOptions = (totalStockQuantity: number) => {
     const options = [];
     for (let i = 1; i <= Math.floor(totalStockQuantity); i++) {
       options.push({
-        label: `${i} METERS`,
+        label: `1.22cm x ${i} METERS`,
         value: i,
       });
     }
@@ -219,7 +221,7 @@ const Table: React.FC<TableProps> = ({
 
   return (
     <>
-      <div className="hidden md:flex flex-col">
+      <div className="hidden lg:flex flex-col">
         <div className="-m-1.5 overflow-x-auto">
           <div className="p-1.5 min-w-full inline-block align-middle">
             <div className="overflow-hidden">
@@ -228,25 +230,24 @@ const Table: React.FC<TableProps> = ({
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-start text-[30px] font-optima text-dark"
-                    >
-                      Product
+                      className="px-6 py-3 text-start text-23 xl:text-[30px] font-medium text-dark">
+                      Products
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-start text-[30px] font-medium text-dark"
+                      className="px-6 py-3 text-start text-23 xl:text-[30px] font-medium text-dark"
                     >
                       Price
                     </th>
-                    {/* <th
-                      scope="col"
-                      className="px-6 py-3 text-start text-[30px] font-medium text-dark"
-                    >
-                      Quantity
-                    </th> */}
                     <th
                       scope="col"
-                      className="px-6 py-3 text-end text-[30px] font-medium text-dark"
+                      className="px-6 py-3 text-start text-23 xl:text-[30px] font-medium text-dark"
+                    >
+                      Quantity (M)
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-end text-23 xl:text-[30px] font-medium text-dark"
                     >
                       {pathName === "/wishlist" ? "Action" : "Total"}
                     </th>
@@ -283,33 +284,34 @@ const Table: React.FC<TableProps> = ({
                             </div>
                             <div className="p-2 w-full">
                               <h1 className="text-sm md:text-base font-bold">
-                                {typeof product.name === "string"
+                                <span>{counts[index] || 1}* </span>{typeof product.name === "string"
                                   ? product.name
                                   : ""}
+                                
                               </h1>
                               <div>
                                 <p className="text-16 font-semibold">
-                                  {counts[index] || 1}x
+                                  Width: <span>1.22cm (28inch)</span>
                                 </p>
                               </div>
-                              <div className="flex gap-2 items-center w-full">
+                              {/* <div className="flex gap-2 items-center w-full">
                                 <ProductSelect
                                   className="w-[70%] h-10 border outline-none shipment text-20"
                                   onChange={(value) =>
                                     handleLengthChange(index, value)
                                   }
                                   options={options}
-                                  defaultValue={`${
+                                  defaultValue={`1.22cm x ${
                                     lengths[index] || product.length
                                   } METERS`}
                                 />
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base">
                           <p>
-                            AED{" "}
+                            AED
                             <span>
                               {pathName === "/wishlist"
                                 ? product.discountPrice
@@ -321,7 +323,33 @@ const Table: React.FC<TableProps> = ({
                             </span>
                           </p>
                         </td>
-
+                        <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base">
+                          <div className="flex border w-28 h-12 justify-between px-2">
+                            <div
+                              onClick={() => decrement(index)}
+                              className="  flex justify-center items-center"
+                            >
+                              <RxMinus size={20} />
+                            </div>
+                            <div className="  flex justify-center items-center">
+                              <input
+                                className="h-7 w-8 text-center"
+                                type="text"
+                                min={1}
+                                max={100}
+                                disabled
+                                value={lengths[index] || product.length}
+                                onChange={(e) => handleChange(index, e)}
+                              />
+                            </div>
+                            <div
+                              onClick={() => increment(index)}
+                              className="  flex justify-center items-center"
+                            >
+                              <RxPlus size={20} />
+                            </div>
+                          </div>
+                        </td>
                         <td className="px-6 py-4 whitespace-nowrap text-end text-sm md:text-base">
                           {pathName === "/wishlist" ? (
                             <Button
@@ -358,7 +386,7 @@ const Table: React.FC<TableProps> = ({
         const options = lengthOptions(product.totalStockQuantity || 0);
         return (
           <div
-            className="p-2 rounded-md mt-5 bg-white shadow block md:hidden"
+            className="p-2 rounded-md mt-5 bg-white shadow block lg:hidden"
             key={index}
           >
             <div className="space-y-2">
@@ -376,19 +404,19 @@ const Table: React.FC<TableProps> = ({
                   <div className="absolute -top-2 -right-2">
                     <div
                       onClick={() => showDeleteConfirm(index)}
-                      className="bg-white shadow h-5 w-5 rounded-full cursor-pointer"
+                      className="bg-white shadow h-5 w-5 rounded-full cursor-pointer flex justify-center items-center"
                     >
-                      <IoCloseSharp size={20} />
+                      <IoCloseSharp size={14} />
                     </div>
                   </div>
                 </div>
                 <div className="space-y-1 w-8/12">
-                  <h1 className="text-14 font-semibold">
-                    {typeof product.name === "string" ? product.name : ""}
+                  <h1 className="text-14 font-medium">
+                    <span>{counts[index] || 1}</span>* (
+                    {typeof product.name === "string" ? product.name : ""} )
                   </h1>
-                  <p>
-                    AED
-                    <span>
+                  <p className="text-14 font-medium">
+                    AED <span>
                       {pathName === "/wishlist"
                         ? product.discountPrice
                           ? product.discountPrice * (counts[index] || 1)
@@ -399,20 +427,35 @@ const Table: React.FC<TableProps> = ({
                     </span>
                   </p>
                   <div>
-                    <p className="text-16 font-semibold">
-                      {counts[index] || 1}x
-                    </p>
-                  </div>
-                  <div className="flex gap-2 items-center">
-                    <ProductSelect
-                      className="w-[70%] h-10 border outline-none shipment text-20"
-                      onChange={(value) => handleLengthChange(index, value)}
-                      options={options}
-                      defaultValue={`${
-                        lengths[index] || product.length
-                      } METERS`}
-                    />
-                  </div>
+                                <p className="text-12 font-medium">
+                                  Width: <span>1.22cm (28inch)</span>
+                                </p>
+                              </div>
+                  <div className="flex border w-20 h-8 justify-between px-2 ">
+                            <div
+                              onClick={() => decrement(index)}
+                              className="  flex justify-center items-center"
+                            >
+                              <RxMinus size={14} />
+                            </div>
+                            <div className="  flex justify-center items-center">
+                              <input
+                                className="h-7 w-8 text-center"
+                                type="text"
+                                min={1}
+                                max={100}
+                                disabled
+                                value={lengths[index] || product.length}
+                                onChange={(e) => handleChange(index, e)}
+                              />
+                            </div>
+                            <div
+                              onClick={() => increment(index)}
+                              className="  flex justify-center items-center"
+                            >
+                              <RxPlus size={14} />
+                            </div>
+                          </div>
                 </div>
               </div>
               <div className="flex gap-2 items-center">

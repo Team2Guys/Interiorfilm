@@ -430,13 +430,13 @@ const Header = () => {
           </div>
         </div>
       </nav>
-      <div className="fixed top-[100px] right-0 z-999 ">
+      <div className="fixed top-auto bottom-0 md:top-[100px] right-0 z-999 ">
         <Link
           target="_blank"
           href={"https://wa.link/mb359y"}
           className="sticky top-1 "
         >
-          <Image width={200} height={200} src={whatsapp} alt="whatsappo" />
+          <Image width={200} height={200} src={whatsapp} alt="whatsappo" className="w-30 md:w-50" />
         </Link>
       </div>
       <Modal
