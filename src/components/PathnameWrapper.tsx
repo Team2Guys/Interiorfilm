@@ -18,7 +18,6 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
 
   ]
 
-  console.log(pathname.split('/').includes('dashboard'), "pathname.split('/').includes('dashboard')")
 
   return (
     <>
@@ -34,4 +33,4 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default Authhook( PathnameWrapper)
+export default Authhook(PathnameWrapper)
