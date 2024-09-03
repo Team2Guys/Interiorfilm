@@ -84,7 +84,20 @@ const ProductPage = () => {
       const categories = [StaticCategory, ...categoryResponse.data];
       setCategory(categories);
       setTotalProducts(productResponse.data.products);
-      setActiveLink(StaticCategory);
+      if(!categoryName){
+        setActiveLink(StaticCategory);
+      }else {
+        console.log(categoryName, "categoryName")
+      const activeCategory = categories.find((cat) =>{
+          console.log(cat, "cat")
+          return generateSlug(cat.name) === categoryName}
+    
+    );
+      console.log(activeCategory, "activeCategory")
+
+      setActiveLink(activeCategory);
+
+      }
     } catch (err) {
       console.error('Error loading products or categories', err);
     } finally {
