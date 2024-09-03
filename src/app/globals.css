@@ -125,16 +125,28 @@
   box-shadow: 0px 3px 21px #3737D512;
 }
 
-.ant-popover .ant-popover-inner {
-  margin-left: 100px !important;
-}
+
 
 .ant-popover-content {
-  width: 630px;
+  width: 780px;
+
+}
+.ant-popover .ant-popover-inner {
+  margin-left: 50px !important;
+  max-height: 90vh;
+}
+@media only screen and (min-width: 1280px) {
+  .ant-popover-content {
+    width: 980px;
+  }
 }
 @media only screen and (min-width: 1440px) {
   .ant-popover-content {
-    width: 1280px;
+    width: 1380px;
+  }
+  .ant-popover .ant-popover-inner {
+    margin-left: 100px !important;
+    max-height: 100vh;
   }
 }
 
@@ -155,13 +167,13 @@
 
 
 .ant-checkbox-checked .ant-checkbox-inner {
-  background-color: #000000 !important;
-  border-color: #000000 !important;
+  background-color: #FF914E !important;
+  border-color: #FF914E !important;
 }
 
 .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
 .ant-checkbox:not(.ant-checkbox-disabled):hover .ant-checkbox-inner {
-  border-color: #000000 !important;
+  border-color: #FF914E !important;
 
 }
 

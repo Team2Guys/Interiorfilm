@@ -95,7 +95,7 @@ const Review: React.FC<ReviewProps> = ({
   return (
     <>
         {
-         currentItems.length > 0 ? (
+          currentItems.length > 0 ? (
           <div className="max-w-screen-lg mx-auto px-4 md:px-0">
             <h1 className="text-center font-medium text-16 lg:text-20">
               Customer Reviews

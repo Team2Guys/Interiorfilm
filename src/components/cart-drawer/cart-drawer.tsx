@@ -2,12 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { Drawer, message, Modal } from "antd";
 import Image from "next/image";
 import { IoCloseSharp } from "react-icons/io5";
-import { RxMinus, RxPlus } from "react-icons/rx";
 import ProductSelect from "components/ui/Select/ProductSelect";
 import Link from "next/link";
 import PRODUCTS_TYPES from "types/interfaces";
-import { FaRegTrashAlt } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
+import { RxMinus, RxPlus } from "react-icons/rx";
 
 interface CartDrawerProps {
   open: boolean;
@@ -61,40 +60,38 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
     calculateSubtotal(validCartItems);
   };
 
-  const lengthOptions = (totalStockQuantity: number) => {
-    const options = [];
-    for (let i = 1; i <= Math.floor(totalStockQuantity); i++) {
-      options.push({
-        label: `${i} METERS`,
-        value: i,
-      });
+  const increment = (index: number) => {
+    const newLengths = { ...lengths };
+    if (newLengths[index] < 100) {
+      newLengths[index] = (newLengths[index] || 1) + 1;
+      setLengths(newLengths);
+      updateTotalPrice(index, counts[index], newLengths[index]);
+    } else {
+      message.error("Length cannot be more than 100 meters.");
     }
-    if (options.length === 0) {
-      options.push({
-        label: "No sizes available",
-        value: "",
-      });
+  };
+
+  const decrement = (index: number) => {
+    const newLengths = { ...lengths };
+    if (newLengths[index] > 1) {
+      newLengths[index] -= 1;
+      setLengths(newLengths);
+      updateTotalPrice(index, counts[index], newLengths[index]);
+    } else {
+      message.error("Length cannot be less than 1 meter.");
     }
-    return options;
   };
 
-  const onLengthChange = (index: number, value: number) => {
-    const newLengths = { ...lengths, [index]: value };
-    setLengths(newLengths);
-    updateTotalPrice(index, counts[index], value);
+  const onLengthChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    if (!isNaN(value) && value >= 1 && value <= 100) {
+      const newLengths = { ...lengths, [index]: value };
+      setLengths(newLengths);
+      updateTotalPrice(index, counts[index], value);
+    } else {
+      message.error("Please enter a valid length between 1 and 100 meters.");
+    }
   };
-
-  const calculateSubtotal = (items: PRODUCTS_TYPES[]) => {
-    console.log("Calculating subtotal with items:", items);
-    const sub = items.reduce((acc, item, index) => {
-      const price = item.discountPrice || item.price;
-      const length = lengths[index] || item.length;
-      const count = counts[index] || item.count;
-      return acc + price * length * count;
-    }, 0);
-    setSubtotal(sub);
-  };
-
 
   const updateTotalPrice = (index: number, newCount: number, length: number) => {
     const updatedData = [...cartItems];
@@ -106,6 +103,16 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
     setCartItems(updatedData);
     localStorage.setItem("cart", JSON.stringify(updatedData));
     calculateSubtotal(updatedData);
+  };
+
+  const calculateSubtotal = (items: PRODUCTS_TYPES[]) => {
+    const sub = items.reduce((acc, item, index) => {
+      const price = item.discountPrice || item.price;
+      const length = lengths[index] || item.length;
+      const count = counts[index] || item.count;
+      return acc + price * length * count;
+    }, 0);
+    setSubtotal(sub);
   };
 
   const removeItem = (index: number) => {
@@ -130,8 +137,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
       },
     });
   };
- 
-
   return (
     <>
     {open && (
@@ -147,7 +152,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
             </div>
             <div className="max-h-52 border border-slate-100 overflow-y-scroll p-1 custom-scrollbar">
             {cartItems.map((item: any, index: number) => {
-          const options = lengthOptions(item.totalStockQuantity || 0);
+          
 
           return (
             <div key={index} className="rounded-md shadow p-2 mt-5 bg-white">
@@ -174,7 +179,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
                   </div>
                   <div className="space-y-1 w-8/12">
                     <h1 className="text-12 md:text-14 font-semibold">
-                      {item.name}
+                     <span>{item.count}*</span>( {item.name} )
                     </h1>
                     <p className="text-12 md:text-14">
                       AED
@@ -183,13 +188,32 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
                       </span>
                    
                     </p>
-                    <p className="font-semibold">{item.count}x</p>
-                    <ProductSelect
-                      className="w-[70%] h-8 border outline-none shipment text-20"
-                      onChange={(value) => onLengthChange(index, value)}
-                      options={options}
-                      defaultValue={`${lengths[index] || item.length} METERS`}
-                    />
+                    <div className="flex border w-28 h-8 justify-between px-2">
+                            <div
+                              onClick={() => decrement(index)}
+                              className="  flex justify-center items-center"
+                            >
+                              <RxMinus size={20} />
+                            </div>
+                            <div className="  flex justify-center items-center">
+                              <input
+                                className="h-7 w-8 text-center"
+                                type="text"
+                                min={1}
+                                max={100}
+                                disabled
+                                value={lengths[index] || item.length}
+                                onChange={(e) => onLengthChange(index, e)}
+                              />
+                            </div>
+                            <div
+                              onClick={() => increment(index)}
+                              className="  flex justify-center items-center"
+                            >
+                              <RxPlus size={20} />
+                            </div>
+                          </div>
+                 
                   </div>
                 </div>
                 <div className="flex gap-2 items-center">

@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import PRODUCTS_TYPES, { Categories_Types } from "types/interfaces";
 import { Skeleton } from "antd";
+import { generateSlug } from "data/Data";
 
 interface MegamanuProps {
   Categories: Categories_Types[];
@@ -28,8 +29,9 @@ const Megamanu: React.FC<MegamanuProps> = ({
     }
   }, [Categories]);
 
-  const handleButtonClick = (categoryId: string) => {
-    router.push(`/categories`);
+  const handleButtonClick = (categoryName: string) => {
+    const slug = generateSlug(categoryName)
+    router.push(`/products?category=${slug}`);
     onProductClick();
   };
 
@@ -38,14 +40,14 @@ const Megamanu: React.FC<MegamanuProps> = ({
   };
 
   return (
-    <div className="flex flex-wrap md:flex-nowrap gap-4 xl:gap-8 p-3 mt-2 ">
+    <div className="flex flex-wrap md:flex-nowrap gap-4 xl:gap-8 p-3 mt-2 w-full">
       <div className={`w-full lg:w-6/12 grid grid-cols-2 md:grid-cols-3 gap-4 xl:gap-8`}>
         {!loading
           ? Categories.map((item) => (
               <div
                 key={item._id}
                 className="category-wrapper text-center cursor-pointer"
-                onClick={() => (handleButtonClick(item._id))}
+                onClick={() => (handleButtonClick(item.name))}
                 onMouseEnter={() => handleHoverImg(item)}
               >
                 <Image
@@ -55,7 +57,7 @@ const Megamanu: React.FC<MegamanuProps> = ({
                   height={200}
                   className="mx-auto w-full"
                 />
-                <h3 className="link-underline after:bg-[#FF914E] font-semibold text-12 lg:text-[10px] 2xl:text-16">
+                <h3 className="link-underline after:bg-[#FF914E] font-semibold text-12 lg:text-[10px] 2xl:text-16" >
                   {item.name}
                 </h3>
               </div>
@@ -75,22 +77,21 @@ const Megamanu: React.FC<MegamanuProps> = ({
               </div>
             ))}
       </div>
-      <div className={`lg:w-6/12 relative category-hover-img-wrapper hidden lg:block`}>
+      <div className={`lg:w-6/12 category-hover-img-wrapper hidden lg:block`}>
         {!loading ? (
           hoverCategory && (
-            <>
+            <div className="cursor-pointer relative w-full h-full" onClick={() => handleButtonClick(hoverCategory.name)}>
               <Image
                 src={hoverCategory.posterImageUrl.imageUrl}
                 alt={hoverCategory.name}
                 width={500}
                 height={500}
                 className="w-full h-full cursor-pointer"
-                onClick={() => handleButtonClick(hoverCategory._id)}
               />
               <div className="bg-white w-50 h-12 flex justify-center items-center shadow-1 absolute bottom-5 left-1/2 -translate-x-1/2 font-medium text-18">
                 {hoverCategory.name}
               </div>
-            </>
+            </div>
           )
         ) : (
           <Skeleton.Image active={true} className="skeleton-img" />

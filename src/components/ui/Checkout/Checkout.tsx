@@ -6,6 +6,7 @@ import Link from "next/link";
 import Product from "app/product/[productname]/page";
 import PRODUCTS_TYPES from "types/interfaces";
 import { number } from "yup";
+import { IoCloseSharp } from "react-icons/io5";
 
 const CheckOut: React.FC = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -13,6 +14,11 @@ const CheckOut: React.FC = () => {
   const [shippingCharges, setShippingCharges] = useState(0);
   const [total, setTotal] = useState(0);
   const [shipmentFee, setShipmentFee] = useState<number | string>(0);
+  const [isChecked, setIsChecked] = useState(true);
+
+  const handleCheckboxChange = (e: any) => {
+    setIsChecked(e.target.checked);
+  };
   const [billingData, setBillingData] = useState({
     name: "",
     email: "",
@@ -54,11 +60,33 @@ const CheckOut: React.FC = () => {
     { state: "abu dhabi", charges: 20, discountCharges: 200 },
   ];
 
+
+  const formatPhoneNumber = (value: any) => {
+    const numbers = value.replace(/\D/g, '');
+    if (numbers.length <= 3) return `+${numbers}`;
+    if (numbers.length <= 5) return `+${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+    return `+${numbers.slice(0, 3)}-${numbers.slice(3, 5)}-${numbers.slice(5, 12)}`;
+  };
+
+  // Function to handle phone number change
+  const handlePhoneNumberChange = (e: any) => {
+    let value = e.target.value;
+    value = value.replace(/[^+\d]/g, "").slice(0, 13);
+    if (!value.startsWith("+")) {
+      value = "+" + value.replace(/^\+/, "");
+    }
+    setBillingData((prevData) => ({
+      ...prevData,
+      phone_number: formatPhoneNumber(value),
+    }));
+  };
+
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     setCartItems(existingCart);
     calculateTotals(existingCart);
   }, []);
+
   useEffect(() => {
     const updatedTotal = shipmentFee === "Free"
       ? subtotal
@@ -112,7 +140,7 @@ const CheckOut: React.FC = () => {
     setBillingData({ ...billingData, state: value });
   };
 
-  const addAddressField = () => {
+  const addAddressField = (value:any) => {
     setBillingData({
       ...billingData,
       additionalAddressFields: [
@@ -155,7 +183,7 @@ const CheckOut: React.FC = () => {
       isValid = false;
     }
     if (!billingData.address) {
-      newErrors.address = "Address is requried.";
+      newErrors.address = "Invalid address.";
       isValid = false;
     }
     if (!billingData.email || !/\S+@\S+\.\S+/.test(billingData.email)) {
@@ -180,9 +208,9 @@ const CheckOut: React.FC = () => {
   };
 
   return (
-    <div className="bg-bglight">
-      <div className="grid grid-cols-1 lg:grid-cols-2">
-        <div className="bg-white pt-8 pb-14 space-y-5 p-2 md:px-10">
+    <div className="bg-bglight lg:px-10">
+      <div className="grid grid-cols-1 md:grid-cols-2">
+        <div className="bg-white pt-8 pb-14 space-y-5 p-2 lg::px-10">
           <p className="text-end text-17 font-light">
             Already have an account?{" "}
             <Link
@@ -192,9 +220,9 @@ const CheckOut: React.FC = () => {
               Log in
             </Link>
           </p>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
             <div>
-              <h2 className="lg:text-20 text-base font-bold text-headingdark mb-4">
+              <h2 className="lg:text-20 text-base font-bold text-black mb-4">
                 SHIPPING DETAILS
               </h2>
               <p className="text-15 font-medium mb-4">
@@ -208,7 +236,7 @@ const CheckOut: React.FC = () => {
                     </label>
                     <input
                       type="text"
-                      className="border-gray border shadow-0 outline-0 p-2"
+                      className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
                       name="name"
                       id="checkoutFullName"
                       value={billingData.name}
@@ -225,11 +253,11 @@ const CheckOut: React.FC = () => {
                   </div>
                   <div className="flex flex-col">
                     <label htmlFor="checkout" className="text-lightdark">
-                      Country <span className="text-red">*</span>
+                      City <span className="text-red">*</span>
                     </label>
                     <Select
                       showSearch
-                      className="w-full h-11 border outline-none shipment text-20 border-gray"
+                      className="w-full h-11 border outline-none shipment text-20 border-[#D2D2D2]"
                       placeholder="Select your state"
                       value={billingData.state}
                       onChange={handleSelectChange}
@@ -247,7 +275,7 @@ const CheckOut: React.FC = () => {
                     </label>
                     <input
                       type="text"
-                      className="border-gray border shadow-0 outline-0 p-2"
+                      className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
                       name="streetAddress"
                       id="checkoutstreetAddress"
                       value={billingData.address}
@@ -266,20 +294,19 @@ const CheckOut: React.FC = () => {
                     <div key={field.id} className="flex items-center">
                       <input
                         type="text"
-                        className="border-gray border shadow-0 outline-0 p-2 flex-grow"
+                        className="border-[#D2D2D2] border shadow-0 outline-0 p-2 flex-grow"
                         placeholder="Additional Address"
                         value={field.address}
                         onChange={(e) =>
                           handleAddressFieldChange(field.id, e.target.value)
                         }
                       />
-                      <Button
-                        type="link"
-                        className="text-red ml-2"
+                      <button
+                        className="text-red ml-2 text-23"
                         onClick={() => handleAddressFieldDelete(field.id)}
                       >
-                        Delete
-                      </Button>
+                        <IoCloseSharp  />
+                      </button>
                     </div>
                   ))}
                   <div className="flex">
@@ -288,7 +315,7 @@ const CheckOut: React.FC = () => {
                     </button>
                   </div>
                   <div className="mt-3">
-                    <h2 className="lg:text-20 text-base font-bold text-headingdark mb-3">
+                    <h2 className="lg:text-20 text-base font-bold text-black mb-3">
                       CONTACT INFORMATION
                     </h2>
                   </div>
@@ -298,7 +325,7 @@ const CheckOut: React.FC = () => {
                     </label>
                     <input
                       type="email"
-                      className="border-gray border shadow-0 outline-0 p-2"
+                      className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
                       name="email"
                       id="checkoutEmail"
                       value={billingData.email}
@@ -318,23 +345,18 @@ const CheckOut: React.FC = () => {
                   </div>
                   <div className="flex flex-col">
                     <label htmlFor="checkout" className="text-lightdark">
-                      Number <span className="text-red">*</span>{" "}
+                      Number <span className="text-red">*</span>
                       <span className="text-12 ms-2 text-headingdark font-medium">
                         For delivery-related queries
                       </span>
                     </label>
                     <input
                       type="tel"
-                      className="border-gray border shadow-0 outline-0 p-2"
+                      className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
                       name="number"
                       id="checkout"
                       value={billingData.phone_number}
-                      onChange={(e) =>
-                        setBillingData({
-                          ...billingData,
-                          phone_number: e.target.value,
-                        })
-                      }
+                      onChange={handlePhoneNumberChange}
                     />
                     {errors.phone_number && (
                       <p className="text-red text-sm">{errors.phone_number}</p>
@@ -344,26 +366,171 @@ const CheckOut: React.FC = () => {
               </div>
             </div>
             <div className="flex flex-col gap-10">
+            <div>
+      <h2 className="lg:text-20 text-base font-bold text-black mb-4">
+        BILLING DETAILS
+      </h2>
+      <Checkbox
+        className="custom-checkbox  text-14 font-normal"
+        checked={isChecked}
+        onChange={handleCheckboxChange}
+      >
+        Same as shipping address
+      </Checkbox>
+      {!isChecked && (
+       <div className="flex flex-col gap-4 mt-3">
+       <div className="flex flex-col text-lightdark">
+         <label htmlFor="checkoutFullName">
+           Full Name <span className="text-red">*</span>
+         </label>
+         <input
+           type="text"
+           className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
+           name="name"
+           id="checkoutFullName"
+           value={billingData.name}
+           onChange={(e) =>
+             setBillingData({
+               ...billingData,
+               name: e.target.value,
+             })
+           }
+         />
+         {errors.name && (
+           <p className="text-red text-sm">{errors.name}</p>
+         )}
+       </div>
+       <div className="flex flex-col">
+         <label htmlFor="checkout" className="text-lightdark">
+           City <span className="text-red">*</span>
+         </label>
+         <Select
+           showSearch
+           className="w-full h-11 border outline-none shipment text-20 border-[#D2D2D2]"
+           placeholder="Select your state"
+           value={billingData.state}
+           onChange={handleSelectChange}
+         >
+           {selectoption.map((option, index) => (
+             <Option value={option.title} key={index}>
+               {option.title}
+             </Option>
+           ))}
+         </Select>
+       </div>
+       <div className="flex flex-col text-lightdark">
+         <label htmlFor="checkoutstreetAddress">
+           Street Address <span className="text-red">*</span>
+         </label>
+         <input
+           type="text"
+           className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
+           name="streetAddress"
+           id="checkoutstreetAddress"
+           value={billingData.address}
+           onChange={(e) =>
+             setBillingData({
+               ...billingData,
+               address: e.target.value,
+             })
+           }
+         />
+         {errors.address && (
+           <p className="text-red text-sm">{errors.address}</p>
+         )}
+       </div>
+       {billingData.additionalAddressFields.map((field) => (
+         <div key={field.id} className="flex items-center">
+           <input
+             type="text"
+             className="border-[#D2D2D2] border shadow-0 outline-0 p-2 flex-grow"
+             placeholder="Additional Address"
+             value={field.address}
+             onChange={(e) =>
+               handleAddressFieldChange(field.id, e.target.value)
+             }
+           />
+           <button
+             className="text-red ml-2 hover:text-red text-23"
+             onClick={() => handleAddressFieldDelete(field.id)}
+           >
+            <IoCloseSharp />
+           </button>
+         </div>
+       ))}
+       <div className="flex">
+         <button className="text-15" onClick={addAddressField}>
+           + Add another address field (optional)
+         </button>
+       </div>
+       <div className="mt-3">
+         <h2 className="lg:text-20 text-base font-bold text-black mb-3">
+           CONTACT INFORMATION
+         </h2>
+       </div>
+       <div className="flex flex-col">
+         <label htmlFor="checkoutEmail" className="text-lightdark">
+           Email <span className="text-red">*</span>
+         </label>
+         <input
+           type="email"
+           className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
+           name="email"
+           id="checkoutEmail"
+           value={billingData.email}
+           onChange={(e) =>
+             setBillingData({
+               ...billingData,
+               email: e.target.value,
+             })
+           }
+         />
+         {errors.email && (
+           <p className="text-red text-sm">{errors.email}</p>
+         )}
+         <p className="text-11 text-headingdark font-medium mt-1">
+           You will be able to create an account after purchasing
+         </p>
+       </div>
+       <div className="flex flex-col">
+         <label htmlFor="checkout" className="text-lightdark">
+           Number <span className="text-red">*</span>
+           <span className="text-12 ms-2 text-headingdark font-medium">
+             For delivery-related queries
+           </span>
+         </label>
+         <input
+           type="tel"
+           className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
+           name="number"
+           id="checkout"
+           value={billingData.phone_number}
+           onChange={handlePhoneNumberChange}
+         />
+         {errors.phone_number && (
+           <p className="text-red text-sm">{errors.phone_number}</p>
+         )}
+       </div>
+     </div>
+      )}
+    </div>
               <div>
-                <h2 className="lg:text-20 text-base font-bold text-headingdark mb-4">
-                  SHIPPING DETAILS
-                </h2>
-                <Checkbox
-                  className="custom-checkbox text-14 font-normal"
-                  checked
-                >
-                  Same as shipping address
-                </Checkbox>
-              </div>
-              <div>
-                <h2 className="lg:text-20 text-base font-bold text-headingdark mb-4">
+                <h2 className="lg:text-20 text-base font-bold text-black mb-4">
                   ADDITIONAL OPTIONS
                 </h2>
                 {showOrderNote ? (
                   <div className="mt-3 flex flex-col">
+                    <div className="flex justify-between items-center">
                     <label htmlFor="orderNote" className="text-lightdark">
                       Order Note
                     </label>
+                    <button
+                      className="text-red mt-2 text-start text-23"
+                      onClick={() => setShowOrderNote(false)}
+                    >
+                      <IoCloseSharp />
+                    </button>
+                    </div>
                     <textarea
                       id="orderNote"
                       className="border border-light p-2"
@@ -372,13 +539,7 @@ const CheckOut: React.FC = () => {
                       
                       onChange={(e) =>handleOrderNoteChange(e)}
                     >{billingData.orderNote}</textarea>
-                    <Button
-                      type="link"
-                      className="text-red mt-2 text-start"
-                      onClick={() => setShowOrderNote(false)}
-                    >
-                      Delete
-                    </Button>
+                   
                   </div>
                 ) : 
                 <button
