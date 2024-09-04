@@ -316,9 +316,8 @@ const Navbar = () => {
                       </li>
                    {Categories &&
                         Categories.map((cat, index) => (
-                            <li>
+                            <li key={index}>
                           <div
-                            key={index}
                             className="link-underline text-14 font-medium text-black hover:text-black cursor-pointer"
                             onClick={() => {
                               const slug = generateSlug(cat.name);

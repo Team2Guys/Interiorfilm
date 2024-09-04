@@ -37,7 +37,6 @@ export default function RootLayout({
 
       <html lang="en">
       <GoogleTagManager gtmId="GTM-PFNKXKTR" />
-
         <head>
         <GoogleTagManager gtmId="GTM-PFNKXKTR" />
 
@@ -52,25 +51,17 @@ export default function RootLayout({
             `,
             }}
           />
-
-
         </head>
 
         <body className={poppinsFont.className}>
         <GoogleTagManager gtmId="GTM-PFNKXKTR" />
           <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PFNKXKTR"
             height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
-
-
           <PathnameWrapper>
             {children}
             <ToastContainer />
-
           </PathnameWrapper>
-
         </body>
-
-
       </html>
     </Providers>
 
