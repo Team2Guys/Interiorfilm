@@ -9,13 +9,15 @@ import "jsvectormap/dist/css/jsvectormap.css";
 import "flatpickr/dist/flatpickr.min.css";
 import "../css/satoshi.css";
 import "../css/style.css";
+import { GoogleTagManager } from '@next/third-parties/google';
 
-import {Poppins} from 'next/font/google'
+import { Poppins } from 'next/font/google'
+import Head from "next/head";
 
 const poppinsFont = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  subsets: ["latin"], 
-  display: "swap", 
+  subsets: ["latin"],
+  display: "swap",
 });
 
 
@@ -34,19 +36,32 @@ export default function RootLayout({
     <Providers>
 
       <html lang="en">
-        <head>
-          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZNPK8S2CW7"></Script>
-          <Script id="google-analytics">
-            {
-              `window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
+      <GoogleTagManager gtmId="GTM-PFNKXKTR" />
 
-              gtag('config', 'G-ZNPK8S2CW7'); `
-            }
-          </Script>
+        <head>
+        <GoogleTagManager gtmId="GTM-PFNKXKTR" />
+
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-PFNKXKTR');
+            `,
+            }}
+          />
+
+
         </head>
+
         <body className={poppinsFont.className}>
+        <GoogleTagManager gtmId="GTM-PFNKXKTR" />
+          <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PFNKXKTR"
+            height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
+
+
           <PathnameWrapper>
             {children}
             <ToastContainer />

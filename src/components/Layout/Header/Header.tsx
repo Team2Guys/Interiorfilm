@@ -110,6 +110,7 @@ const Header = () => {
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    setSearchTerm('');
   };
 
   useEffect(() => {
@@ -390,7 +391,7 @@ const Header = () => {
                         showDrawer={CategoryHandler}
                         onClose={CategoryHandlerclose}
                         open={category}
-                        title={"product"}
+                        title={"Category"}
                         content={
                           <>
                           <Megamanu  Categories={Categories} products={products} loading={loading} onProductClick={CategoryHandlerclose} />
