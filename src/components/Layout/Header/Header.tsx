@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import whitelogo from "../../../../public/images/logowhite.png";
@@ -21,7 +21,6 @@ import Profile from "components/user_profile/Profile";
 import { Categories_Types } from "types/interfaces";
 import { usePathname } from "next/navigation";
 import PRODUCTS_TYPES, { Category } from "types/interfaces";
-import MobileMenu from "./Megamanu/mobile-menu";
 import whatsapp from "../../../../public/images/whatsapp.png";
 import { SlHandbag } from "react-icons/sl";
 import CartDrawer from "components/cart-drawer/cart-drawer";
@@ -96,7 +95,6 @@ const Header = () => {
   const closePopover = () => {
     setVisible(false);
   };
-  const handleOpenDrawer = () => setDrawerOpen(true);
   const handleCloseDrawer = () => setDrawerOpen(false);
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
