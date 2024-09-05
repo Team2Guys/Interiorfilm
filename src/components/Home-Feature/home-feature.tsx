@@ -26,10 +26,10 @@ const HomeFeature = () => {
     }, []);
   return (
     <Container className="mt-10 ">
-    <h1 className="text-[24px] text-heading text-center ">
+    <h1 className="text-[24px] text-heading text-center  tracking-[0.5rem]">
     FEATURE PRODUCT
     </h1>
-    <hr className="w-52 mx-auto border-primary"/>
+    <hr className="w-80 mx-auto border-primary h-1"/>
     <ProductSlider products={allProducts} />
   </Container>
   )
