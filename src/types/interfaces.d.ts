@@ -142,6 +142,7 @@ interface PRODUCTS_TYPES {
   customOrder?: number;
   createdAt?:any;
   updatedAt?: any;
+  code?:string
 }
 
 export default PRODUCTS_TYPES;
