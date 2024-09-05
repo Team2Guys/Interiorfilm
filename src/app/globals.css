@@ -543,3 +543,9 @@ gap: 10px;
   color: white !important; 
   margin-right: 1rem !important;
 }
+.Image_skeleton .ant-skeleton-image-svg{
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+}
