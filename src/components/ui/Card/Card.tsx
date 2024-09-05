@@ -242,23 +242,23 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
       <div className={`relative group mb-5 ${cardClass}`} key={index}>
-        <div className="space-y-3 absolute top-6 right-4 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 overflow-hidden transition ease-in-out duration-400 hidden md:block">
+        <div className="space-y-3 absolute top-6 right-6 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 overflow-hidden transition ease-in-out duration-400 hidden md:block">
           <button onClick={() => handleAddToCart(product)} className="flex justify-center items-center z-10">
-            <LuShoppingCart className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />
+            <LuShoppingCart className="p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white" size={40} />
           </button>
           <button onClick={() => handleAddToWishlist(product)} className="flex justify-center items-center z-10">
-            <GoHeart className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />
+            <GoHeart className="p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white" size={40} />
           </button>
           <button onClick={showModal} className="flex justify-center items-center z-10">
-            <FiZoomIn className="p-2 rounded-full bg-white hover:bg-primary text-heading hover:text-white" size={40} />
+            <FiZoomIn className="p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white" size={40} />
           </button>
         </div>
 
         <div className="cursor-pointer  transition-all m-1 " onClick={() => router.push(`/product/${generateSlug(product.name)}`)}>
           <div className="text-center">
             <div className='absolute top-80 hidden mk translate-y-20 z-10 w-full md:flex gap-5 justify-center opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition ease-in-out duration-400'>
-              <button className='bg-white md:w-[106.45px] md:h-[34.29px] text-11 z-10  py-1' onClick={(e) => { e.stopPropagation(); handleAddToCart(product); router.push('/checkout') }}>Order Now</button>
-              <button className='bg-black z-10 md:w-[106.45px] md:h-[34.29px] text-11 text-white  py-1' onClick={(e) => {
+              <button className='bg-white md:w-[114.45px] md:h-[36.29px] text-11 z-10  py-1' onClick={(e) => { e.stopPropagation(); handleAddToCart(product); router.push('/checkout') }}>Order Now</button>
+              <button className='bg-black z-10 md:w-[114.45px] md:h-[36.29px] text-11 text-white  py-1' onClick={(e) => {
                 e.stopPropagation();
                 setproductDetails(product);
                 setProductDetailModel(true)
@@ -269,13 +269,14 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
             )}
           </div>
           <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
-            <h1 className="lg:text-lg text-sm text-center text-dark  font-semibold">
-              Code : <span>{product.name}</span>
+            <h1 className="lg:text-lg text-md text-center text-dark  font-semibold">
+              {product.name} 
             </h1>
             <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
-              <p className="text-black font-bold text-18">
-                AED <span className={` text-20 ${product.discountPrice ? "text-red" : ""}`}>{product.discountPrice ? product.discountPrice : product.salePrice}</span>
+              <p className="text-black font-bold text-18 flex gap-1">
+                AED <span className={` text-20 ${product.discountPrice ? "" : ""}`}>{product.discountPrice ? product.discountPrice : product.salePrice}</span>
               </p>
+             
 
               { product.discountPrice > 0 && (
                 <p className="line-through text-para text-xs font-medium">
@@ -304,19 +305,18 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
 
   return (
     <>
-
         <Model 
         setproductDetailModel={setProductDetailModel}
         productDetailModel={productDetailModel}
         centered={true}
         footer={null}
+
       >
         <ProductDetails firstFlex='lg:w-8/12' secondFlex='lg:w-4/12' categoryName={populated_categoryName} productDetail={productDetails} />
       </Model>
 
       {ProductCard && (ProductCard.length > 0 && !loading) ? (
         ProductCard.map((product,index)=>renderProduct(product,index))
-        
       ) : (
 
         (productsToRender.length > 0) ? productsToRender.map(renderProduct) :  !loading ? <div className='flex justify-center'>No Product Found</div> : <>
