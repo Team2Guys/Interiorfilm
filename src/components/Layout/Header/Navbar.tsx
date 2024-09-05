@@ -56,9 +56,11 @@ const Navbar = () => {
       console.log(err, "err");
     }
   };
+
+  
   useEffect(() => {
     productHandler();
-  }, [Categories]);
+  }, []);
 
   const AddminProfileTriggerHandler = async (token: string) => {
     try {

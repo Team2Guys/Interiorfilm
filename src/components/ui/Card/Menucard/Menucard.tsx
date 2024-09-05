@@ -43,7 +43,8 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, cardClass ,onClick }) => {
       count: 1,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
       purchasePrice: product.purchasePrice,
-      sizes: product.sizes
+      sizes: product.sizes,
+      product_code : product.code
     };
 
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
