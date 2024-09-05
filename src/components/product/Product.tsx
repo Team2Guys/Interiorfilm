@@ -82,9 +82,7 @@ const ProductPage = () => {
         setActiveLink(StaticCategory);
       }else {
       const activeCategory = categories.find((cat) =>{
-          console.log(cat, "cat")
-          return generateSlug(cat.name) === categoryName}
-    
+       return generateSlug(cat.name) === categoryName}
     );
       setActiveLink(activeCategory);
       }
@@ -147,7 +145,6 @@ const ProductPage = () => {
 
   const sortedProducts = sortProducts(filteredProducts);
 
-  console.log(sortedProducts , "sortedProductssortedProductssortedProducts")
   return (
 
 <>
