@@ -74,9 +74,12 @@ const Footer: React.FC = () => {
         <div className="text-white px-0 ">
           <div className="lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row flex-wrap gap-y-8 gap-x-8 justify-between mt-10">
             <div className="flex-1 lg:pb-0 pb-3">
+
               <p className="2/3 text-slate-200">
                 In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.
               </p>
+
+
               <div className="flex items-center flex-wrap gap-4 py-2 lg:order-2 order-1 text-white dark:text-black">
                 {socialLinks.map((link, index) => (
                   <Link
@@ -176,20 +179,28 @@ const Footer: React.FC = () => {
 
             <div className="flex-1 lg:pb-0 pb-3 md:ml-10">
               <p className="text-17 font-semibold">Contact us</p>
-              <p className="w-full lg:w-auto md:w-2/3 text-slate-400">
+
+
+              <div className="w-full lg:w-auto md:w-2/3 text-slate-400">
                 Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha, Dubai, UAE
                 <p>
                   <a href="mailto:info@interiorfilm.ae" className="hover:text-primary">
                     info@interiorfilm.ae
                   </a>
                 </p>
+
+                
                 <p>
+                  
                   <a href="tel:+97142522025" className="hover:text-primary">
                     +971 4 252 2025
                   </a>
                 </p>
 
-              </p>
+              </div>
+
+
+
               <div className="flex items-center flex-wrap gap-2 py-2 lg:order-2 order-1 text-black dark:text-white">
                 {bottomImages.map((image, index) => (
                   <Image
