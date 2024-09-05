@@ -161,7 +161,7 @@ const ProductPage = () => {
           <div className="flex flex-wrap md:flex-nowrap gap-2 items-center ">
             <h1>Sort By: </h1>
             <Select
-              defaultValue="price"
+              defaultValue="Price"
               className='w-32 md:w-40 h-10 rounded-none'
               onChange={handleSortChange}
               options={[
@@ -171,9 +171,6 @@ const ProductPage = () => {
               ]}
             />
           </div>
- 
-
-
           <div className="relative  flex items-center border border-secondary" >
             <input
               className="px-2 py-1 rounded-none outline-none  w-32 md:w-[90%] border-sky-900"
@@ -185,9 +182,7 @@ const ProductPage = () => {
             <IoIosSearch className="inline-block absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
             </div>
-
         </div>
-
         <div className="w-full">
             {error ? (
               <div className="text-red flex justify-center items-center">{error}</div>
