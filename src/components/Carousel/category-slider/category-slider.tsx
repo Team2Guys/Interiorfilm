@@ -117,7 +117,7 @@ const CategorySlider: React.FC = () => {
               <CategoryCard
                 name={category.name}
                 posterImageUrl={category.posterImageUrl.imageUrl}
-                categoryId={category._id}
+                categoryId={category.name}
                 onClick={() => handleCategoryClick(category)}
               />
             </SwiperSlide>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import Button from 'components/Common/Button';
+import { generateSlug } from 'data/Data';
 
 interface CategoryCardProps {
   name: string;
@@ -13,7 +14,8 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ name, posterImageUrl, categ
   const router = useRouter();
 
   const handleButtonClick = () => {
-    router.push(`/products?category=${categoryId}`);
+    const slug = generateSlug(categoryId)
+    router.push(`/products?category=${slug}`);
   };
 
   return (
