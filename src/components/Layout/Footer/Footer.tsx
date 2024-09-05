@@ -43,6 +43,7 @@ const Footer: React.FC = () => {
       console.log(err, "err");
     }
   };
+  
   useLayoutEffect(() => {
     CategoryHandler();
   }, []);

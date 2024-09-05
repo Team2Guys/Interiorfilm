@@ -53,9 +53,11 @@ const Navbar = () => {
       console.log(err, "err");
     }
   };
+
+  
   useEffect(() => {
-    CategorytHandler();
-  }, [Categories]);
+    productHandler();
+  }, []);
 
 
   const productHandler = async () => {

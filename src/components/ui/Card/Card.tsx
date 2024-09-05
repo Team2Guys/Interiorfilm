@@ -146,6 +146,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
       purchasePrice: product.purchasePrice,
       sizes: product.sizes,
+      product_code : product.code
     };
   
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
