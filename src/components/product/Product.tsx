@@ -90,6 +90,8 @@ const ProductPage = () => {
       }
     } catch (err) {
       console.error('Error loading products or categories', err);
+    } finally {
+      setLoading(false);
     }
   }
   const productHandler = async (categoryName: string | null) => {
@@ -144,19 +146,23 @@ const ProductPage = () => {
   };
 
   const sortedProducts = sortProducts(filteredProducts);
+
+  console.log(sortedProducts , "sortedProductssortedProductssortedProducts")
   return (
 
 <>
       <Overlay title="Product" />
       <Container className="mt-20 md:overflow-hidden">
-        <div className="flex justify-between  gap-3">
-            <p className='uppercase text-[24px] text-lightdark'>Home<span className='capitalize text-black'>/{activeLink?.name}</span></p>
-          <div className='flex gap-4'>
-          <div className="flex flex-wrap gap-2 items-center w-3/6 md:w-auto">
+        <div className="flex flex-wrap md:flex-nowrap justify-between  gap-3">
+          <div >
+            <p className='uppercase text-15 md:text-[24px] text-lightdark'>Home<span className='capitalize text-black'>/{activeLink?.name}</span></p>
+          </div>
+          <div className='flex flex-wrap md:flex-nowrap md:gap-4'>
+          <div className="flex flex-wrap md:flex-nowrap gap-2 items-center ">
             <h1>Sort By: </h1>
             <Select
               defaultValue="price"
-              className='w-40 h-10 rounded-none'
+              className='w-32 md:w-40 h-10 rounded-none'
               onChange={handleSortChange}
               options={[
                 { value: "Default", label: "Default" },
@@ -165,22 +171,12 @@ const ProductPage = () => {
               ]}
             />
           </div>
-          <div className="flex flex-wrap gap-2 items-center w-3/6 md:w-auto">
-            <h1>Sort By: </h1>
-            <Select
-              defaultValue="color"
-              className='w-40 h-10 rounded-none'
-              onChange={handleSortChange}
-              options={[
-                { value: "Default", label: "Default" },
-                { value: "Low to High", label: "Low to High" },
-                { value: "High to Low", label: "High to Low" },
-              ]}
-            />
-          </div>
-          <div className="relative w-3/6 md:w-auto flex items-center border border-secondary" >
+ 
+
+
+          <div className="relative  flex items-center border border-secondary" >
             <input
-              className="px-2 py-1 rounded-none outline-none  w-[90%] border-sky-900"
+              className="px-2 py-1 rounded-none outline-none  w-32 md:w-[90%] border-sky-900"
               type="search"
               placeholder="Search"
               value={searchTerm}
