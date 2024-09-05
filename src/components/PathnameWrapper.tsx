@@ -1,9 +1,10 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import Header from 'components/Layout/Header/Header';
+// import Header from 'components/Layout/Header/Header';
 import Footer from './Layout/Footer/Footer';
 import Authhook from 'hooks/AuthHook'
+import Navbar from './Layout/Header/Navbar';
 
 
 const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -23,7 +24,8 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
     <>
       {
       withoutHeaderPages.includes(pathname)  || pathname.split('/').includes('dashboard') ? null : 
-      <Header />
+      <Navbar/>
+      // <Header />
       }
       {children}
       {pathname !=="/" && (withoutHeaderPages.includes(pathname) || pathname.split('/').includes('dashboard')) ? null  : 

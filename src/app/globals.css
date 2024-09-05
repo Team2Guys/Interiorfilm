@@ -94,7 +94,7 @@
   height: 1px;
   bottom: -2px;
   left: 0;
-  background-color: white;
+  background-color: #FF914E;
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.3s ease-out;
@@ -142,11 +142,12 @@
 }
 @media only screen and (min-width: 1440px) {
   .ant-popover-content {
-    width: 1380px;
+    width: 1180px;
   }
   .ant-popover .ant-popover-inner {
     margin-left: 100px !important;
-    max-height: 100vh;
+    /* max-height: 100vh; */
+    max-height: 85vh;
   }
 }
 
