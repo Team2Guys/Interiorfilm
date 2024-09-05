@@ -10,7 +10,6 @@ const Cart = () => {
   const [total, setTotal] = useState(0);
   const router = useRouter();
 
-  // Function to calculate the total price
   const calculateTotals = (items:any) => {
     const sub = items.reduce((acc:string, item:any) => {
       const price = item.discountPrice ? item.discountPrice : item.price;
@@ -18,8 +17,6 @@ const Cart = () => {
     }, 0);
     setTotal(sub);
   };
-
-  // Fetch cart items and calculate total when component mounts
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
     setCartItems(existingCart);

@@ -1,11 +1,12 @@
 "use client"
 
+import { ButtonHTMLType } from "antd/es/button";
 import React from "react";
 
 interface ButtonProps {
   title?: any;
   className?: string; 
-  onClick?: () => void;
+  onClick?: (e:React.MouseEvent<HTMLButtonElement>) => void;
   value?: any;
   icon?:any;
 type?:any

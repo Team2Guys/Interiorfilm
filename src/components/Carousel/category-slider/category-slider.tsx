@@ -8,6 +8,7 @@ import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading';
 import { Autoplay, Navigation } from 'swiper/modules';
 import CategoryCard from './card';
+import { generateSlug } from 'data/Data';
 
 const CategorySlider: React.FC = () => {
   const prevRef = useRef<HTMLButtonElement>(null);
@@ -48,11 +49,7 @@ const CategorySlider: React.FC = () => {
     fetchCategories();
   }, []);
 
-  const handleCategoryClick = (category:any) => {
-    localStorage.setItem('selectedCategory', JSON.stringify(category));
-  };
   
-
   return (
 <>
 
@@ -117,8 +114,7 @@ const CategorySlider: React.FC = () => {
               <CategoryCard
                 name={category.name}
                 posterImageUrl={category.posterImageUrl.imageUrl}
-                categoryId={category._id}
-                onClick={() => handleCategoryClick(category)}
+                categoryId={generateSlug(category.name)}
               />
             </SwiperSlide>
           ))
