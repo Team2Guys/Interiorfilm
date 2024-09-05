@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import gitImg from "../../public/images/json/404.json";
 import Lottie from "components/Lottie/error-gif";
