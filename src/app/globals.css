@@ -534,3 +534,7 @@ gap: 10px;
 .ant-select-selector:hover{
   border-color: #000000 !important;
 }
+
+.ant-modal-mask{
+  background-color: rgb(0 0 0 / 75%) !important;
+}
