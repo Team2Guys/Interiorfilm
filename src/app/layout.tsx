@@ -11,15 +11,41 @@ import "../css/satoshi.css";
 import "../css/style.css";
 import { GoogleTagManager } from '@next/third-parties/google';
 
-import { Poppins } from 'next/font/google'
-import Head from "next/head";
-
-const poppinsFont = Poppins({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  subsets: ["latin"],
-  display: "swap",
+const futuraCyrillic = localFont({
+  src: [
+    {
+      path: '../../public/fonts/FuturaCyrillicBold.ttf',
+      weight: '700', 
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/FuturaCyrillicDemi.ttf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/FuturaCyrillicExtraBold.ttf',
+      weight: '800',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/FuturaCyrillicHeavy.ttf',
+      weight: '900',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/FuturaCyrillicLight.ttf',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/FuturaCyrillicMedium.ttf',
+      weight: '500',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-futura',
 });
-
 
 export const metadata: Metadata = {
   title: "Interior Film",
@@ -36,9 +62,9 @@ export default function RootLayout({
     <Providers>
 
       <html lang="en">
-      <GoogleTagManager gtmId="GTM-PFNKXKTR" />
-        <head>
         <GoogleTagManager gtmId="GTM-PFNKXKTR" />
+        <head>
+          <GoogleTagManager gtmId="GTM-PFNKXKTR" />
 
           <script
             dangerouslySetInnerHTML={{
@@ -53,8 +79,8 @@ export default function RootLayout({
           />
         </head>
 
-        <body className={poppinsFont.className}>
-        <GoogleTagManager gtmId="GTM-PFNKXKTR" />
+        <body className={futuraCyrillic.className}>
+          <GoogleTagManager gtmId="GTM-PFNKXKTR" />
           <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PFNKXKTR"
             height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
           <PathnameWrapper>
