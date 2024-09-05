@@ -1,6 +1,7 @@
 
 import Container from 'components/Layout/Container/Container';
 import Header from 'components/Layout/Header/Header';
+import Navbar from 'components/Layout/Header/Navbar';
 import Link from 'next/link';
 import React from 'react';
 
@@ -8,7 +9,7 @@ const Hero = () => {
   return (
     <>
       <div className='bg-hero w-full h-[600px] md:h-screen bg-cover bg-no-repeat relative'>
-      <Header/>
+      <Navbar/>
         <div className='absolute top-1/2 left-5 h-36 w-14 transform -translate-x-1/2 -translate-y-1/2 bg-black text-white p-2'>
           <p className='transform  mt-20  -rotate-90 whitespace-nowrap'>Get 10% Off!</p>
         </div>

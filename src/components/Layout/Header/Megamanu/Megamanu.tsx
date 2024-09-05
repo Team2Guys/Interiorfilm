@@ -14,6 +14,7 @@ interface MegamanuProps {
 
 const Megamanu: React.FC<MegamanuProps> = ({
   Categories,
+
   products,
   onProductClick,
   loading,
@@ -22,7 +23,6 @@ const Megamanu: React.FC<MegamanuProps> = ({
   const [hoverCategory, setHoverCategory] = useState<Categories_Types | null>(
     null
   );
-
   useEffect(() => {
     if (Categories.length > 0) {
       setHoverCategory(Categories[0]);
@@ -34,7 +34,6 @@ const Megamanu: React.FC<MegamanuProps> = ({
     router.push(`/products?category=${slug}`);
     onProductClick();
   };
-
   const handleHoverImg = (category: Categories_Types) => {
     setHoverCategory(category);
   };
