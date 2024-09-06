@@ -313,10 +313,10 @@ const Navbar = () => {
                     <ul className="space-y-2">
                     {
                 navarlink.map((navItem: { ref: string, title: string }, index: number) => (
-                  <li onClick={onClose}>
+                  <li onClick={onClose} key={index}>
                   <Link
                     className="text-14 font-medium text-black hover:text-black"
-                    key={index}
+                    
                     href={`/${navItem.ref}`}
                     >
                     {navItem.title}
