@@ -221,7 +221,7 @@ const Table: React.FC<TableProps> = ({
 
   return (
     <>
-      <div className="hidden lg:flex flex-col">
+      <div className=" hidden lg:flex flex-col">
         <div className="-m-1.5 overflow-x-auto">
           <div className="p-1.5 min-w-full inline-block align-middle">
             <div className="overflow-hidden">
@@ -230,29 +230,36 @@ const Table: React.FC<TableProps> = ({
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-start text-23 xl:text-[30px] font-medium text-dark">
+                      className="px-6 py-3 text-start text-23 xl:text-[30px] font-medium text-dark whitespace-nowrap">
                       Products
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-start text-23 xl:text-[30px] font-medium text-dark"
+                      className="px-6 py-3 text-start text-23 xl:text-[30px] font-medium text-dark whitespace-nowrap"
                     >
                       Price
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-start text-23 xl:text-[30px] font-medium text-dark"
+                      className="px-6 py-3  text-23 xl:text-[30px] font-medium text-end text-dark whitespace-nowrap"
                     >
                       Quantity (M)
                     </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-end text-23 xl:text-[30px] font-medium text-dark"
-                    >
-                      {pathName === "/wishlist" ? "Action" : "Total"}
-                    </th>
+                    {
+                      pathName === "/wishlist" ?
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-end text-23 xl:text-[30px] font-medium text-dark whitespace-nowrap"
+                        >
+                          Action
+                        </th> : null
+
+                    }
                   </tr>
                 </thead>
+
+
+
                 <tbody>
                   {data.map((product, index) => {
                     const options = lengthOptions(
@@ -284,14 +291,17 @@ const Table: React.FC<TableProps> = ({
                             </div>
                             <div className="p-2 w-full">
                               <h1 className="text-sm md:text-base font-bold">
-                                <span>{counts[index] || 1}* </span>{typeof product.name === "string"
-                                  ? product.name
-                                  : ""}
+                                <span>{counts[index] || 1}* </span>
+                                {typeof product.name === "string" ? product.name: ""}
                                 
+
                               </h1>
                               <div>
-                                <p className="text-16 font-semibold">
+                              <p className="text-[#B9BBBF]">{product.product_code}</p>
+
+                                <p className="text-16 font-semibold text-[#535353]">
                                   Width: <span>1.22cm (28inch)</span>
+                                  
                                 </p>
                               </div>
                               {/* <div className="flex gap-2 items-center w-full">
@@ -309,6 +319,7 @@ const Table: React.FC<TableProps> = ({
                             </div>
                           </div>
                         </td>
+
                         <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base">
                           <p>
                             AED
@@ -318,22 +329,24 @@ const Table: React.FC<TableProps> = ({
                                   ? product.discountPrice * (counts[index] || 1)
                                   : product.price * (counts[index] || 1)
                                 : product.discountPrice
-                                ? product.discountPrice
-                                : product.price}
+                                  ? product.discountPrice
+                                  : product.price}
                             </span>
                           </p>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base">
-                          <div className="flex border w-28 h-12 justify-between px-2">
+
+
+                        <td className="px-6 py-4 whitespace-nowrap text-end text-sm md:text-base ">
+                          <div className="flex w-28 h-12 justify-between px-2 ml-auto bg-[#F0F0F0]">
                             <div
                               onClick={() => decrement(index)}
                               className="  flex justify-center items-center"
                             >
-                              <RxMinus size={20} />
+                              <RxMinus size={20} className="cursor-pointer"/>
                             </div>
                             <div className="  flex justify-center items-center">
                               <input
-                                className="h-7 w-8 text-center"
+                                className="h-7 w-8 text-center cursor-pointer"
                                 type="text"
                                 min={1}
                                 max={100}
@@ -346,41 +359,40 @@ const Table: React.FC<TableProps> = ({
                               onClick={() => increment(index)}
                               className="  flex justify-center items-center"
                             >
-                              <RxPlus size={20} />
+                              <RxPlus size={20} className="cursor-pointer"/>
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-end text-sm md:text-base">
-                          {pathName === "/wishlist" ? (
+
+
+
+                        <td className="px-6  whitespace-nowrap text-end text-sm md:text-base">
+{
+                          pathName === "/wishlist" ?
                             <Button
                               onClick={() => addToCart(product, index)}
                               className="px-4 rounded-md"
                               title={"Add To Cart"}
-                            />
-                          ) : (
-                            <p>
-                              AED
-                              <span>
-                                {product.discountPrice
-                                  ? product.discountPrice *
-                                    (counts[index] || 1) *
-                                    (lengths[index] || product.length)
-                                  : product.price *
-                                    (counts[index] || 1) *
-                                    (lengths[index] || product.length)}
-                              </span>
-                            </p>
-                          )}
+                            /> : null
+                        }
+                         
                         </td>
+
+
                       </tr>
                     );
                   })}
                 </tbody>
+
+
               </table>
             </div>
           </div>
         </div>
       </div>
+
+
+
 
       {data.map((product, index) => {
         const options = lengthOptions(product.totalStockQuantity || 0);
@@ -422,44 +434,43 @@ const Table: React.FC<TableProps> = ({
                           ? product.discountPrice * (counts[index] || 1)
                           : product.price * (counts[index] || 1)
                         : product.discountPrice
-                        ? product.discountPrice
-                        : product.price}
+                          ? product.discountPrice
+                          : product.price}
                     </span>
                   </p>
                   <div>
-                                <p className="text-12 font-medium">
-                                  Width: <span>1.22cm (28inch)</span>
-                                </p>
-                              </div>
+                    <p className="text-12 font-medium">
+                      Width: <span>1.22cm (28inch)</span>
+                    </p>
+                  </div>
                   <div className="flex border w-20 h-8 justify-between px-2 ">
-                            <div
-                              onClick={() => decrement(index)}
-                              className="  flex justify-center items-center"
-                            >
-                              <RxMinus size={14} />
-                            </div>
-                            <div className="  flex justify-center items-center">
-                              <input
-                                className="h-7 w-8 text-center"
-                                type="text"
-                                min={1}
-                                max={100}
-                                disabled
-                                value={lengths[index] || product.length}
-                                onChange={(e) => handleChange(index, e)}
-                              />
-                            </div>
-                            <div
-                              onClick={() => increment(index)}
-                              className="  flex justify-center items-center"
-                            >
-                              <RxPlus size={14} />
-                            </div>
-                          </div>
+                    <div
+                      onClick={() => decrement(index)}
+                      className="  flex justify-center items-center"
+                    >
+                      <RxMinus size={14} />
+                    </div>
+                    <div className="  flex justify-center items-center">
+                      <input
+                        className="h-7 w-8 text-center"
+                        type="text"
+                        min={1}
+                        max={100}
+                        disabled
+                        value={lengths[index] || product.length}
+                        onChange={(e) => handleChange(index, e)}
+                      />
+                    </div>
+                    <div
+                      onClick={() => increment(index)}
+                      className="  flex justify-center items-center"
+                    >
+                      <RxPlus size={14} />
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="flex gap-2 items-center">
-                <h1 className="font-bold">Total: </h1>
                 {pathName === "/wishlist" ? (
                   <Button
                     onClick={() => addToCart(product, index)}
@@ -481,6 +492,9 @@ const Table: React.FC<TableProps> = ({
                   </p>
                 )}
               </div>
+
+
+
             </div>
           </div>
         );

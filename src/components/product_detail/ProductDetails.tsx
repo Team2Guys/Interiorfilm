@@ -78,6 +78,7 @@ export default function ProductDetails({
       totalPrice: (product.discountPrice || product.salePrice) * length * quantity, // Calculate total price based on length and quantity
       purchasePrice: product.purchasePrice,
       sizes: product.sizes,
+      product_code : product.code
     };
 
     let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');

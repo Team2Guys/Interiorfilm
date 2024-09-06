@@ -22,9 +22,10 @@ interface CardProps {
   categoryId?: string;
   carDetail?: string;
   cardClass?: string;
+  quickClass?: string;
 }
 
-const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail, cardClass, }) => {
+const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail, cardClass,quickClass }) => {
   const router = useRouter();
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [productDetails, setproductDetails] = useState<PRODUCTS_TYPES | any>({});
@@ -145,6 +146,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
       purchasePrice: product.purchasePrice,
       sizes: product.sizes,
+      product_code : product.code
     };
   
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -242,7 +244,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
       <div className={`relative group mb-5 ${cardClass}`} key={index}>
-        <div className="space-y-3 absolute top-6 right-6 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 overflow-hidden transition ease-in-out duration-400 hidden md:block">
+        <div className={`space-y-3 absolute top-6 right-6 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 overflow-hidden transition ease-in-out duration-400 hidden md:block ${quickClass}`}>
           <button onClick={() => handleAddToCart(product)} className="flex justify-center items-center z-10">
             <LuShoppingCart className="p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white" size={40} />
           </button>
@@ -265,7 +267,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
               }}>Quick View </button>
             </div>
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
-              <Image className="bg-contain  w-full md:h-[370px] md:w-[370px]" width={500} height={500} src={product.posterImageUrl.imageUrl} alt="Image" />
+              <Image className="bg-contain  w-full " width={500} height={500} src={product.posterImageUrl.imageUrl} alt="Image" />
             )}
           </div>
           <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
