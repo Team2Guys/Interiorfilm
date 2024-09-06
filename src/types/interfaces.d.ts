@@ -198,3 +198,18 @@ export interface product {
   __v: number;
   code: string
 }
+
+export interface ITabbyList {
+  id: number;
+  para: string;
+}
+export interface ITabbyPayList {
+  id: number;
+  imageUrl: StaticImageData;
+}
+
+export interface ITamaraList {
+  id: number;
+  title?: string;
+  para: string;
+}
