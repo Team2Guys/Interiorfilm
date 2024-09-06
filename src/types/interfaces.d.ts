@@ -87,7 +87,6 @@ export interface USRPROPS {
     colors: { colorName: string }[];
     modelDetails: { name: string; detail: string }[];
     spacification: { specsDetails: string }[];
-    sizes: string[];
     category: string
     code:string
     totalStockQuantity: number;
@@ -196,4 +195,15 @@ export interface product {
   price: string;
   __v: number;
   code: string
+}
+
+
+export interface RECORDS {
+  totalAdmins: string;
+  totalCategories: string;
+  totalProducts: string;
+  totalUsers: string;
+  totalProfit: string;
+  totalSales: string;
+  totalRevenue: string;
 }

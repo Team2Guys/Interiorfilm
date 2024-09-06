@@ -11,16 +11,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { PiUsersThreeFill } from "react-icons/pi";
 import { IoBagOutline } from "react-icons/io5";
 import { Skeleton } from "antd";
-
-interface RECORDS {
-  totalAdmins: string;
-  totalCategories: string;
-  totalProducts: string;
-  totalUsers: string;
-  totalProfit: string;
-  totalSales: string;
-  totalRevenue: string;
-}
+import { RECORDS } from "types/interfaces";
 
 const ECommerce: React.FC = () => {
   const [loading, setloading] = useState(false);
@@ -88,16 +79,8 @@ const ECommerce: React.FC = () => {
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
       {loading ? (
-          <>
-            <Skeleton avatar active  />
-            <Skeleton avatar active  />
-            <Skeleton avatar active  />
-            <Skeleton avatar active  />
-            <Skeleton avatar active  />
-            <Skeleton avatar active  />
-            <Skeleton avatar active  />
-          </>
-        ) : (
+        new Array(5).fill(0).map((item:number, index: number)=> <Skeleton key={index} avatar active  />))
+         : (
           <>
         {!canVeiwAdmins ? null : (
           <CardDataStats
