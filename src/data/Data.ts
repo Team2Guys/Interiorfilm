@@ -416,3 +416,19 @@ export const collapseData = [
     content: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR LOREM IPSUM DOLOR SIT AMET, CONSECTETUR...',
   },
 ];
+
+
+
+export const navarlink =[
+  {ref:"" , title:"Home"},
+  {ref:"products?category=wood-grain-series" , title:"Wood Grain Series"},
+  {ref:"products?category=plain-series" , title:"Plain Series"},
+  {ref:"products?category=cement-gray-series" , title:"Cement Gray Series"},
+  {ref:"products?category=marble-series" , title:"Marble Series"},
+  {ref:"products?category=metal-series" , title:"Metal Series"},
+  {ref:"products?category=fabric-series" , title:"Fabric Series"},
+  {ref:"products?category=skin-texture-series" , title:"Skin Texture Series"},
+  {ref:"products?category=symphony-series" , title:"Symphony Series"},
+  {ref:"about" , title:"About Us"},
+  {ref:"contact" , title:"Contact Us"},
+]

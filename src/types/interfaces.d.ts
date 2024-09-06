@@ -117,6 +117,7 @@ interface sizes {
 interface PRODUCTS_TYPES {
   _id?: any;
   name: any;
+  code: string;
   posterImageUrl?: Image;
   hoverImageUrl?: Image;
   description?: string;

@@ -10,7 +10,7 @@ import DrawerMenu from "components/ui/DrawerMenu/DrawerMenu";
 import { useRouter } from "next/navigation";
 import { Modal, Popover } from "antd";
 import Megamanu from "./Megamanu/Megamanu";
-import { generateSlug } from "data/Data";
+import { generateSlug, navarlink } from "data/Data";
 import axios from "axios";
 import { useAppSelector } from "components/Others/HelperRedux";
 import Cookies from "js-cookie";
@@ -56,7 +56,7 @@ const Navbar = () => {
 
   
   useEffect(() => {
-    productHandler();
+    CategorytHandler();
   }, []);
 
 
@@ -65,8 +65,6 @@ const Navbar = () => {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
       );
-
-      // Ensure products are an array
       if (Array.isArray(response.data.products)) {
         setProducts(response.data.products);
       } else {
@@ -313,47 +311,19 @@ const Navbar = () => {
                 content={
                   <>
                     <ul className="space-y-2">
-                      <li>
-                        <Link
-                          className="text-14 font-medium text-black hover:text-black"
-                          href="/"
-                        >
-                          Home
-                        </Link>
-                      </li>
-                      {Categories &&
-                        Categories.map((cat, index) => (
-                          <li key={index}>
-                            <div
-                              className="link-underline text-14 font-medium text-black hover:text-black cursor-pointer"
-                              onClick={() => {
-                                const slug = generateSlug(cat.name);
-                                router.push(`/products?category=${slug}`);
-                                onClose();
-                              }}
-                            >
-                              {cat.name}
-                            </div>
-                          </li>
-                        ))}
-                      <li>
-                        <Link
-                          className="text-14 font-medium text-black hover:text-black "
-                          onClick={onClose}
-                          href="/about"
-                        >
-                          About Us
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          className="text-14 font-medium text-black hover:text-black"
-                          onClick={onClose}
-                          href="/contact"
-                        >
-                          Contact Us
-                        </Link>
-                      </li>
+                    {
+                navarlink.map((navItem: { ref: string, title: string }, index: number) => (
+                  <li onClick={onClose}>
+                  <Link
+                    className="text-14 font-medium text-black hover:text-black"
+                    key={index}
+                    href={`/${navItem.ref}`}
+                    >
+                    {navItem.title}
+                  </Link>
+                    </li>
+                ))
+              }
                     </ul>
                   </>
                 }
@@ -364,7 +334,7 @@ const Navbar = () => {
 
         <div>
           <ul
-            className={`hidden lg:flex lg:space-x-4  xl:space-x-5 2xl:space-x-16 text-11 xl:text-13 py-3 2xl:px-6 whitespace-nowrap overflow-x-auto ${
+            className={`hidden lg:flex lg:space-x-4 uppercase xl:space-x-5 2xl:space-x-16 text-11 xl:text-13 py-3 2xl:px-6 whitespace-nowrap overflow-x-auto ${
               isHomePage
                 ? isScrolled
                   ? "bg-white text-black"
@@ -372,42 +342,22 @@ const Navbar = () => {
                 : "bg-white text-black"
             }`}
           >
-            <Link
-              className="link-underline 2xl:leading-7 2xl:tracking-[20%] "
-              href="/"
-            >
-              Home
-            </Link>
-            {Categories &&
-              Categories.map((cat, index) => (
-                <div
-                  key={index}
-                  className="link-underline 2xl:leading-7 2xl:tracking-[20%] cursor-pointer"
-                  onClick={() => {
-                    const slug = generateSlug(cat.name);
-                    router.push(`/products?category=${slug}`);
-                  }}
-                >
-                  {cat.name}
-                </div>
-              ))}
-            <Link
-              className="link-underline 2xl:leading-7 2xl:tracking-[20%] "
-              href="/about"
-            >
-              About
-            </Link>
-            <Link
-              className="link-underline 2xl:leading-7 2xl:tracking-[20%] "
-              href="/contact"
-            >
-              Contact
-            </Link>
+           {
+                navarlink.map((navItem: { ref: string, title: string }, index: number) => (
+                  <Link
+                    className="link-underline 2xl:leading-7 2xl:tracking-[20%]"
+                    key={index}
+                    href={`/${navItem.ref}`}
+                  >
+                    {navItem.title}
+                  </Link>
+                ))
+              }
           </ul>
         </div>
       </nav>
 
-      <div className="fixed top-auto bottom-0 md:top-[150px] right-0 z-999 ">
+      <div className="fixed top-auto bottom-0 md:top-[150px] right-0 z-50 ">
         <Link
           target="_blank"
           href={"https://wa.link/mb359y"}
