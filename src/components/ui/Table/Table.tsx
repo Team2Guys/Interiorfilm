@@ -28,7 +28,13 @@ const Table: React.FC<TableProps> = ({
   const [subtotal, setSubtotal] = useState(0);
   const [changeId, setChangeId] = useState<number | null>(null);
   const [lengths, setLengths] = useState<{ [key: number]: number }>({});
+  const [totalItems, setTotalItems] = useState(0);
 
+  useEffect(() => {
+    // Calculate the total number of items
+    const total = data.reduce((sum, product) => sum + (product.count || 1), 0);
+    setTotalItems(total);
+  }, [data]);
   const ProductHandler = () => {
     const Products = localStorage.getItem(
       pathName === "/wishlist" ? "wishlist" : "cart"
@@ -221,7 +227,11 @@ const Table: React.FC<TableProps> = ({
 
   return (
     <>
-      <div className=" hidden lg:flex flex-col">
+<div className=" border border-gray">
+  <div className="text-end p-2">
+    <p className="text-16">*total <span className="text-primary">{totalItems}</span> Items</p>
+  </div>
+<div className=" hidden lg:flex flex-col">
         <div className="-m-1.5 overflow-x-auto">
           <div className="p-1.5 min-w-full inline-block align-middle">
             <div className="overflow-hidden">
@@ -258,8 +268,6 @@ const Table: React.FC<TableProps> = ({
                   </tr>
                 </thead>
 
-
-
                 <tbody>
                   {data.map((product, index) => {
                     const options = lengthOptions(
@@ -271,7 +279,7 @@ const Table: React.FC<TableProps> = ({
                           <div className="flex gap-1">
                             <div className="relative">
                               <Image
-                                className="w-24 h-24 bg-contain"
+                                className="w-[154px] h-[124px] "
                                 width={100}
                                 height={100}
                                 src={
@@ -293,8 +301,6 @@ const Table: React.FC<TableProps> = ({
                               <h1 className="text-sm md:text-base font-bold">
                                 <span>{counts[index] || 1}* </span>
                                 {typeof product.name === "string" ? product.name: ""}
-                                
-
                               </h1>
                               <div>
                               <p className="text-[#B9BBBF]">{product.product_code}</p>
@@ -390,6 +396,7 @@ const Table: React.FC<TableProps> = ({
           </div>
         </div>
       </div>
+</div>
 
 
 

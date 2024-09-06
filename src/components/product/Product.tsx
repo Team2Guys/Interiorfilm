@@ -17,9 +17,10 @@ import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
 import { Checkbox } from "antd";
 import { IoIosSearch } from "react-icons/io";
 import { useSearchParams } from "next/navigation";
-import { generateSlug } from "data/Data";
+import { generateSlug, productimage } from "data/Data";
 import { Suspense } from "react";
-
+import Image from "next/image";
+import product1 from "../../../public/images/ProductsPage/product1.png"
 interface category {
   posterImageUrl: {
     public_id: string;
@@ -184,6 +185,15 @@ product.colors?.forEach((color) => {
         title={activeLink?.name || "Products"}
         bodyText="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, "
       />
+      <div className="hidde md:grid grid-cols-3 mt-2 gap-6">
+        {
+          productimage.map((array:{img:string}, index:number)=> (
+            <div className="w-full" key={index}> 
+            <Image className="object-cover w-full" width={500} height={500} src={array.img} alt="product1"/> 
+          </div>
+          ))
+        }
+      </div>
       <Container className="mt-20 md:overflow-hidden">
         <div className="flex flex-wrap md:flex-nowrap justify-between  gap-3">
           <div>

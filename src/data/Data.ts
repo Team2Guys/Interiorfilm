@@ -419,16 +419,22 @@ export const collapseData = [
 
 
 
-export const navarlink =[
-  {ref:"" , title:"Home"},
-  {ref:"products?category=wood-grain-series" , title:"Wood Grain Series"},
-  {ref:"products?category=plain-series" , title:"Plain Series"},
-  {ref:"products?category=cement-gray-series" , title:"Cement Gray Series"},
-  {ref:"products?category=marble-series" , title:"Marble Series"},
-  {ref:"products?category=metal-series" , title:"Metal Series"},
-  {ref:"products?category=fabric-series" , title:"Fabric Series"},
-  {ref:"products?category=skin-texture-series" , title:"Skin Texture Series"},
-  {ref:"products?category=symphony-series" , title:"Symphony Series"},
-  {ref:"about" , title:"About Us"},
-  {ref:"contact" , title:"Contact Us"},
+export const navarlink = [
+  { ref: "", title: "Home" },
+  { ref: "wood-grain-series", title: "Wood Grain Series" },
+  { ref: "plain-series", title: "Plain Series" },
+  { ref: "cement-gray-series", title: "Cement Gray Series" },
+  { ref: "marble-series", title: "Marble Series" },
+  { ref: "metal-series", title: "Metal Series" },
+  { ref: "fabric-series", title: "Fabric Series" },
+  { ref: "skin-texture-series", title: "Skin Texture Series" },
+  { ref: "symphony-series", title: "Symphony Series" },
+  { ref: "about", title: "About Us" },
+  { ref: "contact", title: "Contact Us" },
+];
+
+export const productimage =[
+  {img:"/images/ProductsPage/product1.png"},
+  {img:"/images/ProductsPage/product2.png"},
+  {img:"/images/ProductsPage/product3.png"},
 ]

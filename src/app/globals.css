@@ -79,6 +79,21 @@
 
 }
 
+.link-active {
+  position: relative;
+  display: inline-block;
+}
+
+.link-active::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #FF914E;
+
+}
 
 .link-underline,
 .link-footer {
