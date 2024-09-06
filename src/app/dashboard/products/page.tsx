@@ -52,10 +52,9 @@ const Products = () => {
     purchasePrice: editProduct && editProduct.purchasePrice,
     totalStockQuantity: editProduct && editProduct.totalStockQuantity,
     hoverImageUrl: editProduct && editProduct.hoverImageUrl,
-
   };  
 
-  console.log(editProduct?.hoverImageUrl, "hoverImageUrl")
+  console.log(editProduct?.colors, "colors")
 
   let productFlag: boolean = selecteMenu === "Add All Products" ? true : false
 
