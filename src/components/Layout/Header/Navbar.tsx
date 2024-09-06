@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import whitelogo from "../../../../public/images/logowhite.png";
 import blacklogo from "../../../../public/images/logoblack.png";
 import { IoIosSearch, IoMdHeartEmpty } from "react-icons/io";
 import { FaBars } from "react-icons/fa";
@@ -25,17 +24,14 @@ import whatsapp from "../../../../public/images/whatsapp.png";
 import { SlHandbag } from "react-icons/sl";
 import CartDrawer from "components/cart-drawer/cart-drawer";
 import TopNav from "./TopNav";
+import { IoSearch } from "react-icons/io5";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [activeLink, setActiveLink] = useState<Category | undefined>();
   const [Categories, setCategories] = useState<Categories_Types[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [visible, setVisible] = useState(false);
-  const [category, setcategory] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [WishlistItems, setWishlistItems] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,7 +42,8 @@ const Navbar = () => {
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
 
-  const productHandler = async () => {
+
+  const CategorytHandler = async () => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
@@ -58,6 +55,28 @@ const Navbar = () => {
   };
 
   
+  useEffect(() => {
+    productHandler();
+  }, []);
+
+
+  const productHandler = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
+      );
+
+      // Ensure products are an array
+      if (Array.isArray(response.data.products)) {
+        setProducts(response.data.products);
+      } else {
+        console.error('Product data is not an array', response.data.products);
+      }
+    } catch (err) {
+      console.log(err, "err");
+    }
+  };
+
   useEffect(() => {
     productHandler();
   }, []);
@@ -79,18 +98,14 @@ const Navbar = () => {
     }
   };
 
-  const handleVisibleChange = (visible: boolean) => {
-    setVisible(visible);
-  };
 
-  const closePopover = () => {
-    setVisible(false);
-  };
   const handleCloseDrawer = () => setDrawerOpen(false);
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
+  const filteredProducts = Array.isArray(products)
+    ? products.filter((product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -150,20 +165,10 @@ const Navbar = () => {
     setOpen(false);
   };
 
-  const CategoryHandler = () => {
-    setcategory(true);
-  };
-
-  const CategoryHandlerclose = () => {
-    setcategory(false);
-    setOpen(false);
-  };
-
   const router = useRouter();
 
   useEffect(() => {
     const handleCartChange = () => {
-      setcategory(false);
       setOpen(false);
     };
 
@@ -316,20 +321,20 @@ const Navbar = () => {
                           Home
                         </Link>
                       </li>
-                   {Categories &&
+                      {Categories &&
                         Categories.map((cat, index) => (
-                            <li key={index}>
-                          <div
-                            className="link-underline text-14 font-medium text-black hover:text-black cursor-pointer"
-                            onClick={() => {
-                              const slug = generateSlug(cat.name);
-                              router.push(`/products?category=${slug}`);
-                              onClose();
-                            }}
-                          >
-                            {cat.name}
-                          </div>
-                   </li>
+                          <li key={index}>
+                            <div
+                              className="link-underline text-14 font-medium text-black hover:text-black cursor-pointer"
+                              onClick={() => {
+                                const slug = generateSlug(cat.name);
+                                router.push(`/products?category=${slug}`);
+                                onClose();
+                              }}
+                            >
+                              {cat.name}
+                            </div>
+                          </li>
                         ))}
                       <li>
                         <Link
@@ -359,7 +364,7 @@ const Navbar = () => {
 
         <div>
           <ul
-            className={`hidden lg:flex lg:space-x-4  xl:space-x-5 2xl:space-x-17 text-11 xl:text-13 py-3 2xl:px-6 whitespace-nowrap  ${
+            className={`hidden lg:flex lg:space-x-4  xl:space-x-5 2xl:space-x-16 text-11 xl:text-13 py-3 2xl:px-6 whitespace-nowrap overflow-x-auto ${
               isHomePage
                 ? isScrolled
                   ? "bg-white text-black"
@@ -426,16 +431,20 @@ const Navbar = () => {
         width={800}
       >
         <>
-          <div className="mt-8 space-y-3 mb-3">
+          <div className="flex items-center  w-full max-w-md mx-auto md:max-w-screen-2xl  mt-10  shadow shadow-boxdark  mb-3">
             <input
-              className="w-full px-4 border h-14 rounded-md outline-none"
               type="text"
               ref={searchInputRef} // Assign the ref here
-              placeholder="Search Product Here..."
+              placeholder="Product Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full h-[51px] px-4 py-2 text-gray-700 bg-white border-none   focus:outline-none"
             />
+            <button className="h-[51px] px-4 py-3 bg-white text-gray-600  hover:text-gray-800">
+              <IoSearch size={25} />
+            </button>
           </div>
+  
 
           {searchTerm && ( // Render products only when there is a search term
             <div className="max-h-[400px] overflow-y-scroll  pr-2 bg-white rounded-md p-2">

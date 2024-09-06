@@ -260,6 +260,7 @@ const config: Config = {
         'overlay': "url('/images/overlay.png')",
         'Offer': "url('/images/back.png')",
         'hero': "url('/images/herohead.jpg')",
+        'search': "url('/images/Searchimage/main.png')",
       },
       content: {
         "icon-copy": 'url("../images/icon/icon-copy-alt.svg")',
