@@ -39,6 +39,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
     updateSwiperNavigation();
   }, [updateSwiperNavigation]);
 
+  console.log(products, "productsproductsproductsproductsproductsproducts")
 
 
   return (
@@ -134,7 +135,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
             }}
             className="mySwiper custom"
           >
-            {featuredProducts.map((product, index) => (
+            {featuredProducts && featuredProducts.map((product, index) => (
               <SwiperSlide key={index} className="mb-10 custom">
                 <Card ProductCard={[product]} slider={true} />
               </SwiperSlide>
