@@ -63,10 +63,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
       fetchReviews(product?._id);
     }
   }, [product]);
-  console.log("+++++++++++++++++++++++++++++++++++++++")
-  console.log(detail)
-  console.log("+++++++++++++++ review ++++++++++++++++++++++++")
-  console.log(reviews)
+
 
   return (
     <Fragment>

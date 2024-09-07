@@ -190,7 +190,7 @@ export default function ProductDetails({
                 <h3 className="text-30  text-[#B9BBBF] font-medium">{productDetail.code}</h3>
               </span>
               <hr className="text-[#E4E4E4]" />
-             
+
               <div className="flex w-full justify-between">
 
                 <div className="flex  flex-col ">
@@ -208,16 +208,18 @@ export default function ProductDetails({
                     </p>
                   ) : null}
                 </div>
-                <div className="flex flex-col gap-2 w-1/2 text-[10.67px]">
-                  <div className="flex gap-4">
-                    <div className="flex gap-1 items-center bg-[#FBF3EA] w-[49.79px] h-[23px] p-2 rounded-xl text-[#D48D3B]"><FaRegStar /> {averageRating}.0</div>
-                    <div className="flex  items-center gap-1 bg-[#F5F5F5] px-3 rounded-xl h-[23px]">
-                      <BiMessageDetail />
-                      {reviews.length} Review</div>
+                {reviews.length && reviews.length > 0 ? (
+                  <div className="flex flex-col gap-2 w-1/2 text-[10.67px]">
+                    <div className="flex gap-4">
+                      <div className="flex gap-1 items-center bg-[#FBF3EA] w-[49.79px] h-[23px] p-2 rounded-xl text-[#D48D3B]"><FaRegStar /> {averageRating}.0</div>
+                      <div className="flex  items-center gap-1 bg-[#F5F5F5] px-3 rounded-xl h-[23px]">
+                        <BiMessageDetail />
+                        {reviews.length} Review</div>
+                    </div>
+                    <div className="text-[#B9BBBF]"> <span className="text-[#3E9242]">
+                      {(averageRating / 5) * 100}% </span> of buyers have recommended this.</div>
                   </div>
-                  <div className="text-[#B9BBBF]"> <span className="text-[#3E9242]">
-                  {(averageRating/5)*100}% </span> of buyers have recommended this.</div>
-                </div>
+                ) : null}
               </div>
 
               <p className="font-medium text-16 text-text">
