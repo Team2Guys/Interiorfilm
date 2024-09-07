@@ -65,24 +65,37 @@ const CheckOut: React.FC = () => {
     { state: "abu dhabi", charges: 20, discountCharges: 200 },
   ];
 
+
   const formatPhoneNumber = (value: string) => {
-    // Remove all non-digit characters
+
     const numbers = value.replace(/\D/g, "");
-  
-    const formattedNumber = `${numbers.slice(0, 1)}-${numbers.slice(1, 4)}-${numbers.slice(4, 8)}`;
-  
-    return formattedNumber;
-  }  
 
+    if (numbers.length <= 1) return numbers; // 1
+    if (numbers.length <= 4) return `${numbers.slice(0, 1)}-${numbers.slice(1)}`; 
+    if (numbers.length <= 7) return `${numbers.slice(0, 1)}-${numbers.slice(1, 4)}-${numbers.slice(4)}`; 
+  
 
-  const handlePhoneNumberChange = (e: any) => {
+    return `${numbers.slice(0, 1)}-${numbers.slice(1, 4)}-${numbers.slice(4, 8)}`;
+  };
+  
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
+    const lastChar = value[value.length - 1];
+  
+
+    if (lastChar === "-") {
+      value = value.slice(0, -1);
+    }
+  
     value = value.slice(0, 9);
+  
     setBillingData((prevData) => ({
       ...prevData,
       phone_number: formatPhoneNumber(value),
     }));
   };
+  
+  
 
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
