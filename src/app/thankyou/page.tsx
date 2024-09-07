@@ -12,8 +12,8 @@ const Thankyou = () => {
         width={"100"}/>
         </div>
         <div className='text-2xl sm:text-4xl text-center'><h2>Your Order Is Completed!</h2></div>
-        <div className='sm:max-w-[90%] max-w-[80%] lg:max-w-[55%] text-center'><p className='text-xs text-lightdark leading-6'>Thank you for your order! Your order is being processed and will be completed within 3-6 hours. You will receive an email confirmation when your order is completed.</p></div>
-        <div className='bg-black text-white text-xs text-center py-5 px-9'>
+        <div className='sm:max-w-[90%] max-w-[80%] lg:max-w-[55%] text-center'><p className='text-sm text-lightdark leading-6'>Thank you for your order! Your order is being processed and will be completed within 3-6 hours. You will receive an email confirmation when your order is completed.</p></div>
+        <div className='bg-black text-white text-sm text-center py-5 px-9'>
         <Link href={'/products'}>
         Continue Shopping
         </Link>
