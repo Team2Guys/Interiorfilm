@@ -220,7 +220,7 @@ const SideMenu: React.FC = () => {
                 type="checkbox"
                 checked={selectedProducts.includes(product)}
                 onChange={() => handleCheckboxChange(product)}
-                className="w-4 h-4 accent-orange-500 absolute top-2 left-2 !text-white z-10"
+                className="w-4 h-4 accent-orange-600 absolute top-2 left-2 !text-white z-10"
               />
               <ProductCard product={product} />
             </div>

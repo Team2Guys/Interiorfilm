@@ -11,6 +11,7 @@ import { generateSlug } from 'data/Data';
 import PRODUCTS_TYPES from 'types/interfaces';
 import ProductDetails from 'components/product_detail/ProductDetails';
 import Accordion from 'components/widgets/Accordion';
+import { ProductSkeleton } from 'components/Skeleton-loading/ProductSkelton';
 
 const { TabPane } = Tabs;
 
@@ -23,7 +24,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
   const [relatedProductsLoading, setRelatedProductsLoading] = useState<boolean>(false);
   const [categories, setCategories] = useState<string[]>([]);
   const [categoryName, setCategoryName] = useState<string | undefined>();
- 
+
   const productHandler = async () => {
     try {
       setProductsLoading(true);
@@ -79,32 +80,33 @@ const Product = ({ params }: { params: { productname: string } }) => {
   return (
     <>
       <Overlay title='Product Detail' />
+      
       {
         productsLoading ? (
-          <div className='flex justify-center items-center h-[20vh] '><Loader /></div>
+         <ProductSkeleton/>
         ) : productDetail ? (
           <>
-            <ProductDetails 
-              productDetail={productDetail} 
-              categoryName={categoryName} 
+            <ProductDetails
+              productDetail={productDetail}
+              categoryName={categoryName}
             />
-            
-           
+
+
           </>
         ) : null
       }
-        {
+      {/* {
         productsLoading ? (
           <div className='flex justify-center items-center h-[20vh]'><Loader /></div>
         ) : productDetail ? (
           <>
-          <div className='block lg:hidden mt-5'>
-        <Accordion detail={productDetail.modelDetails}/>
-      </div>
+            <div className='block lg:hidden mt-5'>
+              <Accordion detail={productDetail.modelDetails} />
+            </div>
           </>
         ) : null
-      }
-     
+      } */}
+
       <Container className='mt-20'>
         <div className='flex justify-center items-center'>
           <h1 className='w-fit text-center text-lg border-b-2 border-[#FF914E] md:text-3xl mb-5 up'>FEATURE PRODUCT</h1>
