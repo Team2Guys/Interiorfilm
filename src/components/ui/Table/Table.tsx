@@ -28,7 +28,13 @@ const Table: React.FC<TableProps> = ({
   const [subtotal, setSubtotal] = useState(0);
   const [changeId, setChangeId] = useState<number | null>(null);
   const [lengths, setLengths] = useState<{ [key: number]: number }>({});
+  const [totalItems, setTotalItems] = useState(0);
 
+  useEffect(() => {
+    // Calculate the total number of items
+    const total = data.reduce((sum, product) => sum + (product.count || 1), 0);
+    setTotalItems(total);
+  }, [data]);
   const ProductHandler = () => {
     const Products = localStorage.getItem(
       pathName === "/wishlist" ? "wishlist" : "cart"
@@ -105,7 +111,6 @@ const Table: React.FC<TableProps> = ({
     setSubtotal(sub);
     onCartChange(updatedData);
   };
-
 
   const removeItemFromCart = (index: number) => {
     const updatedData = [...data];
@@ -221,90 +226,68 @@ const Table: React.FC<TableProps> = ({
 
   return (
     <>
-      <div className=" hidden lg:flex flex-col">
-        <div className="-m-1.5 overflow-x-auto">
-          <div className="p-1.5 min-w-full inline-block align-middle">
-            <div className="overflow-hidden">
-              <table className="min-w-full">
-                <thead>
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-start text-23 xl:text-[30px] font-medium text-dark whitespace-nowrap">
-                      Products
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-start text-23 xl:text-[30px] font-medium text-dark whitespace-nowrap"
-                    >
-                      Price
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3  text-23 xl:text-[30px] font-medium text-end text-dark whitespace-nowrap"
-                    >
-                      Quantity (M)
-                    </th>
-                    {
-                      pathName === "/wishlist" ?
-                        <th
+      <div className=" border border-gray py-3">
+        <div className="text-end p-2">
+          <p className="text-16">
+            *total <span className="text-primary">{totalItems}</span> Items
+          </p>
+        </div>
+        <div className=" hidden lg:block   ">
+          <div className="">
+            <div className="flex justify-between items-center text-22 font-bold px-6">
+              <p className="w-3/12">Products</p>
+              <p className="w-3/12">Price</p>
+              <p className={`w-3/12 ${pathName === "/wishlist" ?"":"text-end"} `}>Quantity (M) </p>
+             {pathName === "/wishlist" ? (
+             <p className="w-3/12">
+                        <div
                           scope="col"
-                          className="px-6 py-3 text-end text-23 xl:text-[30px] font-medium text-dark whitespace-nowrap"
+                          className="px-6 py-3 text-end text-23 xl:text-[30px] font-medium text-dark whitespace-nowrap "
                         >
                           Action
-                        </th> : null
+                        </div>
+             </p>
+                      ) : null}
+            </div>
 
-                    }
-                  </tr>
-                </thead>
+            <div className="max-h-[529px] overflow-y-auto table-scrollbar px-4 mx-2">
 
+            
+            {data.map((product, index) => {
+              const options = lengthOptions(product.totalStockQuantity || 0);
+              return (
+                <div className="flex justify-between items-center mt-5" key={index}>
+                  <div className="flex gap-1 w-3/12 ">
+                    <div className="relative">
+                      <Image
+                        className="w-[184px] h-[124px] "
+                        width={100}
+                        height={100}
+                        src={product.imageUrl[0]?.imageUrl || product.imageUrl}
+                        alt="Product"
+                      />
+                      <div className="absolute -top-2 -right-2">
+                        <div
+                          onClick={() => showDeleteConfirm(index)}
+                          className="bg-white shadow h-5 w-5 flex justify-center items-center rounded-full cursor-pointer hover:text-white hover:bg-primary"
+                        >
+                          <IoCloseSharp size={18} />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-2 w-full ">
+                      <h1 className="text-sm md:text-base font-bold">
+                        <span>{counts[index] || 1}* </span>
+                        {typeof product.name === "string" ? product.name : ""}
+                      </h1>
+                      <div>
+                        <p className="text-[#B9BBBF]">{product.product_code}</p>
 
-
-                <tbody>
-                  {data.map((product, index) => {
-                    const options = lengthOptions(
-                      product.totalStockQuantity || 0
-                    );
-                    return (
-                      <tr key={index} className="border-b border-[#EFEFEF]">
-                        <td className="md:px-3 md:py-4 text-sm font-medium">
-                          <div className="flex gap-1">
-                            <div className="relative">
-                              <Image
-                                className="w-24 h-24 bg-contain"
-                                width={100}
-                                height={100}
-                                src={
-                                  product.imageUrl[0]?.imageUrl ||
-                                  product.imageUrl
-                                }
-                                alt="Product"
-                              />
-                              <div className="absolute -top-2 -right-2">
-                                <div
-                                  onClick={() => showDeleteConfirm(index)}
-                                  className="bg-white shadow h-5 w-5 flex justify-center items-center rounded-full cursor-pointer hover:text-white hover:bg-[#C62131]"
-                                >
-                                  <IoCloseSharp size={18} />
-                                </div>
-                              </div>
-                            </div>
-                            <div className="p-2 w-full">
-                              <h1 className="text-sm md:text-base font-bold">
-                                <span>{counts[index] || 1}* </span>
-                                {typeof product.name === "string" ? product.name: ""}
-                                
-
-                              </h1>
-                              <div>
-                              <p className="text-[#B9BBBF]">{product.product_code}</p>
-
-                                <p className="text-16 font-semibold text-[#535353]">
-                                  Width: <span>1.22cm (28inch)</span>
-                                  
-                                </p>
-                              </div>
-                              {/* <div className="flex gap-2 items-center w-full">
+                        <p className="text-16 font-semibold text-[#535353]">
+                          Width: <span>1.22cm (28inch)</span>
+                        </p>
+                      </div>
+                      {/* <div className="flex gap-2 items-center w-full">
                                 <ProductSelect
                                   className="w-[70%] h-10 border outline-none shipment text-20"
                                   onChange={(value) =>
@@ -316,83 +299,68 @@ const Table: React.FC<TableProps> = ({
                                   } METERS`}
                                 />
                               </div> */}
-                            </div>
-                          </div>
-                        </td>
+                    </div>
+                  </div>
 
-                        <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base">
-                          <p>
-                            AED
-                            <span>
-                              {pathName === "/wishlist"
-                                ? product.discountPrice
-                                  ? product.discountPrice * (counts[index] || 1)
-                                  : product.price * (counts[index] || 1)
-                                : product.discountPrice
-                                  ? product.discountPrice
-                                  : product.price}
-                            </span>
-                          </p>
-                        </td>
-
-
-                        <td className="px-6 py-4 whitespace-nowrap text-end text-sm md:text-base ">
-                          <div className="flex w-28 h-12 justify-between px-2 ml-auto bg-[#F0F0F0]">
-                            <div
-                              onClick={() => decrement(index)}
-                              className="  flex justify-center items-center"
-                            >
-                              <RxMinus size={20} className="cursor-pointer"/>
-                            </div>
-                            <div className="  flex justify-center items-center">
-                              <input
-                                className="h-7 w-8 text-center cursor-pointer"
-                                type="text"
-                                min={1}
-                                max={100}
-                                disabled
-                                value={lengths[index] || product.length}
-                                onChange={(e) => handleChange(index, e)}
-                              />
-                            </div>
-                            <div
-                              onClick={() => increment(index)}
-                              className="  flex justify-center items-center"
-                            >
-                              <RxPlus size={20} className="cursor-pointer"/>
-                            </div>
-                          </div>
-                        </td>
-
-
-
-                        <td className="px-6  whitespace-nowrap text-end text-sm md:text-base">
-{
-                          pathName === "/wishlist" ?
-                            <Button
-                              onClick={() => addToCart(product, index)}
-                              className="px-4 rounded-md"
-                              title={"Add To Cart"}
-                            /> : null
-                        }
-                         
-                        </td>
-
-
-                      </tr>
-                    );
-                  })}
-                </tbody>
-
-
-              </table>
-            </div>
+              <div  className=" w-3/12 ">
+              <p>
+                    AED
+                    <span>
+                      {pathName === "/wishlist"
+                        ? product.discountPrice
+                          ? product.discountPrice * (counts[index] || 1)
+                          : product.price * (counts[index] || 1)
+                        : product.discountPrice
+                        ? product.discountPrice
+                        : product.price}
+                    </span>
+                  </p>
+              </div>
+                  <div className="w-3/12">
+                  <div className={`flex w-28 h-12  justify-between px-2  bg-[#F0F0F0]  ${pathName === "/wishlist" ?"":"ml-auto"}`}>
+                    <div
+                      onClick={() => decrement(index)}
+                      className="  flex justify-center items-center"
+                    >
+                      <RxMinus size={20} className="cursor-pointer" />
+                    </div>
+                    <div className="  flex justify-center items-center">
+                      <input
+                        className="h-7 w-8 text-center cursor-pointer"
+                        type="text"
+                        min={1}
+                        max={100}
+                        disabled
+                        value={lengths[index] || product.length}
+                        onChange={(e) => handleChange(index, e)}
+                      />
+                    </div>
+                    <div
+                      onClick={() => increment(index)}
+                      className="  flex justify-center items-center"
+                    >
+                      <RxPlus size={20} className="cursor-pointer" />
+                    </div>
+                  </div>
+                  </div>
+                 
+                  {pathName === "/wishlist" ? (
+                  <div className="w-3/12 text-end">
+                    <Button
+                      onClick={() => addToCart(product, index)}
+                      className="px-4 rounded-md"
+                      title={"Add To Cart"}
+                    />
+                  </div>
+                  ) : null}
+                 
+                </div>
+              );
+            })}
+          </div>
           </div>
         </div>
       </div>
-
-
-
 
       {data.map((product, index) => {
         const options = lengthOptions(product.totalStockQuantity || 0);
@@ -428,14 +396,15 @@ const Table: React.FC<TableProps> = ({
                     {typeof product.name === "string" ? product.name : ""} )
                   </h1>
                   <p className="text-14 font-medium">
-                    AED <span>
+                    AED{" "}
+                    <span>
                       {pathName === "/wishlist"
                         ? product.discountPrice
                           ? product.discountPrice * (counts[index] || 1)
                           : product.price * (counts[index] || 1)
                         : product.discountPrice
-                          ? product.discountPrice
-                          : product.price}
+                        ? product.discountPrice
+                        : product.price}
                     </span>
                   </p>
                   <div>
@@ -492,9 +461,6 @@ const Table: React.FC<TableProps> = ({
                   </p>
                 )}
               </div>
-
-
-
             </div>
           </div>
         );

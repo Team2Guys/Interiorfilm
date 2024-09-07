@@ -20,6 +20,8 @@ import Button from "components/ui/Button/Button";
 import axios from "axios";
 import { CategoriesType } from "types/interfaces";
 import PreFooter from "./PreFooter";
+import { generateSlug } from "data/Data";
+import { useRouter } from "next/navigation";
 
 const { Footer: AntFooter } = Layout;
 
@@ -33,6 +35,7 @@ const Footer: React.FC = () => {
   const togglePages = () => setIsPagesOpen(!isPagesOpen);
   const bottomImages = [card1, card2, card3, card4, card5, card6, card7];
   const CategoryHandler = async () => {
+     
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
@@ -47,12 +50,18 @@ const Footer: React.FC = () => {
   useLayoutEffect(() => {
     CategoryHandler();
   }, []);
+  const router = useRouter();
+  const handleButtonClick = (categoryName: string) => {
+    const slug = generateSlug(categoryName)
+    router.push(`/products?category=${slug}`);
+  };
+
   return (
     <>
 
       <PreFooter />
       <div className="bg-secondary text-white pt-10  pb-10 md:px-30">
-        <div className="flex flex-wrap md:flex-nowrap justify-between border-b pb-10 ">
+        <div className="flex flex-wrap md:flex-nowrap justify-between border-b border-slate-500 pb-10 ">
           <div className=" md:w-4/12 flex flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
             <Image width={250} height={250} src={logo} alt="Interior Film" />
           </div>
@@ -121,9 +130,9 @@ const Footer: React.FC = () => {
                           .slice(chunkIndex * 4, chunkIndex * 4 + 4)
                           .map((categoryItem, index) => (
                             <li key={index}>
-                              <Link href="/products" className="hover:text-primary link-footer text-slate-400">
+                              <div onClick={() => (handleButtonClick(categoryItem.name))} className="hover:text-primary link-footer text-slate-400 cursor-pointer">
                                 {categoryItem.name}
-                              </Link>
+                              </div>
                             </li>
                           ))}
                       </ul>

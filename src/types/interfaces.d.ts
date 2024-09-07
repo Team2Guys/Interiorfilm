@@ -115,7 +115,8 @@ interface sizes {
 
 interface PRODUCTS_TYPES {
   _id?: any;
-  name: any;
+  name: string;
+  code: string;
   posterImageUrl?: Image;
   hoverImageUrl?: Image;
   description?: string;
@@ -125,7 +126,7 @@ interface PRODUCTS_TYPES {
   imageUrl?: IMAGE_INTERFACE[];
   discountPrice?: any;
   colors?: Color[];
-  modelDetails?: { name: string; detail: string }[]; 
+  modelDetails: Array<{ name: string, detail: string,}>;
   spacification?: Specification[];
   createdAt: Date;
   updatedAt: Date;
@@ -141,6 +142,7 @@ interface PRODUCTS_TYPES {
   customOrder?: number;
   createdAt?:any;
   updatedAt?: any;
+  code?:string
 }
 
 export default PRODUCTS_TYPES;
@@ -197,6 +199,20 @@ export interface product {
   code: string
 }
 
+export interface ITabbyList {
+  id: number;
+  para: string;
+}
+export interface ITabbyPayList {
+  id: number;
+  imageUrl: StaticImageData;
+}
+
+export interface ITamaraList {
+  id: number;
+  title?: string;
+  para: string;
+}
 
 export interface RECORDS {
   totalAdmins: string;

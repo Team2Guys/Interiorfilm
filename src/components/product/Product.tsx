@@ -9,43 +9,41 @@ import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu'
 import { IoFunnelOutline } from 'react-icons/io5'
 import PRODUCTS_TYPES, { product } from 'types/interfaces'
 import Loader from "components/Loader/Loader";
-import type { CheckboxProps, RadioChangeEvent } from 'antd';
-import { Radio } from 'antd';
-import Input from 'components/Common/regularInputs'
-import axios from 'axios'
-import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading'
-import { Checkbox } from 'antd';
-import { IoIosSearch } from 'react-icons/io'
-import { useSearchParams } from 'next/navigation'
-import { generateSlug } from 'data/Data'
-import { Suspense } from 'react'
-
-
-
+import type { CheckboxProps, RadioChangeEvent } from "antd";
+import { Radio } from "antd";
+import Input from "components/Common/regularInputs";
+import axios from "axios";
+import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
+import { Checkbox } from "antd";
+import { IoIosSearch } from "react-icons/io";
+import { useSearchParams } from "next/navigation";
+import { generateSlug, productimage } from "data/Data";
+import { Suspense } from "react";
+import Image from "next/image";
+import product1 from "../../../public/images/ProductsPage/product1.png"
 interface category {
   posterImageUrl: {
-    public_id: string,
-    imageUrl: string
-  },
-  _id: string,
-  name: string,
-  createdAt: string,
-  updatedAt: string,
-  __v: any
+    public_id: string;
+    imageUrl: string;
+  };
+  _id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: any;
 }
 
 const StaticCategory = {
   posterImageUrl: {
-    public_id: 'string',
-    imageUrl: "string"
+    public_id: "string",
+    imageUrl: "string",
   },
   _id: "all",
   name: "View All",
   createdAt: "string",
   updatedAt: "string",
-  __v: "any"
-}
-
+  __v: "any",
+};
 
 const ProductPage = () => {
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
@@ -77,6 +75,7 @@ const ProductPage = () => {
   useEffect(() => {
     productHandler(categoryName);
   }, [categoryName]);
+
 
   const Get_colors_handler = (products: any) => {
     let uniqcolorArray: string[] = []
@@ -127,7 +126,7 @@ const ProductPage = () => {
       //   setActiveLink(activeCategory);
       // }
     } catch (err) {
-      console.error('Error loading products or categories', err);
+      console.error("Error loading products or categories", err);
     } finally {
       setLoading(false);
     }
@@ -155,7 +154,7 @@ const ProductPage = () => {
       Get_colors_handler(filteredProductsByCategory)
 
     } catch (err) {
-      console.error('Error loading products or categories', err);
+      console.error("Error loading products or categories", err);
     }
   };
 
@@ -188,13 +187,18 @@ const ProductPage = () => {
       return products.sort((a, b) => {
         const nameA = a.name.toUpperCase();
         const nameB = b.name.toUpperCase();
-        return nameA.localeCompare(nameB, undefined, { numeric: true, sensitivity: 'base' });
+        return nameA.localeCompare(nameB, undefined, {
+          numeric: true,
+          sensitivity: "base",
+        });
       });
     } else if (sortOption === "Low to High") {
-      const getPrice = (product: PRODUCTS_TYPES) => product.discountPrice ?? product.salePrice;
+      const getPrice = (product: PRODUCTS_TYPES) =>
+        product.discountPrice ?? product.salePrice;
       return products.sort((a, b) => getPrice(b) - getPrice(a));
     } else if (sortOption === "High to Low") {
-      const getPrice = (product: PRODUCTS_TYPES) => product.discountPrice ?? product.salePrice;
+      const getPrice = (product: PRODUCTS_TYPES) =>
+        product.discountPrice ?? product.salePrice;
       return products.sort((a, b) => getPrice(a) - getPrice(b));
     } else {
       return products;
@@ -235,13 +239,27 @@ const ProductPage = () => {
 
 
   return (
-
     <>
-      <Overlay title="Product" />
+      <Overlay
+        title={activeLink?.name || "Products"}
+        bodyText="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, "
+      />
+      <div className="hidde md:grid grid-cols-3 mt-2 gap-6">
+        {
+          productimage.map((array:{img:string}, index:number)=> (
+            <div className="w-full" key={index}> 
+            <Image className="object-cover w-full" width={500} height={500} src={array.img} alt="product1"/> 
+          </div>
+          ))
+        }
+      </div>
       <Container className="mt-20 md:overflow-hidden">
         <div className="flex flex-wrap md:flex-nowrap justify-between  gap-3">
-          <div >
-            <p className='uppercase text-15 md:text-[24px] text-lightdark'>Home<span className='capitalize text-black'>/{activeLink?.name}</span></p>
+          <div>
+            <p className="uppercase text-15 md:text-[24px] text-lightdark">
+              Home
+              <span className="capitalize text-black">/{activeLink?.name}</span>
+            </p>
           </div>
           <div className='flex flex-wrap md:flex-nowrap md:gap-4'>
 
@@ -365,6 +383,7 @@ const ProductPage = () => {
               </button>
             )} */}
         </div>
+
       </Container>
 
     </>

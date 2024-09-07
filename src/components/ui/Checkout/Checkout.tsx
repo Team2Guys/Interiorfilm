@@ -7,6 +7,12 @@ import Product from "app/product/[productname]/page";
 import PRODUCTS_TYPES from "types/interfaces";
 import { number } from "yup";
 import { IoCloseSharp } from "react-icons/io5";
+import Container from "components/Layout/Container/Container";
+import CheckoutInput from "./checkout-input";
+import { CountryCode } from "data/Data";
+import { FiTag } from "react-icons/fi";
+import Overlay from 'components/widgets/Overlay/Overlay'
+
 
 const CheckOut: React.FC = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -32,7 +38,6 @@ const CheckOut: React.FC = () => {
     productItems: [] as PRODUCTS_TYPES[],
     subtotalAmount: 0,
     totalAmount: 0,
-    
   });
   const [showOrderNote, setShowOrderNote] = useState(false);
   const [errors, setErrors] = useState({
@@ -60,21 +65,19 @@ const CheckOut: React.FC = () => {
     { state: "abu dhabi", charges: 20, discountCharges: 200 },
   ];
 
+  const formatPhoneNumber = (value: string) => {
+    // Remove all non-digit characters
+    const numbers = value.replace(/\D/g, "");
+  
+    const formattedNumber = `${numbers.slice(0, 1)}-${numbers.slice(1, 4)}-${numbers.slice(4, 8)}`;
+  
+    return formattedNumber;
+  }  
 
-  const formatPhoneNumber = (value: any) => {
-    const numbers = value.replace(/\D/g, '');
-    if (numbers.length <= 3) return `+${numbers}`;
-    if (numbers.length <= 5) return `+${numbers.slice(0, 3)}-${numbers.slice(3)}`;
-    return `+${numbers.slice(0, 3)}-${numbers.slice(3, 5)}-${numbers.slice(5, 12)}`;
-  };
 
-  // Function to handle phone number change
   const handlePhoneNumberChange = (e: any) => {
     let value = e.target.value;
-    value = value.replace(/[^+\d]/g, "").slice(0, 13);
-    if (!value.startsWith("+")) {
-      value = "+" + value.replace(/^\+/, "");
-    }
+    value = value.slice(0, 9);
     setBillingData((prevData) => ({
       ...prevData,
       phone_number: formatPhoneNumber(value),
@@ -88,10 +91,9 @@ const CheckOut: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const updatedTotal = shipmentFee === "Free"
-      ? subtotal
-      : Number(shipmentFee) + subtotal;
-  
+    const updatedTotal =
+      shipmentFee === "Free" ? subtotal : Number(shipmentFee) + subtotal;
+
     setBillingData({
       ...billingData,
       productItems: cartItems,
@@ -99,7 +101,6 @@ const CheckOut: React.FC = () => {
       totalAmount: updatedTotal,
     });
   }, [cartItems, shipmentFee, subtotal]);
-  
 
   useEffect(() => {
     const calculateCharges = () => {
@@ -140,7 +141,7 @@ const CheckOut: React.FC = () => {
     setBillingData({ ...billingData, state: value });
   };
 
-  const addAddressField = (value:any) => {
+  const addAddressField = (value: any) => {
     setBillingData({
       ...billingData,
       additionalAddressFields: [
@@ -174,6 +175,7 @@ const CheckOut: React.FC = () => {
       orderNote: e.target.value,
     });
   };
+
   const validateFields = () => {
     let isValid = true;
     const newErrors = { name: "", email: "", phone_number: "", address: "" };
@@ -206,364 +208,245 @@ const CheckOut: React.FC = () => {
     }
     console.log("Shipping Data:", billingData);
   };
+  const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
 
   return (
-    <div className="bg-bglight lg:px-10">
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        <div className="bg-white pt-8 pb-14 space-y-5 p-2 lg::px-10">
-          <p className="text-end text-17 font-light">
-            Already have an account?{" "}
-            <Link
-              href="/login"
-              className="inline-block cursor-pointer underline"
-            >
-              Log in
-            </Link>
-          </p>
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
-            <div>
-              <h2 className="lg:text-20 text-base font-bold text-black mb-4">
-                SHIPPING DETAILS
-              </h2>
-              <p className="text-15 font-medium mb-4">
-                <span className="text-red ">*</span> required fields
-              </p>
-              <div className="grid grid-cols-1 gap-4">
-                <div className="flex flex-col gap-4">
-                  <div className="flex flex-col text-lightdark">
-                    <label htmlFor="checkoutFullName">
-                      Full Name <span className="text-red">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
-                      name="name"
-                      id="checkoutFullName"
-                      value={billingData.name}
-                      onChange={(e) =>
-                        setBillingData({
-                          ...billingData,
-                          name: e.target.value,
-                        })
-                      }
-                    />
-                    {errors.name && (
-                      <p className="text-red text-sm">{errors.name}</p>
-                    )}
-                  </div>
-                  <div className="flex flex-col">
-                    <label htmlFor="checkout" className="text-lightdark">
-                      City <span className="text-red">*</span>
-                    </label>
-                    <Select
-                      showSearch
-                      className="w-full h-11 border outline-none shipment text-20 border-[#D2D2D2]"
-                      placeholder="Select your state"
-                      value={billingData.state}
-                      onChange={handleSelectChange}
-                    >
-                      {selectoption.map((option, index) => (
-                        <Option value={option.title} key={index}>
-                          {option.title}
-                        </Option>
-                      ))}
-                    </Select>
-                  </div>
-                  <div className="flex flex-col text-lightdark">
-                    <label htmlFor="checkoutstreetAddress">
-                      Street Address <span className="text-red">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
-                      name="streetAddress"
-                      id="checkoutstreetAddress"
-                      value={billingData.address}
-                      onChange={(e) =>
-                        setBillingData({
-                          ...billingData,
-                          address: e.target.value,
-                        })
-                      }
-                    />
-                    {errors.address && (
-                      <p className="text-red text-sm">{errors.address}</p>
-                    )}
-                  </div>
-                  {billingData.additionalAddressFields.map((field) => (
-                    <div key={field.id} className="flex items-center">
-                      <input
-                        type="text"
-                        className="border-[#D2D2D2] border shadow-0 outline-0 p-2 flex-grow"
-                        placeholder="Additional Address"
-                        value={field.address}
-                        onChange={(e) =>
-                          handleAddressFieldChange(field.id, e.target.value)
-                        }
-                      />
-                      <button
-                        className="text-red ml-2 text-23"
-                        onClick={() => handleAddressFieldDelete(field.id)}
-                      >
-                        <IoCloseSharp  />
-                      </button>
-                    </div>
-                  ))}
-                  <div className="flex">
-                    <button className="text-15" onClick={addAddressField}>
-                      + Add another address field (optional)
-                    </button>
-                  </div>
-                  <div className="mt-3">
-                    <h2 className="lg:text-20 text-base font-bold text-black mb-3">
-                      CONTACT INFORMATION
-                    </h2>
-                  </div>
-                  <div className="flex flex-col">
-                    <label htmlFor="checkoutEmail" className="text-lightdark">
-                      Email <span className="text-red">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
-                      name="email"
-                      id="checkoutEmail"
-                      value={billingData.email}
-                      onChange={(e) =>
-                        setBillingData({
-                          ...billingData,
-                          email: e.target.value,
-                        })
-                      }
-                    />
-                    {errors.email && (
-                      <p className="text-red text-sm">{errors.email}</p>
-                    )}
-                    <p className="text-11 text-headingdark font-medium mt-1">
-                      You will be able to create an account after purchasing
-                    </p>
-                  </div>
-                  <div className="flex flex-col">
-                    <label htmlFor="checkout" className="text-lightdark">
-                      Number <span className="text-red">*</span>
-                      <span className="text-12 ms-2 text-headingdark font-medium">
-                        For delivery-related queries
-                      </span>
-                    </label>
-                    <input
-                      type="tel"
-                      className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
-                      name="number"
-                      id="checkout"
-                      value={billingData.phone_number}
-                      onChange={handlePhoneNumberChange}
-                    />
-                    {errors.phone_number && (
-                      <p className="text-red text-sm">{errors.phone_number}</p>
-                    )}
-                  </div>
+    <>
+      <Overlay title="show_details"/>
+
+      <Container className=" mt-10 md:mt-20 py-2 px-4">
+        <div className="flex flex-wrap md:flex-nowrap gap-4">
+          <div className="border border-gray py-2 px-4 w-full md:w-7/12">
+            <p className="text-16 md:text-22 font-semibold md:tracking-[2px]">
+              Where You Want Us To Deliver?
+            </p>
+            <div className="grid grid-cols-12 gap-4 mt-5 md:mt-10 ">
+              <div className="col-span-12 md:col-span-6">
+                <div className="flex flex-col text-lightdark">
+                  <CheckoutInput
+                    label="Full Name"
+                    type="text"
+                    placeholder="e.g. John"
+                    name="name"
+                    id="checkoutFullName"
+                    value={billingData.name}
+                    onChange={(e) =>
+                      setBillingData({
+                        ...billingData,
+                        name: e.target.value,
+                      })
+                    }
+                  />
+                  {errors.name && (
+                    <p className="text-red text-sm">{errors.name}</p>
+                  )}
+                </div>
+              </div>
+              <div className="col-span-12 md:col-span-6">
+                <div className="flex flex-col text-lightdark">
+                  <CheckoutInput
+                    label="Last name"
+                    type="text"
+                    name="name"
+                    id="checkoutFullName"
+                    value={billingData.name}
+                    onChange={(e) =>
+                      setBillingData({
+                        ...billingData,
+                        name: e.target.value,
+                      })
+                    }
+                  />
+                  {errors.name && (
+                    <p className="text-red text-sm">{errors.name}</p>
+                  )}
+                </div>
+              </div>
+              <div className="col-span-12">
+                <div className="flex flex-col">
+                  <CheckoutInput
+                    label="Email"
+                    type="email"
+                    name="email"
+                    placeholder="e.g.mail@example.com"
+                    id="checkoutEmail"
+                    value={billingData.email}
+                    onChange={(e) =>
+                      setBillingData({
+                        ...billingData,
+                        email: e.target.value,
+                      })
+                    }
+                  />
+                  {errors.email && (
+                    <p className="text-red text-sm">{errors.email}</p>
+                  )}
+                </div>
+              </div>
+              <div className="col-span-5 md:col-span-3">
+                <div className="flex flex-col">
+                  <label htmlFor="checkout" className="text-lightdark">
+                    Phone Code <span className="text-red">*</span>
+                  </label>
+
+                  <Select
+                    showSearch
+                    className="w-full h-11 border outline-none shipment text-20 mt-5 border-[#D2D2D2]"
+                    placeholder="Select your state"
+                    defaultValue={"+971"}
+                    onChange={handleChange}
+                  >
+                    {CountryCode.map((option, index) => (
+                      <Option value={option.title} key={index}>
+                        {option.title}
+                      </Option>
+                    ))}
+                  </Select>
+                </div>
+              </div>
+              <div className="col-span-7 md:col-span-9">
+                <div className="flex flex-col">
+                  <CheckoutInput
+                    label="Phone Number*"
+                    type="tel"
+                    placeholder="e.g.92123456"
+                    name="number"
+                    id="checkout"
+                    value={billingData.phone_number}
+                    onChange={handlePhoneNumberChange}
+                  />
+                  {errors.phone_number && (
+                    <p className="text-red text-sm">{errors.phone_number}</p>
+                  )}
+                </div>
+              </div>
+              <div className="col-span-12">
+                <div className="flex flex-col">
+                  <label htmlFor="checkout" className="text-lightdark">
+                    City <span className="text-red">*</span>
+                  </label>
+                  <Select
+                    showSearch
+                    className="w-full h-11 border outline-none shipment text-20 mt-5 border-[#D2D2D2]"
+                    defaultValue="Select your state"
+                    value={billingData.state}
+                    onChange={handleSelectChange}
+                  >
+                    {selectoption.map((option, index) => (
+                      <Option value={option.title} key={index}>
+                        {option.title}
+                      </Option>
+                    ))}
+                  </Select>
+                </div>
+              </div>
+              <div className="col-span-12">
+                <div className="flex flex-col text-lightdark">
+                  <label htmlFor="checkoutstreetAddress">
+                    Area <span className="text-red">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="border-[#D2D2D2] border shadow-0 mt-5 outline-0 p-2"
+                    name="streetAddress"
+                    placeholder="e.g. Al Ghubrah Ash-Shamaliyyah"
+                    id="checkoutstreetAddress"
+                    value={billingData.address}
+                    onChange={(e) =>
+                      setBillingData({
+                        ...billingData,
+                        address: e.target.value,
+                      })
+                    }
+                  />
+                  {errors.address && (
+                    <p className="text-red text-sm">{errors.address}</p>
+                  )}
+                </div>
+              </div>
+              <div className="col-span-12">
+                <div className="flex flex-col text-lightdark">
+                  <label htmlFor="checkoutstreetAddress">
+                    Delivery Address <span className="text-red">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="border-[#D2D2D2] border shadow-0 mt-5 outline-0 p-2"
+                    name="streetAddress"
+                    placeholder="e.g. 11 Kaiyuan Road"
+                    id="checkoutstreetAddress"
+                    value={billingData.address}
+                    onChange={(e) =>
+                      setBillingData({
+                        ...billingData,
+                        address: e.target.value,
+                      })
+                    }
+                  />
+                  {errors.address && (
+                    <p className="text-red text-sm">{errors.address}</p>
+                  )}
+                </div>
+              </div>
+              <div className="col-span-12">
+                <div className="flex flex-col text-lightdark">
+                  <label htmlFor="checkoutstreetAddress">
+                    Apartment#/Hotel Room/Villa (optional){" "}
+                    <span className="text-red">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="border-[#D2D2D2] border shadow-0 mt-5 outline-0 p-2"
+                    name="streetAddress"
+                    placeholder="e.g. Apartment 2101"
+                    id="checkoutstreetAddress"
+                    value={billingData.address}
+                    onChange={(e) =>
+                      setBillingData({
+                        ...billingData,
+                        address: e.target.value,
+                      })
+                    }
+                  />
+                  {errors.address && (
+                    <p className="text-red text-sm">{errors.address}</p>
+                  )}
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-10">
-            <div>
-      <h2 className="lg:text-20 text-base font-bold text-black mb-4">
-        BILLING DETAILS
-      </h2>
-      <Checkbox
-        className="custom-checkbox  text-14 font-normal"
-        checked={isChecked}
-        onChange={handleCheckboxChange}
-      >
-        Same as shipping address
-      </Checkbox>
-      {!isChecked && (
-       <div className="flex flex-col gap-4 mt-3">
-       <div className="flex flex-col text-lightdark">
-         <label htmlFor="checkoutFullName">
-           Full Name <span className="text-red">*</span>
-         </label>
-         <input
-           type="text"
-           className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
-           name="name"
-           id="checkoutFullName"
-           value={billingData.name}
-           onChange={(e) =>
-             setBillingData({
-               ...billingData,
-               name: e.target.value,
-             })
-           }
-         />
-         {errors.name && (
-           <p className="text-red text-sm">{errors.name}</p>
-         )}
-       </div>
-       <div className="flex flex-col">
-         <label htmlFor="checkout" className="text-lightdark">
-           City <span className="text-red">*</span>
-         </label>
-         <Select
-           showSearch
-           className="w-full h-11 border outline-none shipment text-20 border-[#D2D2D2]"
-           placeholder="Select your state"
-           value={billingData.state}
-           onChange={handleSelectChange}
-         >
-           {selectoption.map((option, index) => (
-             <Option value={option.title} key={index}>
-               {option.title}
-             </Option>
-           ))}
-         </Select>
-       </div>
-       <div className="flex flex-col text-lightdark">
-         <label htmlFor="checkoutstreetAddress">
-           Street Address <span className="text-red">*</span>
-         </label>
-         <input
-           type="text"
-           className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
-           name="streetAddress"
-           id="checkoutstreetAddress"
-           value={billingData.address}
-           onChange={(e) =>
-             setBillingData({
-               ...billingData,
-               address: e.target.value,
-             })
-           }
-         />
-         {errors.address && (
-           <p className="text-red text-sm">{errors.address}</p>
-         )}
-       </div>
-       {billingData.additionalAddressFields.map((field) => (
-         <div key={field.id} className="flex items-center">
-           <input
-             type="text"
-             className="border-[#D2D2D2] border shadow-0 outline-0 p-2 flex-grow"
-             placeholder="Additional Address"
-             value={field.address}
-             onChange={(e) =>
-               handleAddressFieldChange(field.id, e.target.value)
-             }
-           />
-           <button
-             className="text-red ml-2 hover:text-red text-23"
-             onClick={() => handleAddressFieldDelete(field.id)}
-           >
-            <IoCloseSharp />
-           </button>
-         </div>
-       ))}
-       <div className="flex">
-         <button className="text-15" onClick={addAddressField}>
-           + Add another address field (optional)
-         </button>
-       </div>
-       <div className="mt-3">
-         <h2 className="lg:text-20 text-base font-bold text-black mb-3">
-           CONTACT INFORMATION
-         </h2>
-       </div>
-       <div className="flex flex-col">
-         <label htmlFor="checkoutEmail" className="text-lightdark">
-           Email <span className="text-red">*</span>
-         </label>
-         <input
-           type="email"
-           className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
-           name="email"
-           id="checkoutEmail"
-           value={billingData.email}
-           onChange={(e) =>
-             setBillingData({
-               ...billingData,
-               email: e.target.value,
-             })
-           }
-         />
-         {errors.email && (
-           <p className="text-red text-sm">{errors.email}</p>
-         )}
-         <p className="text-11 text-headingdark font-medium mt-1">
-           You will be able to create an account after purchasing
-         </p>
-       </div>
-       <div className="flex flex-col">
-         <label htmlFor="checkout" className="text-lightdark">
-           Number <span className="text-red">*</span>
-           <span className="text-12 ms-2 text-headingdark font-medium">
-             For delivery-related queries
-           </span>
-         </label>
-         <input
-           type="tel"
-           className="border-[#D2D2D2] border shadow-0 outline-0 p-2"
-           name="number"
-           id="checkout"
-           value={billingData.phone_number}
-           onChange={handlePhoneNumberChange}
-         />
-         {errors.phone_number && (
-           <p className="text-red text-sm">{errors.phone_number}</p>
-         )}
-       </div>
-     </div>
-      )}
-    </div>
-              <div>
-                <h2 className="lg:text-20 text-base font-bold text-black mb-4">
-                  ADDITIONAL OPTIONS
-                </h2>
-                {showOrderNote ? (
-                  <div className="mt-3 flex flex-col">
-                    <div className="flex justify-between items-center">
-                    <label htmlFor="orderNote" className="text-lightdark">
-                      Order Note
-                    </label>
-                    <button
-                      className="text-red mt-2 text-start text-23"
-                      onClick={() => setShowOrderNote(false)}
-                    >
-                      <IoCloseSharp />
-                    </button>
-                    </div>
-                    <textarea
-                      id="orderNote"
-                      className="border border-light p-2"
-                      placeholder="Add a note to this order"
-                      value={billingData.orderNote}
-                      
-                      onChange={(e) =>handleOrderNoteChange(e)}
-                    >{billingData.orderNote}</textarea>
-                   
-                  </div>
-                ) : 
-                <button
-                  className="text-15"
-                  onClick={() => setShowOrderNote(!showOrderNote)}
-                >
-                  + Add a note to this order
-                </button>}
+          </div>
+          <div className="w-full md:w-5/12">
+            <div className=" w-full  relative">
+              <div className="absolute left-0 top-0 py-2 px-4 bg-[#F0F0F0] w-10/12">
+                <div className="flex items-center">
+                  <FiTag className="text-black/40 mr-2" size={20} />
+                  <input
+                    type="text"
+                    placeholder="Add promo code"
+                    className="w-full bg-transparent outline-none py-2"
+                  />
+                </div>
               </div>
+              <button className="absolute right-0 top-0 bg-primary text-white px-8 py-4">
+                Apply
+              </button>
+            </div>
+            <div className="mt-20 border border-gray ">
+              <CheckoutData
+                cartdata={cartItems}
+                onCartChange={handleCartChange}
+                subtotal={subtotal}
+                setSubtotal={setSubtotal}
+                shipmentFee={shipmentFee}
+                onClick={handleSubmit}
+              />
             </div>
           </div>
         </div>
-        <div>
-          <CheckoutData
-            cartdata={cartItems}
-            onCartChange={handleCartChange}
-            subtotal={subtotal}
-            setSubtotal={setSubtotal}
-            shipmentFee={shipmentFee}
-            onClick={handleSubmit}
-          />
-        </div>
-      </div>
-    </div>
+      </Container>
+    </>
   );
 };
 

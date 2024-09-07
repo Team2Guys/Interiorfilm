@@ -17,13 +17,13 @@ const ProductSelect: React.FC<ProductSelectProps> = ({
   ...props
 }) => {
   return (
-    <Select
+    <Select 
       showSearch
       className={className}
       placeholder="Select Size"
       onChange={onChange}
       options={options}
-      value={length}  // Display the selected length
+      value={length}  
       {...props}
     />
   );

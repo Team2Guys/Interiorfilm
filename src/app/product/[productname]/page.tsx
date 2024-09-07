@@ -127,7 +127,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
         <div className='flex justify-center items-center'>
           <h1 className='w-fit text-center text-lg border-b-2 border-[#FF914E] md:text-3xl mb-5 up'>FEATURE PRODUCT</h1>
         </div>
-        <ProductSlider products={filteredProducts} />
+        <ProductSlider loading={productsLoading} products={filteredProducts} />
       </Container>
     </>
   );

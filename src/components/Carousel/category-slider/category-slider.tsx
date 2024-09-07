@@ -122,7 +122,7 @@ const CategorySlider: React.FC = () => {
       </Swiper>
       <button
         ref={nextRef}
-        className="relative right-4 bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
+        className="relative right-4  bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
       >
         <MdArrowForwardIos size={20} />
       </button>
