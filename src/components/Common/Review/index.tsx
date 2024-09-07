@@ -97,9 +97,9 @@ const Review: React.FC<ReviewProps> = ({
         {
           currentItems.length > 0 ? (
           <div className="max-w-screen-lg mx-auto px-4 md:px-0">
-            <h1 className="text-center font-medium text-16 lg:text-20">
+            {/* <h1 className="text-center font-medium text-16 lg:text-20">
               Customer Reviews
-            </h1>
+            </h1> */}
                     <div className="flex flex-wrap md:flex-nowrap items-center  mt-10">
                     <div className="w-full lg:w-5/12">
                           {currentItems.map((array: any, index: any) => {

@@ -36,6 +36,8 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [populated_categoryName, setCategoryName] = useState<string | any>(null);
 
+console.log(ProductCard, "ProductCardProductCardProductCard")
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -272,7 +274,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
           </div>
           <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
             <h1 className="lg:text-lg text-md text-center text-dark  font-semibold">
-              {product.name} 
+              {product.name} {product.code} 
             </h1>
             <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
               <p className="text-black font-bold text-18 flex gap-1">
@@ -314,7 +316,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
         footer={null}
 
       >
-        <ProductDetails firstFlex='lg:w-8/12' secondFlex='lg:w-4/12' categoryName={populated_categoryName} productDetail={productDetails} />
+        <ProductDetails firstFlex='lg:w-8/12' isQuickView={true} categoryName={populated_categoryName} productDetail={productDetails} />
       </Model>
 
       {ProductCard && (ProductCard.length > 0 && !loading) ? (

@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 interface OverlayProps {
-  title: string;
+  title?: string;
   bodyText?: string
 }
 

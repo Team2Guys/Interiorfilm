@@ -14,13 +14,13 @@ import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi';
 
 interface ProductSliderProps {
   products: PRODUCTS_TYPES[];
+  loading?: boolean;
 }
 
-const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
+const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<any>(null);
-  const [loading, setLoading] = useState(false);
 
   const featuredProducts = products.slice(0, 10);
 
@@ -39,13 +39,14 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
     updateSwiperNavigation();
   }, [updateSwiperNavigation]);
 
+  console.log(products, "productsproductsproductsproductsproductsproducts")
 
 
   return (
     <>
       {loading ? (
         <div className="flex flex-wrap items-center justify-center gap-5 md:flex-wrap mt-5 mb-5">
-          {Array.from({ length: 3 }).map((_, index) => (
+          {Array.from({ length: 4 }).map((_, index) => (
             <div key={index} className="w-full sm:w-[48%] md:w-[20%] min-w-[250px]">
               <SkeletonLoading
                 avatar={{
@@ -134,7 +135,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products }) => {
             }}
             className="mySwiper custom"
           >
-            {featuredProducts.map((product, index) => (
+            {featuredProducts && featuredProducts.map((product, index) => (
               <SwiperSlide key={index} className="mb-10 custom">
                 <Card ProductCard={[product]} slider={true} />
               </SwiperSlide>

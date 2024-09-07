@@ -1,7 +1,25 @@
 
 import * as Yup from 'yup';
-import {Product, Category,FormValues} from 'types/interfaces'
+import {Product, Category,FormValues, ITabbyList, ITabbyPayList, ITamaraList} from 'types/interfaces'
 import { PrivacyPolicyItem } from 'types/types';
+import masterCard from './../../public/images/payment-icons/Mastercard-Logo.png'
+import viseCard from './../../public/images/payment-icons/visacard-logo.png'
+import gPayCard from './../../public/images/payment-icons/googlepay-logo.png'
+import applypayCard from './../../public/images/payment-icons/apply-pay-black.png'
+import amexLogo from './../../public/images/payment-icons/american-express.png'
+import tabbyLogo from "./../../public/images/payment-icons/tabby-logo.png";
+import tamaraLogo from "./../../public/images/payment-icons/tamara-logo.png";
+import icon1 from './../../public/images/enviroment-icon/icon1.png'
+import icon2 from './../../public/images/enviroment-icon/icon2.png'
+import icon3 from './../../public/images/enviroment-icon/icon3.png'
+import icon4 from './../../public/images/enviroment-icon/icon4.png'
+import icon5 from './../../public/images/enviroment-icon/icon5.png'
+import icon6 from './../../public/images/enviroment-icon/icon6.png'
+import icon7 from './../../public/images/enviroment-icon/icon7.png'
+import icon8 from './../../public/images/enviroment-icon/icon8.png'
+import icon9 from './../../public/images/enviroment-icon/icon9.png'
+
+import { StaticImageData } from 'next/image';
 
 export const validateForm = (formData: { fullName: string; email: string; password: string; confirmpassword: string }) => {
     if (formData.password !== formData.confirmpassword) {
@@ -411,4 +429,121 @@ export const collapseData = [
     title: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR',
     content: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR LOREM IPSUM DOLOR SIT AMET, CONSECTETUR...',
   },
+];
+
+
+
+
+export const tabbyfeature: ITabbyList[] = [
+  { id: 1, para: 'No interest. No fees.' },
+  { id: 2, para: 'Trusted by 4,5m+ customers.' },
+  { id: 3, para: 'Shariah-compliant.' },
+];
+
+export const tabbyhowitwork: ITabbyList[] = [
+  { id: 1, para: 'Choose Tabby at checkout' },
+  { id: 2, para: 'Enter your information and add your debit or credit card.' },
+  { id: 3, para: 'Your first payment is taken when the order is made.' },
+  { id: 4, para: 'We will send you a reminder when your next payment is due' },
+];
+
+export const tabbypayicon: ITabbyPayList[] = [
+  { id: 1, imageUrl: masterCard },
+  { id: 2, imageUrl: viseCard },
+  { id: 3, imageUrl: gPayCard },
+];
+
+export const tamarawhy: ITamaraList[] = [
+  { id: 1, para: 'Sharia-compliant' },
+  { id: 2, para: 'No late fees' },
+  { id: 3, para: 'Quick and easy' },
+];
+export const tamaralist: ITamaraList[] = [
+  {
+    id: 1,
+    para: 'Payment options availability may vary based on your order value and Tamara record.',
+  },
+  { id: 2, para: 'Subject to terms and conditions.' },
+  { id: 3, para: 'Tamara is Sharia-compliant.' },
+  { id: 4, para: 'Eligible for customers in United Arab Emirates.' },
+  {
+    id: 5,
+    para: 'Your final payment plan may vary depending on your credit history.',
+  },
+];
+
+export const tamarafeature: ITamaraList[] = [
+  {
+    id: 1,
+    title: 'Split in 4',
+    para: 'Pay a fraction now and the rest in 3 payments over the next 3 months. No late fees, shariah-compliant!*',
+  },
+  {
+    id: 2,
+    title: 'Pay in Full',
+    para: 'Pay the full amount today and enjoy exclusive perks with Tamara!*',
+  },
+];
+
+
+export const PaymentMethods: ITabbyPayList[] = [
+  { id: 1, imageUrl: masterCard },
+  { id: 2, imageUrl: applypayCard },
+  { id: 4, imageUrl: viseCard },
+  { id: 3, imageUrl: gPayCard },
+  { id: 5, imageUrl: amexLogo },
+];
+export const FooterPaymentMethods: ITabbyPayList[] = [
+  { id: 1, imageUrl: masterCard },
+  { id: 2, imageUrl: applypayCard },
+  { id: 4, imageUrl: viseCard },
+  { id: 3, imageUrl: gPayCard },
+  { id: 5, imageUrl: amexLogo },
+  { id: 6, imageUrl: tabbyLogo },
+  { id: 7, imageUrl: tamaraLogo },
+];
+
+
+
+export const EnvironmentData: {title:string,icon:StaticImageData}[] = [
+  { title: '100% waterproof', icon: icon1 },
+  { title: 'Scratch Resistance', icon: icon2 },
+  { title: 'Fully Wear Resistance', icon: icon3 },
+  { title: 'Heat Resistance', icon: icon4 },
+  { title: 'Ductile Reusable', icon: icon5 },
+  { title: 'Stain resistance', icon: icon6 },
+  { title: 'Abrasion Resistance', icon: icon7 },
+  { title: 'Eco-Friendly Material ', icon: icon8 },
+  { title: 'Low-Temperature Resistance', icon: icon9 },
+];
+
+export const navarlink = [
+  { ref: "", title: "Home" },
+  { ref: "wood-grain-series", title: "Wood Grain Series" },
+  { ref: "plain-series", title: "Plain Series" },
+  { ref: "cement-gray-series", title: "Cement Gray Series" },
+  { ref: "marble-series", title: "Marble Series" },
+  { ref: "metal-series", title: "Metal Series" },
+  { ref: "fabric-series", title: "Fabric Series" },
+  { ref: "skin-texture-series", title: "Skin Texture Series" },
+  { ref: "symphony-series", title: "Symphony Series" },
+  { ref: "about", title: "About Us" },
+  { ref: "contact", title: "Contact Us" },
+];
+
+export const productimage =[
+  {img:"/images/ProductsPage/product1.png"},
+  {img:"/images/ProductsPage/product2.png"},
+  {img:"/images/ProductsPage/product3.png"},
+]
+
+
+
+export const CountryCode = [
+  { title: "+971", code: "+971" },
+  { title: "+1", code: "+1" },
+  { title: "+61", code: "+61" },
+  { title: "+49", code: "+49" },
+  { title: "+33", code: "+33" },
+  // Add more country codes as needed
 ];
