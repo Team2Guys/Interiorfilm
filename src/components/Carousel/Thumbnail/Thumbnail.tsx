@@ -1,7 +1,7 @@
 //@ts-nocheck
 'use client';
 
-import React, { useState, useRef, Fragment } from 'react';
+import React, { useState, useRef, Fragment, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -13,17 +13,30 @@ import { IMAGE_INTERFACE } from 'types/interfaces';
 import Collapse from 'components/ui/Collapse/Collapse';
 import { collapseData } from 'data/Data';
 import Accordion from 'components/widgets/Accordion';
+import axios from 'axios';
+import Review from 'components/Common/Review';
 
 interface ThumbProps {
   thumbs?: IMAGE_INTERFACE[];
   detail?: IMAGE_INTERFACE[];
+  product?: any
 }
 
-const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail }) => {
+const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
+
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
   const [backgroundPosition, setBackgroundPosition] = useState<string>('0% 0%');
+  const [reviews, setReviews] = useState<string[]>([]);
 
+  const fetchReviews = async (productId: string) => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`);
+      setReviews(response.data.reviews);
+    } catch (err) {
+      console.log("Failed to fetch reviews:", err);
+    }
+  };
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const handleMouseEnter = (imageUrl: string) => {
@@ -45,6 +58,15 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail }) => {
     const indexB = b.imageIndex ?? Number.MAX_SAFE_INTEGER;
     return indexA - indexB;
   });
+  useEffect(() => {
+    if (product?._id) {
+      fetchReviews(product?._id);
+    }
+  }, [product]);
+  console.log("+++++++++++++++++++++++++++++++++++++++")
+  console.log(detail)
+  console.log("+++++++++++++++ review ++++++++++++++++++++++++")
+  console.log(reviews)
 
   return (
     <Fragment>
@@ -135,10 +157,19 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail }) => {
               />
             )}
           </div>
-        </div>       
+        </div>
       </div>
-      <div className="lg:max-w-[1020px] hidden lg:block mt-5">
+      <div className="mt-13">
         <Accordion detail={detail} />
+        <hr className=" h-1 border-stone-200" />
+        <Collapse
+          title="Customer Reviews"
+
+        >
+          <Review reviews={reviews} productId={product?._id} fetchReviews={fetchReviews} />
+        </Collapse>
+        <hr className=" h-1 border-stone-200" />
+        {/* <div className="lg:max-w-[1020px] hidden lg:block mt-5"> */}
       </div>
     </Fragment>
   );

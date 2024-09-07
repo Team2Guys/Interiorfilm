@@ -23,25 +23,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
   const [relatedProductsLoading, setRelatedProductsLoading] = useState<boolean>(false);
   const [categories, setCategories] = useState<string[]>([]);
   const [categoryName, setCategoryName] = useState<string | undefined>();
-  const [reviews, setReviews] = useState<string[]>([]);
-
-  const fetchReviews = async (productId: string) => {
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`);
-      setReviews(response.data.reviews);
-    } catch (err) {
-      console.log("Failed to fetch reviews:", err);
-    }
-  };
-   
-  useEffect(() => {
-    if(productDetail?._id)
-    {
-
-      fetchReviews(productDetail?._id);
-    }
-  }, [productDetail]);
-
+ 
   const productHandler = async () => {
     try {
       setProductsLoading(true);
@@ -107,7 +89,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
               categoryName={categoryName} 
             />
             
-            <Review reviews={reviews} productId={productDetail?._id} fetchReviews={fetchReviews} />
+           
           </>
         ) : null
       }
