@@ -317,7 +317,7 @@ const Table: React.FC<TableProps> = ({
                   </p>
               </div>
                   <div className="w-3/12">
-                  <div className={`flex w-28 h-12  px-2  bg-[#F0F0F0]  ${pathName === "/wishlist" ?"":"ml-auto"}`}>
+                  <div className={`flex w-28 h-12  justify-between px-2  bg-[#F0F0F0]  ${pathName === "/wishlist" ?"":"ml-auto"}`}>
                     <div
                       onClick={() => decrement(index)}
                       className="  flex justify-center items-center"
