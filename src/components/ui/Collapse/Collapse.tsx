@@ -8,7 +8,7 @@ interface CollapseProps {
 }
 
 const Collapse: React.FC<CollapseProps> = ({ title, children }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="w-full">
@@ -17,8 +17,8 @@ const Collapse: React.FC<CollapseProps> = ({ title, children }) => {
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex justify-between items-center uppercase">
-          <span>{title}</span>
-          <span>{isOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}</span>
+          <span className="font-semibold py-4 text=[20px]">{title}</span>
+          <span>{isOpen ? <MdKeyboardArrowUp className="text-3xl" /> : <MdKeyboardArrowDown className="text-3xl" />}</span>
         </div>
       </button>
       <div
