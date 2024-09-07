@@ -7,6 +7,8 @@ import viseCard from './../../public/images/payment-icons/visacard-logo.png'
 import gPayCard from './../../public/images/payment-icons/googlepay-logo.png'
 import applypayCard from './../../public/images/payment-icons/apply-pay-black.png'
 import amexLogo from './../../public/images/payment-icons/american-express.png'
+import tabbyLogo from "./../../public/images/payment-icons/tabby-logo.png";
+import tamaraLogo from "./../../public/images/payment-icons/tamara-logo.png";
 import icon1 from './../../public/images/enviroment-icon/icon1.png'
 import icon2 from './../../public/images/enviroment-icon/icon2.png'
 import icon3 from './../../public/images/enviroment-icon/icon3.png'
@@ -16,6 +18,7 @@ import icon6 from './../../public/images/enviroment-icon/icon6.png'
 import icon7 from './../../public/images/enviroment-icon/icon7.png'
 import icon8 from './../../public/images/enviroment-icon/icon8.png'
 import icon9 from './../../public/images/enviroment-icon/icon9.png'
+
 import { StaticImageData } from 'next/image';
 
 export const validateForm = (formData: { fullName: string; email: string; password: string; confirmpassword: string }) => {
@@ -489,6 +492,17 @@ export const PaymentMethods: ITabbyPayList[] = [
   { id: 3, imageUrl: gPayCard },
   { id: 5, imageUrl: amexLogo },
 ];
+export const FooterPaymentMethods: ITabbyPayList[] = [
+  { id: 1, imageUrl: masterCard },
+  { id: 2, imageUrl: applypayCard },
+  { id: 4, imageUrl: viseCard },
+  { id: 3, imageUrl: gPayCard },
+  { id: 5, imageUrl: amexLogo },
+  { id: 6, imageUrl: tabbyLogo },
+  { id: 7, imageUrl: tamaraLogo },
+];
+
+
 
 export const EnvironmentData: {title:string,icon:StaticImageData}[] = [
   { title: '100% waterproof', icon: icon1 },

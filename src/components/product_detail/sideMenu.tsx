@@ -195,7 +195,7 @@ const SideMenu: React.FC = () => {
   const totalPrice = selectedProducts.reduce((total, product) => total + product.discountPrice, 0);
 
   return (
-    <div className=''>
+    <div className='flex md:flex-col gap-2'>
       <div className='divide-y-2 p-2 divide-[#E4E4E4] border-2 border-[#E4E4E4]'>
         {TextWithIconData.map((item, index) => (
           <TextwithIcon

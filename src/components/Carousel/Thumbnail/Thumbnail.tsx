@@ -28,6 +28,8 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
   const [backgroundPosition, setBackgroundPosition] = useState<string>('0% 0%');
   const [reviews, setReviews] = useState<string[]>([]);
+  const [showArrow, setShowArrow] = useState(false);
+  const swiperContainerRef = useRef(null);
 
   const fetchReviews = async (productId: string) => {
     try {
@@ -64,37 +66,66 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
     }
   }, [product]);
 
+  useEffect(() => {
+    const container = swiperContainerRef.current;
+    if (container) {
+      const isScrollable = container.scrollHeight > container.clientHeight;
+      setShowArrow(isScrollable);
+    }
+  }, [sortedThumbs]);
 
+  const handleScrollDown = () => {
+    const container = swiperContainerRef.current;
+    if (container) {
+      container.scrollBy({ top: 150, behavior: 'smooth' });
+    }
+  };
   return (
     <Fragment>
       <div className='space-y-20'>
         <div className='lg:relative w-full'>
           <div className='w-full flex flex-wrap lg:flex-nowrap flex-col-reverse lg:flex-row gap-5'>
-            <div className='w-full lg:w-2/12 lg:max-h-[798px] overflow-y-scroll  custom-scrollbar '>
-              <Swiper
-                onSwiper={setThumbsSwiper}
-                loop={false}
-                spaceBetween={10}
-                slidesPerView={4}
-                freeMode={true}
-                watchSlidesProgress={true}
-                modules={[FreeMode, Navigation, Thumbs]}
-                className="bg-contain bg-white column-swipper"
-              >
-                {sortedThumbs.map((array, index) => (
-                  <SwiperSlide key={array.imageIndex ?? index} className='w-full h-full column-swiper-slider custom-scrollbar md:h-5'>
-                    <Image
-                      className='bg-contain pb-2 bg-white md:h-[222px] md:w-67 cursor-pointer'
-                      src={array.imageUrl}
-                      width={270}
-                      height={120}
-                      alt='Image'
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+
+            <div className='w-full lg:w-2/12 flex flex-col gap-3'>
+              <div className=' lg:max-h-[650px] overflow-y-auto custom-scrollbar' ref={swiperContainerRef}>
+                <Swiper
+                  onSwiper={setThumbsSwiper}
+                  loop={false}
+                  spaceBetween={10}
+                  slidesPerView={4}
+                  freeMode={true}
+                  watchSlidesProgress={true}
+                  modules={[FreeMode, Navigation, Thumbs]}
+                  className="bg-contain bg-white column-swipper"
+                >
+                  {sortedThumbs.map((array, index) => (
+                    <SwiperSlide key={array.imageIndex ?? index} className='w-full h-full column-swiper-slider custom-scrollbar md:h-5'>
+                      <Image
+                        className='bg-contain pb-2 bg-white md:h-[222px] md:w-67 cursor-pointer'
+                        src={array.imageUrl}
+                        width={270}
+                        height={120}
+                        alt='Image'
+                      />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+
+              </div>
+              {showArrow && (
+                <div className='items-center justify-center hidden md:flex'>
+                  <Image
+                    src='/images/downarrow.png'
+                    width={100}
+                    height={100}
+                    onClick={handleScrollDown}
+                    className='object-contain'
+                    alt='arrow'
+                  />
+                </div>
+              )}
             </div>
-            <div className='w-full lg:w-8/12 relative lg::max-h-[798px]'>
+            <div className='w-full lg:w-9/12 relative lg::max-h-[798px]'>
               <Swiper
                 style={{
                   '--swiper-navigation-color': '#ffffff',
@@ -124,6 +155,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                     >
                       <Image className='bg-contain w-full h-full lg:max-h-[798px]' src={array.imageUrl} width={800} height={800} alt='Image' />
                     </div>
+
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -139,7 +171,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
             </div>
           </div>
 
-          <div className="  absolute right-20 top-1 hidden md:block">
+          <div className="  absolute right-15 top-1 hidden md:block">
             {hoveredImage && (
               <div
                 className="magnified-image absolute left-0  z-50"

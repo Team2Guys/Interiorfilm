@@ -314,7 +314,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
         footer={null}
 
       >
-        <ProductDetails firstFlex='lg:w-8/12' secondFlex='lg:w-4/12' categoryName={populated_categoryName} productDetail={productDetails} />
+        <ProductDetails firstFlex='lg:w-8/12' isQuickView={true} categoryName={populated_categoryName} productDetail={productDetails} />
       </Model>
 
       {ProductCard && (ProductCard.length > 0 && !loading) ? (

@@ -407,7 +407,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <div className="fixed top-auto bottom-0 md:top-[150px] right-0 z-999 ">
+      <div className="fixed top-auto bottom-0 md:top-[150px] right-0 z-999 h-[9rem] ">
         <Link
           target="_blank"
           href={"https://wa.link/mb359y"}

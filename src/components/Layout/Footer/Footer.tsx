@@ -20,7 +20,7 @@ import Button from "components/ui/Button/Button";
 import axios from "axios";
 import { CategoriesType } from "types/interfaces";
 import PreFooter from "./PreFooter";
-import { generateSlug } from "data/Data";
+import { FooterPaymentMethods, generateSlug, PaymentMethods } from "data/Data";
 import { useRouter } from "next/navigation";
 
 const { Footer: AntFooter } = Layout;
@@ -209,9 +209,20 @@ const Footer: React.FC = () => {
 
               </div>
 
-
-
               <div className="flex items-center flex-wrap gap-2 py-2 lg:order-2 order-1 text-black dark:text-white">
+                {FooterPaymentMethods.map((item, index) => (
+                  <Image
+                    src={item.imageUrl}
+                    alt="master"
+                    width={40}
+                    height={40}
+                    className="bg-white p-1 h-6  object-contain shadow-lg rounded-md"
+                    key={index}
+                  />
+                ))}
+              </div>
+
+              {/* <div className="flex items-center flex-wrap gap-2 py-2 lg:order-2 order-1 text-black dark:text-white">
                 {bottomImages.map((image, index) => (
                   <Image
                     key={index}
@@ -222,7 +233,7 @@ const Footer: React.FC = () => {
                     className="w-10 rounded-sm"
                   />
                 ))}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
