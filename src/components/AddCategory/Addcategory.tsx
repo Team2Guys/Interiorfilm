@@ -29,7 +29,7 @@ interface editCategoryProps {
 const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategoryProps) => {
   let CategoryName = editCategory && editCategory.name ? { name: editCategory.name, description: editCategory.description } : null;
   let CategorImageUrl = editCategory && editCategory.posterImageUrl;
-  const [posterimageUrl, setposterimageUrl] = useState<any[] | null | undefined>(CategorImageUrl ? [CategorImageUrl] : null);
+  const [posterimageUrl, setposterimageUrl] = useState<any[] | null >(CategorImageUrl ? [CategorImageUrl] : null);
   const [loading, setloading] = useState<boolean>(false);
   const [editCategoryName, setEditCategoryName] = useState<editCategoryNameType | null | undefined>(CategoryName);
 

@@ -433,6 +433,7 @@ export const collapseData = [
 
 
 
+
 export const tabbyfeature: ITabbyList[] = [
   { id: 1, para: 'No interest. No fees.' },
   { id: 2, para: 'Trusted by 4,5m+ customers.' },
@@ -514,4 +515,35 @@ export const EnvironmentData: {title:string,icon:StaticImageData}[] = [
   { title: 'Abrasion Resistance', icon: icon7 },
   { title: 'Eco-Friendly Material ', icon: icon8 },
   { title: 'Low-Temperature Resistance', icon: icon9 },
+];
+
+export const navarlink = [
+  { ref: "", title: "Home" },
+  { ref: "wood-grain-series", title: "Wood Grain Series" },
+  { ref: "plain-series", title: "Plain Series" },
+  { ref: "cement-gray-series", title: "Cement Gray Series" },
+  { ref: "marble-series", title: "Marble Series" },
+  { ref: "metal-series", title: "Metal Series" },
+  { ref: "fabric-series", title: "Fabric Series" },
+  { ref: "skin-texture-series", title: "Skin Texture Series" },
+  { ref: "symphony-series", title: "Symphony Series" },
+  { ref: "about", title: "About Us" },
+  { ref: "contact", title: "Contact Us" },
+];
+
+export const productimage =[
+  {img:"/images/ProductsPage/product1.png"},
+  {img:"/images/ProductsPage/product2.png"},
+  {img:"/images/ProductsPage/product3.png"},
+]
+
+
+
+export const CountryCode = [
+  { title: "+971", code: "+971" },
+  { title: "+1", code: "+1" },
+  { title: "+61", code: "+61" },
+  { title: "+49", code: "+49" },
+  { title: "+33", code: "+33" },
+  // Add more country codes as needed
 ];

@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import PRODUCTS_TYPES from 'types/interfaces';
 
 interface accordionprop {
-  detail?: PRODUCTS_TYPES[];
+  detail: PRODUCTS_TYPES[] | any;
 }
 
 const Accordion: React.FC<accordionprop> = ({ detail }: any) => {

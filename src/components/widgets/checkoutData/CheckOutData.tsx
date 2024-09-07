@@ -7,6 +7,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import PRODUCTS_TYPES from "types/interfaces";
 import { IoIosClose } from "react-icons/io";
 import { Checkbox } from "antd";
+import { FaArrowRight } from "react-icons/fa";
 interface TableProps {
   cartdata: PRODUCTS_TYPES[];
   onCartChange: (updatedCart: PRODUCTS_TYPES[]) => void;
@@ -85,30 +86,38 @@ const CheckoutData: React.FC<TableProps> = ({
   };
 
   return (
-    <div className="bg-transparent px-2 lg:ps-6 py-10 lg:pe-10">
-      <h2 className="text-16 font-medium  text-end mb-4">
-        *total <span className="text-primary">{totalCount}</span> Items
-      </h2>
-      <div className="space-y-4 max-h-54 overflow-y-scroll custom-scrollbar1">
+    <div className="bg-transparent ">
+      <div className="flex justify-between items-center px-2 py-6 lg:px-10">
+        <p className="text-16 md:text-[24px]">Order Summary</p>
+        <h2 className="text-16 font-medium  text-end mb-4">
+          *total <span className="text-primary">{totalCount}</span> Items
+        </h2>
+      </div>
+      <div className="space-y-4 max-h-100 overflow-y-scroll table-scrollbar px-2 lg:px-8 mx-2">
         {data.map((product, index) => (
           <div className="bg-transparent" key={index}>
             <div className="flex gap-2 sm:gap-4 justify-between items-center pe-1 sm:pe-6">
-              <div className="w-10/12 flex gap-3 sm:gap-6 items-center">
+              <div className="w-12/12 flex gap-3 sm:gap-4 items-center">
                 <Image
-                  className="w-18 xsm:w-22 sm:w-24 h-18 xsm:h-22 sm:h-24"
+                  className="w-18 xsm:w-22 sm:w-[124px] h-18 xsm:h-22 sm:h-[124px]"
                   width={100}
                   height={100}
                   src={product.imageUrl[0].imageUrl || product.imageUrl}
                   alt="Product"
                 />
                 <div>
-                  <h1 className="text-16 sm:text-18 font-medium">
-                  {counts[index] || 1}X ({typeof product.name === "string" ? product.name : ""})
+                <h1 className="text-16 sm:text-18 font-medium">
+                  {product.name}
+                    {/* {counts[index] || 1}X (
+                    {typeof product.name === "string" ? product.name : ""}) */}
+                  </h1>
+                  <h1 className="text-16 sm:text-18 font-medium text-[#B9BBBF]">
+                    {product.code}
                   </h1>
 
                   <div className="flex mt-1 xsm:mt-0 gap-0 items-center">
                     <p className="font-normal text-14 sm:text-base text-lightdark text-nowrap">
-                      Size : 1.22
+                    Width : 1.22
                     </p>
                     <IoIosClose size={25} className="text-lightdark" />
                     <div
@@ -119,7 +128,7 @@ const CheckoutData: React.FC<TableProps> = ({
                   </div>
                 </div>
               </div>
-              <div className="space-y-1 w-4/12">
+              {/* <div className="space-y-1 w-4/12">
                 <p className="float-end text-16 sm:text-18 font-medium">
                   AED{" "}
                   <span>
@@ -130,16 +139,15 @@ const CheckoutData: React.FC<TableProps> = ({
                       : product.price * (counts[index] || 1) * product.length}
                   </span>
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         ))}
       </div>
 
-      <div className="w-full sm:w-3/4 md:w-11/12 lg:w-11/12 xl:w-10/12 2xl:w-3/4 mx-auto bg-white px-5 xl:px-14 pt-10 py-14 space-y-3 rounded-sm mt-10">
-        <h2 className="text-23 font-bold tracking-wide">YOUR ORDER</h2>
+      <div className="w-full   space-y-3 rounded-sm mt-10 px-4">
         <div className="flex justify-between items-center">
-          <h2 className="text-16 font-bold">SUBTOTAL</h2>
+          <h2 className="text-16 ">SUBTOTAL</h2>
           <h2 className="text-20">
             AED <span>{subtotal}</span>
           </h2>
@@ -147,19 +155,19 @@ const CheckoutData: React.FC<TableProps> = ({
         <hr className="w-full mx-auto border-[#D2D2D2]" />
 
         <div className="flex justify-between items-center">
-          <h2 className="text-16 font-bold">SHIPPING</h2>
-          {
-            shipmentFee === "Free"
-          }
+          <h2 className="text-16 ">SHIPPING</h2>
+          {shipmentFee === "Free"}
           <h2 className="text-16">
-            <span>{  shipmentFee === "Free" ?  shipmentFee : `AED ${shipmentFee}`}</span>
+            <span>
+              {shipmentFee === "Free" ? shipmentFee : `AED ${shipmentFee}`}
+            </span>
           </h2>
         </div>
         <hr className="w-full mx-auto border-[#D2D2D2]" />
 
         <div className="flex justify-between items-center">
-          <h2 className="text-16 font-bold">TOTAL</h2>
-          <h2 className="text-22 font-bold">
+          <h2 className="text-16 ">TOTAL</h2>
+          <h2 className="text-20 ">
             AED{" "}
             <span>
               {shipmentFee == "Free"
@@ -168,19 +176,20 @@ const CheckoutData: React.FC<TableProps> = ({
             </span>
           </h2>
         </div>
-        <div className="flex gap-2 items-center">
-          <Checkbox className="custom-checkbox font-medium">
-            Agree <span className="underline">Shipping and Returns</span> Policy
-          </Checkbox>
-        </div>
         <div className="flex justify-center items-center">
           <button
-            className="w-full bg-black hover:bg-dark text-white py-3"
+            className="w-full bg-black hover:bg-dark text-white py-3 flex justify-center items-center gap-3"
             onClick={onClick}
           >
-            Confirm Order
+            proceed to payment  <FaArrowRight />
           </button>
         </div>
+          <div className="max-w-70 pt-5 mx-auto">
+            <Image className="w-[618px] h-[42px]" width={500} height={500} src={"/images/icon/return.png"} alt="return"/>
+          </div>
+          <div className="pt-4">
+            <Image className="w-[618px] h-[42px]" width={500} height={500} src={"/images/icon/payment.png"} alt="return"/>
+          </div>
       </div>
     </div>
   );

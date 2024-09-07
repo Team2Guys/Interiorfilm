@@ -79,6 +79,21 @@
 
 }
 
+.link-active {
+  position: relative;
+  display: inline-block;
+}
+
+.link-active::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #FF914E;
+
+}
 
 .link-underline,
 .link-footer {
@@ -413,6 +428,33 @@
   /* Color when hovering over the scrollbar thumb */
 }
 
+
+/* Custom scrollbar styling */
+.table-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  /* Width of the entire scrollbar */
+  height: 5px;
+}
+
+.table-scrollbar::-webkit-scrollbar-track {
+  background: #F5F5F5;
+  /* Color of the scrollbar track */
+  border-radius: 0px;
+}
+
+.table-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #E0E0E0;
+  /* Color of the scrollbar thumb */
+  border-radius: 0px;
+  border: 0px solid white;
+  /* Padding around the thumb */
+}
+
+.table-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #E0E0E0;
+  /* Color when hovering over the scrollbar thumb */
+}
+
 .column-swipper .swiper-wrapper {
   flex-direction: row !important;
   width: 100% !important;
@@ -548,4 +590,8 @@ gap: 10px;
   max-width: 100% !important;
   height: 100% !important;
   max-height: 100% !important;
+}
+
+.ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled){
+  width: 100% !important;
 }

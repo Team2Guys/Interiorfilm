@@ -216,7 +216,7 @@ const Footer: React.FC = () => {
                     alt="master"
                     width={40}
                     height={40}
-                    className="bg-white p-1 h-6  object-contain shadow-lg rounded-md"
+                    className="bg-white  h-6 px-1  object-contain shadow-lg rounded-md"
                     key={index}
                   />
                 ))}
