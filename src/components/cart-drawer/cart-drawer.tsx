@@ -13,7 +13,6 @@ interface CartDrawerProps {
   onClose: () => void;
   OpenDrawer?: React.ReactNode;
 }
-
 const CartDrawer: React.FC<CartDrawerProps> = ({
   open,
   onClose,
@@ -30,9 +29,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
     const handleCartChange = () => {
       fetchCartItems();
     };
-
     window.addEventListener("cartChanged", handleCartChange);
-
     return () => {
       window.removeEventListener("cartChanged", handleCartChange);
     };
