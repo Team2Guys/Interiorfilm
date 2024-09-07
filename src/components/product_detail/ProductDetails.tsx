@@ -19,17 +19,18 @@ import { FaRegStar } from "react-icons/fa";
 import { BiMessageDetail } from "react-icons/bi";
 import SideMenu from "./sideMenu";
 import EnviromentIcons from "./enviroment-icon";
+import axios from "axios";
 interface productDetailsProps {
   productDetail: PRODUCTS_TYPES;
   categoryName?: string;
   firstFlex?: string;
-  secondFlex?: string;
+  isQuickView?: boolean;
 }
 export default function ProductDetails({
   productDetail,
   categoryName,
   firstFlex,
-  secondFlex,
+  isQuickView,
 }: productDetailsProps) {
 
 
@@ -44,6 +45,14 @@ export default function ProductDetails({
     }))
     : [];
 
+  const fetchReviews = async (productId: string) => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`);
+      setReviews(response.data.reviews);
+    } catch (err) {
+      console.log("Failed to fetch reviews:", err);
+    }
+  };
   const calculateAverageRating = () => {
     if (reviews.length === 0) return 0;
     const totalRating = reviews.reduce((sum, review) => sum + review.star, 0);
@@ -157,37 +166,31 @@ export default function ProductDetails({
   const onChange = (value: number) => {
     setLength(value);
   };
+  useEffect(() => {
+    if (productDetail?._id) {
+      fetchReviews(productDetail?._id);
+    }
+  }, [productDetail]);
 
   return (
     // xl:max-w-screen-2xl
-    <div className="mt-10 mb-5 px-4  mx-auto">
+    <div className="mt-10 mb-5 px-10  mx-auto ">
       <div className="flex flex-wrap lg:flex-nowrap lg:gap-5  mt-2 p-2 ">
         <div className={`w-full lg:w-8/12 ${firstFlex} `}>
-          <Thumbnail detail={productDetail.modelDetails} thumbs={productDetail.imageUrl} />
+          <Thumbnail detail={productDetail.modelDetails} product={productDetail} thumbs={productDetail.imageUrl} />
         </div>
         <div className="flex flex-col">
-          <div className="flex w-full justify-between ">
+          <div className="flex w-full justify-between flex-col md:flex-row ">
 
 
             {/* <div className={`lg:w-4/12 py-3 space-y-2 md:space-y-4 lg:max-w-[400px] w-2/3 ${secondFlex}`}> */}
-            <div className="w-2/3 px-2 space-y-2 md:space-y-4">
+            <div className={`w-full  bg  md:px-2 space-y-2 md:space-y-4 ${!isQuickView ? 'md:w-2/3' : 'w-full'}`}>
               <span className="divide--8">
                 <h1 className="text-22 lg:text-[28px] text-[#000000] font-medium">{productDetail.name}</h1>
                 <h3 className="text-30  text-[#B9BBBF] font-medium">{productDetail.code}</h3>
               </span>
               <hr className="text-[#E4E4E4]" />
-              {/* {reviews.length && reviews.length > 0 ? (
-              <div className="flex gap-2">
-                <Rate
-                  className="text-primary product_starts"
-                  value={averageRating}
-                  disabled
-                />
-                <p className="flex items-center h-[30x] w-[30x]">
-                  ({reviews.length})
-                </p>
-              </div>
-            ) : null} */}
+
               <div className="flex w-full justify-between">
 
                 <div className="flex  flex-col ">
@@ -205,16 +208,18 @@ export default function ProductDetails({
                     </p>
                   ) : null}
                 </div>
-                <div className="flex flex-col gap-2 w-1/2 text-[10.67px]">
-                  <div className="flex gap-4">
-                    <div className="flex gap-1 items-center bg-[#FBF3EA] w-[49.79px] h-[23px] p-2 rounded-xl text-[#D48D3B]"><FaRegStar /> 4.8</div>
-                    <div className="flex  items-center gap-1 bg-[#F5F5F5] px-3 rounded-xl h-[23px]">
-                      <BiMessageDetail />
-                      67 Review</div>
+                {reviews.length && reviews.length > 0 ? (
+                  <div className="flex flex-col gap-2 w-1/2 text-[10.67px]">
+                    <div className="flex gap-4">
+                      <div className="flex gap-1 items-center bg-[#FBF3EA] w-[49.79px] h-[23px] p-2 rounded-xl text-[#D48D3B]"><FaRegStar /> {averageRating}.0</div>
+                      <div className="flex  items-center gap-1 bg-[#F5F5F5] px-3 rounded-xl h-[23px]">
+                        <BiMessageDetail />
+                        {reviews.length} Review</div>
+                    </div>
+                    <div className="text-[#B9BBBF]"> <span className="text-[#3E9242]">
+                      {(averageRating / 5) * 100}% </span> of buyers have recommended this.</div>
                   </div>
-                  <div className="text-[#B9BBBF]"> <span className="text-[#3E9242]">
-                    97% </span> of buyers have recommended this.</div>
-                </div>
+                ) : null}
               </div>
 
               <p className="font-medium text-16 text-text">
@@ -501,15 +506,18 @@ export default function ProductDetails({
 
 
             </div>
-            <div className="w-1/3 ">
-              <SideMenu />
-            </div>
+            {!isQuickView && (
+
+              <div className="w-full md:w-1/3  ">
+                <SideMenu />
+              </div>
+            )}
           </div>
 
-          <div>
+          <div className="flex flex-col gap-2 mt-2">
             <h1 className="text-[14px] font-bold">Healthy Green Environment</h1>
-           <EnviromentIcons/>
-           
+            <EnviromentIcons />
+
           </div>
         </div>
       </div>
