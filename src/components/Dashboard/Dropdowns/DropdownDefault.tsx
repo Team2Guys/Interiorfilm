@@ -19,6 +19,7 @@ const DropdownDefault = () => {
         trigger.current.contains(target)
       )
         return;
+    
       setDropdownOpen(false);
     };
     document.addEventListener("click", clickHandler);

@@ -55,7 +55,7 @@ const Cart = () => {
   };
   return (
     <>
-      <Overlay title="Shopping Cart" />
+      <Overlay title="Cart" />
       <Container className="mt-10  mb-20">
         {cartItems.length === 0 ? (
           <div className="flex flex-col justify-center items-center space-y-3">
