@@ -142,6 +142,7 @@ interface PRODUCTS_TYPES {
   customOrder?: number;
   createdAt?:any;
   updatedAt?: any;
+  code?:string
 }
 
 export default PRODUCTS_TYPES;
@@ -198,6 +199,20 @@ export interface product {
   code: string
 }
 
+export interface ITabbyList {
+  id: number;
+  para: string;
+}
+export interface ITabbyPayList {
+  id: number;
+  imageUrl: StaticImageData;
+}
+
+export interface ITamaraList {
+  id: number;
+  title?: string;
+  para: string;
+}
 
 export interface RECORDS {
   totalAdmins: string;
