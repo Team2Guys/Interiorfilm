@@ -82,22 +82,31 @@ const Cart = () => {
                   </h1>
                 </div>
                 </div>
-                <div className=" space-y-3 pt-20">
-                <div className="flex flex-wrap xl:flex-nowrap gap-4 items-center rounded-md w-full">
-                  <div className='flex items-center w-full py-2 px-4 bg-[#F0F0F0]'>
-                  <FiTag className="text-black/40 mr-2" size={20} />
-                    <input
-                      type="text"
-                      placeholder="Add promo code"
-                      className="flex-grow bg-transparent outline-none py-2"
-                    />
+
+                <div className="space-y-3 pt-20 relative lg:top-20 mt-10">
+                <div className=" w-full">
+                  <div className="absolute left-0 top-0 py-2 px-4 bg-[#F0F0F0] w-3/4">
+                    <div className="flex items-center">
+                      <FiTag className="text-black/40 mr-2" size={20} />
+                      <input
+                        type="text"
+                        placeholder="Add promo code"
+                        className="w-full bg-transparent outline-none py-2"
+                      />
+                    </div>
                   </div>
-                    <button className="bg-primary text-white px-8 py-4">
-                      Apply
-                    </button>
-                  </div>
-                  <button className="w-full bg-black text-white py-3" onClick={()=>router.push("/checkout")}>Proceed To Checkout</button>
+                  <button className="absolute right-0 top-0 bg-primary text-white px-8 py-4">
+                    Apply
+                  </button>
                 </div>
+                <button
+                  className="w-full bg-black text-white py-3"
+                  onClick={() => router.push("/checkout")}
+                >
+                  Proceed To Checkout
+                </button>
+              </div>
+
               </div>
         
             </div>

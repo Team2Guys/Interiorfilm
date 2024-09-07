@@ -501,3 +501,13 @@ export const productimage =[
   {img:"/images/ProductsPage/product3.png"},
 ]
 
+
+
+export const CountryCode = [
+  { title: "+971", code: "+971" },
+  { title: "+1", code: "+1" },
+  { title: "+61", code: "+61" },
+  { title: "+49", code: "+49" },
+  { title: "+33", code: "+33" },
+  // Add more country codes as needed
+];
