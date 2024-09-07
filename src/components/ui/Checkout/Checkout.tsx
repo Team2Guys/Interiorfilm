@@ -11,6 +11,8 @@ import Container from "components/Layout/Container/Container";
 import CheckoutInput from "./checkout-input";
 import { CountryCode } from "data/Data";
 import { FiTag } from "react-icons/fi";
+import Overlay from 'components/widgets/Overlay/Overlay'
+
 
 const CheckOut: React.FC = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -63,29 +65,37 @@ const CheckOut: React.FC = () => {
     { state: "abu dhabi", charges: 20, discountCharges: 200 },
   ];
 
-  const formatPhoneNumber = (value: any) => {
-    const numbers = value.replace(/\D/g, "");
-    if (numbers.length <= 3) return `+${numbers}`;
-    if (numbers.length <= 5)
-      return `+${numbers.slice(0, 3)}-${numbers.slice(3)}`;
-    return `+${numbers.slice(0, 3)}-${numbers.slice(3, 5)}-${numbers.slice(
-      5,
-      12
-    )}`;
-  };
 
-  // Function to handle phone number change
-  const handlePhoneNumberChange = (e: any) => {
+  const formatPhoneNumber = (value: string) => {
+
+    const numbers = value.replace(/\D/g, "");
+
+    if (numbers.length <= 1) return numbers; // 1
+    if (numbers.length <= 4) return `${numbers.slice(0, 1)}-${numbers.slice(1)}`; 
+    if (numbers.length <= 7) return `${numbers.slice(0, 1)}-${numbers.slice(1, 4)}-${numbers.slice(4)}`; 
+  
+
+    return `${numbers.slice(0, 1)}-${numbers.slice(1, 4)}-${numbers.slice(4, 8)}`;
+  };
+  
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
-    value = value.replace(/[^+\d]/g, "").slice(0, 13);
-    if (!value.startsWith("+")) {
-      value = "+" + value.replace(/^\+/, "");
+    const lastChar = value[value.length - 1];
+  
+
+    if (lastChar === "-") {
+      value = value.slice(0, -1);
     }
+  
+    value = value.slice(0, 9);
+  
     setBillingData((prevData) => ({
       ...prevData,
       phone_number: formatPhoneNumber(value),
     }));
   };
+  
+  
 
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -178,6 +188,7 @@ const CheckOut: React.FC = () => {
       orderNote: e.target.value,
     });
   };
+
   const validateFields = () => {
     let isValid = true;
     const newErrors = { name: "", email: "", phone_number: "", address: "" };
@@ -216,6 +227,8 @@ const CheckOut: React.FC = () => {
 
   return (
     <>
+      <Overlay title="show_details"/>
+
       <Container className=" mt-10 md:mt-20 py-2 px-4">
         <div className="flex flex-wrap md:flex-nowrap gap-4">
           <div className="border border-gray py-2 px-4 w-full md:w-7/12">
