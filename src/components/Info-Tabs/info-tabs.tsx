@@ -18,6 +18,7 @@ export default function InfoTabs() {
     "Content for Popular Products tab goes here. It highlights our most popular products.",
     "Content for Convenience tab goes here. It discusses how our services or products provide convenience to customers.",
   ];
+  
   return (
     <Container className="mt-10 relative">
       <div className="flex justify-between  text-center overflow-x-scroll md:overflow-hidden  z-10">

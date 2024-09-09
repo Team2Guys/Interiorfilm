@@ -41,7 +41,7 @@ const Navbar = () => {
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
   const [activeLink, setActiveLink] = useState<string>("");
-  
+
   useEffect(() => {
     if (pathname === "/") {
       setActiveLink("/");
@@ -84,8 +84,8 @@ const Navbar = () => {
 
   const filteredProducts = Array.isArray(products)
     ? products.filter((product) =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
     : [];
 
   const showModal = () => {
@@ -169,7 +169,7 @@ const Navbar = () => {
   }, [isModalOpen]);
 
 
-  
+
   const truncateText = (text: any, maxLength: any) => {
     return text.length > maxLength
       ? text.substring(0, maxLength) + "..."
@@ -183,6 +183,8 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+
   useEffect(() => {
     let previousCartItemCount = cartItems.reduce(
       (count, item: any) => count + item.count,
@@ -216,22 +218,23 @@ const Navbar = () => {
     <>
       <TopNav />
       <nav
-        className={`z-99 w-full p-2 px-4 lg:px-8 xl:px-32   ${
-          isHomePage
+        className={`z-99 w-full p-2 pr-0 sm:px-4 lg:px-8 xl:px-12   ${isHomePage
             ? isScrolled
               ? "bg-white text-black top-0 fixed"
               : "bg-white text-black sticky top-0"
             : "bg-white text-black sticky top-0 "
-        }`}
+          }`}
       >
-        <div className="grid grid-cols-3 items-center mt-2">
+        <div className="grid grid-cols-12 items-center mt-2">
+
           <div
-            className=" cursor-pointer text-20 md:text-2xl w-fit"
+            className=" cursor-pointer text-22 sm:text-20 md:text-2xl w-fit col-span-2 md:col-span-4"
             onClick={showModal}
           >
-            <IoIosSearch />
+            <IoIosSearch  className="text-2xl sm:text-20"/>
           </div>
-          <div className="mx-auto">
+
+          <div className="mx-auto col-span-5 md:col-span-4">
             <Link href="/">
               <Image
                 src={
@@ -243,16 +246,17 @@ const Navbar = () => {
               />
             </Link>
           </div>
-          <div className="flex items-center justify-end gap-2 md:gap-4">
+
+          <div className="flex items-center justify-end gap-2 md:gap-4 col-span-5 md:col-span-4">
             {loggedInUser ? (
               <Profile />
             ) : (
-              <Link className=" text-16 md:text-2xl" href="/login">
+              <Link className="text-22 sm:text-16 md:text-2xl" href="/login">
                 <FaRegUser className=" cursor-pointer" />
               </Link>
             )}
 
-            <Link href={"/wishlist"} className="relative text-16 md:text-2xl">
+            <Link href={"/wishlist"} className="relative text-22 sm:text-16 md:text-2xl">
               <IoMdHeartEmpty className=" cursor-pointer" />
               {cartItems.length > 0 ? (
                 <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center shadow-2xl bg-white text-black absolute left-2 top-2 md:left-3 md:top-3">
@@ -267,7 +271,7 @@ const Navbar = () => {
                 <></>
               )}
             </Link>
-            <Link href={"/cart"} className="relative text-16 md:text-2xl">
+            <Link href={"/cart"} className="relative text-22 sm:text-16 md:text-2xl">
               <SlHandbag className=" cursor-pointer" />
               {cartItems.length > 0 ? (
                 <>
@@ -291,7 +295,7 @@ const Navbar = () => {
                 width={250}
                 title={
                   <>
-                    <div className="text-16 md:text-2xl">
+                    <div className="text-22 sm:text-16 md:text-2xl">
                       <FaBars />
                     </div>
                   </>
@@ -331,20 +335,19 @@ const Navbar = () => {
 
         <div>
           <ul
-            className={`hidden lg:flex lg:space-x-4 uppercase xl:space-x-5 2xl:space-x-16 text-11 xl:text-13 py-3 2xl:px-6 whitespace-nowrap overflow-x-auto ${
-              isHomePage
+            className={`hidden lg:flex lg:justify-between lg:space-x-4 uppercase xl:space-x-5 2xl:space-x-16 text-11 xl:text-13 py-3 2xl:px-6 whitespace-nowrap overflow-x-auto ${isHomePage
                 ? isScrolled
                   ? "bg-white text-black"
                   : "bg-white text-black"
                 : "bg-white text-black"
-            }`}
+              }`}
           >
             {navarlink.map(
               (navItem: { ref: string; title: string }, index: number) => {
                 const slug = navItem.title.includes("Series")
                   ? `products?category=${navItem.ref}`
                   : `/${navItem.ref}`;
-                  const isActive = activeLink === slug;
+                const isActive = activeLink === slug;
                 return (
                   <Link
                     className={` 2xl:leading-7 2xl:tracking-[20%] ${isActive ? "link-active" : "link-underline"}`}
@@ -389,20 +392,20 @@ const Navbar = () => {
           <div className="flex items-center  w-full max-w-md mx-auto md:max-w-screen-2xl  mt-10  shadow shadow-boxdark  mb-3">
             <input
               type="text"
-              ref={searchInputRef} 
+              ref={searchInputRef}
               placeholder="Product Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full h-[51px] px-4 py-2 text-gray-700 bg-white border-none   focus:outline-none"
-              autoFocus 
-              
+              autoFocus
+
             />
             <button className="h-[51px] px-4 py-3 bg-white text-gray-600  hover:text-gray-800">
               <IoSearch size={25} />
             </button>
           </div>
 
-          {searchTerm && ( // Render products only when there is a search term
+          {searchTerm && (
             <div className="max-h-[400px] overflow-y-scroll  pr-2 bg-white rounded-md p-2">
               {filteredProducts.length > 0 ? (
                 filteredProducts.map((product, index) => (

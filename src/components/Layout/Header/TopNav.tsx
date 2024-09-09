@@ -8,7 +8,7 @@ import { TiSocialFacebook } from "react-icons/ti";
 
 const TopNav = () => {
   return (
-    <div className="bg-primary  border-b py-2 border-primary w-full z-99 relative  p-2 lg:px-8 xl:px-32 ">
+    <div className="bg-primary hidden sm:block border-b py-2 border-primary w-full z-99 relative  p-2 lg:px-8 xl:px-32 ">
     <div className="grid grid-cols-1 lg:grid-cols-3 text-center space-y-1 lg:space-y-0 items-center">
       <div className="flex flex-wrap items-center justify-center lg:justify-start lg:text-start  gap-4 xl:gap-10">
         <div className="flex gap-2 items-center text-white">
@@ -27,9 +27,11 @@ const TopNav = () => {
           href="mailto:info@interiorfilm.ae"
           target='_blank'
           >
-info@interiorfilm.ae
+       info@interiorfilm.ae
           </Link>
         </div>
+
+
       </div>
       <div>
         <p className="uppercase text-white text-[10px] sm:text-xs md:text-14 whitespace-normal md:whitespace-nowrap ">
