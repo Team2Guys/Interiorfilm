@@ -14,7 +14,7 @@ const config: Config = {
     extend: {
     
       fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
+        futura: ["futuraCyrillic", "sans-serif"],
       },
       screens: {
         "2xsm": "375px",
