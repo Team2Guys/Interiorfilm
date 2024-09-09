@@ -209,8 +209,8 @@ export default function ProductDetails({
         <div className="flex lg:w-4/12  flex-col gap-3">
           <div className="flex flex-wrap w-full justify-between flex-col md:flex-row ">
             <div
-              className={`w-full xl:w-8/12  md:px-2 space-y-2 md:space-y-4 ${
-                !isQuickView ? "md:w-3/3" : "w-full"
+              className={`w-full md:px-2 space-y-2 md:space-y-4 ${
+                !isQuickView ? "md:w-3/3 xl:w-8/12" : "w-full xl:w-12/12"
               }`}
             >
               <span className="divide-8">

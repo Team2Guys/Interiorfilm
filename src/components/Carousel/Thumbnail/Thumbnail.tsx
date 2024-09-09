@@ -75,12 +75,12 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
   }, [sortedThumbs]);
 
   
-  const handleScrollDown = () => {
-    const container:any = swiperContainerRef.current;
-    if (container) {
-      container.scrollBy({ top: 150, behavior: 'smooth' });
-    }
-  };
+  // const handleScrollDown = () => {
+  //   const container:any = swiperContainerRef.current;
+  //   if (container) {
+  //     container.scrollBy({ top: 150, behavior: 'smooth' });
+  //   }
+  // };
   return (
     <Fragment>
       <div className='space-y-20'>
@@ -114,12 +114,13 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
 
               </div>
               {showArrow && (
-                <div ref={nextRef} className='items-center justify-center hidden lg:flex'>
+                <div className='items-center justify-center hidden lg:flex'>
                   <Image
+                   ref={nextRef}
                     src='/images/downarrow.png'
                     width={100}
                     height={100}
-                    onClick={handleScrollDown}
+                    // onClick={handleScrollDown}
                     className='object-contain cursor-pointer'
                     alt='arrow'
                   />
