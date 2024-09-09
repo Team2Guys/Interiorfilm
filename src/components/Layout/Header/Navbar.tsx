@@ -25,6 +25,7 @@ import { SlHandbag } from "react-icons/sl";
 import CartDrawer from "components/cart-drawer/cart-drawer";
 import TopNav from "./TopNav";
 import { IoSearch } from "react-icons/io5";
+import Container from "../Container/Container";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
@@ -334,8 +335,8 @@ const Navbar = () => {
         </div>
 
         <div>
-          <ul
-            className={`hidden lg:flex lg:justify-between lg:space-x-4 uppercase xl:space-x-5 2xl:space-x-16 text-11 xl:text-13 py-3 2xl:px-6 whitespace-nowrap overflow-x-auto ${isHomePage
+          <Container
+            className={`hidden lg:flex  lg:justify-between uppercase text-11 xl:text-13 py-3  ${isHomePage
               ? isScrolled
                 ? "bg-white text-black"
                 : "bg-white text-black"
@@ -360,7 +361,7 @@ const Navbar = () => {
                 );
               }
             )}
-          </ul>
+          </Container>
         </div>
       </nav>
 
