@@ -160,10 +160,16 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    if (isModalOpen && searchInputRef.current) {
-      searchInputRef.current.focus();
+    if (isModalOpen) {
+      setSearchTerm('')
+      setTimeout(() => {
+        searchInputRef.current?.focus();
+      }, 100);
     }
   }, [isModalOpen]);
+
+
+  
   const truncateText = (text: any, maxLength: any) => {
     return text.length > maxLength
       ? text.substring(0, maxLength) + "..."
@@ -383,11 +389,13 @@ const Navbar = () => {
           <div className="flex items-center  w-full max-w-md mx-auto md:max-w-screen-2xl  mt-10  shadow shadow-boxdark  mb-3">
             <input
               type="text"
-              ref={searchInputRef} // Assign the ref here
+              ref={searchInputRef} 
               placeholder="Product Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full h-[51px] px-4 py-2 text-gray-700 bg-white border-none   focus:outline-none"
+              autoFocus 
+              
             />
             <button className="h-[51px] px-4 py-3 bg-white text-gray-600  hover:text-gray-800">
               <IoSearch size={25} />
