@@ -198,15 +198,15 @@ export default function ProductDetails({
   return (
     // xl:max-w-screen-2xl
     <div className="mt-10 mb-5 px-2 md:px-10  mx-auto ">
-      <div className="flex flex-wrap lg:flex-nowrap lg:gap-5  mt-2 p-2 ">
-        <div className={`w-full lg:w-8/12 ${firstFlex} `}>
+      <div className="flex flex-wrap lg:flex-nowrap gap-8  mt-2 p-2 ">
+        <div className={`w-full lg:w-8/12 xl:w-7/12 ${firstFlex} `}>
           <Thumbnail
             detail={productDetail.modelDetails}
             product={productDetail}
             thumbs={productDetail.imageUrl}
           />
         </div>
-        <div className="flex lg:w-4/12  flex-col gap-3">
+        <div className="flex lg:w-4/12 xl:w-5/12  flex-col gap-3">
           <div className="flex flex-wrap w-full justify-between flex-col md:flex-row ">
             <div
               className={`w-full md:px-2 space-y-2 md:space-y-4 ${

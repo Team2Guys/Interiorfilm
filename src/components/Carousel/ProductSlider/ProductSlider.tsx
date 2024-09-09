@@ -39,9 +39,6 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
     updateSwiperNavigation();
   }, [updateSwiperNavigation]);
 
-  console.log(products, "productsproductsproductsproductsproductsproducts")
-
-
   return (
     <>
       {loading ? (
