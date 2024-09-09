@@ -24,9 +24,10 @@ const TopNav = () => {
           <TfiEmail  className="text-white text-14 lg:text-20" />
           <Link
             className="text-12 lg:text-13 font-normal"
-            href={`tel:+971 4 252 2025`}
+          href="mailto:info@interiorfilm.ae"
+          target='_blank'
           >
-            +971 4 252 2025
+info@interiorfilm.ae
           </Link>
         </div>
       </div>

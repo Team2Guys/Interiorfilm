@@ -79,7 +79,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
 
   return (
     <>
-      <Overlay title='Product Detail' />
+      <Overlay title='Shop' />
       
       {
         productsLoading ? (

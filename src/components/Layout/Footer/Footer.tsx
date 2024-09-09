@@ -35,7 +35,7 @@ const Footer: React.FC = () => {
   const togglePages = () => setIsPagesOpen(!isPagesOpen);
   const bottomImages = [card1, card2, card3, card4, card5, card6, card7];
   const CategoryHandler = async () => {
-     
+
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
       console.log(err, "err");
     }
   };
-  
+
   useLayoutEffect(() => {
     CategoryHandler();
   }, []);
@@ -67,10 +67,10 @@ const Footer: React.FC = () => {
           </div>
           <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start md:justify-end gap-2 w-full px-3 md:w-8/12 text-white mt-4 md:mt-0">
 
-              <SlEnvolopeLetter className="text-primary ml-12 sm:ml-0" size={35} />
-              <p className="lg:text-base text-sm capitalize text-white">
-                SUBSCRIBE TO OUR NEWSLETTER.
-              </p>
+            <SlEnvolopeLetter className="text-primary ml-12 sm:ml-0" size={35} />
+            <p className="lg:text-base text-sm capitalize text-white">
+              SUBSCRIBE TO OUR NEWSLETTER.
+            </p>
             <div className="ml-5 flex items-center justify-center mt-5 md:mt-0 rounded-none h-13">
               <input
                 className="bg-white border border-r-0  h-full rounded-none  px-4 outline-none w-4/6 md:w-auto text-black"
@@ -194,17 +194,19 @@ const Footer: React.FC = () => {
               <div className="w-full lg:w-auto md:w-2/3 text-slate-400">
                 Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha, Dubai, UAE
                 <p>
-                  <a href="mailto:info@interiorfilm.ae" className="hover:text-primary">
+                  <Link href="mailto:info@interiorfilm.ae" target="_blank" className="hover:text-primary">
                     info@interiorfilm.ae
-                  </a>
+                  </Link>
                 </p>
 
-                
+
                 <p>
-                  
-                  <a href="tel:+97142522025" className="hover:text-primary">
+                  <Link
+                    className="text-12 lg:text-13 font-normal"
+                    href={`tel:+971 4 252 2025`}
+                  >
                     +971 4 252 2025
-                  </a>
+                  </Link>
                 </p>
 
               </div>

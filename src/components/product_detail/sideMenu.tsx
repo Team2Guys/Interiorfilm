@@ -210,7 +210,7 @@ const SideMenu: React.FC = () => {
       </div>
 
       <div className="">
-        <div className="text-center mb-4">
+        <div className="text-start mb-4">
           <h2 className="font-semibold text-sm">Add on <span className="font-bold">5% Save</span></h2>
         </div>
         <div className="space-y-4">

@@ -41,6 +41,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
   };
   const prevRef = useRef(null);
   const nextRef = useRef(null);
+  
   const handleMouseEnter = (imageUrl: string) => {
     setHoveredImage(imageUrl);
   };
@@ -113,13 +114,13 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
 
               </div>
               {showArrow && (
-                <div className='items-center justify-center hidden md:flex'>
+                <div ref={nextRef} className='items-center justify-center hidden md:flex'>
                   <Image
                     src='/images/downarrow.png'
                     width={100}
                     height={100}
                     onClick={handleScrollDown}
-                    className='object-contain'
+                    className='object-contain cursor-pointer'
                     alt='arrow'
                   />
                 </div>

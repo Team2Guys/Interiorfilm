@@ -123,7 +123,7 @@ const CheckoutData: React.FC<TableProps> = ({
                     <div
                       className={`text-14 sm:text-base font-normal text-lightdark text-nowrap`}
                     >
-                      {product.length} Meter
+                      {product.length} (m)
                     </div>
                   </div>
                 </div>

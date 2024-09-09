@@ -20,6 +20,7 @@ import { BiMessageDetail } from "react-icons/bi";
 import SideMenu from "./sideMenu";
 import EnviromentIcons from "./enviroment-icon";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 interface productDetailsProps {
   productDetail: PRODUCTS_TYPES;
   categoryName?: string;
@@ -38,6 +39,7 @@ export default function ProductDetails({
   const [reviews, setReviews] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [length, setLength] = useState<number>(1);
+  const router = useRouter()
   const options = productDetail && productDetail.totalStockQuantity > 0
     ? Array.from({ length: Math.floor(productDetail.totalStockQuantity) }, (_, i) => ({
       label: `1.22m x ${i + 1} METERS`,
@@ -290,7 +292,7 @@ export default function ProductDetails({
                   <div className="flex  w-full gap-1 md:gap-2">
                     <button
                       className="bg-secondary w-1/3 text-12 md:text-16  py-2 px-3 md:px-5 text-white"
-
+                      onClick={() => {handleAddToCart(productDetail); router.push('/checkout')}}
                     >
                       Buy Now
                     </button>
@@ -302,12 +304,26 @@ export default function ProductDetails({
                     </button>
 
                   </div>
+
+{/*                   
                   <Link
                     className="bg-[#2AB200]  w-full flex items-center gap-2 justify-center py-2 text-white"
                     href={`tel:${process.env.NEXT_PUBLIC_CONTACT_NUMBER}`}
+                    
                   >
                     <BsWhatsapp /> Order on WhatsApp
+                  </Link> */}
+
+                  <Link
+                  
+                 
+          target="_blank"
+          href="https://wa.link/mb359y"
+          className="bg-[#2AB200]  w-full flex items-center gap-2 justify-center py-2 text-white"
+        >
+              <BsWhatsapp /> Order on WhatsApp
                   </Link>
+
                 </Fragment>
 
               )}
@@ -388,6 +404,8 @@ export default function ProductDetails({
                       </DialogContent>
                     </Dialog>
                   </p>
+
+
                 </div>
                 <div className="relative w-1/2 border-4 border-[#D47C84] p-4 rounded-lg shadow">
                   <span className="absolute -top-3 left-2 bg-gradient-to-r from-blue-300 via-orange-300 to-pink-300 text-black font-extrabold px-2 py-1 rounded-lg text-xs">
@@ -480,7 +498,7 @@ export default function ProductDetails({
                     alt="master"
                     width={60}
                     height={60}
-                    className="bg-white p-2 object-contain shadow-lg rounded-md"
+                    className="bg-white p-2 object-contain shadow-lg "
                     key={index}
                   />
                 ))}
