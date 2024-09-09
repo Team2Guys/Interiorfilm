@@ -1,4 +1,3 @@
-//@ts-nocheck
 "use client"
 import React, { useRef, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
@@ -6,7 +5,6 @@ import type { InputRef, TableColumnsType, TableColumnType } from 'antd';
 import {  Button, Input, Space, Table } from 'antd';
 import type { FilterDropdownProps } from 'antd/es/table/interface';
 import Highlighter from 'react-highlight-words';
-
 interface DataType {
   key: string;
   [key: string]: any;
@@ -20,9 +18,10 @@ interface FilterTableProps {
 }
 
 const FilterTable: React.FC<FilterTableProps> = ({ data, columns }) => {
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
+
 
   const handleSearch = (
     selectedKeys: string[],
@@ -31,7 +30,7 @@ const FilterTable: React.FC<FilterTableProps> = ({ data, columns }) => {
   ) => {
     confirm();
     setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
+setSearchedColumn(dataIndex as string);
   };
 
   const handleReset = (clearFilters: () => void) => {
@@ -73,7 +72,7 @@ const FilterTable: React.FC<FilterTableProps> = ({ data, columns }) => {
             onClick={() => {
               confirm({ closeDropdown: false });
               setSearchText((selectedKeys as string[])[0]);
-              setSearchedColumn(dataIndex);
+              setSearchedColumn(dataIndex as string);
             }}
           
 
@@ -120,10 +119,15 @@ const FilterTable: React.FC<FilterTableProps> = ({ data, columns }) => {
       ),
   });
 
-  const enhancedColumns = columns.map((col) => ({
-    ...col,
-    ...getColumnSearchProps(col.dataIndex as DataIndex),
-  }));
+  const enhancedColumns = columns.map((col) => {
+    if (!("dataIndex" in col)) {
+      return col;
+    }
+    return {
+      ...col,
+      ...getColumnSearchProps(col.dataIndex as DataIndex),
+    };
+  });
 
   return <Table className='overflow-x-auto mt-10' columns={enhancedColumns} dataSource={data} pagination={false} />;
 };

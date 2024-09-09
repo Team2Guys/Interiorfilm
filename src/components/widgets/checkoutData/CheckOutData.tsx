@@ -1,12 +1,9 @@
-//@ts-nocheck
 import Image from "next/image";
 import React, { SetStateAction, useEffect, useState } from "react";
-import { message, Modal } from "antd";
+import { Modal } from "antd";
 import { usePathname } from "next/navigation";
-import { IoCloseSharp } from "react-icons/io5";
 import PRODUCTS_TYPES from "types/interfaces";
 import { IoIosClose } from "react-icons/io";
-import { Checkbox } from "antd";
 import { FaArrowRight } from "react-icons/fa";
 interface TableProps {
   cartdata: PRODUCTS_TYPES[];
@@ -15,7 +12,7 @@ interface TableProps {
   setSubtotal: React.Dispatch<SetStateAction<number>>;
   shipmentFee: number | string;
   cartItems?: PRODUCTS_TYPES[];
-  onClick?: MouseEvent<HTMLButtonElement>;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 const CheckoutData: React.FC<TableProps> = ({
   cartdata,
@@ -94,20 +91,27 @@ const CheckoutData: React.FC<TableProps> = ({
         </h2>
       </div>
       <div className="space-y-4 max-h-100 overflow-y-scroll table-scrollbar px-2 lg:px-8 mx-2">
-        {data.map((product, index) => (
+        {data && data.map((product, index) => (
           <div className="bg-transparent" key={index}>
             <div className="flex gap-2 sm:gap-4 justify-between items-center pe-1 sm:pe-6">
-              <div className="w-12/12 flex gap-3 sm:gap-4 items-center">
+            <div className="w-12/12 flex gap-3 sm:gap-4 items-center">
                 <Image
-                  className="w-18 xsm:w-22 sm:w-[124px] h-18 xsm:h-22 sm:h-[124px]"
-                  width={100}
-                  height={100}
-                  src={product.imageUrl[0].imageUrl || product.imageUrl}
-                  alt="Product"
-                />
+
+                      className="w-18 xsm:w-22 sm:w-[124px] h-18 xsm:h-22 sm:h-[124px]"
+                      width={100}
+                      height={100}
+                      src={
+                        typeof product.imageUrl === "string"
+                          ? product.imageUrl
+                          : product.imageUrl && product.imageUrl[0] && product.imageUrl[0].imageUrl
+                          ? product.imageUrl[0].imageUrl
+                          : ""
+                      }
+                      alt="Product"
+                    />
                 <div>
-                <h1 className="text-16 sm:text-18 font-medium">
-                  {product.name}
+                  <h1 className="text-16 sm:text-18 font-medium">
+                    {product.name}
                     {/* {counts[index] || 1}X (
                     {typeof product.name === "string" ? product.name : ""}) */}
                   </h1>
@@ -117,7 +121,7 @@ const CheckoutData: React.FC<TableProps> = ({
 
                   <div className="flex mt-1 xsm:mt-0 gap-0 items-center">
                     <p className="font-normal text-14 sm:text-base text-lightdark text-nowrap">
-                    Width : 1.22
+                      Width : 1.22
                     </p>
                     <IoIosClose size={25} className="text-lightdark" />
                     <div
@@ -181,15 +185,27 @@ const CheckoutData: React.FC<TableProps> = ({
             className="w-full bg-black hover:bg-dark text-white py-3 flex justify-center items-center gap-3"
             onClick={onClick}
           >
-            proceed to payment  <FaArrowRight />
+            proceed to payment <FaArrowRight />
           </button>
         </div>
-          <div className="max-w-70 pt-5 mx-auto">
-            <Image className="w-[618px] h-[42px]" width={500} height={500} src={"/images/icon/return.png"} alt="return"/>
-          </div>
-          <div className="pt-4">
-            <Image className="w-[618px] h-[42px]" width={500} height={500} src={"/images/icon/payment.png"} alt="return"/>
-          </div>
+        <div className="max-w-70 pt-5 mx-auto">
+          <Image
+            className="w-[618px] h-[42px]"
+            width={500}
+            height={500}
+            src={"/images/icon/return.png"}
+            alt="return"
+          />
+        </div>
+        <div className="pt-4">
+          <Image
+            className="w-[618px] h-[42px]"
+            width={500}
+            height={500}
+            src={"/images/icon/payment.png"}
+            alt="return"
+          />
+        </div>
       </div>
     </div>
   );

@@ -10,11 +10,26 @@ import { RxMinus, RxPlus } from "react-icons/rx";
 import Button from "components/Common/Button";
 import { BsWhatsapp } from "react-icons/bs";
 import Link from "next/link";
-import { Dialog, DialogContent, DialogHeader, DialogOverlay, DialogTitle, DialogTrigger } from "components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogOverlay,
+  DialogTitle,
+  DialogTrigger,
+} from "components/ui/dialog";
 import Image from "next/image";
-import { PaymentMethods, tabbyfeature, tabbyhowitwork, tabbypayicon, tamarafeature, tamaralist, tamarawhy } from "data/Data";
-import tamaraLogo from './../../../public/images/logo/tamara-transparent.png'
-import tabbyLogo from './../../../public/images/logo/tabby-transparent.png'
+import {
+  PaymentMethods,
+  tabbyfeature,
+  tabbyhowitwork,
+  tabbypayicon,
+  tamarafeature,
+  tamaralist,
+  tamarawhy,
+} from "data/Data";
+import tamaraLogo from "./../../../public/images/logo/tamara-transparent.png";
+import tabbyLogo from "./../../../public/images/logo/tabby-transparent.png";
 import { FaRegStar } from "react-icons/fa";
 import { BiMessageDetail } from "react-icons/bi";
 import SideMenu from "./sideMenu";
@@ -33,23 +48,27 @@ export default function ProductDetails({
   firstFlex,
   isQuickView,
 }: productDetailsProps) {
-
-
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
   const [reviews, setReviews] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [length, setLength] = useState<number>(1);
-  const router = useRouter()
-  const options = productDetail && productDetail.totalStockQuantity > 0
-    ? Array.from({ length: Math.floor(productDetail.totalStockQuantity) }, (_, i) => ({
-      label: `1.22m x ${i + 1} METERS`,
-      value: i + 1,
-    }))
-    : [];
+  const router = useRouter();
+  const options =
+    productDetail && productDetail.totalStockQuantity > 0
+      ? Array.from(
+          { length: Math.floor(productDetail.totalStockQuantity) },
+          (_, i) => ({
+            label: `1.22m x ${i + 1} METERS`,
+            value: i + 1,
+          })
+        )
+      : [];
 
   const fetchReviews = async (productId: string) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`
+      );
       setReviews(response.data.reviews);
     } catch (err) {
       console.log("Failed to fetch reviews:", err);
@@ -66,7 +85,7 @@ export default function ProductDetails({
     if (quantity < 100) {
       setQuantity(quantity + 1);
     } else {
-      message.error('Quantity cannot exceed 100.');
+      message.error("Quantity cannot exceed 100.");
     }
   };
 
@@ -74,7 +93,7 @@ export default function ProductDetails({
     if (quantity > 1) {
       setQuantity(quantity - 1);
     } else {
-      message.error('Quantity cannot be less than 1.');
+      message.error("Quantity cannot be less than 1.");
     }
   };
 
@@ -83,7 +102,7 @@ export default function ProductDetails({
     if (!isNaN(value) && value >= 1 && value <= 100) {
       setQuantity(value);
     } else {
-      message.error('Please enter a quantity between 1 and 100.');
+      message.error("Please enter a quantity between 1 and 100.");
     }
   };
 
@@ -97,13 +116,14 @@ export default function ProductDetails({
       totalStockQuantity: product.totalStockQuantity,
       count: quantity,
       length,
-      totalPrice: (product.discountPrice || product.salePrice) * length * quantity, // Calculate total price based on length and quantity
+      totalPrice:
+        (product.discountPrice || product.salePrice) * length * quantity, // Calculate total price based on length and quantity
       purchasePrice: product.purchasePrice,
       sizes: product.sizes,
-      product_code: product.code
+      code: product.code,
     };
 
-    let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     const existingItemIndex = existingCart.findIndex(
       (item: any) => item.id === product._id && item.length === length
     );
@@ -119,9 +139,9 @@ export default function ProductDetails({
     } else {
       existingCart.push(newCartItem);
     }
-    localStorage.setItem('cart', JSON.stringify(existingCart));
-    message.success('Product added to cart successfully!');
-    window.dispatchEvent(new Event('cartChanged'));
+    localStorage.setItem("cart", JSON.stringify(existingCart));
+    message.success("Product added to cart successfully!");
+    window.dispatchEvent(new Event("cartChanged"));
   };
 
   const handleAddToWishlist = (product: any) => {
@@ -134,10 +154,11 @@ export default function ProductDetails({
       totalStockQuantity: product.totalStockQuantity,
       count: quantity,
       length,
-      totalPrice: (product.discountPrice || product.salePrice) * length * quantity,
+      totalPrice:
+        (product.discountPrice || product.salePrice) * length * quantity,
     };
 
-    let existingWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
     const existingItemIndex = existingWishlist.findIndex(
       (item: any) => item.id === product._id && item.length === length
     );
@@ -153,9 +174,9 @@ export default function ProductDetails({
     } else {
       existingWishlist.push(newWishlistItem);
     }
-    localStorage.setItem('wishlist', JSON.stringify(existingWishlist));
-    message.success('Product added to Wishlist successfully!');
-    window.dispatchEvent(new Event('WishlistChanged'));
+    localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
+    message.success("Product added to Wishlist successfully!");
+    window.dispatchEvent(new Event("WishlistChanged"));
   };
 
   useEffect(() => {
@@ -176,28 +197,37 @@ export default function ProductDetails({
 
   return (
     // xl:max-w-screen-2xl
-    <div className="mt-10 mb-5 px-10  mx-auto ">
+    <div className="mt-10 mb-5 px-2 md:px-10  mx-auto ">
       <div className="flex flex-wrap lg:flex-nowrap lg:gap-5  mt-2 p-2 ">
         <div className={`w-full lg:w-8/12 ${firstFlex} `}>
-          <Thumbnail detail={productDetail.modelDetails} product={productDetail} thumbs={productDetail.imageUrl} />
+          <Thumbnail
+            detail={productDetail.modelDetails}
+            product={productDetail}
+            thumbs={productDetail.imageUrl}
+          />
         </div>
-        <div className="flex flex-col">
-          <div className="flex w-full justify-between flex-col md:flex-row ">
-
-
-            {/* <div className={`lg:w-4/12 py-3 space-y-2 md:space-y-4 lg:max-w-[400px] w-2/3 ${secondFlex}`}> */}
-            <div className={`w-full  bg  md:px-2 space-y-2 md:space-y-4 ${!isQuickView ? 'md:w-2/3' : 'w-full'}`}>
-              <span className="divide--8">
-                <h1 className="text-22 lg:text-[28px] text-[#000000] font-medium">{productDetail.name}</h1>
-                <h3 className="text-30  text-[#B9BBBF] font-medium">{productDetail.code}</h3>
+        <div className="flex lg:w-4/12  flex-col gap-3">
+          <div className="flex flex-wrap w-full justify-between flex-col md:flex-row ">
+            <div
+              className={`w-full xl:w-8/12  md:px-2 space-y-2 md:space-y-4 ${
+                !isQuickView ? "md:w-3/3" : "w-full"
+              }`}
+            >
+              <span className="divide-8">
+                <h1 className="text-22 lg:text-[28px] text-[#000000] font-medium">
+                  {productDetail.name}
+                </h1>
+                <h3 className="text-30  text-[#B9BBBF] font-medium">
+                  {productDetail.code}
+                </h3>
               </span>
               <hr className="text-[#E4E4E4]" />
 
-              <div className="flex w-full justify-between">
-
+              <div className="flex flex-wrap w-full justify-between">
                 <div className="flex  flex-col ">
                   <p className="text-secondary font-poppins text-[25.92px] font-bold ">
-                    AED <span>
+                    AED{" "}
+                    <span>
                       {productDetail.discountPrice
                         ? productDetail.discountPrice
                         : productDetail.salePrice}
@@ -211,15 +241,23 @@ export default function ProductDetails({
                   ) : null}
                 </div>
                 {reviews.length && reviews.length > 0 ? (
-                  <div className="flex flex-col gap-2 w-1/2 text-[10.67px]">
-                    <div className="flex gap-4">
-                      <div className="flex gap-1 items-center bg-[#FBF3EA] w-[49.79px] h-[23px] p-2 rounded-xl text-[#D48D3B]"><FaRegStar /> {averageRating}.0</div>
+                  <div className="flex flex-col flex-wrap gap-2 w-1/2 text-[10.67px]">
+                    <div className="flex flex-wrap gap-4">
+                      <div className="flex gap-1 items-center bg-[#FBF3EA] w-[49.79px] h-[23px] p-2 rounded-xl text-[#D48D3B] max-w-fit ">
+                        <FaRegStar /> {averageRating}.0
+                      </div>
                       <div className="flex  items-center gap-1 bg-[#F5F5F5] px-3 rounded-xl h-[23px]">
                         <BiMessageDetail />
-                        {reviews.length} Review</div>
+                        {reviews.length} Review
+                      </div>
                     </div>
-                    <div className="text-[#B9BBBF]"> <span className="text-[#3E9242]">
-                      {(averageRating / 5) * 100}% </span> of buyers have recommended this.</div>
+                    <div className="text-[#B9BBBF]">
+                      {" "}
+                      <span className="text-[#3E9242]">
+                        {(averageRating / 5) * 100}%{" "}
+                      </span>{" "}
+                      of buyers have recommended this.
+                    </div>
                   </div>
                 ) : null}
               </div>
@@ -227,13 +265,12 @@ export default function ProductDetails({
               <p className="font-medium text-16 text-text">
                 Width : <span className="text-blak font-normal">1.22cm</span>
               </p>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap 2xl:flex-nowrap items-center gap-2">
                 <p className="font-medium text-16 whitespace-nowrap text-text">
                   Select Quantity (m):
                 </p>
                 <ProductSelect
                   className="w-60 h-10 border outline-none shipment text-16"
-
                   onChange={onChange}
                   options={options}
                   value={length}
@@ -269,7 +306,7 @@ export default function ProductDetails({
                     Available Quantity:
                   </span>
                   {productDetail.totalStockQuantity &&
-                    productDetail.totalStockQuantity > 0
+                  productDetail.totalStockQuantity > 0
                     ? "In Stock"
                     : "Out Of Stock"}
                 </p>
@@ -288,24 +325,25 @@ export default function ProductDetails({
                 </p>
               ) : (
                 <Fragment>
-
-                  <div className="flex  w-full gap-1 md:gap-2">
+                  <div className="flex flex-wrap lg:flex-nowrap w-full gap-1 md:gap-2">
                     <button
-                      className="bg-secondary w-1/3 text-12 md:text-16  py-2 px-3 md:px-5 text-white"
-                      onClick={() => {handleAddToCart(productDetail); router.push('/checkout')}}
+                      className="bg-secondary w-full md:w-1/3 text-12 md:text-16  py-2 px-3 md:px-5 text-white"
+                      onClick={() => {
+                        handleAddToCart(productDetail);
+                        router.push("/checkout");
+                      }}
                     >
                       Buy Now
                     </button>
                     <button
-                      className="bg-[#FA7F2C]  w-2/3   text-12 md:text-16  py-2  md:px-5 text-white text-center"
+                      className="bg-[#FA7F2C]  w-full md:w-2/3   text-12 md:text-16  py-2  md:px-5 text-white text-center"
                       onClick={() => handleAddToCart(productDetail)}
                     >
                       Add To Cart
                     </button>
-
                   </div>
 
-{/*                   
+                  {/*                   
                   <Link
                     className="bg-[#2AB200]  w-full flex items-center gap-2 justify-center py-2 text-white"
                     href={`tel:${process.env.NEXT_PUBLIC_CONTACT_NUMBER}`}
@@ -315,17 +353,13 @@ export default function ProductDetails({
                   </Link> */}
 
                   <Link
-                  
-                 
-          target="_blank"
-          href="https://wa.link/mb359y"
-          className="bg-[#2AB200]  w-full flex items-center gap-2 justify-center py-2 text-white"
-        >
-              <BsWhatsapp /> Order on WhatsApp
+                    target="_blank"
+                    href="https://wa.link/mb359y"
+                    className="bg-[#2AB200]  w-full flex items-center gap-2 justify-center py-2 text-white"
+                  >
+                    <BsWhatsapp /> Order on WhatsApp
                   </Link>
-
                 </Fragment>
-
               )}
 
               <div className="flex items-center justify-center relative mb-2 text-[#E4E4E4]">
@@ -342,7 +376,7 @@ export default function ProductDetails({
                     tabby
                   </span>
                   <p className="text-12">
-                    Pay 4 interest-free payments of AED 396.25.{' '}
+                    Pay 4 interest-free payments of AED 396.25.{" "}
                     <Dialog>
                       <DialogTrigger asChild>
                         <span className="text-red-600 underline cursor-pointer">
@@ -380,7 +414,10 @@ export default function ProductDetails({
                             </h3>
                             <ul className="font-medium text-xl xs:text-2xl md:text-3xl mt-8 md:leading-relaxed">
                               {tabbyhowitwork.map((item) => (
-                                <li className="flex items-center gap-2" key={item.id}>
+                                <li
+                                  className="flex items-center gap-2"
+                                  key={item.id}
+                                >
                                   <span className="rounded-full bg-lightbackground min-w-10 h-10 flex items-center justify-center">
                                     {item.id}
                                   </span>
@@ -404,15 +441,13 @@ export default function ProductDetails({
                       </DialogContent>
                     </Dialog>
                   </p>
-
-
                 </div>
                 <div className="relative w-1/2 border-4 border-[#D47C84] p-4 rounded-lg shadow">
                   <span className="absolute -top-3 left-2 bg-gradient-to-r from-blue-300 via-orange-300 to-pink-300 text-black font-extrabold px-2 py-1 rounded-lg text-xs">
                     tamara
                   </span>
                   <p className="text-12">
-                    Pay 4 interest-free payments of AED 396.25.{' '}
+                    Pay 4 interest-free payments of AED 396.25.{" "}
                     <Dialog>
                       <DialogTrigger asChild>
                         <span className="text-red-600 underline cursor-pointer">
@@ -429,7 +464,11 @@ export default function ProductDetails({
                         </DialogHeader>
                         <div className="py-8 px-5 xs:px-10 md:px-20 me-4 xs:me-7 max-h-[80vh] overflow-y-auto custom-scroll">
                           <div className="text-center">
-                            <Image src={tamaraLogo} alt="logo" className="mx-auto" />
+                            <Image
+                              src={tamaraLogo}
+                              alt="logo"
+                              className="mx-auto"
+                            />
                           </div>
                           <h2 className="text-center font-bold text-5xl mt-12">
                             Pay easier with Tamara
@@ -484,14 +523,10 @@ export default function ProductDetails({
                         </div>
                       </DialogContent>
                     </Dialog>
-
-
                   </p>
-
                 </div>
-
               </div>
-              <div className="flex justify-between   px-6">
+              <div className="flex flex-wrap gap-1 justify-start  px-2 md:px-6 sp">
                 {PaymentMethods.map((item, index) => (
                   <Image
                     src={item.imageUrl}
@@ -508,25 +543,27 @@ export default function ProductDetails({
                 <p className="text-dark text-12 md:text-14">{categoryName}</p>
               </div>
               <div>
-                <p className="text-14 text-[#707070] font-light">{productDetail?.description}</p>
+                <p className="text-14 text-[#707070] font-light">
+                  {productDetail?.description}
+                </p>
               </div>
               <div>
                 <ul className="px-6">
                   {productDetail?.spacification?.map(
                     (item: any, index: number) => (
-                      <li className="list-disc text-14 text-[#707070] font-light" key={index}>
+                      <li
+                        className="list-disc text-14 text-[#707070] font-light"
+                        key={index}
+                      >
                         {item.specsDetails}
                       </li>
                     )
                   )}
                 </ul>
               </div>
-
-
             </div>
             {!isQuickView && (
-
-              <div className="w-full md:w-1/3  ">
+              <div className="w-full xl:w-4/12  ">
                 <SideMenu />
               </div>
             )}
@@ -535,7 +572,6 @@ export default function ProductDetails({
           <div className="flex flex-col gap-2 mt-2">
             <h1 className="text-[14px] font-bold">Healthy Green Environment</h1>
             <EnviromentIcons />
-
           </div>
         </div>
       </div>

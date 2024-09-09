@@ -1,4 +1,3 @@
-//@ts-nocheck
 'use client'
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -21,7 +20,7 @@ interface SliderProps {
 }
 const pagination = {
   clickable: true,
-  renderBullet: function (index, className) {
+  renderBullet: function (index:number, className:string) {
     return '<span class="' + className + '">' + (index + 1) + '</span>';
   },
 };

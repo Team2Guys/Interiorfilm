@@ -61,13 +61,13 @@ const Footer: React.FC = () => {
 
       <PreFooter />
       <div className="bg-secondary text-white pt-10  pb-10 md:px-30">
-        <div className="flex flex-wrap md:flex-nowrap justify-between border-b border-slate-500 pb-10 ">
+        <div className="flex flex-wrap md:flex-nowrap justify-between border-b items-center border-slate-500 pb-10 ">
           <div className=" md:w-4/12 flex flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
             <Image width={250} height={250} src={logo} alt="Interior Film" />
           </div>
           <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start md:justify-end gap-2 w-full px-3 md:w-8/12 text-white mt-4 md:mt-0">
 
-            <SlEnvolopeLetter className="text-primary ml-12 sm:ml-0" size={35} />
+            <SlEnvolopeLetter className="text-primary ml-4 md:ml-12 sm:ml-0" size={35} />
             <p className="lg:text-base text-sm capitalize text-white">
               SUBSCRIBE TO OUR NEWSLETTER.
             </p>

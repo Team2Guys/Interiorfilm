@@ -134,7 +134,6 @@ export  const generateSlug = (text:string) => {
     .replace(/\-\-+/g, '-'); 
 };
 
-// @ts-nocheck
 export const AddProductvalidationSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, 'Too Short!')
