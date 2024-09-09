@@ -26,6 +26,8 @@ const TopNav = () => {
             className="text-12 lg:text-13 font-normal"
           href="mailto:info@interiorfilm.ae"
           target='_blank'
+          rel="noopener"
+          
           >
        info@interiorfilm.ae
           </Link>
@@ -41,13 +43,17 @@ const TopNav = () => {
       <div className="flex items-center justify-center lg:justify-end gap-3 ">
       <Link
         className="text-13 font-normal  bg-white p-1 rounded-full"
-        href={`https://www.facebook.com/EcoTech-107134337607215/`}
+        target='_blank'
+         rel="noopener"
+        href="https://www.facebook.com/InteriorFilm.ae"
       >
         <TiSocialFacebook className='text-primary' size={18} />
       </Link>
       <Link
         className="text-13 font-normal bg-black p-1 rounded-full"
-        href={`https://www.facebook.com/EcoTech-107134337607215/`}
+        target='_blank'
+         rel="noopener"
+        href="https://instagram.com/interiorfilm.ae/"
       >
         <BsInstagram className='text-white rounded-md'  size={18} />
       </Link>
