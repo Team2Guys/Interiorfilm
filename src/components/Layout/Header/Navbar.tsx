@@ -219,10 +219,10 @@ const Navbar = () => {
       <TopNav />
       <nav
         className={`z-99 w-full p-2 pr-0 sm:px-4 lg:px-8 xl:px-12   ${isHomePage
-            ? isScrolled
-              ? "bg-white text-black top-0 fixed"
-              : "bg-white text-black sticky top-0"
-            : "bg-white text-black sticky top-0 "
+          ? isScrolled
+            ? "bg-white text-black top-0 fixed"
+            : "bg-white text-black sticky top-0"
+          : "bg-white text-black sticky top-0 "
           }`}
       >
         <div className="grid grid-cols-12 items-center mt-2">
@@ -231,7 +231,7 @@ const Navbar = () => {
             className=" cursor-pointer text-22 sm:text-20 md:text-2xl w-fit col-span-2 md:col-span-4"
             onClick={showModal}
           >
-            <IoIosSearch  className="text-2xl sm:text-20"/>
+            <IoIosSearch className="text-2xl sm:text-20" />
           </div>
 
           <div className="mx-auto col-span-5 md:col-span-4">
@@ -336,10 +336,10 @@ const Navbar = () => {
         <div>
           <ul
             className={`hidden lg:flex lg:justify-between lg:space-x-4 uppercase xl:space-x-5 2xl:space-x-16 text-11 xl:text-13 py-3 2xl:px-6 whitespace-nowrap overflow-x-auto ${isHomePage
-                ? isScrolled
-                  ? "bg-white text-black"
-                  : "bg-white text-black"
+              ? isScrolled
+                ? "bg-white text-black"
                 : "bg-white text-black"
+              : "bg-white text-black"
               }`}
           >
             {navarlink.map(
@@ -364,7 +364,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <div className="fixed top-auto bottom-0 md:top-[150px] right-0 z-999 h-[9rem] ">
+      <div className="fixed top-auto bottom-60 md:top-[150px] right-0 z-999 h-[9rem] ">
         <Link
           target="_blank"
           href={"https://wa.link/mb359y"}
