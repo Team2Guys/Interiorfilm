@@ -325,9 +325,9 @@ export default function ProductDetails({
                 </p>
               ) : (
                 <Fragment>
-                  <div className="flex flex-wrap lg:flex-nowrap w-full gap-1 md:gap-2">
+                  <div className="flex  gap-1 md:gap-2">
                     <button
-                      className="bg-secondary w-full md:w-1/3 text-12 md:text-16  py-2 px-3 md:px-5 text-white"
+                      className="bg-secondary w-full  text-12 md:text-14 2xl:text-16  py-2 px-3 md:px-5 text-white "
                       onClick={() => {
                         handleAddToCart(productDetail);
                         router.push("/checkout");
@@ -336,7 +336,7 @@ export default function ProductDetails({
                       Buy Now
                     </button>
                     <button
-                      className="bg-[#FA7F2C]  w-full md:w-2/3   text-12 md:text-16  py-2  md:px-5 text-white text-center"
+                      className="bg-[#FA7F2C]  w-full   text-12 md:text-14 2xl:text-16   py-2  md:px-5 text-white text-center"
                       onClick={() => handleAddToCart(productDetail)}
                     >
                       Add To Cart
