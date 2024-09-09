@@ -14,6 +14,8 @@ import { collapseData } from 'data/Data';
 import Accordion from 'components/widgets/Accordion';
 import axios from 'axios';
 import Review from 'components/Common/Review';
+import { FaArrowDownLong } from 'react-icons/fa6';
+import { PiArrowDownLight } from 'react-icons/pi';
 
 interface ThumbProps {
   thumbs?: IMAGE_INTERFACE[];
@@ -75,20 +77,20 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
   }, [sortedThumbs]);
 
   
-  // const handleScrollDown = () => {
-  //   const container:any = swiperContainerRef.current;
-  //   if (container) {
-  //     container.scrollBy({ top: 150, behavior: 'smooth' });
-  //   }
-  // };
+  const handleScrollDown = () => {
+    const container:any = swiperContainerRef.current;
+    if (container) {
+      container.scrollBy({ top: 150, behavior: 'smooth' });
+    }
+  };
   return (
     <Fragment>
       <div className='space-y-20'>
         <div className='lg:relative w-full'>
-          <div className='w-full flex flex-wrap lg:flex-nowrap flex-col-reverse lg:flex-row gap-5'>
+          <div className='w-full flex flex-wrap lg:flex-nowrap flex-col-reverse lg:flex-row lg:gap-6 xl:gap-10'>
 
-            <div className='w-full lg:w-2/12 flex flex-col gap-3'>
-              <div className=' lg:max-h-[650px] overflow-y-auto custom-scrollbar' ref={swiperContainerRef}>
+            <div className='w-full lg:w-3/12 flex flex-col gap-3'>
+              <div className=' lg:max-h-[500px] xl:max-h-[700px] overflow-y-auto custom-scrollbar' ref={swiperContainerRef}>
                 <Swiper
                   onSwiper={setThumbsSwiper}
                   loop={false}
@@ -100,9 +102,9 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                   className="bg-contain bg-white column-swipper"
                 >
                   {sortedThumbs && sortedThumbs.map((array, index) => (
-                    <SwiperSlide key={array.imageIndex ?? index} className='w-full h-full column-swiper-slider custom-scrollbar md:h-5'>
+                    <SwiperSlide key={array.imageIndex ?? index} className='w-full h-full column-swiper-slider custom-scrollbar md:h-5 mt-3 lg:mt-0'>
                       <Image
-                        className='bg-contain pb-2 bg-white md:h-[222px] md:w-67 cursor-pointer'
+                        className='bg-contain pb-2 bg-white lg:h-[160px] xl:h-[222px] md:w-67 cursor-pointer'
                         src={array.imageUrl}
                         width={270}
                         height={120}
@@ -114,20 +116,12 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
 
               </div>
               {showArrow && (
-                <div className='items-center justify-center hidden lg:flex'>
-                  <Image
-                   ref={nextRef}
-                    src='/images/downarrow.png'
-                    width={100}
-                    height={100}
-                    // onClick={handleScrollDown}
-                    className='object-contain cursor-pointer'
-                    alt='arrow'
-                  />
+                <div ref={nextRef} className='items-center justify-center hidden lg:flex'>
+                  <PiArrowDownLight  className='object-contain cursor-pointer  w-[90.2px] h-[95px]' onClick={handleScrollDown}/>
                 </div>
               )}
             </div>
-            <div className='w-full lg:w-9/12 relative lg::max-h-[798px]'>
+            <div className='w-full lg:w-9/12 relative '>
               <Swiper
                 style={{
                   '--swiper-navigation-color': '#ffffff',
@@ -158,7 +152,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                       onMouseMove={handleMouseMove}
                       onMouseLeave={handleMouseLeave}
                     >
-                      <Image className='bg-contain w-full h-full lg:max-h-[798px]' src={array.imageUrl} width={800} height={800} alt='Image' />
+                      <Image className='bg-contain w-full h-full lg:h-[611px]  xl:h-[811px]  ' src={array.imageUrl} width={800} height={800} alt='Image' />
                     </div>
 
                   </SwiperSlide>
@@ -176,7 +170,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
             </div>
           </div>
 
-          <div className="  absolute right-15 top-1 hidden lg:block">
+          <div className="  absolute right-0 top-10 hidden lg:block">
             {hoveredImage && (
               <div
                 className="magnified-image absolute left-0  z-50"
