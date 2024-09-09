@@ -1,18 +1,15 @@
-//@ts-nocheck
+
 "use client";
 import React, { useRef, useEffect } from 'react';
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 // Import required modules
-import { Pagination, Navigation, Autoplay } from 'swiper/modules';
-import { FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
+import {  Navigation, Autoplay } from 'swiper/modules';
+import { FaQuoteLeft } from 'react-icons/fa';
 import { PiUsersFour } from 'react-icons/pi';
-import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import { Rate } from 'antd';
 
 interface review{
@@ -28,7 +25,6 @@ interface Reviewprops{
 }
 
 const Slider: React.FC<Reviewprops> = ({Reviews}) => {
-  // Refs for custom navigation buttons
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<any>(null);
@@ -48,12 +44,6 @@ const Slider: React.FC<Reviewprops> = ({Reviews}) => {
   return (
     <div className="relative">
       <div className='text-end mb-5'>
-        {/* <button ref={prevRef} className=' p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white ml-2 mr-2'>
-          <MdArrowBackIos size={25} />
-        </button>
-        <button ref={nextRef} className=' p-2 rounded-md bg-white hover:bg-primary shadow hover:scale-105 text-primary hover:text-white'>
-          <MdArrowForwardIos size={25} />
-        </button> */}
         <div className='text-center mb-10'>
           <h2 className='lg:text-5xl md:text-3xl font-medium text-xl lg:w-96 leading-10 mx-auto text-heading '>What Say Our Top Clients</h2>
         </div>
@@ -61,7 +51,7 @@ const Slider: React.FC<Reviewprops> = ({Reviews}) => {
       
       <Swiper
         ref={swiperRef}
-        slidesPerView={1} // Default to 1 slide per view
+        slidesPerView={1}
         spaceBetween={20}
         loop={true}
         breakpoints={{

@@ -164,7 +164,7 @@ const SideMenu: React.FC = () => {
         purchasePrice: product.purchasePrice,
         //@ts-expect-error
         sizes: product.sizes || [], 
-        product_code: product.code
+        code: product.code
       };
 
       let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -195,8 +195,8 @@ const SideMenu: React.FC = () => {
   const totalPrice = selectedProducts.reduce((total, product) => total + product.discountPrice, 0);
 
   return (
-    <div className='flex md:flex-col gap-2'>
-      <div className='divide-y-2 p-2 divide-[#E4E4E4] border-2 border-[#E4E4E4]'>
+    <div className='flex flex-wrap lg:flex-nowrap lg:flex-col gap-2'>
+      <div className='divide-y-2 p-2 divide-[#E4E4E4] border-2 border-[#E4E4E4] hidden lg:block'>
         {TextWithIconData.map((item, index) => (
           <TextwithIcon
             key={index}
@@ -209,7 +209,7 @@ const SideMenu: React.FC = () => {
         ))}
       </div>
 
-      <div className="">
+      <div className="w-full">
         <div className="text-start mb-4">
           <h2 className="font-semibold text-sm">Add on <span className="font-bold">5% Save</span></h2>
         </div>

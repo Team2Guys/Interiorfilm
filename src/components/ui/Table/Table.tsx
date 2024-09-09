@@ -1,4 +1,3 @@
-//@ts-nocheck
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
@@ -8,8 +7,6 @@ import { usePathname } from "next/navigation";
 import { message, Modal } from "antd";
 import Button from "../Button/Button";
 import PRODUCTS_TYPES from "types/interfaces";
-import SelectList from "../Select/Select";
-import ProductSelect from "../Select/ProductSelect";
 
 interface TableProps {
   cartdata?: PRODUCTS_TYPES[];
@@ -40,7 +37,7 @@ const Table: React.FC<TableProps> = ({
       pathName === "/wishlist" ? "wishlist" : "cart"
     );
     if (Products && JSON.parse(Products).length > 0) {
-      const items = JSON.parse(Products || "[]");
+      const items: any = JSON.parse(Products || "[]");
       setData(items);
       setCounts(
         items.reduce((acc: any, item: any, index: number) => {
@@ -144,18 +141,16 @@ const Table: React.FC<TableProps> = ({
 
     // Find index of existing product with the same ID and length
     const existingIndex = cart.findIndex(
-      (item) => item.id === product.id && item.length === lengths[index]
+      (item: any) => item.id === product._id && item.length === lengths[index]
     );
 
     if (existingIndex !== -1) {
-      // Update quantity and totalPrice if product with the same ID and length already exists
       cart[existingIndex].count += counts[index] || 1;
       cart[existingIndex].totalPrice =
         (product.discountPrice || product.price) *
         cart[existingIndex].count *
         lengths[index];
     } else {
-      // Add new item to cart if no matching product found
       const totalPrice =
         (product.discountPrice || product.price) *
         (counts[index] || 1) *
@@ -167,19 +162,12 @@ const Table: React.FC<TableProps> = ({
         totalPrice: totalPrice,
       });
     }
-
-    // Ensure all totalPrices are numbers
-    cart.forEach((item) => {
+    cart.forEach((item: any) => {
       item.totalPrice = Number(item.totalPrice) || 0;
     });
 
-    // Update local storage
     localStorage.setItem("cart", JSON.stringify(cart));
-
-    // Remove item from wishlist if added to cart
     removeItemFromCart(index);
-
-    // Trigger cart changed event
     window.dispatchEvent(new Event("cartChanged"));
   };
 
@@ -237,57 +225,61 @@ const Table: React.FC<TableProps> = ({
             <div className="flex justify-between items-center text-22 font-bold px-6">
               <p className="w-3/12">Products</p>
               <p className="w-3/12">Price</p>
-              <p className={`w-3/12 ${pathName === "/wishlist" ?"":"text-end"} `}>Quantity (M) </p>
-             {pathName === "/wishlist" ? (
-             <p className="w-3/12">
-                        <div
-                          scope="col"
-                          className="px-6 py-3 text-end text-23 xl:text-[30px] font-medium text-dark whitespace-nowrap "
-                        >
-                          Action
-                        </div>
-             </p>
-                      ) : null}
+              <p
+                className={`w-3/12 ${
+                  pathName === "/wishlist" ? "" : "text-end"
+                } `}
+              >
+                Quantity (M){" "}
+              </p>
+              {pathName === "/wishlist" ? (
+                <p className="w-3/12">
+                  <div className="px-6 py-3 text-end text-23 xl:text-[30px] font-medium text-dark whitespace-nowrap ">
+                    Action
+                  </div>
+                </p>
+              ) : null}
             </div>
 
             <div className="max-h-[529px] overflow-y-auto table-scrollbar px-4 mx-2">
-
-            
-            {data.map((product, index) => {
-              const options = lengthOptions(product.totalStockQuantity || 0);
-              return (
-                <div className="flex justify-between items-center mt-5" key={index}>
-                  <div className="flex gap-1 w-3/12 ">
-                    <div className="relative">
-                      <Image
-                        className="w-[184px] h-[124px] "
-                        width={100}
-                        height={100}
-                        src={product.imageUrl[0]?.imageUrl || product.imageUrl}
-                        alt="Product"
-                      />
-                      <div className="absolute -top-2 -right-2">
-                        <div
-                          onClick={() => showDeleteConfirm(index)}
-                          className="bg-white shadow h-5 w-5 flex justify-center items-center rounded-full cursor-pointer hover:text-white hover:bg-primary"
-                        >
-                          <IoCloseSharp size={18} />
+              {data.map((product, index) => {
+                const options = lengthOptions(product.totalStockQuantity || 0);
+                return (
+                  <div
+                    className="flex justify-between items-center mt-5"
+                    key={index}
+                  >
+                    <div className="flex gap-1 w-3/12 ">
+                      <div className="relative">
+                        <Image
+                          className="w-[184px] h-[124px] "
+                          width={100}
+                          height={100}
+                          src={product.posterImageUrl || product.imageUrl}
+                          alt="Product"
+                        />
+                        <div className="absolute -top-2 -right-2">
+                          <div
+                            onClick={() => showDeleteConfirm(index)}
+                            className="bg-white shadow h-5 w-5 flex justify-center items-center rounded-full cursor-pointer hover:text-white hover:bg-primary"
+                          >
+                            <IoCloseSharp size={18} />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="p-2 w-full ">
-                      <h1 className="text-sm md:text-base font-bold">
-                        <span>{counts[index] || 1}* </span>
-                        {typeof product.name === "string" ? product.name : ""}
-                      </h1>
-                      <div>
-                        <p className="text-[#B9BBBF]">{product.product_code}</p>
+                      <div className="p-2 w-full ">
+                        <h1 className="text-sm md:text-base font-bold">
+                          <span>{counts[index] || 1}* </span>
+                          {typeof product.name === "string" ? product.name : ""}
+                        </h1>
+                        <div>
+                          <p className="text-[#B9BBBF]">{product.code}</p>
 
-                        <p className="text-16 font-semibold text-[#535353]">
-                          Width: <span>1.22cm (28inch)</span>
-                        </p>
-                      </div>
-                      {/* <div className="flex gap-2 items-center w-full">
+                          <p className="text-16 font-semibold text-[#535353]">
+                            Width: <span>1.22cm (28inch)</span>
+                          </p>
+                        </div>
+                        {/* <div className="flex gap-2 items-center w-full">
                                 <ProductSelect
                                   className="w-[70%] h-10 border outline-none shipment text-20"
                                   onChange={(value) =>
@@ -299,65 +291,68 @@ const Table: React.FC<TableProps> = ({
                                   } METERS`}
                                 />
                               </div> */}
+                      </div>
                     </div>
-                  </div>
 
-              <div  className=" w-3/12 ">
-              <p>
-                    AED
-                    <span>
-                      {pathName === "/wishlist"
-                        ? product.discountPrice
-                          ? product.discountPrice * (counts[index] || 1)
-                          : product.price * (counts[index] || 1)
-                        : product.discountPrice
-                        ? product.discountPrice
-                        : product.price}
-                    </span>
-                  </p>
-              </div>
-                  <div className="w-3/12">
-                  <div className={`flex w-28 h-12  justify-between px-2  bg-[#F0F0F0]  ${pathName === "/wishlist" ?"":"ml-auto"}`}>
-                    <div
-                      onClick={() => decrement(index)}
-                      className="  flex justify-center items-center"
-                    >
-                      <RxMinus size={20} className="cursor-pointer" />
+                    <div className=" w-3/12 ">
+                      <p>
+                        AED
+                        <span>
+                          {pathName === "/wishlist"
+                            ? product.discountPrice
+                              ? product.discountPrice * (counts[index] || 1)
+                              : product.price * (counts[index] || 1)
+                            : product.discountPrice
+                            ? product.discountPrice
+                            : product.price}
+                        </span>
+                      </p>
                     </div>
-                    <div className="  flex justify-center items-center">
-                      <input
-                        className="h-7 w-8 text-center cursor-pointer"
-                        type="text"
-                        min={1}
-                        max={100}
-                        disabled
-                        value={lengths[index] || product.length}
-                        onChange={(e) => handleChange(index, e)}
-                      />
+                    <div className="w-3/12">
+                      <div
+                        className={`flex w-28 h-12  justify-between px-2  bg-[#F0F0F0]  ${
+                          pathName === "/wishlist" ? "" : "ml-auto"
+                        }`}
+                      >
+                        <div
+                          onClick={() => decrement(index)}
+                          className="  flex justify-center items-center"
+                        >
+                          <RxMinus size={20} className="cursor-pointer" />
+                        </div>
+                        <div className="  flex justify-center items-center">
+                          <input
+                            className="h-7 w-8 text-center cursor-pointer"
+                            type="text"
+                            min={1}
+                            max={100}
+                            disabled
+                            value={lengths[index] || product.length}
+                            onChange={(e) => handleChange(index, e)}
+                          />
+                        </div>
+                        <div
+                          onClick={() => increment(index)}
+                          className="  flex justify-center items-center"
+                        >
+                          <RxPlus size={20} className="cursor-pointer" />
+                        </div>
+                      </div>
                     </div>
-                    <div
-                      onClick={() => increment(index)}
-                      className="  flex justify-center items-center"
-                    >
-                      <RxPlus size={20} className="cursor-pointer" />
-                    </div>
+
+                    {pathName === "/wishlist" ? (
+                      <div className="w-3/12 text-end">
+                        <Button
+                          onClick={() => addToCart(product, index)}
+                          className="px-4 rounded-md"
+                          title={"Add To Cart"}
+                        />
+                      </div>
+                    ) : null}
                   </div>
-                  </div>
-                 
-                  {pathName === "/wishlist" ? (
-                  <div className="w-3/12 text-end">
-                    <Button
-                      onClick={() => addToCart(product, index)}
-                      className="px-4 rounded-md"
-                      title={"Add To Cart"}
-                    />
-                  </div>
-                  ) : null}
-                 
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
@@ -377,7 +372,7 @@ const Table: React.FC<TableProps> = ({
                       className="w-20 h-20 bg-contain"
                       width={80}
                       height={80}
-                      src={product.imageUrl[0]?.imageUrl || product.imageUrl}
+                      src={product.posterImageUrl || product.imageUrl}
                       alt="Product"
                     />
                   </div>
@@ -445,7 +440,7 @@ const Table: React.FC<TableProps> = ({
                     onClick={() => addToCart(product, index)}
                     className="px-4 rounded-md"
                     title={"Add To Cart"}
-                  />
+                  /> 
                 ) : (
                   <p>
                     AED

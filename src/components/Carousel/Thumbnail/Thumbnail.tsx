@@ -1,4 +1,3 @@
-//@ts-nocheck
 'use client';
 
 import React, { useState, useRef, Fragment, useEffect } from 'react';
@@ -24,7 +23,7 @@ interface ThumbProps {
 
 const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
 
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [thumbsSwiper, setThumbsSwiper] = useState<any>();
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
   const [backgroundPosition, setBackgroundPosition] = useState<string>('0% 0%');
   const [reviews, setReviews] = useState<string[]>([]);
@@ -56,7 +55,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
   const handleMouseLeave = () => {
     setHoveredImage(null);
   };
-  const sortedThumbs = thumbs.slice().sort((a, b) => {
+  const sortedThumbs = thumbs?.slice().sort((a, b) => {
     const indexA = a.imageIndex ?? Number.MAX_SAFE_INTEGER;
     const indexB = b.imageIndex ?? Number.MAX_SAFE_INTEGER;
     return indexA - indexB;
@@ -68,15 +67,16 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
   }, [product]);
 
   useEffect(() => {
-    const container = swiperContainerRef.current;
+    const container:any = swiperContainerRef.current;
     if (container) {
       const isScrollable = container.scrollHeight > container.clientHeight;
       setShowArrow(isScrollable);
     }
   }, [sortedThumbs]);
 
+  
   const handleScrollDown = () => {
-    const container = swiperContainerRef.current;
+    const container:any = swiperContainerRef.current;
     if (container) {
       container.scrollBy({ top: 150, behavior: 'smooth' });
     }
@@ -99,7 +99,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                   modules={[FreeMode, Navigation, Thumbs]}
                   className="bg-contain bg-white column-swipper"
                 >
-                  {sortedThumbs.map((array, index) => (
+                  {sortedThumbs && sortedThumbs.map((array, index) => (
                     <SwiperSlide key={array.imageIndex ?? index} className='w-full h-full column-swiper-slider custom-scrollbar md:h-5'>
                       <Image
                         className='bg-contain pb-2 bg-white md:h-[222px] md:w-67 cursor-pointer'
@@ -114,7 +114,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
 
               </div>
               {showArrow && (
-                <div ref={nextRef} className='items-center justify-center hidden md:flex'>
+                <div ref={nextRef} className='items-center justify-center hidden lg:flex'>
                   <Image
                     src='/images/downarrow.png'
                     width={100}
@@ -141,16 +141,19 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                   prevEl: prevRef.current,
                   nextEl: nextRef.current,
                 }}
-                onBeforeInit={(swiper) => {
-                  swiper.params.navigation.prevEl = prevRef.current;
-                  swiper.params.navigation.nextEl = nextRef.current;
+                onBeforeInit={(swiper:any) => {
+                  if (swiper.params.navigation) {//+
+                    swiper.params.navigation.prevEl = prevRef.current;//+
+                    swiper.params.navigation.nextEl = nextRef.current;//+
+                  }
                 }}
               >
-                {sortedThumbs.map((array, index) => (
+                {sortedThumbs && sortedThumbs.map((array, index) => (
                   <SwiperSlide key={index}>
                     <div
                       className="relative cursor-zoom-in h-full w-full"
                       onMouseEnter={() => handleMouseEnter(array.imageUrl)}
+
                       onMouseMove={handleMouseMove}
                       onMouseLeave={handleMouseLeave}
                     >
@@ -172,7 +175,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
             </div>
           </div>
 
-          <div className="  absolute right-15 top-1 hidden md:block">
+          <div className="  absolute right-15 top-1 hidden lg:block">
             {hoveredImage && (
               <div
                 className="magnified-image absolute left-0  z-50"
@@ -189,7 +192,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
           </div>
         </div>
       </div>
-      <div className="mt-13">
+      <div className="mt-13 hidden lg:block">
         <Accordion detail={detail} />
         <hr className=" h-1 border-stone-200" />
         <Collapse

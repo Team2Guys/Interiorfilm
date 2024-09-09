@@ -1,10 +1,11 @@
-//@ts-nocheck
+
 "use client";
 import Container from 'components/Layout/Container/Container';
 import Table from 'components/ui/Table/Table';
 import Overlay from 'components/widgets/Overlay/Overlay';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import PRODUCTS_TYPES from 'types/interfaces';
 
 const Wishlist = () => {
   const [WishlistItems, setWishlistItems] = useState([]);

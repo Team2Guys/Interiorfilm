@@ -62,7 +62,7 @@ export interface USRPROPS {
 
   export interface IMAGE_INTERFACE {
     public_id?: string;
-    imageUrl?: string;
+    imageUrl?: any;
     name?: string;
     imageIndex?:number;
   }
@@ -135,7 +135,7 @@ interface PRODUCTS_TYPES {
   totalStockQuantity?: any;
   sizes?: sizes[];
   isFeatured?: any;
-  price?: number;
+  price?: any;
   count?: any;
   length?: any;
   totalPrice?:any;
