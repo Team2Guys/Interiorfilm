@@ -44,6 +44,7 @@ const Header = () => {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
+
   useEffect(() => {
     const productHandler = async () => {
       setLoading(true);
@@ -71,6 +72,8 @@ const Header = () => {
 
     productHandler();
   }, []);
+
+
 
   const AddminProfileTriggerHandler = async (token: string) => {
     try {

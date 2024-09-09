@@ -87,6 +87,7 @@ const Navbar = () => {
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : [];
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -95,9 +96,7 @@ const Navbar = () => {
     setIsModalOpen(false);
   };
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+
 
   useEffect(() => {
     const existingWishlist = JSON.parse(
@@ -221,7 +220,7 @@ const Navbar = () => {
       >
         <div className="grid grid-cols-3 items-center mt-2">
           <div
-            className=" cursor-pointer text-20 md:text-2xl"
+            className=" cursor-pointer text-20 md:text-2xl w-fit"
             onClick={showModal}
           >
             <IoIosSearch />
@@ -286,7 +285,7 @@ const Navbar = () => {
                 width={250}
                 title={
                   <>
-                    <div className="text-16 md:text-2xl ">
+                    <div className="text-16 md:text-2xl">
                       <FaBars />
                     </div>
                   </>
@@ -376,7 +375,7 @@ const Navbar = () => {
         title=""
         open={isModalOpen}
         onOk={handleOk}
-        onCancel={handleCancel}
+        onCancel={handleOk}
         footer=""
         width={800}
       >
