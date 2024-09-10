@@ -25,7 +25,7 @@ interface CardProps {
   quickClass?: string;
 }
 
-const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail, cardClass,quickClass }) => {
+const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail, cardClass, quickClass }) => {
   const router = useRouter();
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [productDetails, setproductDetails] = useState<PRODUCTS_TYPES | any>({});
@@ -36,7 +36,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [populated_categoryName, setCategoryName] = useState<string | any>(null);
 
-console.log(ProductCard, "ProductCardProductCardProductCard")
+  console.log(ProductCard, "ProductCardProductCardProductCard")
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -58,33 +58,33 @@ console.log(ProductCard, "ProductCardProductCardProductCard")
     try {
       if (pathname.startsWith("/products") || slider) return;
       console.log('slider false');
-  
+
       setLoading(true);
       let response: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
       let products = response.data.products;
-  
+
       // Debugging: Check if products are received correctly
       console.log('Received products:', products);
-  
+
       // Sort products based on the numeric part of their name
       products.sort((a: PRODUCTS_TYPES, b: PRODUCTS_TYPES) => {
         // Extract numeric part of product names
         const nameA = a.name.match(/\d+/);
         const nameB = b.name.match(/\d+/);
-  
+
         // Debugging: Check extracted numbers
         console.log(`Sorting: ${a.name} (${nameA}) vs ${b.name} (${nameB})`);
-  
+
         const numA = nameA ? parseInt(nameA[0], 10) : 0;
         const numB = nameB ? parseInt(nameB[0], 10) : 0;
-  
+
         // Compare numeric values
         return numA - numB;
       });
-  
+
       // Debugging: Check sorted products
       console.log('Sorted products:', products);
-  
+
       if (CategoryId !== "demo" && CategoryId) {
         let filtered = products.filter((item: any) => {
           return item.category === CategoryId;
@@ -93,7 +93,7 @@ console.log(ProductCard, "ProductCardProductCardProductCard")
       } else {
         setTotalProducts(products);
       }
-  
+
       if (products.length > 0 && products[0].colors && products[0].colors.length > 0) {
         setSelectedValue(products[0].colors[0]);
       }
@@ -110,8 +110,8 @@ console.log(ProductCard, "ProductCardProductCardProductCard")
       setLoading(false);
     }
   };
-  
-  
+
+
 
   const ProductFilterHandler = () => {
     if (CategoryId != "demo" && CategoryId) {
@@ -141,19 +141,19 @@ console.log(ProductCard, "ProductCardProductCardProductCard")
       name: product.name,
       price: product.salePrice,
       imageUrl: product.posterImageUrl?.imageUrl,
-      totalStockQuantity: product.totalStockQuantity, 
+      totalStockQuantity: product.totalStockQuantity,
       discountPrice: product.discountPrice,
       length: 1,
       count: 1,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
       purchasePrice: product.purchasePrice,
       sizes: product.sizes,
-      code : product.code
+      code: product.code
     };
-  
+
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     const existingItemIndex = existingCart.findIndex((item: any) => item.id === product._id);
-  
+
     if (existingItemIndex !== -1) {
       const updatedCart = existingCart.map((item: any, index: number) => {
         if (index === existingItemIndex) {
@@ -170,13 +170,13 @@ console.log(ProductCard, "ProductCardProductCardProductCard")
       existingCart.push(newCartItem);
       localStorage.setItem("cart", JSON.stringify(existingCart));
     }
-  
+
     message.success('Product added to cart successfully!');
     window.dispatchEvent(new Event("cartChanged"));
-    
- 
+
+
   };
-  
+
 
   const handleAddToWishlist = (product: any) => {
     const newWishlistItem = {
@@ -191,11 +191,11 @@ console.log(ProductCard, "ProductCardProductCardProductCard")
       length: 1,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
     };
-  
+
     let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
-  
+
     const existingItemIndex = existingWishlist.findIndex((item: any) => item.id === product._id);
-  
+
     if (existingItemIndex !== -1) {
       const updatedWishlist = existingWishlist.map((item: any, index: number) => {
         if (index === existingItemIndex) {
@@ -212,11 +212,11 @@ console.log(ProductCard, "ProductCardProductCardProductCard")
       existingWishlist.push(newWishlistItem);
       localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
     }
-  
+
     message.success('Product added to Wishlist successfully!');
     window.dispatchEvent(new Event("WishlistChanged"));
   };
-  
+
 
 
 
@@ -229,13 +229,13 @@ console.log(ProductCard, "ProductCardProductCardProductCard")
     try {
       const categoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
       const [categoryResponse] = await Promise.all([categoryRequest]);
-      if((categoryRequest && ProductCard) && categoryResponse.data.length > 0) {    
+      if ((categoryRequest && ProductCard) && categoryResponse.data.length > 0) {
         const foundCategory = categoryResponse.data.find((cat: any) => cat._id === productDetails.category);
         setCategoryName(foundCategory ? foundCategory.name : null);
       }
     } catch (error) {
       console.log('Error fetching data:', error);
-    } 
+    }
   };
 
   useEffect(() => {
@@ -274,19 +274,19 @@ console.log(ProductCard, "ProductCardProductCardProductCard")
           </div>
           <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
             <h1 className="lg:text-lg text-md text-center text-dark  font-semibold">
-              {product.name} {product.code} 
+              {product.name} {product.code}
             </h1>
             <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
               <p className="text-black font-bold text-18 flex gap-1">
-                AED <span className={` text-20 ${product.discountPrice ? "" : ""}`}>{product.discountPrice ? product.discountPrice : product.salePrice}</span>
+                AED <span className={` text-20 ${product.discountPrice ? "text-red" : "text-black"}`}>{product.discountPrice ? product.discountPrice : product.salePrice}</span>
               </p>
-             
 
-              { product.discountPrice > 0 && (
+
+              {product.discountPrice > 0 && (
                 <p className="line-through text-para text-xs font-medium">
                   AED <span className=''>{product.discountPrice}</span>
                 </p>
-               )}
+              )}
             </div>
             {product.starRating && (
               <div className="flex gap-1 justify-center">
@@ -309,7 +309,7 @@ console.log(ProductCard, "ProductCardProductCardProductCard")
 
   return (
     <>
-        <Model 
+      <Model
         setproductDetailModel={setProductDetailModel}
         productDetailModel={productDetailModel}
         centered={true}
@@ -320,10 +320,10 @@ console.log(ProductCard, "ProductCardProductCardProductCard")
       </Model>
 
       {ProductCard && (ProductCard.length > 0 && !loading) ? (
-        ProductCard.map((product,index)=>renderProduct(product,index))
+        ProductCard.map((product, index) => renderProduct(product, index))
       ) : (
 
-        (productsToRender.length > 0) ? productsToRender.map(renderProduct) :  !loading ? <div className='flex justify-center'>No Product Found</div> : <>
+        (productsToRender.length > 0) ? productsToRender.map(renderProduct) : !loading ? <div className='flex justify-center'>No Product Found</div> : <>
 
           {Array.from({ length: 3 }).map((_, index) => (
 
@@ -344,7 +344,7 @@ console.log(ProductCard, "ProductCardProductCardProductCard")
 
       )}
       <div className='absolute top-1'>
-    </div>
+      </div>
     </>
   );
 };

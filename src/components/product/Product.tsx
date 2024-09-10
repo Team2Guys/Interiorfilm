@@ -248,7 +248,7 @@ const ProductPage = () => {
         {
           productimage.map((array:{img:string}, index:number)=> (
             <div className="w-full" key={index}> 
-            <Image className="object-cover w-full" width={500} height={500} src={array.img} alt="product1"/> 
+            <Image className={`object-cover w-full ${index > 0 ? "hidden sm:block": ""}`} width={500} height={500} src={array.img} alt="product1"/> 
           </div>
           ))
         }

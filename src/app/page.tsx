@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
 
-    <div className='fixed top-1/2 z-999 left-5 h-36 w-14 transform -translate-x-1/2 -translate-y-1/2 bg-black text-white p-2'>
+    <div className='hidden sm:block fixed top-1/2 z-999 left-5 h-36 w-14 transform -translate-x-1/2 -translate-y-1/2 bg-black text-white p-2'>
           <p className='transform  mt-20  -rotate-90 whitespace-nowrap'>Get 10% Off!</p>
         </div>
 

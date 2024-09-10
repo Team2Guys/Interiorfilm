@@ -365,7 +365,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <div className="fixed top-auto bottom-60 md:top-[150px] right-0 z-999 h-[9rem] ">
+      <div className="fixed top-auto bottom-20 sm:bottom-60 md:top-[150px] right-0 z-999 h-[9rem] ">
         <Link
           target="_blank"
           href={"https://wa.link/mb359y"}
@@ -376,7 +376,7 @@ const Navbar = () => {
             height={50}
             src={whatsapp}
             alt="whatsappo"
-            className="w-30 md:w-50"
+            className="w-39 md:w-50 sm:w-30"
           />
         </Link>
       </div>

@@ -376,7 +376,7 @@ export default function ProductDetails({
                     tabby
                   </span>
                   <p className="text-12">
-                    Pay 4 interest-free payments of AED 396.25.{" "}
+                    Pay 4 interest-free payments of AED { totalPrice &&  (totalPrice/4).toFixed()} {" "}
                     <Dialog>
                       <DialogTrigger asChild>
                         <span className="text-red-600 underline cursor-pointer">
@@ -447,7 +447,7 @@ export default function ProductDetails({
                     tamara
                   </span>
                   <p className="text-12">
-                    Pay 4 interest-free payments of AED 396.25.{" "}
+                    Pay 4 interest-free payments of AED { totalPrice &&  (totalPrice/4).toFixed()} {" "}
                     <Dialog>
                       <DialogTrigger asChild>
                         <span className="text-red-600 underline cursor-pointer">

@@ -26,9 +26,9 @@ import { useRouter } from "next/navigation";
 const { Footer: AntFooter } = Layout;
 
 const Footer: React.FC = () => {
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
-  const [isCustomerCareOpen, setIsCustomerCareOpen] = useState(false);
-  const [isPagesOpen, setIsPagesOpen] = useState(false);
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(true);
+  const [isCustomerCareOpen, setIsCustomerCareOpen] = useState(true);
+  const [isPagesOpen, setIsPagesOpen] = useState(true);
   const [category, setCategory] = useState<CategoriesType[]>([]);
   const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
   const toggleCustomerCare = () => setIsCustomerCareOpen(!isCustomerCareOpen);
@@ -62,9 +62,11 @@ const Footer: React.FC = () => {
       <PreFooter />
       <div className="bg-secondary text-white pt-10  pb-10 md:px-30">
         <div className="flex flex-wrap md:flex-nowrap justify-between border-b items-center border-slate-500 pb-10 ">
-          <div className=" md:w-4/12 flex flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
+          
+          <div className=" hidden  md:w-4/12 md:flex  flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
             <Image width={250} height={250} src={logo} alt="Interior Film" />
           </div>
+
           <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start md:justify-end gap-2 w-full px-3 md:w-8/12 text-white mt-4 md:mt-0">
 
             <SlEnvolopeLetter className="text-primary ml-4 md:ml-12 sm:ml-0" size={35} />
@@ -81,8 +83,19 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </div>
+
+
+
         <div className="text-white px-0 ">
+
           <div className="lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row flex-wrap gap-y-8 gap-x-8 justify-between mt-10">
+
+            
+        <div className=" md:w-4/12 md:hidden flex  flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
+            <Image width={250} height={250} src={logo} alt="Interior Film" />
+          </div>
+
+
             <div className="flex-1 lg:pb-0 pb-3">
 
               <p className="2/3 text-slate-200">
