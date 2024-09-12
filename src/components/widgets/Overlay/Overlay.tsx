@@ -74,7 +74,7 @@ const Overlay: React.FC<OverlayProps> = ({ title, bodyText }) => {
 
 
 {
-  title == "show_details" ?
+  title !== "show_details" ?
   
   <div className="flex justify-center space-x-2 text-slate-400">
   <Link href="/" className="hover:text-black">

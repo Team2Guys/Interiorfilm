@@ -66,8 +66,28 @@ const showModal = () => {
       }, []);
     
       const filteredProducts = Array.isArray(products)
-        ? products.filter((product) =>
-            product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        ? products.filter((product) =>{
+          product.name.toLowerCase().includes(searchTerm.toLowerCase())
+
+          return (
+            product.name.toLowerCase().includes(searchTerm) ||
+            product.description && product.description.toLowerCase().includes(searchTerm) ||
+            product.salePrice && product.salePrice.toString().toLowerCase().includes(searchTerm) ||
+            product.purchasePrice &&  product.purchasePrice.toString().toLowerCase().includes(searchTerm) ||
+            product.category && product.category.toString().toLowerCase().includes(searchTerm) ||
+            product.discountPrice?.toString().toLowerCase().includes(searchTerm) || 
+            product.colors && product.colors.some((color:any) => color.colorName.toLowerCase().includes(searchTerm)) ||
+            product.modelDetails.some((model:any) => model.name.toLowerCase().includes(searchTerm) || model.detail.toLowerCase().includes(searchTerm)) ||
+            product.spacification && product.spacification.some((spec:any) => spec.specsDetails.toLowerCase().includes(searchTerm)) ||
+            product.starRating?.toString().toLowerCase().includes(searchTerm) ||  
+            product.reviews?.toLowerCase().includes(searchTerm) || 
+            product.code.toLowerCase().includes(searchTerm) ||
+            product.totalStockQuantity?.toString().toLowerCase().includes(searchTerm) ||  
+            product.sizes && product.sizes.some((size:any) => size.sizesDetails.toLowerCase().includes(searchTerm))
+          )
+          
+
+        }
           )
         : [];
     
