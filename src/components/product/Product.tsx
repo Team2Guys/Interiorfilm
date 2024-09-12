@@ -53,7 +53,7 @@ const ProductPage = () => {
   const [showColors, setShowColors] = useState<boolean>(false)
 
   const [colorName, setColorName] = useState<string>()
-  const [availableColors, setAvailableColors] = useState<{ value: string; label: string; }[]>([])
+  const [availableColors, setAvailableColors] = useState<{ value: string; label: string; }[] | string[]>([])
 
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [sortOption, setSortOption] = useState<string>("Default")
@@ -86,7 +86,7 @@ const ProductPage = () => {
         element.colors.forEach((color: { colorName: string, _id: string }) => uniqcolorArray.push(color.colorName));
       }
     })
-    console.log(uniqcolorArray, "color")
+
 
     if (uniqcolorArray.length > 0) {
 
@@ -98,6 +98,10 @@ const ProductPage = () => {
       })
 
       setAvailableColors(colorsArray);
+    }
+    else{
+      setAvailableColors(uniqcolorArray);
+
     }
   }
 
@@ -305,12 +309,12 @@ const ProductPage = () => {
                   {showColors ? (
                     <div
                       ref={dropdown}
-                      className="border shadow-sm flex flex-wrap gap-3 m-auto p-3 right-0 top-10 border-gray rounded-sm absolute w-full z-10 bg-white"
+                      className="border shadow-sm flex flex-wrap gap-3 m-auto z-30 p-3 right-0 top-10 border-gray rounded-sm absolute w-full z-10 bg-white"
                       id="ColorDropdown"
                     >
                       {!(availableColors.length > 0)
                         ? "Colors not found"
-                        : availableColors.map((item) => (
+                        : availableColors.map((item:any) => (
                           <p
                             id="ColorDropdown"
 

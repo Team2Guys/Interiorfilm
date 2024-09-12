@@ -80,7 +80,7 @@ export interface USRPROPS {
     name: string;
     description: string;
     salePrice: string;
-    purchasePrice: string;
+    purchasePrice?: string;
     discountPrice: string;
     starRating: string;
     reviews: string;

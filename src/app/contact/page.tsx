@@ -104,12 +104,15 @@ const Contact = () => {
                   +971 052 1919 327
                 </Link>
               </div>
+
               <div className="flex gap-2 items-center">
                 <FiMail size={20} />
                 <Link target="_blank" href={"mailto:orders@yzgroup.ae"}>
                   orders@yzgroup.ae
                 </Link>
               </div>
+
+              
             </div>
             <div>
               <h1 className="text-lg md:text-xl lg:text-3xl font-medium">

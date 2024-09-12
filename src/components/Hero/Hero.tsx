@@ -15,9 +15,9 @@ const Hero = () => {
         </div> */}
         <Container className='text-white text-end absolute bottom-10 md:bottom-20 right-1 md:right-20 space-y-5'>
           <p className='text-14 font-medium'>ARCHITECTURAL VINYL FILM WRAP</p>
-          <p className='text-[25px]'>FRESH START, FRACTION OF THE COST</p>
+          <p className='text-[25px]'>FRESH LOOK, SAVE BIG</p>
           <div>
-            <Link className='bg-white px-8 py-2 text-black' href={"/products"}>
+            <Link className='bg-white px-8 py-2 text-black' href={"/categories"}>
               SHOP OUR FULL RANGE
             </Link>
           </div>

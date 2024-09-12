@@ -92,6 +92,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
         imageUrl: imagesUrl,
         hoverImageUrl,
         createdAt,
+        purchasePrice:0
       };
       setloading(true);
 
@@ -273,7 +274,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                       </div>
 
                       <div className="flex full gap-4">
-                        <div className="w-[33%]">
+                        <div className="w-[50%]">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                             Sale Price
                           </label>
@@ -302,7 +303,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                           ) : null}
                         </div>
 
-                        <div className="w-[33%]">
+                        {/* <div className="w-[33%]">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                             Purchase Price
                           </label>
@@ -329,8 +330,11 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                               }
                             </div>
                           ) : null}
-                        </div>
-                        <div className="w-[33%]">
+                        </div> */}
+
+
+
+                        <div className="w-[50%]">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                             Discount Price
                           </label>

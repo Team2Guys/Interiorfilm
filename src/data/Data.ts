@@ -150,9 +150,11 @@ export const AddProductvalidationSchema = Yup.object().shape({
   salePrice: Yup.number()
     .min(1, "Minimum sales price must be at least 1")
     .required('Required'),
-  purchasePrice: Yup.number()
-    .min(1, "Must be at least 1")
-    .required('Required'),
+  // purchasePrice: Yup.number()
+  //   .min(1, "Must be at least 1")
+  //   .required('Required'),
+
+
   discountPrice: Yup.number().nullable(), 
   starRating: Yup.number()
     .min(1, "Rating must be at least 1")
