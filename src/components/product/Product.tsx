@@ -309,7 +309,7 @@ const ProductPage = () => {
                   {showColors ? (
                     <div
                       ref={dropdown}
-                      className="border shadow-sm flex flex-wrap gap-3 m-auto z-30 p-3 right-0 top-10 border-gray rounded-sm absolute w-full z-10 bg-white"
+                      className="border shadow-sm flex flex-wrap gap-3 m-auto z-30 p-3 right-0 top-10 border-gray rounded-sm absolute w-full bg-white"
                       id="ColorDropdown"
                     >
                       {!(availableColors.length > 0)
