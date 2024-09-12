@@ -73,17 +73,26 @@ const Overlay: React.FC<OverlayProps> = ({ title, bodyText }) => {
 
 
 
+{
+  title == "show_details" ?
+  
+  <div className="flex justify-center space-x-2 text-slate-400">
+  <Link href="/" className="hover:text-black">
+    Home
+  </Link>
+  <span>&gt;</span>
+  <span className="text-slate-500">{title}</span>
+</div> : ''}
 
-
-      <Breadcrumb
+      {/* <Breadcrumb
         className="flex justify-center"
         items={[
-
           {
-            title: <p className="text-white uppercase">{bodyText}</p>,
+            title: `Home/${title}`,
+            href: `/`,
           },
         ]}
-      />
+      /> */}
     </div>
   );
 };

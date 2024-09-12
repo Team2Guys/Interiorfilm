@@ -251,15 +251,17 @@ export default function ProductDetails({
                         {reviews.length} Review
                       </div>
                     </div>
-                    <div className="text-[#B9BBBF]">
+                    {/* <div className="text-[#B9BBBF]">
                       {" "}
                       <span className="text-[#3E9242]">
                         {(averageRating / 5) * 100}%{" "}
                       </span>{" "}
                       of buyers have recommended this.
-                    </div>
+                    </div> */}
                   </div>
                 ) : null}
+
+                
               </div>
 
               <p className="font-medium text-16 text-text">
@@ -267,7 +269,7 @@ export default function ProductDetails({
               </p>
               <div className="flex flex-wrap 2xl:flex-nowrap items-center gap-2">
                 <p className="font-medium text-16 whitespace-nowrap text-text">
-                  Select Quantity (m):
+                  Select Quantity:
                 </p>
                 <ProductSelect
                   className="w-60 h-10 border outline-none shipment text-16"
@@ -526,7 +528,7 @@ export default function ProductDetails({
                   </p>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-1 justify-start  px-2 md:px-6 sp">
+              <div className="flex flex-wrap gap-1 justify-evenly  px-2 md:px-6 sp">
                 {PaymentMethods.map((item, index) => (
                   <Image
                     src={item.imageUrl}

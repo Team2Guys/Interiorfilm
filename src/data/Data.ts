@@ -495,11 +495,10 @@ export const tamarafeature: ITamaraList[] = [
 
 
 export const PaymentMethods: ITabbyPayList[] = [
-  { id: 1, imageUrl: masterCard },
-  { id: 2, imageUrl: applypayCard },
-  { id: 4, imageUrl: viseCard },
-  { id: 3, imageUrl: gPayCard },
-  { id: 5, imageUrl: amexLogo },
+  { id: 1, imageUrl: viseCard },
+  { id: 2, imageUrl: masterCard },
+  { id: 3, imageUrl: applypayCard },
+  { id: 4, imageUrl: gPayCard },
 ];
 export const FooterPaymentMethods: ITabbyPayList[] = [
   { id: 1, imageUrl: viseCard },

@@ -13,6 +13,7 @@ import { CountryCode } from "data/Data";
 import { FiTag } from "react-icons/fi";
 import Overlay from 'components/widgets/Overlay/Overlay'
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 
 const CheckOut: React.FC = () => {
@@ -22,6 +23,7 @@ const CheckOut: React.FC = () => {
   const [total, setTotal] = useState(0);
   const [shipmentFee, setShipmentFee] = useState<number | string>(0);
   const [isChecked, setIsChecked] = useState(true);
+  const router = useRouter()
 
   const handleCheckboxChange = (e: any) => {
     setIsChecked(e.target.checked);
@@ -31,8 +33,8 @@ const CheckOut: React.FC = () => {
     last_name:'',
     email: "",
     phone_number: "",
-    city: "Islamabad",
-    country: "Pakistan",
+    city: "Dubai",
+    country: "United Arab Emirates",
     address: "",
     productItems: [] as PRODUCTS_TYPES[],
     subtotalAmount: 0,
@@ -50,6 +52,9 @@ const CheckOut: React.FC = () => {
 
   const { Option } = Select;
 
+  const countSelectoption = [
+    { title: "United Arab Emirates" },
+  ];
   const selectoption = [
     { title: "Dubai" },
     { title: "Abu Dhabi" },
@@ -163,6 +168,11 @@ const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBillingData({ ...billingData, city: value });
   };
 
+  const handleSelectChangeCountey = (value: string) => {
+    setBillingData({ ...billingData, country: value });
+  };
+
+
   // const addAddressField = (value: any) => {
   //   setBillingData({
   //     ...billingData,additionalAddressFields: [
@@ -239,11 +249,9 @@ let date = Date.now();
 
 
     const paymentKeyResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/recordSale`, {token,orderId,...extractedData,
-      date,shipmentFee,phone_number:"923184036661",email,address,products:productItems,state:city, city:city, postal_code: '44000', // Ensure valid postal code
-      building: 'Building 12',
+      date,shipmentFee,phone_number:"923184036661",email,address,products:productItems,state:city, city:city,
       street: 'Main Boulevard',
-      floor: '2', // Specify a valid floor number
-      apartment: '5B', // Optional, but good to include for complete data
+      floor: '2', 
       shipping_method: 'Courier', },
     );
 
@@ -267,6 +275,13 @@ let date = Date.now();
       <Overlay title="show_details"/>
 
       <Container className=" mt-10 md:mt-20 py-2 px-4">
+      <button className="flex gap-3 items-center my-2" onClick={()=>router.push('/cart')}>
+        
+      <svg className={`${"fill-black"}`} width="30" height="30" viewBox="0 0 55 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M54.6404 14.3224H4.87739L17.3712 1.82617L15.7027 0.157654L0.360352 15.5024L15.7004 30.8424L17.3689 29.1739L4.87739 16.6824H54.6404V14.3224Z" />
+                </svg>
+        Back</button>
+
         <div className="flex flex-wrap md:flex-nowrap gap-4">
           <div className="border border-gray py-2 px-4 w-full md:w-7/12">
             <p className="text-16 md:text-22 font-semibold md:tracking-[2px]">
@@ -278,7 +293,7 @@ let date = Date.now();
                   <CheckoutInput
                     label="First Name"
                     type="text"
-                    placeholder="e.g. John"
+        
                     name="name"
                     id="checkoutFullName"
                     value={billingData.first_name}
@@ -301,7 +316,7 @@ let date = Date.now();
                     type="text"
                     name="last_name"
                     id="checkoutFullName"
-                    placeholder="e.g.Doe"
+           
                     value={billingData.last_name}
                     onChange={(e) =>
                       setBillingData({
@@ -321,7 +336,7 @@ let date = Date.now();
                     label="Email"
                     type="email"
                     name="email"
-                    placeholder="e.g.mail@example.com"
+      
                     id="checkoutEmail"
                     value={billingData.email}
                     onChange={(e) =>
@@ -339,7 +354,7 @@ let date = Date.now();
               <div className="col-span-5 md:col-span-3">
                 <div className="flex flex-col">
                   <label htmlFor="checkout" className="text-lightdark">
-                    Phone Code <span className="text-red">*</span>
+                    Country Code <span className="text-red">*</span>
                   </label>
 
                   <Select
@@ -362,7 +377,7 @@ let date = Date.now();
                   <CheckoutInput
                     label="Phone Number*"
                     type="tel"
-                    placeholder="e.g.92123456"
+        
                     name="number"
                     id="checkout"
                     value={billingData.phone_number}
@@ -373,8 +388,32 @@ let date = Date.now();
                   )}
                 </div>
               </div>
+
+
               <div className="col-span-12">
-                <div className="flex flex-col">
+                <div className="flex justify-between gap-5 ">
+
+<div className="flex flex-col w-1/2">
+                  <label htmlFor="checkout" className="text-lightdark">
+                  Country <span className="text-red">*</span>
+                  </label>
+                  <Select
+                    showSearch
+                    className="w-full h-11 border outline-none shipment text-20 mt-5 border-[#D2D2D2]"
+                    defaultValue="Select your state"
+                    value={billingData.country}
+                    onChange={handleSelectChangeCountey}
+                  >
+                    {countSelectoption.map((option, index) => (
+                      <Option value={option.title} key={index}>
+                        {option.title}
+                      </Option>
+                    ))}
+                  </Select>
+
+</div>
+
+<div className="flex flex-col w-1/2">
                   <label htmlFor="checkout" className="text-lightdark">
                     City <span className="text-red">*</span>
                   </label>
@@ -391,8 +430,22 @@ let date = Date.now();
                       </Option>
                     ))}
                   </Select>
+
+</div>
+
+
+
+
+
                 </div>
               </div>
+
+
+  
+
+
+
+
               {/* <div className="col-span-12">
                 <div className="flex flex-col text-lightdark">
                   <label htmlFor="checkoutstreetAddress">
@@ -427,7 +480,7 @@ let date = Date.now();
                     type="text"
                     className="border-[#D2D2D2] border shadow-0 mt-5 outline-0 p-2"
                     name="streetAddress"
-                    placeholder="e.g. 11 Kaiyuan Road"
+                
                     id="checkoutstreetAddress"
                     value={billingData.address}
                     onChange={(e) =>

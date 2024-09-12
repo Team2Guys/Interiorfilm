@@ -217,7 +217,7 @@ const Navbar = () => {
         setDrawerOpen(true);
         setTimeout(() => {
           setDrawerOpen(false);
-        }, 2000);
+        }, 8000);
       }
       previousCartItemCount = updatedCartItemCount;
     };

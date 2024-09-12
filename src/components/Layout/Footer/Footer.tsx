@@ -4,7 +4,6 @@ import React, { useState, useLayoutEffect } from "react";
 import { Layout } from "antd";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import Link from "next/link";
-import logo from "../../../../public/images/logowhite.png";
 import Image from "next/image";
 import { socialLinks, customerCare, pages } from "data/FooterData";
 import card6 from "../../../../public/images/payment-icons/Mastercard-Logo.png";
@@ -22,6 +21,10 @@ import { CategoriesType } from "types/interfaces";
 import PreFooter from "./PreFooter";
 import { FooterPaymentMethods, generateSlug, PaymentMethods } from "data/Data";
 import { useRouter } from "next/navigation";
+import PaymentMethod from "../PaymentMethod";
+
+
+
 
 const { Footer: AntFooter } = Layout;
 
@@ -86,6 +89,9 @@ const Footer: React.FC = () => {
 
 
 
+
+
+
         <div className="text-white px-0 ">
 
           <div className="lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row flex-wrap gap-y-8 gap-x-8 justify-between mt-10">
@@ -96,7 +102,7 @@ const Footer: React.FC = () => {
           </div>
 
 
-            <div className="flex-1 lg:pb-0 pb-3">
+            <div className="lg:pb-0 pb-3 max-w-75">
 
               <p className="2/3 text-slate-200">
                 In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.
@@ -117,11 +123,12 @@ const Footer: React.FC = () => {
                   </Link>
                 ))}
               </div>
+
             </div>
 
             <hr className="lg:hidden bg-primary mb-5" />
 
-            <div className="flex-1 lg:pb-0 pb-3 md:ml-10">
+            <div className=" lg:pb-0 pb-3 md:ml-10">
               <h3
                 className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between tracking-[.5rem]"
                 onClick={toggleCategories}
@@ -200,7 +207,7 @@ const Footer: React.FC = () => {
               </ul>
             </div>
 
-            <div className="flex-1 lg:pb-0 pb-3 md:ml-10">
+            <div className="lg:pb-0 pb-3 md:ml-10">
               <p className="text-17 font-semibold">Contact us</p>
 
 
@@ -224,29 +231,10 @@ const Footer: React.FC = () => {
 <br />
               </div>
 
-              <div className="grid grid-cols-3 gap-2 py-2 text-black dark:text-white w-fit">
-                {FooterPaymentMethods.map((item, index) => {
-                  return(
-             
-
-                    <Image
-                      src={item.imageUrl}
-                      alt="master"
-                      width={40}
-                      height={40}
-                      className="bg-white  h-6 px-1  object-contain shadow-lg rounded-md"
-                      key={index}
-                    />
-          
-
-    
-
-                  )
 
 
-})}
-              </div>
-
+<PaymentMethod/>
+         
               {/* <div className="flex items-center flex-wrap gap-2 py-2 lg:order-2 order-1 text-black dark:text-white">
                 {bottomImages.map((image, index) => (
                   <Image
@@ -262,6 +250,12 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </div>
+
+
+
+
+
+
 
       </div>
       <div className="bg-white  flex justify-center items-center">

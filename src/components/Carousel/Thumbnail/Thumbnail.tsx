@@ -115,11 +115,14 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                 </Swiper>
 
               </div>
-              {showArrow && (
+              {/* {showArrow && (
                 <div ref={nextRef} className='items-center justify-center hidden lg:flex'>
                   <PiArrowDownLight  className='object-contain cursor-pointer  w-[90.2px] h-[95px]' onClick={handleScrollDown}/>
                 </div>
-              )}
+              )} */}
+
+
+
             </div>
             <div className='w-full lg:w-9/12 relative '>
               <Swiper
@@ -158,15 +161,18 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                   </SwiperSlide>
                 ))}
               </Swiper>
-
+{/* 
               <div ref={prevRef} className='swiper-prev absolute left-[-30px] md:left-[-25px] top-1/2 transform -translate-y-1/2 z-10 cursor-pointer'>
 
                 <Image src='/images/arrows.png' width={51} height={55} alt='arrow' />
 
               </div>
+
               <div ref={nextRef} className='swiper-button absolute right-[-15px]  md:right-[-25px] top-1/2 transform -translate-y-1/2 z-10 cursor-pointer'>
                 <Image src='/images/arrows.png' width={51} height={55} className='rotate-180' alt='arrow' />
-              </div>
+              </div> */}
+
+
             </div>
           </div>
 
