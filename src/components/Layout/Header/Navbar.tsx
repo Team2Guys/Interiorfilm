@@ -83,12 +83,26 @@ const Navbar = () => {
 
   const handleCloseDrawer = () => setDrawerOpen(false);
 
-  const filteredProducts = Array.isArray(products)
-    ? products.filter((product) =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    : [];
+  const searchTermLower = searchTerm.toLowerCase();
 
+  const filteredProducts = Array.isArray(products) ? products.filter((product:PRODUCTS_TYPES) => {
+    return (
+      product.name.toLowerCase().includes(searchTermLower) ||
+      product.description && product.description.toLowerCase().includes(searchTermLower) ||
+      product.salePrice && product.salePrice.toString().toLowerCase().includes(searchTermLower) ||
+      product.purchasePrice &&  product.purchasePrice.toString().toLowerCase().includes(searchTermLower) ||
+      product.category && product.category.toString().toLowerCase().includes(searchTermLower) ||
+      product.discountPrice?.toString().toLowerCase().includes(searchTermLower) || 
+      product.colors && product.colors.some((color:any) => color.colorName.toLowerCase().includes(searchTermLower)) ||
+      product.modelDetails.some((model:any) => model.name.toLowerCase().includes(searchTermLower) || model.detail.toLowerCase().includes(searchTermLower)) ||
+      product.spacification && product.spacification.some((spec:any) => spec.specsDetails.toLowerCase().includes(searchTermLower)) ||
+      product.starRating?.toString().toLowerCase().includes(searchTermLower) ||  
+      product.reviews?.toLowerCase().includes(searchTermLower) || 
+      product.code.toLowerCase().includes(searchTermLower) ||
+      product.totalStockQuantity?.toString().toLowerCase().includes(searchTermLower) ||  
+      product.sizes && product.sizes.some((size:any) => size.sizesDetails.toLowerCase().includes(searchTermLower))
+    );
+  }) : [];
   const showModal = () => {
     setIsModalOpen(true);
   };

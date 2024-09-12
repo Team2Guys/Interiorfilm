@@ -209,10 +209,10 @@ const ProductPage = () => {
 
 
   useEffect(() => {
-    const clickHandler = ( event: MouseEvent) => {
-      const target = event.target as HTMLElement; 
-      let id=['ColorDropdown']
-    console.log(target.id, "target")
+    const clickHandler = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      let id = ['ColorDropdown']
+      console.log(target.id, "target")
       if (!id.includes(target.id)) {
         console.log(target.id)
         setShowColors(false);
@@ -246,26 +246,24 @@ const ProductPage = () => {
       />
       <div className="hidde md:grid grid-cols-3 mt-2 gap-6">
         {
-          productimage.map((array:{img:string}, index:number)=> (
-            <div className="w-full" key={index}> 
-            <Image className={`object-cover w-full ${index > 0 ? "hidden sm:block": ""}`} width={500} height={500} src={array.img} alt="product1"/> 
-          </div>
+          productimage.map((array: { img: string }, index: number) => (
+            <div className="w-full" key={index}>
+              <Image className={`object-cover w-full ${index > 0 ? "hidden sm:block" : ""}`} width={500} height={500} src={array.img} alt="product1" />
+            </div>
           ))
         }
       </div>
       <Container className="mt-20 md:overflow-hidden">
-        <div className="flex flex-wrap md:flex-nowrap justify-between  gap-3">
+        <div className="flex flex-wrap lg:flex-nowrap justify-between  gap-3">
           <div>
-            <p className="uppercase text-15 md:text-[24px] text-lightdark">
+            <p className="uppercase text-[24px] text-lightdark">
               Home
               <span className="capitalize text-black">/{activeLink?.name}</span>
             </p>
           </div>
-          <div className='flex flex-wrap md:flex-nowrap md:gap-4'>
+          <div className='flex flex-wrap lg:flex-nowrap justify-between  w-full md:w-auto sm:space-x-4 '>
 
-
-
-            <div className="flex flex-wrap md:flex-nowrap gap-2 items-center ">
+            <div className="flex flex-wrap md:flex-nowrap gap-2 items-center mt-2 ">
               <h1>Sort By: </h1>
               <Select
                 defaultValue="Price"
@@ -281,66 +279,58 @@ const ProductPage = () => {
             </div>
 
 
-            
-            <div className="flex flex-wrap md:flex-nowrap gap-2 items-center ">
-  <h1>Sort By: </h1>
-  <div className="w-32 md:w-40 h-10 flex items-center border relative" id="DropdownContainer">
-    <div
-      ref={trigger}   
-      className='w-full'
-    >
-      <div className="w-full px-3 flex justify-between items-center text-[#3A393C] cursor-pointer" 
-         onClick={(e) =>{e.stopPropagation(); setShowColors(!showColors)}}
-         >
-      <p className="cursor-pointer">Colors</p>
+            <div className="flex flex-wrap md:flex-nowrap gap-2 items-center mt-2 ">
+              <h1>Sort By: </h1>
+              <div className="w-32 md:w-40 h-10 flex items-center border relative" id="DropdownContainer">
+                <div
+                  ref={trigger}
+                  className='w-full'
+                >
+                  <div className="w-full px-3 flex justify-between items-center text-[#3A393C] cursor-pointer"
+                    onClick={(e) => { e.stopPropagation(); setShowColors(!showColors) }}
+                  >
+                    <p className="cursor-pointer">Colors</p>
+                    <svg
+                      width="15"
+                      height="8"
+                      viewBox="0 0 15 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M1 1.44421L7.15424 7.00429L13.7221 1.00497" stroke="#3A393C" />
+                    </svg>
 
-      <svg
-        width="15"
-        height="8"
-        viewBox="0 0 15 8"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M1 1.44421L7.15424 7.00429L13.7221 1.00497" stroke="#3A393C" />
-      </svg>
+                  </div>
 
-      </div>
+                  {showColors ? (
+                    <div
+                      ref={dropdown}
+                      className="border shadow-sm flex flex-wrap gap-3 m-auto p-3 right-0 top-10 border-gray rounded-sm absolute w-full z-10 bg-white"
+                      id="ColorDropdown"
+                    >
+                      {!(availableColors.length > 0)
+                        ? "Colors not found"
+                        : availableColors.map((item) => (
+                          <p
+                            id="ColorDropdown"
 
+                            className={`w-5 h-5 border ${colorName === item.label ? "border-primary" : "border-gray"
+                              } cursor-pointer`}
+                            onClick={() => handleColorChange(item.label)}
+                            style={{ backgroundColor: `#${item.value}` }}
+                            key={item.label}
+                          />
+                        ))}
+                    </div>
+                  ) : null}
+                </div>
 
-
-      {showColors ? (
-        <div
-          ref={dropdown}
-          className="border shadow-sm flex flex-wrap gap-3 m-auto p-3 right-0 top-10 border-gray rounded-sm absolute w-full z-10 bg-white"
-          id="ColorDropdown"
-        >
-          {!(availableColors.length > 0)
-            ? "Colors not found"
-            : availableColors.map((item) => (
-                <p
-          id="ColorDropdown"
-                
-                  className={`w-5 h-5 border ${
-                    colorName === item.label ? "border-primary" : "border-gray"
-                  } cursor-pointer`}
-                  onClick={() => handleColorChange(item.label)}
-                  style={{ backgroundColor: `#${item.value}` }}
-                  key={item.label} 
-                />
-              ))}
-        </div>
-      ) : null}
-    </div>
+              </div>
+            </div>
 
 
 
-
-  </div>
-</div>
-
-          
-
-            <div className="relative  flex items-center border border-secondary" >
+            <div className="relative  flex items-center border border-secondary w-full sm:w-auto mt-2" >
               <input
                 className="px-2 py-1 rounded-none outline-none  w-32 md:w-[90%] border-sky-900"
                 type="search"
@@ -350,11 +340,12 @@ const ProductPage = () => {
               />
               <IoIosSearch className="inline-block absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             </div>
+
           </div>
         </div>
         <div className="w-full">
           <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-10">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 gap-2 mt-10">
               {loading ? (
                 Array.from({ length: 9 }).map((_, index) => (
                   <div key={index} className='gap-10 flex flex-col mt-3'>

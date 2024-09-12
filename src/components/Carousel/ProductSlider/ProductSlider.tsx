@@ -105,7 +105,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
                 slidesPerView: 2.2,
                 spaceBetween: 20,
               },
-              768: {
+              800: {
                 slidesPerView: 2.6,
                 spaceBetween: 10,
               },
@@ -113,7 +113,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
                 slidesPerView: 3.2,
                 spaceBetween: 20,
               },
-              1220: {
+              1280: {
                 slidesPerView: 4,
                 spaceBetween: 20,
               },

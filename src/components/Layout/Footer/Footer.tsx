@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
         <div className="flex flex-wrap md:flex-nowrap justify-between border-b items-center border-slate-500 pb-10 ">
           
           <div className=" hidden  md:w-4/12 md:flex  flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
-            <Image width={250} height={250} src={logo} alt="Interior Film" />
+            <Image width={500} height={500} className="w-[320px] h-auto" src="/images/logowhite.png" alt="Interior Film" />
           </div>
 
           <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start md:justify-end gap-2 w-full px-3 md:w-8/12 text-white mt-4 md:mt-0">
@@ -91,8 +91,8 @@ const Footer: React.FC = () => {
           <div className="lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row flex-wrap gap-y-8 gap-x-8 justify-between mt-10">
 
             
-        <div className=" md:w-4/12 md:hidden flex  flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
-            <Image width={250} height={250} src={logo} alt="Interior Film" />
+        <div className=" md:w-4/12 md:hidden flex flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
+            <Image width={250} height={250} src="/images/logowhite.png" alt="Interior Film" />
           </div>
 
 
@@ -126,7 +126,7 @@ const Footer: React.FC = () => {
                 className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between tracking-[.5rem]"
                 onClick={toggleCategories}
               >
-                All Categories
+            Collections
                 <span className="ml-2 md:hidden ">
                   {isCategoriesOpen ? <FaAngleUp /> : <FaAngleDown />}
                 </span>
@@ -144,7 +144,7 @@ const Footer: React.FC = () => {
                           .map((categoryItem, index) => (
                             <li key={index}>
                               <div onClick={() => (handleButtonClick(categoryItem.name))} className="hover:text-primary link-footer text-slate-400 cursor-pointer">
-                                {categoryItem.name}
+                                {categoryItem.name.replace("Series","")}
                               </div>
                             </li>
                           ))}
@@ -221,20 +221,30 @@ const Footer: React.FC = () => {
                     +971 4 252 2025
                   </Link>
                 </p>
-
+<br />
               </div>
 
-              <div className="flex items-center flex-wrap gap-2 py-2 lg:order-2 order-1 text-black dark:text-white">
-                {FooterPaymentMethods.map((item, index) => (
-                  <Image
-                    src={item.imageUrl}
-                    alt="master"
-                    width={40}
-                    height={40}
-                    className="bg-white  h-6 px-1  object-contain shadow-lg rounded-md"
-                    key={index}
-                  />
-                ))}
+              <div className="grid grid-cols-3 gap-2 py-2 text-black dark:text-white w-fit">
+                {FooterPaymentMethods.map((item, index) => {
+                  return(
+             
+
+                    <Image
+                      src={item.imageUrl}
+                      alt="master"
+                      width={40}
+                      height={40}
+                      className="bg-white  h-6 px-1  object-contain shadow-lg rounded-md"
+                      key={index}
+                    />
+          
+
+    
+
+                  )
+
+
+})}
               </div>
 
               {/* <div className="flex items-center flex-wrap gap-2 py-2 lg:order-2 order-1 text-black dark:text-white">

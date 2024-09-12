@@ -19,6 +19,13 @@ import icon7 from './../../public/images/enviroment-icon/icon7.png'
 import icon8 from './../../public/images/enviroment-icon/icon8.png'
 import icon9 from './../../public/images/enviroment-icon/icon9.png'
 
+import { SlDiamond } from 'react-icons/sl'
+import { CgBulb } from 'react-icons/cg'
+import { GiPayMoney } from 'react-icons/gi'
+import { RiCustomerService2Line } from 'react-icons/ri'
+
+
+
 import { StaticImageData } from 'next/image';
 
 export const validateForm = (formData: { fullName: string; email: string; password: string; confirmpassword: string }) => {
@@ -493,13 +500,12 @@ export const PaymentMethods: ITabbyPayList[] = [
   { id: 5, imageUrl: amexLogo },
 ];
 export const FooterPaymentMethods: ITabbyPayList[] = [
-  { id: 1, imageUrl: masterCard },
-  { id: 2, imageUrl: applypayCard },
-  { id: 4, imageUrl: viseCard },
-  { id: 3, imageUrl: gPayCard },
-  { id: 5, imageUrl: amexLogo },
-  { id: 6, imageUrl: tabbyLogo },
-  { id: 7, imageUrl: tamaraLogo },
+  { id: 1, imageUrl: viseCard },
+  { id: 2, imageUrl: masterCard },
+  { id: 3, imageUrl: applypayCard },
+  { id: 4, imageUrl: gPayCard },
+  { id: 5, imageUrl: tabbyLogo },
+  { id: 6, imageUrl: tamaraLogo },
 ];
 
 
@@ -546,3 +552,6 @@ export const CountryCode = [
   { title: "+33", code: "+33" },
   // Add more country codes as needed
 ];
+
+
+

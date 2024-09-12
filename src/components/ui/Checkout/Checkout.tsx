@@ -12,6 +12,7 @@ import CheckoutInput from "./checkout-input";
 import { CountryCode } from "data/Data";
 import { FiTag } from "react-icons/fi";
 import Overlay from 'components/widgets/Overlay/Overlay'
+import axios from "axios";
 
 
 const CheckOut: React.FC = () => {
@@ -26,22 +27,22 @@ const CheckOut: React.FC = () => {
     setIsChecked(e.target.checked);
   };
   const [billingData, setBillingData] = useState({
-    name: "",
+    first_name: "",
+    last_name:'',
     email: "",
     phone_number: "",
-    state: "Dubai",
-    city: "",
-    country: "United Arab Emirates",
+    city: "Islamabad",
+    country: "Pakistan",
     address: "",
-    additionalAddressFields: [] as { id: string; address: string }[],
-    orderNote: "",
     productItems: [] as PRODUCTS_TYPES[],
     subtotalAmount: 0,
     totalAmount: 0,
+    phone_code:"+971"
   });
   const [showOrderNote, setShowOrderNote] = useState(false);
   const [errors, setErrors] = useState({
-    name: "",
+    first_name: "",
+    last_name:"",
     email: "",
     phone_number: "",
     address: "",
@@ -66,35 +67,43 @@ const CheckOut: React.FC = () => {
   ];
 
 
-  const formatPhoneNumber = (value: string) => {
 
-    const numbers = value.replace(/\D/g, "");
+const formatPhoneNumber = (value: string) => {
 
-    if (numbers.length <= 1) return numbers; // 1
-    if (numbers.length <= 4) return `${numbers.slice(0, 1)}-${numbers.slice(1)}`; 
-    if (numbers.length <= 7) return `${numbers.slice(0, 1)}-${numbers.slice(1, 4)}-${numbers.slice(4)}`; 
-  
+  const numbers = value.replace(/\D/g, "");
 
-    return `${numbers.slice(0, 1)}-${numbers.slice(1, 4)}-${numbers.slice(4, 8)}`;
-  };
-  
-  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-    const lastChar = value[value.length - 1];
-  
 
-    if (lastChar === "-") {
-      value = value.slice(0, -1);
-    }
-  
-    value = value.slice(0, 9);
-  
-    setBillingData((prevData) => ({
-      ...prevData,
-      phone_number: formatPhoneNumber(value),
-    }));
-  };
-  
+  if (numbers.length <= 1) return numbers;
+
+
+  if (numbers.length <= 4) return `${numbers.slice(0, 1)}-${numbers.slice(1)}`;
+
+
+  if (numbers.length <= 8) return `${numbers.slice(0, 1)}-${numbers.slice(1, 4)}-${numbers.slice(4)}`;
+
+
+  return `${numbers.slice(0, 1)}-${numbers.slice(1, 4)}-${numbers.slice(4, 8)}`;
+};
+
+
+const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  let value = e.target.value;
+
+
+  const lastChar = value[value.length - 1];
+  if (lastChar === "-") {
+    value = value.slice(0, -1);
+  }
+
+  value = value.slice(0, 8);
+
+
+  setBillingData((prevData) => ({
+    ...prevData,
+    phone_number: formatPhoneNumber(value),
+  }));
+};
+
   
 
   useEffect(() => {
@@ -118,7 +127,7 @@ const CheckOut: React.FC = () => {
   useEffect(() => {
     const calculateCharges = () => {
       const matchingItem = AddresAAray.find(
-        (item) => item.state.toLowerCase() === billingData.state.toLowerCase()
+        (item) => item.state.toLowerCase() === billingData.city.toLowerCase()
       );
 
       const charges = matchingItem
@@ -132,7 +141,7 @@ const CheckOut: React.FC = () => {
     };
 
     calculateCharges();
-  }, [billingData.state, subtotal, AddresAAray]);
+  }, [billingData.city, subtotal, AddresAAray]);
 
   const calculateTotals = (items: any) => {
     const sub = items.reduce((acc: any, item: any) => {
@@ -151,50 +160,44 @@ const CheckOut: React.FC = () => {
   };
 
   const handleSelectChange = (value: string) => {
-    setBillingData({ ...billingData, state: value });
+    setBillingData({ ...billingData, city: value });
   };
 
-  const addAddressField = (value: any) => {
-    setBillingData({
-      ...billingData,
-      additionalAddressFields: [
-        ...billingData.additionalAddressFields,
-        { id: Date.now().toString(), address: "" },
-      ],
-    });
-  };
+  // const addAddressField = (value: any) => {
+  //   setBillingData({
+  //     ...billingData,additionalAddressFields: [
+  //       ...billingData.additionalAddressFields,
+  //       { id: Date.now().toString(), address: "" },
+  //     ],
+  //   });
+  // };
 
-  const handleAddressFieldChange = (id: string, value: string) => {
-    setBillingData({
-      ...billingData,
-      additionalAddressFields: billingData.additionalAddressFields.map(
-        (field) => (field.id === id ? { ...field, address: value } : field)
-      ),
-    });
-  };
+  // const handleAddressFieldChange = (id: string, value: string) => {
+  //   setBillingData({
+  //     ...billingData,
+  //     additionalAddressFields: billingData.additionalAddressFields.map(
+  //       (field) => (field.id === id ? { ...field, address: value } : field)
+  //     ),
+  //   });
+  // };
 
-  const handleAddressFieldDelete = (id: string) => {
-    setBillingData({
-      ...billingData,
-      additionalAddressFields: billingData.additionalAddressFields.filter(
-        (field) => field.id !== id
-      ),
-    });
-  };
+  // const handleAddressFieldDelete = (id: string) => {
+  //   setBillingData({
+  //     ...billingData,
+  //     additionalAddressFields: billingData.additionalAddressFields.filter(
+  //       (field) => field.id !== id
+  //     ),
+  //   });
+  // };
 
-  const handleOrderNoteChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setBillingData({
-      ...billingData,
-      orderNote: e.target.value,
-    });
-  };
+
 
   const validateFields = () => {
     let isValid = true;
-    const newErrors = { name: "", email: "", phone_number: "", address: "" };
+    const newErrors = { first_name: "", email: "", phone_number: "", address: "", last_name:"" };
 
-    if (!billingData.name || /\d/.test(billingData.name)) {
-      newErrors.name = "Invalid name. No numbers allowed.";
+    if (!billingData.first_name || /\d/.test(billingData.first_name)) {
+      newErrors.first_name = "Invalid name. No numbers allowed.";
       isValid = false;
     }
     if (!billingData.address) {
@@ -205,24 +208,58 @@ const CheckOut: React.FC = () => {
       newErrors.email = "Invalid email address.";
       isValid = false;
     }
-    if (!billingData.phone_number || !/^\d+$/.test(billingData.phone_number)) {
-      newErrors.phone_number =
-        "Invalid phone number. Only numbers are allowed.";
-      isValid = false;
-    }
-
+  
+    // console.log(billingData.phone_number)
+    // if (!billingData.phone_number || !/^\d{1}-\d{3}-\d{4}$/.test(billingData.phone_number)) {
+    //   newErrors.phone_number = "Invalid phone number. Format should be 1-XXX-XXXX.";
+    //   isValid = false;
+    // }
     setErrors(newErrors);
     return isValid;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     if (!validateFields()) {
       return;
     }
-    console.log("Shipping Data:", billingData);
+const {phone_number:newPhone,phone_code,email,address,productItems,city,  ...extractedData} = billingData
+let phone_number= phone_code.split('+')[1]+newPhone.split('-').join("")
+
+let date = Date.now();
+
+    const authResponse = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/authenticate`);
+    const token = authResponse.data.token;
+    console.log(token, "token")
+
+
+    const orderResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/createOrder`,{ token, amount: billingData.totalAmount });
+    const orderId = orderResponse.data.orderId;
+
+    console.log(orderId, "orderId")
+
+
+    const paymentKeyResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/recordSale`, {token,orderId,...extractedData,
+      date,shipmentFee,phone_number:"923184036661",email,address,products:productItems,state:city, city:city, postal_code: '44000', // Ensure valid postal code
+      building: 'Building 12',
+      street: 'Main Boulevard',
+      floor: '2', // Specify a valid floor number
+      apartment: '5B', // Optional, but good to include for complete data
+      shipping_method: 'Courier', },
+    );
+
+    console.log(paymentKeyResponse, "paymentKeyResponse")
+
+    const paymentKey = paymentKeyResponse.data.paymentKey;
+
+    window.location.href = `${process.env.NEXT_PUBLIC_PAYMOD_BASE_URL}/iframes/${process.env.NEXT_PUBLIC_PAYMOB_IFRAME_ID}?payment_token=${paymentKey}`;
+
+
   };
   const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
+    setBillingData((prevData) => ({
+      ...prevData,
+      phone_code:value,
+    }));
   };
 
   return (
@@ -239,21 +276,21 @@ const CheckOut: React.FC = () => {
               <div className="col-span-12 md:col-span-6">
                 <div className="flex flex-col text-lightdark">
                   <CheckoutInput
-                    label="Full Name"
+                    label="First Name"
                     type="text"
                     placeholder="e.g. John"
                     name="name"
                     id="checkoutFullName"
-                    value={billingData.name}
+                    value={billingData.first_name}
                     onChange={(e) =>
                       setBillingData({
                         ...billingData,
-                        name: e.target.value,
+                        first_name: e.target.value,
                       })
                     }
                   />
-                  {errors.name && (
-                    <p className="text-red text-sm">{errors.name}</p>
+                  {errors.first_name && (
+                    <p className="text-red text-sm">{errors.first_name}</p>
                   )}
                 </div>
               </div>
@@ -262,18 +299,19 @@ const CheckOut: React.FC = () => {
                   <CheckoutInput
                     label="Last name"
                     type="text"
-                    name="name"
+                    name="last_name"
                     id="checkoutFullName"
-                    value={billingData.name}
+                    placeholder="e.g.Doe"
+                    value={billingData.last_name}
                     onChange={(e) =>
                       setBillingData({
                         ...billingData,
-                        name: e.target.value,
+                        last_name: e.target.value,
                       })
                     }
                   />
-                  {errors.name && (
-                    <p className="text-red text-sm">{errors.name}</p>
+                  {errors.last_name && (
+                    <p className="text-red text-sm">{errors.last_name}</p>
                   )}
                 </div>
               </div>
@@ -308,7 +346,7 @@ const CheckOut: React.FC = () => {
                     showSearch
                     className="w-full h-11 border outline-none shipment text-20 mt-5 border-[#D2D2D2]"
                     placeholder="Select your state"
-                    defaultValue={"+971"}
+                    defaultValue="+971"
                     onChange={handleChange}
                   >
                     {CountryCode.map((option, index) => (
@@ -344,7 +382,7 @@ const CheckOut: React.FC = () => {
                     showSearch
                     className="w-full h-11 border outline-none shipment text-20 mt-5 border-[#D2D2D2]"
                     defaultValue="Select your state"
-                    value={billingData.state}
+                    value={billingData.city}
                     onChange={handleSelectChange}
                   >
                     {selectoption.map((option, index) => (
@@ -355,7 +393,7 @@ const CheckOut: React.FC = () => {
                   </Select>
                 </div>
               </div>
-              <div className="col-span-12">
+              {/* <div className="col-span-12">
                 <div className="flex flex-col text-lightdark">
                   <label htmlFor="checkoutstreetAddress">
                     Area <span className="text-red">*</span>
@@ -378,7 +416,8 @@ const CheckOut: React.FC = () => {
                     <p className="text-red text-sm">{errors.address}</p>
                   )}
                 </div>
-              </div>
+              </div> */}
+
               <div className="col-span-12">
                 <div className="flex flex-col text-lightdark">
                   <label htmlFor="checkoutstreetAddress">
@@ -403,7 +442,8 @@ const CheckOut: React.FC = () => {
                   )}
                 </div>
               </div>
-              <div className="col-span-12">
+
+              {/* <div className="col-span-12">
                 <div className="flex flex-col text-lightdark">
                   <label htmlFor="checkoutstreetAddress">
                     Apartment#/Hotel Room/Villa (optional){" "}
@@ -427,7 +467,7 @@ const CheckOut: React.FC = () => {
                     <p className="text-red text-sm">{errors.address}</p>
                   )}
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="w-full md:w-5/12">

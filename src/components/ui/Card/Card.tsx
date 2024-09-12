@@ -245,24 +245,24 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
-      <div className={`relative group mb-5 ${cardClass}`} key={index}>
-        <div className={`space-y-3 absolute top-6 right-6 translate-x-20 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 overflow-hidden transition ease-in-out duration-400 hidden md:block ${quickClass}`}>
-          <button onClick={() => handleAddToCart(product)} className="flex justify-center items-center z-10">
-            <LuShoppingCart className="p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white" size={40} />
+      <div className={`relative group mb-5 z-20 ${cardClass}`} key={index}>
+        <div className={`space-y-3 absolute top-6 right-6 opacity-0 group-hover:opacity-100  overflow-hidden transition ease-in-out duration-400 hidden md:block ${quickClass}`}>
+          <button onClick={() => handleAddToCart(product)} className="flex justify-center items-center z-20">
+            <LuShoppingCart className=" p-[0.50rem] lg:p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white text-[30px] lg:text-[40px]"  />
           </button>
-          <button onClick={() => handleAddToWishlist(product)} className="flex justify-center items-center z-10">
-            <GoHeart className="p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white" size={40} />
+          <button onClick={() => handleAddToWishlist(product)} className="flex justify-center items-center z-20">
+            <GoHeart className=" p-[0.50rem] lg:p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white text-[30px] lg:text-[40px]"  />
           </button>
-          <button onClick={showModal} className="flex justify-center items-center z-10">
-            <FiZoomIn className="p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white" size={40} />
+          <button onClick={showModal} className="flex justify-center items-center z-20">
+            <FiZoomIn className=" p-[0.50rem] lg:p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white text-[30px] lg:text-[40px]"  />
           </button>
         </div>
 
         <div className="cursor-pointer  transition-all m-1 " onClick={() => router.push(`/product/${generateSlug(product.name)}`)}>
-          <div className="text-center">
-            <div className='absolute top-80 hidden mk translate-y-20 z-10 w-full md:flex gap-5 justify-center opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition ease-in-out duration-400'>
-              <button className='bg-white md:w-[114.45px] md:h-[36.29px] text-11 z-10  py-1' onClick={(e) => { e.stopPropagation(); handleAddToCart(product); router.push('/checkout') }}>Order Now</button>
-              <button className='bg-black z-10 md:w-[114.45px] md:h-[36.29px] text-11 text-white  py-1' onClick={(e) => {
+          <div className="text-center ">
+            <div className='absolute bottom-32 hidden   z-20 w-full md:flex gap-5 justify-center opacity-0 group-hover:opacity-100 transition ease-in-out duration-400'>
+              <button className='bg-white w-[90px] h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-11 z-10  py-1' onClick={(e) => { e.stopPropagation(); handleAddToCart(product); router.push('/checkout') }}>Order Now</button>
+              <button className='bg-black z-10 w-[90px] l:h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-11 text-white  py-1' onClick={(e) => {
                 e.stopPropagation();
                 setproductDetails(product);
                 setProductDetailModel(true)
@@ -272,13 +272,15 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
               <Image className="bg-contain  w-full " width={500} height={500} src={product.posterImageUrl.imageUrl} alt="Image" />
             )}
           </div>
+        </div>
           <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
             <h1 className="lg:text-lg text-md text-center text-dark  font-semibold">
               {product.name} {product.code}
             </h1>
             <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
+
               <p className="text-black font-bold text-18 flex gap-1">
-                AED <span className={` text-20 ${product.discountPrice ? "text-red" : "text-black"}`}>{product.discountPrice ? product.discountPrice : product.salePrice}</span>
+                AED <span className={` text-20 ${product.discountPrice ? "text-red" : "text-black"}`}>{product.salePrice}</span>
               </p>
 
 
@@ -295,7 +297,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
               </div>
             )}
           </div>
-        </div>
         <Modal title={<h1 className="lg:text-xl text-sm text-dark group-hover:text-white font-bold">
           Code : <span>{product.name}</span>
         </h1>} open={isModalOpen} width={700} onOk={handleOk} onCancel={handleCancel} footer={""}>

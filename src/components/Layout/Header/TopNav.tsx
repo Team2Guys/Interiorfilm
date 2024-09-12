@@ -37,7 +37,7 @@ const TopNav = () => {
       </div>
       <div>
         <p className="uppercase text-white text-[10px] sm:text-xs md:text-14 whitespace-normal md:whitespace-nowrap ">
-          Free Shipping on over AED 250 EVERYWHERE (WITHIN DUBAI CITY LIMITS.)
+        Free shipping throughout mainland UAE on all orders over AED 250
         </p>
       </div>
       <div className="flex items-center justify-center lg:justify-end gap-3 ">
