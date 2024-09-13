@@ -124,6 +124,8 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
 
 
             </div>
+
+
             <div className='w-full lg:w-9/12 relative '>
               <Swiper
                 style={{
@@ -140,9 +142,9 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                   nextEl: nextRef.current,
                 }}
                 onBeforeInit={(swiper:any) => {
-                  if (swiper.params.navigation) {//+
-                    swiper.params.navigation.prevEl = prevRef.current;//+
-                    swiper.params.navigation.nextEl = nextRef.current;//+
+                  if (swiper.params.navigation) {
+                    swiper.params.navigation.prevEl = prevRef.current;
+                    swiper.params.navigation.nextEl = nextRef.current;  
                   }
                 }}
               >
@@ -155,7 +157,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                       onMouseMove={handleMouseMove}
                       onMouseLeave={handleMouseLeave}
                     >
-                      <Image className='bg-contain w-full h-full lg:h-[611px]  xl:h-[811px]  ' src={array.imageUrl} width={800} height={800} alt='Image' />
+                      <Image className='bg-contain w-full h-full lg:h-[611px] xl:h-[711px] ' src={array.imageUrl} width={800} height={800} alt='Image' />
                     </div>
 
                   </SwiperSlide>
@@ -174,6 +176,8 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
 
 
             </div>
+
+
           </div>
 
           <div className="  absolute right-0 top-10 hidden lg:block">
@@ -193,6 +197,8 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
           </div>
         </div>
       </div>
+
+
       <div className="mt-13 hidden lg:block">
         <Accordion detail={detail} />
         <hr className=" h-1 border-stone-200" />
