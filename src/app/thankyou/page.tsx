@@ -11,7 +11,7 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react';
 
 
-export interface PaymentQueryParams {
+interface PaymentQueryParams {
   id: string | null;
   amount_cents: string | null;
   success: string | null;
@@ -136,6 +136,8 @@ const Thankyou = () => {
 
 </>
   )
+
+  
 }
 
 export default Thankyou;
