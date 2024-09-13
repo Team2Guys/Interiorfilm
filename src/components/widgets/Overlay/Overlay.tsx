@@ -1,4 +1,4 @@
-import { Breadcrumb } from "antd";
+"use client"
 
 import Image from "next/image";
 import Link from "next/link";
