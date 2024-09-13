@@ -28,8 +28,8 @@ interface Offer {
                     <div className='w-10 h-10 md:w-16 md:h-16 rounded-full bg-white group-hover:bg-primary transition duration-500 ease-in-out flex justify-center items-center'>
                         {array.icon}
                     </div>
-                    <h1 className='font-medium text-12 sm:text-14 text-center text-heading'>{array.title}</h1>
-                    <p className='text-center text-[10px] md:text-base text-para'>{array.detail}</p>
+                    <h1 className='font-semibold md:text-[20px] font-futura text-center text-heading'>{array.title}</h1>
+                    <p className='text-center text-[30px]  md:text-base text-para'>{array.detail}</p>
                  </div>
                  </div>
                  
