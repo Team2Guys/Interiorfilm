@@ -138,7 +138,7 @@ const Footer: React.FC = () => {
                   {isCategoriesOpen ? <FaAngleUp /> : <FaAngleDown />}
                 </span>
               </h3>
-              <div className="flex gap-4">
+              <div className="flex gap-16">
                 {category?.length > 0 &&
                   Array.from({ length: Math.ceil(category.length / 4) }).map(
                     (_, chunkIndex) => (

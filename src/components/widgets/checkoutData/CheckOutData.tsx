@@ -91,7 +91,7 @@ const CheckoutData: React.FC<TableProps> = ({
       <div className="flex justify-between items-center px-2 py-6 lg:px-10">
         <p className="text-16 md:text-[24px]">Order Summary</p>
         <h2 className="text-16 font-medium  text-end mb-4">
-          *total <span className="text-primary">{totalCount}</span> {totalCount <= 0 ? "Item" : "Items"}
+          *total <span className="text-primary">{totalCount}</span>{totalCount <= 1 ? "Item" : "Items"}
         </h2>
       </div>
       <div className="space-y-4 max-h-100 overflow-y-scroll table-scrollbar px-2 lg:px-8 mx-2">

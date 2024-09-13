@@ -22,31 +22,45 @@ const contact_us_Validation = Yup.object().shape({
       .required("Name is Required"),
     comment: Yup.string().required("Comment is Required"),
     user_email: Yup.string().email("Invalid email").required("Email is Required"),
-    user_phone: Yup.string()
-      .matches(
-        /^\+\d{3}-\d{2}-\d{7}$/,
-        'Phone Number must be in the format "+971-41-1234567"'
-      )
-      .required("Phone Number is Required"),
+    user_phone: Yup.string()    .required("Phone Number is Required"),
+
+
+
   });
   
-  // Function to format phone number
-  const formatPhoneNumber = (value:any) => {
-    const numbers = value.replace(/\D/g, '');
-    if (numbers.length <= 3) return `+${numbers}`;
-    if (numbers.length <= 5) return `+${numbers.slice(0, 3)}-${numbers.slice(3)}`;
-    return `+${numbers.slice(0, 3)}-${numbers.slice(3, 5)}-${numbers.slice(5, 12)}`;
+  const formatPhoneNumber = (value: any) => {
+    // Remove all characters except digits and "+"
+    const numbers = value.replace(/[^+\d]/g, "");
+  
+    // Handle UAE-specific formatting when starting with "+971"
+    if (numbers.startsWith("+971")) {
+      if (numbers.length <= 5) return `${numbers}`; // "+971"
+      if (numbers.length <= 7) return `${numbers.slice(0, 4)}-${numbers.slice(4)}`; // "+971-XX"
+      return `${numbers.slice(0, 4)}-${numbers.slice(4, 6)}-${numbers.slice(6, 13)}`; // "+971-XX-XXXXXXX"
+    } 
+    // Handle numbers starting with "0" for UAE (assume "0971")
+    else if (numbers.startsWith("0")) {
+      if (numbers.length <= 3) return `${numbers}`;
+      if (numbers.length <= 6) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`; // "0971-XX"
+      return `${numbers.slice(0, 3)}-${numbers.slice(3, 5)}-${numbers.slice(5, 12)}`; // "0971-XX-XXXXXXX"
+    } 
+  
+    return numbers; // If no valid prefix, return the input as-is.
   };
   
-  // Function to handle phone number change
-  const handlePhoneNumberChange = (e:any, setFieldValue:any) => {
+  const handlePhoneNumberChange = (e: any, setFieldValue: any) => {
     let value = e.target.value;
-    value = value.replace(/[^+\d]/g, "").slice(0, 13);
-    if (!value.startsWith("+")) {
-      value = "+" + value.replace(/^\+/, "");
-    }
+  
+    // Allow only digits and '+' at the start
+    value = value.replace(/[^+\d]/g, "");
+  
+    // Limit the input to 14 characters (for full UAE number)
+    value = value.slice(0, 14);
+  
+    // Set the formatted phone number
     setFieldValue("user_phone", formatPhoneNumber(value));
   };
+  
 
 const Contact = () => {
   const [loading, setloading] = useState<boolean>(false);
@@ -145,21 +159,7 @@ const Contact = () => {
                 </div>
               )}
 
-              <LabelInput
-                label="Email"
-                placeholder="Enter Email"
-                type="email"
-                id="user_email"
-                name="user_email"
-                onChange={formik.handleChange}
-                value={formik.values.user_email}
-              />
-              {formik.errors.user_email && formik.touched.user_email && (
-                <div className="text-primary pb-4">
-                  {formik.errors.user_email}
-                </div>
-              )}
-
+          
             <LabelInput
                 label="Phone Number"
                 placeholder="+971-XX-XXXXXXX"
@@ -175,6 +175,22 @@ const Contact = () => {
               {formik.errors.user_phone && formik.touched.user_phone && (
                 <div className="text-primary pb-4">
                   {formik.errors.user_phone}
+                </div>
+              )}
+
+
+<LabelInput
+                label="Email"
+                placeholder="Enter Email"
+                type="email"
+                id="user_email"
+                name="user_email"
+                onChange={formik.handleChange}
+                value={formik.values.user_email}
+              />
+              {formik.errors.user_email && formik.touched.user_email && (
+                <div className="text-primary pb-4">
+                  {formik.errors.user_email}
                 </div>
               )}
 

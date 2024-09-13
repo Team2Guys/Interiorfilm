@@ -217,7 +217,7 @@ const Table: React.FC<TableProps> = ({
       <div className=" border border-gray py-3">
         <div className="text-end p-2">
           <p className="text-16">
-            *total <span className="text-primary">{totalItems}</span> Items
+            *total <span className="text-primary">{totalItems}</span> {totalItems <= 1 ? "Item" : "Items"}
           </p>
         </div>
         <div className=" hidden lg:block   ">

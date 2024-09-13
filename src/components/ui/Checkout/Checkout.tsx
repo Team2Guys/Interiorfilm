@@ -375,7 +375,7 @@ let date = Date.now();
               <div className="col-span-7 md:col-span-9">
                 <div className="flex flex-col">
                   <CheckoutInput
-                    label="Phone Number*"
+                    label="Phone Number"
                     type="tel"
         
                     name="number"
