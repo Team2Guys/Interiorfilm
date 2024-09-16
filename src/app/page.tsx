@@ -10,6 +10,8 @@ import { SlDiamond } from 'react-icons/sl'
 import { CgBulb } from 'react-icons/cg'
 import { GiPayMoney } from 'react-icons/gi'
 import { RiCustomerService2Line } from 'react-icons/ri'
+import PreFooter from "components/Layout/Footer/PreFooter";
+import HomeAccordian from "components/widgets/HomeAccordian";
 
 const offers = [
   { icon:<SlDiamond className='text-primary group-hover:text-white text-23 md:text-[40px]'  /> ,title: 'Savings to your pocket', detail: 'We cut out the middle man, passing the savings on to you.' },
@@ -30,6 +32,8 @@ export default function Home() {
       <InfoTabs/>
       <CategorySlider/>
       <InteriorVideo/>
+<HomeAccordian/>
+      <PreFooter />
       <SearchProduct/>
       <HomeFeature/>
       <Offer Offers={offers}/>

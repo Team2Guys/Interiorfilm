@@ -30,7 +30,7 @@ const data = [
 
 
 const Overlay: React.FC<OverlayProps> = ({ title, bodyText }) => {
-  let overLay = ['cart', "shop"]
+  let overLay = ['cart', "shop","faqs"]
   let uiFlag = overLay.includes(title.toLowerCase());
   const router = useRouter()
 
@@ -89,22 +89,13 @@ const Overlay: React.FC<OverlayProps> = ({ title, bodyText }) => {
   title !== "show_details" ?
   
   <div className="flex justify-center space-x-2 text-slate-400">
-  <Link href="/" className="hover:text-black">
+  <Link href="/">
     Home
   </Link>
   <span>&gt;</span>
   <span className="text-slate-500">{title}</span>
 </div> : ''}
 
-      {/* <Breadcrumb
-        className="flex justify-center"
-        items={[
-          {
-            title: `Home/${title}`,
-            href: `/`,
-          },
-        ]}
-      /> */}
     </div>
   );
 };

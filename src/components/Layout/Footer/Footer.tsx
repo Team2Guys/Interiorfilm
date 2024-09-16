@@ -20,13 +20,11 @@ import axios from "axios";
 import { CategoriesType } from "types/interfaces";
 import PreFooter from "./PreFooter";
 import { FooterPaymentMethods, generateSlug, PaymentMethods } from "data/Data";
-import { useRouter } from "next/navigation";
+import { usePathname , useRouter } from "next/navigation";
 import PaymentMethod from "../PaymentMethod";
 
 
 
-
-const { Footer: AntFooter } = Layout;
 
 const Footer: React.FC = () => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(true);
@@ -35,6 +33,8 @@ const Footer: React.FC = () => {
   const [category, setCategory] = useState<CategoriesType[]>([]);
   const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
   const toggleCustomerCare = () => setIsCustomerCareOpen(!isCustomerCareOpen);
+
+  const pathname = usePathname()
   const togglePages = () => setIsPagesOpen(!isPagesOpen);
   const bottomImages = [card1, card2, card3, card4, card5, card6, card7];
   const CategoryHandler = async () => {
@@ -62,8 +62,10 @@ const Footer: React.FC = () => {
   return (
     <>
 
-      <PreFooter />
-      <div className="bg-secondary text-white pt-10  pb-10 md:px-30">
+     {pathname =='/' ? null : <PreFooter /> } 
+
+
+      <div className="bg-secondary text-white pt-10  pb-10 md:px-8 lg:px-30">
         <div className="flex flex-wrap md:flex-nowrap justify-between border-b items-center border-slate-500 pb-10 ">
           
           <div className=" hidden  md:w-4/12 md:flex  flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
@@ -94,7 +96,7 @@ const Footer: React.FC = () => {
 
         <div className="text-white px-0 ">
 
-          <div className="lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row flex-wrap gap-y-8 gap-x-8 justify-between mt-10">
+          <div className="lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row flex-nowrap gap-y-8 gap-x-4 justify-between mt-10">
 
             
         <div className=" md:w-4/12 md:hidden flex flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
@@ -161,7 +163,7 @@ const Footer: React.FC = () => {
               </div>
             </div>
 
-            <div className="lg:pb-0 pb-3 ">
+            <div className="lg:pb-0 pb-3 whitespace-nowrap">
               <h3
                 className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
                 onClick={toggleCustomerCare}
@@ -184,7 +186,7 @@ const Footer: React.FC = () => {
               </ul>
             </div>
 
-            <div className="lg:pb-0 pb-3 md:ml-10">
+            <div className="lg:pb-0 pb-3 ">
               <h3
                 className="font-semibold mb-4 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
                 onClick={togglePages}
@@ -207,7 +209,7 @@ const Footer: React.FC = () => {
               </ul>
             </div>
 
-            <div className="lg:pb-0 pb-3 md:ml-10">
+            <div className="lg:pb-0 pb-3">
               <p className="text-17 font-semibold">Contact us</p>
 
 

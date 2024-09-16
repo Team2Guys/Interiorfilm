@@ -65,7 +65,8 @@ export default function RootLayout({
         <head>
           <GoogleTagManager gtmId="GTM-PFNKXKTR" />
 
-          <script
+          <Script
+            id="google-tag-manager"
             dangerouslySetInnerHTML={{
               __html: `
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

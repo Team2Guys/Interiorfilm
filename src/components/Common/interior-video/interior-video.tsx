@@ -24,10 +24,10 @@ const InteriorVideo: React.FC = () => {
   return (
     <>
       <div className="text-center mt-10 flex flex-col justify-center items-center space-y-2">
-        <FaArrowDownLong className="text-primary" />
+        {/* <FaArrowDownLong className="text-primary" />
         <p className="uppercase text-[14px] leading-6 tracking-widest">
           ALL collection
-        </p>
+        </p> */}
       </div>
       <div className="relative w-full h-[483px] mt-10">
         <video
@@ -37,17 +37,18 @@ const InteriorVideo: React.FC = () => {
           muted
           playsInline
           onClick={handlePlayPause}
+          autoPlay
         >
           <source src="/video/Agsons.mp4" type="video/mp4" />
         </video>
-        {!isPlaying && (
+        {/* {!isPlaying && (
           <button
             onClick={handlePlayPause}
             className="absolute inset-0 flex items-center justify-center  hover:bg-opacity-75 transition-opacity"
           >
            <Image width={97} height={90} src={video} alt='video' />
           </button>
-        )}
+        )} */}
       </div>
     </>
   );

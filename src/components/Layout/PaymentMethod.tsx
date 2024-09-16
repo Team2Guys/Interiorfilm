@@ -7,7 +7,7 @@ interface PaymentMethodProps{
 
 function PaymentMethod() {
   return (
-    <div className="flex flex-nowrap gap-2 py-2 text-black dark:text-white w-fit">
+    <div className="flex flex-nowrap md:flex-wrap  gap-2 py-2 text-black dark:text-white w-fit">
                 {FooterPaymentMethods.map((item, index) => {
                   return(
              

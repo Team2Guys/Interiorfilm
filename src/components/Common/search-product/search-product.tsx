@@ -21,6 +21,7 @@ import { generateSlug } from 'data/Data'
 import Link from 'next/link'
 import { Modal } from 'antd'
 import { useRouter } from 'next/navigation'
+import PreFooter from 'components/Layout/Footer/PreFooter'
 
 
 const SearchProduct = () => {
@@ -112,6 +113,7 @@ const showModal = () => {
     
   return (
     <>
+    {/* <PreFooter /> */}
     <div className='px-2 md:px-6 mt-10'>
         <div className='flex flex-wrap md:flex-nowrap gap-1 sm:gap-2'>
             <div className='w-full md:w-3/12'>

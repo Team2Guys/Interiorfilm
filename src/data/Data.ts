@@ -535,6 +535,9 @@ export const navarlink = [
   { ref: "symphony-series", title: "Symphony Series" },
   { ref: "about", title: "About Us" },
   { ref: "contact", title: "Contact Us" },
+  { title: "FAQs", ref: "/frequently-asked-questions" },
+
+
 ];
 
 export const productimage =[

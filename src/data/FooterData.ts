@@ -11,7 +11,7 @@ export const socialLinks = [
   export const customerCare = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
-    { name: "Trade Enquiries", href: "/trade" },
+    { name: "FAQs", href: "/frequently-asked-questions" },
     { name: "Contact Us", href: "/contact" },
   ];
   

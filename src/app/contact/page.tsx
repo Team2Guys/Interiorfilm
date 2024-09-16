@@ -103,8 +103,10 @@ const Contact = () => {
       <Container className="lg:my-16 my-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-primary rounded-md p-4  sm:p-4 md:p-8 text-white space-y-14">
+            
             <h1 className="text-2xl lg:text-4xl font-medium pt-10">Contact</h1>
-            <div className="space-y-4">
+
+            <div className="flex flex-col gap-4">
               <div className="flex gap-2 items-center">
                 <TfiLocationPin size={20} />
                 <p>
@@ -129,10 +131,10 @@ const Contact = () => {
               
             </div>
             <div>
-              <h1 className="text-lg md:text-xl lg:text-3xl font-medium">
+              <h1 className="text-lg md:text-xl lg:text-3xl font-medium flex flex-col gap-2">
                 Follow Us
               </h1>
-              <div className="flex gap-5 mt-5">
+              <div className="flex gap-5 ">
                 <Link target="_blank" href={"https://www.facebook.com/InteriorFilm.ae"}>
                   <FaFacebookSquare className="text-white" size={25} />
                 </Link>
@@ -141,6 +143,14 @@ const Contact = () => {
                 </Link>
               </div>
             </div>
+
+<div>
+
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.7645284624414!2d55.29684471128044!3d25.244854829675067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f42d1e8f3abe7%3A0xc724750e36691cb2!2sYellow%20Zone%20Technical%20Services!5e0!3m2!1sen!2s!4v1726464310457!5m2!1sen!2s" className ="w-full max-h-300 min-h-50" loading="lazy"></iframe>
+
+</div>
+
+
           </div>
           <div className="border border-gray rounded-md">
             <form className="p-4 pt-10" onSubmit={formik.handleSubmit}>
