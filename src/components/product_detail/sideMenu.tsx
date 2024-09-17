@@ -175,7 +175,8 @@ const SideMenu: React.FC = () => {
 
       let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
       const existingItemIndex = existingCart.findIndex(
-        (item: any) => item.id === product._id && item.length === length
+        (item: any) => item.id === product._id 
+        // && item.length === length
       );
 
       console.log(existingItemIndex, "existingItemIndex")

@@ -159,8 +159,8 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
         if (index === existingItemIndex) {
           return {
             ...item,
-            count: item.count + 1,
-            totalPrice: (item.count + 1) * (item.discountPrice ? item.discountPrice : item.price),
+            length: item.length + 1,
+            totalPrice: (item.length + 1) * (item.discountPrice ? item.discountPrice : item.price),
           };
         }
         return item;

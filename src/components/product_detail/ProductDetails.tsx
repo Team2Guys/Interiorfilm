@@ -114,27 +114,25 @@ export default function ProductDetails({
       imageUrl: product.posterImageUrl?.imageUrl,
       discountPrice: product.discountPrice,
       totalStockQuantity: product.totalStockQuantity,
-      count: quantity,
+      count: 1,
       length,
-      totalPrice:
-        (product.discountPrice || product.salePrice) * length * quantity, // Calculate total price based on length and quantity
-      purchasePrice: product.purchasePrice,
+      totalPrice: (product.discountPrice || product.salePrice) * length * quantity,
+purchasePrice: product.purchasePrice,
       sizes: product.sizes,
       code: product.code,
     };
 
+
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const existingItemIndex = existingCart.findIndex(
-      (item: any) => item.id === product._id && item.length === length
-    );
+    const existingItemIndex = existingCart.findIndex( (item: any) => item.id === product._id 
+    
+    // && item.length === length
+  );
 
     if (existingItemIndex !== -1) {
       const existingItem = existingCart[existingItemIndex];
-      existingItem.count += quantity;
-      existingItem.totalPrice =
-        (product.discountPrice || product.salePrice) *
-        existingItem.count *
-        length;
+      existingItem.length += length;
+      existingItem.totalPrice =(product.discountPrice || product.salePrice) *existingItem.count *length;
       existingCart[existingItemIndex] = existingItem;
     } else {
       existingCart.push(newCartItem);
@@ -390,13 +388,13 @@ export default function ProductDetails({
                       <DialogContent className="sm:max-w-[80%] lg:max-w-[60%] bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180 ">
                         {/* <DialogContent className="bg-red h-10"> */}
                         <DialogHeader>
-                          <DialogTitle className="text-xl xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10">
+                          <DialogTitle className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10">
                             Easy Monthly Installments
                           </DialogTitle>
                         </DialogHeader>
-                        <div className="py-8 ps-5 xs:ps-10 md:ps-20 pe-4 me-4 xs:me-7 max-h-[80vh] overflow-y-auto custom-scroll">
+                        <div className="py-5 ps-5 xs:ps-10 md:ps-20 pe-4 me-4 xs:me-7 max-h-[80vh] overflow-y-auto custom-scroll">
                           <Image src={tabbyLogo} alt="logo" />
-                          <h2 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-bold mt-8 leading-10 xs:leading-tight">
+                          <h2 className="text-xl xs:text-2xl sm:text-lg md:text-xl font-bold mt-5 leading-10 xs:leading-tight">
                             <span className="rounded-full bg-[#3BFFC1] px-4 py-0 text-nowrap">
                               Shop now,
                             </span>
@@ -405,16 +403,16 @@ export default function ProductDetails({
                               pay over time.
                             </span>
                           </h2>
-                          <ul className='mt-14 font-bold text-2xl xs:text-3xl sm:text-4xl md:text-5xl list-["–"] list-inside leading-normal md:leading-normal'>
+                          <ul className='mt-5 font-bold text-lg xs:text-2xl sm:text-xl md:text-xl list-["–"] list-inside leading-normal md:leading-normal'>
                             {tabbyfeature.map((item) => (
                               <li key={item.id}>{item.para}</li>
                             ))}
                           </ul>
-                          <div className="mt-12">
-                            <h3 className="font-bold text-4xl sm:text-5xl">
+                          <div className="mt-5">
+                            <h3 className="font-bold text-2xl sm:text-3xl">
                               How it works
                             </h3>
-                            <ul className="font-medium text-xl xs:text-2xl md:text-3xl mt-8 md:leading-relaxed">
+                            <ul className="font-medium text-lg xs:text-xl md:text-2xl mt-3 md:leading-relaxed">
                               {tabbyhowitwork.map((item) => (
                                 <li
                                   className="flex items-center gap-2"
@@ -429,7 +427,7 @@ export default function ProductDetails({
                             </ul>
                           </div>
 
-                          <div className="flex justify-end gap-2 mt-20 px-6">
+                          <div className="flex justify-end gap-2 mt-5 px-6">
                             {tabbypayicon.map((item, index) => (
                               <Image
                                 src={item.imageUrl}
@@ -472,22 +470,22 @@ export default function ProductDetails({
                               className="mx-auto"
                             />
                           </div>
-                          <h2 className="text-center font-bold text-5xl mt-12">
+                          <h2 className="text-center font-bold text-2xl mt-5">
                             Pay easier with Tamara
                           </h2>
-                          <div className="px-4 py-2 bg-gradient-to-r from-orange-300 via-blue-300 to-pink-300 mt-12 rounded-[70px]">
-                            <div className="bg-gradient-to-r from-orange-100 via-blue-100 to-pink-100 pb-6 pt-2 px-8 rounded-[70px] flex flex-col gap-4">
+                          <div className="px-4 py-2 bg-gradient-to-r from-orange-300 via-blue-300 to-pink-300 mt-4 rounded-[70px]">
+                            <div className="bg-gradient-to-r from-orange-100 via-blue-100 to-pink-100 pb-6 pt-1 px-8 rounded-[70px] flex flex-col gap-2">
                               <div className="w-10/12 mx-auto">
                                 {tamarafeature.map((item) => (
                                   <div
-                                    className="flex justify-between items-center py-4"
+                                    className="flex justify-between items-center py-2"
                                     key={item.id}
                                   >
                                     <div>
-                                      <h3 className="font-bold text-2xl">
+                                      <h3 className="font-bold text-lg">
                                         {item.title}
                                       </h3>
-                                      <p className="text-md font-light mt-2">
+                                      <p className="text-md font-light mt-1">
                                         {item.para}
                                       </p>
                                     </div>
@@ -496,19 +494,19 @@ export default function ProductDetails({
                               </div>
                             </div>
                           </div>
-                          <div className="mt-10 px-5 xs:px-10 2xl:px-20">
+                          <div className="mt-5 px-5 xs:px-10 2xl:px-20">
                             <h3 className="font-bold text-2xl">Why Tamara?</h3>
-                            <div className="flex items-center flex-wrap 2xl:flex-nowrap justify-center 2xl:justify-between gap-4 pt-6">
+                            <div className="flex items-center flex-wrap 2xl:flex-nowrap justify-center 2xl:justify-between gap-4 pt-4">
                               {tamarawhy.map((item) => (
                                 <div
-                                  className="w-48 h-9 rounded-2xl bg-primary text-white flex items-center justify-center text-20 font-semibold"
+                                  className="w-40 h-9 rounded-2xl bg-primary text-white flex items-center justify-center text-20 font-semibold"
                                   key={item.id}
                                 >
                                   {item.para}
                                 </div>
                               ))}
                             </div>
-                            <div className="mt-10">
+                            <div className="mt-5">
                               <ul className="font-20 font-normal">
                                 {tamaralist.map((item) => (
                                   <li
