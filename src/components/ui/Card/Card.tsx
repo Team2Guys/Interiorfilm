@@ -186,7 +186,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       imageUrl: product.posterImageUrl?.imageUrl,
       totalStockQuantity: product.totalStockQuantity, // Ensure totalStockQuantity is stored
       discountPrice: product.discountPrice,
-
       count: 1,
       length: 1,
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
@@ -201,8 +200,8 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
         if (index === existingItemIndex) {
           return {
             ...item,
-            count: item.count + 1,
-            totalPrice: (item.count + 1) * (item.discountPrice ? item.discountPrice : item.price),
+            length: item.length + 1,
+            totalPrice: (item.length + 1) * (item.discountPrice ? item.discountPrice : item.price),
           };
         }
         return item;
