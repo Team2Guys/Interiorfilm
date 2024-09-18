@@ -233,7 +233,7 @@ const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       return;
     }
 const {phone_number:newPhone,phone_code,email,address,productItems,city,  ...extractedData} = billingData
-let phone_number= phone_code.split('+')[1]+newPhone.split('-').join("")
+let phone_number= 0 + phone_code.split('+')[1]+newPhone.split('-').join("")
 
 let date = Date.now();
 
@@ -248,11 +248,14 @@ let date = Date.now();
     console.log(orderId, "orderId")
 
 
-    const paymentKeyResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/recordSale`, {token,orderId,...extractedData,
-      date,shipmentFee,phone_number:"923184036661",email,address,products:productItems,state:city, city:city,
-      street: 'Main Boulevard',
-      floor: '2', 
-      shipping_method: 'Courier', },
+    const paymentKeyResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/recordSale`, {token,orderId : orderId,...extractedData,
+      date,shipmentFee,phone_number:phone_number,email,address,products:productItems,state:city, city:city,
+      street: '-',
+      floor: '-', 
+      shipping_method: 'Courier',
+      building: "-",
+      apartment:"-",
+     },
     );
 
     console.log(paymentKeyResponse, "paymentKeyResponse")

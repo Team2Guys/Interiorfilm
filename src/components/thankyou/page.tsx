@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 interface PaymentQueryParams {
   id: string | null;
   amount_cents: string | null;
-  success: string | null;
+  success: boolean | null
   integration_id: string | null,
   currency: string | null,
   is_refund: string | null,
@@ -42,11 +42,11 @@ const Thankyou = () => {
   const pending = searchParams.get('pending')
   const is_3d_secure = searchParams.get('is_3d_secure')
 
-  let successFlag = success && success.toLowerCase() === "true"
+  let successFlag :boolean = success ? success.toLowerCase() === "true" : false
 
   let paymentObject = {
     id,
-    success,
+    success:successFlag ,
     amount_cents,
     integration_id,
     currency,
@@ -70,7 +70,7 @@ const Thankyou = () => {
         localStorage.removeItem('cart')
       }
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/postPayhnalder`, payementDetails,);
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/postPayement`, payementDetails,);
       console.log(response, "response")
     } catch (error) {
       console.log(error, "err")

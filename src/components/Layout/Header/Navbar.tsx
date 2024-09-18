@@ -119,11 +119,12 @@ const Navbar = () => {
     );
     setWishlistItems(existingWishlist);
   }, []);
+
   useEffect(() => {
     const handleWishlistChange = () => {
-      const updatedWishlist = JSON.parse(
-        localStorage.getItem("wishlist") || "[]"
-      );
+      const updatedWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+
+console.log(updatedWishlist, "WishlistChanged")
       setWishlistItems(updatedWishlist);
     };
 
@@ -151,6 +152,9 @@ const Navbar = () => {
       window.removeEventListener("cartChanged", handleCartChange);
     };
   }, []);
+
+
+
 
   const showDrawer = () => {
     setOpen(true);
@@ -270,13 +274,10 @@ const Navbar = () => {
 
             <Link href={"/wishlist"} className="relative text-22 sm:text-16 md:text-2xl">
               <IoMdHeartEmpty className=" cursor-pointer" />
-              {cartItems.length > 0 ? (
+              {WishlistItems.length > 0 ? (
                 <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center shadow-2xl bg-white text-black absolute left-2 top-2 md:left-3 md:top-3">
                   <span className="font-medium text-11 md:text-18">
-                    {WishlistItems.reduce(
-                      (count: any, item: any) => count + item.count,
-                      0
-                    )}
+                    {WishlistItems.length}
                   </span>
                 </div>
               ) : (

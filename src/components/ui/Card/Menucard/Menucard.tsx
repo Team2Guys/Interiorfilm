@@ -118,6 +118,7 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, cardClass ,onClick }) => {
 
     message.success('Product added to Wishlist successfully!');
     window.dispatchEvent(new Event("WishlistChanged"));
+    
     console.log(existingWishlist, "existingWishlist")
   };
   const Homepage = pathname.startsWith('/');
