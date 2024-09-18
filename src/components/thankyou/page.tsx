@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 interface PaymentQueryParams {
   id: string | null;
   amount_cents: string | null;
-  success: boolean | null
+  success: string | null
   integration_id: string | null,
   currency: string | null,
   is_refund: string | null,
@@ -46,7 +46,7 @@ const Thankyou = () => {
 
   let paymentObject = {
     id,
-    success:successFlag ,
+    success ,
     amount_cents,
     integration_id,
     currency,
