@@ -20,11 +20,8 @@ import axios from "axios";
 import { CategoriesType } from "types/interfaces";
 import PreFooter from "./PreFooter";
 import { FooterPaymentMethods, generateSlug, PaymentMethods } from "data/Data";
-import { usePathname , useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import PaymentMethod from "../PaymentMethod";
-
-
-
 
 const Footer: React.FC = () => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(true);
@@ -34,11 +31,10 @@ const Footer: React.FC = () => {
   const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
   const toggleCustomerCare = () => setIsCustomerCareOpen(!isCustomerCareOpen);
 
-  const pathname = usePathname()
+  const pathname = usePathname();
   const togglePages = () => setIsPagesOpen(!isPagesOpen);
   const bottomImages = [card1, card2, card3, card4, card5, card6, card7];
   const CategoryHandler = async () => {
-
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
@@ -55,26 +51,31 @@ const Footer: React.FC = () => {
   }, []);
   const router = useRouter();
   const handleButtonClick = (categoryName: string) => {
-    const slug = generateSlug(categoryName)
+    const slug = generateSlug(categoryName);
     router.push(`/products?category=${slug}`);
   };
 
   return (
     <>
-
-     {pathname =='/' ? null : <PreFooter /> } 
-
+      {pathname == "/" ? null : <PreFooter />}
 
       <div className="bg-secondary text-white pt-10  pb-10 md:px-8 lg:px-30">
         <div className="flex flex-wrap md:flex-nowrap justify-between border-b items-center border-slate-500 pb-10 ">
-          
           <div className=" hidden  md:w-4/12 md:flex  flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
-            <Image width={500} height={500} className="w-[320px] h-auto" src="/images/logowhite.png" alt="Interior Film" />
+            <Image
+              width={500}
+              height={500}
+              className="w-[320px] h-auto"
+              src="/images/logowhite.png"
+              alt="Interior Film"
+            />
           </div>
 
           <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start md:justify-end gap-2 w-full px-3 md:w-8/12 text-white mt-4 md:mt-0">
-
-            <SlEnvolopeLetter className="text-primary ml-4 md:ml-12 sm:ml-0" size={35} />
+            <SlEnvolopeLetter
+              className="text-primary ml-4 md:ml-12 sm:ml-0"
+              size={35}
+            />
             <p className="lg:text-base text-sm capitalize text-white">
               SUBSCRIBE TO OUR NEWSLETTER.
             </p>
@@ -89,27 +90,22 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-
-
-
-
-
-        <div className="text-white px-0 ">
-
-          <div className="lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row flex-nowrap gap-y-8 gap-x-4 justify-between mt-10">
-
-            
-        <div className=" md:w-4/12 md:hidden flex flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
-            <Image width={250} height={250} src="/images/logowhite.png" alt="Interior Film" />
-          </div>
-
-
+        <div className="grid grid-cols-12 px-2 pt-5">
+          <div className="col-span-12 lg:col-span-3">
+            <div className=" md:w-4/12 md:hidden flex flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
+              <Image
+                width={250}
+                height={250}
+                src="/images/logowhite.png"
+                alt="Interior Film"
+              />
+            </div>
             <div className="lg:pb-0 pb-3 max-w-75">
-
-              <p className="2/3 text-slate-200">
-                In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.
+              <p className=" text-slate-200">
+                In publishing and graphic design, Lorem ipsum is a placeholder
+                text commonly used to demonstrate the visual form of a document
+                or a typeface without relying on meaningful content.
               </p>
-
 
               <div className="flex items-center flex-wrap gap-4 py-2 lg:order-2 order-1 text-white dark:text-black">
                 {socialLinks.map((link, index) => (
@@ -125,41 +121,66 @@ const Footer: React.FC = () => {
                   </Link>
                 ))}
               </div>
+            </div>
+          </div>
+        </div>
 
+        <div className="text-white px-0 ">
+          <div className="lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row flex-nowrap gap-y-8 gap-x-4 justify-between mt-10">
+            
+
+            <div className="lg:pb-0 pb-3 max-w-75">
+              <p className=" text-slate-200">
+                In publishing and graphic design, Lorem ipsum is a placeholder
+                text commonly used to demonstrate the visual form of a document
+                or a typeface without relying on meaningful content.
+              </p>
+
+              <div className="flex items-center flex-wrap gap-4 py-2 lg:order-2 order-1 text-white dark:text-black">
+                {socialLinks.map((link, index) => (
+                  <Link
+                    key={index}
+                    href={link.href}
+                    target="_blank"
+                    className="hover:text-primary link-footer"
+                  >
+                    {React.createElement(require("react-icons/fa")[link.icon], {
+                      className: "text-lg hover:text-primary link-footer",
+                    })}
+                  </Link>
+                ))}
+              </div>
             </div>
 
             <hr className="lg:hidden bg-primary mb-5" />
 
-            <div className=" lg:pb-0 pb-3 md:ml-10">
+            <div className=" lg:pb-0 pb-3 ">
               <h3
                 className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between tracking-[.5rem]"
                 onClick={toggleCategories}
               >
-            Collections
+                Collections
                 <span className="ml-2 md:hidden ">
                   {isCategoriesOpen ? <FaAngleUp /> : <FaAngleDown />}
                 </span>
               </h3>
-              <div className="flex gap-16">
-                {category?.length > 0 &&
-                  Array.from({ length: Math.ceil(category.length / 4) }).map(
-                    (_, chunkIndex) => (
-                      <ul
-                        key={chunkIndex}
-                        className={`space-y-2 transition-all duration-300 overflow-hidden ${isCategoriesOpen ? "max-h-96" : "max-h-0"} md:max-h-none`}
+              <div className="flex md:block gap-16">
+                <ul
+                  className={`space-y-2 transition-all duration-300 overflow-hidden ${
+                    isCategoriesOpen ? "max-h-96" : "max-h-0"
+                  } md:max-h-none`}
+                >
+                  {category.map((categoryItem, index) => (
+                    <li key={index}>
+                      <div
+                        onClick={() => handleButtonClick(categoryItem.name)}
+                        className="hover:text-primary link-footer text-slate-400 cursor-pointer whitespace-nowrap"
                       >
-                        {category
-                          .slice(chunkIndex * 4, chunkIndex * 4 + 4)
-                          .map((categoryItem, index) => (
-                            <li key={index}>
-                              <div onClick={() => (handleButtonClick(categoryItem.name))} className="hover:text-primary link-footer text-slate-400 cursor-pointer">
-                                {categoryItem.name.replace("Series","")}
-                              </div>
-                            </li>
-                          ))}
-                      </ul>
-                    )
-                  )}
+                        {categoryItem.name.replace("Series", "")}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
@@ -174,11 +195,16 @@ const Footer: React.FC = () => {
                 </span>
               </h3>
               <ul
-                className={`space-y-2 transition-all duration-300 overflow-hidden ${isCustomerCareOpen ? "max-h-96" : "max-h-0"} md:max-h-none`}
+                className={`space-y-2 transition-all duration-300 overflow-hidden ${
+                  isCustomerCareOpen ? "max-h-96" : "max-h-0"
+                } md:max-h-none`}
               >
                 {customerCare.map((item, index) => (
                   <li key={index}>
-                    <Link href={item.href} className="hover:text-primary link-footer text-slate-400">
+                    <Link
+                      href={item.href}
+                      className="hover:text-primary link-footer text-slate-400"
+                    >
                       {item.name}
                     </Link>
                   </li>
@@ -197,11 +223,16 @@ const Footer: React.FC = () => {
                 </span>
               </h3>
               <ul
-                className={`space-y-2 transition-all duration-300 overflow-hidden ${isPagesOpen ? "max-h-96" : "max-h-0"} md:max-h-none`}
+                className={`space-y-2 transition-all duration-300 overflow-hidden ${
+                  isPagesOpen ? "max-h-96" : "max-h-0"
+                } md:max-h-none`}
               >
                 {pages.map((page, index) => (
                   <li key={index}>
-                    <Link href={`/${page.href}`} className="hover:text-primary link-footer text-slate-400">
+                    <Link
+                      href={`/${page.href}`}
+                      className="hover:text-primary link-footer text-slate-400"
+                    >
                       {page.name}
                     </Link>
                   </li>
@@ -212,16 +243,18 @@ const Footer: React.FC = () => {
             <div className="lg:pb-0 pb-3">
               <p className="text-17 font-semibold">Contact us</p>
 
-
               <div className="w-full lg:w-auto md:w-2/3 text-slate-400">
-                Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha, Dubai, UAE
+                Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha,
+                Dubai, UAE
                 <p>
-                  <Link href="mailto:info@interiorfilm.ae" target="_blank" className="hover:text-primary">
+                  <Link
+                    href="mailto:info@interiorfilm.ae"
+                    target="_blank"
+                    className="hover:text-primary"
+                  >
                     info@interiorfilm.ae
                   </Link>
                 </p>
-
-
                 <p>
                   <Link
                     className="text-12 lg:text-13 font-normal"
@@ -230,13 +263,11 @@ const Footer: React.FC = () => {
                     +971 4 252 2025
                   </Link>
                 </p>
-<br />
+                <br />
               </div>
 
+              <PaymentMethod />
 
-
-<PaymentMethod/>
-         
               {/* <div className="flex items-center flex-wrap gap-2 py-2 lg:order-2 order-1 text-black dark:text-white">
                 {bottomImages.map((image, index) => (
                   <Image
@@ -252,13 +283,6 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </div>
-
-
-
-
-
-
-
       </div>
       <div className="bg-white  flex justify-center items-center">
         <p className="text-text h-12 flex items-center">
