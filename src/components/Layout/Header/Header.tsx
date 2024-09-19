@@ -234,7 +234,7 @@ const Header = () => {
     <>
       <div className="bg-black  border-b py-2 border-black  w-full z-99 relative">
         <p className="uppercase text-white text-center text-[10px] sm:text-xs md:text-14">
-          Free Shipping on over AED 250 EVERYWHERE (WITHIN DUBAI CITY LIMITS.)
+          Free Shipping on above AED 250 EVERYWHERE (WITHIN DUBAI CITY LIMITS.)
         </p>
       </div>
       <nav

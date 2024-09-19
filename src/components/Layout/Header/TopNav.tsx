@@ -17,7 +17,7 @@ const TopNav = () => {
             className="text-12 lg:text-13 font-normal"
             href={`tel:+971 4 252 2025`}
           >
-            +971 4 252 2025
+            +971 52 191 9327
           </Link>
         </div>
         <div className="flex gap-2 items-center text-white">
@@ -37,7 +37,7 @@ const TopNav = () => {
       </div>
       <div>
         <p className="uppercase text-white text-[10px] sm:text-xs md:text-14 whitespace-normal md:whitespace-nowrap ">
-        Free shipping throughout mainland UAE on all orders over AED 250
+        Free shipping throughout mainland UAE on all orders above AED 250
         </p>
       </div>
       <div className="flex items-center justify-center lg:justify-end gap-3 ">

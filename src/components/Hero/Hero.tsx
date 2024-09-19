@@ -17,7 +17,7 @@ const Hero = () => {
           <p className='text-14 font-medium'>ARCHITECTURAL VINYL FILM WRAP</p>
           <p className='text-[25px]'>FRESH LOOK, SAVE BIG</p>
           <div>
-            <Link className='bg-white px-8 py-2 text-black' href={"/categories"}>
+            <Link className='bg-white px-8 py-2 hover:bg-primary hover:text-white  text-black' href={"/categories"}>
               SHOP OUR FULL RANGE
             </Link>
           </div>
