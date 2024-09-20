@@ -223,15 +223,14 @@ const Table: React.FC<TableProps> = ({
         <div className=" hidden lg:block   ">
           <div className="">
             <div className="flex justify-between items-center text-22 font-bold px-6">
-              <p className="w-3/12">Products</p>
-              <p className="w-3/12">Price</p>
-              <p
-                className={`w-3/12 ${
+              <div className="lg:w-6/12 xl:w-6/12"><p>Products</p></div>
+              <div className="lg:w-2/12 xl:w-3/12 "><p >Price</p></div>
+              <div  className={`lg:w-3/12 xl:w-3/12 ${
                   pathName === "/wishlist" ? "" : "text-end"
-                } `}
-              >
-                Quantity (M){" "}
-              </p>
+                } `}><p>
+                Quantity (M)
+              </p></div>
+              
               {pathName === "/wishlist" ? (
                 <p className="w-3/12">
                   <div className="px-6 py-3 text-end text-23 xl:text-[30px] font-medium text-dark whitespace-nowrap ">
@@ -249,7 +248,7 @@ const Table: React.FC<TableProps> = ({
                     className="flex justify-between items-center mt-5"
                     key={index}
                   >
-                    <div className="flex gap-1 w-3/12 ">
+                    <div className="flex gap-1 lg:w-6/12 xl:w-6/12 ">
                       <div className="relative">
                         <Image
                           className="w-[184px] h-[124px] "
@@ -269,7 +268,7 @@ const Table: React.FC<TableProps> = ({
                       </div>
                       <div className="p-2 w-full ">
                         <h1 className="text-sm md:text-base font-bold">
-                          <span>{counts[index] || 1}* </span>
+                          {/* <span>{counts[index] || 1}* </span> */}
                           {typeof product.name === "string" ? product.name : ""}
                         </h1>
                         <div>
@@ -294,7 +293,7 @@ const Table: React.FC<TableProps> = ({
                       </div>
                     </div>
 
-                    <div className=" w-3/12 ">
+                    <div className=" lg:w-2/12 xl:w-3/12 ">
                       <p>
                         AED
                         <span>

@@ -23,7 +23,7 @@ function Categories() {
     try {
       setloading(true)
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
-      console.log(response, "response")
+
       setCategory(response.data);
     } catch (err) {
       console.log(err, "err")

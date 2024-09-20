@@ -17,7 +17,7 @@ const Collapse: React.FC<CollapseProps> = ({ title, children }) => {
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex justify-between items-center uppercase">
-          <span className="font-semibold py-4 text=[20px]">{title}</span>
+          <span className="font-semibold py-4">{title}</span>
           <span>{isOpen ? <MdKeyboardArrowUp className="text-3xl" /> : <MdKeyboardArrowDown className="text-3xl" />}</span>
         </div>
       </button>

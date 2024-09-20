@@ -61,19 +61,19 @@ const Overlay: React.FC<OverlayProps> = ({ title, bodyText }) => {
         
 
               <span className="cursor-pointer">
-                {title.toLowerCase()==="shop"  ? 
+                {/* {title.toLowerCase()==="shop"  ?  */}
                 
                 <svg onClick={()=>router.back()} className={`${uiFlag ? "fill-black" : "fill-white"}`} width="55" height="25" viewBox="0 0 55 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M54.6404 14.3224H4.87739L17.3712 1.82617L15.7027 0.157654L0.360352 15.5024L15.7004 30.8424L17.3689 29.1739L4.87739 16.6824H54.6404V14.3224Z" />
               </svg>
-                :
-                <Link href='/'>
-                <svg className={`${uiFlag ? "fill-black" : "fill-white"}`} width="55" height="25" viewBox="0 0 55 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M54.6404 14.3224H4.87739L17.3712 1.82617L15.7027 0.157654L0.360352 15.5024L15.7004 30.8424L17.3689 29.1739L4.87739 16.6824H54.6404V14.3224Z" />
-                </svg>
+                {/* :
+            //     <Link href='/'>
+            //     <svg className={`${uiFlag ? "fill-black" : "fill-white"}`} width="55" height="25" viewBox="0 0 55 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+            //       <path d="M54.6404 14.3224H4.87739L17.3712 1.82617L15.7027 0.157654L0.360352 15.5024L15.7004 30.8424L17.3689 29.1739L4.87739 16.6824H54.6404V14.3224Z" />
+            //     </svg>
 
-            </Link>
-                }
+            // </Link>
+                } */}
             
 
               </span>

@@ -29,7 +29,7 @@ const HomeFeature = () => {
     <h1 className="text-[24px] text-heading text-center  tracking-[0.5rem]">
     FEATURE PRODUCT
     </h1>
-    <hr className="w-80 mx-auto border-primary h-1"/>
+    <hr className="2xsm:w-80 mx-auto border-primary h-1"/>
     <ProductSlider loading={loading} products={allProducts} />
   </Container>
   )

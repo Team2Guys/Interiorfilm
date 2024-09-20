@@ -58,7 +58,7 @@ export default function ProductDetails({
       ? Array.from(
           { length: Math.floor(productDetail.totalStockQuantity) },
           (_, i) => ({
-            label: `1.22m x ${i + 1} METERS`,
+            label: `1.22m x ${i + 1}m`,
             value: i + 1,
           })
         )
@@ -116,23 +116,27 @@ export default function ProductDetails({
       totalStockQuantity: product.totalStockQuantity,
       count: 1,
       length,
-      totalPrice: (product.discountPrice || product.salePrice) * length * quantity,
-purchasePrice: product.purchasePrice,
+      totalPrice:
+        (product.discountPrice || product.salePrice) * length * quantity,
+      purchasePrice: product.purchasePrice,
       sizes: product.sizes,
       code: product.code,
     };
 
-
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const existingItemIndex = existingCart.findIndex( (item: any) => item.id === product._id 
-    
-    // && item.length === length
-  );
+    const existingItemIndex = existingCart.findIndex(
+      (item: any) => item.id === product._id
+
+      // && item.length === length
+    );
 
     if (existingItemIndex !== -1) {
       const existingItem = existingCart[existingItemIndex];
       existingItem.length += length;
-      existingItem.totalPrice =(product.discountPrice || product.salePrice) *existingItem.count *length;
+      existingItem.totalPrice =
+        (product.discountPrice || product.salePrice) *
+        existingItem.count *
+        length;
       existingCart[existingItemIndex] = existingItem;
     } else {
       existingCart.push(newCartItem);
@@ -258,12 +262,10 @@ purchasePrice: product.purchasePrice,
                     </div> */}
                   </div>
                 ) : null}
-
-                
               </div>
 
               <p className="font-medium text-16 text-text">
-                Width : <span className="text-blak font-normal">1.22cm</span>
+                Roll width is <span className="text-black">122cm</span>
               </p>
               <div className="flex flex-wrap 2xl:flex-nowrap items-center gap-2">
                 <p className="font-medium text-16 whitespace-nowrap text-text">
@@ -319,10 +321,20 @@ purchasePrice: product.purchasePrice,
                 AED <span>{totalPrice}</span>
               </p>
 
-              {productDetail.totalStockQuantity == null ? (
-                <p className="text-primary text-center text-2xl">
+              {productDetail.totalStockQuantity == 0 ? (
+               <>
+               <p className="text-primary text-center text-2xl">
                   Product is out of stock
                 </p>
+                <Link
+                    target="_blank"
+                    href="https://wa.link/mb359y"
+                    className="bg-[#2AB200]  w-full flex items-center gap-2 justify-center py-2 text-white"
+                  >
+                    <BsWhatsapp /> Order on WhatsApp
+                  </Link>
+               </>
+                
               ) : (
                 <Fragment>
                   <div className="flex  gap-1 md:gap-2">
@@ -376,7 +388,8 @@ purchasePrice: product.purchasePrice,
                     tabby
                   </span>
                   <p className="text-12">
-                    Pay 4 interest-free payments of AED { totalPrice &&  (totalPrice/4).toFixed()} {" "}
+                    Pay 4 interest-free payments of AED{" "}
+                    {totalPrice && (totalPrice / 4).toFixed()}{" "}
                     <Dialog>
                       <DialogTrigger asChild>
                         <span className="text-red-600 underline cursor-pointer">
@@ -385,7 +398,7 @@ purchasePrice: product.purchasePrice,
                       </DialogTrigger>
 
                       <DialogOverlay className="bg-white/80" />
-                      <DialogContent className="sm:max-w-[80%] lg:max-w-[60%] bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180 ">
+                      <DialogContent className="sm:max-w-[80%] lg:max-w-[60%] z-99999 bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180 ">
                         {/* <DialogContent className="bg-red h-10"> */}
                         <DialogHeader>
                           <DialogTitle className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10">
@@ -447,7 +460,8 @@ purchasePrice: product.purchasePrice,
                     tamara
                   </span>
                   <p className="text-12">
-                    Pay 4 interest-free payments of AED { totalPrice &&  (totalPrice/4).toFixed()} {" "}
+                    Pay 4 interest-free payments of AED{" "}
+                    {totalPrice && (totalPrice / 4).toFixed()}{" "}
                     <Dialog>
                       <DialogTrigger asChild>
                         <span className="text-red-600 underline cursor-pointer">
@@ -455,10 +469,10 @@ purchasePrice: product.purchasePrice,
                         </span>
                       </DialogTrigger>
 
-                      <DialogOverlay className="bg-white/80" />
-                      <DialogContent className="sm:max-w-[80%] lg:max-w-[60%] bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180">
+                      <DialogOverlay className="bg-white/80 " />
+                      <DialogContent className="sm:max-w-[80%] lg:max-w-[60%] z-99999  bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180">
                         <DialogHeader>
-                          <DialogTitle className="text-xl xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10">
+                          <DialogTitle className="text-xl xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10 ">
                             Easy Monthly Installments
                           </DialogTitle>
                         </DialogHeader>
@@ -526,7 +540,7 @@ purchasePrice: product.purchasePrice,
                   </p>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-1 justify-evenly  px-2 md:px-6 sp">
+              <div className="flex flex-wrap gap-1 justify-between  px-2 md:px-0">
                 {PaymentMethods.map((item, index) => (
                   <Image
                     src={item.imageUrl}
@@ -539,20 +553,20 @@ purchasePrice: product.purchasePrice,
                 ))}
               </div>
               <div className="flex items-center gap-2 text-black dark:text-white">
-                <p className="font-medium text-12 md:text-14">Categories: </p>
-                <p className="text-dark text-12 md:text-14">{categoryName}</p>
+                <p className="font-semibold text-12 md:text-16">Categories: </p>
+                <p className="font-semibold text-12 md:text-16">{categoryName}</p>
               </div>
               <div>
-                <p className="text-14 text-[#707070] font-light">
+                <p className="text-14 md:text-16 font-normal">
                   {productDetail?.description}
                 </p>
               </div>
               <div>
-                <ul className="px-6">
+                <ul className="px-4">
                   {productDetail?.spacification?.map(
                     (item: any, index: number) => (
                       <li
-                        className="list-disc text-14 text-[#707070] font-light"
+                        className="list-disc text-14 text-black font-normal"
                         key={index}
                       >
                         {item.specsDetails}
