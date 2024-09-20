@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
 
   return (
     <>
-      {pathname == "/" ? null : <PreFooter />}
+      {pathname == "/" || pathname == "/about" ? null : <PreFooter />}
 
       <div className="bg-secondary text-white pt-10  pb-10 md:px-8 lg:px-30">
         <div className="flex flex-wrap md:flex-nowrap justify-between border-b items-center border-slate-500 pb-10 ">
@@ -90,9 +90,9 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-12 px-2 pt-5">
-          <div className="col-span-12 lg:col-span-3">
-            <div className=" md:w-4/12 md:hidden flex flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
+        <div className="grid grid-cols-12 px-2 pt-5 md:justify-items-center gap-4">
+          <div className="col-span-12  xsm:col-span-12 md:col-span-3">
+            <div className="  md:hidden flex flex-wrap items-center  md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
               <Image
                 width={250}
                 height={250}
@@ -100,7 +100,7 @@ const Footer: React.FC = () => {
                 alt="Interior Film"
               />
             </div>
-            <div className="lg:pb-0 pb-3 max-w-75">
+            <div className="lg:pb-0 pb-3">
               <p className=" text-slate-200">
                 In publishing and graphic design, Lorem ipsum is a placeholder
                 text commonly used to demonstrate the visual form of a document
@@ -123,40 +123,10 @@ const Footer: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="text-white px-0 ">
-          <div className="lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row flex-nowrap gap-y-8 gap-x-4 justify-between mt-10">
-            
-
-            <div className="lg:pb-0 pb-3 max-w-75">
-              <p className=" text-slate-200">
-                In publishing and graphic design, Lorem ipsum is a placeholder
-                text commonly used to demonstrate the visual form of a document
-                or a typeface without relying on meaningful content.
-              </p>
-
-              <div className="flex items-center flex-wrap gap-4 py-2 lg:order-2 order-1 text-white dark:text-black">
-                {socialLinks.map((link, index) => (
-                  <Link
-                    key={index}
-                    href={link.href}
-                    target="_blank"
-                    className="hover:text-primary link-footer"
-                  >
-                    {React.createElement(require("react-icons/fa")[link.icon], {
-                      className: "text-lg hover:text-primary link-footer",
-                    })}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            <hr className="lg:hidden bg-primary mb-5" />
-
-            <div className=" lg:pb-0 pb-3 ">
+          <div className=" lg:pb-0 pb-3 col-span-12 2xsm:col-span-6 xsm:col-span-4 md:col-span-2 ">
               <h3
-                className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between tracking-[.5rem]"
+                className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
                 onClick={toggleCategories}
               >
                 Collections
@@ -184,7 +154,7 @@ const Footer: React.FC = () => {
               </div>
             </div>
 
-            <div className="lg:pb-0 pb-3 whitespace-nowrap">
+            <div className="lg:pb-0 pb-3 whitespace-nowrap col-span-12 2xsm:col-span-6 xsm:col-span-4 md:col-span-2 ">
               <h3
                 className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
                 onClick={toggleCustomerCare}
@@ -211,8 +181,7 @@ const Footer: React.FC = () => {
                 ))}
               </ul>
             </div>
-
-            <div className="lg:pb-0 pb-3 ">
+            <div className="lg:pb-0 pb-3 whitespace-nowrap col-span-12 2xsm:col-span-12 xsm:col-span-4 md:col-span-2">
               <h3
                 className="font-semibold mb-4 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
                 onClick={togglePages}
@@ -239,8 +208,7 @@ const Footer: React.FC = () => {
                 ))}
               </ul>
             </div>
-
-            <div className="lg:pb-0 pb-3">
+            <div className="lg:pb-0 pb-3 col-span-12 sm:col-span-12 md:col-span-3">
               <p className="text-17 font-semibold">Contact us</p>
 
               <div className="w-full lg:w-auto md:w-2/3 text-slate-400">
@@ -281,8 +249,9 @@ const Footer: React.FC = () => {
                 ))}
               </div> */}
             </div>
-          </div>
         </div>
+
+
       </div>
       <div className="bg-white  flex justify-center items-center">
         <p className="text-text h-12 flex items-center">

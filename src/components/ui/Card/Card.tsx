@@ -36,8 +36,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [populated_categoryName, setCategoryName] = useState<string | any>(null);
 
-  console.log(ProductCard, "ProductCardProductCardProductCard")
-
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -62,29 +60,15 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       setLoading(true);
       let response: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
       let products = response.data.products;
-
-      // Debugging: Check if products are received correctly
-      console.log('Received products:', products);
-
-      // Sort products based on the numeric part of their name
       products.sort((a: PRODUCTS_TYPES, b: PRODUCTS_TYPES) => {
         // Extract numeric part of product names
         const nameA = a.name.match(/\d+/);
         const nameB = b.name.match(/\d+/);
-
-        // Debugging: Check extracted numbers
-        console.log(`Sorting: ${a.name} (${nameA}) vs ${b.name} (${nameB})`);
-
         const numA = nameA ? parseInt(nameA[0], 10) : 0;
         const numB = nameB ? parseInt(nameB[0], 10) : 0;
 
-        // Compare numeric values
         return numA - numB;
       });
-
-      // Debugging: Check sorted products
-      console.log('Sorted products:', products);
-
       if (CategoryId !== "demo" && CategoryId) {
         let filtered = products.filter((item: any) => {
           return item.category === CategoryId;
@@ -110,8 +94,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       setLoading(false);
     }
   };
-
-
 
   const ProductFilterHandler = () => {
     if (CategoryId != "demo" && CategoryId) {
@@ -174,7 +156,6 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
     message.success('Product added to cart successfully!');
     window.dispatchEvent(new Event("cartChanged"));
 
-
   };
 
 
@@ -216,13 +197,9 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
     window.dispatchEvent(new Event("WishlistChanged"));
   };
 
-
-
-
   const Homepage = pathname.startsWith('/');
   const slicedArray = Homepage && totalProducts ? totalProducts.slice(0, 6) : [];
   const productsToRender = slicedArray.length > 0 ? slicedArray : totalProducts;
-
 
   const productHandler = async () => {
     try {

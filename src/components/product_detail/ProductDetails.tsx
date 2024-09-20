@@ -58,7 +58,7 @@ export default function ProductDetails({
       ? Array.from(
           { length: Math.floor(productDetail.totalStockQuantity) },
           (_, i) => ({
-            label: `1.22m x ${i + 1} METERS`,
+            label: `1.22m x ${i + 1}m`,
             value: i + 1,
           })
         )
@@ -116,23 +116,27 @@ export default function ProductDetails({
       totalStockQuantity: product.totalStockQuantity,
       count: 1,
       length,
-      totalPrice: (product.discountPrice || product.salePrice) * length * quantity,
-purchasePrice: product.purchasePrice,
+      totalPrice:
+        (product.discountPrice || product.salePrice) * length * quantity,
+      purchasePrice: product.purchasePrice,
       sizes: product.sizes,
       code: product.code,
     };
 
-
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const existingItemIndex = existingCart.findIndex( (item: any) => item.id === product._id 
-    
-    // && item.length === length
-  );
+    const existingItemIndex = existingCart.findIndex(
+      (item: any) => item.id === product._id
+
+      // && item.length === length
+    );
 
     if (existingItemIndex !== -1) {
       const existingItem = existingCart[existingItemIndex];
       existingItem.length += length;
-      existingItem.totalPrice =(product.discountPrice || product.salePrice) *existingItem.count *length;
+      existingItem.totalPrice =
+        (product.discountPrice || product.salePrice) *
+        existingItem.count *
+        length;
       existingCart[existingItemIndex] = existingItem;
     } else {
       existingCart.push(newCartItem);
@@ -258,12 +262,10 @@ purchasePrice: product.purchasePrice,
                     </div> */}
                   </div>
                 ) : null}
-
-                
               </div>
 
               <p className="font-medium text-16 text-text">
-                Width : <span className="text-blak font-normal">1.22cm</span>
+                Roll width is <span className="text-black">122cm</span>
               </p>
               <div className="flex flex-wrap 2xl:flex-nowrap items-center gap-2">
                 <p className="font-medium text-16 whitespace-nowrap text-text">
@@ -376,7 +378,8 @@ purchasePrice: product.purchasePrice,
                     tabby
                   </span>
                   <p className="text-12">
-                    Pay 4 interest-free payments of AED { totalPrice &&  (totalPrice/4).toFixed()} {" "}
+                    Pay 4 interest-free payments of AED{" "}
+                    {totalPrice && (totalPrice / 4).toFixed()}{" "}
                     <Dialog>
                       <DialogTrigger asChild>
                         <span className="text-red-600 underline cursor-pointer">
@@ -447,7 +450,8 @@ purchasePrice: product.purchasePrice,
                     tamara
                   </span>
                   <p className="text-12">
-                    Pay 4 interest-free payments of AED { totalPrice &&  (totalPrice/4).toFixed()} {" "}
+                    Pay 4 interest-free payments of AED{" "}
+                    {totalPrice && (totalPrice / 4).toFixed()}{" "}
                     <Dialog>
                       <DialogTrigger asChild>
                         <span className="text-red-600 underline cursor-pointer">

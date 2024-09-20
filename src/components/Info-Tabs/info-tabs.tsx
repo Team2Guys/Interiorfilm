@@ -5,7 +5,7 @@ export default function InfoTabs() {
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = [
-    "Why Choose Us ?",
+    "Why Choose Us?",
     "Our Mission",
     "Product Range",
     "Popular Products",
@@ -28,7 +28,7 @@ export default function InfoTabs() {
             className={`text-black py-2 md:py-6 whitespace-nowrap w-full px-4 text-17 hover:text-black focus:outline-none transition duration-300 ${
               activeTab === index
                 ? "border-b-4 border-primary text-black font-bold"
-                : "border-b-4 border-transparent hover:border-primary font-medium"
+                : "border-b-4 border-transparent hover:border-primary font-black"
             }`}
             onClick={() => setActiveTab(index)}
           >

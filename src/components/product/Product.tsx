@@ -48,13 +48,10 @@ const StaticCategory = {
 const ProductPage = () => {
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
   const [filteredProductsByCategory, setfilteredProductsByCategory] = useState<PRODUCTS_TYPES[]>([])
-  const [error, setError] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
   const [showColors, setShowColors] = useState<boolean>(false)
-
   const [colorName, setColorName] = useState<string>()
   const [availableColors, setAvailableColors] = useState<{ value: string; label: string; }[] | string[]>([])
-
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [sortOption, setSortOption] = useState<string>("Default")
   const [category, setCategory] = useState<category[]>([])
@@ -64,10 +61,6 @@ const ProductPage = () => {
   const dropdown = useRef<any>(null);
   const trigger = useRef<any>(null);
 
-
-
-
-
   useEffect(() => {
     get_recordHandler();
   }, []);
@@ -76,32 +69,25 @@ const ProductPage = () => {
     productHandler(categoryName);
   }, [categoryName]);
 
-
   const Get_colors_handler = (products: any) => {
     let uniqcolorArray: string[] = []
 
     products.forEach((element: any) => {
       if (element.colors && element.colors.length > 0) {
-
         element.colors.forEach((color: { colorName: string, _id: string }) => uniqcolorArray.push(color.colorName));
       }
     })
-
-
     if (uniqcolorArray.length > 0) {
 
       let colorsArray = [...new Set<string>(uniqcolorArray)].map((item) => {
         return (
           { value: item, label: item }
-
         )
       })
-
       setAvailableColors(colorsArray);
     }
     else{
       setAvailableColors(uniqcolorArray);
-
     }
   }
 
@@ -113,13 +99,10 @@ const ProductPage = () => {
         axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
       ]);
       let products = productResponse.data.products
-
       const categories = [StaticCategory, ...categoryResponse.data];
       setCategory(categories);
       setTotalProducts(products);
-
       productHandler(categoryName, categories, products)
-
       // if (!categoryName) {
       //   setActiveLink(StaticCategory);
       // } else {
@@ -136,10 +119,8 @@ const ProductPage = () => {
     }
   }
 
-
   const productHandler = async (categoryName: string | null, newcategories?: category[], newProducts?: any) => {
     try {
-
       const activeCategory: any = (newcategories ? newcategories : category).find((cat) => generateSlug(cat.name) === categoryName);
       setActiveLink(activeCategory);
       console.log(activeCategory, "activeCategory")
@@ -186,28 +167,31 @@ const ProductPage = () => {
   });
 
 
-  const sortProducts = (products: PRODUCTS_TYPES[]) => {
-    if (sortOption === "Default") {
-      return products.sort((a, b) => {
-        const nameA = a.name.toUpperCase();
-        const nameB = b.name.toUpperCase();
-        return nameA.localeCompare(nameB, undefined, {
-          numeric: true,
-          sensitivity: "base",
-        });
-      });
-    } else if (sortOption === "Low to High") {
-      const getPrice = (product: PRODUCTS_TYPES) =>
-        product.discountPrice ?? product.salePrice;
-      return products.sort((a, b) => getPrice(b) - getPrice(a));
-    } else if (sortOption === "High to Low") {
-      const getPrice = (product: PRODUCTS_TYPES) =>
-        product.discountPrice ?? product.salePrice;
-      return products.sort((a, b) => getPrice(a) - getPrice(b));
-    } else {
-      return products;
-    }
-  };
+      const sortProducts = (products: PRODUCTS_TYPES[]) => {
+        if (!products || products.length === 0) return []; // Check if products array exists
+
+        const getPrice = (product: PRODUCTS_TYPES) => {
+          if (!product.salePrice) return 0; // Add check for salePrice
+          return product.salePrice;
+        };
+
+        if (sortOption === "Default") {
+          return products.sort((a, b) => {
+            const nameA = a.name.toUpperCase();
+            const nameB = b.name.toUpperCase();
+            return nameA.localeCompare(nameB, undefined, {
+              numeric: true,
+              sensitivity: "base",
+            });
+          });
+        } else if (sortOption === "Low to High") {
+          return products.sort((a, b) => getPrice(a) - getPrice(b));
+        } else if (sortOption === "High to Low") {
+          return products.sort((a, b) => getPrice(b) - getPrice(a));
+        } else {
+          return products; // Return unmodified products if no sortOption is selected
+        }
+      };
 
   const sortedProducts = sortProducts(filteredProducts);
 

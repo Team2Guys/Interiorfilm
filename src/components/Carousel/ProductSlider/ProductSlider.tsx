@@ -39,6 +39,18 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
     updateSwiperNavigation();
   }, [updateSwiperNavigation]);
 
+  const handleMouseEnter = () => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.autoplay.stop();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.autoplay.start();
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -71,21 +83,8 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
           ))}
         </div>
       ) : (
-        <div className="relative mt-2">
-          <div className='float-end flex gap-2 mb-5'>
-            <button
-              ref={prevRef}
-              className="bg-white text-black h-8 w-8 shadow-lg  flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
-            >
-              <RiArrowLeftSFill size={30} />
-            </button>
-            <button
-              ref={nextRef}
-              className="bg-white text-black h-8 w-8 shadow-lg flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
-            >
-              <RiArrowRightSFill size={30} />
-            </button>
-          </div>
+        <div className="relative mt-10" >
+         
           <Swiper
             ref={swiperRef}
             autoplay={{
@@ -133,11 +132,26 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
             className="mySwiper custom"
           >
             {featuredProducts && featuredProducts.map((product, index) => (
-              <SwiperSlide key={index} className="mb-10 custom">
+              <SwiperSlide key={index} className="mb-10 custom" onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}>
                 <Card ProductCard={[product]} slider={true} />
               </SwiperSlide>
             ))}
           </Swiper>
+           <div className=' flex justify-center gap-48 absolute w-full bottom-5'>
+            <button
+              ref={prevRef}
+              className="bg-white text-black h-8 w-8 shadow-lg  flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
+            >
+              <RiArrowLeftSFill size={30} />
+            </button>
+            <button
+              ref={nextRef}
+              className="bg-white text-black h-8 w-8 shadow-lg flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
+            >
+              <RiArrowRightSFill size={30} />
+            </button>
+          </div>
         </div>
       )}
     </>

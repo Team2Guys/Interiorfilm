@@ -21,7 +21,6 @@ import { generateSlug } from 'data/Data'
 import Link from 'next/link'
 import { Modal } from 'antd'
 import { useRouter } from 'next/navigation'
-import PreFooter from 'components/Layout/Footer/PreFooter'
 
 
 const SearchProduct = () => {
@@ -143,6 +142,7 @@ const showModal = () => {
                         <div className=' max-w-screen-md mx-auto  text-center space-y-6'>
                           <p className='text-white text-16 sm:text-23 md:text-[37px]'>Products for every eventuality</p>
                           <div className="flex items-center  w-full max-w-md mx-auto md:max-w-screen-2xl  mt-10  shadow shadow-boxdark ">
+                            
                             <input
                                 type="text"
                                 ref={searchInputRef} // Assign the ref here
