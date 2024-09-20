@@ -416,7 +416,6 @@ const Navbar = () => {
                   ? `/products?category=${navItem.ref}`
                   : `/${navItem.ref}`;
                 const isActive = activeLink === slug;
-                console.log(slug , "slug")
                 return (
                   <Link
                     className={` 2xl:leading-7 2xl:tracking-[20%] ${

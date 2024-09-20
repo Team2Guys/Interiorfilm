@@ -105,7 +105,7 @@ function Page() {
                         isOpen={openIndex === index}
                         isHome={true}
                         onClick={() => handleToggle(index)} title={item.Title}
-                        titleClass={openIndex === index ? "font-bold" : 'font-normal font-futura'}
+                        titleClass={openIndex === index ? "font-semibold" : 'font-normal'}
                         className='flex gap-2 items-center my-3'
 
                     >

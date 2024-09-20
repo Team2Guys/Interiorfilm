@@ -321,10 +321,20 @@ export default function ProductDetails({
                 AED <span>{totalPrice}</span>
               </p>
 
-              {productDetail.totalStockQuantity == null ? (
-                <p className="text-primary text-center text-2xl">
+              {productDetail.totalStockQuantity == 0 ? (
+               <>
+               <p className="text-primary text-center text-2xl">
                   Product is out of stock
                 </p>
+                <Link
+                    target="_blank"
+                    href="https://wa.link/mb359y"
+                    className="bg-[#2AB200]  w-full flex items-center gap-2 justify-center py-2 text-white"
+                  >
+                    <BsWhatsapp /> Order on WhatsApp
+                  </Link>
+               </>
+                
               ) : (
                 <Fragment>
                   <div className="flex  gap-1 md:gap-2">
@@ -388,7 +398,7 @@ export default function ProductDetails({
                       </DialogTrigger>
 
                       <DialogOverlay className="bg-white/80" />
-                      <DialogContent className="sm:max-w-[80%] lg:max-w-[60%] bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180 ">
+                      <DialogContent className="sm:max-w-[80%] lg:max-w-[60%] z-99999 bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180 ">
                         {/* <DialogContent className="bg-red h-10"> */}
                         <DialogHeader>
                           <DialogTitle className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10">
@@ -459,10 +469,10 @@ export default function ProductDetails({
                         </span>
                       </DialogTrigger>
 
-                      <DialogOverlay className="bg-white/80" />
-                      <DialogContent className="sm:max-w-[80%] lg:max-w-[60%] bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180">
+                      <DialogOverlay className="bg-white/80 " />
+                      <DialogContent className="sm:max-w-[80%] lg:max-w-[60%] z-99999  bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180">
                         <DialogHeader>
-                          <DialogTitle className="text-xl xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10">
+                          <DialogTitle className="text-xl xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10 ">
                             Easy Monthly Installments
                           </DialogTitle>
                         </DialogHeader>
@@ -530,7 +540,7 @@ export default function ProductDetails({
                   </p>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-1 justify-evenly  px-2 md:px-6 sp">
+              <div className="flex flex-wrap gap-1 justify-between  px-2 md:px-0">
                 {PaymentMethods.map((item, index) => (
                   <Image
                     src={item.imageUrl}
@@ -543,20 +553,20 @@ export default function ProductDetails({
                 ))}
               </div>
               <div className="flex items-center gap-2 text-black dark:text-white">
-                <p className="font-medium text-12 md:text-14">Categories: </p>
-                <p className="text-dark text-12 md:text-14">{categoryName}</p>
+                <p className="font-semibold text-12 md:text-16">Categories: </p>
+                <p className="font-semibold text-12 md:text-16">{categoryName}</p>
               </div>
               <div>
-                <p className="text-14 text-[#707070] font-light">
+                <p className="text-14 md:text-16 font-normal">
                   {productDetail?.description}
                 </p>
               </div>
               <div>
-                <ul className="px-6">
+                <ul className="px-4">
                   {productDetail?.spacification?.map(
                     (item: any, index: number) => (
                       <li
-                        className="list-disc text-14 text-[#707070] font-light"
+                        className="list-disc text-14 text-black font-normal"
                         key={index}
                       >
                         {item.specsDetails}
