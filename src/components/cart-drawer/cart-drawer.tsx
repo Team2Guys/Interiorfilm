@@ -26,7 +26,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
 
   useEffect(() => {
     fetchCartItems();
-
     const handleCartChange = () => {
       fetchCartItems();
     };
