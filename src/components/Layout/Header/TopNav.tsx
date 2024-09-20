@@ -15,7 +15,7 @@ const TopNav = () => {
           <BsTelephone  className="text-white text-14 lg:text-20" />
           <Link
             className="text-12 lg:text-13 font-normal"
-            href={`tel:+971 4 252 2025`}
+            href={`tel:+971 52 191 9327`}
           >
             +971 52 191 9327
           </Link>

@@ -277,7 +277,7 @@ const Navbar = () => {
           <div className="sm:flex items-center  w-full rounded-3xl  shadow border border-gray-2  col-span-2 md:col-span-4 hidden ">
             <input
               type="text"
-              ref={searchInputRef} // Assign the ref here
+              ref={searchInputRef}
               placeholder="Product Search..."
               value={searchTerm}
               onKeyDown={handleKeyDown}
@@ -529,7 +529,7 @@ const Navbar = () => {
           )}
         </>
       </Modal>
-      <CartDrawer open={drawerOpen} onClose={handleCloseDrawer} />
+      <CartDrawer open={drawerOpen} onClose={handleCloseDrawer}   />
     </>
   );
 };

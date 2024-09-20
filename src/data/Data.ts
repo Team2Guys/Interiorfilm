@@ -527,7 +527,7 @@ export const navarlink = [
   { ref: "", title: "Home" },
   { ref: "wood-grain-series", title: "Wood Grain Series" },
   { ref: "plain-series", title: "Plain Series" },
-  { ref: "cement-gray-series", title: "Cement Gray Series" },
+  { ref: "cement-grey-series", title: "Cement Grey Series" },
   { ref: "marble-series", title: "Marble Series" },
   { ref: "metal-series", title: "Metal Series" },
   { ref: "fabric-series", title: "Fabric Series" },
