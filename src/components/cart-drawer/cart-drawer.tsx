@@ -22,6 +22,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
   const [lengths, setLengths] = useState<{ [key: number]: number }>({});
   const [cartItems, setCartItems] = useState<PRODUCTS_TYPES[]>([]);
   const [subtotal, setSubtotal] = useState(0);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetchCartItems();
@@ -134,11 +135,29 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
       },
     });
   };
+
+    // Function to close the drawer if clicked outside
+    useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+          onClose();
+        }
+      };
+  
+      if (open) {
+        document.addEventListener("mousedown", handleClickOutside);
+      }
+  
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [open, onClose]);
+
   return (
     <>
     {open && (
         <div className="  right-0 sm:right-5 top-20 mt-2 fixed z-999 ">
-          <div className="border sm:w-96  bg-white p-2">
+          <div className="border sm:w-96  bg-white p-2" ref={drawerRef}>
             <div className="flex items-center justify-between">
               <p className="font-bold text-md-h6">SHOPPING CART</p>
               <IoIosClose
@@ -175,9 +194,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
                     </div>
                   </div>
                   <div className="space-y-1 w-8/12">
-                    <h1 className="text-12 md:text-14 font-semibold">
-                     <span>{item.count}*</span>( {item.name} )
-                    </h1>
+                    <h1 className="text-12 md:text-14 font-semibold">{item.name}</h1>
                     <p className="text-12 md:text-14">
                       AED
                       <span>

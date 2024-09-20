@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
 
   return (
     <>
-      {pathname == "/" || pathname == "/about" ? null : <PreFooter />}
+      {/* {pathname == "/" || pathname == "/about" ? null : <PreFooter />} */}
 
       <div className="bg-secondary text-white pt-10  pb-10 md:px-8 lg:px-30">
         <div className="flex flex-wrap md:flex-nowrap justify-between border-b items-center border-slate-500 pb-10 ">
@@ -226,9 +226,9 @@ const Footer: React.FC = () => {
                 <p>
                   <Link
                     className="text-12 lg:text-13 font-normal"
-                    href={`tel:+971 4 252 2025`}
+                    href={`tel:+971 52 191 9327`}
                   >
-                    +971 4 252 2025
+                    +971 52 191 9327
                   </Link>
                 </p>
                 <br />

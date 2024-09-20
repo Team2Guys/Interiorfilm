@@ -116,8 +116,8 @@ const Contact = () => {
               </div>
               <div className="flex gap-2 items-center">
                 <FiPhone size={20} />
-                <Link target="_blank" href={"tel:+971 052 1919 327"}>
-                  +971 052 1919 327
+                <Link target="_blank" href={"tel:+971 52 191 9327"}>
+                  +971 52 191 9327
                 </Link>
               </div>
 

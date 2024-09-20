@@ -5,47 +5,9 @@ import InfoTabs from "components/Info-Tabs/info-tabs";
 import InteriorVideo from "components/Common/interior-video/interior-video";
 import SearchProduct from "components/Common/search-product/search-product";
 import Offer from "components/widgets/Offer/Offer";
-import { SlDiamond } from "react-icons/sl";
-import { CgBulb } from "react-icons/cg";
-import { GiPayMoney } from "react-icons/gi";
-import { RiCustomerService2Line } from "react-icons/ri";
 import PreFooter from "components/Layout/Footer/PreFooter";
 import HomeAccordian from "components/widgets/HomeAccordian";
-
-const offers = [
-  {
-    icon: (
-      <SlDiamond className="text-primary group-hover:text-white text-23 md:text-[40px]" />
-    ),
-    title: "Savings to your pocket",
-    detail: "We cut out the middle man, passing the savings on to you.",
-  },
-  {
-    icon: (
-      <CgBulb className="text-primary  group-hover:text-white text-23 md:text-[40px]" />
-    ),
-    title: "Fast Delivery ",
-    detail:
-      "Choose your material, select quantity, check out and receive by the next working day.",
-  },
-  {
-    icon: (
-      <GiPayMoney className="text-primary  group-hover:text-white text-23 md:text-[40px]" />
-    ),
-    title: "Exclusive Collection",
-    detail:
-      "We buy direct from the factory and are exclusive distributors for the GCC.",
-  },
-  {
-    icon: (
-      <RiCustomerService2Line className="text-primary  group-hover:text-white text-23 md:text-[40px]" />
-    ),
-    title: "Service Promise",
-    detail:
-      "Our professional team are on hand 365 days a year to help with any queries you may have.",
-  },
-];
-
+import { offers } from "data/sideMenuData";
 export default function Home() {
   return (
     <>

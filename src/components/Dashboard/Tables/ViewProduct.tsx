@@ -22,7 +22,7 @@ interface Product {
 
 interface CategoryProps {
   Categories: any;
-  setCategory: any;
+  setProduct: any;
   setselecteMenu: (menu: string) => void;
   loading: boolean;
   setEditProduct: any;
@@ -30,7 +30,7 @@ interface CategoryProps {
 
 const ViewProduct: React.FC<CategoryProps> = ({
   Categories,
-  setCategory,
+  setProduct,
   setselecteMenu,
   loading,
   setEditProduct,
@@ -53,9 +53,11 @@ const ViewProduct: React.FC<CategoryProps> = ({
   )
 
   const filteredProducts: Product[] =
-    Categories?.filter((product: any) =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase())
-    ) || [];
+  Categories?.filter((product: any) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.code?.toLowerCase().includes(searchTerm.toLowerCase())
+  ) || [];
 
   const confirmDelete = (key: any) => {
     Modal.confirm({
@@ -72,7 +74,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteProduct/${key}`
       );
-      setCategory((prev: Product[]) => prev.filter((item) => item._id !== key));
+      setProduct((prev: Product[]) => prev.filter((item) => item._id !== key));
       notification.success({
         message: "Product Deleted",
         description: "The product has been successfully deleted.",
