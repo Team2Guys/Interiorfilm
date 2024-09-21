@@ -113,7 +113,7 @@ const Product = ({ params }: { params: { productname: string } }) => {
 
       <Container className="mt-20">
         <div className="flex justify-center items-center">
-          <h1 className="w-fit text-center text-lg border-b-2 border-[#FF914E] md:text-3xl mb-5 up tracking-[0.5rem] uppercase">
+          <h1 className="w-fit text-center text-lg border-b-2 border-[#FF914E] md:text-3xl mb-5 tracking-widest uppercase">
           recommended Product</h1>
         </div>
         <ProductSlider loading={productsLoading} products={filteredProducts} />

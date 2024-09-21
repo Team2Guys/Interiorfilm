@@ -1,20 +1,23 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import Table from 'components/ui/Table/Table'; // Update with correct path to your Table component
-import Overlay from 'components/widgets/Overlay/Overlay';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import Container from 'components/Layout/Container/Container';
-import { FiTag } from 'react-icons/fi';
-import ProductSlider from 'components/Carousel/ProductSlider/ProductSlider';
-import axios from 'axios';
-import PRODUCTS_TYPES from 'types/interfaces';
+import React, { useState, useEffect } from "react";
+import Table from "components/ui/Table/Table"; // Update with correct path to your Table component
+import Overlay from "components/widgets/Overlay/Overlay";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Container from "components/Layout/Container/Container";
+import { FiTag } from "react-icons/fi";
+import ProductSlider from "components/Carousel/ProductSlider/ProductSlider";
+import axios from "axios";
+import PRODUCTS_TYPES from "types/interfaces";
+import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import { GoLock } from "react-icons/go";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const router = useRouter();
+  const [totalItems, setTotalItems] = useState(0);
 
   const productHandler = async () => {
     try {
@@ -24,7 +27,7 @@ const Cart = () => {
       if (Array.isArray(response.data.products)) {
         setProducts(response.data.products);
       } else {
-        console.error('Product data is not an array', response.data.products);
+        console.error("Product data is not an array", response.data.products);
       }
     } catch (err) {
       console.log(err, "err");
@@ -35,90 +38,119 @@ const Cart = () => {
     productHandler();
   }, []);
 
-  const calculateTotals = (items:any) => {
-    const sub = items.reduce((acc:string, item:any) => {
+  const calculateTotals = (items: any) => {
+    const sub = items.reduce((acc: number, item: any) => {
       const price = item.discountPrice ? item.discountPrice : item.price;
-      return acc + (price * item.count * item.length); 
+      return acc + price * item.count;
     }, 0);
+  
+    const totalItems = items.reduce((acc: number, item: any) => {
+      return acc + item.count;
+    }, 0);
+  
     setTotal(sub);
+    return totalItems;
   };
+
   useEffect(() => {
-    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     setCartItems(existingCart);
     calculateTotals(existingCart);
+    const totalItems = calculateTotals(existingCart);
+    setTotalItems(totalItems);
   }, []);
 
   // Handle cart changes from the Table component
-  const handleCartChange = (updatedCart:any) => {
+  const handleCartChange = (updatedCart: any) => {
     setCartItems(updatedCart);
     calculateTotals(updatedCart);
+    const totalItems = calculateTotals(updatedCart);
+    setTotalItems(totalItems);
   };
   return (
     <>
-      <Overlay title="Cart" />
+      <Container className="grid grid-cols-12  items-center mt-5 sm:mt-0">
+        <div className="col-span-12 md:col-span-4 2xl:col-span-2">
+          <p className="text-[29px] text-center sm:text-start">Your shopping basket</p>
+        </div>
+        <div className="col-span-12 md:col-span-4 2xl:col-span-8">
+          <h1
+            className={`text-3xl font-medium text-black flex justify-center items-center gap-3 leading-loose uppercase`}
+          >
+            <span className="cursor-pointer">
+              <svg
+                onClick={() => router.back()}
+                className={`fill-black`}
+                width="55"
+                height="25"
+                viewBox="0 0 55 31"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M54.6404 14.3224H4.87739L17.3712 1.82617L15.7027 0.157654L0.360352 15.5024L15.7004 30.8424L17.3689 29.1739L4.87739 16.6824H54.6404V14.3224Z" />
+              </svg>
+            </span>
+            CART
+          </h1>
+        </div>
+        <div className="col-span-12 md:col-span-4 2xl:col-span-2 ">
+          <p className="text-13 font-medium">Free Delivery</p>
+          <div className="flex justify-between items-center">
+            <p className="text-11">Applies to orders of Over AED 250.</p>
+            <p className="text-11 font-medium underline">View details</p>
+          </div>
+        </div>
+      </Container>
+
       <Container className="mt-10  mb-20">
         {cartItems.length === 0 ? (
           <div className="flex flex-col justify-center items-center space-y-3">
-            <p className='text-2xl'>Your cart is empty.</p>
+            <p className="text-2xl">Your cart is empty.</p>
             <div>
-              <Link className='underline' href={"/products"}>Continue Shopping</Link>
+              <Link className="underline" href={"/products"}>
+                Continue Shopping
+              </Link>
             </div>
           </div>
         ) : (
-          <div className="flex flex-wrap lg:flex-nowrap md:gap-10 ">
-            <div className="w-full lg:w-10/12 xl:w-9/12 2xl:w-7/12">
+          <>
+            <div className="w-full ">
               <Table onCartChange={handleCartChange} />
             </div>
-            <div className="w-full lg:w-5/12 xl:w-3/12  2xl:w-5/12 mt-3 md:mt-0 border border-gray">
-              <div className='p-2 md:p-4 space-y-4'>
-                <p className='text-20 md:text-23'>Order Summary</p>
-                <div className='space-y-3'>
-                  <hr/>
-                  <div className="flex justify-between items-center">
-                  <h1 className="text-20 ">Total:</h1>
-                  <h1 className="text-20 ">
-                    AED <span>{total}</span>
-                  </h1>
-                </div>
-                </div>
-
-                <div className="space-y-3 pt-20 relative lg:top-20 mt-10">
-                <div className=" w-full">
-                  <div className="absolute left-0 top-0 py-2 px-4 bg-[#F0F0F0] w-3/4">
-                    <div className="flex items-center">
-                      <FiTag className="text-black/40 mr-2" size={20} />
-                      <input
-                        type="text"
-                        placeholder="Add promo code"
-                        className="w-full bg-transparent outline-none py-2"
-                      />
-                    </div>
-                  </div>
-                  <button className="absolute right-0 top-0 bg-primary text-white px-8 py-4">
-                    Apply
-                  </button>
-                </div>
-                <button
-                  className="w-full bg-black text-white py-3"
-                  onClick={() => router.push("/checkout")}
-                >
-                  Proceed To Checkout
-                </button>
-              </div>
-
-              </div>
-        
+            
+          <div className="flex flex-wrap sm:flex-nowrap justify-between items-center w-full mt-3 md:mt-5 border-t-2 border-b-2 py-4 border-gray">
+            <div className="hidden sm:block">
+              <button className="flex gap-2 justify-center items-center px-6 py-2 bg-primary text-white hover:bg-black text-16" onClick={() => router.back()}>
+              <FaArrowLeftLong />
+              Continue Shopping
+              </button>
             </div>
+
+            <div className="flex flex-col justify-center space-y-2">
+              <p className="text-22 sm:text-[26px] text-start  sm:text-center">Subtotal {totalItems} items: <span className="font-semibold"> AED {total}</span></p>
+              <button className="flex gap-2 justify-center items-center px-6 py-2 bg-black text-white hover:bg-primary text-16" onClick={() => router.push("/checkout")}>
+              Secure Checkout
+              <FaArrowRightLong />
+              </button>
+              <div className="flex items-center gap-1 text-12">
+              <GoLock />Secure Checkout - Shopping with us is always safe and secure
+              </div>
+            </div>
+
           </div>
+
+          
+          </>
         )}
 
-
-      <div className='mt-20'>
-        <div className='flex justify-center items-center'>
-          <h1 className='w-fit text-center text-lg border-b-2 border-[#FF914E] md:text-3xl mb-5  uppercase'>Similar Products</h1>
+        <div className="mt-10 md:mt-20">
+          <div className="flex justify-center items-center">
+            <h1 className="w-fit text-center text-lg border-b-2 border-[#FF914E] md:text-3xl mb-5  uppercase tracking-widest">
+              Similar Products
+            </h1>
+          </div>
+          <ProductSlider products={products} />
         </div>
-        <ProductSlider products={products} />
-      </div>
       </Container>
     </>
   );
