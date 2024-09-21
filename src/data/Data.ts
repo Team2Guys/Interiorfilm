@@ -194,7 +194,17 @@ export const AddproductsinitialValues: FormValues = {
   modelDetails: [],
   spacification: [],
   category: "",
-  code: ""
+  code: "",
+  Meta_Title: "",
+  Meta_Description: "",
+  URL: "",
+ Canonical_Tag: "",
+ Images_Alt_Text: "",
+// Og_title: "",
+// Og_description:"" ,
+// Og_Image:"" ,
+// OgUrl:"",
+
 
 };
 

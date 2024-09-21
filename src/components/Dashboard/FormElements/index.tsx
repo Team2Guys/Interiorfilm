@@ -92,7 +92,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
         imageUrl: imagesUrl,
         hoverImageUrl,
         createdAt,
-        purchasePrice:0
+        purchasePrice: 0
       };
       setloading(true);
 
@@ -105,7 +105,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
         }`;
       const response = await axios.post(url, newValue);
       console.log(response, "response");
-      Toaster( "success",  updateFlag? "Product has been sucessufully Updated !": "Product has been sucessufully Created !");
+      Toaster("success", updateFlag ? "Product has been sucessufully Updated !" : "Product has been sucessufully Created !");
       setProductInitialValue(AddproductsinitialValues);
       resetForm();
       setloading(false);
@@ -369,6 +369,8 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                             type="text"
                             name="code"
                             onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+
                             value={formik.values.code}
                             placeholder="Product code"
                             className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
@@ -386,6 +388,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                           <SelectGroupTwo
                             name="category"
                             changeHandler={formik.handleChange}
+
                             value={formik.values.category}
                             Categories={Categories}
                             selectedOption={selectedOption}
@@ -402,145 +405,129 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                         </div>
                       </div>
 
-                      <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
-                        <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-                          <h3 className="font-medium text-black dark:text-white">
-                            Model Details
-                          </h3>
+
+
+                      <div className="flex gap-4">
+                        <div className="w-2/4">
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                            Meta Title
+                          </label>
+                          <input
+                            type="text"
+                            name="Meta_Title"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.Meta_Title}
+                            placeholder="Meta Title"
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                              ? "border-red-500"
+                              : ""
+                              }`}
+                          />
+                          {formik.touched.Meta_Title && formik.errors.Meta_Title ? (
+                            <div className="text-red text-sm">
+                              {formik.errors.code as String}
+                            </div>
+                          ) : null}
+
+
+
                         </div>
-                        <div className="flex flex-col gap-5.5 p-6.5">
-                          <FieldArray name="modelDetails">
-                            {({ push, remove }) => (
-                              <div className="flex flex-col gap-2">
-                                {formik.values.modelDetails.map(
-                                  (model: any, index: any) => (
-                                    <div key={index} className="flex items-center">
-                                      <input
-                                        type="text"
-                                        name={`modelDetails[${index}].name`}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={
-                                          formik.values.modelDetails[index].name
-                                        }
-                                        placeholder="Model Name"
-                                        className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary 
-                                      ${formik.touched.modelDetails && (formik.touched.modelDetails as FormikTouched<FormValues["modelDetails"]>)?.[index]?.name &&
-                                            (
-                                              formik.errors
-                                                .modelDetails as FormikErrors<
-                                                  FormValues["modelDetails"]
-                                                >
-                                            )?.[index]?.name
-                                            ? "border-red-500"
-                                            : ""
-                                          }`}
-                                      />
-                                      <input
-                                        type="text"
-                                        name={`modelDetails[${index}].detail`}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={
-                                          formik.values.modelDetails[index].detail
-                                        }
-                                        placeholder="Model Detail"
-                                        className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary 
-            ${formik.touched.modelDetails && (formik.touched.modelDetails as FormikTouched<FormValues["modelDetails"]>)?.[index]?.detail &&
-                                            (
-                                              formik.errors
-                                                .modelDetails as FormikErrors<
-                                                  FormValues["modelDetails"]
-                                                >
-                                            )?.[index]?.detail
-                                            ? "border-red-500"
-                                            : ""
-                                          }`}
-                                      />
-                                      <button
-                                        type="button"
-                                        onClick={() => remove(index)}
-                                        className="ml-2 text-red "
-                                      >
-                                        <RxCross2 className="text-red" size={25} />
-                                      </button>
-                                    </div>
-                                  )
-                                )}
-                                <button
-                                  type="button"
-                                  onClick={() => push({ name: "", detail: "" })}
-                                  className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
-                                >
-                                  Add Model
-                                </button>
-                              </div>
-                            )}
-                          </FieldArray>
+                        <div className="w-2/4">
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                            Canonical Tag
+
+                          </label>
+                          <input
+                            onBlur={formik.handleBlur}
+
+                            type="text"
+                            name="Canonical_Tag"
+                            onChange={formik.handleChange}
+                            value={formik.values.Canonical_Tag}
+                            placeholder="Canonical Tag"
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                              ? "border-red-500"
+                              : ""
+                              }`}
+
+
+                          />
+
+                          {formik.touched.Canonical_Tag && formik.errors.Canonical_Tag ? (
+                            <div className="text-red text-sm">
+                              {formik.errors.code as String}
+                            </div>
+                          ) : null}
                         </div>
+
+
+                      </div>
+                      <div>
+                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                          Meta Description
+
+                        </label>
+                        <textarea
+                          name="Meta_Description"
+                          onChange={formik.handleChange}
+                          value={formik.values.Meta_Description}
+                          placeholder="Meta Description"
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.description &&
+                            formik.errors.description
+                            ? "border-red-500"
+                            : ""
+                            }`}
+                        />
+                        {formik.touched.Meta_Description && formik.errors.Meta_Description ? (
+                          <div className="text-red text-sm">
+                            {formik.errors.code as String}
+                          </div>
+                        ) : null}
                       </div>
 
-                      <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
-                        <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                          <h3 className="font-medium text-black dark:text-white">
-                            Colors
-                          </h3>
-                        </div>
-                        <div className="flex flex-col gap-4 p-4">
-                          <FieldArray name="colors">
-                            {({ push, remove }) => (
-                              <div className="flex flex-col gap-2">
-                                {formik.values.colors.map(
-                                  (spec: any, index: any) => (
-                                    <div key={index} className="flex items-center">
-                                      <input
-                                        type="text"
-                                        name={`colors[${index}].colorName`}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={
-                                          formik.values.colors[index]
-                                            .colorName
-                                        }
-                                        placeholder="Add color Code"
-                                        className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary 
-                                     ${formik.touched.colors &&
-                                            (formik.touched.colors && formik.touched.colors as FormikTouched<FormValues["colors"]>)[index]?.colorName &&
-                                            (formik.errors.color && (formik.errors.colors as FormikErrors<FormValues["colors"]>)[index]?.colorName)
-                                            ? "border-red-500"
-                                            : ""
-                                          }
-                                      
-                                      `}
-                                      />
-                                      <button
-                                        type="button"
-                                        onClick={() => remove(index)}
-                                        className="ml-2 text-red"
-                                      >
-                                        <RxCross2 className="text-red" size={25} />
-                                      </button>
-                                    </div>
-                                  )
-                                )}
-                                <button
 
-                                  type="button"
-                                  onClick={() => push({ colorName: "" })}
-                                  className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
-                                >
-                                  Add Colors
-                                </button>
-                              </div>
-                            )}
-                          </FieldArray>
+                      <div className="flex gap-4">
+                        <div className="w-full">
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                            Images Alt Text
+
+                          </label>
+                          <input
+                            type="text"
+                            name="Images_Alt_Text"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+
+                            value={formik.values.Images_Alt_Text}
+                            placeholder="Images Alt Text"
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                              ? "border-red-500"
+                              : ""
+                              }`}
+                          />
+                          {formik.touched.Images_Alt_Text && formik.errors.Images_Alt_Text ? (
+                            <div className="text-red text-sm">
+                              {formik.errors.code as String}
+                            </div>
+                          ) : null}
+
+
+
                         </div>
+
+
+
+
                       </div>
 
 
                     </div>
                   </div>
                 </div>
+
+
+
 
                 <div className="flex flex-col gap-5">
                   <div className="py-4 px-6.5 rounded-sm border border-stroke">
@@ -572,6 +559,142 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                       </>
                     )}
 
+                  </div>
+
+
+                  <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Model Details
+                      </h3>
+                    </div>
+                    <div className="flex flex-col gap-5.5 p-6.5">
+                      <FieldArray name="modelDetails">
+                        {({ push, remove }) => (
+                          <div className="flex flex-col gap-2">
+                            {formik.values.modelDetails.map(
+                              (model: any, index: any) => (
+                                <div key={index} className="flex items-center">
+                                  <input
+                                    type="text"
+                                    name={`modelDetails[${index}].name`}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={
+                                      formik.values.modelDetails[index].name
+                                    }
+                                    placeholder="Model Name"
+                                    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary 
+                                      ${formik.touched.modelDetails && (formik.touched.modelDetails as FormikTouched<FormValues["modelDetails"]>)?.[index]?.name &&
+                                        (
+                                          formik.errors
+                                            .modelDetails as FormikErrors<
+                                              FormValues["modelDetails"]
+                                            >
+                                        )?.[index]?.name
+                                        ? "border-red-500"
+                                        : ""
+                                      }`}
+                                  />
+                                  <input
+                                    type="text"
+                                    name={`modelDetails[${index}].detail`}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={
+                                      formik.values.modelDetails[index].detail
+                                    }
+                                    placeholder="Model Detail"
+                                    className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary 
+            ${formik.touched.modelDetails && (formik.touched.modelDetails as FormikTouched<FormValues["modelDetails"]>)?.[index]?.detail &&
+                                        (
+                                          formik.errors
+                                            .modelDetails as FormikErrors<
+                                              FormValues["modelDetails"]
+                                            >
+                                        )?.[index]?.detail
+                                        ? "border-red-500"
+                                        : ""
+                                      }`}
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={() => remove(index)}
+                                    className="ml-2 text-red "
+                                  >
+                                    <RxCross2 className="text-red" size={25} />
+                                  </button>
+                                </div>
+                              )
+                            )}
+                            <button
+                              type="button"
+                              onClick={() => push({ name: "", detail: "" })}
+                              className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
+                            >
+                              Add Model
+                            </button>
+                          </div>
+                        )}
+                      </FieldArray>
+                    </div>
+                  </div>
+
+                  <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Colors
+                      </h3>
+                    </div>
+                    <div className="flex flex-col gap-4 p-4">
+                      <FieldArray name="colors">
+                        {({ push, remove }) => (
+                          <div className="flex flex-col gap-2">
+                            {formik.values.colors.map(
+                              (spec: any, index: any) => (
+                                <div key={index} className="flex items-center">
+                                  <input
+                                    type="text"
+                                    name={`colors[${index}].colorName`}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={
+                                      formik.values.colors[index]
+                                        .colorName
+                                    }
+                                    placeholder="Add color Code"
+                                    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary 
+                                     ${formik.touched.colors &&
+                                        (formik.touched.colors && formik.touched.colors as FormikTouched<FormValues["colors"]>)[index]?.colorName &&
+                                        (formik.errors.color && (formik.errors.colors as FormikErrors<FormValues["colors"]>)[index]?.colorName)
+                                        ? "border-red-500"
+                                        : ""
+                                      }
+                                      
+                                      `}
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={() => remove(index)}
+                                    className="ml-2 text-red"
+                                  >
+                                    <RxCross2 className="text-red" size={25} />
+                                  </button>
+                                </div>
+                              )
+                            )}
+                            <button
+
+                              type="button"
+                              onClick={() => push({ colorName: "" })}
+                              className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
+                            >
+                              Add Colors
+                            </button>
+                          </div>
+                        )}
+                      </FieldArray>
+                    </div>
                   </div>
 
 

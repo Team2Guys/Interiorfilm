@@ -1,125 +1,77 @@
-"use client";
-import Container from "components/Layout/Container/Container";
-import Overlay from "components/widgets/Overlay/Overlay";
-import React, { useState, useEffect } from "react";
-import ProductSlider from "components/Carousel/ProductSlider/ProductSlider";
-import axios from "axios";
-import { generateSlug } from "data/Data";
-import PRODUCTS_TYPES from "types/interfaces";
-import ProductDetails from "components/product_detail/ProductDetails";
-import { ProductSkeleton } from "components/Skeleton-loading/ProductSkelton";
-import Loader from "components/Loader/Loader";
-import Accordion from "components/widgets/Accordion";
-import Collapse from "components/ui/Collapse/Collapse";
-import Review from "components/Common/Review";
+import type { Metadata, ResolvingMetadata } from 'next'
+import Product from './Product';
+import axios from 'axios';
+import { usePathname } from 'next/navigation';
+import { headers } from "next/headers";
+import { generateSlug } from 'data/Data';
 
-const Product = ({ params }: { params: { productname: string } }) => {
-  const parsedProduct = params.productname ? params.productname : null;
-  const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
-  const [productDetail, setProductDetail] = useState<PRODUCTS_TYPES | null>(
-    null
-  );
-  const [productsLoading, setProductsLoading] = useState<boolean>(false);
-  const [categoryName, setCategoryName] = useState<string | undefined>();
-  const [reviews, setReviews] = useState<string[]>([]);
-  const productHandler = async () => {
-    try {
-      setProductsLoading(true);
 
-      const categoryRequest = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
-      );
-      const productRequest = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
-      );
-      const [categoryResponse, productResponse] = await Promise.all([
-        categoryRequest,
-        productRequest,
-      ]);
-      setProducts(productResponse.data.products);
 
-      if (parsedProduct && productResponse.data.products.length > 0) {
-        const foundProduct = productResponse.data.products.find(
-          (item: any) => generateSlug(item.name) === parsedProduct
-        );
+type Props = {
+  params: { productname: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
 
-        if (foundProduct) {
-          setProductDetail(foundProduct);
+export async function generateMetadata({ params, searchParams }: Props,): Promise<Metadata> {
+  // read route params
+  const headersList = headers();
+  // Get the domain, protocol, and pathname
+  const domain = headersList.get('x-forwarded-host') || headersList.get('host') || ''; // Fallback to host if x-forwarded-host is not present
+  const protocol = headersList.get('x-forwarded-proto') || 'https'; // Default to https if no protocol is set
+  const pathname = headersList.get('x-invoke-path') || '/'; // Fallback to root if no path
 
-          const foundCategory = categoryResponse.data.find(
-            (cat: any) => cat._id === foundProduct.category
-          );
-          setCategoryName(foundCategory ? foundCategory.name : null);
-        }
-      }
-    } catch (error) {
-      console.log("Error fetching data:", error);
-    } finally {
-      setProductsLoading(false);
-    }
-  };
+  // Construct the full URL
+  const fullUrl = `${protocol}://${domain}${pathname}`;
+  console.log(fullUrl, "fullurl")
 
-  useEffect(() => {
-    productHandler();
-  }, [parsedProduct]);
-  const fetchReviews = async (productId: string) => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`
-      );
-      setReviews(response.data.reviews);
-    } catch (err) {
-      console.log("Failed to fetch reviews:", err);
-    }
-  };
-  useEffect(() => {
-    if (productDetail?._id) {
-      fetchReviews(productDetail?._id);
-    }
-  }, [products]);
+  const categoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+  const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
+  const [categoryResponse, productResponse] = await Promise.all([categoryRequest, productRequest]);
 
-  const filteredProducts = products.filter(
-    (product) => product.category === productDetail?.category
-  );
+  const { products } = productResponse.data
+
+  let Product = products?.find((item: any) => generateSlug(item.name) == params.productname)
+
+  Product  
+let ImageUrl = Product && Product.posterImageUrl.imageUrl ? Product.posterImageUrl.imageUrl : "interiorfilm"
+let alt = Product && Product.Images_Alt_Text ? Product.Images_Alt_Text : "Interior films"
+
+  let images = []
+
+  images.push({url: ImageUrl, alt: alt })
+
+
+  let title = Product && Product.Meta_Title ? Product.Meta_Title : "Interior Films"
+  let description = Product && Product.description ? Product.description : "Welcome to Interior films"
+
+  return {
+    title: title,
+    description: description,
+    openGraph: {
+      title: title,
+      description: description,
+      url: `${fullUrl}/${params.productname}`,
+      images: images,
+    },
+    alternates: {
+      canonical: fullUrl, 
+    },
+  }
+}
+
+
+
+const Page = ({ params }: { params: { productname: string } }) => {
+
+
+
+
+
   return (
     <>
-      <Overlay title="Shop" />
-
-      {productsLoading ? (
-        <ProductSkeleton />
-      ) : productDetail ? (
-        <>
-          <ProductDetails
-            productDetail={productDetail}
-            categoryName={categoryName}
-          />
-        </>
-      ) : null}
-
-      { productDetail ? (
-        <>
-          <div className="block lg:hidden mt-5">
-            <Accordion detail={productDetail.modelDetails} />
-            <Collapse title="Customer Reviews">
-              <Review
-                reviews={reviews}
-                productId={productDetail?._id}
-                fetchReviews={fetchReviews}
-              />
-            </Collapse>
-          </div>
-        </>
-      ) : null}
-
-      <Container className="mt-20">
-        <div className="flex justify-center items-center">
-          <h1 className="w-fit text-center text-lg border-b-2 border-[#FF914E] md:text-3xl mb-5 up tracking-[0.5rem]">
-          recommended Product</h1>
-        </div>
-        <ProductSlider loading={productsLoading} products={filteredProducts} />
-      </Container>
+      <Product productname={params.productname} />
     </>
   );
 };
 
-export default Product;
+export default Page;
