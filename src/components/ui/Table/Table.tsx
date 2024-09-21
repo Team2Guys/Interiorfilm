@@ -235,16 +235,9 @@ const Table: React.FC<TableProps> = ({
   
     return (
       <>
-        <div className=" border border-gray py-3">
-          <div className="text-end p-2">
-            <p className="text-16">
-              *total <span className="text-primary">{totalItems}</span> {totalItems <= 1 ? "Item" : "Items"}
-            </p>
-          </div>
           <div className=" hidden lg:block   ">
-            <div className="">
-              <div className="flex justify-between items-center text-22 font-bold px-6">
-                <div className="lg:w-6/12 xl:w-6/12"><p>Products</p></div>
+              <div className="flex justify-between items-center text-22 font-bold px-6 bg-black text-white py-2 ">
+                <div className="lg:w-5/12 xl:w-5/12"><p>Products</p></div>
                 <div className="lg:w-2/12 xl:w-3/12 "><p >Price</p></div>
                 <div  className={`lg:w-3/12 xl:w-3/12 ${
                     pathName === "/wishlist" ? "" : "text-end"
@@ -254,14 +247,16 @@ const Table: React.FC<TableProps> = ({
                 
                 {pathName === "/wishlist" ? (
                   <p className="w-3/12">
-                    <div className="px-6 py-3 text-end text-23 xl:text-[30px] font-medium text-dark whitespace-nowrap ">
+                    <div className=" text-end text-22  font-medium text-white whitespace-nowrap ">
                       Action
                     </div>
                   </p>
                 ) : null}
+                <div className="lg:w-1/12 xl:w-1/12 "></div>
+
               </div>
   
-              <div className="max-h-[529px] overflow-y-auto table-scrollbar px-4 mx-2">
+              <div className="max-h-[529px] overflow-y-auto table-scrollbar ">
                 {data.map((product, index) => {
                   const options = lengthOptions(product.totalStockQuantity || 0);
                   return (
@@ -269,8 +264,7 @@ const Table: React.FC<TableProps> = ({
                       className="flex justify-between items-center mt-5"
                       key={index}
                     >
-                      <div className="flex gap-1 lg:w-6/12 xl:w-6/12 ">
-                        <div className="relative">
+                      <div className="flex gap-1 lg:w-5/12 xl:w-5/12 ">
                           <Image
                             className="w-[184px] h-[124px] "
                             width={100}
@@ -278,15 +272,6 @@ const Table: React.FC<TableProps> = ({
                             src={product.posterImageUrl || product.imageUrl}
                             alt="Product"
                           />
-                          <div className="absolute -top-2 -right-2">
-                            <div
-                              onClick={() => showDeleteConfirm(index)}
-                              className="bg-white shadow h-5 w-5 flex justify-center items-center rounded-full cursor-pointer hover:text-white hover:bg-primary"
-                            >
-                              <IoCloseSharp size={18} />
-                            </div>
-                          </div>
-                        </div>
                         <div className="p-2 w-full ">
                           <h1 className="text-sm md:text-base font-bold">
                             {/* <span>{counts[index] || 1}* </span> */}
@@ -296,7 +281,7 @@ const Table: React.FC<TableProps> = ({
                             <p className="text-[#B9BBBF]">{product.code}</p>
   
                             <p className="text-16 font-semibold text-[#535353]">
-                              Width: <span>1.22cm (28inch)</span>
+                              Width: <span>Roll width is 122cm</span>
                             </p>
                           </div>
                           {/* <div className="flex gap-2 items-center w-full">
@@ -369,13 +354,19 @@ const Table: React.FC<TableProps> = ({
                           />
                         </div>
                       ) : null}
+                        <div className="w-1/12"> 
+                        <div
+                              onClick={() => showDeleteConfirm(index)}
+                              className="bg-white shadow h-5 w-5  mx-auto flex justify-center items-center rounded-full cursor-pointer hover:text-white hover:bg-primary"
+                            >
+                              <IoCloseSharp size={18} />
+                            </div>
+                        </div>
                     </div>
                   );
                 })}
               </div>
-            </div>
           </div>
-        </div>
   
         {data.map((product, index) => {
           const options = lengthOptions(product.totalStockQuantity || 0);
@@ -424,7 +415,7 @@ const Table: React.FC<TableProps> = ({
                     </p>
                     <div>
                       <p className="text-12 font-medium">
-                        Width: <span>1.22cm (28inch)</span>
+                        Width: <span>Roll width is 122cm</span>
                       </p>
                     </div>
                     <div className="flex border w-20 h-8 justify-between px-2 ">

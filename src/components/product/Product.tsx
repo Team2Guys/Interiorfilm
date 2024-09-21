@@ -170,10 +170,9 @@ const ProductPage = () => {
         !colorName ||
         (product.colors &&
           product.colors.some((color) => color.colorName === colorName));
-      console.log(colorMatch, "colormatch");
-      return nameMatch && colorMatch;
-    }
-  );
+          return nameMatch && colorMatch;
+        }
+      );
 
   const sortProducts = (products: PRODUCTS_TYPES[]) => {
     if (!products || products.length === 0) return [];

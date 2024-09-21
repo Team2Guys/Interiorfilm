@@ -6,7 +6,6 @@ import Overlay from "components/widgets/Overlay/Overlay";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FaFacebookSquare, FaInstagram } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
 import { FiMail, FiPhone } from "react-icons/fi";
 import { TfiLocationPin } from "react-icons/tfi";
 import { useFormik } from "formik";

@@ -22,7 +22,7 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
 
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense>
       {
       withoutHeaderPages.includes(pathname)  || pathname.split('/').includes('dashboard') ? null : 
       <Navbar/>

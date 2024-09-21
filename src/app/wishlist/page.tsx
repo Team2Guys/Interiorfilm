@@ -23,7 +23,7 @@ const Wishlist = () => {
   return (
     <>
       <Overlay title='Wishlist' />
-      <Container className='mt-20'>
+      <Container className='mt-20 mb-10'>
         <div className='flex justify-between mb-10'>
           <Link className='underline' href={"/"}>Continue Shopping</Link>
           <Link className='underline' href={"/cart"}>Go to Cart</Link>

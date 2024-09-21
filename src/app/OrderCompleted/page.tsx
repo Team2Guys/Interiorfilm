@@ -1,4 +1,3 @@
-import Button from 'components/Common/Button'
 import Container from 'components/Layout/Container/Container'
 import Overlay from 'components/widgets/Overlay/Overlay'
 import React from 'react'
