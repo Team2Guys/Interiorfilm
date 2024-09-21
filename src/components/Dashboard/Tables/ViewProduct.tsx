@@ -52,45 +52,45 @@ const ViewProduct: React.FC<CategoryProps> = ({
 
   const filteredProducts: Product[] =
   Categories?.filter((product: any) =>
-    product.name.toLowerCase().includes(searchTerm) ||
+    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
   (product.description &&
-    product.description.toLowerCase().includes(searchTerm)) ||
+    product.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
   (product.salePrice &&
-    product.salePrice.toString().toLowerCase().includes(searchTerm)) ||
+    product.salePrice.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
   (product.purchasePrice &&
     product.purchasePrice
       .toString()
       .toLowerCase()
-      .includes(searchTerm)) ||
+      .includes(searchTerm.toLowerCase())) ||
   (product.category &&
-    product.category.toString().toLowerCase().includes(searchTerm)) ||
+    product.category.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
   product.discountPrice
     ?.toString()
     .toLowerCase()
-    .includes(searchTerm) ||
+    .includes(searchTerm.toLowerCase()) ||
   (product.colors &&
     product.colors.some((color: any) =>
-      color.colorName.toLowerCase().includes(searchTerm)
+      color.colorName.toLowerCase().includes(searchTerm.toLowerCase())
     )) ||
   product.modelDetails.some(
     (model: any) =>
-      model.name.toLowerCase().includes(searchTerm) ||
-      model.detail.toLowerCase().includes(searchTerm)
+      model.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      model.detail.toLowerCase().includes(searchTerm.toLowerCase())
   ) ||
   (product.spacification &&
     product.spacification.some((spec: any) =>
-      spec.specsDetails.toLowerCase().includes(searchTerm)
+      spec.specsDetails.toLowerCase().includes(searchTerm.toLowerCase())
     )) ||
-  product.starRating?.toString().toLowerCase().includes(searchTerm) ||
-  product.reviews?.toLowerCase().includes(searchTerm) ||
-  product.code.toLowerCase().includes(searchTerm) ||
+  product.starRating?.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+  product.reviews?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  product.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
   product.totalStockQuantity
     ?.toString()
     .toLowerCase()
-    .includes(searchTerm) ||
+    .includes(searchTerm.toLowerCase()) ||
   (product.sizes &&
     product.sizes.some((size: any) =>
-      size.sizesDetails.toLowerCase().includes(searchTerm)
+      size.sizesDetails.toLowerCase().includes(searchTerm.toLowerCase())
     ))
   ) || [];
 
