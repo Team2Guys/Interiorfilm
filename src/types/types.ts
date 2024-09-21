@@ -24,3 +24,9 @@ export type BRAND = {
     text?: any;
     listItems?: any[];
   }
+
+  export interface ACCORDINTYPES {
+    Title: string;
+    Description: string;
+    Icon: any;
+  }

@@ -22,7 +22,7 @@ interface Product {
 
 interface CategoryProps {
   Categories: any;
-  setCategory: any;
+  setProduct: any;
   setselecteMenu: (menu: string) => void;
   loading: boolean;
   setEditProduct: any;
@@ -30,7 +30,7 @@ interface CategoryProps {
 
 const ViewProduct: React.FC<CategoryProps> = ({
   Categories,
-  setCategory,
+  setProduct,
   setselecteMenu,
   loading,
   setEditProduct,
@@ -47,15 +47,54 @@ const ViewProduct: React.FC<CategoryProps> = ({
   const canAddProduct=loggedInUser && (loggedInUser.role =='Admin' ?   loggedInUser.canAddProduct : true ) 
   const canDeleteProduct=loggedInUser && (loggedInUser.role =='Admin' ?  loggedInUser.canDeleteProduct : true )
   const canEditproduct = loggedInUser && (loggedInUser.role =='Admin'  ? loggedInUser.canEditproduct : true )  
-
-
   console.log(canDeleteProduct, "canAddProduct"
   )
 
   const filteredProducts: Product[] =
-    Categories?.filter((product: any) =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase())
-    ) || [];
+  Categories?.filter((product: any) =>
+    product.name.toLowerCase().includes(searchTerm) ||
+  (product.description &&
+    product.description.toLowerCase().includes(searchTerm)) ||
+  (product.salePrice &&
+    product.salePrice.toString().toLowerCase().includes(searchTerm)) ||
+  (product.purchasePrice &&
+    product.purchasePrice
+      .toString()
+      .toLowerCase()
+      .includes(searchTerm)) ||
+  (product.category &&
+    product.category.toString().toLowerCase().includes(searchTerm)) ||
+  product.discountPrice
+    ?.toString()
+    .toLowerCase()
+    .includes(searchTerm) ||
+  (product.colors &&
+    product.colors.some((color: any) =>
+      color.colorName.toLowerCase().includes(searchTerm)
+    )) ||
+  product.modelDetails.some(
+    (model: any) =>
+      model.name.toLowerCase().includes(searchTerm) ||
+      model.detail.toLowerCase().includes(searchTerm)
+  ) ||
+  (product.spacification &&
+    product.spacification.some((spec: any) =>
+      spec.specsDetails.toLowerCase().includes(searchTerm)
+    )) ||
+  product.starRating?.toString().toLowerCase().includes(searchTerm) ||
+  product.reviews?.toLowerCase().includes(searchTerm) ||
+  product.code.toLowerCase().includes(searchTerm) ||
+  product.totalStockQuantity
+    ?.toString()
+    .toLowerCase()
+    .includes(searchTerm) ||
+  (product.sizes &&
+    product.sizes.some((size: any) =>
+      size.sizesDetails.toLowerCase().includes(searchTerm)
+    ))
+  ) || [];
+
+
 
   const confirmDelete = (key: any) => {
     Modal.confirm({
@@ -72,7 +111,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteProduct/${key}`
       );
-      setCategory((prev: Product[]) => prev.filter((item) => item._id !== key));
+      setProduct((prev: Product[]) => prev.filter((item) => item._id !== key));
       notification.success({
         message: "Product Deleted",
         description: "The product has been successfully deleted.",

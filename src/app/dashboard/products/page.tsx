@@ -53,7 +53,6 @@ const Products = () => {
     hoverImageUrl: editProduct && editProduct.hoverImageUrl,
   };  
 
-  console.log(editProduct?.colors, "colors")
 
   let productFlag: boolean = selecteMenu === "Add All Products" ? true : false
 
@@ -65,10 +64,9 @@ const Products = () => {
 
           <ViewProduct
             Categories={products}
-            setCategory={setProducts}
+            setProduct={setProducts}
             setselecteMenu={setselecteMenu}
             loading={productloading}
-
             setEditProduct={setEditProduct}
           />
           :

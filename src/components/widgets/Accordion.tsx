@@ -19,8 +19,8 @@ const Accordion: React.FC<accordionprop> = ({ detail }: any) => {
         <>
             <React.Fragment key={index}>
               <ProductCollapse isOpen={openIndex === index}
-                onClick={() => handleToggle(index)} title={item.name} titleClass="text-[14px]"  className=" py-4 border-t border-stone-200">
-                <p className="text-[14px]">{item.detail}</p>
+                onClick={() => handleToggle(index)} title={item.name} titleClass="font-semibold text-[18px]"  className=" py-4 border-t border-stone-200">
+                <p className="text-[15px]">{item.detail}</p>
               </ProductCollapse>
             </React.Fragment>
             
