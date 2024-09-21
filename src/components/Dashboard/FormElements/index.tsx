@@ -104,7 +104,6 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
       let url = `${process.env.NEXT_PUBLIC_BASE_URL}${updateFlag ? addProductUrl : "/api/addProduct"
         }`;
       const response = await axios.post(url, newValue);
-      console.log(response, "response");
       Toaster( "success",  updateFlag? "Product has been sucessufully Updated !": "Product has been sucessufully Created !");
       setProductInitialValue(AddproductsinitialValues);
       resetForm();

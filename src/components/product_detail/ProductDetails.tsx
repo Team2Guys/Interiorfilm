@@ -386,15 +386,15 @@ export default function ProductDetails({
 
               <div className="flex gap-2 mb-4">
                 <div className="relative w-1/2 border-4 border-[#00FFBC] p-4 rounded-lg shadow">
-                  <span className="absolute -top-3 left-2 bg-[#00FFBC] text-black px-2 py-1 rounded-lg text-xs font-extrabold">
+                  <span className="absolute -top-3 left-2 bg-[#00FFBC]  px-2 py-1 rounded-lg text-xs font-extrabold">
                     tabby
                   </span>
-                  <p className="text-12">
+                  <p className="text-12 ">
                     Pay 4 interest-free payments of AED{" "}
                     {totalPrice && (totalPrice / 4).toFixed()}{" "}
                     <Dialog>
-                      <DialogTrigger asChild>
-                        <span className="text-red-600 underline cursor-pointer">
+                      <DialogTrigger asChild className="text-red">
+                        <span className=" underline cursor-pointer" style={{color:"red"}}>
                           Learn more
                         </span>
                       </DialogTrigger>
@@ -465,8 +465,8 @@ export default function ProductDetails({
                     Pay 4 interest-free payments of AED{" "}
                     {totalPrice && (totalPrice / 4).toFixed()}{" "}
                     <Dialog>
-                      <DialogTrigger asChild>
-                        <span className="text-red-600 underline cursor-pointer">
+                      <DialogTrigger asChild className="text-red">
+                        <span className=" underline cursor-pointer">
                           Learn more
                         </span>
                       </DialogTrigger>
