@@ -95,11 +95,8 @@ const Product = ({ params }: { params: { productname: string } }) => {
           />
         </>
       ) : null}
-      {productsLoading ? (
-        <div className="flex justify-center items-center h-[20vh]">
-          <Loader />
-        </div>
-      ) : productDetail ? (
+
+      { productDetail ? (
         <>
           <div className="block lg:hidden mt-5">
             <Accordion detail={productDetail.modelDetails} />

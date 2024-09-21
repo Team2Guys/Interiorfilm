@@ -9,14 +9,10 @@ import Button from "../Button/Button";
 import PRODUCTS_TYPES from "types/interfaces";
 
 interface TableProps {
-  cartdata?: PRODUCTS_TYPES[];
-  wishlistdata?: PRODUCTS_TYPES[];
   onCartChange: (updatedCart: PRODUCTS_TYPES[]) => void;
 }
 
 const Table: React.FC<TableProps> = ({
-  cartdata,
-  wishlistdata,
   onCartChange,
 }) => {
   const pathName = usePathname();
@@ -27,11 +23,30 @@ const Table: React.FC<TableProps> = ({
   const [lengths, setLengths] = useState<{ [key: number]: number }>({});
   const [totalItems, setTotalItems] = useState(0);
 
+
   useEffect(() => {
-    // Calculate the total number of items
+    const handleCartChange = () => {
+      ProductHandler(); // This re-fetches cart data and updates the UI
+    };
+  
+    window.addEventListener("cartChanged", handleCartChange);
+    window.addEventListener("WishlistChanged", handleCartChange);
+  
+    return () => {
+      window.removeEventListener("cartChanged", handleCartChange);
+      window.removeEventListener("WishlistChanged", handleCartChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    ProductHandler();
+  }, [pathName, changeId]);
+
+  useEffect(() => {
     const total = data.reduce((sum, product) => sum + (product.count || 1), 0);
     setTotalItems(total);
   }, [data]);
+
   const ProductHandler = () => {
     const Products = localStorage.getItem(
       pathName === "/wishlist" ? "wishlist" : "cart"
@@ -59,9 +74,6 @@ const Table: React.FC<TableProps> = ({
     }
   };
 
-  useEffect(() => {
-    ProductHandler();
-  }, [pathName, changeId]);
 
   const increment = (index: number) => {
     const newLengths = { ...lengths };
@@ -138,12 +150,12 @@ const Table: React.FC<TableProps> = ({
 
   const addToCart = (product: PRODUCTS_TYPES, index: number) => {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-
+  
     // Find index of existing product with the same ID and length
     const existingIndex = cart.findIndex(
       (item: any) => item.id === product._id && item.length === lengths[index]
     );
-
+  
     if (existingIndex !== -1) {
       cart[existingIndex].count += counts[index] || 1;
       cart[existingIndex].totalPrice =
@@ -162,14 +174,19 @@ const Table: React.FC<TableProps> = ({
         totalPrice: totalPrice,
       });
     }
-    cart.forEach((item: any) => {
-      item.totalPrice = Number(item.totalPrice) || 0;
-    });
-
+  
+    // Update localStorage with new cart data
     localStorage.setItem("cart", JSON.stringify(cart));
+  
+    // ** Update the local state immediately to reflect changes in the UI **
+    setData(cart);
+  
+    // Remove the item from wishlist
     removeItemFromCart(index);
     window.dispatchEvent(new Event("cartChanged"));
   };
+  
+  
 
   const handleChange = (
     index: number,

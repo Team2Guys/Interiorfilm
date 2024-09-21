@@ -67,7 +67,7 @@ const Cart = () => {
         ) : (
           <div className="flex flex-wrap lg:flex-nowrap md:gap-10 ">
             <div className="w-full lg:w-10/12 xl:w-9/12 2xl:w-7/12">
-              <Table cartdata={cartItems} onCartChange={handleCartChange} />
+              <Table onCartChange={handleCartChange} />
             </div>
             <div className="w-full lg:w-5/12 xl:w-3/12  2xl:w-5/12 mt-3 md:mt-0 border border-gray">
               <div className='p-2 md:p-4 space-y-4'>
