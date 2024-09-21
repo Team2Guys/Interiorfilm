@@ -18,9 +18,9 @@ export default function Home() {
       <Hero />
       <InfoTabs />
       <CategorySlider />
+      <PreFooter />
       <HomeAccordian />
       <InteriorVideo />
-      <PreFooter />
       <SearchProduct />
       <HomeFeature />
       <Offer Offers={offers} />

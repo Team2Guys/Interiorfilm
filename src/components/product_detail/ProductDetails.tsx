@@ -20,6 +20,7 @@ import {
 } from "components/ui/dialog";
 import Image from "next/image";
 import {
+  generateSlug,
   PaymentMethods,
   tabbyfeature,
   tabbyhowitwork,
@@ -77,10 +78,11 @@ export default function ProductDetails({
   const calculateAverageRating = () => {
     if (reviews.length === 0) return 0;
     const totalRating = reviews.reduce((sum, review) => sum + review.star, 0);
-    return totalRating / reviews.length;
+    return (totalRating / reviews.length).toFixed(2); // Convert to 2 decimal places
   };
 
   const averageRating = calculateAverageRating();
+  
   const handleIncrement = () => {
     if (quantity < 100) {
       setQuantity(quantity + 1);
@@ -225,8 +227,8 @@ export default function ProductDetails({
               </span>
               <hr className="text-[#E4E4E4]" />
 
-              <div className="flex flex-wrap w-full justify-between">
-                <div className="flex  flex-col ">
+              <div className="flex flex-wrap w-full justify-between items-center">
+                <div className="flex flex-col">
                   <p className="text-secondary font-poppins text-[25.92px] font-bold ">
                     AED{" "}
                     <span>
@@ -246,7 +248,7 @@ export default function ProductDetails({
                   <div className="flex flex-col flex-wrap gap-2 w-1/2 text-[10.67px]">
                     <div className="flex flex-wrap gap-4">
                       <div className="flex gap-1 items-center bg-[#FBF3EA] w-[49.79px] h-[23px] p-2 rounded-xl text-[#D48D3B] max-w-fit ">
-                        <FaRegStar /> {averageRating}.0
+                        <FaRegStar /> {averageRating}
                       </div>
                       <div className="flex  items-center gap-1 bg-[#F5F5F5] px-3 rounded-xl h-[23px]">
                         <BiMessageDetail />
@@ -554,7 +556,7 @@ export default function ProductDetails({
               </div>
               <div className="flex items-center gap-2 text-black dark:text-white">
                 <p className="font-semibold text-12 md:text-16">Categories: </p>
-                <p className="font-semibold text-12 md:text-16">{categoryName}</p>
+                <Link href={`/products?category=${generateSlug(categoryName ? categoryName : "")}`} className="font-semibold hover:text-primary text-12 md:text-16">{categoryName}</Link>
               </div>
               <div>
                 <p className="text-14 md:text-16 font-normal">
