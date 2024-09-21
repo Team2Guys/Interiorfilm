@@ -32,29 +32,33 @@ export async function generateMetadata({ params, searchParams }: Props,): Promis
 
   let Product = products?.find((item: any) => generateSlug(item.name) == params.productname)
 
-  Product  
-let ImageUrl = Product && Product.posterImageUrl.imageUrl ? Product.posterImageUrl.imageUrl : "interiorfilm"
-let alt = Product && Product.Images_Alt_Text ? Product.Images_Alt_Text : "Interior films"
+  let ImageUrl = Product?.posterImageUrl?.imageUrl || "interiorfilm"; // Make sure the URL is correct
+  let alt = Product?.Images_Alt_Text || "Interior films"; // Check if alt text is available
+  
+  let NewImage = [
+    {
+      url: ImageUrl, 
+      alt: alt     }
+  ];
 
-  let images = []
 
-  images.push({url: ImageUrl, alt: alt })
+  console.log(NewImage, "NewImage")
 
 
   let title = Product && Product.Meta_Title ? Product.Meta_Title : "Interior Films"
   let description = Product && Product.description ? Product.description : "Welcome to Interior films"
-
+let url = `${fullUrl}/product/${params.productname}`
   return {
     title: title,
     description: description,
     openGraph: {
       title: title,
       description: description,
-      url: `${fullUrl}/${params.productname}`,
-      images: images,
+      url: url,
+      images: NewImage,
     },
     alternates: {
-      canonical: fullUrl, 
+      canonical:Product && Product.Canonical_Tag? Product.Canonical_Tag : url , 
     },
   }
 }
