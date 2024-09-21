@@ -18,8 +18,8 @@ export default function Home() {
       <Hero />
       <InfoTabs />
       <CategorySlider />
-      <PreFooter />
       <HomeAccordian />
+      <PreFooter />
       <InteriorVideo />
       <SearchProduct />
       <HomeFeature />

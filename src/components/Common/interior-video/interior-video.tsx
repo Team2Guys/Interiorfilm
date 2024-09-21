@@ -23,13 +23,13 @@ const InteriorVideo: React.FC = () => {
 
   return (
     <>
-      <div className="text-center mt-10 flex flex-col justify-center items-center space-y-2">
+      <div className="text-center flex flex-col justify-center items-center space-y-2">
         {/* <FaArrowDownLong className="text-primary" />
         <p className="uppercase text-[14px] leading-6 tracking-widest">
           ALL collection
         </p> */}
       </div>
-      <div className="relative w-full h-[483px] mt-10">
+      <div className="relative w-full h-[483px] mt-5">
         <video
           ref={videoRef}
           className="w-full h-full object-cover"
