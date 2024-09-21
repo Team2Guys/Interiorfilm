@@ -40,13 +40,17 @@ const Navbar = () => {
    
   const category = searchParams.get("category");
 
+  // Handle setting the active link based on the current category or pathname
   useEffect(() => {
     if (category) {
       setActiveLink(`/products?category=${category}`);
-    } else {
-      setActiveLink("");
+    } else if (pathname) {
+      const activeNavLink = navarlink.find((nav) =>
+        pathname.includes(nav.ref)
+      );
+      setActiveLink(activeNavLink?.ref || "");
     }
-  }, [category]);
+  }, [category, pathname]);
 
   const showModal = () => {
     // if (searchTerm.trim() !== "") {
