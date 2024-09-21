@@ -42,7 +42,7 @@ const ProductCollapse: React.FC<CollapseProps> = ({
             onClick={onClick}
           >
             <div className="flex w-full justify-between items-center  gap-3">
-              <span className={`${titleClass }  `}>{title}</span>
+              <span className={`${titleClass }   `}>{title}</span>
               <span>{isOpen ? isHome ? <RxCross2 className="text-2xl " /> : <MdKeyboardArrowUp className="text-3xl" /> : isHome ? <BsPlus className="text-3xl " /> : <MdKeyboardArrowDown className="text-3xl" />}</span>
             </div>
           </button>

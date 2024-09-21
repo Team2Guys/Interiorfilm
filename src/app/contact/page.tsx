@@ -123,8 +123,8 @@ const Contact = () => {
 
               <div className="flex gap-2 items-center">
                 <FiMail size={20} />
-                <Link target="_blank" href={"mailto:orders@yzgroup.ae"}>
-                  orders@yzgroup.ae
+                <Link target="_blank" href={"mailto:info@interiorfilm.ae"}>
+                  info@interiorfilm.ae
                 </Link>
               </div>
 
