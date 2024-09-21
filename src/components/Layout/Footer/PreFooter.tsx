@@ -1,7 +1,5 @@
 import TextwithIcon from 'components/TextwithIcon'
 import React from 'react'
-import { BiMessageAlt } from 'react-icons/bi'
-import icon from './t.svg'
 const PreFooter = () => {
     return (
         <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-4 md:px-15 md:place-items-center">

@@ -4,12 +4,10 @@ import Image from 'next/image'
 import React from 'react'
 import about from "../../../public/images/about.png"
 import Offer from 'components/widgets/Offer/Offer'
-import Testimonial from 'components/widgets/Testimonial/Testimonial'
 import { SlDiamond } from 'react-icons/sl'
 import { CgBulb } from 'react-icons/cg'
 import { GiPayMoney } from 'react-icons/gi'
 import { RiCustomerService2Line } from 'react-icons/ri'
-import Link from 'next/link'
 const offers = [
     { icon:<SlDiamond className='text-primary  group-hover:text-white text-23 md:text-[40px]'  /> ,title: 'Savings to your pocket', detail: 'We cut out the middle man, passing the savings on to you.' },
     { icon:<CgBulb className='text-primary  group-hover:text-white text-23 md:text-[40px]'  /> ,title: 'Fast Delivery ', detail: 'Choose your material, select quantity, check out and receive by the next working day.' },

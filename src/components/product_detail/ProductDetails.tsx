@@ -20,6 +20,7 @@ import {
 } from "components/ui/dialog";
 import Image from "next/image";
 import {
+  generateSlug,
   PaymentMethods,
   tabbyfeature,
   tabbyhowitwork,
@@ -77,10 +78,11 @@ export default function ProductDetails({
   const calculateAverageRating = () => {
     if (reviews.length === 0) return 0;
     const totalRating = reviews.reduce((sum, review) => sum + review.star, 0);
-    return totalRating / reviews.length;
+    return (totalRating / reviews.length).toFixed(2); // Convert to 2 decimal places
   };
 
   const averageRating = calculateAverageRating();
+  
   const handleIncrement = () => {
     if (quantity < 100) {
       setQuantity(quantity + 1);
@@ -200,7 +202,7 @@ export default function ProductDetails({
   return (
     // xl:max-w-screen-2xl
     <div className="mt-10 mb-5 px-2 md:px-10  mx-auto xl:max-w-screen-3xl">
-      <div className="flex flex-wrap lg:flex-nowrap gap-8  mt-2 p-2 ">
+      <div className="flex flex-wrap lg:flex-nowrap gap-4  mt-2 p-2 ">
         <div className={`w-full lg:w-8/12 xl:w-7/12 ${firstFlex} `}>
           <Thumbnail
             detail={productDetail.modelDetails}
@@ -208,8 +210,8 @@ export default function ProductDetails({
             thumbs={productDetail.imageUrl}
           />
         </div>
-        <div className="flex lg:w-4/12 xl:w-5/12  flex-col gap-3">
-          <div className="flex flex-wrap w-full justify-between flex-col md:flex-row ">
+        <div className="flex lg:w-4/12 xl:w-5/12  flex-col ">
+          <div className="flex flex-wrap lg:flex-nowrap w-full justify-between flex-col md:flex-row gap-4">
             <div
               className={`w-full md:px-2 space-y-2 md:space-y-4 ${
                 !isQuickView ? "md:w-3/3 xl:w-8/12" : "w-full xl:w-12/12"
@@ -225,8 +227,8 @@ export default function ProductDetails({
               </span>
               <hr className="text-[#E4E4E4]" />
 
-              <div className="flex flex-wrap w-full justify-between">
-                <div className="flex  flex-col ">
+              <div className="flex flex-wrap w-full justify-between items-center">
+                <div className="flex flex-col">
                   <p className="text-secondary font-poppins text-[25.92px] font-bold ">
                     AED{" "}
                     <span>
@@ -246,7 +248,7 @@ export default function ProductDetails({
                   <div className="flex flex-col flex-wrap gap-2 w-1/2 text-[10.67px]">
                     <div className="flex flex-wrap gap-4">
                       <div className="flex gap-1 items-center bg-[#FBF3EA] w-[49.79px] h-[23px] p-2 rounded-xl text-[#D48D3B] max-w-fit ">
-                        <FaRegStar /> {averageRating}.0
+                        <FaRegStar /> {averageRating}
                       </div>
                       <div className="flex  items-center gap-1 bg-[#F5F5F5] px-3 rounded-xl h-[23px]">
                         <BiMessageDetail />
@@ -397,8 +399,8 @@ export default function ProductDetails({
                         </span>
                       </DialogTrigger>
 
-                      <DialogOverlay className="bg-white/80" />
-                      <DialogContent className="sm:max-w-[80%] lg:max-w-[60%] z-99999 bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180 ">
+                      <DialogOverlay className="bg-black/60 z-999999" />
+                      <DialogContent className="sm:max-w-[80%] mt-10 lg:max-w-[60%] z-999999 bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180 ">
                         {/* <DialogContent className="bg-red h-10"> */}
                         <DialogHeader>
                           <DialogTitle className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10">
@@ -469,8 +471,8 @@ export default function ProductDetails({
                         </span>
                       </DialogTrigger>
 
-                      <DialogOverlay className="bg-white/80 " />
-                      <DialogContent className="sm:max-w-[80%] lg:max-w-[60%] z-99999  bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180">
+                      <DialogOverlay className="bg-black/60  z-999999 " />
+                      <DialogContent className="sm:max-w-[80%] mt-10 lg:max-w-[60%] z-999999  bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180">
                         <DialogHeader>
                           <DialogTitle className="text-xl xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10 ">
                             Easy Monthly Installments
@@ -540,21 +542,21 @@ export default function ProductDetails({
                   </p>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-1 justify-between  px-2 md:px-0">
+              <div className="flex flex-wrap gap-1 justify-between items-center px-2 md:px-0 bg-white  ">
                 {PaymentMethods.map((item, index) => (
                   <Image
                     src={item.imageUrl}
                     alt="master"
                     width={60}
                     height={60}
-                    className="bg-white p-2 object-contain shadow-lg "
+                    className="object-contain shadow p-1 "
                     key={index}
                   />
                 ))}
               </div>
               <div className="flex items-center gap-2 text-black dark:text-white">
                 <p className="font-semibold text-12 md:text-16">Categories: </p>
-                <p className="font-semibold text-12 md:text-16">{categoryName}</p>
+                <Link href={`/products?category=${generateSlug(categoryName ? categoryName : "")}`} className="font-semibold hover:text-primary text-12 md:text-16">{categoryName}</Link>
               </div>
               <div>
                 <p className="text-14 md:text-16 font-normal">

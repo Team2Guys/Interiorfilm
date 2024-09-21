@@ -14,14 +14,13 @@ import { useAppSelector } from "components/Others/HelperRedux";
 import Cookies from "js-cookie";
 import { useAppDispatch } from "components/Others/HelperRedux";
 import Profile from "components/user_profile/Profile";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import PRODUCTS_TYPES, { Category } from "types/interfaces";
 import { SlHandbag } from "react-icons/sl";
 import CartDrawer from "components/cart-drawer/cart-drawer";
 import TopNav from "./TopNav";
 import { IoSearch } from "react-icons/io5";
 import Container from "../Container/Container";
-
 const Navbar = () => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
@@ -32,11 +31,26 @@ const Navbar = () => {
   const pathname = usePathname(); // Get the current path
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
-  const [activeLink, setActiveLink] = useState<string>("");
+  const [activeLink, setActiveLink] = useState<string>("/");
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchParams = useSearchParams();
+   
+  const category = searchParams.get("category");
+
+  // Handle setting the active link based on the current category or pathname
+  useEffect(() => {
+    if (category) {
+      setActiveLink(`/products?category=${category}`);
+    } else if (pathname) {
+      const activeNavLink = navarlink.find((nav) =>
+        pathname.includes(nav.ref)
+      );
+      setActiveLink(activeNavLink?.ref || "");
+    }
+  }, [category, pathname]);
 
   const showModal = () => {
     // if (searchTerm.trim() !== "") {
@@ -206,7 +220,6 @@ const Navbar = () => {
     setOpen(false);
   };
 
-
   useEffect(() => {
     const handleCartChange = () => {
       setOpen(false);
@@ -325,7 +338,11 @@ const Navbar = () => {
               href={"/wishlist"}
               className="relative text-22 sm:text-16 md:text-2xl"
             >
-              <IoMdHeartEmpty className={`cursor-pointer ${WishlistItems.length > 0 ? ("text-primary"):("text-black")}`} />
+              <IoMdHeartEmpty
+                className={`cursor-pointer ${
+                  WishlistItems.length > 0 ? "text-primary" : "text-black"
+                }`}
+              />
               {WishlistItems.length > 0 ? (
                 <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center shadow-2xl bg-white text-black absolute left-2 top-2 md:left-3 md:top-3">
                   <span className="font-medium text-11 md:text-18">
@@ -340,7 +357,11 @@ const Navbar = () => {
               href={"/cart"}
               className="relative text-22 sm:text-16 md:text-2xl"
             >
-              <SlHandbag className={`cursor-pointer ${cartItems.length > 0 ? ("text-primary"):("text-black")}`}  />
+              <SlHandbag
+                className={`cursor-pointer ${
+                  cartItems.length > 0 ? "text-primary" : "text-black"
+                }`}
+              />
               {cartItems.length > 0 ? (
                 <>
                   <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center bg-white  text-black absolute left-2 top-2 md:left-3 md:top-3">
@@ -411,26 +432,27 @@ const Navbar = () => {
                 : "bg-white text-black"
             }`}
           >
-            {navarlink.map(
-              (navItem: { ref: string; title: string }, index: number) => {
-                const slug = navItem.title.includes("Series")
-                  ? `/products?category=${navItem.ref}`
-                  : `/${navItem.ref}`;
-                const isActive = activeLink === slug;
-                return (
-                  <Link
-                    className={` 2xl:leading-7 2xl:tracking-[20%] ${
-                      isActive ? "link-active" : "link-underline"
-                    }`}
-                    key={index}
-                    href={slug}
-                    onClick={() => setActiveLink(slug)}
-                  >
-                    {navItem.title}
-                  </Link>
-                );
-              }
-            )}
+           {navarlink.map((navItem, index) => {
+        // Build slug depending on whether the item is a series or not
+        const slug = navItem.title.includes("Series")
+          ? `/products?category=${navItem.ref}`
+          : `/${navItem.ref}`;
+
+        const isActive = activeLink === slug; // Check if the link is active
+
+        return (
+          <Link
+            className={`2xl:leading-7 2xl:tracking-[20%] ${
+              isActive ? "link-active" : "link-underline"
+            }`}
+            key={index}
+            href={slug}
+            onClick={() => setActiveLink(slug)} // Update the active link on click
+          >
+            {navItem.title}
+          </Link>
+        );
+      })}
           </Container>
         </div>
       </nav>
@@ -530,7 +552,7 @@ const Navbar = () => {
           )}
         </>
       </Modal>
-      <CartDrawer open={drawerOpen} onClose={handleCloseDrawer}   />
+      <CartDrawer open={drawerOpen} onClose={handleCloseDrawer} />
     </>
   );
 };

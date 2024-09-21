@@ -19,8 +19,8 @@ export default function Home() {
       <InfoTabs />
       <CategorySlider />
       <HomeAccordian />
-      <InteriorVideo />
       <PreFooter />
+      <InteriorVideo />
       <SearchProduct />
       <HomeFeature />
       <Offer Offers={offers} />
