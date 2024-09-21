@@ -1,11 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Table from "components/ui/Table/Table"; // Update with correct path to your Table component
-import Overlay from "components/widgets/Overlay/Overlay";
+import Table from "components/ui/Table/Table";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Container from "components/Layout/Container/Container";
-import { FiTag } from "react-icons/fi";
 import ProductSlider from "components/Carousel/ProductSlider/ProductSlider";
 import axios from "axios";
 import PRODUCTS_TYPES from "types/interfaces";

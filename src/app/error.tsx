@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { ImNotification } from "react-icons/im";
 interface ErrorProps {
   error: Error;
   reset: () => void;
