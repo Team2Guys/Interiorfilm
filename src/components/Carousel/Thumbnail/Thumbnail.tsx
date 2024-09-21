@@ -74,7 +74,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
     <Fragment>
       <div className="space-y-20">
         <div className="lg:relative w-full">
-          <div className="w-full flex flex-wrap lg:flex-nowrap flex-col-reverse lg:flex-row lg:gap-6 xl:gap-10">
+          <div className="w-full flex flex-wrap lg:flex-nowrap flex-col-reverse lg:flex-row lg:gap-3 xl:gap-6">
             <div className="w-full lg:w-3/12 flex flex-col gap-3">
               <div
                 className=" lg:max-h-[650px] 2xl:max-h-[700px] overflow-y-auto custom-scrollbar"

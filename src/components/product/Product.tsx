@@ -47,15 +47,11 @@ const StaticCategory = {
 
 const ProductPage = () => {
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
-  const [filteredProductsByCategory, setfilteredProductsByCategory] = useState<
-    PRODUCTS_TYPES[]
-  >([]);
+  const [filteredProductsByCategory, setfilteredProductsByCategory] = useState<PRODUCTS_TYPES[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showColors, setShowColors] = useState<boolean>(false);
   const [colorName, setColorName] = useState<string>();
-  const [availableColors, setAvailableColors] = useState<
-    { value: string; label: string }[] | string[]
-  >([]);
+  const [availableColors, setAvailableColors] = useState<{ value: string; label: string }[] | string[] >([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortOption, setSortOption] = useState<string>("Default");
   const [category, setCategory] = useState<category[]>([]);
@@ -130,28 +126,26 @@ const ProductPage = () => {
       const activeCategory: any = (
         newcategories ? newcategories : category
       ).find((cat) => generateSlug(cat.name) === categoryName);
-      setActiveLink(activeCategory);
-      console.log(activeCategory, "activeCategory");
-
-      if (!activeCategory) return;
+      if (!activeCategory || activeCategory._id === "all") {
+        setfilteredProductsByCategory(newProducts ? newProducts : totalProducts);
+        setActiveLink(StaticCategory);
+        Get_colors_handler(newProducts ? newProducts : totalProducts);
+        return;
+      }
       const filteredProductsByCategory = (
         newProducts ? newProducts : totalProducts
       ).filter((product: PRODUCTS_TYPES) => {
-        // if (activeLink._id === "all") {
-        //   return product;
-        // }
-        // return product.category === activeLink._id;
         return product.category === activeCategory._id;
       });
-      console.log(filteredProductsByCategory, "filteredProductsByCategory");
+  
       setfilteredProductsByCategory(filteredProductsByCategory);
-
+      setActiveLink(activeCategory);
       Get_colors_handler(filteredProductsByCategory);
     } catch (err) {
       console.error("Error loading products or categories", err);
     }
   };
-
+  
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
@@ -182,10 +176,10 @@ const ProductPage = () => {
   );
 
   const sortProducts = (products: PRODUCTS_TYPES[]) => {
-    if (!products || products.length === 0) return []; // Check if products array exists
+    if (!products || products.length === 0) return [];
 
     const getPrice = (product: PRODUCTS_TYPES) => {
-      if (!product.salePrice) return 0; // Add check for salePrice
+      if (!product.salePrice) return 0; 
       return product.salePrice;
     };
 

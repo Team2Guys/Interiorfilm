@@ -202,7 +202,7 @@ export default function ProductDetails({
   return (
     // xl:max-w-screen-2xl
     <div className="mt-10 mb-5 px-2 md:px-10  mx-auto xl:max-w-screen-3xl">
-      <div className="flex flex-wrap lg:flex-nowrap gap-8  mt-2 p-2 ">
+      <div className="flex flex-wrap lg:flex-nowrap gap-4  mt-2 p-2 ">
         <div className={`w-full lg:w-8/12 xl:w-7/12 ${firstFlex} `}>
           <Thumbnail
             detail={productDetail.modelDetails}
@@ -210,8 +210,8 @@ export default function ProductDetails({
             thumbs={productDetail.imageUrl}
           />
         </div>
-        <div className="flex lg:w-4/12 xl:w-5/12  flex-col gap-3">
-          <div className="flex flex-wrap w-full justify-between flex-col md:flex-row ">
+        <div className="flex lg:w-4/12 xl:w-5/12  flex-col ">
+          <div className="flex flex-wrap lg:flex-nowrap w-full justify-between flex-col md:flex-row gap-4">
             <div
               className={`w-full md:px-2 space-y-2 md:space-y-4 ${
                 !isQuickView ? "md:w-3/3 xl:w-8/12" : "w-full xl:w-12/12"
@@ -399,8 +399,8 @@ export default function ProductDetails({
                         </span>
                       </DialogTrigger>
 
-                      <DialogOverlay className="bg-white/80" />
-                      <DialogContent className="sm:max-w-[80%] lg:max-w-[60%] z-99999 bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180 ">
+                      <DialogOverlay className="bg-black/60 z-999999" />
+                      <DialogContent className="sm:max-w-[80%] mt-10 lg:max-w-[60%] z-999999 bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180 ">
                         {/* <DialogContent className="bg-red h-10"> */}
                         <DialogHeader>
                           <DialogTitle className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10">
@@ -471,8 +471,8 @@ export default function ProductDetails({
                         </span>
                       </DialogTrigger>
 
-                      <DialogOverlay className="bg-white/80 " />
-                      <DialogContent className="sm:max-w-[80%] lg:max-w-[60%] z-99999  bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180">
+                      <DialogOverlay className="bg-black/60  z-999999 " />
+                      <DialogContent className="sm:max-w-[80%] mt-10 lg:max-w-[60%] z-999999  bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180">
                         <DialogHeader>
                           <DialogTitle className="text-xl xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10 ">
                             Easy Monthly Installments
@@ -542,14 +542,14 @@ export default function ProductDetails({
                   </p>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-1 justify-between  px-2 md:px-0">
+              <div className="flex flex-wrap gap-1 justify-between items-center px-2 md:px-0 bg-white  ">
                 {PaymentMethods.map((item, index) => (
                   <Image
                     src={item.imageUrl}
                     alt="master"
                     width={60}
                     height={60}
-                    className="bg-white p-2 object-contain shadow-lg "
+                    className="object-contain shadow p-1 "
                     key={index}
                   />
                 ))}
