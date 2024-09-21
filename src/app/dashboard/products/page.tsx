@@ -51,6 +51,14 @@ const Products = () => {
     salePrice: editProduct && editProduct.salePrice,
     totalStockQuantity: editProduct && editProduct.totalStockQuantity,
     hoverImageUrl: editProduct && editProduct.hoverImageUrl,
+    Meta_Title:editProduct && editProduct?.Meta_Title,
+    Meta_Description:editProduct && editProduct?.Meta_Title,
+    URL:editProduct && editProduct?.Meta_Title,
+    Canonical_Tag:editProduct && editProduct?.Meta_Title,
+    Images_Alt_Text:editProduct && editProduct?.Meta_Title,
+    Og_title:editProduct && editProduct?.Meta_Title,
+    Og_Image:editProduct && editProduct?.Meta_Title,
+    OgUrl:editProduct && editProduct?.Meta_Title,
   };  
 
 

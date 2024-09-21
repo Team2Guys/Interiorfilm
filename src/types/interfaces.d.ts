@@ -91,6 +91,15 @@ export interface USRPROPS {
     code:string
     totalStockQuantity: number;
     variantStockQuantities: { variant: string; quantity: number }[]
+    Meta_Title: string
+   Meta_Description: string
+   URL: string
+   Canonical_Tag: string
+   Images_Alt_Text: string
+  // Og_title : string
+  // Og_description: string
+  // Og_Image: string
+  // OgUrl:string
   
   }
 
@@ -197,6 +206,16 @@ export interface product {
   price: string;
   __v: number;
   code: string
+
+  Meta_Title: string
+Meta_Description: string
+URL: string
+Canonical_Tag: string
+Images_Alt_Text: string
+Og_title : string
+Og_description: string
+Og_Image: string
+OgUrl:string
 }
 
 export interface ITabbyList {
