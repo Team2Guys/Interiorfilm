@@ -230,13 +230,13 @@ const Table: React.FC<TableProps> = ({
     <>
       <div className=" hidden md:block   ">
         <div className="flex justify-between items-center text-14 font-semibold px-6 bg-black text-white py-3 ">
-          <div className={` ${pathName === "/wishlist" ? "md:w-4/12" : "md:w-4/12 lg:w-4/12"} `}>
+          <div className={` ${pathName === "/wishlist" ? "md:w-4/12 lg:w-4/12" : "md:w-4/12 lg:w-4/12"} `}>
             <p>Items</p>
           </div>
           <div className={` ${pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12" : "md:w-2/12 lg:w-2/12"} `}>
             <p>Price</p>
           </div>
-          <div className={` ${pathName === "/wishlist" ? "md:w-2/12 lg:w-3/12" : "md:w-1/12 lg:w-3/12"} `}>
+          <div className={` ${pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12" : "md:w-1/12 lg:w-3/12"} `}>
             <p>QTY(M)</p>
           </div>
 
@@ -245,7 +245,7 @@ const Table: React.FC<TableProps> = ({
           </div>
 
           {pathName === "/wishlist" ? (
-            <p className="md:w-2/12 lg:w-1/12">
+            <p className="md:w-2/12 lg:w-2/12">
               <div className=" text-end text-14  font-semibold text-white whitespace-nowrap ">
                 Action
               </div>
