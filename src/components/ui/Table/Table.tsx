@@ -275,7 +275,7 @@ const Table: React.FC<TableProps> = ({
 
               <Link
                   href={`/product/${generateSlug(product.name)}`}
-                className="w-fit border-2 border-red"
+                className="w-fit"
                 >
                   <Image
                     className="w-[184px] h-[130px] object-cover "
