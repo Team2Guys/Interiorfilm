@@ -38,12 +38,9 @@ const Cart = () => {
   }, []);
 
 const calculateTotals = (items: any) => {
-  const sub = items.reduce((acc: number, item: any) => {
-    return acc + item.totalPrice;
-  }, 0);
-  const totalItems = items.reduce((acc: number, item: any) => {
-    return acc + item.count;
-  }, 0);
+  const sub = items.reduce((acc: number, item: any) => {return acc + item.totalPrice;}, 0);
+  console.log(sub, "sub")
+  const totalItems = items.reduce((acc: number, item: any) => {return acc + item.count}, 0);
   setTotal(sub); 
   setTotalItems(totalItems);
   return totalItems;
@@ -60,9 +57,11 @@ const calculateTotals = (items: any) => {
   const handleCartChange = (updatedCart: any) => {
     setCartItems(updatedCart);
     calculateTotals(updatedCart);
+  console.log(updatedCart, "sub")
     const totalItems = calculateTotals(updatedCart);
     setTotalItems(totalItems);
   };
+
   return (
     <>
       <Container className="grid grid-cols-12  items-center mt-5">

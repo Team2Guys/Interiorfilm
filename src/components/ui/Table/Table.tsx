@@ -30,9 +30,14 @@ const Table: React.FC<TableProps> = ({
   const [lengths, setLengths] = useState<{ [key: number]: number }>({});
   const [totalItems, setTotalItems] = useState(0);
 
+
+
   useEffect(() => {
     const handleCartChange = () => {
-      ProductHandler(); // This re-fetches cart data and updates the UI
+      ProductHandler(); 
+      console.log(
+        "function called", "sub"
+      )
     };
 
     window.addEventListener("cartChanged", handleCartChange);
@@ -54,11 +59,12 @@ const Table: React.FC<TableProps> = ({
   }, [data]);
 
   const ProductHandler = () => {
-    const Products = localStorage.getItem(
-      pathName === "/wishlist" ? "wishlist" : "cart"
-    );
+    const Products = localStorage.getItem(pathName === "/wishlist" ? "wishlist" : "cart");
     if (Products && JSON.parse(Products).length > 0) {
       const items: any = JSON.parse(Products || "[]");
+      console.log(items, "sub")
+      onCartChange(items)
+      
       setData(items);
       setCounts(
         items.reduce((acc: any, item: any, index: number) => {
@@ -185,10 +191,7 @@ const Table: React.FC<TableProps> = ({
     window.dispatchEvent(new Event("cartChanged"));
   };
 
-  const handleChange = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChange = (index: number,e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
     if (isNaN(value) || value < 1 || value > 100) {
       message.error("Please select a quantity between 1 and 100.");
@@ -226,10 +229,13 @@ const Table: React.FC<TableProps> = ({
     return options;
   };
 
+
+
   return (
     <>
       <div className=" hidden md:block   ">
         <div className="flex justify-between items-center text-14 font-semibold px-6 bg-black text-white py-3 ">
+
           <div className={` ${pathName === "/wishlist" ? "md:w-4/12 lg:w-4/12" : "md:w-4/12 lg:w-4/12"} `}>
             <p>Items</p>
           </div>
@@ -243,6 +249,9 @@ const Table: React.FC<TableProps> = ({
           <div className={`${pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12" : "text-center md:w-2/12 lg:w-2/12"} `} >
             <p>Total</p>
           </div>
+
+
+          
 
           {pathName === "/wishlist" ? (
             <p className="md:w-2/12 lg:w-2/12">
