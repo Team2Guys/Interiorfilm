@@ -110,6 +110,13 @@ const ProductPage = () => {
       //   );
       //   setActiveLink(activeCategory);
       // }
+      
+      // const skinTextureCategory = categories.find(cat => cat.name === "Skin Texture Series");
+
+      // if (skinTextureCategory) {
+      //   const skinTextureProducts = products.filter(product => product.category === skinTextureCategory._id);
+      //   console.log("Skin Texture Series Products:", skinTextureProducts);
+      // }
     } catch (err) {
       console.error("Error loading products or categories", err);
     } finally {

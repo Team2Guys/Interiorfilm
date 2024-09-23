@@ -34,21 +34,20 @@ const Cart = () => {
 
   useEffect(() => {
     productHandler();
+    
   }, []);
 
-  const calculateTotals = (items: any) => {
-    const sub = items.reduce((acc: number, item: any) => {
-      const price = item.discountPrice ? item.discountPrice : item.price;
-      return acc + price * item.count;
-    }, 0);
-  
-    const totalItems = items.reduce((acc: number, item: any) => {
-      return acc + item.count;
-    }, 0);
-  
-    setTotal(sub);
-    return totalItems;
-  };
+const calculateTotals = (items: any) => {
+  const sub = items.reduce((acc: number, item: any) => {
+    return acc + item.totalPrice;
+  }, 0);
+  const totalItems = items.reduce((acc: number, item: any) => {
+    return acc + item.count;
+  }, 0);
+  setTotal(sub); 
+  setTotalItems(totalItems);
+  return totalItems;
+};
 
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -58,7 +57,6 @@ const Cart = () => {
     setTotalItems(totalItems);
   }, []);
 
-  // Handle cart changes from the Table component
   const handleCartChange = (updatedCart: any) => {
     setCartItems(updatedCart);
     calculateTotals(updatedCart);
@@ -67,9 +65,9 @@ const Cart = () => {
   };
   return (
     <>
-      <Container className="grid grid-cols-12  items-center mt-5 sm:mt-0">
+      <Container className="grid grid-cols-12  items-center mt-5">
         <div className="col-span-12 md:col-span-4 2xl:col-span-2">
-          <p className="text-[29px] text-center sm:text-start">Your shopping basket</p>
+          <p className="text-[29px] text-center sm:text-start capitalize">Your shopping basket</p>
         </div>
         <div className="col-span-12 md:col-span-4 2xl:col-span-8">
           <h1
@@ -95,7 +93,7 @@ const Cart = () => {
           <p className="text-13 font-medium">Free Delivery</p>
           <div className="flex justify-between items-center">
             <p className="text-11">Applies to orders of Over AED 250.</p>
-            <p className="text-11 font-medium underline">View details</p>
+            <Link href={"/shipment-policy"} className="text-11 font-medium underline">View details</Link>
           </div>
         </div>
       </Container>
@@ -105,7 +103,7 @@ const Cart = () => {
           <div className="flex flex-col justify-center items-center space-y-3">
             <p className="text-2xl">Your cart is empty.</p>
             <div>
-              <Link className="underline" href={"/products"}>
+              <Link className="underline" href={"/products?category=view-all"}>
                 Continue Shopping
               </Link>
             </div>
@@ -130,7 +128,7 @@ const Cart = () => {
               Secure Checkout
               <FaArrowRightLong />
               </button>
-              <div className="flex items-center gap-1 text-12">
+              <div className="flex items-center gap-1 text-12 text-[#6F6969]">
               <GoLock />Secure Checkout - Shopping with us is always safe and secure
               </div>
             </div>
