@@ -271,11 +271,11 @@ const Table: React.FC<TableProps> = ({
                 key={index}
               >
 
-              <div   className={`flex gap-1  ${pathName === "/wishlist" ? "md:w-4/12 lg:w-4/12" : "md:w-4/12 lg:w-4/12"}`}>
+              <div   className={`  ${pathName === "/wishlist" ? "md:w-4/12 lg:w-4/12" : "md:w-4/12 lg:w-4/12"}`}>
 
               <Link
                   href={`/product/${generateSlug(product.name)}`}
-                className="w-fit"
+                className="w-fit flex gap-1 border border-red"
                 >
                   <Image
                     className="w-[184px] h-[130px] object-cover "
@@ -284,7 +284,7 @@ const Table: React.FC<TableProps> = ({
                     src={product.posterImageUrl || product.imageUrl}
                     alt="Product"
                   />
-                  <div className="p-2 w-full ">
+                  <div className="p-2 w-fit border border-red">
                     <h1 className="text-sm md:text-base font-bold">
                       {typeof product.name === "string" ? product.name : ""}
                     </h1>
