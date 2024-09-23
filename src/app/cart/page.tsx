@@ -91,7 +91,7 @@ const calculateTotals = (items: any) => {
         <div className="col-span-12 md:col-span-4 2xl:col-span-2 ">
           <p className="text-13 font-medium">Free Delivery</p>
           <div className="flex justify-between items-center">
-            <p className="text-11">Applies to orders of Over AED 250.</p>
+            <p className="text-11">Applies to orders of over AED 250.</p>
             <Link href={"/shipment-policy"} className="text-11 font-medium underline">View details</Link>
           </div>
         </div>
@@ -121,7 +121,7 @@ const calculateTotals = (items: any) => {
               </button>
             </div>
 
-            <div className="flex flex-col justify-center space-y-2">
+            <div className="flex flex-col justify-center items-center space-y-2">
               <p className="text-22 sm:text-[26px] text-start  sm:text-center">Subtotal {totalItems} items: <span className="font-semibold"> AED {total}</span></p>
               <button className="flex gap-2 justify-center items-center px-6 py-2 bg-black text-white hover:bg-primary text-16" onClick={() => router.push("/checkout")}>
               Secure Checkout

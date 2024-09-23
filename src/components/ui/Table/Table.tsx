@@ -270,9 +270,12 @@ const Table: React.FC<TableProps> = ({
                 className="flex justify-between items-center mt-5"
                 key={index}
               >
-                <Link
+
+              <div   className={`flex gap-1  ${pathName === "/wishlist" ? "md:w-4/12 lg:w-4/12" : "md:w-4/12 lg:w-4/12"}`}>
+
+              <Link
                   href={`/product/${generateSlug(product.name)}`}
-                  className={`flex gap-1  ${pathName === "/wishlist" ? "md:w-4/12 lg:w-4/12" : "md:w-4/12 lg:w-4/12"}`}
+                className="w-fit border-2 border-red"
                 >
                   <Image
                     className="w-[184px] h-[130px] object-cover "
@@ -293,7 +296,12 @@ const Table: React.FC<TableProps> = ({
                       </p>
                     </div>
                   </div>
+
+
                 </Link>
+                
+              </div>
+        
 
                 <div className={` ${ pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12" : " md:w-2/12 lg:w-2/12"} `}>
                   <p>
@@ -379,6 +387,9 @@ const Table: React.FC<TableProps> = ({
           })}
         </div>
       </div>
+
+
+
 
       {data.map((product, index) => {
         const options = lengthOptions(product.totalStockQuantity || 0);
@@ -486,6 +497,7 @@ const Table: React.FC<TableProps> = ({
           </>
         );
       })}
+
     </>
   );
 };
