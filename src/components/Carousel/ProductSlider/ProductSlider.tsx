@@ -138,6 +138,8 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
               </SwiperSlide>
             ))}
           </Swiper>
+
+          
            <div className=' flex justify-center gap-48 absolute w-full bottom-5'>
             <button
               ref={prevRef}
