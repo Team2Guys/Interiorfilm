@@ -131,7 +131,7 @@ const Cart = () => {
                 <p className="font-normal  w-full flex justify-between text-[#6F6969]">Shipment Fee:<span> {total > 250 ?  "Free" : "AED 20"  }</span></p>
 
                 <div className="flex flex-col gap-1 text-12 text-[#6F6969] border-t pt-3">
-                <p className="font-bold items-center w-full flex justify-between">Grand total:<span>AED{ total < 250 ? ` ${20+total}` : total }</span></p>
+                <p className="font-bold text-lg items-center w-full text-black flex justify-between">Grand total:<span>AED { total < 250 ? ` ${20+total}` : total }</span></p>
 
               <p className="flex items-center gap-1">   <GoLock />Secure Checkout - Shopping with us is always safe and secure</p>  
                 </div>

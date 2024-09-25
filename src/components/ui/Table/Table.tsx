@@ -234,7 +234,7 @@ const Table: React.FC<TableProps> = ({
   return (
     <>
       <div className=" hidden md:block   ">
-        <div className="flex justify-between items-center text-14 font-semibold px-6 bg-black text-white py-3 ">
+        <div className="flex justify-between items-center text-18 font-semibold px-6 bg-white text-black py-3 ">
 
           <div className={` ${pathName === "/wishlist" ? "md:w-4/12 lg:w-4/12" : "md:w-4/12 lg:w-4/12"} `}>
             <p>Items</p>
@@ -349,9 +349,7 @@ const Table: React.FC<TableProps> = ({
                   </div>
                 </div>
 
-                <div className={` flex gap-4 ${
-                    pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12 " : "justify-evenly lg:w-2/12 pr-4"
-                  } `}
+                <div className={` flex gap-4 ${pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12 " : "justify-center lg:w-2/12 "} `}
                 >
                   <p>
                     AED
