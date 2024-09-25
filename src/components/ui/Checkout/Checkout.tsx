@@ -66,9 +66,9 @@ const CheckOut: React.FC = () => {
   ];
 
   const AddresAAray = [
-    { state: "dubai", charges: 15, discountCharges: 150 },
-    { state: "sharjah", charges: 20, discountCharges: 200 },
-    { state: "abu dhabi", charges: 20, discountCharges: 200 },
+    { state: "dubai", charges: 15, discountCharges: 250 },
+    { state: "sharjah", charges: 20, discountCharges: 250 },
+    { state: "abu dhabi", charges: 20, discountCharges: 250 },
   ];
 
 
@@ -135,13 +135,7 @@ const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         (item) => item.state.toLowerCase() === billingData.city.toLowerCase()
       );
 
-      const charges = matchingItem
-        ? subtotal > matchingItem.discountCharges
-          ? "Free"
-          : matchingItem.charges
-        : subtotal > 250
-        ? "Free"
-        : 25;
+      const charges = matchingItem ? subtotal > matchingItem.discountCharges? "Free": matchingItem.charges: subtotal > 250? "Free": 25;
       setShipmentFee(charges);
     };
 

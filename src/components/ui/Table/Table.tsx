@@ -30,9 +30,14 @@ const Table: React.FC<TableProps> = ({
   const [lengths, setLengths] = useState<{ [key: number]: number }>({});
   const [totalItems, setTotalItems] = useState(0);
 
+
+
   useEffect(() => {
     const handleCartChange = () => {
-      ProductHandler(); // This re-fetches cart data and updates the UI
+      ProductHandler(); 
+      console.log(
+        "function called", "sub"
+      )
     };
 
     window.addEventListener("cartChanged", handleCartChange);
@@ -54,11 +59,12 @@ const Table: React.FC<TableProps> = ({
   }, [data]);
 
   const ProductHandler = () => {
-    const Products = localStorage.getItem(
-      pathName === "/wishlist" ? "wishlist" : "cart"
-    );
+    const Products = localStorage.getItem(pathName === "/wishlist" ? "wishlist" : "cart");
     if (Products && JSON.parse(Products).length > 0) {
       const items: any = JSON.parse(Products || "[]");
+      console.log(items, "sub")
+      onCartChange(items)
+      
       setData(items);
       setCounts(
         items.reduce((acc: any, item: any, index: number) => {
@@ -185,10 +191,7 @@ const Table: React.FC<TableProps> = ({
     window.dispatchEvent(new Event("cartChanged"));
   };
 
-  const handleChange = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChange = (index: number,e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
     if (isNaN(value) || value < 1 || value > 100) {
       message.error("Please select a quantity between 1 and 100.");
@@ -226,10 +229,13 @@ const Table: React.FC<TableProps> = ({
     return options;
   };
 
+
+
   return (
     <>
       <div className=" hidden md:block   ">
-        <div className="flex justify-between items-center text-14 font-semibold px-6 bg-black text-white py-3 ">
+        <div className="flex justify-between items-center text-18 font-semibold px-6 bg-white text-black py-3 ">
+
           <div className={` ${pathName === "/wishlist" ? "md:w-4/12 lg:w-4/12" : "md:w-4/12 lg:w-4/12"} `}>
             <p>Items</p>
           </div>
@@ -243,6 +249,9 @@ const Table: React.FC<TableProps> = ({
           <div className={`${pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12" : "text-center md:w-2/12 lg:w-2/12"} `} >
             <p>Total</p>
           </div>
+
+
+          
 
           {pathName === "/wishlist" ? (
             <p className="md:w-2/12 lg:w-2/12">
@@ -261,9 +270,12 @@ const Table: React.FC<TableProps> = ({
                 className="flex justify-between items-center mt-5"
                 key={index}
               >
-                <Link
+
+              <div   className={`  ${pathName === "/wishlist" ? "md:w-4/12 lg:w-4/12" : "md:w-4/12 lg:w-4/12"}`}>
+
+              <Link
                   href={`/product/${generateSlug(product.name)}`}
-                  className={`flex gap-1  ${pathName === "/wishlist" ? "md:w-4/12 lg:w-4/12" : "md:w-4/12 lg:w-4/12"}`}
+                className="w-fit flex gap-1"
                 >
                   <Image
                     className="w-[184px] h-[130px] object-cover "
@@ -272,7 +284,7 @@ const Table: React.FC<TableProps> = ({
                     src={product.posterImageUrl || product.imageUrl}
                     alt="Product"
                   />
-                  <div className="p-2 w-full ">
+                  <div className="p-2 w-fit">
                     <h1 className="text-sm md:text-base font-bold">
                       {typeof product.name === "string" ? product.name : ""}
                     </h1>
@@ -284,7 +296,12 @@ const Table: React.FC<TableProps> = ({
                       </p>
                     </div>
                   </div>
+
+
                 </Link>
+                
+              </div>
+        
 
                 <div className={` ${ pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12" : " md:w-2/12 lg:w-2/12"} `}>
                   <p>
@@ -332,9 +349,7 @@ const Table: React.FC<TableProps> = ({
                   </div>
                 </div>
 
-                <div className={` flex gap-4 ${
-                    pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12 " : "justify-evenly lg:w-2/12 pr-4"
-                  } `}
+                <div className={` flex gap-4 ${pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12 " : "justify-center lg:w-2/12 "} `}
                 >
                   <p>
                     AED
@@ -370,6 +385,9 @@ const Table: React.FC<TableProps> = ({
           })}
         </div>
       </div>
+
+
+
 
       {data.map((product, index) => {
         const options = lengthOptions(product.totalStockQuantity || 0);
@@ -477,6 +495,7 @@ const Table: React.FC<TableProps> = ({
           </>
         );
       })}
+
     </>
   );
 };

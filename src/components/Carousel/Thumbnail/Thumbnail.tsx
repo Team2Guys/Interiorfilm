@@ -73,11 +73,11 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
   return (
     <Fragment>
       <div className="space-y-20">
-        <div className="lg:relative w-full">
-          <div className="w-full flex flex-wrap lg:flex-nowrap flex-col-reverse lg:flex-row lg:gap-3 xl:gap-6">
-            <div className="w-full lg:w-3/12 flex flex-col gap-3">
+        <div className="md:relative w-full">
+          <div className="w-full flex flex-wrap md:flex-nowrap flex-col-reverse md:flex-row md:gap-3 xl:gap-6 ">
+            <div className="w-full md:w-3/12 flex flex-col gap-3">
               <div
-                className=" lg:max-h-[650px] 2xl:max-h-[700px] overflow-y-auto custom-scrollbar"
+                className=" md:max-h-[600px] lg:max-h-[470px] xl:max-h-[530px] 2xl:max-h-[700px] overflow-y-auto custom-scrollbar "
                 ref={swiperContainerRef}
               >
                 <Swiper
@@ -94,11 +94,11 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                     sortedThumbs.map((array, index) => (
                       <SwiperSlide
                         key={array.imageIndex ?? index}
-                        className={`w-full h-full  column-swiper-slider custom-scrollbar mt-3 lg:mt-0 `}
+                        className={`w-full h-full  column-swiper-slider custom-scrollbar mt-3 md:mt-0 `}
                         onClick={() => handleSlideClick(index)}
                       >
                         <Image
-                          className={`bg-cover border-4   bg-white lg:h-[160px] 2xl:h-[222px]  w-full cursor-pointer ${
+                          className={`bg-cover border-4   bg-white h-full  w-full cursor-pointer ${
                             activeIndex === index
                               ? " border-primary"
                               : "border-white"
@@ -113,13 +113,13 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                 </Swiper>
               </div>
               {/* {showArrow && (
-                <div ref={nextRef} className='items-center justify-center hidden lg:flex'>
+                <div ref={nextRef} className='items-center justify-center hidden md:flex'>
                   <PiArrowDownLight  className='object-contain cursor-pointer  w-[90.2px] h-[95px]' onClick={handleScrollDown}/>
                 </div>
               )} */}
             </div>
 
-            <div className="w-full lg:w-9/12 relative ">
+            <div className="w-full md:w-9/12 relative ">
               <Swiper
                 style={
                   {
@@ -172,7 +172,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
         </div>
       </div>
 
-      <div className="mt-13 hidden lg:block">
+      <div className="mt-13 hidden md:block">
         <Accordion detail={detail} />
         <hr className=" h-1 border-stone-200" />
         <Collapse title="Customer Reviews">

@@ -36,24 +36,18 @@ const Cart = () => {
 
   useEffect(() => {
     productHandler();
-    
+
   }, []);
 
-  // Function to calculate total price and item count
   const calculateTotals = (items: any) => {
-    const subTotal = items.reduce((acc: number, item: any) => {
-      return acc + item.totalPrice; // Assuming item.totalPrice is the price per product
-    }, 0);
-
-    const itemCount = items.reduce((acc: number, item: any) => {
-      return acc + item.count; // Assuming item.count is the quantity
-    }, 0);
-
-    setTotal(subTotal);
-    setTotalItems(itemCount);
+    const sub = items.reduce((acc: number, item: any) => { return acc + item.totalPrice; }, 0);
+    console.log(sub, "sub")
+    const totalItems = items.reduce((acc: number, item: any) => { return acc + item.count }, 0);
+    setTotal(sub);
+    setTotalItems(totalItems);
+    return totalItems;
   };
 
-  // Fetch cart from localStorage and calculate totals
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     setCartItems(existingCart); // Set the cart items
@@ -62,12 +56,13 @@ const Cart = () => {
 
   // Handle cart changes (e.g., when a product is added, removed, or modified)
   const handleCartChange = (updatedCart: any) => {
-    setCartItems(updatedCart); // Update cart items state
-    localStorage.setItem("cart", JSON.stringify(updatedCart)); // Persist updated cart in localStorage
-    calculateTotals(updatedCart); // Recalculate total price and item count
+    setCartItems(updatedCart);
+    calculateTotals(updatedCart);
+    console.log(updatedCart, "sub")
+    const totalItems = calculateTotals(updatedCart);
+    setTotalItems(totalItems);
   };
 
-  
   return (
     <>
       <Container className="grid grid-cols-12  items-center mt-5">
@@ -97,7 +92,7 @@ const Cart = () => {
         <div className="col-span-12 md:col-span-4 2xl:col-span-2 ">
           <p className="text-13 font-medium">Free Delivery</p>
           <div className="flex justify-between items-center">
-            <p className="text-11">Applies to orders of Over AED 250.</p>
+            <p className="text-11">Applies to orders of over AED 250.</p>
             <Link href={"/shipment-policy"} className="text-11 font-medium underline">View details</Link>
           </div>
         </div>
@@ -118,35 +113,48 @@ const Cart = () => {
             <div className="w-full ">
               <Table onCartChange={handleCartChange} />
             </div>
-            
-          <div className="flex flex-wrap sm:flex-nowrap justify-between items-center w-full mt-3 md:mt-5 border-t-2 border-b-2 py-4 border-gray">
-            <div className="hidden sm:block">
-              <button className="flex gap-2 justify-center items-center px-6 py-2 bg-primary text-white hover:bg-black text-16" onClick={() => router.back()}>
-              <FaArrowLeftLong />
-              Continue Shopping
-              </button>
-            </div>
 
-            <div className="flex flex-col justify-center space-y-2">
-              <p className="text-22 sm:text-[26px] text-start  sm:text-center">Subtotal {totalItems} items: <span className="font-semibold"> AED {total}</span></p>
-              <button className="flex gap-2 justify-center items-center px-6 py-2 bg-black text-white hover:bg-primary text-16" onClick={() => router.push("/checkout")}>
-              Secure Checkout
-              <FaArrowRightLong />
-              </button>
-              <div className="flex items-center gap-1 text-12 text-[#6F6969]">
-              <GoLock />Secure Checkout - Shopping with us is always safe and secure
+            <div className="flex flex-wrap sm:flex-nowrap justify-between items-center w-full mt-3 md:mt-5 border-t-2 border-b-2 py-4 border-gray">
+              <div className="hidden sm:block">
+                <button className="flex gap-2 justify-center items-center px-6 py-2 bg-primary text-white hover:bg-black text-16" onClick={() => router.back()}>
+                  <FaArrowLeftLong />
+                  Continue Shopping
+                </button>
               </div>
+
+              <div className="flex flex-col justify-center items-center space-y-2">
+                <p className="text-13 font-semibold text-[#6F6969] sm:text-15  text-start  w-full"> You have {totalItems} items in your cart </p>
+                <p className="text-13 font-semibold text-[#6F6969] sm:text-15  text-start  w-full">
+                  You have {cartItems && cartItems.length > 0 ? cartItems.reduce((total: number, item: any) => total + item.length, 0) : 0} (m) length in your cart
+                </p>
+
+                <p className="font-semibold sm:text-15 w-full flex justify-between text-[#6F6969]">Subtotal:<span>AED { total}</span></p>
+                <p className="font-normal  w-full flex justify-between text-[#6F6969]">Shipment Fee:<span> {total > 250 ?  "Free" : "AED 20"  }</span></p>
+
+                <div className="flex flex-col gap-1 text-12 text-[#6F6969] border-t pt-3">
+                <p className="font-bold text-lg items-center w-full text-black flex justify-between">Grand total:<span>AED { total < 250 ? ` ${20+total}` : total }</span></p>
+
+              <p className="flex items-center gap-1">   <GoLock />Secure Checkout - Shopping with us is always safe and secure</p>  
+                </div>
+                <button className="flex gap-2 ml-auto items-center px-6 py-2 bg-black text-white hover:bg-primary text-16" onClick={() => router.push("/checkout")}>
+                  Secure Checkout
+                  <FaArrowRightLong />
+                </button>
+
+                {/* <div className="flex items-center gap-1 text-12 text-[#6F6969]">
+                  <GoLock />Secure Checkout - Shopping with us is always safe and secure
+                </div> */}
+              </div>
+
             </div>
 
-          </div>
 
-          
           </>
         )}
 
         <div className="mt-10 md:mt-20">
           <div className="flex justify-center items-center">
-            <h1 className="w-fit text-center text-lg border-b-2 border-[#FF914E] md:text-3xl mb-5  uppercase tracking-widest">
+            <h1 className="w-fit text-center text-lg border-b-2 border-primary md:text-3xl mb-5  uppercase tracking-widest">
               Similar Products
             </h1>
           </div>
