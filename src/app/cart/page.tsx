@@ -17,6 +17,8 @@ const Cart = () => {
   const router = useRouter();
   const [totalItems, setTotalItems] = useState(0);
 
+
+  console.log(cartItems, "cartItemscartItems")
   const productHandler = async () => {
     try {
       const response = await axios.get(
@@ -37,32 +39,35 @@ const Cart = () => {
     
   }, []);
 
-const calculateTotals = (items: any) => {
-  const sub = items.reduce((acc: number, item: any) => {
-    return acc + item.totalPrice;
-  }, 0);
-  const totalItems = items.reduce((acc: number, item: any) => {
-    return acc + item.count;
-  }, 0);
-  setTotal(sub); 
-  setTotalItems(totalItems);
-  return totalItems;
-};
+  // Function to calculate total price and item count
+  const calculateTotals = (items: any) => {
+    const subTotal = items.reduce((acc: number, item: any) => {
+      return acc + item.totalPrice; // Assuming item.totalPrice is the price per product
+    }, 0);
 
+    const itemCount = items.reduce((acc: number, item: any) => {
+      return acc + item.count; // Assuming item.count is the quantity
+    }, 0);
+
+    setTotal(subTotal);
+    setTotalItems(itemCount);
+  };
+
+  // Fetch cart from localStorage and calculate totals
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    setCartItems(existingCart);
-    calculateTotals(existingCart);
-    const totalItems = calculateTotals(existingCart);
-    setTotalItems(totalItems);
+    setCartItems(existingCart); // Set the cart items
+    calculateTotals(existingCart); // Calculate totals based on the cart items
   }, []);
 
+  // Handle cart changes (e.g., when a product is added, removed, or modified)
   const handleCartChange = (updatedCart: any) => {
-    setCartItems(updatedCart);
-    calculateTotals(updatedCart);
-    const totalItems = calculateTotals(updatedCart);
-    setTotalItems(totalItems);
+    setCartItems(updatedCart); // Update cart items state
+    localStorage.setItem("cart", JSON.stringify(updatedCart)); // Persist updated cart in localStorage
+    calculateTotals(updatedCart); // Recalculate total price and item count
   };
+
+  
   return (
     <>
       <Container className="grid grid-cols-12  items-center mt-5">
