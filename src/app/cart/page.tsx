@@ -17,6 +17,8 @@ const Cart = () => {
   const router = useRouter();
   const [totalItems, setTotalItems] = useState(0);
 
+
+  console.log(cartItems, "cartItemscartItems")
   const productHandler = async () => {
     try {
       const response = await axios.get(
@@ -48,12 +50,11 @@ const Cart = () => {
 
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    setCartItems(existingCart);
-    calculateTotals(existingCart);
-    const totalItems = calculateTotals(existingCart);
-    setTotalItems(totalItems);
+    setCartItems(existingCart); // Set the cart items
+    calculateTotals(existingCart); // Calculate totals based on the cart items
   }, []);
 
+  // Handle cart changes (e.g., when a product is added, removed, or modified)
   const handleCartChange = (updatedCart: any) => {
     setCartItems(updatedCart);
     calculateTotals(updatedCart);
@@ -91,7 +92,7 @@ const Cart = () => {
         <div className="col-span-12 md:col-span-4 2xl:col-span-2 ">
           <p className="text-13 font-medium">Free Delivery</p>
           <div className="flex justify-between items-center">
-            <p className="text-11">Applies to orders of over AED 250.</p>
+            <p className="text-11">Applies to orders of above AED 250.</p>
             <Link href={"/shipment-policy"} className="text-11 font-medium underline">View details</Link>
           </div>
         </div>
