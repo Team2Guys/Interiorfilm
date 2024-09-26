@@ -57,9 +57,11 @@ const SideBySideMagnifier: React.FC<SideBySideMagnifierProps> = ({
   };
 
   return (
-    <div className="relative" ref={containerRef}>
+    <div className="relative h-full" 
+    ref={containerRef}
+    >
       <div
-        className="relative bg-cover w-full h-full  cursor-crosshair"
+        className="relative w-full h-full   cursor-crosshair"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onMouseMove={handleMouseMove}
@@ -73,7 +75,7 @@ const SideBySideMagnifier: React.FC<SideBySideMagnifierProps> = ({
           width={800}
           height={800}
           alt="Main"
-          className="bg-contain w-full h-full "
+          className="w-full h-full "
         />
       </div>
 
@@ -83,8 +85,8 @@ const SideBySideMagnifier: React.FC<SideBySideMagnifierProps> = ({
             displayInPlace ? "in-place" : "side-by-side"
           }`}
           style={{
-            width: displayInPlace ? "100%" :  "md:max-h-[600px] lg:max-h-[470px] xl:max-h-[530px] 2xl:max-h-[700px]",
-            height: displayInPlace ? "100%" :  "md:max-h-[600px] lg:max-h-[470px] xl:max-h-[530px] 2xl:max-h-[700px]",
+            width: displayInPlace ? "100%" :  "",
+            height: displayInPlace ? "100%" :  "",
             top: displayInPlace ? "0" : `${magnifierPosition.y}px`,
             left: displayInPlace ? "0" : "320px", 
             backgroundImage: `url(${largeImageSrc})`,

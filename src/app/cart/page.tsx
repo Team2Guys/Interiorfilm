@@ -92,7 +92,7 @@ const Cart = () => {
         <div className="col-span-12 md:col-span-4 2xl:col-span-2 ">
           <p className="text-13 font-medium">Free Delivery</p>
           <div className="flex justify-between items-center">
-            <p className="text-11">Applies to orders of over AED 250.</p>
+            <p className="text-11">Applies to orders of above AED 250.</p>
             <Link href={"/shipment-policy"} className="text-11 font-medium underline">View details</Link>
           </div>
         </div>

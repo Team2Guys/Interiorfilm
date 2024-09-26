@@ -70,21 +70,22 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
       container.scrollBy({ top: 150, behavior: "smooth" });
     }
   };
+  // md:!max-h-[700px] lg:!max-h-[570px] xl:!max-h-[600px] 2xl:!max-h-[720px] 3xl:!max-h-[800px] thumbnailslide
   return (
     <Fragment>
       <div className="space-y-20">
         <div className="md:relative w-full">
           <div className="w-full flex flex-wrap md:flex-nowrap flex-col-reverse md:flex-row md:gap-3 xl:gap-6 ">
-            <div className="w-full md:w-3/12 flex flex-col gap-3">
+            <div className="w-full md:w-3/12 flex flex-col gap-3   md:!max-h-[700px] lg:!max-h-[570px] xl:!max-h-[637px] 2xl:!max-h-[780px] 3xl:!max-h-[800px] thumbnailslide">
               <div
-                className=" md:max-h-[600px] lg:max-h-[470px] xl:max-h-[530px] 2xl:max-h-[700px] overflow-y-auto custom-scrollbar "
+                className=" overflow-y-auto custom-scrollbar "
                 ref={swiperContainerRef}
               >
                 <Swiper
                   onSwiper={setThumbsSwiper}
                   loop={false}
                   spaceBetween={10}
-                  slidesPerView={4}
+                  slidesPerView={3}
                   freeMode={true}
                   watchSlidesProgress={true}
                   modules={[FreeMode, Navigation, Thumbs]}
@@ -105,7 +106,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                           }`}
                           src={array.imageUrl}
                           width={270}
-                          height={120}
+                          height={140}
                           alt="Image"
                         />
                       </SwiperSlide>
@@ -119,7 +120,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
               )} */}
             </div>
 
-            <div className="w-full md:w-9/12 relative ">
+            <div className="w-full md:w-9/12 relative  md:!max-h-[700px] lg:!max-h-[570px] xl:!max-h-[637px] 2xl:!max-h-[750px] 3xl:!max-h-[800px] thumbnailslide ">
               <Swiper
                 style={
                   {
