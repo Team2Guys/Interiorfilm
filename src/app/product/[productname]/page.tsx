@@ -1,7 +1,6 @@
-import type { Metadata, ResolvingMetadata } from 'next'
+import type { Metadata } from 'next'
 import Product from './Product';
 import axios from 'axios';
-import { usePathname } from 'next/navigation';
 import { headers } from "next/headers";
 import { generateSlug } from 'data/Data';
 
@@ -13,14 +12,12 @@ type Props = {
 }
 
 export async function generateMetadata({ params, searchParams }: Props,): Promise<Metadata> {
-  // read route params
+
   const headersList = headers();
-  // Get the domain, protocol, and pathname
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || ''; // Fallback to host if x-forwarded-host is not present
   const protocol = headersList.get('x-forwarded-proto') || 'https'; // Default to https if no protocol is set
   const pathname = headersList.get('x-invoke-path') || '/'; // Fallback to root if no path
 
-  // Construct the full URL
   const fullUrl = `${protocol}://${domain}${pathname}`;
   console.log(fullUrl, "fullurl")
 
@@ -32,19 +29,14 @@ export async function generateMetadata({ params, searchParams }: Props,): Promis
 
   let Product = products?.find((item: any) => generateSlug(item.name) == params.productname)
 
-  let ImageUrl = Product?.posterImageUrl?.imageUrl || "interiorfilm"; // Make sure the URL is correct
-  let alt = Product?.Images_Alt_Text || "Interior films"; // Check if alt text is available
-  
+  let ImageUrl = Product?.posterImageUrl?.imageUrl || "interiorfilm";
+  let alt = Product?.Images_Alt_Text || "Interior films";
+
   let NewImage = [
     {
       url: ImageUrl, 
-      alt: alt     }
+      alt: alt}
   ];
-
-
-  console.log(NewImage, "NewImage")
-
-
   let title = Product && Product.Meta_Title ? Product.Meta_Title : "Interior Films"
   let description = Product && Product.description ? Product.description : "Welcome to Interior films"
 let url = `${fullUrl}/product/${params.productname}`
@@ -63,14 +55,7 @@ let url = `${fullUrl}/product/${params.productname}`
   }
 }
 
-
-
 const Page = ({ params }: { params: { productname: string } }) => {
-
-
-
-
-
   return (
     <>
       <Product productname={params.productname} />
