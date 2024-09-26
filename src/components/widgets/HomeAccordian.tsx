@@ -29,7 +29,7 @@ function HomeAccordian() {
         </div>
 
         <div className="">
-          <h3 className="font-futura font-bold text-3xl mb-8" >
+          <h3 className="font-futura font-bold text-3xl mb-8 text-center  md:text-start" >
             Lorem Ipsum Dolor
           </h3>
           {AccordionsArray.map((item, index) => {

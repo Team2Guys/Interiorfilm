@@ -350,11 +350,11 @@ export const return__refund: PrivacyPolicyItem[] = [
 export const ShipmentPolicydata: PrivacyPolicyItem[] = [
 
   {
-    title: 'Free Shipping On Orders Over AED 250 EVERYWHERE (WITHIN DUBAI CITY LIMITS. ) ',
-    text: 'If your order exceeds over AED 250 and you are located inside the UAE, you will be offered free standard delivery at checkout. ',
+    title: 'Free shipping throughout mainland UAE on all orders above AED 250',
+    text: 'If your order exceeds Above AED 250 and you are located inside the UAE, you will be offered free standard delivery at checkout. ',
   },
   {
-    text: 'If your order is below AED 250, we will offer standard delivery anywhere in the UAE for only AED 30. ',
+    text: 'If your order is below AED 250, we will offer standard delivery anywhere in the UAE for only AED 20. ',
   },
   {
     text: "CASH ON DELIVERY: NOT AVAILABLE",
@@ -382,11 +382,11 @@ export const Terms_Conditions: PrivacyPolicyItem[] = [
     text: "To contact us please email us at: cs@interiorfilm.ae ",
   },
   {
-    title:"2) By using our website (www.interiorfilm.ae.ae) and services, you accept these terms:",
+    title:"2) By using our website (www.interiorfilm.ae) and services, you accept these terms:",
     text: "By using our website, you agree and confirm that you accept these terms and our Privacy Policy, and are bound to comply with them, incorporated here by reference. If you do not feel comfortable with these terms and conditions and wish to disagree, we respect your decision.",
   },
   {
-    text: "These T&Cs take effect from the date you first access our website. In addition to the general T&Cs mentioned in this page, you can also refer to Yellowzone Trading LLC’s Delivery Policy, Refund & Return Policy, Shipping Policy before making any purchase from our website (www.interiorfilm.ae.ae). Please be advised that by agreeing to these general T&Cs, you are accepting the other T&Cs outlined in the Delivery Policy, Refund & Return Policy and Shipping Policy. These policies are all part of a legally binding contract between Yellowzone Trading LLC and “you” (user of this website and services).",
+    text: "These T&Cs take effect from the date you first access our website. In addition to the general T&Cs mentioned in this page, you can also refer to Yellowzone Trading LLC’s Delivery Policy, Refund & Return Policy, Shipping Policy before making any purchase from our website (www.interiorfilm.ae). Please be advised that by agreeing to these general T&Cs, you are accepting the other T&Cs outlined in the Delivery Policy, Refund & Return Policy and Shipping Policy. These policies are all part of a legally binding contract between Yellowzone Trading LLC and “you” (user of this website and services).",
   },
   {
     text: "By agreeing to these terms, you represent and warrant that you are of legal age to use the website and the services provided by Yellowzone Trading LLC, under the law of the United Arab Emirates to form a binding contract with Yellowzone Trading LLC.",
@@ -396,7 +396,7 @@ export const Terms_Conditions: PrivacyPolicyItem[] = [
     text: "We may update or revise these Terms at any time at our sole discretion.",
   },
   {
-    text: "Please be advised that any modifications made to the Terms and Conditions of our website (www.interiorfilm.ae.ae) will take effect immediately once they are updated. These changes and updates will apply to all future access and use of our website and services mentioned. By continuing to use the website after the revised terms have been posted, you are indicating your acceptance and agreement to the changes and updated T&Cs, Delivery Policy, Refund and Return Policy, and Shipping Policy.",
+    text: "Please be advised that any modifications made to the Terms and Conditions of our website (www.interiorfilm.ae) will take effect immediately once they are updated. These changes and updates will apply to all future access and use of our website and services mentioned. By continuing to use the website after the revised terms have been posted, you are indicating your acceptance and agreement to the changes and updated T&Cs, Delivery Policy, Refund and Return Policy, and Shipping Policy.",
   },
   {
     text: "We strongly recommend you to regularly review and have a clear understanding of these Terms and Conditions that govern your use of the website and its services. Whenever these terms are updated, we will update the 'Last Updated' date at the top of this document.",

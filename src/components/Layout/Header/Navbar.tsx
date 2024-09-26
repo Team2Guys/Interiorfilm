@@ -279,7 +279,7 @@ const Navbar = () => {
     <>
       <TopNav />
       <nav
-        className={`z-99 w-full p-2 pr-0 sm:px-4 lg:px-8 xl:px-12 border-b-2 border-gray shadow-md  ${
+        className={`z-99 w-full py-2 px-2 sm:px-4 lg:px-8 xl:px-12 border-b-2 border-gray shadow-md  ${
           isHomePage
             ? isScrolled
               ? "bg-white text-black top-0 fixed"
@@ -344,7 +344,7 @@ const Navbar = () => {
                 }`}
               />
               {WishlistItems.length > 0 ? (
-                <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center shadow-2xl bg-white text-black absolute left-2 top-2 md:left-3 md:top-3">
+                <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center shadow-2xl bg-white text-black absolute top-3 left-3 sm:left-2 sm:top-2 md:left-3 md:top-3">
                   <span className="font-medium text-11 md:text-18">
                     {WishlistItems.length}
                   </span>
@@ -364,7 +364,7 @@ const Navbar = () => {
               />
               {cartItems.length > 0 ? (
                 <>
-                  <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center bg-white  text-black absolute left-2 top-2 md:left-3 md:top-3">
+                  <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center bg-white  text-black absolute top-3 left-3 sm:left-2 sm:top-2 md:left-3 md:top-3">
                     <span className="font-medium text-11 md:text-18">
                       {cartItems.reduce(
                         (count: any, item: any) => count + item.count,
@@ -457,7 +457,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <div className="fixed top-auto bottom-12 sm:bottom-12 right-7 z-999 h-[9rem] ">
+      <div className="fixed top-auto bottom-12 right-7 z-999  ">
         <Link
           target="_blank"
           href={"https://wa.link/mb359y"}
