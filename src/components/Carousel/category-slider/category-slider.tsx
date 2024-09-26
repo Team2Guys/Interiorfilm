@@ -79,7 +79,7 @@ const CategorySlider: React.FC = () => {
         ))}
       </div>
     ) : (
-      <div className="px-0 md:px-4 flex items-center relative mt-10"        onMouseEnter={handleMouseEnter}
+      <div className="px-0 md:px-4 flex items-center relative mt-10"  onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}>
       <button
         ref={prevRef}

@@ -84,7 +84,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                       <SwiperSlide
                         key={array.imageIndex ?? index}
                         className={`w-full h-full column-swiper-slider custom-scrollbar mt-3 md:mt-0`}
-                        onClick={() => handleSlideClick(index)} // Update active index on thumbnail click
+                        onClick={() => handleSlideClick(index)}
                       >
                         <Image
                           className={`bg-cover border-4 bg-white h-full w-full cursor-pointer ${

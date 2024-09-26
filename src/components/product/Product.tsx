@@ -167,19 +167,59 @@ const ProductPage = () => {
     colorName == value;
   };
 
-  const filteredProducts = filteredProductsByCategory.filter(
-    (product: PRODUCTS_TYPES) => {
-      if (!product) return true;
-      const nameMatch = product.name
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
+  const filteredProducts = Array.isArray(filteredProductsByCategory)
+    ? filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
+      let Search = searchTerm.toLowerCase();
+      
+      const nameMatch =
+        product.name.toLowerCase().includes(Search) ||
+        (product.description &&
+          product.description.toLowerCase().includes(Search)) ||
+        (product.salePrice &&
+          product.salePrice.toString().toLowerCase().includes(Search)) ||
+        (product.purchasePrice &&
+          product.purchasePrice.toString().toLowerCase().includes(Search)) ||
+        (product.category &&
+          product.category.toString().toLowerCase().includes(Search)) ||
+        product.discountPrice?.toString().toLowerCase().includes(Search) ||
+        (product.colors &&
+          product.colors.some((color: any) =>
+            color.colorName.toLowerCase().includes(Search)
+          )) ||
+        product.modelDetails.some(
+          (model: any) =>
+            model.name.toLowerCase().includes(Search) ||
+            model.detail.toLowerCase().includes(Search)
+        ) ||
+        (product.spacification &&
+          product.spacification.some((spec: any) =>
+            spec.specsDetails.toLowerCase().includes(Search)
+          )) ||
+        product.starRating?.toString().toLowerCase().includes(Search) ||
+        product.reviews?.toLowerCase().includes(Search) ||
+        product.code.toLowerCase().includes(Search) ||
+        product.totalStockQuantity
+          ?.toString()
+          .toLowerCase()
+          .includes(Search) ||
+        (product.sizes &&
+          product.sizes.some((size: any) =>
+            size.sizesDetails.toLowerCase().includes(Search)
+          ));
+
+      // Check for color match if colorName is provided
       const colorMatch =
         !colorName ||
         (product.colors &&
-          product.colors.some((color) => color.colorName === colorName));
-          return nameMatch && colorMatch;
-        }
-      );
+          product.colors.some((color: any) => 
+            color.colorName.toLowerCase() === colorName.toLowerCase()
+          ));
+
+      // Return true only if both nameMatch and colorMatch are satisfied
+      return nameMatch && colorMatch;
+    })
+  : [];
+
 
   const sortProducts = (products: PRODUCTS_TYPES[]) => {
     if (!products || products.length === 0) return [];
@@ -203,7 +243,7 @@ const ProductPage = () => {
     } else if (sortOption === "High to Low") {
       return products.sort((a, b) => getPrice(b) - getPrice(a));
     } else {
-      return products; // Return unmodified products if no sortOption is selected
+      return products;
     }
   };
 
@@ -350,7 +390,7 @@ const ProductPage = () => {
 
             <div className="relative  flex items-center border border-secondary w-full sm:w-auto mt-2">
               <input
-                className="px-2 py-1 rounded-none outline-none  w-32 md:w-[90%] border-sky-900"
+                className="px-2 py-1 rounded-none outline-none  w-full md:w-[90%] border-sky-900"
                 type="search"
                 placeholder="Search"
                 value={searchTerm}

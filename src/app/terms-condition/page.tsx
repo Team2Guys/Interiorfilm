@@ -5,6 +5,42 @@ import { Terms_Conditions } from 'data/Data';
 import Link from 'next/link';
 
 const TermsAndCondition: React.FC = () => {
+  const replaceTextWithLink = (text: string) => {
+    let replacedText = text.split('cs@interiorfilm.ae').map((part, index, array) =>
+      index < array.length - 1 ? (
+        <>
+          {part}
+          <Link href='mailto:cs@interiorfilm.ae' className='text-primary hover:text-primary'>
+            cs@interiorfilm.ae
+          </Link>
+        </>
+      ) : (
+        part
+      )
+    );
+
+    replacedText = replacedText.flatMap((element: any) =>
+      typeof element === 'string' ? (
+        element.split('www.interiorfilm.ae').map((part, index, array) =>
+          index < array.length - 1 ? (
+            <>
+              {part}
+              <Link href='/' className='text-primary hover:text-primary'>
+                www.interiorfilm.ae
+              </Link>
+            </>
+          ) : (
+            part
+          )
+        )
+      ) : (
+        [element]
+      )
+    );
+
+    return replacedText;
+  };
+
   return (
     <>
       <Overlay title='Terms & Conditions'/>
@@ -12,42 +48,21 @@ const TermsAndCondition: React.FC = () => {
         <h1 className='text-2xl font-bold'>Terms & Conditions–Yellowzone Trading LLC</h1>
         {Terms_Conditions.map((item, index) => (
           <div key={index} className='space-y-3'>
-            <h2 className='text-xl font-bold'>{item.title}</h2>
-            <div>
-            {item.text.includes('cs@interiorfilm.ae') ? (
-                      <>
-                        {item.text.split('cs@interiorfilm.ae')[0]}
-                        <Link href='mailto:cs@interiorfilm.ae' className='text-primary hover:text-primary'>
-                          cs@interiorfilm.ae
-                        </Link>
-                        {item.text.split('cs@interiorfilm.ae')[1]}
-                      </>
-                    ) : (
-                      item.text
-                    )}
-            </div>
+            <h2 className='text-xl font-bold'>
+              {replaceTextWithLink(item.title ?? '')}
+            </h2>
+            <div>{replaceTextWithLink(item.text)}</div>
             {item.listItems && (
               <ul className='px-4 space-y-1'>
                 {item.listItems.map((listItem, listItemIndex) => (
                   <li key={listItemIndex} className='list-decimal'>
-                    {listItem.includes('cs@interiorfilm.ae') ? (
-                      <>
-                        {listItem.split('cs@interiorfilm.ae')[0]}
-                        <Link href='mailto:cs@interiorfilm.ae' className='text-primary hover:text-primary'>
-                          cs@interiorfilm.ae
-                        </Link>
-                        {listItem.split('cs@interiorfilm.ae')[1]}
-                      </>
-                    ) : (
-                      listItem
-                    )}
+                    {replaceTextWithLink(listItem)}
                   </li>
                 ))}
               </ul>
             )}
           </div>
         ))}
-        
       </div>
     </>
   );
