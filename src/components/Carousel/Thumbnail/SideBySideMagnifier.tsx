@@ -2,12 +2,12 @@ import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 
 interface SideBySideMagnifierProps {
-  imageSrc: string; // URL for the main image
-  largeImageSrc: string; // URL for the high-resolution image
-  zoomScale?: number; // Magnification scale
-  inPlace?: boolean; // Whether to show the magnified image "in place"
-  alignTop?: boolean; // Align magnified image to top or center
-  fillSpace?: boolean; // Whether the zoomed image should fill the available space
+  imageSrc: string;
+  largeImageSrc: string; 
+  zoomScale?: number;
+  inPlace?: boolean; 
+  alignTop?: boolean;
+  fillSpace?: boolean;
 }
 
 const SideBySideMagnifier: React.FC<SideBySideMagnifierProps> = ({
@@ -24,7 +24,6 @@ const SideBySideMagnifier: React.FC<SideBySideMagnifierProps> = ({
   const [displayInPlace, setDisplayInPlace] = useState(inPlace);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // Function to calculate whether to display inPlace based on container width
   useEffect(() => {
     const container: any = containerRef.current;
     if (container) {
@@ -39,7 +38,6 @@ const SideBySideMagnifier: React.FC<SideBySideMagnifierProps> = ({
     }
   }, [inPlace]);
 
-  // Handle mouse movement over the image
   const handleMouseMove = (e: React.MouseEvent) => {
     const { top, left, width, height } =
       e.currentTarget.getBoundingClientRect();
@@ -47,7 +45,7 @@ const SideBySideMagnifier: React.FC<SideBySideMagnifierProps> = ({
     const y = e.clientY - top;
 
     setMagnifierPosition({
-      x: x - 75, // Center magnifier (assuming a 150x150px box)
+      x: x - 75,
       y: alignTop ? 0 : y - 75,
     });
 
@@ -61,7 +59,7 @@ const SideBySideMagnifier: React.FC<SideBySideMagnifierProps> = ({
     ref={containerRef}
     >
       <div
-        className="relative w-full h-full   cursor-crosshair"
+        className="relative w-full h-full   cursor-zoom-in"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onMouseMove={handleMouseMove}

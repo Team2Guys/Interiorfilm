@@ -70,7 +70,6 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
       container.scrollBy({ top: 150, behavior: "smooth" });
     }
   };
-  // md:!max-h-[700px] lg:!max-h-[570px] xl:!max-h-[600px] 2xl:!max-h-[720px] 3xl:!max-h-[800px] thumbnailslide
   return (
     <Fragment>
       <div className="space-y-20">
