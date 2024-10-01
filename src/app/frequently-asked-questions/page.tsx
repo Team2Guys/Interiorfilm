@@ -2,84 +2,9 @@
 import React, { useState } from 'react'
 import Container from 'components/Layout/Container/Container'
 import Overlay from "components/widgets/Overlay/Overlay";
-import { Description } from '@radix-ui/react-dialog';
 import Link from 'next/link';
 import ProductCollapse from 'components/ui/Collapse/productCollpase';
-
-interface ACCORDINTYPES {
-    Title: string,
-    Description: string,
-}
-
-
-// const AccordionsArray: ACCORDINTYPES[] = [
-//     {
-//         Title: "What is the meaning of Lorem ipsum?",
-//         Description: "Lorem ipsum dolor sit amet, consectetur adipisici elit…&apos; (complete text) is dummy text that is not meant to mean anything. It is used as a placeholder in magazine layouts, for example, in order to give an impression of the finished document. The text is intentionally unintelligible so that the viewer is not distracted by the content. The language is not real Latin and even the first word &apos;Lorem&apos; ",
-
-
-//     },
-//     {
-//         Title: "Can I order a free sample copy of a magazine?",
-//         Description: "Lorem ipsum dolor sit amet, consectetur adipisici elit…&apos; (complete text) is dummy text that is not meant to mean anything. It is used as a placeholder in magazine layouts, for example, in order to give an impression of the finished document. The text is intentionally unintelligible so that the viewer is not distracted by the content. The language is not real Latin and even the first word &apos;Lorem&apos ",
-//     },
-//     {
-//         Title: "Are unsold magazines sent back to the publisher?",
-//         Description: "Lorem ipsum dolor sit amet, consectetur adipisici elit…&apos; (complete text) is dummy text that is not meant to mean anything. It is used as a placeholder in magazine layouts, for example, in order to give an impression of the finished document. The text is intentionally unintelligible so that the viewer is not distracted by the content. The language is not real Latin and even the first word &apos;Lorem&apos",
-
-
-//     },
-//     {
-//         Title: "Where can I find your disclaimer and privacy policy?",
-//         Description: "Lorem ipsum dolor sit amet, consectetur adipisici elit…&apos; (complete text) is dummy text that is not meant to mean anything. It is used as a placeholder in magazine layouts, for example, in order to give an impression of the finished document. The text is intentionally unintelligible so that the viewer is not distracted by the content. The language is not real Latin and even the first word &apos;Lorem&apos ",
-
-//     },
-//     {
-//         Title: "Can I change the displayed currency?",
-//         Description: "Improve aesthetics of your kitchen with Premium Vinyl Wraps",
-
-//     },
-//     {
-//         Title: "Do I have the right to return an item?",
-//         Description: "Improve aesthetics of your kitchen with Premium Vinyl Wraps",
-
-//     },
-
-
-// ]
-
-
-
-const AccordionsArray: ACCORDINTYPES[] = [
-    {
-        Title: "What is the meaning of Lorem ipsum?",
-        Description: "Lorem ipsum dolor sit amet, consectetur adipisici elit…&apos; (complete text) is dummy text that is not meant to mean anything. It is used as a placeholder in magazine layouts, for example, in order to give an impression of the finished document. The text is intentionally unintelligible so that the viewer is not distracted by the content. The language is not real Latin and even the first word &apos;Lorem&apos;",
-    },
-    {
-        Title: "Can I order a free sample copy of a magazine?",
-        Description: "Lorem ipsum dolor sit amet, consectetur adipisici elit…&apos; (complete text) is dummy text that is not meant to mean anything. It is used as a placeholder in magazine layouts, for example, in order to give an impression of the finished document. The text is intentionally unintelligible so that the viewer is not distracted by the content. The language is not real Latin and even the first word &apos;Lorem&apos;",
-    },
-    {
-        Title: "Are unsold magazines sent back to the publisher?",
-        Description: "Lorem ipsum dolor sit amet, consectetur adipisici elit…&apos; (complete text) is dummy text that is not meant to mean anything. It is used as a placeholder in magazine layouts, for example, in order to give an impression of the finished document. The text is intentionally unintelligible so that the viewer is not distracted by the content. The language is not real Latin and even the first word &apos;Lorem&apos;",
-    },
-    {
-        Title: "Where can I find your disclaimer and privacy policy?",
-        Description: "Lorem ipsum dolor sit amet, consectetur adipisici elit…&apos; (complete text) is dummy text that is not meant to mean anything. It is used as a placeholder in magazine layouts, for example, in order to give an impression of the finished document. The text is intentionally unintelligible so that the viewer is not distracted by the content. The language is not real Latin and even the first word &apos;Lorem&apos;",
-    },
-    {
-        Title: "Can I change the displayed currency?",
-        Description: "Improve aesthetics of your kitchen with Premium Vinyl Wraps",
-    },
-    {
-        Title: "Do I have the right to return an item?",
-        Description: "Improve aesthetics of your kitchen with Premium Vinyl Wraps",
-    },
-]
-
-
-
-
+import { AccordionsArray } from 'data/Data';
 
 function Page() {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -88,7 +13,7 @@ function Page() {
         setOpenIndex(openIndex === index ? null : index);
     };
     return (
-        <Container>
+        <Container className="mb-5">
             <Overlay title="faqS" />
             <div className='flex justify-center my-7'>
                 <div>
@@ -97,25 +22,41 @@ function Page() {
 
                 </div>
             </div>
-
             {AccordionsArray.map((item, index) => {
                 return (
                     <ProductCollapse
-                        key={index}
-                        isOpen={openIndex === index}
-                        isHome={true}
-                        onClick={() => handleToggle(index)} title={item.Title}
-                        titleClass={openIndex === index ? "font-semibold" : 'font-normal'}
-                        className='flex gap-2 items-center my-3'
-
-                    >
-
-                        <p className="text-[14px] text-para">{item.Description}</p>
-                    </ProductCollapse>
+                    key={index}
+                    isOpen={openIndex === index}
+                    isHome={true}
+                    onClick={() => handleToggle(index)}
+                    title={item.Title}
+                    titleClass={openIndex === index ? "font-semibold" : 'font-normal'}
+                    className='flex gap-2 items-center my-3'
+                  >
+                    {item.Description.includes('Interiorfilm.ae') ? (
+                      <p className="text-[14px] text-para">
+                        {item.Description.split('Interiorfilm.ae').map((part, i) => (
+                          <React.Fragment key={i}>
+                            {part}
+                            {i === 0 && (
+                              <Link
+                                href="/"
+                                className="text-primary underline"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                Interiorfilm.ae
+                              </Link>
+                            )}
+                          </React.Fragment>
+                        ))}
+                      </p>
+                    ) : (
+                      <p className="text-[14px] text-para">{item.Description}</p>
+                    )}
+                  </ProductCollapse>   
                 )
             })}
-
-
             <div className='flex justify-center flex-col items-center font-futura mt-8 gap-5'>
                 <h1 className='font-semibold text-23'>Still have questions?</h1>
                 <p className='font-light text-16 text-center text-[#A3A9B3] flex flex-col'>Can&apos;t find the answer you&apos;re looking for?
