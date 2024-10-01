@@ -3,3 +3,9 @@ export type FAQ = {
   id: number;
   text: string;
 };
+
+
+export interface ACCORDINTYPES {
+  Title: string,
+  Description: string,
+}

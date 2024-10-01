@@ -27,6 +27,7 @@ import { RiCustomerService2Line } from 'react-icons/ri'
 
 
 import { StaticImageData } from 'next/image';
+import { ACCORDINTYPES } from 'types/faq';
 
 export const validateForm = (formData: { fullName: string; email: string; password: string; confirmpassword: string }) => {
     if (formData.password !== formData.confirmpassword) {
@@ -569,3 +570,49 @@ export const CountryCode = [
 
 
 
+export const AccordionsArray: ACCORDINTYPES[] = [
+  {
+      Title: "What is architectural vinyl film wrap?",
+      Description: "Architectural vinyl film wrap is a high-quality, adhesive-backed film designed to cover and transform surfaces such as doors, kitchen counters, and furniture. It offers a cost-effective alternative to traditional remodeling by enhancing aesthetics without extensive renovations.",
+  },
+  {
+      Title: "What surfaces can I use vinyl film on?",
+      Description: "Our vinyl films are suitable for a variety of surfaces, including doors, kitchen counters, cabinets, walls, furniture, and backsplashes.",
+  },
+  {
+      Title: "Is vinyl film durable?",
+      Description: "Yes, our architectural vinyl films are designed to be durable and long-lasting. They are resistant to scratches, stains, and moisture, making them ideal for high-traffic areas like kitchens and bathrooms.",
+  },
+  {
+      Title: "Can I install the vinyl film myself?",
+      Description: "While many customers choose to install the film themselves, we recommend hiring a professional for the best results, especially for larger surfaces or intricate designs. We provide detailed installation instructions to assist DIY enthusiasts.",
+  },
+  {
+      Title: "How do I clean and maintain vinyl film?",
+      Description: "To maintain the appearance of your vinyl film, simply wipe it down with a soft cloth and mild soap. Avoid abrasive cleaners and scrubbing pads, as they can damage the surface.",
+  },
+  {
+      Title: "Can I remove the vinyl film later?",
+      Description: "Yes, our vinyl films are designed for easy removal without damaging the underlying surface. If you decide to change the look of your space, you can safely peel off the film.",
+  },
+  {
+      Title: "What colors and textures are available?",
+      Description: "We offer a wide range of colors, patterns, and textures to suit your design needs. From sleek matte finishes to wood and stone textures, you can find the perfect match for your style.",
+  },
+  {
+      Title: "How do I order vinyl film?",
+      Description: "You can browse our selection on Interiorfilm.ae and place your order directly through the website. If you need assistance, feel free to contact our customer service team.",
+  },
+  {
+      Title: "What is the delivery time for my order?",
+      Description: "Delivery times for most addresses in mainland UAE is 24-48 hours. For outlying areas or off shore areas, please consider an extra day or 2. ",
+  },
+  {
+      Title: "Do you offer custom sizes or designs?",
+      Description: "Our material is delivered in roll width of 122cm but if you have a custom requirement, we can check with the factory if it’s possible. There will be a minimum order requirement but this can vary from style to style. .",
+  },
+  {
+      Title: "What if I have more questions?",
+      Description: "If you have any additional questions or need further assistance, feel free to reach out to our customer service team via our contact page or through email. We're here to help!",
+  },
+];
