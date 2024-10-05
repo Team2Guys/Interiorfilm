@@ -129,9 +129,9 @@ const Footer: React.FC = () => {
                 onClick={toggleCategories}
               >
                 Collections
-                <span className="ml-2 md:hidden ">
+                {/* <span className="ml-2 md:hidden ">
                   {isCategoriesOpen ? <FaAngleUp /> : <FaAngleDown />}
-                </span>
+                </span> */}
               </h3>
               <div className="flex md:block gap-16">
                 <ul
@@ -159,9 +159,9 @@ const Footer: React.FC = () => {
                 onClick={toggleCustomerCare}
               >
                 Quick Links
-                <span className="ml-2 md:hidden">
+                {/* <span className="ml-2 md:hidden">
                   {isCustomerCareOpen ? <FaAngleUp /> : <FaAngleDown />}
-                </span>
+                </span> */}
               </h3>
               <ul
                 className={`space-y-2 transition-all duration-300 overflow-hidden ${
@@ -186,9 +186,9 @@ const Footer: React.FC = () => {
                 onClick={togglePages}
               >
                 Policies
-                <span className="ml-2 md:hidden">
+                {/* <span className="ml-2 md:hidden">
                   {isPagesOpen ? <FaAngleUp /> : <FaAngleDown />}
-                </span>
+                </span> */}
               </h3>
               <ul
                 className={`space-y-2 transition-all duration-300 overflow-hidden ${
