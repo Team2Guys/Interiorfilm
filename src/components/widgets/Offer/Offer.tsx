@@ -20,7 +20,7 @@ interface Offer {
     <Container className='mt-20'>
         <h1 className=' font-semibold text-lg lg:text-5xl text-center capitalize'>What does interior Film offer you!</h1>
 
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-10 gap-2 md:gap-4'>
+        <div className='grid grid-cols-2  lg:grid-cols-4 mt-10 gap-2 md:gap-4'>
             {
                 Offers.map((array,index)=>(
                     <div className='group ' key={index}>
@@ -28,8 +28,8 @@ interface Offer {
                     <div className='w-10 h-10 md:w-16 md:h-16 rounded-full bg-white group-hover:bg-primary transition duration-500 ease-in-out flex justify-center items-center'>
                         {array.icon}
                     </div>
-                    <h1 className='font-semibold md:text-20 font-futura text-center text-heading'>{array.title}</h1>
-                    <p className='text-center  text-15 sm:text-2xl md:text-base text-para'>{array.detail}</p>
+                    <h1 className='font-semibold text-14 sm:text-base md:text-20 font-futura text-center text-heading'>{array.title}</h1>
+                    <p className='text-center  text-10 sm:text-16 md:text-base text-para'>{array.detail}</p>
                  </div>
                  </div>
                  

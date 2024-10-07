@@ -22,7 +22,7 @@ function HomeAccordian() {
           <Image
             src="/images/AcccodianImage.png"
             alt="Accordian Image"
-            className="object-cover w-full"
+            className="object-cover w-full h-full"
             height={1000}
             width={1000}
           />
@@ -44,7 +44,7 @@ function HomeAccordian() {
                 titleClass={`font-futura group-hover:text-primary ${
                   openIndex === index ? "font-bold text-primary" : "font-normal"
                 }`}
-                className="flex gap-2 items-center my-3"
+                className="flex flex-col sm:flex-row gap-2 items-start sm:items-center my-3"
                 Icon={item.Icon}
               >
                 <p className="text-[14px] text-para">{item.Description}</p>

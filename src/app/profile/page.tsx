@@ -144,10 +144,11 @@ const Profile: React.FC = () => {
       <Container className='mt-10'>
         <div className='flex flex-wrap md:flex-nowrap md:gap-4'>
           <div className='p-2 rounded-md shadow w-full md:w-4/12 hidden md:block'>
-            <div className='space-y-2 flex flex-col'>
-              <Link className='border border-gray p-2 w-96 rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/wishlist"}>Wishlist</Link>
-              <Link className='border border-gray p-2 w-96 rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/about"}>About Us</Link>
-              <p className='border border-gray p-2 w-96 rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' onClick={logoutHhandler}>Log Out</p>
+            <div className='space-y-2 flex flex-col w'>
+              <Link className='border border-gray p-2 w-full rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/wishlist"}>Wishlist</Link>
+              {/* <Link className='border border-gray p-2 w-full rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/order-history"}>Order History</Link> */}
+              <Link className='border border-gray p-2 w-full rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/about"}>About Us</Link>
+              <p className='border border-gray p-2 w-full rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' onClick={logoutHhandler}>Log Out</p>
             </div>
           </div>
           <div className='p-4 rounded-md shadow w-full md:w-8/12'>
