@@ -146,7 +146,7 @@ const Profile: React.FC = () => {
           <div className='p-2 rounded-md shadow w-full md:w-4/12 hidden md:block'>
             <div className='space-y-2 flex flex-col w'>
               <Link className='border border-gray p-2 w-full rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/wishlist"}>Wishlist</Link>
-              {/* <Link className='border border-gray p-2 w-full rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/order-history"}>Order History</Link> */}
+              <Link className='border border-gray p-2 w-full rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/order-history"}>Order History</Link>
               <Link className='border border-gray p-2 w-full rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' href={"/about"}>About Us</Link>
               <p className='border border-gray p-2 w-full rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold' onClick={logoutHhandler}>Log Out</p>
             </div>
