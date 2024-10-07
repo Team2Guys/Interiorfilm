@@ -1,7 +1,11 @@
 import axios, { AxiosResponse,AxiosRequestConfig } from "axios";
 import PRODUCTS_TYPES from 'types/interfaces'
+import Cookies from "js-cookie";
 
 
+const token = Cookies.get("2guysAdminToken");
+const superAdminToken = Cookies.get("superAdminToken");
+let finalToken = token ? token : superAdminToken;
 
 type setTotalProducts= React.Dispatch<React.SetStateAction<PRODUCTS_TYPES[]>>
     type setTotalPage= React.Dispatch<React.SetStateAction<string | undefined >>
@@ -36,21 +40,18 @@ export const uploadPhotosToBackend = async (files: File[]): Promise<any[]> => {
     }
   };
 
-
+  const headers = {
+    token: finalToken,
+  };
 
   
- export const ImageRemoveHandler = async (
-    imagePublicId: string,
-    setterFunction: any
-  ) => {
-    const requestConfig: AxiosRequestConfig = {data: { imageUrl: imagePublicId },
-    };
-console.log('function called')
+ export const ImageRemoveHandler = async (imagePublicId: string,setterFunction: any) => {
+
+
+  console.log(finalToken, "finalToken")
+    const requestConfig: AxiosRequestConfig = {data: { imageUrl: imagePublicId },headers: headers,};
     try {
-      const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/removeProductImage`,
-        requestConfig
-      );
+      const response = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/removeProductImage`,requestConfig);
       console.log("Image removed successfully:", response.data);
       setterFunction((prev: any) =>
         prev.filter((item: any) => item.public_id != imagePublicId)

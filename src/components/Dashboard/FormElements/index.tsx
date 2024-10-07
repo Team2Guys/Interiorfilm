@@ -22,6 +22,8 @@ import Toaster from "components/Toaster/Toaster";
 import axios from "axios";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import Loader from "components/Loader/Loader";
+import Cookies from "js-cookie";
+
 import {
   withoutVariation,
   AddProductvalidationSchema,
@@ -44,6 +46,14 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
   const handleOptionChange = (e: any) => {
     console.log(e);
     setVariationOption(e.target.value);
+  };
+  const token = Cookies.get("2guysAdminToken");
+  const superAdminToken = Cookies.get("superAdminToken");
+  let finalToken = token ? token : superAdminToken;
+
+
+  const headers = {
+    token: finalToken,
   };
 
   const changeTextColor = () => {
@@ -103,7 +113,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
         : null;
       let url = `${process.env.NEXT_PUBLIC_BASE_URL}${updateFlag ? addProductUrl : "/api/addProduct"
         }`;
-      const response = await axios.post(url, newValue);
+      const response = await axios.post(url, newValue,{headers:headers});
       console.log(response, "response");
       Toaster("success", updateFlag ? "Product has been sucessufully Updated !" : "Product has been sucessufully Created !");
       setProductInitialValue(AddproductsinitialValues);
