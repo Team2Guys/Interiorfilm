@@ -228,7 +228,7 @@ const SearchProduct = () => {
                     {searchTerm && isFocused && (
                       <div className="px-4">
                         <div
-                          className="absolute left-0 top-28 lg:top-32  w-full max-h-[300px] bg-white  shadow-lg  overflow-y-auto z-10 custom-scrollbar x-3"
+                          className="absolute left-0  top-25 md:top-28 lg:top-32  w-full max-h-[300px] bg-white  shadow-lg  overflow-y-auto z-10 custom-scrollbar"
                           onBlur={() => setIsFocused(false)}
                           ref={dropdownRef}
                         >
