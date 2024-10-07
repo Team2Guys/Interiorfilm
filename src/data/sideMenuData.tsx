@@ -488,7 +488,7 @@ export const AccordionsArray: ACCORDINTYPES[] = [
         <SlDiamond className="text-primary group-hover:text-white text-23 md:text-[40px]" />
       ),
       title: "Savings to your pocket",
-      detail: "We cut out the middle man, passing the savings on to you.",
+      detail: "We cut out the middleman, passing the savings on to you.",
     },
     {
       icon: (

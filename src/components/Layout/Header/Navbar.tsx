@@ -37,8 +37,29 @@ const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchParams = useSearchParams();
-   
+  const [isFocused, setIsFocused] = useState(false);
   const category = searchParams.get("category");
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event:any) => {
+      // Check if click is outside both the search input and dropdown
+      if (
+        searchInputRef.current &&
+        !searchInputRef.current.contains(event.target) &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setIsFocused(false); // Close the dropdown
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   // Handle setting the active link based on the current category or pathname
   useEffect(() => {
@@ -140,11 +161,7 @@ const Navbar = () => {
     }
   }, [isModalOpen]);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      showModal();
-    }
-  };
+
 
   useEffect(() => {
     if (pathname === "/") {
@@ -288,44 +305,81 @@ const Navbar = () => {
         }`}
       >
         <div className="grid grid-cols-12 items-center mt-2">
-          <div className="sm:flex items-center  w-full rounded-3xl  shadow border border-gray-2  col-span-2 md:col-span-4 hidden ">
+          <div className="md:flex items-center  w-full rounded-3xl  shadow border border-gray-2  col-span-2 md:col-span-4 hidden relative ">
             <input
               type="text"
               ref={searchInputRef}
               placeholder="Product Search..."
               value={searchTerm}
-              onKeyDown={handleKeyDown}
               onChange={(e) => setSearchTerm(e.target.value)}
+              onFocus={() => setIsFocused(true)}
               className="w-full h-[40px] rounded-3xl px-4 py-2 text-gray-700 bg-white border-none   focus:outline-none"
             />
             <button
-              className="h-[51px] px-4 py-3 rounded-3xl bg-white text-gray-600  hover:text-gray-800 cursor-pointer"
-              onClick={showModal}
+              className="h-[51px] px-4 py-3 rounded-3xl text-gray-600  hover:text-gray-800 cursor-pointer absolute right-0"
             >
               <IoSearch size={25} />
             </button>
-          </div>
+            {searchTerm && isFocused && (
+        <div className="px-4">
           <div
-            className=" cursor-pointer text-22 sm:text-20 md:text-2xl w-fit col-span-2 md:col-span-4 block sm:hidden"
+          className="absolute left-0 top-14  w-full max-h-[300px] bg-white  shadow-lg  overflow-y-auto z-10 custom-scrollbar x-3"
+          onBlur={() => setIsFocused(false)}
+          ref={dropdownRef}
+        >
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product, index) => (
+             <div className=" flex items-center mt-1 px-2"  key={index}>
+                {product.posterImageUrl && (
+                      <Image
+                        className="rounded-md"
+                        width={50}
+                        height={50}
+                        src={product.posterImageUrl.imageUrl}
+                        alt="image"
+                      />
+                    )}
+               <Link
+                href={{
+                  pathname: `/product/${generateSlug(product.name)}`,
+                }}
+                onClick={() => setIsFocused(false)}
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+              >
+                {product.name}
+              </Link>
+             </div>
+            ))
+          ) : (
+            <div className="px-4 py-2 text-gray-600">No products found</div>
+          )}
+        </div>
+        </div>
+      )}
+          </div>
+        
+          <div
+            className=" cursor-pointer text-22 sm:text-20 md:text-2xl w-fit col-span-1 sm:col-span-4 md:col-span-4 block md:hidden"
             onClick={showModal}
           >
             <IoIosSearch className="text-2xl sm:text-20" />
           </div>
 
-          <div className="mx-auto col-span-5 md:col-span-4">
-            <Link href="/">
+          <div className="text-center   flex justify-center col-span-5 sm:col-span-4 md:col-span-4 ml-3">
+            <Link href="/" className="">
               <Image
+              className=" w-full h-full lg:w-[277px] lg:h-[60px] object-contain"
                 src={
                   isHomePage ? (isScrolled ? blacklogo : blacklogo) : blacklogo
                 }
                 alt="logo"
-                width={207}
-                height={39}
+                width={700}
+                height={700}
               />
             </Link>
           </div>
 
-          <div className="flex items-center justify-end gap-2 md:gap-4 col-span-5 md:col-span-4">
+          <div className="flex items-center justify-end gap-2 col-span-6 md:gap-4 sm:col-span-4 md:col-span-4">
             {loggedInUser ? (
               <Profile />
             ) : (
@@ -530,7 +584,7 @@ const Navbar = () => {
                   >
                     {product.posterImageUrl && (
                       <Image
-                        className="rounded-md"
+                        className="rounded-md h-[120px]"
                         width={100}
                         height={100}
                         src={product.posterImageUrl.imageUrl}
@@ -538,15 +592,15 @@ const Navbar = () => {
                       />
                     )}
                     <div>
-                      <p className="font-semibold text-lg md:text-xl">
+                      <p className="font-semibold text-14 md:text-xl">
                         {product.name}
                       </p>
-                      <p>{truncateText(product.description, 160)}</p>
+                      <p className="text-10 md:text-base">{truncateText(product.description, 60)}</p>
                     </div>
                   </Link>
                 ))
               ) : (
-                <p className="text-dark dark:text-white">No products found</p>
+                <p className="text-dark text-10 md:text-base dark:text-white">No products found</p>
               )}
             </div>
           )}
