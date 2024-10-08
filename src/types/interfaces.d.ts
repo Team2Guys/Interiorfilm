@@ -62,7 +62,7 @@ export interface USRPROPS {
 
   export interface IMAGE_INTERFACE {
     public_id?: string;
-    imageUrl?: string;
+    imageUrl?: any;
     name?: string;
     imageIndex?:number;
   }
@@ -80,7 +80,7 @@ export interface USRPROPS {
     name: string;
     description: string;
     salePrice: string;
-    purchasePrice: string;
+    purchasePrice?: string;
     discountPrice: string;
     starRating: string;
     reviews: string;
@@ -91,6 +91,15 @@ export interface USRPROPS {
     code:string
     totalStockQuantity: number;
     variantStockQuantities: { variant: string; quantity: number }[]
+    Meta_Title: string
+   Meta_Description: string
+   URL: string
+   Canonical_Tag: string
+   Images_Alt_Text: string
+  // Og_title : string
+  // Og_description: string
+  // Og_Image: string
+  // OgUrl:string
   
   }
 
@@ -135,7 +144,7 @@ interface PRODUCTS_TYPES {
   totalStockQuantity?: any;
   sizes?: sizes[];
   isFeatured?: any;
-  price?: number;
+  price?: any;
   count?: any;
   length?: any;
   totalPrice?:any;
@@ -197,6 +206,16 @@ export interface product {
   price: string;
   __v: number;
   code: string
+
+  Meta_Title: string
+Meta_Description: string
+URL: string
+Canonical_Tag: string
+Images_Alt_Text: string
+Og_title : string
+Og_description: string
+Og_Image: string
+OgUrl:string
 }
 
 export interface ITabbyList {

@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useEffect, DragEvent, SetStateAction } from "react";
-import { BsCloudDownload, BsCloudUpload } from "react-icons/bs";
+import React, { useState, SetStateAction } from "react";
+import { BsCloudUpload } from "react-icons/bs";
 
 interface PROPS {
   setImagesUrl : React.Dispatch<SetStateAction<any[]>> | any ,

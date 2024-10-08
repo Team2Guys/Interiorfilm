@@ -14,7 +14,7 @@ const config: Config = {
     extend: {
     
       fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
+        futura: ["futuraCyrillic", "sans-serif"],
       },
       screens: {
         "2xsm": "375px",
@@ -36,7 +36,8 @@ const config: Config = {
         bodydark: "#AEB7C0",
         bodydark1: "#DEE4EE",
         bodydark2: "#8A99AF",
-        primary: "#FF914E",
+        // primary: "#FB711D",
+        primary: "var(--primary)",
         secondary: "#000",
         bglight: "#F8FAFB",
         lightdark:"#8F8F8F",

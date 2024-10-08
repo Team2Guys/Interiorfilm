@@ -5,25 +5,19 @@ import Overlay from 'components/widgets/Overlay/Overlay';
 import { generateSlug } from 'data/Data';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useLayoutEffect, useState } from 'react';
 import { CategoriesType } from 'types/interfaces';
 
 function Categories() {
   const [category, setCategory] = useState<CategoriesType[]>([]);
   const [loading, setloading] = useState<boolean>(true);
-  const router = useRouter();
-
-  const handleButtonClick = (categoryID: string) => {
-    router.push(`/products?category=${categoryID}`);
-  };
 
 
   const CategoryHandler = async () => {
     try {
       setloading(true)
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
-      console.log(response, "response")
+
       setCategory(response.data);
     } catch (err) {
       console.log(err, "err")

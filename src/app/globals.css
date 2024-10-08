@@ -7,6 +7,8 @@
   --antd-body-bg: #ffffff;
   --antd-text-color: #000000;
   --antd-border-color: #d9d9d9;
+  --primary:#FB701E;
+  /* --primary:#FF914E; */
 }
 
 .dark :root {
@@ -38,7 +40,7 @@
 .swiper-button-next::after,
 .swiper-button-prev::after {
   font-size: 20px !important;
-  color: #FF914E !important;
+  color: var(--primary) !important;
 }
 
 /* Custom styles for Swiper pagination dots */
@@ -61,7 +63,7 @@
 
 .ant-pagination .ant-pagination-item-active a {
   color: #ffffff !important;
-  background-color: #FF914E;
+  background-color: var(--primary);
   border-radius: 50px !important;
 
 
@@ -91,7 +93,7 @@
   height: 1px;
   bottom: -2px;
   left: 0;
-  background-color: #FF914E;
+  background-color: var(--primary);
 
 }
 
@@ -109,14 +111,14 @@
   height: 1px;
   bottom: -2px;
   left: 0;
-  background-color: #FF914E;
+  background-color: var(--primary);
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.3s ease-out;
 }
 
 .link-footer:after {
-  background-color: #FF914E !important;
+  background-color: var(--primary) !important;
 }
 
 .link-underline:hover::after,
@@ -183,19 +185,19 @@
 
 
 .ant-checkbox-checked .ant-checkbox-inner {
-  background-color: #FF914E !important;
-  border-color: #FF914E !important;
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
 }
 
 .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
 .ant-checkbox:not(.ant-checkbox-disabled):hover .ant-checkbox-inner {
-  border-color: #FF914E !important;
+  border-color: var(--primary) !important;
 
 }
 
 .ant-radio-wrapper .ant-radio-checked .ant-radio-inner {
-  border-color: #FF914E !important;
-  background-color: #FF914E !important;
+  border-color: var(--primary) !important;
+  background-color: var(--primary) !important;
   ;
 }
 
@@ -313,7 +315,7 @@
 .ant-tabs .ant-tabs-tab:hover {
   color: black !important;
   padding: 8px 10px 8px 2px !important;
-  border-bottom: 2px solid #FF914E !important;
+  border-bottom: 2px solid var(--primary) !important;
 
 }
 
@@ -330,7 +332,7 @@
 
 .ant-tabs .ant-tabs-tab.ant-tabs-tab-active {
   color: black !important;
-  border-bottom: 2px solid #FF914E !important;
+  border-bottom: 2px solid var(--primary) !important;
   position: relative;
 
 
@@ -338,7 +340,7 @@
 
 .ant-tabs .ant-tabs-tab.ant-tabs-tab-active::after {
   content: '•';
-  color: #FF914E;
+  color: var(--primary);
   position: absolute;
   right: -10px;
   top: 50%;
@@ -388,12 +390,12 @@
 }
 
 .ant-btn-primary {
-  background: #FF914E !important;
+  background: var(--primary) !important;
 }
 
 .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
-  color: #FF914E !important;
-  border-color: #FF914E !important;
+  color: var(--primary) !important;
+  border-color: var(--primary) !important;
   /* background: #ffffff; */
 }
 
@@ -424,7 +426,7 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #FF914E;
+  background: var(--primary);
   /* Color when hovering over the scrollbar thumb */
 }
 
@@ -455,9 +457,10 @@
   /* Color when hovering over the scrollbar thumb */
 }
 
+
 .column-swipper .swiper-wrapper {
   flex-direction: row !important;
-  width: 100% !important;
+  /* width: 100% !important; */
 }
 .category-wrapper .skeleton-input{
   min-width: auto !important;
@@ -488,13 +491,15 @@
 }
 
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 768px) {
   .column-swipper .swiper-wrapper {
     flex-direction: column !important;
     width: 100% !important;
   }
   .column-swiper-slider {
     width: 100% !important;
+    --tw-space-y-reverse: 1 !important;
+    margin-bottom: calc(1.25rem /* 20px */ * var(--tw-space-y-reverse)) !important;
   }
 }
 
@@ -548,7 +553,7 @@ gap: 10px;
 }
 
 .custom-scrollbar1::-webkit-scrollbar-thumb:hover {
-  background: #FF914E; /* Color when hovering over the scrollbar thumb */
+  background: var(--primary); /* Color when hovering over the scrollbar thumb */
 }
 
 .ant-dropdown{
@@ -592,6 +597,45 @@ gap: 10px;
   max-height: 100% !important;
 }
 
-.ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled){
+/* .ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled){
   width: 100% !important;
+} */
+
+@media only screen and (min-width: 1600px) {
+  .thumbnailslide {
+    max-height:800px !important;
+  }
+}
+
+@media only screen and (min-width: 1588px) {
+  .thumbnailslide {
+    max-height:670px !important ;
+  }
+}
+
+@media only screen and (min-width: 1380px) {
+  .thumbnailslide {
+    max-height:565px !important;
+  }
+}
+@media only screen and (min-width: 1076px) {
+  .thumbnailslide {
+    max-height:491px !important;
+  }
+}
+@media only screen and (min-width: 944px) {
+  .thumbnailslide {
+    max-height:633px !important;
+  }
+}
+
+@media only screen and (min-width: 920px) {
+  .thumbnailslide {
+    max-height:613px !important;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .thumbnailslide {
+    max-height:673px !important;
+  }
 }

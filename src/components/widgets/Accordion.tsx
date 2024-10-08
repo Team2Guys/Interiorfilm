@@ -17,16 +17,13 @@ const Accordion: React.FC<accordionprop> = ({ detail }: any) => {
     <>
       {detail?.map((item: any, index: any) => (
         <>
-          <div className='px-4 md:px-0'>
             <React.Fragment key={index}>
               <ProductCollapse isOpen={openIndex === index}
-                onClick={() => handleToggle(index)} title={item.name} titleClass="text-[14px]" className=" py-4 border-t border-stone-200">
-                <p className="text-[14px]">{item.detail}</p>
+                onClick={() => handleToggle(index)} title={item.name} titleClass="font-semibold text-[18px] capitalize"  className=" py-4 border-t border-stone-200 capitalize">
+                <p className="text-[15px]">{item.detail}</p>
               </ProductCollapse>
             </React.Fragment>
             
-            {/* <hr className=" h-1 border-stone-200" /> */}
-          </div>
         </>
       ))}
 

@@ -10,13 +10,16 @@ interface IIconText {
 
 const TextwithIcon = ({ Icon, title, subTitle, titleCSS, SubtitleCSS}: IIconText) => {
   return (
-    <div className='flex items-center gap-3 px-3 py-7'>
-      {Icon && Icon}
-      <div className='flex flex-col'>
-        <h1 className={`font-semibold  md:text-[20px] ${titleCSS && titleCSS}`}>{title}</h1>
-        <h3 className={`${SubtitleCSS && SubtitleCSS}`}>{subTitle}</h3>
-      </div>
-    </div>
+   
+<div className='flex flex-col justify-start sm:flex-row sm:items-center px-2 gap-3 py-4 w-full'>
+  {Icon && Icon}
+  <div className='flex flex-col w-full'>
+    <h1 className={`sm:font-semibold font-medium text-13 md:text-[20px] ${titleCSS && titleCSS}`}>{title}</h1>
+    <h3 className={`text-11 sm:text-base ${SubtitleCSS && SubtitleCSS}`}>{subTitle}</h3>
+  </div>
+</div>
+
+
   )
 }
 

@@ -33,7 +33,6 @@ const CategorySlider: React.FC = () => {
   }, [updateSwiperNavigation]);
 
   const fetchCategories = async () => {
-    
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
       const data = await response.json();
@@ -49,6 +48,17 @@ const CategorySlider: React.FC = () => {
     fetchCategories();
   }, []);
 
+  const handleMouseEnter = () => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.autoplay.stop();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.autoplay.start();
+    }
+  };
   
   return (
 <>
@@ -69,7 +79,8 @@ const CategorySlider: React.FC = () => {
         ))}
       </div>
     ) : (
-      <div className="px-0 md:px-4 flex items-center relative mt-10">
+      <div className="px-0 md:px-4 flex items-center relative mt-10"  onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}>
       <button
         ref={prevRef}
         className="relative left-4 bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
@@ -92,8 +103,8 @@ const CategorySlider: React.FC = () => {
             slidesPerView: 2,
             spaceBetween: 20,
           },
-          768: {
-            slidesPerView: 2.5,
+          904: {
+            slidesPerView: 2.2,
             spaceBetween: 10,
           },
           1024: {

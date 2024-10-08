@@ -6,7 +6,6 @@ import Overlay from "components/widgets/Overlay/Overlay";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FaFacebookSquare, FaInstagram } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
 import { FiMail, FiPhone } from "react-icons/fi";
 import { TfiLocationPin } from "react-icons/tfi";
 import { useFormik } from "formik";
@@ -22,31 +21,45 @@ const contact_us_Validation = Yup.object().shape({
       .required("Name is Required"),
     comment: Yup.string().required("Comment is Required"),
     user_email: Yup.string().email("Invalid email").required("Email is Required"),
-    user_phone: Yup.string()
-      .matches(
-        /^\+\d{3}-\d{2}-\d{7}$/,
-        'Phone Number must be in the format "+971-41-1234567"'
-      )
-      .required("Phone Number is Required"),
+    user_phone: Yup.string()    .required("Phone Number is Required"),
+
+
+
   });
   
-  // Function to format phone number
-  const formatPhoneNumber = (value:any) => {
-    const numbers = value.replace(/\D/g, '');
-    if (numbers.length <= 3) return `+${numbers}`;
-    if (numbers.length <= 5) return `+${numbers.slice(0, 3)}-${numbers.slice(3)}`;
-    return `+${numbers.slice(0, 3)}-${numbers.slice(3, 5)}-${numbers.slice(5, 12)}`;
+  const formatPhoneNumber = (value: any) => {
+    // Remove all characters except digits and "+"
+    const numbers = value.replace(/[^+\d]/g, "");
+  
+    // Handle UAE-specific formatting when starting with "+971"
+    if (numbers.startsWith("+971")) {
+      if (numbers.length <= 5) return `${numbers}`; // "+971"
+      if (numbers.length <= 7) return `${numbers.slice(0, 4)}-${numbers.slice(4)}`; // "+971-XX"
+      return `${numbers.slice(0, 4)}-${numbers.slice(4, 6)}-${numbers.slice(6, 13)}`; // "+971-XX-XXXXXXX"
+    } 
+    // Handle numbers starting with "0" for UAE (assume "0971")
+    else if (numbers.startsWith("0")) {
+      if (numbers.length <= 3) return `${numbers}`;
+      if (numbers.length <= 6) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`; // "0971-XX"
+      return `${numbers.slice(0, 3)}-${numbers.slice(3, 5)}-${numbers.slice(5, 12)}`; // "0971-XX-XXXXXXX"
+    } 
+  
+    return numbers; // If no valid prefix, return the input as-is.
   };
   
-  // Function to handle phone number change
-  const handlePhoneNumberChange = (e:any, setFieldValue:any) => {
+  const handlePhoneNumberChange = (e: any, setFieldValue: any) => {
     let value = e.target.value;
-    value = value.replace(/[^+\d]/g, "").slice(0, 13);
-    if (!value.startsWith("+")) {
-      value = "+" + value.replace(/^\+/, "");
-    }
+  
+    // Allow only digits and '+' at the start
+    value = value.replace(/[^+\d]/g, "");
+  
+    // Limit the input to 14 characters (for full UAE number)
+    value = value.slice(0, 14);
+  
+    // Set the formatted phone number
     setFieldValue("user_phone", formatPhoneNumber(value));
   };
+  
 
 const Contact = () => {
   const [loading, setloading] = useState<boolean>(false);
@@ -89,33 +102,36 @@ const Contact = () => {
       <Container className="lg:my-16 my-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-primary rounded-md p-4  sm:p-4 md:p-8 text-white space-y-14">
+            
             <h1 className="text-2xl lg:text-4xl font-medium pt-10">Contact</h1>
-            <div className="space-y-4">
+
+            <div className="flex flex-col gap-4">
               <div className="flex gap-2 items-center">
                 <TfiLocationPin size={20} />
-                <p>
-                  Yellowzone Trading, Al Nabooda Tower A ,Shop 6, Oud Metha,
-                  Dubai, UAE
-                </p>
+                <Link target="_blank" href={"https://www.google.com/maps?ll=25.24485,55.299425&z=15&t=m&hl=en&gl=US&mapclient=embed&cid=14349723016612093106"} className="md:text-12 lg:text-base">Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha,
+                Dubai, UAE</Link>
               </div>
               <div className="flex gap-2 items-center">
                 <FiPhone size={20} />
-                <Link target="_blank" href={"tel:+971 052 1919 327"}>
-                  +971 052 1919 327
+                <Link target="_blank" href={"tel:+971 52 191 9327"}>
+                  +971 52 191 9327
                 </Link>
               </div>
+
               <div className="flex gap-2 items-center">
                 <FiMail size={20} />
-                <Link target="_blank" href={"mailto:orders@yzgroup.ae"}>
-                  orders@yzgroup.ae
+                <Link target="_blank" href={"mailto:info@interiorfilm.ae"}>
+                  info@interiorfilm.ae
                 </Link>
               </div>
+
+              
             </div>
             <div>
-              <h1 className="text-lg md:text-xl lg:text-3xl font-medium">
+              <h1 className="text-lg md:text-xl lg:text-3xl font-medium flex flex-col gap-2">
                 Follow Us
               </h1>
-              <div className="flex gap-5 mt-5">
+              <div className="flex gap-5 ">
                 <Link target="_blank" href={"https://www.facebook.com/InteriorFilm.ae"}>
                   <FaFacebookSquare className="text-white" size={25} />
                 </Link>
@@ -124,6 +140,14 @@ const Contact = () => {
                 </Link>
               </div>
             </div>
+
+<div>
+
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.7645284624414!2d55.29684471128044!3d25.244854829675067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f42d1e8f3abe7%3A0xc724750e36691cb2!2sYellow%20Zone%20Technical%20Services!5e0!3m2!1sen!2s!4v1726464310457!5m2!1sen!2s" className ="w-full max-h-300 min-h-50" loading="lazy"></iframe>
+
+</div>
+
+
           </div>
           <div className="border border-gray rounded-md">
             <form className="p-4 pt-10" onSubmit={formik.handleSubmit}>
@@ -142,21 +166,7 @@ const Contact = () => {
                 </div>
               )}
 
-              <LabelInput
-                label="Email"
-                placeholder="Enter Email"
-                type="email"
-                id="user_email"
-                name="user_email"
-                onChange={formik.handleChange}
-                value={formik.values.user_email}
-              />
-              {formik.errors.user_email && formik.touched.user_email && (
-                <div className="text-primary pb-4">
-                  {formik.errors.user_email}
-                </div>
-              )}
-
+          
             <LabelInput
                 label="Phone Number"
                 placeholder="+971-XX-XXXXXXX"
@@ -172,6 +182,22 @@ const Contact = () => {
               {formik.errors.user_phone && formik.touched.user_phone && (
                 <div className="text-primary pb-4">
                   {formik.errors.user_phone}
+                </div>
+              )}
+
+
+<LabelInput
+                label="Email"
+                placeholder="Enter Email"
+                type="email"
+                id="user_email"
+                name="user_email"
+                onChange={formik.handleChange}
+                value={formik.values.user_email}
+              />
+              {formik.errors.user_email && formik.touched.user_email && (
+                <div className="text-primary pb-4">
+                  {formik.errors.user_email}
                 </div>
               )}
 

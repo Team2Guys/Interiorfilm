@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import Footer from './Layout/Footer/Footer';
 import Authhook from 'hooks/AuthHook'
 import Navbar from './Layout/Header/Navbar';
+import { Suspense } from 'react';
 
 
 const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -21,7 +22,7 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
 
 
   return (
-    <>
+    <Suspense>
       {
       withoutHeaderPages.includes(pathname)  || pathname.split('/').includes('dashboard') ? null : 
       <Navbar/>
@@ -31,7 +32,7 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
       {pathname !=="/" && (withoutHeaderPages.includes(pathname) || pathname.split('/').includes('dashboard')) ? null  : 
       <Footer /> 
       }
-    </>
+    </Suspense>
   );
 };
 

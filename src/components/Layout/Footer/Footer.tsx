@@ -4,7 +4,6 @@ import React, { useState, useLayoutEffect } from "react";
 import { Layout } from "antd";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import Link from "next/link";
-import logo from "../../../../public/images/logowhite.png";
 import Image from "next/image";
 import { socialLinks, customerCare, pages } from "data/FooterData";
 import card6 from "../../../../public/images/payment-icons/Mastercard-Logo.png";
@@ -21,75 +20,90 @@ import axios from "axios";
 import { CategoriesType } from "types/interfaces";
 import PreFooter from "./PreFooter";
 import { FooterPaymentMethods, generateSlug, PaymentMethods } from "data/Data";
-import { useRouter } from "next/navigation";
-
-const { Footer: AntFooter } = Layout;
+import { usePathname, useRouter } from "next/navigation";
+import PaymentMethod from "../PaymentMethod";
 
 const Footer: React.FC = () => {
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
-  const [isCustomerCareOpen, setIsCustomerCareOpen] = useState(false);
-  const [isPagesOpen, setIsPagesOpen] = useState(false);
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(true);
+  const [isCustomerCareOpen, setIsCustomerCareOpen] = useState(true);
+  const [isPagesOpen, setIsPagesOpen] = useState(true);
   const [category, setCategory] = useState<CategoriesType[]>([]);
   const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
   const toggleCustomerCare = () => setIsCustomerCareOpen(!isCustomerCareOpen);
+
+  const pathname = usePathname();
   const togglePages = () => setIsPagesOpen(!isPagesOpen);
   const bottomImages = [card1, card2, card3, card4, card5, card6, card7];
   const CategoryHandler = async () => {
-     
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
       );
-      console.log(response, "response");
       setCategory(response.data);
     } catch (err) {
       console.log(err, "err");
     }
   };
-  
+
   useLayoutEffect(() => {
     CategoryHandler();
   }, []);
   const router = useRouter();
   const handleButtonClick = (categoryName: string) => {
-    const slug = generateSlug(categoryName)
+    const slug = generateSlug(categoryName);
     router.push(`/products?category=${slug}`);
   };
 
   return (
     <>
+      {/* {pathname == "/" || pathname == "/about" ? null : <PreFooter />} */}
 
-      <PreFooter />
-      <div className="bg-secondary text-white pt-10  pb-10 md:px-30">
-        <div className="flex flex-wrap md:flex-nowrap justify-between border-b border-slate-500 pb-10 ">
-          <div className=" md:w-4/12 flex flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
-            <Image width={250} height={250} src={logo} alt="Interior Film" />
+      <div className="bg-secondary text-white pt-10  pb-10 md:px-2 lg:px-30">
+        <div className="flex flex-wrap md:flex-nowrap justify-between border-b items-center border-slate-500 pb-10 ">
+          <div className=" hidden  md:w-4/12 md:flex  flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
+            <Image
+              width={500}
+              height={500}
+              className="w-[320px] h-auto"
+              src="/images/logowhite.png"
+              alt="Interior Film"
+            />
           </div>
-          <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start md:justify-end gap-2 w-full px-3 md:w-8/12 text-white mt-4 md:mt-0">
 
-              <SlEnvolopeLetter className="text-primary ml-12 sm:ml-0" size={35} />
-              <p className="lg:text-base text-sm capitalize text-white">
-                SUBSCRIBE TO OUR NEWSLETTER.
-              </p>
-            <div className="ml-5 flex items-center justify-center mt-5 md:mt-0 rounded-none h-13">
+          <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start gap-2 md:justify-end w-full px-3 md:w-8/12 text-white mt-4 md:mt-0">
+            <SlEnvolopeLetter
+              className="text-primary ml-4 md:ml-12 sm:ml-0"
+              size={35}
+            />
+            <p className="lg:text-base text-sm capitalize text-white">
+              SUBSCRIBE TO OUR NEWSLETTER.
+            </p>
+            <div className=" flex items-center justify-center mt-5 md:mt-0 rounded-none h-13">
               <input
                 className="bg-white border border-r-0  h-full rounded-none  px-4 outline-none w-4/6 md:w-auto text-black"
                 type="email"
                 placeholder="Enter Email Address"
               />
-              <Button className="text-sm px-5  h-full" title={"SUBSCRBE"} />
+              <Button className="text-sm px-5  h-full" title={"SUBSCRIBE"} />
             </div>
           </div>
         </div>
-        <div className="text-white px-0 ">
-          <div className="lg:px-0 md:px-0 mx-auto px-4 lg:pb-0 flex flex-col md:flex-row flex-wrap gap-y-8 gap-x-8 justify-between mt-10">
-            <div className="flex-1 lg:pb-0 pb-3">
 
-              <p className="2/3 text-slate-200">
-                In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.
+        <div className="grid grid-cols-12 px-2 pt-5 md:justify-items-center gap-4">
+          <div className="col-span-12  xsm:col-span-12 md:col-span-3">
+            <div className="  md:hidden flex flex-wrap items-center  md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
+              <Image
+                width={250}
+                height={250}
+                src="/images/logowhite.png"
+                alt="Interior Film"
+              />
+            </div>
+            <div className="lg:pb-0 pb-3">
+              <p className=" text-slate-200 md:text-13 lg:text-base md:font-normal">
+              Our mission is to bring the latest and best architechtural vinyl film wrap at the lowest possible prices
               </p>
-
-
+  
               <div className="flex items-center flex-wrap gap-4 py-2 lg:order-2 order-1 text-white dark:text-black">
                 {socialLinks.map((link, index) => (
                   <Link
@@ -105,122 +119,119 @@ const Footer: React.FC = () => {
                 ))}
               </div>
             </div>
+          </div>
 
-            <hr className="lg:hidden bg-primary mb-5" />
-
-            <div className="flex-1 lg:pb-0 pb-3 md:ml-10">
+          <div className=" lg:pb-0 pb-3 col-span-12 2xsm:col-span-6 xsm:col-span-4 md:col-span-2 ">
               <h3
-                className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between tracking-[.5rem]"
+                className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
                 onClick={toggleCategories}
               >
-                All Categories
-                <span className="ml-2 md:hidden ">
+                Collections
+                {/* <span className="ml-2 md:hidden ">
                   {isCategoriesOpen ? <FaAngleUp /> : <FaAngleDown />}
-                </span>
+                </span> */}
               </h3>
-              <div className="flex gap-4">
-                {category?.length > 0 &&
-                  Array.from({ length: Math.ceil(category.length / 4) }).map(
-                    (_, chunkIndex) => (
-                      <ul
-                        key={chunkIndex}
-                        className={`space-y-2 transition-all duration-300 overflow-hidden ${isCategoriesOpen ? "max-h-96" : "max-h-0"} md:max-h-none`}
+              <div className="flex md:block gap-16">
+                <ul
+                  className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${
+                    isCategoriesOpen ? "max-h-96" : "max-h-0"
+                  } md:max-h-none`}
+                >
+                  {category.map((categoryItem, index) => (
+                    <li key={index}>
+                      <div
+                        onClick={() => handleButtonClick(categoryItem.name)}
+                        className="hover:text-primary link-footer text-slate-400 cursor-pointer whitespace-nowrap"
                       >
-                        {category
-                          .slice(chunkIndex * 4, chunkIndex * 4 + 4)
-                          .map((categoryItem, index) => (
-                            <li key={index}>
-                              <div onClick={() => (handleButtonClick(categoryItem.name))} className="hover:text-primary link-footer text-slate-400 cursor-pointer">
-                                {categoryItem.name}
-                              </div>
-                            </li>
-                          ))}
-                      </ul>
-                    )
-                  )}
+                        {categoryItem.name.replace("Series", "")}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
-            <div className="lg:pb-0 pb-3 ">
+            <div className="lg:pb-0 pb-3 whitespace-nowrap col-span-12 2xsm:col-span-6 xsm:col-span-4 md:col-span-2 ">
               <h3
                 className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
                 onClick={toggleCustomerCare}
               >
                 Quick Links
-                <span className="ml-2 md:hidden">
+                {/* <span className="ml-2 md:hidden">
                   {isCustomerCareOpen ? <FaAngleUp /> : <FaAngleDown />}
-                </span>
+                </span> */}
               </h3>
               <ul
-                className={`space-y-2 transition-all duration-300 overflow-hidden ${isCustomerCareOpen ? "max-h-96" : "max-h-0"} md:max-h-none`}
+                className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${
+                  isCustomerCareOpen ? "max-h-96" : "max-h-0"
+                } md:max-h-none`}
               >
                 {customerCare.map((item, index) => (
                   <li key={index}>
-                    <Link href={item.href} className="hover:text-primary link-footer text-slate-400">
+                    <Link
+                      href={item.href}
+                      className="hover:text-primary link-footer text-slate-400"
+                    >
                       {item.name}
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
-
-            <div className="lg:pb-0 pb-3 md:ml-10">
+            <div className="lg:pb-0 pb-3 whitespace-nowrap col-span-12 2xsm:col-span-12 xsm:col-span-4 md:col-span-2">
               <h3
                 className="font-semibold mb-4 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
                 onClick={togglePages}
               >
                 Policies
-                <span className="ml-2 md:hidden">
+                {/* <span className="ml-2 md:hidden">
                   {isPagesOpen ? <FaAngleUp /> : <FaAngleDown />}
-                </span>
+                </span> */}
               </h3>
               <ul
-                className={`space-y-2 transition-all duration-300 overflow-hidden ${isPagesOpen ? "max-h-96" : "max-h-0"} md:max-h-none`}
+                className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${
+                  isPagesOpen ? "max-h-96" : "max-h-0"
+                } md:max-h-none`}
               >
                 {pages.map((page, index) => (
                   <li key={index}>
-                    <Link href={`/${page.href}`} className="hover:text-primary link-footer text-slate-400">
+                    <Link
+                      href={`/${page.href}`}
+                      className="hover:text-primary link-footer text-slate-400"
+                    >
                       {page.name}
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
-
-            <div className="flex-1 lg:pb-0 pb-3 md:ml-10">
-              <p className="text-17 font-semibold">Contact us</p>
-
+            <div className="lg:pb-0 pb-3 col-span-12 sm:col-span-12 md:col-span-3">
+              <p className="lg:text-lg text-sm font-semibold mb-4">Contact us</p>
 
               <div className="w-full lg:w-auto md:w-2/3 text-slate-400">
-                Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha, Dubai, UAE
+                <Link target="_blank" href={"https://www.google.com/maps?ll=25.24485,55.299425&z=15&t=m&hl=en&gl=US&mapclient=embed&cid=14349723016612093106"} className="md:text-12 lg:text-base">Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha,
+                Dubai, UAE</Link>
                 <p>
-                  <a href="mailto:info@interiorfilm.ae" className="hover:text-primary">
+                  <Link
+                    href="mailto:info@interiorfilm.ae"
+                    target="_blank"
+                    className="hover:text-primary"
+                  >
                     info@interiorfilm.ae
-                  </a>
+                  </Link>
                 </p>
-
-                
                 <p>
-                  
-                  <a href="tel:+97142522025" className="hover:text-primary">
-                    +971 4 252 2025
-                  </a>
+                  <Link
+                    className="text-12 lg:text-13 font-normal hover:text-primary"
+                    href={`tel:+971 52 191 9327`}
+                  >
+                    +971 52 191 9327
+                  </Link>
                 </p>
-
+                <br />
               </div>
 
-              <div className="flex items-center flex-wrap gap-2 py-2 lg:order-2 order-1 text-black dark:text-white">
-                {FooterPaymentMethods.map((item, index) => (
-                  <Image
-                    src={item.imageUrl}
-                    alt="master"
-                    width={40}
-                    height={40}
-                    className="bg-white  h-6 px-1  object-contain shadow-lg rounded-md"
-                    key={index}
-                  />
-                ))}
-              </div>
+              <PaymentMethod />
 
               {/* <div className="flex items-center flex-wrap gap-2 py-2 lg:order-2 order-1 text-black dark:text-white">
                 {bottomImages.map((image, index) => (
@@ -235,8 +246,8 @@ const Footer: React.FC = () => {
                 ))}
               </div> */}
             </div>
-          </div>
         </div>
+
 
       </div>
       <div className="bg-white  flex justify-center items-center">

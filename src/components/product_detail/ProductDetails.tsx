@@ -10,16 +10,33 @@ import { RxMinus, RxPlus } from "react-icons/rx";
 import Button from "components/Common/Button";
 import { BsWhatsapp } from "react-icons/bs";
 import Link from "next/link";
-import { Dialog, DialogContent, DialogHeader, DialogOverlay, DialogTitle, DialogTrigger } from "components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogOverlay,
+  DialogTitle,
+  DialogTrigger,
+} from "components/ui/dialog";
 import Image from "next/image";
-import { PaymentMethods, tabbyfeature, tabbyhowitwork, tabbypayicon, tamarafeature, tamaralist, tamarawhy } from "data/Data";
-import tamaraLogo from './../../../public/images/logo/tamara-transparent.png'
-import tabbyLogo from './../../../public/images/logo/tabby-transparent.png'
+import {
+  generateSlug,
+  PaymentMethods,
+  tabbyfeature,
+  tabbyhowitwork,
+  tabbypayicon,
+  tamarafeature,
+  tamaralist,
+  tamarawhy,
+} from "data/Data";
+import tamaraLogo from "./../../../public/images/logo/tamara-transparent.png";
+import tabbyLogo from "./../../../public/images/logo/tabby-transparent.png";
 import { FaRegStar } from "react-icons/fa";
 import { BiMessageDetail } from "react-icons/bi";
 import SideMenu from "./sideMenu";
 import EnviromentIcons from "./enviroment-icon";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 interface productDetailsProps {
   productDetail: PRODUCTS_TYPES;
   categoryName?: string;
@@ -32,22 +49,27 @@ export default function ProductDetails({
   firstFlex,
   isQuickView,
 }: productDetailsProps) {
-
-
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
   const [reviews, setReviews] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [length, setLength] = useState<number>(1);
-  const options = productDetail && productDetail.totalStockQuantity > 0
-    ? Array.from({ length: Math.floor(productDetail.totalStockQuantity) }, (_, i) => ({
-      label: `1.22m x ${i + 1} METERS`,
-      value: i + 1,
-    }))
-    : [];
+  const router = useRouter();
+  const options =
+    productDetail && productDetail.totalStockQuantity > 0
+      ? Array.from(
+          { length: Math.floor(productDetail.totalStockQuantity) },
+          (_, i) => ({
+            label: `1.22m x ${i + 1}m`,
+            value: i + 1,
+          })
+        )
+      : [];
 
   const fetchReviews = async (productId: string) => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`
+      );
       setReviews(response.data.reviews);
     } catch (err) {
       console.log("Failed to fetch reviews:", err);
@@ -56,15 +78,16 @@ export default function ProductDetails({
   const calculateAverageRating = () => {
     if (reviews.length === 0) return 0;
     const totalRating = reviews.reduce((sum, review) => sum + review.star, 0);
-    return totalRating / reviews.length;
+    return (totalRating / reviews.length).toFixed(2); // Convert to 2 decimal places
   };
 
   const averageRating = calculateAverageRating();
+  
   const handleIncrement = () => {
     if (quantity < 100) {
       setQuantity(quantity + 1);
     } else {
-      message.error('Quantity cannot exceed 100.');
+      message.error("Quantity cannot exceed 100.");
     }
   };
 
@@ -72,7 +95,7 @@ export default function ProductDetails({
     if (quantity > 1) {
       setQuantity(quantity - 1);
     } else {
-      message.error('Quantity cannot be less than 1.');
+      message.error("Quantity cannot be less than 1.");
     }
   };
 
@@ -81,7 +104,7 @@ export default function ProductDetails({
     if (!isNaN(value) && value >= 1 && value <= 100) {
       setQuantity(value);
     } else {
-      message.error('Please enter a quantity between 1 and 100.');
+      message.error("Please enter a quantity between 1 and 100.");
     }
   };
 
@@ -93,22 +116,25 @@ export default function ProductDetails({
       imageUrl: product.posterImageUrl?.imageUrl,
       discountPrice: product.discountPrice,
       totalStockQuantity: product.totalStockQuantity,
-      count: quantity,
+      count: 1,
       length,
-      totalPrice: (product.discountPrice || product.salePrice) * length * quantity, // Calculate total price based on length and quantity
+      totalPrice:
+        (product.discountPrice || product.salePrice) * length * quantity,
       purchasePrice: product.purchasePrice,
       sizes: product.sizes,
-      product_code: product.code
+      code: product.code,
     };
 
-    let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     const existingItemIndex = existingCart.findIndex(
-      (item: any) => item.id === product._id && item.length === length
+      (item: any) => item.id === product._id
+
+      // && item.length === length
     );
 
     if (existingItemIndex !== -1) {
       const existingItem = existingCart[existingItemIndex];
-      existingItem.count += quantity;
+      existingItem.length += length;
       existingItem.totalPrice =
         (product.discountPrice || product.salePrice) *
         existingItem.count *
@@ -117,9 +143,9 @@ export default function ProductDetails({
     } else {
       existingCart.push(newCartItem);
     }
-    localStorage.setItem('cart', JSON.stringify(existingCart));
-    message.success('Product added to cart successfully!');
-    window.dispatchEvent(new Event('cartChanged'));
+    localStorage.setItem("cart", JSON.stringify(existingCart));
+    message.success("Product added to cart successfully!");
+    window.dispatchEvent(new Event("cartChanged"));
   };
 
   const handleAddToWishlist = (product: any) => {
@@ -132,10 +158,11 @@ export default function ProductDetails({
       totalStockQuantity: product.totalStockQuantity,
       count: quantity,
       length,
-      totalPrice: (product.discountPrice || product.salePrice) * length * quantity,
+      totalPrice:
+        (product.discountPrice || product.salePrice) * length * quantity,
     };
 
-    let existingWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
     const existingItemIndex = existingWishlist.findIndex(
       (item: any) => item.id === product._id && item.length === length
     );
@@ -151,9 +178,9 @@ export default function ProductDetails({
     } else {
       existingWishlist.push(newWishlistItem);
     }
-    localStorage.setItem('wishlist', JSON.stringify(existingWishlist));
-    message.success('Product added to Wishlist successfully!');
-    window.dispatchEvent(new Event('WishlistChanged'));
+    localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
+    message.success("Product added to Wishlist successfully!");
+    window.dispatchEvent(new Event("WishlistChanged"));
   };
 
   useEffect(() => {
@@ -174,28 +201,37 @@ export default function ProductDetails({
 
   return (
     // xl:max-w-screen-2xl
-    <div className="mt-10 mb-5 px-10  mx-auto ">
-      <div className="flex flex-wrap lg:flex-nowrap lg:gap-5  mt-2 p-2 ">
-        <div className={`w-full lg:w-8/12 ${firstFlex} `}>
-          <Thumbnail detail={productDetail.modelDetails} product={productDetail} thumbs={productDetail.imageUrl} />
+    <div className="mt-10 mb-5 px-2 md:px-10  mx-auto xl:max-w-screen-3xl">
+      <div className="flex flex-wrap lg:flex-nowrap gap-4  mt-2 p-2 ">
+        <div className={`w-full lg:w-8/12 xl:w-7/12 ${firstFlex} `}>
+          <Thumbnail
+            detail={productDetail.modelDetails}
+            product={productDetail}
+            thumbs={productDetail.imageUrl}
+          />
         </div>
-        <div className="flex flex-col">
-          <div className="flex w-full justify-between flex-col md:flex-row ">
-
-
-            {/* <div className={`lg:w-4/12 py-3 space-y-2 md:space-y-4 lg:max-w-[400px] w-2/3 ${secondFlex}`}> */}
-            <div className={`w-full  bg  md:px-2 space-y-2 md:space-y-4 ${!isQuickView ? 'md:w-2/3' : 'w-full'}`}>
-              <span className="divide--8">
-                <h1 className="text-22 lg:text-[28px] text-[#000000] font-medium">{productDetail.name}</h1>
-                <h3 className="text-30  text-[#B9BBBF] font-medium">{productDetail.code}</h3>
+        <div className="flex lg:w-4/12 xl:w-5/12  flex-col ">
+          <div className="flex flex-wrap xl:flex-nowrap w-full justify-between flex-col md:flex-row gap-4">
+            <div
+              className={`w-full md:px-2 space-y-2 md:space-y-4 ${
+                !isQuickView ? "md:w-3/3 xl:w-8/12" : "w-full xl:w-12/12"
+              }`}
+            >
+              <span className="divide-8">
+                <h1 className="text-22 lg:text-[28px] text-[#000000] font-medium">
+                  {productDetail.name}
+                </h1>
+                <h3 className="text-30  text-[#B9BBBF] font-medium">
+                  {productDetail.code}
+                </h3>
               </span>
               <hr className="text-[#E4E4E4]" />
 
-              <div className="flex w-full justify-between">
-
-                <div className="flex  flex-col ">
+              <div className="flex flex-wrap w-full justify-between items-center">
+                <div className="flex flex-col">
                   <p className="text-secondary font-poppins text-[25.92px] font-bold ">
-                    AED <span>
+                    AED{" "}
+                    <span>
                       {productDetail.discountPrice
                         ? productDetail.discountPrice
                         : productDetail.salePrice}
@@ -209,29 +245,36 @@ export default function ProductDetails({
                   ) : null}
                 </div>
                 {reviews.length && reviews.length > 0 ? (
-                  <div className="flex flex-col gap-2 w-1/2 text-[10.67px]">
-                    <div className="flex gap-4">
-                      <div className="flex gap-1 items-center bg-[#FBF3EA] w-[49.79px] h-[23px] p-2 rounded-xl text-[#D48D3B]"><FaRegStar /> {averageRating}.0</div>
+                  <div className="flex flex-col flex-wrap gap-2 w-1/2 text-[10.67px]">
+                    <div className="flex flex-wrap gap-4">
+                      <div className="flex gap-1 items-center bg-[#FBF3EA] w-[49.79px] h-[23px] p-2 rounded-xl text-[#D48D3B] max-w-fit ">
+                        <FaRegStar /> {averageRating}
+                      </div>
                       <div className="flex  items-center gap-1 bg-[#F5F5F5] px-3 rounded-xl h-[23px]">
                         <BiMessageDetail />
-                        {reviews.length} Review</div>
+                        {reviews.length} Review
+                      </div>
                     </div>
-                    <div className="text-[#B9BBBF]"> <span className="text-[#3E9242]">
-                      {(averageRating / 5) * 100}% </span> of buyers have recommended this.</div>
+                    {/* <div className="text-[#B9BBBF]">
+                      {" "}
+                      <span className="text-[#3E9242]">
+                        {(averageRating / 5) * 100}%{" "}
+                      </span>{" "}
+                      of buyers have recommended this.
+                    </div> */}
                   </div>
                 ) : null}
               </div>
 
               <p className="font-medium text-16 text-text">
-                Width : <span className="text-blak font-normal">1.22cm</span>
+                Roll width is <span className="text-black">122cm</span>
               </p>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap 2xl:flex-nowrap items-center gap-2">
                 <p className="font-medium text-16 whitespace-nowrap text-text">
-                  Select Quantity (m):
+                  Select Quantity:
                 </p>
                 <ProductSelect
                   className="w-60 h-10 border outline-none shipment text-16"
-
                   onChange={onChange}
                   options={options}
                   value={length}
@@ -267,7 +310,7 @@ export default function ProductDetails({
                     Available Quantity:
                   </span>
                   {productDetail.totalStockQuantity &&
-                    productDetail.totalStockQuantity > 0
+                  productDetail.totalStockQuantity > 0
                     ? "In Stock"
                     : "Out Of Stock"}
                 </p>
@@ -280,36 +323,57 @@ export default function ProductDetails({
                 AED <span>{totalPrice}</span>
               </p>
 
-              {productDetail.totalStockQuantity == null ? (
-                <p className="text-primary text-center text-2xl">
+              {productDetail.totalStockQuantity == 0 ? (
+               <>
+               <p className="text-primary text-center text-2xl">
                   Product is out of stock
                 </p>
+                <Link
+                    target="_blank"
+                    href="https://wa.link/mb359y"
+                    className="bg-[#2AB200]  w-full flex items-center gap-2 justify-center py-2 text-white"
+                  >
+                    <BsWhatsapp /> Order on WhatsApp
+                  </Link>
+               </>
+                
               ) : (
                 <Fragment>
-
-                  <div className="flex  w-full gap-1 md:gap-2">
+                  <div className="flex  gap-1 md:gap-2">
                     <button
-                      className="bg-secondary w-1/3 text-12 md:text-16  py-2 px-3 md:px-5 text-white"
-
+                      className="bg-secondary w-full  text-12 md:text-14 2xl:text-16  py-2 px-3 md:px-5 text-white "
+                      onClick={() => {
+                        handleAddToCart(productDetail);
+                        router.push("/checkout");
+                      }}
                     >
                       Buy Now
                     </button>
                     <button
-                      className="bg-[#FA7F2C]  w-2/3   text-12 md:text-16  py-2  md:px-5 text-white text-center"
+                      className="bg-[#FA7F2C]  w-full   text-12 md:text-14 2xl:text-16   py-2  md:px-5 text-white text-center"
                       onClick={() => handleAddToCart(productDetail)}
                     >
                       Add To Cart
                     </button>
-
                   </div>
+
+                  {/*                   
                   <Link
                     className="bg-[#2AB200]  w-full flex items-center gap-2 justify-center py-2 text-white"
                     href={`tel:${process.env.NEXT_PUBLIC_CONTACT_NUMBER}`}
+                    
+                  >
+                    <BsWhatsapp /> Order on WhatsApp
+                  </Link> */}
+
+                  <Link
+                    target="_blank"
+                    href="https://wa.link/mb359y"
+                    className="bg-[#2AB200]  w-full flex items-center gap-2 justify-center py-2 text-white"
                   >
                     <BsWhatsapp /> Order on WhatsApp
                   </Link>
                 </Fragment>
-
               )}
 
               <div className="flex items-center justify-center relative mb-2 text-[#E4E4E4]">
@@ -322,29 +386,30 @@ export default function ProductDetails({
 
               <div className="flex gap-2 mb-4">
                 <div className="relative w-1/2 border-4 border-[#00FFBC] p-4 rounded-lg shadow">
-                  <span className="absolute -top-3 left-2 bg-[#00FFBC] text-black px-2 py-1 rounded-lg text-xs font-extrabold">
+                  <span className="absolute -top-3 left-2 bg-[#00FFBC]  px-2 py-1 rounded-lg text-xs font-extrabold">
                     tabby
                   </span>
-                  <p className="text-12">
-                    Pay 4 interest-free payments of AED 396.25.{' '}
+                  <p className="text-12 ">
+                    Pay 4 interest-free payments of AED{" "}
+                    {totalPrice && (totalPrice / 4).toFixed()}{" "}
                     <Dialog>
-                      <DialogTrigger asChild>
-                        <span className="text-red-600 underline cursor-pointer">
+                      <DialogTrigger asChild className="text-red">
+                        <span className=" underline cursor-pointer" style={{color:"red"}}>
                           Learn more
                         </span>
                       </DialogTrigger>
 
-                      <DialogOverlay className="bg-white/80" />
-                      <DialogContent className="sm:max-w-[80%] lg:max-w-[60%] bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180 ">
+                      <DialogOverlay className="bg-black/60 z-999999" />
+                      <DialogContent className="sm:max-w-[80%] mt-10 lg:max-w-[60%] z-999999 bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180 ">
                         {/* <DialogContent className="bg-red h-10"> */}
                         <DialogHeader>
-                          <DialogTitle className="text-xl xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10">
+                          <DialogTitle className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10">
                             Easy Monthly Installments
                           </DialogTitle>
                         </DialogHeader>
-                        <div className="py-8 ps-5 xs:ps-10 md:ps-20 pe-4 me-4 xs:me-7 max-h-[80vh] overflow-y-auto custom-scroll">
+                        <div className="py-5 ps-5 xs:ps-10 md:ps-20 pe-4 me-4 xs:me-7 max-h-[80vh] overflow-y-auto custom-scroll">
                           <Image src={tabbyLogo} alt="logo" />
-                          <h2 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-bold mt-8 leading-10 xs:leading-tight">
+                          <h2 className="text-xl xs:text-2xl sm:text-lg md:text-xl font-bold mt-5 leading-10 xs:leading-tight">
                             <span className="rounded-full bg-[#3BFFC1] px-4 py-0 text-nowrap">
                               Shop now,
                             </span>
@@ -353,18 +418,21 @@ export default function ProductDetails({
                               pay over time.
                             </span>
                           </h2>
-                          <ul className='mt-14 font-bold text-2xl xs:text-3xl sm:text-4xl md:text-5xl list-["–"] list-inside leading-normal md:leading-normal'>
+                          <ul className='mt-5 font-bold text-lg xs:text-2xl sm:text-xl md:text-xl list-["–"] list-inside leading-normal md:leading-normal'>
                             {tabbyfeature.map((item) => (
                               <li key={item.id}>{item.para}</li>
                             ))}
                           </ul>
-                          <div className="mt-12">
-                            <h3 className="font-bold text-4xl sm:text-5xl">
+                          <div className="mt-5">
+                            <h3 className="font-bold text-2xl sm:text-3xl">
                               How it works
                             </h3>
-                            <ul className="font-medium text-xl xs:text-2xl md:text-3xl mt-8 md:leading-relaxed">
+                            <ul className="font-medium text-lg xs:text-xl md:text-2xl mt-3 md:leading-relaxed">
                               {tabbyhowitwork.map((item) => (
-                                <li className="flex items-center gap-2" key={item.id}>
+                                <li
+                                  className="flex items-center gap-2"
+                                  key={item.id}
+                                >
                                   <span className="rounded-full bg-lightbackground min-w-10 h-10 flex items-center justify-center">
                                     {item.id}
                                   </span>
@@ -374,7 +442,7 @@ export default function ProductDetails({
                             </ul>
                           </div>
 
-                          <div className="flex justify-end gap-2 mt-20 px-6">
+                          <div className="flex justify-end gap-2 mt-5 px-6">
                             {tabbypayicon.map((item, index) => (
                               <Image
                                 src={item.imageUrl}
@@ -394,41 +462,46 @@ export default function ProductDetails({
                     tamara
                   </span>
                   <p className="text-12">
-                    Pay 4 interest-free payments of AED 396.25.{' '}
+                    Pay 4 interest-free payments of AED{" "}
+                    {totalPrice && (totalPrice / 4).toFixed()}{" "}
                     <Dialog>
-                      <DialogTrigger asChild>
-                        <span className="text-red-600 underline cursor-pointer">
+                      <DialogTrigger asChild className="text-red">
+                        <span className=" underline cursor-pointer">
                           Learn more
                         </span>
                       </DialogTrigger>
 
-                      <DialogOverlay className="bg-white/80" />
-                      <DialogContent className="sm:max-w-[80%] lg:max-w-[60%] bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180">
+                      <DialogOverlay className="bg-black/60  z-999999 " />
+                      <DialogContent className="sm:max-w-[80%] mt-10 lg:max-w-[60%] z-999999  bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180">
                         <DialogHeader>
-                          <DialogTitle className="text-xl xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10">
+                          <DialogTitle className="text-xl xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10 ">
                             Easy Monthly Installments
                           </DialogTitle>
                         </DialogHeader>
                         <div className="py-8 px-5 xs:px-10 md:px-20 me-4 xs:me-7 max-h-[80vh] overflow-y-auto custom-scroll">
                           <div className="text-center">
-                            <Image src={tamaraLogo} alt="logo" className="mx-auto" />
+                            <Image
+                              src={tamaraLogo}
+                              alt="logo"
+                              className="mx-auto"
+                            />
                           </div>
-                          <h2 className="text-center font-bold text-5xl mt-12">
+                          <h2 className="text-center font-bold text-2xl mt-5">
                             Pay easier with Tamara
                           </h2>
-                          <div className="px-4 py-2 bg-gradient-to-r from-orange-300 via-blue-300 to-pink-300 mt-12 rounded-[70px]">
-                            <div className="bg-gradient-to-r from-orange-100 via-blue-100 to-pink-100 pb-6 pt-2 px-8 rounded-[70px] flex flex-col gap-4">
+                          <div className="px-4 py-2 bg-gradient-to-r from-orange-300 via-blue-300 to-pink-300 mt-4 rounded-[70px]">
+                            <div className="bg-gradient-to-r from-orange-100 via-blue-100 to-pink-100 pb-6 pt-1 px-8 rounded-[70px] flex flex-col gap-2">
                               <div className="w-10/12 mx-auto">
                                 {tamarafeature.map((item) => (
                                   <div
-                                    className="flex justify-between items-center py-4"
+                                    className="flex justify-between items-center py-2"
                                     key={item.id}
                                   >
                                     <div>
-                                      <h3 className="font-bold text-2xl">
+                                      <h3 className="font-bold text-lg">
                                         {item.title}
                                       </h3>
-                                      <p className="text-md font-light mt-2">
+                                      <p className="text-md font-light mt-1">
                                         {item.para}
                                       </p>
                                     </div>
@@ -437,19 +510,19 @@ export default function ProductDetails({
                               </div>
                             </div>
                           </div>
-                          <div className="mt-10 px-5 xs:px-10 2xl:px-20">
+                          <div className="mt-5 px-5 xs:px-10 2xl:px-20">
                             <h3 className="font-bold text-2xl">Why Tamara?</h3>
-                            <div className="flex items-center flex-wrap 2xl:flex-nowrap justify-center 2xl:justify-between gap-4 pt-6">
+                            <div className="flex items-center flex-wrap 2xl:flex-nowrap justify-center 2xl:justify-between gap-4 pt-4">
                               {tamarawhy.map((item) => (
                                 <div
-                                  className="w-48 h-9 rounded-2xl bg-primary text-white flex items-center justify-center text-20 font-semibold"
+                                  className="w-40 h-9 rounded-2xl bg-primary text-white flex items-center justify-center text-20 font-semibold"
                                   key={item.id}
                                 >
                                   {item.para}
                                 </div>
                               ))}
                             </div>
-                            <div className="mt-10">
+                            <div className="mt-5">
                               <ul className="font-20 font-normal">
                                 {tamaralist.map((item) => (
                                   <li
@@ -466,49 +539,47 @@ export default function ProductDetails({
                         </div>
                       </DialogContent>
                     </Dialog>
-
-
                   </p>
-
                 </div>
-
               </div>
-              <div className="flex justify-between   px-6">
+              <div className="flex flex-wrap gap-1 justify-between items-center px-2 md:px-0 bg-white  ">
                 {PaymentMethods.map((item, index) => (
                   <Image
                     src={item.imageUrl}
                     alt="master"
                     width={60}
                     height={60}
-                    className="bg-white p-2 object-contain shadow-lg rounded-md"
+                    className="object-contain shadow p-1 "
                     key={index}
                   />
                 ))}
               </div>
               <div className="flex items-center gap-2 text-black dark:text-white">
-                <p className="font-medium text-12 md:text-14">Categories: </p>
-                <p className="text-dark text-12 md:text-14">{categoryName}</p>
+                <p className="font-semibold text-12 md:text-16">Category: </p>
+                <Link href={`/products?category=${generateSlug(categoryName ? categoryName : "")}`} className="font-semibold hover:text-primary text-12 md:text-16">{categoryName}</Link>
               </div>
               <div>
-                <p className="text-14 text-[#707070] font-light">{productDetail?.description}</p>
+                <p className="text-14 md:text-16 font-normal">
+                  {productDetail?.description}
+                </p>
               </div>
               <div>
-                <ul className="px-6">
+                <ul className="px-4">
                   {productDetail?.spacification?.map(
                     (item: any, index: number) => (
-                      <li className="list-disc text-14 text-[#707070] font-light" key={index}>
+                      <li
+                        className="list-disc text-14 text-black font-normal"
+                        key={index}
+                      >
                         {item.specsDetails}
                       </li>
                     )
                   )}
                 </ul>
               </div>
-
-
             </div>
             {!isQuickView && (
-
-              <div className="w-full md:w-1/3  ">
+              <div className="w-full xl:w-4/12  ">
                 <SideMenu />
               </div>
             )}
@@ -517,7 +588,6 @@ export default function ProductDetails({
           <div className="flex flex-col gap-2 mt-2">
             <h1 className="text-[14px] font-bold">Healthy Green Environment</h1>
             <EnviromentIcons />
-
           </div>
         </div>
       </div>

@@ -19,7 +19,15 @@ import icon7 from './../../public/images/enviroment-icon/icon7.png'
 import icon8 from './../../public/images/enviroment-icon/icon8.png'
 import icon9 from './../../public/images/enviroment-icon/icon9.png'
 
+import { SlDiamond } from 'react-icons/sl'
+import { CgBulb } from 'react-icons/cg'
+import { GiPayMoney } from 'react-icons/gi'
+import { RiCustomerService2Line } from 'react-icons/ri'
+
+
+
 import { StaticImageData } from 'next/image';
+import { ACCORDINTYPES } from 'types/faq';
 
 export const validateForm = (formData: { fullName: string; email: string; password: string; confirmpassword: string }) => {
     if (formData.password !== formData.confirmpassword) {
@@ -134,7 +142,6 @@ export  const generateSlug = (text:string) => {
     .replace(/\-\-+/g, '-'); 
 };
 
-// @ts-nocheck
 export const AddProductvalidationSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, 'Too Short!')
@@ -144,9 +151,11 @@ export const AddProductvalidationSchema = Yup.object().shape({
   salePrice: Yup.number()
     .min(1, "Minimum sales price must be at least 1")
     .required('Required'),
-  purchasePrice: Yup.number()
-    .min(1, "Must be at least 1")
-    .required('Required'),
+  // purchasePrice: Yup.number()
+  //   .min(1, "Must be at least 1")
+  //   .required('Required'),
+
+
   discountPrice: Yup.number().nullable(), 
   starRating: Yup.number()
     .min(1, "Rating must be at least 1")
@@ -186,7 +195,17 @@ export const AddproductsinitialValues: FormValues = {
   modelDetails: [],
   spacification: [],
   category: "",
-  code: ""
+  code: "",
+  Meta_Title: "",
+  Meta_Description: "",
+  URL: "",
+ Canonical_Tag: "",
+ Images_Alt_Text: "",
+// Og_title: "",
+// Og_description:"" ,
+// Og_Image:"" ,
+// OgUrl:"",
+
 
 };
 
@@ -332,11 +351,11 @@ export const return__refund: PrivacyPolicyItem[] = [
 export const ShipmentPolicydata: PrivacyPolicyItem[] = [
 
   {
-    title: 'Free Shipping On Orders Over AED 250 EVERYWHERE (WITHIN DUBAI CITY LIMITS. ) ',
-    text: 'If your order exceeds over AED 250 and you are located inside the UAE, you will be offered free standard delivery at checkout. ',
+    title: 'Free shipping throughout mainland UAE on all orders above AED 250',
+    text: 'If your order exceeds Above AED 250 and you are located inside the UAE, you will be offered free standard delivery at checkout. ',
   },
   {
-    text: 'If your order is below AED 250, we will offer standard delivery anywhere in the UAE for only AED 30. ',
+    text: 'If your order is below AED 250, we will offer standard delivery anywhere in the UAE for only AED 20. ',
   },
   {
     text: "CASH ON DELIVERY: NOT AVAILABLE",
@@ -364,11 +383,11 @@ export const Terms_Conditions: PrivacyPolicyItem[] = [
     text: "To contact us please email us at: cs@interiorfilm.ae ",
   },
   {
-    title:"2) By using our website (www.interiorfilm.ae.ae) and services, you accept these terms:",
+    title:"2) By using our website (www.interiorfilm.ae) and services, you accept these terms:",
     text: "By using our website, you agree and confirm that you accept these terms and our Privacy Policy, and are bound to comply with them, incorporated here by reference. If you do not feel comfortable with these terms and conditions and wish to disagree, we respect your decision.",
   },
   {
-    text: "These T&Cs take effect from the date you first access our website. In addition to the general T&Cs mentioned in this page, you can also refer to Yellowzone Trading LLC’s Delivery Policy, Refund & Return Policy, Shipping Policy before making any purchase from our website (www.interiorfilm.ae.ae). Please be advised that by agreeing to these general T&Cs, you are accepting the other T&Cs outlined in the Delivery Policy, Refund & Return Policy and Shipping Policy. These policies are all part of a legally binding contract between Yellowzone Trading LLC and “you” (user of this website and services).",
+    text: "These T&Cs take effect from the date you first access our website. In addition to the general T&Cs mentioned in this page, you can also refer to Yellowzone Trading LLC’s Delivery Policy, Refund & Return Policy, Shipping Policy before making any purchase from our website (www.interiorfilm.ae). Please be advised that by agreeing to these general T&Cs, you are accepting the other T&Cs outlined in the Delivery Policy, Refund & Return Policy and Shipping Policy. These policies are all part of a legally binding contract between Yellowzone Trading LLC and “you” (user of this website and services).",
   },
   {
     text: "By agreeing to these terms, you represent and warrant that you are of legal age to use the website and the services provided by Yellowzone Trading LLC, under the law of the United Arab Emirates to form a binding contract with Yellowzone Trading LLC.",
@@ -378,7 +397,7 @@ export const Terms_Conditions: PrivacyPolicyItem[] = [
     text: "We may update or revise these Terms at any time at our sole discretion.",
   },
   {
-    text: "Please be advised that any modifications made to the Terms and Conditions of our website (www.interiorfilm.ae.ae) will take effect immediately once they are updated. These changes and updates will apply to all future access and use of our website and services mentioned. By continuing to use the website after the revised terms have been posted, you are indicating your acceptance and agreement to the changes and updated T&Cs, Delivery Policy, Refund and Return Policy, and Shipping Policy.",
+    text: "Please be advised that any modifications made to the Terms and Conditions of our website (www.interiorfilm.ae) will take effect immediately once they are updated. These changes and updates will apply to all future access and use of our website and services mentioned. By continuing to use the website after the revised terms have been posted, you are indicating your acceptance and agreement to the changes and updated T&Cs, Delivery Policy, Refund and Return Policy, and Shipping Policy.",
   },
   {
     text: "We strongly recommend you to regularly review and have a clear understanding of these Terms and Conditions that govern your use of the website and its services. Whenever these terms are updated, we will update the 'Last Updated' date at the top of this document.",
@@ -487,20 +506,18 @@ export const tamarafeature: ITamaraList[] = [
 
 
 export const PaymentMethods: ITabbyPayList[] = [
-  { id: 1, imageUrl: masterCard },
-  { id: 2, imageUrl: applypayCard },
-  { id: 4, imageUrl: viseCard },
-  { id: 3, imageUrl: gPayCard },
-  { id: 5, imageUrl: amexLogo },
+  { id: 1, imageUrl: viseCard },
+  { id: 2, imageUrl: masterCard },
+  { id: 3, imageUrl: applypayCard },
+  { id: 4, imageUrl: gPayCard },
 ];
 export const FooterPaymentMethods: ITabbyPayList[] = [
-  { id: 1, imageUrl: masterCard },
-  { id: 2, imageUrl: applypayCard },
-  { id: 4, imageUrl: viseCard },
-  { id: 3, imageUrl: gPayCard },
-  { id: 5, imageUrl: amexLogo },
-  { id: 6, imageUrl: tabbyLogo },
-  { id: 7, imageUrl: tamaraLogo },
+  { id: 1, imageUrl: viseCard },
+  { id: 2, imageUrl: masterCard },
+  { id: 3, imageUrl: applypayCard },
+  { id: 4, imageUrl: gPayCard },
+  { id: 5, imageUrl: tabbyLogo },
+  { id: 6, imageUrl: tamaraLogo },
 ];
 
 
@@ -519,16 +536,19 @@ export const EnvironmentData: {title:string,icon:StaticImageData}[] = [
 
 export const navarlink = [
   { ref: "", title: "Home" },
-  { ref: "wood-grain-series", title: "Wood Grain Series" },
-  { ref: "plain-series", title: "Plain Series" },
-  { ref: "cement-gray-series", title: "Cement Gray Series" },
-  { ref: "marble-series", title: "Marble Series" },
-  { ref: "metal-series", title: "Metal Series" },
-  { ref: "fabric-series", title: "Fabric Series" },
-  { ref: "skin-texture-series", title: "Skin Texture Series" },
-  { ref: "symphony-series", title: "Symphony Series" },
+  { ref: "products?category=wood-grain-series", title: "Wood Grain" },
+  { ref: "products?category=plain-series", title: "Plain" },
+  { ref: "products?category=cement-grey-series", title: "Cement Grey" },
+  { ref: "products?category=marble-series", title: "Marble" },
+  { ref: "products?category=metal-series", title: "Metal" },
+  { ref: "products?category=fabric-series", title: "Fabric" },
+  { ref: "products?category=skin-texture-series", title: "Skin Texture" },
+  { ref: "products?category=symphony-series", title: "Symphony" },
   { ref: "about", title: "About Us" },
   { ref: "contact", title: "Contact Us" },
+  { title: "FAQs", ref: "frequently-asked-questions" },
+
+
 ];
 
 export const productimage =[
@@ -546,4 +566,53 @@ export const CountryCode = [
   { title: "+49", code: "+49" },
   { title: "+33", code: "+33" },
   // Add more country codes as needed
+];
+
+
+
+export const AccordionsArray: ACCORDINTYPES[] = [
+  {
+      Title: "What is architectural vinyl film wrap?",
+      Description: "Architectural vinyl film wrap is a high-quality, adhesive-backed film designed to cover and transform surfaces such as doors, kitchen counters, and furniture. It offers a cost-effective alternative to traditional remodeling by enhancing aesthetics without extensive renovations.",
+  },
+  {
+      Title: "What surfaces can I use vinyl film on?",
+      Description: "Our vinyl films are suitable for a variety of surfaces, including doors, kitchen counters, cabinets, walls, furniture, and backsplashes.",
+  },
+  {
+      Title: "Is vinyl film durable?",
+      Description: "Yes, our architectural vinyl films are designed to be durable and long-lasting. They are resistant to scratches, stains, and moisture, making them ideal for high-traffic areas like kitchens and bathrooms.",
+  },
+  {
+      Title: "Can I install the vinyl film myself?",
+      Description: "While many customers choose to install the film themselves, we recommend hiring a professional for the best results, especially for larger surfaces or intricate designs. We provide detailed installation instructions to assist DIY enthusiasts.",
+  },
+  {
+      Title: "How do I clean and maintain vinyl film?",
+      Description: "To maintain the appearance of your vinyl film, simply wipe it down with a soft cloth and mild soap. Avoid abrasive cleaners and scrubbing pads, as they can damage the surface.",
+  },
+  {
+      Title: "Can I remove the vinyl film later?",
+      Description: "Yes, our vinyl films are designed for easy removal without damaging the underlying surface. If you decide to change the look of your space, you can safely peel off the film.",
+  },
+  {
+      Title: "What colors and textures are available?",
+      Description: "We offer a wide range of colors, patterns, and textures to suit your design needs. From sleek matte finishes to wood and stone textures, you can find the perfect match for your style.",
+  },
+  {
+      Title: "How do I order vinyl film?",
+      Description: "You can browse our selection on Interiorfilm.ae and place your order directly through the website. If you need assistance, feel free to contact our customer service team.",
+  },
+  {
+      Title: "What is the delivery time for my order?",
+      Description: "Delivery times for most addresses in mainland UAE is 24-48 hours. For outlying areas or off shore areas, please consider an extra day or 2. ",
+  },
+  {
+      Title: "Do you offer custom sizes or designs?",
+      Description: "Our material is delivered in roll width of 122cm but if you have a custom requirement, we can check with the factory if it’s possible. There will be a minimum order requirement but this can vary from style to style. .",
+  },
+  {
+      Title: "What if I have more questions?",
+      Description: "If you have any additional questions or need further assistance, feel free to reach out to our customer service team via our contact page or through email. We're here to help!",
+  },
 ];

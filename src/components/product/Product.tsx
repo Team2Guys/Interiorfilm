@@ -1,26 +1,16 @@
-'use client'
-import Container from 'components/Layout/Container/Container'
-import Overlay from 'components/widgets/Overlay/Overlay'
-import React, { useState, useEffect, useRef } from 'react'
-import Card from 'components/ui/Card/Card'
-import Collapse from 'components/ui/Collapse/Collapse'
-import { Select, Space } from 'antd'
-import DrawerMenu from 'components/ui/DrawerMenu/DrawerMenu'
-import { IoFunnelOutline } from 'react-icons/io5'
-import PRODUCTS_TYPES, { product } from 'types/interfaces'
-import Loader from "components/Loader/Loader";
-import type { CheckboxProps, RadioChangeEvent } from "antd";
-import { Radio } from "antd";
-import Input from "components/Common/regularInputs";
+"use client";
+import Container from "components/Layout/Container/Container";
+import Overlay from "components/widgets/Overlay/Overlay";
+import React, { useState, useEffect, useRef } from "react";
+import Card from "components/ui/Card/Card";
+import { Select } from "antd";
+import PRODUCTS_TYPES, { product } from "types/interfaces";
 import axios from "axios";
 import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
-import { Checkbox } from "antd";
 import { IoIosSearch } from "react-icons/io";
-import { useSearchParams } from "next/navigation";
-import { generateSlug, productimage } from "data/Data";
-import { Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { generateSlug } from "data/Data";
 import Image from "next/image";
-import product1 from "../../../public/images/ProductsPage/product1.png"
 interface category {
   posterImageUrl: {
     public_id: string;
@@ -46,27 +36,21 @@ const StaticCategory = {
 };
 
 const ProductPage = () => {
-  const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([])
-  const [filteredProductsByCategory, setfilteredProductsByCategory] = useState<PRODUCTS_TYPES[]>([])
-  const [error, setError] = useState<any>()
-  const [loading, setLoading] = useState<boolean>(false)
-  const [showColors, setShowColors] = useState<boolean>(false)
-
-  const [colorName, setColorName] = useState<string>()
-  const [availableColors, setAvailableColors] = useState<{ value: string; label: string; }[]>([])
-
-  const [searchTerm, setSearchTerm] = useState<string>("")
-  const [sortOption, setSortOption] = useState<string>("Default")
-  const [category, setCategory] = useState<category[]>([])
-  const [activeLink, setActiveLink] = useState<category | undefined>()
-  const searchParams = useSearchParams()
-  const categoryName = searchParams.get('category');
+  const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
+  const [filteredProductsByCategory, setfilteredProductsByCategory] = useState<PRODUCTS_TYPES[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [showColors, setShowColors] = useState<boolean>(false);
+  const [colorName, setColorName] = useState<string>();
+  const [availableColors, setAvailableColors] = useState<{ value: string; label: string }[] | string[] >([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [sortOption, setSortOption] = useState<string>("Default");
+  const [category, setCategory] = useState<category[]>([]);
+  const [activeLink, setActiveLink] = useState<category | undefined>();
+  const searchParams = useSearchParams();
+  const categoryName = searchParams.get("category");
   const dropdown = useRef<any>(null);
   const trigger = useRef<any>(null);
-
-
-
-
+  const route =useRouter()
 
   useEffect(() => {
     get_recordHandler();
@@ -76,30 +60,25 @@ const ProductPage = () => {
     productHandler(categoryName);
   }, [categoryName]);
 
-
   const Get_colors_handler = (products: any) => {
-    let uniqcolorArray: string[] = []
+    let uniqcolorArray: string[] = [];
 
     products.forEach((element: any) => {
       if (element.colors && element.colors.length > 0) {
-
-        element.colors.forEach((color: { colorName: string, _id: string }) => uniqcolorArray.push(color.colorName));
+        element.colors.forEach((color: { colorName: string; _id: string }) =>
+          uniqcolorArray.push(color.colorName)
+        );
       }
-    })
-    console.log(uniqcolorArray, "color")
-
+    });
     if (uniqcolorArray.length > 0) {
-
       let colorsArray = [...new Set<string>(uniqcolorArray)].map((item) => {
-        return (
-          { value: item, label: item }
-
-        )
-      })
-
+        return { value: item, label: item };
+      });
       setAvailableColors(colorsArray);
+    } else {
+      setAvailableColors(uniqcolorArray);
     }
-  }
+  };
 
   const get_recordHandler = async () => {
     try {
@@ -108,81 +87,119 @@ const ProductPage = () => {
         axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`),
         axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
       ]);
-      let products = productResponse.data.products
-
+      let products = productResponse.data.products;
       const categories = [StaticCategory, ...categoryResponse.data];
       setCategory(categories);
       setTotalProducts(products);
-
-      productHandler(categoryName, categories, products)
-
-      // if (!categoryName) {
-      //   setActiveLink(StaticCategory);
-      // } else {
-      //   const activeCategory = categories.find((cat) => {
-      //     return generateSlug(cat.name) === categoryName
-      //   }
-      //   );
-      //   setActiveLink(activeCategory);
-      // }
+      productHandler(categoryName, categories, products);
     } catch (err) {
       console.error("Error loading products or categories", err);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
-
-  const productHandler = async (categoryName: string | null, newcategories?: category[], newProducts?: any) => {
+  const productHandler = async (
+    categoryName: any,
+    newcategories?: category[],
+    newProducts?: any
+  ) => {
     try {
-
-      const activeCategory: any = (newcategories ? newcategories : category).find((cat) => generateSlug(cat.name) === categoryName);
-      setActiveLink(activeCategory);
-      console.log(activeCategory, "activeCategory")
-
-      if (!activeCategory) return
-      const filteredProductsByCategory = (newProducts ? newProducts : totalProducts).filter((product: PRODUCTS_TYPES) => {
-        // if (activeLink._id === "all") {
-        //   return product;
-        // }
-        // return product.category === activeLink._id;
+      const activeCategory: any = (
+        newcategories ? newcategories : category
+      ).find((cat) => generateSlug(cat.name) === categoryName);
+      if (!activeCategory || activeCategory._id === "all") {
+        setfilteredProductsByCategory(newProducts ? newProducts : totalProducts);
+        setActiveLink(StaticCategory);
+        Get_colors_handler(newProducts ? newProducts : totalProducts);
+        return;
+      }
+      const filteredProductsByCategory = (
+        newProducts ? newProducts : totalProducts
+      ).filter((product: PRODUCTS_TYPES) => {
         return product.category === activeCategory._id;
-      })
-      console.log(filteredProductsByCategory, "filteredProductsByCategory")
-      setfilteredProductsByCategory(filteredProductsByCategory)
-
-      Get_colors_handler(filteredProductsByCategory)
-
+      });
+  
+      setfilteredProductsByCategory(filteredProductsByCategory);
+      setActiveLink(activeCategory);
+      Get_colors_handler(filteredProductsByCategory);
     } catch (err) {
       console.error("Error loading products or categories", err);
     }
   };
-
-
+  
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
   const handleColorChange = (value: string) => {
     setSortOption(value);
-    setColorName(colorName == value ? "" : value)
+    setColorName(colorName == value ? "" : value);
   };
 
   const handleSortChange = (value: string) => {
     setSortOption(value);
-    colorName == value
+    colorName == value;
   };
 
-  const filteredProducts = filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
-    if (!product) return true;
-    const nameMatch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const colorMatch = !colorName || (product.colors && product.colors.some(color => color.colorName === colorName));
-    console.log(colorMatch, "colormatch")
-    return nameMatch && colorMatch;
-  });
+  const filteredProducts = Array.isArray(filteredProductsByCategory)
+    ? filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
+      let Search = searchTerm.toLowerCase();
+      
+      const nameMatch =
+        product.name.toLowerCase().includes(Search) ||
+        (product.description &&
+          product.description.toLowerCase().includes(Search)) ||
+        (product.salePrice &&
+          product.salePrice.toString().toLowerCase().includes(Search)) ||
+        (product.purchasePrice &&
+          product.purchasePrice.toString().toLowerCase().includes(Search)) ||
+        (product.category &&
+          product.category.toString().toLowerCase().includes(Search)) ||
+        product.discountPrice?.toString().toLowerCase().includes(Search) ||
+        (product.colors &&
+          product.colors.some((color: any) =>
+            color.colorName.toLowerCase().includes(Search)
+          )) ||
+        product.modelDetails.some(
+          (model: any) =>
+            model.name.toLowerCase().includes(Search) ||
+            model.detail.toLowerCase().includes(Search)
+        ) ||
+        (product.spacification &&
+          product.spacification.some((spec: any) =>
+            spec.specsDetails.toLowerCase().includes(Search)
+          )) ||
+        product.starRating?.toString().toLowerCase().includes(Search) ||
+        product.reviews?.toLowerCase().includes(Search) ||
+        product.code.toLowerCase().includes(Search) ||
+        product.totalStockQuantity
+          ?.toString()
+          .toLowerCase()
+          .includes(Search) ||
+        (product.sizes &&
+          product.sizes.some((size: any) =>
+            size.sizesDetails.toLowerCase().includes(Search)
+          ));
+      const colorMatch =
+        !colorName ||
+        (product.colors &&
+          product.colors.some((color: any) => 
+            color.colorName.toLowerCase() === colorName.toLowerCase()
+          ));
+      return nameMatch && colorMatch;
+    })
+  : [];
 
 
   const sortProducts = (products: PRODUCTS_TYPES[]) => {
+    if (!products || products.length === 0) return [];
+
+    const getPrice = (product: PRODUCTS_TYPES) => {
+      if (!product.salePrice) return 0; 
+      return product.salePrice;
+    };
+
     if (sortOption === "Default") {
       return products.sort((a, b) => {
         const nameA = a.name.toUpperCase();
@@ -193,13 +210,9 @@ const ProductPage = () => {
         });
       });
     } else if (sortOption === "Low to High") {
-      const getPrice = (product: PRODUCTS_TYPES) =>
-        product.discountPrice ?? product.salePrice;
-      return products.sort((a, b) => getPrice(b) - getPrice(a));
-    } else if (sortOption === "High to Low") {
-      const getPrice = (product: PRODUCTS_TYPES) =>
-        product.discountPrice ?? product.salePrice;
       return products.sort((a, b) => getPrice(a) - getPrice(b));
+    } else if (sortOption === "High to Low") {
+      return products.sort((a, b) => getPrice(b) - getPrice(a));
     } else {
       return products;
     }
@@ -207,70 +220,91 @@ const ProductPage = () => {
 
   const sortedProducts = sortProducts(filteredProducts);
 
-
   useEffect(() => {
-    const clickHandler = ( event: MouseEvent) => {
-      const target = event.target as HTMLElement; 
-      let id=['ColorDropdown']
-    console.log(target.id, "target")
+    const clickHandler = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      let id = ["ColorDropdown"];
+      console.log(target.id, "target");
       if (!id.includes(target.id)) {
-        console.log(target.id)
+        console.log(target.id);
         setShowColors(false);
-        return
-      };
-
-      // setShowColors(false);
+        return;
+      }
     };
     document.addEventListener("click", clickHandler);
     return () => document.removeEventListener("click", clickHandler);
   });
 
-
   useEffect(() => {
     const keyHandler = ({ code }: KeyboardEvent) => {
       if (!showColors || code !== "Escape") return;
-      console.log(code, "code")
+      console.log(code, "code");
       setShowColors(false);
     };
     document.addEventListener("keydown", keyHandler);
     return () => document.removeEventListener("keydown", keyHandler);
   });
+  const handleColorReset = () => {
+    setColorName("");
+  };
 
+  const plainSeriesCategoryName = "plain-series"; // Category for plain series
+  const woodGrainSeriesCategoryName = "wood-grain-series"; // Category for wood grain series
 
+  const specificProductCodesByCategory = {
+    [plainSeriesCategoryName]: ["KH9613", "KH9602", "KH9605"], // Codes for plain series
+    [woodGrainSeriesCategoryName]: ["CA162", "CA164", "CA126"], // Codes for wood grain series
+  };
+  //@ts-ignore
+  const specificProductCodes = specificProductCodesByCategory[categoryName] || [];
+
+  const specificProductImages = filteredProductsByCategory.filter(
+    (product) => specificProductCodes.includes(product.code)
+  );
+
+  const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
+    if (products.length <= 3) return products;
+    return products.sort(() => 0.5 - Math.random()).slice(0, 3);
+  };
+
+  const selectedProductImages = specificProductImages.length
+    ? specificProductImages
+    : getRandomProducts(filteredProductsByCategory); 
 
   return (
     <>
       <Overlay
         title={activeLink?.name || "Products"}
-        bodyText="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, "
       />
       <div className="hidde md:grid grid-cols-3 mt-2 gap-6">
-        {
-          productimage.map((array:{img:string}, index:number)=> (
-            <div className="w-full" key={index}> 
-            <Image className="object-cover w-full" width={500} height={500} src={array.img} alt="product1"/> 
+        {selectedProductImages.map((array, index: number) => (
+          <div className="w-full cursor-pointer" key={index} onClick={() => route.push(`/product/${generateSlug(array.name)}`)}>
+            <Image
+              className={`object-cover w-full h-[300px] ${
+                index > 0 ? "hidden sm:block" : ""
+              }`}
+              width={500}
+              height={500}
+              src={array.posterImageUrl.imageUrl}
+              alt="product1"
+            />
           </div>
-          ))
-        }
+        ))}
       </div>
       <Container className="mt-20 md:overflow-hidden">
-        <div className="flex flex-wrap md:flex-nowrap justify-between  gap-3">
+        <div className="flex flex-wrap lg:flex-nowrap justify-between  gap-3">
           <div>
-            <p className="uppercase text-15 md:text-[24px] text-lightdark">
+            <p className="uppercase text-[24px] text-lightdark">
               Home
               <span className="capitalize text-black">/{activeLink?.name}</span>
             </p>
           </div>
-          <div className='flex flex-wrap md:flex-nowrap md:gap-4'>
-
-
-
-            <div className="flex flex-wrap md:flex-nowrap gap-2 items-center ">
+          <div className="flex flex-wrap lg:flex-nowrap justify-between  w-full md:w-auto sm:space-x-4 ">
+            <div className="flex flex-wrap md:flex-nowrap gap-2 items-center mt-2 ">
               <h1>Sort By: </h1>
               <Select
                 defaultValue="Price"
-
-                className='w-32 md:w-40 h-10 rounded-none'
+                className="w-32 md:w-40 h-10 rounded-none"
                 onChange={handleSortChange}
                 options={[
                   { value: "Default", label: "Default" },
@@ -280,69 +314,73 @@ const ProductPage = () => {
               />
             </div>
 
+            <div className="flex flex-wrap md:flex-nowrap gap-2 items-center mt-2 ">
+              <h1>Sort By: </h1>
+              <div
+                className="w-32 md:w-40 h-10 flex items-center border relative"
+                id="DropdownContainer"
+              >
+                <div ref={trigger} className="w-full">
+                  <div
+                    className="w-full px-3 flex justify-between items-center text-[#3A393C] cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowColors(!showColors);
+                    }}
+                  >
+                    <p className="cursor-pointer">Colours</p>
+                    <svg
+                      width="15"
+                      height="8"
+                      viewBox="0 0 15 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M1 1.44421L7.15424 7.00429L13.7221 1.00497"
+                        stroke="#3A393C"
+                      />
+                    </svg>
+                  </div>
 
-            
-            <div className="flex flex-wrap md:flex-nowrap gap-2 items-center ">
-  <h1>Sort By: </h1>
-  <div className="w-32 md:w-40 h-10 flex items-center border relative" id="DropdownContainer">
-    <div
-      ref={trigger}   
-      className='w-full'
-    >
-      <div className="w-full px-3 flex justify-between items-center text-[#3A393C] cursor-pointer" 
-         onClick={(e) =>{e.stopPropagation(); setShowColors(!showColors)}}
-         >
-      <p className="cursor-pointer">Colors</p>
+                  {showColors ? (
+                    <div
+                      ref={dropdown}
+                      className="border shadow-sm flex flex-wrap gap-3 m-auto z-30 p-3 right-0 top-10 border-gray rounded-sm absolute w-full bg-white"
+                      id="ColorDropdown"
+                    >
+                      {!(availableColors.length > 0)
+                        ? "Colors not found"
+                        : availableColors.map((item: any) => (
+                            <p
+                              id="ColorDropdown"
+                              className={`w-5 h-5 border ${
+                                colorName === item.label
+                                  ? "border-primary"
+                                  : "border-gray"
+                              } cursor-pointer`}
+                              onClick={() => handleColorChange(item.label)}
+                              style={{ backgroundColor: `#${item.value}` }}
+                              key={item.label}
+                            />
+                          ))}
+                      {colorName && (
+                        <button
+                          className="bg-red-500 text-black rounded-md "
+                          onClick={() => handleColorReset()}
+                        >
+                          Reset
+                        </button>
+                      )}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            </div>
 
-      <svg
-        width="15"
-        height="8"
-        viewBox="0 0 15 8"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M1 1.44421L7.15424 7.00429L13.7221 1.00497" stroke="#3A393C" />
-      </svg>
-
-      </div>
-
-
-
-      {showColors ? (
-        <div
-          ref={dropdown}
-          className="border shadow-sm flex flex-wrap gap-3 m-auto p-3 right-0 top-10 border-gray rounded-sm absolute w-full z-10 bg-white"
-          id="ColorDropdown"
-        >
-          {!(availableColors.length > 0)
-            ? "Colors not found"
-            : availableColors.map((item) => (
-                <p
-          id="ColorDropdown"
-                
-                  className={`w-5 h-5 border ${
-                    colorName === item.label ? "border-primary" : "border-gray"
-                  } cursor-pointer`}
-                  onClick={() => handleColorChange(item.label)}
-                  style={{ backgroundColor: `#${item.value}` }}
-                  key={item.label} 
-                />
-              ))}
-        </div>
-      ) : null}
-    </div>
-
-
-
-
-  </div>
-</div>
-
-          
-
-            <div className="relative  flex items-center border border-secondary" >
+            <div className="relative  flex items-center border border-secondary w-full sm:w-auto mt-2">
               <input
-                className="px-2 py-1 rounded-none outline-none  w-32 md:w-[90%] border-sky-900"
+                className="px-2 py-1 rounded-none outline-none  w-full md:w-[90%] border-sky-900"
                 type="search"
                 placeholder="Search"
                 value={searchTerm}
@@ -354,22 +392,26 @@ const ProductPage = () => {
         </div>
         <div className="w-full">
           <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-10">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 gap-2 mt-10">
               {loading ? (
                 Array.from({ length: 9 }).map((_, index) => (
-                  <div key={index} className='gap-10 flex flex-col mt-3'>
+                  <div key={index} className="gap-10 flex flex-col mt-3">
                     <SkeletonLoading
-                      avatar={{ shape: 'square', size: 150, className: "w-full flex flex-col" }}
+                      avatar={{
+                        shape: "square",
+                        size: 150,
+                        className: "w-full flex flex-col",
+                      }}
                       title={false}
-                      style={{ flexDirection: 'column' }}
+                      style={{ flexDirection: "column" }}
                       paragraph={{ rows: 3 }}
-                      className='gap-10 flex'
+                      className="gap-10 flex"
                       active={true}
                     />
                   </div>
                 ))
               ) : (
-                <Card quickClass='right-8' ProductCard={sortedProducts} />
+                <Card quickClass="right-8" ProductCard={sortedProducts} />
               )}
             </div>
           </>
@@ -383,11 +425,8 @@ const ProductPage = () => {
               </button>
             )} */}
         </div>
-
       </Container>
-
     </>
-
   );
 };
 

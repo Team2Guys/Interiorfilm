@@ -29,6 +29,7 @@ interface Product {
   code: string;
   totalStockQuantity: number;
   variantStockQuantities: Array<any>;
+  length:number
 }
 
 const SideMenu: React.FC = () => {
@@ -48,6 +49,7 @@ const SideMenu: React.FC = () => {
         salePrice: 100,
         purchasePrice: 80,
         category: '66867ce543c6399137eb296c',
+        length:1,
         imageUrl: [
           {
             imageIndex: 1,
@@ -74,8 +76,8 @@ const SideMenu: React.FC = () => {
           public_id: 'interiorFilms/cqzkqjcykjaafevr9cgi',
           imageUrl: 'http://res.cloudinary.com/dhh6gp5tr/image/upload/v1723790134/interiorFilms/cqzkqjcykjaafevr9cgi.jpg'
         },
-        _id: '668bc6eddbca58sab0a2f93619',
-        name: 'KH6015',
+        _id: '668bc92b3cdbb2e4e08f7d6d',
+        name: 'KH9007',
         description: 'test',
         salePrice: 100,
         purchasePrice: 80,
@@ -97,17 +99,19 @@ const SideMenu: React.FC = () => {
         discountPrice: 20,
         starRating: '',
         reviews: '',
-        code: 'KH6015',
+        code: 'KH9007',
         totalStockQuantity: 10,
-        variantStockQuantities: []
+        variantStockQuantities: [],
+        length:1,
+
       },
       {
         posterImageUrl: {
           public_id: 'interiorFilms/cqzkqjcykjaafevr9cgi',
           imageUrl: 'http://res.cloudinary.com/dhh6gp5tr/image/upload/v1723790134/interiorFilms/cqzkqjcykjaafevr9cgi.jpg'
         },
-        _id: '668bc6eddbca58b0a2f93619',
-        name: 'KH6015',
+        _id: '668bc858dbca58b0a2f93692',
+        name: 'KH9003',
         description: 'test',
         salePrice: 100,
         purchasePrice: 80,
@@ -129,9 +133,11 @@ const SideMenu: React.FC = () => {
         discountPrice: 20,
         starRating: '',
         reviews: '',
-        code: 'KH6015',
+        code: 'KH9003',
         totalStockQuantity: 10,
-        variantStockQuantities: []
+        variantStockQuantities: [],
+        length:1,
+
       },
       
     ];
@@ -159,27 +165,27 @@ const SideMenu: React.FC = () => {
         discountPrice: product.discountPrice,
         totalStockQuantity: product.totalStockQuantity,
         count: 1,
-        length,
-        totalPrice: (product.discountPrice || product.salePrice), 
+        length:product.length,
+        totalPrice: Number((product.discountPrice || product.salePrice)),
         purchasePrice: product.purchasePrice,
         //@ts-expect-error
         sizes: product.sizes || [], 
-        product_code: product.code
+        code: product.code
       };
 
       let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
       const existingItemIndex = existingCart.findIndex(
-        (item: any) => item.id === product._id && item.length === length
+        (item: any) => item.id === product._id 
+        // && item.length === length
       );
 
+      console.log(existingItemIndex, "existingItemIndex")
       if (existingItemIndex !== -1) {
         const existingItem = existingCart[existingItemIndex];
         // existingItem.count += quantity;
+
         existingItem.count += 0;
-        existingItem.totalPrice =
-          (product.discountPrice || product.salePrice) *
-          existingItem.count *
-          length;
+        existingItem.totalPrice = (product.discountPrice || product.salePrice) * existingItem.count * length;
         existingCart[existingItemIndex] = existingItem;
       } else {
         existingCart.push(newCartItem);
@@ -195,8 +201,8 @@ const SideMenu: React.FC = () => {
   const totalPrice = selectedProducts.reduce((total, product) => total + product.discountPrice, 0);
 
   return (
-    <div className='flex md:flex-col gap-2'>
-      <div className='divide-y-2 p-2 divide-[#E4E4E4] border-2 border-[#E4E4E4]'>
+    <div className='flex flex-wrap lg:flex-nowrap lg:flex-col gap-2'>
+      <div className='divide-y-2 p-2 divide-[#E4E4E4] border-2 border-[#E4E4E4] hidden lg:block'>
         {TextWithIconData.map((item, index) => (
           <TextwithIcon
             key={index}
@@ -209,9 +215,9 @@ const SideMenu: React.FC = () => {
         ))}
       </div>
 
-      <div className="">
-        <div className="text-center mb-4">
-          <h2 className="font-semibold text-sm">Add on <span className="font-bold">5% Save</span></h2>
+      <div className="w-full">
+        <div className="text-start mb-4">
+          <h2 className="font-semibold text-sm"><span className="font-bold">You May Also Need</span></h2>
         </div>
         <div className="space-y-4">
           {products.map((product) => (
