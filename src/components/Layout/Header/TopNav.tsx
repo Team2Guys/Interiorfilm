@@ -2,13 +2,12 @@ import Link from "next/link";
 import React from "react";
 import { BsInstagram, BsTelephone } from "react-icons/bs";
 import { FaFacebook, FaPinterest } from "react-icons/fa";
-import { IoLogoFacebook } from "react-icons/io5";
 import { TfiEmail } from "react-icons/tfi";
 import { TiSocialFacebook } from "react-icons/ti";
 
 const TopNav = () => {
   return (
-    <div className="bg-primary hidden sm:block border-b py-2 border-primary w-full z-99 relative  p-2 lg:px-8 xl:px-32 ">
+    <div className="bg-primary hidden sm:block border-b py-2 border-primary w-full z-99 relative  px-2 sm:px-4 lg:px-8 xl:px-12 ">
       <div className="grid grid-cols-1 md:grid-cols-3 text-center space-y-1 lg:space-y-0 items-center">
         <div className="flex flex-wrap items-center justify-center lg:justify-start lg:text-start  gap-4 xl:gap-10">
           <Link

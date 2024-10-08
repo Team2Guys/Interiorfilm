@@ -165,7 +165,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
       name: product.name,
       price: product.salePrice,
       imageUrl: product.posterImageUrl?.imageUrl,
-      totalStockQuantity: product.totalStockQuantity, // Ensure totalStockQuantity is stored
+      totalStockQuantity: product.totalStockQuantity, 
       discountPrice: product.discountPrice,
       count: 1,
       length: 1,
@@ -275,6 +275,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
               </div>
             )}
           </div>
+          
         <Modal title={<h1 className="lg:text-xl text-sm text-dark group-hover:text-white font-bold">
           Code : <span>{product.name}</span>
         </h1>} open={isModalOpen} width={700} onOk={handleOk} onCancel={handleCancel} footer={""}>
@@ -322,8 +323,7 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
         </>
 
       )}
-      <div className='absolute top-1'>
-      </div>
+  
     </>
   );
 };
