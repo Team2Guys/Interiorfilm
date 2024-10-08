@@ -3,24 +3,14 @@ import Container from "components/Layout/Container/Container";
 import Overlay from "components/widgets/Overlay/Overlay";
 import React, { useState, useEffect, useRef } from "react";
 import Card from "components/ui/Card/Card";
-import Collapse from "components/ui/Collapse/Collapse";
-import { Select, Space } from "antd";
-import DrawerMenu from "components/ui/DrawerMenu/DrawerMenu";
-import { IoFunnelOutline } from "react-icons/io5";
+import { Select } from "antd";
 import PRODUCTS_TYPES, { product } from "types/interfaces";
-import Loader from "components/Loader/Loader";
-import type { CheckboxProps, RadioChangeEvent } from "antd";
-import { Radio } from "antd";
-import Input from "components/Common/regularInputs";
 import axios from "axios";
 import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
-import { Checkbox } from "antd";
 import { IoIosSearch } from "react-icons/io";
-import { useSearchParams } from "next/navigation";
-import { generateSlug, productimage } from "data/Data";
-import { Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { generateSlug } from "data/Data";
 import Image from "next/image";
-import product1 from "../../../public/images/ProductsPage/product1.png";
 interface category {
   posterImageUrl: {
     public_id: string;
@@ -60,6 +50,7 @@ const ProductPage = () => {
   const categoryName = searchParams.get("category");
   const dropdown = useRef<any>(null);
   const trigger = useRef<any>(null);
+  const route =useRouter()
 
   useEffect(() => {
     get_recordHandler();
@@ -109,7 +100,7 @@ const ProductPage = () => {
   };
 
   const productHandler = async (
-    categoryName: string | null,
+    categoryName: any,
     newcategories?: category[],
     newProducts?: any
   ) => {
@@ -257,21 +248,37 @@ const ProductPage = () => {
     setColorName("");
   };
 
-    const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
-      if (products.length <= 3) return products;
-      return products.sort(() => 0.5 - Math.random()).slice(0, 3);
-    };
-  
-    const randomProductImages = getRandomProducts(filteredProductsByCategory);
-  
+  const plainSeriesCategoryName = "plain-series"; // Category for plain series
+  const woodGrainSeriesCategoryName = "wood-grain-series"; // Category for wood grain series
+
+  const specificProductCodesByCategory = {
+    [plainSeriesCategoryName]: ["KH9613", "KH9602", "KH9605"], // Codes for plain series
+    [woodGrainSeriesCategoryName]: ["CA162", "CA164", "CA126"], // Codes for wood grain series
+  };
+  //@ts-ignore
+  const specificProductCodes = specificProductCodesByCategory[categoryName] || [];
+
+  const specificProductImages = filteredProductsByCategory.filter(
+    (product) => specificProductCodes.includes(product.code)
+  );
+
+  const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
+    if (products.length <= 3) return products;
+    return products.sort(() => 0.5 - Math.random()).slice(0, 3);
+  };
+
+  const selectedProductImages = specificProductImages.length
+    ? specificProductImages
+    : getRandomProducts(filteredProductsByCategory); 
+
   return (
     <>
       <Overlay
         title={activeLink?.name || "Products"}
       />
       <div className="hidde md:grid grid-cols-3 mt-2 gap-6">
-        {randomProductImages.map((array, index: number) => (
-          <div className="w-full" key={index}>
+        {selectedProductImages.map((array, index: number) => (
+          <div className="w-full cursor-pointer" key={index} onClick={() => route.push(`/product/${generateSlug(array.name)}`)}>
             <Image
               className={`object-cover w-full h-[300px] ${
                 index > 0 ? "hidden sm:block" : ""

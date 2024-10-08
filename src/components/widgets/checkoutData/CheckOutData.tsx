@@ -207,19 +207,19 @@ const CheckoutData: React.FC<TableProps> = ({
 
         </div>
         <div className="pt-4" >
-          <div className="flex flex-nowrap gap-2 py-2 text-black justify-between dark:text-white ">
+          <div className="grid grid-cols-4 xl:grid-cols-6 gap-2 py-2 text-black justify-start xl:justify-between  w-full items-center ">
             {FooterPaymentMethods.map((item, index) => {
               return (
-                <Image
+                <div className=" px-2 rounded-md flex justify-center items-center bg-white shadow-lg h-14"key={index} >
+                  <Image
                   src={item.imageUrl}
                   alt="master"
                   width={85}
                   height={35}
-                  className="bg-white px-1 object-contain shadow-lg rounded-md cursor-pointer"
-                  key={index}
+                  className=" object-contain  rounded-md cursor-pointer"
+                  
                 />
-
-
+                </div>
 
 
               )

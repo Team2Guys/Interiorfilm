@@ -555,7 +555,7 @@ export default function ProductDetails({
                 ))}
               </div>
               <div className="flex items-center gap-2 text-black dark:text-white">
-                <p className="font-semibold text-12 md:text-16">Categories: </p>
+                <p className="font-semibold text-12 md:text-16">Category: </p>
                 <Link href={`/products?category=${generateSlug(categoryName ? categoryName : "")}`} className="font-semibold hover:text-primary text-12 md:text-16">{categoryName}</Link>
               </div>
               <div>
