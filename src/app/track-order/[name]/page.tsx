@@ -25,6 +25,7 @@ const orderDetails: OrderDetail[] = [
 
 const ViewOrder = () => {
   const [products, setProducts] = useState<any[]>([]);
+  const [userDetail, setUserDetail] = useState<any>(null);
   const [total, setTotal] = useState<number>(0);
   const [shippingFee, setShippingFee] = useState<number>(0);
   const { name } = useParams();
@@ -35,8 +36,9 @@ const ViewOrder = () => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/track-order/${name}`);
         if (res.data && res.data.products) {
           const fetchedProducts = res.data.products;
+          const userDetails = res.data.userDetails;
           setProducts(fetchedProducts);
-
+          setUserDetail(userDetails);
           const totalAmount = fetchedProducts.reduce(
             //@ts-expect-error
             (sum: number, product: Product) => sum + parseFloat(product.totalPrice.toString()),
@@ -62,8 +64,9 @@ const ViewOrder = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-10 my-10 max-w-screen-lg mx-auto">
       <div>
+      {userDetail && (
         <div className="max-w-screen-sm mx-auto">
-          <div className="space-y-3">
+          {/* <div className="space-y-3">
             <div>
               <p className="font-medium text-23">Login To View</p>
             </div>
@@ -92,39 +95,29 @@ const ViewOrder = () => {
                 </button>
               </div>
             </div>
-          </div>
-
+          </div> */}
+      
+        
           <div className="border border-gray p-2 rounded-md mt-10">
             <p className="font-medium text-23">
-              Lorem Ipsum is simply dummy text
+             {userDetail.first_name} {userDetail.last_name} 
             </p>
             <p className="text-14">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry&apos;s standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
+            {userDetail.usermail}
             </p>
           </div>
 
           <div className="border border-gray p-2 rounded-md mt-10">
             <p className="font-medium text-23">Order Detail</p>
             <div className="grid grid-cols-6 gap-4">
-              {orderDetails.map((detail, index) => (
-                <React.Fragment key={index}>
+             
                   <div className="col-span-6">
                     <p className="text-18 font-medium">Shipping Address</p>
-                    <p className="text-14">{detail.shippingAddress}</p>
+                    <p className="text-14">{userDetail.userAddress}</p>
+                    <p className="text-14"> {userDetail.city}, {userDetail.country}</p>
                   </div>
-                  <div className="col-span-3">
-                    <p className="text-18 font-medium">Shipping Method</p>
-                    <p className="text-14">{detail.shippingMethod}</p>
-                  </div>
-                  <div className="col-span-3">
-                    <p className="text-18 font-medium">Payment Method</p>
-                    <p className="text-14">{detail.paymentMethod}</p>
-                  </div>
-                </React.Fragment>
-              ))}
+               
+              
             </div>
           </div>
 
@@ -140,6 +133,7 @@ const ViewOrder = () => {
             </Link>
           </div>
         </div>
+)}
       </div>
 
       {/* Product Details Section */}
