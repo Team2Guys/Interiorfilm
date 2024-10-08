@@ -1,16 +1,14 @@
 "use client";
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import Card from 'components/ui/Card/Card';
 import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import PRODUCTS_TYPES from 'types/interfaces';
 import { RiArrowLeftSFill, RiArrowRightSFill } from 'react-icons/ri';
-import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi';
 
 interface ProductSliderProps {
   products: PRODUCTS_TYPES[];
@@ -121,9 +119,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
             pagination={{
               dynamicBullets: true,
               clickable: true,
-              renderBullet: function (index: number, className: string) {
-                return `<span class="custom-pag ${className}">${index + 1}</span>`;
-              },
+             
             }}
             navigation={{
               prevEl: prevRef.current,
@@ -140,16 +136,16 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
           </Swiper>
 
           
-           <div className=' flex justify-center gap-48 absolute w-full bottom-5'>
+           <div className=' flex justify-center gap-54 absolute w-full bottom-5'>
             <button
               ref={prevRef}
-              className="bg-white text-black h-8 w-8 shadow-lg  flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
+              className="text-black h-8 w-8 shadow  flex justify-center items-center z-10 "
             >
               <RiArrowLeftSFill size={30} />
             </button>
             <button
               ref={nextRef}
-              className="bg-white text-black h-8 w-8 shadow-lg flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
+              className="text-black h-8 w-8 shadow flex justify-center items-center z-10 "
             >
               <RiArrowRightSFill size={30} />
             </button>

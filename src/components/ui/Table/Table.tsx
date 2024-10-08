@@ -234,19 +234,19 @@ const Table: React.FC<TableProps> = ({
   return (
     <>
       <div className=" hidden md:block   ">
-        <div className="flex justify-between items-center text-18 font-semibold px-6 bg-white text-black py-3 ">
+        <div className="flex justify-between items-center text-18 font-semibold px-4 bg-white text-black py-3 ">
 
-          <div className={` ${pathName === "/wishlist" ? "md:w-4/12 lg:w-4/12" : "md:w-4/12 lg:w-4/12"} `}>
+          <div className={` ${pathName === "/wishlist" ? "md:w-4/12 lg:w-6/12" : "md:w-4/12 lg:w-6/12"} `}>
             <p>Items</p>
           </div>
-          <div className={` ${pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12" : "md:w-2/12 lg:w-2/12"} `}>
+          <div className={` ${pathName === "/wishlist" ? "md:w-2/12 lg:w-1/12" : "md:w-2/12 lg:w-2/12 "} `}>
             <p>Price</p>
           </div>
-          <div className={` ${pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12" : "md:w-1/12 lg:w-3/12"} `}>
+          <div className={` ${pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12" : "md:w-1/12 lg:w-2/12 text-center"} `}>
             <p>QTY(M)</p>
           </div>
 
-          <div className={`${pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12" : "text-center md:w-2/12 lg:w-2/12"} `} >
+          <div className={`${pathName === "/wishlist" ? "md:w-2/12 lg:w-1/12" : "text-center md:w-2/12 lg:w-2/12"} `} >
             <p>Total</p>
           </div>
 
@@ -271,7 +271,7 @@ const Table: React.FC<TableProps> = ({
                 key={index}
               >
 
-              <div   className={`  ${pathName === "/wishlist" ? "md:w-4/12 lg:w-4/12" : "md:w-4/12 lg:w-4/12"}`}>
+              <div   className={`  ${pathName === "/wishlist" ? "md:w-4/12 lg:w-6/12" : "md:w-4/12 lg:w-6/12"}`}>
 
               <Link
                   href={`/product/${generateSlug(product.name)}`}
@@ -303,7 +303,7 @@ const Table: React.FC<TableProps> = ({
               </div>
         
 
-                <div className={` ${ pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12" : " md:w-2/12 lg:w-2/12"} `}>
+                <div className={` ${ pathName === "/wishlist" ? "md:w-2/12 lg:w-1/12" : " md:w-2/12 lg:w-2/12"} `}>
                   <p>
                     AED
                     <span>
@@ -317,7 +317,7 @@ const Table: React.FC<TableProps> = ({
                     </span>
                   </p>
                 </div>
-                <div className={` ${ pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12" : " md:w-2/12 lg:w-3/12"} `}>
+                <div className={` ${ pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12" : " md:w-2/12 lg:w-2/12 lg:flex lg:justify-center"} `}>
                   <div
                     className={`flex w-28 h-12  justify-between px-2  bg-[#F0F0F0]  ${
                       pathName === "/wishlist" ? "" : ""
@@ -349,7 +349,7 @@ const Table: React.FC<TableProps> = ({
                   </div>
                 </div>
 
-                <div className={` flex gap-4 ${pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12 " : "justify-center lg:w-2/12 "} `}
+                <div className={` flex gap-4 ${pathName === "/wishlist" ? "md:w-2/12 lg:w-1/12 " : "justify-center lg:w-2/12 "} `}
                 >
                   <p>
                     AED

@@ -42,14 +42,14 @@ const Overlay: React.FC<OverlayProps> = ({ title, bodyText }) => {
 
       {
         title == "show_details" ?
-          <div className="bg-black py-5 gap-5 flex justify-center items-center">
+          <div className="bg-black py-5 gap-5 flex  justify-center items-center">
             {data.map((item, index) => {
               return (
-                <div key={index} className="flex items-center gap-4">
-                  <Image src={item.src} alt="shipping image" height="20" width="20" />
-                  <p className="text-white">{item.name}</p>
+                <div key={index} className="flex items-center gap-2 md:gap-4">
+                  <Image className="w-[10px] h-[10px] sm:w-[20px] sm:h-[20px]" src={item.src} alt="shipping image" height="20" width="20" />
+                  <p className="text-white text-[7px] sm:text-12 lg:text-base">{item.name}</p>
                   {index !== data.length - 1 && (
-                    <div className="w-10 h-px bg-white"></div>
+                    <div className=" w-4 md:w-10 h-px bg-white"></div>
                   )}
                 </div>
               );
