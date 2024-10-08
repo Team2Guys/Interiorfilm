@@ -250,9 +250,10 @@ const Card: React.FC<CardProps> = ({ ProductCard, slider, categoryId, carDetail,
           </div>
         </div>
           <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
+            <h1 className="lg:text-lg text-md text-center text-black font-bold ">
+              {product.name} 
+            </h1>
             <h1 className="lg:text-lg text-md text-center text-dark  font-semibold">
-              {/* {product.name}  */}
-              
               {product.code}
             </h1>
             <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
