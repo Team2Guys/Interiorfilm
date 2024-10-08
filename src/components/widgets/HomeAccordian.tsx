@@ -5,8 +5,17 @@ import ProductCollapse from "components/ui/Collapse/productCollpase";
 import Container from "components/Layout/Container/Container";
 import Image from "next/image";
 import { AccordionsArray } from "data/sideMenuData";
-
-
+import imga from "../../../public/images/CA101.png"
+import imga2 from "../../../public/images/CA107.png"
+import imga3 from "../../../public/images/CA143.png"
+const accordionImages = [
+  imga,
+  imga2,
+  imga3,
+  imga,
+  imga2,
+  imga3,
+];
 
 
 function HomeAccordian() {
@@ -18,19 +27,19 @@ function HomeAccordian() {
   return (
     <Container>
       <div className="grid grid-cols-1 gap-10 mt-10 md:grid-cols-2">
-        <div>
+        <div className="hidden md:block">
           <Image
-            src="/images/AcccodianImage.png"
+            src={accordionImages[openIndex || 0]}
             alt="Accordian Image"
-            className="object-cover w-full h-full"
-            height={1000}
-            width={1000}
+            className="object-contain md:object-cover w-full h-[300px] md:h-[600px]"
+            height={600}
+            width={600}
           />
         </div>
 
         <div className="">
-          <h3 className="font-futura font-bold text-3xl mb-8 text-center  md:text-start capitalize" >
-            Areas We Cover
+          <h3 className="font-futura font-bold text-3xl mb-8 text-center  md:text-start" >
+            Lorem Ipsum Dolor
           </h3>
           {AccordionsArray.map((item, index) => {
             return (

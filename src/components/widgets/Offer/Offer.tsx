@@ -25,10 +25,10 @@ interface Offer {
                 Offers.map((array,index)=>(
                     <div className='group ' key={index}>
                     <div className='custom-shadow p-1 md:p-2  group-hover:shadow-lg flex flex-col justify-center items-center space-y-3 md:pt-10 md:pb-10 px-1 md:px-4   h-50 md:h-72 transition duration-500 ease-in-out' >
-                    <div className='w-10 h-10 md:w-16 md:h-16 rounded-full bg-white group-hover:bg-primary transition duration-500 ease-in-out flex justify-center items-center'>
+                    <div className='w-16 h-16 md:w-24 md:h-24 rounded-full bg-white group-hover:bg-primary transition duration-500 ease-in-out flex justify-center items-center'>
                         {array.icon}
                     </div>
-                    <h1 className='font-semibold text-14 sm:text-base md:text-20 font-futura text-center text-heading'>{array.title}</h1>
+                    <h1 className='font-semibold text-14 sm:text-base md:text-20 font-futura text-center text-heading capitalize'>{array.title}</h1>
                     <p className='text-center  text-10 sm:text-16 md:text-base text-para'>{array.detail}</p>
                  </div>
                  </div>

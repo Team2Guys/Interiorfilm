@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
             />
           </div>
 
-          <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start md:justify-end gap-2 w-full px-3 md:w-8/12 text-white mt-4 md:mt-0">
+          <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start gap-2 md:justify-end w-full px-3 md:w-8/12 text-white mt-4 md:mt-0">
             <SlEnvolopeLetter
               className="text-primary ml-4 md:ml-12 sm:ml-0"
               size={35}
@@ -78,13 +78,13 @@ const Footer: React.FC = () => {
             <p className="lg:text-base text-sm capitalize text-white">
               SUBSCRIBE TO OUR NEWSLETTER.
             </p>
-            <div className="ml-5 flex items-center justify-center mt-5 md:mt-0 rounded-none h-13">
+            <div className=" flex items-center justify-center mt-5 md:mt-0 rounded-none h-13">
               <input
                 className="bg-white border border-r-0  h-full rounded-none  px-4 outline-none w-4/6 md:w-auto text-black"
                 type="email"
                 placeholder="Enter Email Address"
               />
-              <Button className="text-sm px-5  h-full" title={"SUBSCRBE"} />
+              <Button className="text-sm px-5  h-full" title={"SUBSCRIBE"} />
             </div>
           </div>
         </div>

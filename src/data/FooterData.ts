@@ -19,7 +19,7 @@ export const socialLinks = [
   export const pages = [
     { name: "Privacy Policy", href: "privacy-policy" },
     { name: "Terms & Conditions", href: "terms-conditions" },
-    { name: "Return and Refund", href: "return-refund" },
+    { name: "Returns and Refunds", href: "returns-refunds" },
     { name: "Shipment Policy", href: "shipment-policy" },
 
   ];

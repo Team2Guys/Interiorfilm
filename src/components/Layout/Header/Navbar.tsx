@@ -487,7 +487,6 @@ const Navbar = () => {
             }`}
           >
            {navarlink.map((navItem, index) => {
-        // Build slug depending on whether the item is a series or not
         const slug = navItem.title.includes("Series")
           ? `/products?category=${navItem.ref}`
           : `/${navItem.ref}`;

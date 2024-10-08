@@ -1,7 +1,9 @@
 import { CgBulb } from "react-icons/cg";
 import { GiPayMoney } from "react-icons/gi";
+import { MdFactory } from "react-icons/md";
 import { RiCustomerService2Line } from "react-icons/ri";
 import { SlDiamond } from "react-icons/sl";
+import { TbTruckDelivery } from "react-icons/tb";
 import { ACCORDINTYPES } from "types/types";
 
 export const TextWithIconData = [
@@ -485,14 +487,14 @@ export const AccordionsArray: ACCORDINTYPES[] = [
  export const offers = [
     {
       icon: (
-        <SlDiamond className="text-primary group-hover:text-white text-23 md:text-[40px]" />
+        <GiPayMoney size={50} className="text-primary group-hover:text-white text-23 " />
       ),
       title: "Savings to your pocket",
       detail: "We cut out the middleman, passing the savings on to you.",
     },
     {
       icon: (
-        <CgBulb className="text-primary  group-hover:text-white text-23 md:text-[40px]" />
+        <TbTruckDelivery size={50} className="text-primary  group-hover:text-white text-23 " />
       ),
       title: "Fast Delivery ",
       detail:
@@ -500,7 +502,7 @@ export const AccordionsArray: ACCORDINTYPES[] = [
     },
     {
       icon: (
-        <GiPayMoney className="text-primary  group-hover:text-white text-23 md:text-[40px]" />
+        <MdFactory size={50}  className="text-primary  group-hover:text-white text-23 " />
       ),
       title: "Exclusive Collection",
       detail:
@@ -508,7 +510,7 @@ export const AccordionsArray: ACCORDINTYPES[] = [
     },
     {
       icon: (
-        <RiCustomerService2Line className="text-primary  group-hover:text-white text-23 md:text-[40px]" />
+        <RiCustomerService2Line size={50} className="text-primary  group-hover:text-white text-23 " />
       ),
       title: "Service Promise",
       detail:

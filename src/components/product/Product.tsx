@@ -101,22 +101,6 @@ const ProductPage = () => {
       setCategory(categories);
       setTotalProducts(products);
       productHandler(categoryName, categories, products);
-      // if (!categoryName) {
-      //   setActiveLink(StaticCategory);
-      // } else {
-      //   const activeCategory = categories.find((cat) => {
-      //     return generateSlug(cat.name) === categoryName
-      //   }
-      //   );
-      //   setActiveLink(activeCategory);
-      // }
-      
-      // const skinTextureCategory = categories.find(cat => cat.name === "Skin Texture Series");
-
-      // if (skinTextureCategory) {
-      //   const skinTextureProducts = products.filter(product => product.category === skinTextureCategory._id);
-      //   console.log("Skin Texture Series Products:", skinTextureProducts);
-      // }
     } catch (err) {
       console.error("Error loading products or categories", err);
     } finally {
@@ -206,16 +190,12 @@ const ProductPage = () => {
           product.sizes.some((size: any) =>
             size.sizesDetails.toLowerCase().includes(Search)
           ));
-
-      // Check for color match if colorName is provided
       const colorMatch =
         !colorName ||
         (product.colors &&
           product.colors.some((color: any) => 
             color.colorName.toLowerCase() === colorName.toLowerCase()
           ));
-
-      // Return true only if both nameMatch and colorMatch are satisfied
       return nameMatch && colorMatch;
     })
   : [];
@@ -259,8 +239,6 @@ const ProductPage = () => {
         setShowColors(false);
         return;
       }
-
-      // setShowColors(false);
     };
     document.addEventListener("click", clickHandler);
     return () => document.removeEventListener("click", clickHandler);
@@ -275,27 +253,32 @@ const ProductPage = () => {
     document.addEventListener("keydown", keyHandler);
     return () => document.removeEventListener("keydown", keyHandler);
   });
-
   const handleColorReset = () => {
-    setColorName(""); // Clear the selected color
+    setColorName("");
   };
 
+    const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
+      if (products.length <= 3) return products;
+      return products.sort(() => 0.5 - Math.random()).slice(0, 3);
+    };
+  
+    const randomProductImages = getRandomProducts(filteredProductsByCategory);
+  
   return (
     <>
       <Overlay
         title={activeLink?.name || "Products"}
-        bodyText="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, "
       />
       <div className="hidde md:grid grid-cols-3 mt-2 gap-6">
-        {productimage.map((array: { img: string }, index: number) => (
+        {randomProductImages.map((array, index: number) => (
           <div className="w-full" key={index}>
             <Image
-              className={`object-cover w-full ${
+              className={`object-cover w-full h-[300px] ${
                 index > 0 ? "hidden sm:block" : ""
               }`}
               width={500}
               height={500}
-              src={array.img}
+              src={array.posterImageUrl.imageUrl}
               alt="product1"
             />
           </div>
