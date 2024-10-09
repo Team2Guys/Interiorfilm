@@ -624,6 +624,7 @@ const cementCategoryName: string = "cement-grey-series";
 const marbleseriesCategoryName: string = "marble-series"; 
 const metalseriesCategoryName: string = "metal-series"; 
 const fabriceriesCategoryName: string = "fabric-series"; 
+const skinCategoryName: string = "skin-texture-series"; 
 
 export const specificProductCodesByCategory = {
 [plainSeriesCategoryName]: ["KH9613", "KH9602", "KH9605"],
@@ -632,6 +633,8 @@ export const specificProductCodesByCategory = {
 [marbleseriesCategoryName]: ["KS6007", "KS6004", "KS6011"],
 [metalseriesCategoryName]: ["KW006", "KW012", "KW013"],
 [fabriceriesCategoryName]: ["KS8005", "KS8006", "KS8002"],
+[fabriceriesCategoryName]: ["KS8005", "KS8006", "KS8002"],
+[skinCategoryName]: ["KS7715", "KS7710", "KS7701"],
 };
 export const specificImageIndexByCode:any = {
 KS6007: 2, 
@@ -642,5 +645,6 @@ KS5002: 2,
 KW013: 1, 
 KS8005:2,
 KS8002:2,
+KS7701:2,
 
 };
