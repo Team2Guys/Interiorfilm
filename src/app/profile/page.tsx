@@ -2,7 +2,7 @@
 import Container from 'components/Layout/Container/Container';
 import Overlay from 'components/widgets/Overlay/Overlay';
 import Link from 'next/link';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useAppSelector } from "components/Others/HelperRedux";
 import { uploadPhotosToBackend } from 'utils/helperFunctions'
 import { IMAGE_INTERFACE } from 'types/interfaces'
@@ -26,6 +26,13 @@ const Profile: React.FC = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [profilePhoto, setProfilePhoto] = useState<IMAGE_INTERFACE[]>([]);
   const token = Cookies.get('user_token');
+
+  useEffect(()=>{
+    if(!token)
+    {
+      router.push('/login')
+    }
+  },[token])
 
   const initialValue = {
     name: loggedInUser ? `${loggedInUser.email}` : "",

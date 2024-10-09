@@ -9,7 +9,7 @@ import axios from "axios";
 import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
 import { IoIosSearch } from "react-icons/io";
 import { useRouter, useSearchParams } from "next/navigation";
-import { generateSlug } from "data/Data";
+import { generateSlug, specificImageIndexByCode, specificProductCodesByCategory } from "data/Data";
 import Image from "next/image";
 interface category {
   posterImageUrl: {
@@ -52,6 +52,8 @@ const ProductPage = () => {
   const trigger = useRef<any>(null);
   const route =useRouter()
 
+
+  // console.log(totalProducts,"totalProductstotalProducts")
   useEffect(() => {
     get_recordHandler();
   }, []);
@@ -99,15 +101,9 @@ const ProductPage = () => {
     }
   };
 
-  const productHandler = async (
-    categoryName: any,
-    newcategories?: category[],
-    newProducts?: any
-  ) => {
+  const productHandler = async (categoryName: string | null,newcategories?: category[],newProducts?: any) => {
     try {
-      const activeCategory: any = (
-        newcategories ? newcategories : category
-      ).find((cat) => generateSlug(cat.name) === categoryName);
+      const activeCategory: any = (newcategories ? newcategories : category).find((cat) => generateSlug(cat.name) === categoryName);
       if (!activeCategory || activeCategory._id === "all") {
         setfilteredProductsByCategory(newProducts ? newProducts : totalProducts);
         setActiveLink(StaticCategory);
@@ -248,59 +244,50 @@ const ProductPage = () => {
     setColorName("");
   };
 
-    const plainSeriesCategoryName: string = "plain-series";
-    const woodGrainSeriesCategoryName: string = "wood-grain-series"; 
-    const cementCategoryName: string = "cement-grey-series"; 
 
-  const specificProductCodesByCategory = {
-    [plainSeriesCategoryName]: ["KH9613", "KH9602", "KH9605"],
-    [woodGrainSeriesCategoryName]: ["CA162", "CA164", "CA126"],
-    [cementCategoryName]: ["KS5002", "KS5007", "KS5007"],
-  };
-  const categoryNameNormalized:any = categoryName?.trim();
-  const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
-  const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
-    const productImages: PRODUCTS_TYPES[] = [];
-    codes.forEach(code => {
-      const matchedProducts = products.filter(product => product.code.trim() === code.trim());
-      matchedProducts.forEach(product => {
-        for (let i = 0; i < 1; i++) {
-          productImages.push(product);
-        }
-      });
+const categoryNameNormalized: any = categoryName?.trim();
+const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
+const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
+  const productImages: PRODUCTS_TYPES[] = [];
+  codes.forEach(code => {
+    const matchedProducts = products.filter(product => product.code.trim() === code.trim());
+    matchedProducts.forEach(product => {
+      productImages.push(product);
     });
-
-    return productImages;
-  };
-  const specificProductImages = getSpecificProductImages(filteredProductsByCategory, specificProductCodes);
-  const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
-    if (products.length <= 3) return products;
-    return products.sort(() => 0.5 - Math.random()).slice(0, 3);
-  };
-  const selectedProductImages = specificProductImages.length
-    ? specificProductImages
-    : getRandomProducts(filteredProductsByCategory);
-
+  });
+  return productImages;
+};
+const specificProductImages = getSpecificProductImages(filteredProductsByCategory, specificProductCodes);
+const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
+  if (products.length <= 3) return products;
+  return products.slice(0, 3);
+};
+const selectedProductImages = specificProductImages.length
+  ? specificProductImages
+  : getRandomProducts(filteredProductsByCategory);
   return (
     <>
       <Overlay
         title={activeLink?.name || "Products"}
       />
-      <div className="hidde md:grid grid-cols-3 mt-2 gap-6">
-        {selectedProductImages.map((array, index: number) => (
-          <div className="w-full cursor-pointer" key={index} onClick={() => route.push(`/product/${generateSlug(array.name)}`)}>
-            <Image
-              className={`object-cover w-full h-[300px] ${
-                index > 0 ? "hidden sm:block" : ""
-              }`}
-              width={500}
-              height={500}
-              src={array.posterImageUrl.imageUrl}
-              alt="product1"
-            />
-          </div>
-        ))}
+     <div className="hidden md:grid grid-cols-3 mt-2 gap-6">
+  {selectedProductImages.map((product, index: number) => {
+    const imageIndex = specificImageIndexByCode[product.code] || 0;
+    const selectedImage = product.imageUrl?.[imageIndex]?.imageUrl || product.posterImageUrl?.imageUrl;
+
+    return (
+      <div className="w-full cursor-pointer" key={index} onClick={() => route.push(`/product/${generateSlug(product.name)}`)}>
+        <Image
+          className={`object-cover w-full h-[300px] ${index > 0 ? "hidden sm:block" : ""}`}
+          width={500}
+          height={500}
+          src={selectedImage}
+          alt={`product-image-${product.name}`}
+        />
       </div>
+    );
+  })}
+</div>
       <Container className="mt-20 md:overflow-hidden">
         <div className="flex flex-wrap lg:flex-nowrap justify-between  gap-3">
           <div>
@@ -421,7 +408,7 @@ const ProductPage = () => {
                   </div>
                 ))
               ) : (
-                <Card quickClass="right-8" ProductCard={sortedProducts} />
+                <Card quickClass="right-8" ProductCard={sortedProducts} slider={true} />
               )}
             </div>
           </>

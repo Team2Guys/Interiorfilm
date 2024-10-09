@@ -6,10 +6,21 @@ import Overlay from 'components/widgets/Overlay/Overlay';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import PRODUCTS_TYPES from 'types/interfaces';
+import Cookies from "js-cookie";
+import { useRouter } from 'next/navigation';
 
 const Wishlist = () => {
   const [WishlistItems, setWishlistItems] = useState([]);
-
+  const token = Cookies.get("user_token");
+  const router = useRouter()
+  
+  useEffect(()=>{
+    if(!token)
+    {
+      router.push('/login')
+    }
+  },[token])
+  
   useEffect(() => {
     const existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
     setWishlistItems(existingWishlist);

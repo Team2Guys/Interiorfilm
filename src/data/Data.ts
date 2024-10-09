@@ -536,14 +536,15 @@ export const EnvironmentData: {title:string,icon:StaticImageData}[] = [
 
 export const navarlink = [
   { ref: "", title: "Home" },
-  { ref: "products?category=wood-grain-series", title: "Wood Grain" },
-  { ref: "products?category=plain-series", title: "Plain" },
-  { ref: "products?category=cement-grey-series", title: "Cement Grey" },
-  { ref: "products?category=marble-series", title: "Marble" },
-  { ref: "products?category=metal-series", title: "Metal" },
-  { ref: "products?category=fabric-series", title: "Fabric" },
-  { ref: "products?category=skin-texture-series", title: "Skin Texture" },
-  { ref: "products?category=symphony-series", title: "Symphony" },
+  { ref: "wood-grain-series", title: "Wood Grain Series" },
+  { ref: "plain-series", title: "Plain Series" },
+  { ref: "cement-grey-series", title: "Cement Grey Series" },
+  { ref: "marble-series", title: "Marble Series" },
+  { ref: "metal-series", title: "Metal Series" },
+  { ref: "fabric-series", title: "Fabric Series" },
+  { ref: "skin-texture-series", title: "Skin Texture Series" },
+  { ref: "symphony-series", title: "Symphony Series" },
+  { ref: "leather-series", title: "Leather Series" },
   { ref: "about", title: "About Us" },
   { ref: "contact", title: "Contact Us" },
   { title: "FAQs", ref: "frequently-asked-questions" },
@@ -616,3 +617,35 @@ export const AccordionsArray: ACCORDINTYPES[] = [
       Description: "If you have any additional questions or need further assistance, feel free to reach out to our customer service team via our contact page or through email. We're here to help!",
   },
 ];
+
+
+const plainSeriesCategoryName: string = "plain-series";
+const woodGrainSeriesCategoryName: string = "wood-grain-series"; 
+const cementCategoryName: string = "cement-grey-series"; 
+const marbleseriesCategoryName: string = "marble-series"; 
+const metalseriesCategoryName: string = "metal-series"; 
+const fabriceriesCategoryName: string = "fabric-series"; 
+const skinCategoryName: string = "skin-texture-series"; 
+
+export const specificProductCodesByCategory = {
+[plainSeriesCategoryName]: ["KH9613", "KH9602", "KH9605"],
+[woodGrainSeriesCategoryName]: ["CA162", "CA164", "CA126"],
+[cementCategoryName]: ["KS5002", "KS5007", "KS5007"],
+[marbleseriesCategoryName]: ["KS6007", "KS6004", "KS6011"],
+[metalseriesCategoryName]: ["KW006", "KW012", "KW013"],
+[fabriceriesCategoryName]: ["KS8005", "KS8006", "KS8002"],
+[fabriceriesCategoryName]: ["KS8005", "KS8006", "KS8002"],
+[skinCategoryName]: ["KS7715", "KS7710", "KS7701"],
+};
+export const specificImageIndexByCode:any = {
+KS6007: 2, 
+KS6004: 0,
+KS6011: 2,
+CA126: 2, 
+KS5002: 2, 
+KW013: 1, 
+KS8005:2,
+KS8002:2,
+KS7701:2,
+
+};

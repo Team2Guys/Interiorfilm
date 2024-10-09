@@ -8,13 +8,10 @@ import { usePathname, useRouter } from "next/navigation";
 import PRODUCTS_TYPES from "types/interfaces";
 import axios from "axios";
 import { generateSlug } from "data/Data";
-import Loader from "components/Loader/Loader";
 import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
 import { FiZoomIn } from "react-icons/fi";
 import Model from "components/ui/Modal/Model";
 import ProductDetails from "components/product_detail/ProductDetails";
-
-import CartDrawer from "components/cart-drawer/cart-drawer";
 
 interface CardProps {
   ProductCard?: PRODUCTS_TYPES[];
@@ -51,24 +48,17 @@ const Card: React.FC<CardProps> = ({
   );
   const [isLoading, setIsLoading] = useState(false);
 
+
+  
   const handleProductClick = (product: PRODUCTS_TYPES) => {
-    setIsLoading(true); // Start showing loader
+    setIsLoading(true); 
     setSelectedProduct(product);
     setIsModalOpen(true);
-
-    // Simulate a delay for loading data (optional, remove if real data is fast)
     setTimeout(() => {
-      setIsLoading(false); // Stop loading when data is available
-    }, 500);  // 500ms delay for the loading spinner
+      setIsLoading(false); 
+    }, 100);
   };
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -364,7 +354,14 @@ const Card: React.FC<CardProps> = ({
           )}
         </div>
 
-        <Modal
+        
+      </div>
+    );
+  };
+
+  return (
+    <>
+    <Modal
         title={<h1 className="lg:text-xl text-sm text-dark font-bold">Code: <span>{selectedProduct?.name}</span></h1>}
         open={isModalOpen}
         width={700}
@@ -383,12 +380,6 @@ const Card: React.FC<CardProps> = ({
           )
         )}
       </Modal>
-      </div>
-    );
-  };
-
-  return (
-    <>
       <Model
         setproductDetailModel={setProductDetailModel}
         productDetailModel={productDetailModel}
