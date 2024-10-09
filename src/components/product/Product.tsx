@@ -9,7 +9,7 @@ import axios from "axios";
 import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
 import { IoIosSearch } from "react-icons/io";
 import { useRouter, useSearchParams } from "next/navigation";
-import { generateSlug } from "data/Data";
+import { generateSlug, specificImageIndexByCode, specificProductCodesByCategory } from "data/Data";
 import Image from "next/image";
 interface category {
   posterImageUrl: {
@@ -250,32 +250,7 @@ const ProductPage = () => {
     setColorName("");
   };
 
-    const plainSeriesCategoryName: string = "plain-series";
-    const woodGrainSeriesCategoryName: string = "wood-grain-series"; 
-    const cementCategoryName: string = "cement-grey-series"; 
-    const marbleseriesCategoryName: string = "marble-series"; 
-    const metalseriesCategoryName: string = "metal-series"; 
-    const fabriceriesCategoryName: string = "fabric-series"; 
 
-const specificProductCodesByCategory = {
-  [plainSeriesCategoryName]: ["KH9613", "KH9602", "KH9605"],
-  [woodGrainSeriesCategoryName]: ["CA162", "CA164", "CA126"],
-  [cementCategoryName]: ["KS5002", "KS5007", "KS5007"],
-  [marbleseriesCategoryName]: ["KS6007", "KS6004", "KS6011"],
-  [metalseriesCategoryName]: ["KW006", "KW012", "KW013"],
-  [fabriceriesCategoryName]: ["KS8005", "KS8006", "KS8002"],
-};
-const specificImageIndexByCode:any = {
-  KS6007: 2, 
-  KS6004: 0,
-  KS6011: 2,
-  CA126: 2, 
-  KS5002: 2, 
-  KW013: 1, 
-  KS8005:2,
-  KS8002:2,
-
-};
 const categoryNameNormalized: any = categoryName?.trim();
 const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
 const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
