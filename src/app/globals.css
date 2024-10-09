@@ -581,10 +581,12 @@ gap: 10px;
 .ant-select-selector:hover{
   border-color: #000000 !important;
 }
-
-.ant-modal-mask{
-  background-color: rgb(0 0 0 / 75%) !important;
-}
+/* .ant-modal .ant-modal-content{
+  box-shadow: 2px 1px 0px 2px rgb(255 255 255 / 8%), 0px -1px 0px 0px rgb(219 207 207 / 12%), 1px -1px 0px 0px rgb(255 255 255 / 5%) !important;
+} */
+/* .ant-modal-mask{
+  background-color: rgba(0, 0, 0, 0.45) !important;
+} */
 .ant-select-item-option-selected{
   background-color: black !important;
   color: white !important; 

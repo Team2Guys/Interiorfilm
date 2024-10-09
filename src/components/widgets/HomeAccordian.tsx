@@ -1,20 +1,22 @@
 "use client";
 import { useState } from "react";
-import Accordion from "components/widgets/Accordion";
 import ProductCollapse from "components/ui/Collapse/productCollpase";
 import Container from "components/Layout/Container/Container";
 import Image from "next/image";
 import { AccordionsArray } from "data/sideMenuData";
-import imga from "../../../public/images/CA101.png"
-import imga2 from "../../../public/images/CA107.png"
-import imga3 from "../../../public/images/CA143.png"
+import Kitchen from "../../../public/images/testimonial/Kitchen.jpg"
+import Bathroom from "../../../public/images/testimonial/Bathroom.jpg"
+import Hotel from "../../../public/images/testimonial/Hotel.jpg"
+import Office from "../../../public/images/testimonial/Office.jpg"
+import Restaurant from "../../../public/images/testimonial/Restaurant.jpg"
+import Furniture from "../../../public/images/testimonial/Furniture.jpg"
 const accordionImages = [
-  imga,
-  imga2,
-  imga3,
-  imga,
-  imga2,
-  imga3,
+  Kitchen,
+  Bathroom,
+  Hotel,
+  Office,
+  Restaurant,
+  Furniture,
 ];
 
 
@@ -27,19 +29,19 @@ function HomeAccordian() {
   return (
     <Container>
       <div className="grid grid-cols-1 gap-10 mt-10 md:grid-cols-2">
-        <div className="hidden md:block">
+        <div className="block">
           <Image
             src={accordionImages[openIndex || 0]}
             alt="Accordian Image"
-            className="object-contain md:object-cover w-full h-[300px] md:h-[600px]"
-            height={600}
-            width={600}
+            className="object-cover w-full h-[300px] md:h-[600px]"
+            height={800}
+            width={800}
           />
         </div>
 
         <div className="">
           <h3 className="font-futura font-bold text-3xl mb-8 text-center  md:text-start" >
-            Lorem Ipsum Dolor
+            Areas We Cover
           </h3>
           {AccordionsArray.map((item, index) => {
             return (

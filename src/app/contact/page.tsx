@@ -5,7 +5,7 @@ import Container from "components/Layout/Container/Container";
 import Overlay from "components/widgets/Overlay/Overlay";
 import Link from "next/link";
 import React, { useState } from "react";
-import { FaFacebookSquare, FaInstagram } from "react-icons/fa";
+import { FaFacebookSquare, FaInstagram, FaPinterest } from "react-icons/fa";
 import { FiMail, FiPhone } from "react-icons/fi";
 import { TfiLocationPin } from "react-icons/tfi";
 import { useFormik } from "formik";
@@ -137,6 +137,9 @@ const Contact = () => {
                 </Link>
                 <Link target="_blank" href={"https://www.instagram.com/interiorfilm.ae/"}>
                   <FaInstagram className="text-white" size={25} />
+                </Link>
+                <Link target="_blank" href={"https://www.pinterest.com/interiorfilmuae/"}>
+                  <FaPinterest className="text-white" size={25} />
                 </Link>
               </div>
             </div>

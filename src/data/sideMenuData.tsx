@@ -50,7 +50,7 @@ export const TextWithIconData = [
 export const AccordionsArray: ACCORDINTYPES[] = [
     {
       Title: "Kitchen Wrapping",
-      Description: "Improve aesthetics of your kitchen with Premium Vinyl Wraps",
+      Description: "Premium Vinyl Wraps may dramatically improve the appearance of your kitchen.  Our high-quality vinyl coverings give drab, outdated cabinets new life without the trouble of replacing or repainting.",
       Icon: (
         <svg
           width="42"
@@ -118,7 +118,7 @@ export const AccordionsArray: ACCORDINTYPES[] = [
     },
     {
       Title: "Bathroom Wrapping",
-      Description: "Improve aesthetics of your kitchen with Premium Vinyl Wraps",
+      Description: "With Premium Vinyl Wraps, you can turn your bathroom into a luxury haven. Our water-resistant, easy-to-clean wraps are ideal for concealing ugly surfaces or replacing old tiles.",
       Icon: (
         <svg
           width="44"
@@ -171,7 +171,7 @@ export const AccordionsArray: ACCORDINTYPES[] = [
     },
     {
       Title: "Hotel Wrapping",
-      Description: "Improve aesthetics of your kitchen with Premium Vinyl Wraps",
+      Description: "Use Premium Vinyl Wraps to create a chic and welcoming atmosphere for your visitors. Our durable, non-scratch covers enhance walls, furniture, and other surfaces in hotels and resorts.",
       Icon: (
         <svg
           width="46"
@@ -360,7 +360,7 @@ export const AccordionsArray: ACCORDINTYPES[] = [
     },
     {
       Title: "Office Wrapping",
-      Description: "Improve aesthetics of your kitchen with Premium Vinyl Wraps",
+      Description: "Give your office a fresh look with Premium Vinyl Wraps. They're UV-resistant and easy to maintain, perfect for sprucing up desks, cabinets, and walls with a professional touch",
       Icon: (
         <svg
           width="40"
@@ -378,7 +378,7 @@ export const AccordionsArray: ACCORDINTYPES[] = [
     },
     {
       Title: "Restaurant Wrapping",
-      Description: "Improve aesthetics of your kitchen with Premium Vinyl Wraps",
+      Description: "Upgrade the aesthetics of your restaurant with Premium Vinyl Wraps. Our durable and stylish wraps are perfect for transforming tables, chairs, walls, and more into a cohesive and inviting space.",
       Icon: (
         <svg
           width="38"
@@ -415,7 +415,7 @@ export const AccordionsArray: ACCORDINTYPES[] = [
     },
     {
       Title: "Furniture Wrapping",
-      Description: "Improve aesthetics of your kitchen with Premium Vinyl Wraps",
+      Description: "Premium Vinyl Wraps may make your furniture look new. Our bubble-free installation ensures a flawless finish, and the scratch- and UV-resistant qualities keep it looking new for many years.",
       Icon: (
         <svg
           width="40"
