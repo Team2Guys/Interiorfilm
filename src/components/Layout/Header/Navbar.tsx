@@ -296,7 +296,7 @@ const Navbar = () => {
     <>
       <TopNav />
       <nav
-        className={`z-99 w-full py-2 px-2 sm:px-4 lg:px-8 xl:px-12 border-b-2 border-gray shadow-md  ${
+        className={`z-99 w-full py-2 px-2 sm:px-4 lg:px-8 xl:px-9 border-b-2 border-gray shadow-md  ${
           isHomePage
             ? isScrolled
               ? "bg-white text-black top-0 fixed"
@@ -304,7 +304,7 @@ const Navbar = () => {
             : "bg-white text-black sticky top-0 "
         }`}
       >
-        <div className="grid grid-cols-12 items-center mt-2">
+        <Container className="grid grid-cols-12 items-center mt-2">
           <div className="md:flex items-center  w-full rounded-3xl  shadow border border-gray-2  col-span-2 md:col-span-4 hidden relative ">
             <input
               type="text"
@@ -474,7 +474,7 @@ const Navbar = () => {
               />
             </div>
           </div>
-        </div>
+        </Container>
 
         <div>
           <Container
