@@ -52,6 +52,8 @@ const ProductPage = () => {
   const trigger = useRef<any>(null);
   const route =useRouter()
 
+
+  // console.log(totalProducts,"totalProductstotalProducts")
   useEffect(() => {
     get_recordHandler();
   }, []);
@@ -251,56 +253,72 @@ const ProductPage = () => {
     const plainSeriesCategoryName: string = "plain-series";
     const woodGrainSeriesCategoryName: string = "wood-grain-series"; 
     const cementCategoryName: string = "cement-grey-series"; 
+    const marbleseriesCategoryName: string = "marble-series"; 
+    const metalseriesCategoryName: string = "metal-series"; 
+    const fabriceriesCategoryName: string = "fabric-series"; 
 
-  const specificProductCodesByCategory = {
-    [plainSeriesCategoryName]: ["KH9613", "KH9602", "KH9605"],
-    [woodGrainSeriesCategoryName]: ["CA162", "CA164", "CA126"],
-    [cementCategoryName]: ["KS5002", "KS5007", "KS5007"],
-  };
-  const categoryNameNormalized:any = categoryName?.trim();
-  const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
-  const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
-    const productImages: PRODUCTS_TYPES[] = [];
-    codes.forEach(code => {
-      const matchedProducts = products.filter(product => product.code.trim() === code.trim());
-      matchedProducts.forEach(product => {
-        for (let i = 0; i < 1; i++) {
-          productImages.push(product);
-        }
-      });
+const specificProductCodesByCategory = {
+  [plainSeriesCategoryName]: ["KH9613", "KH9602", "KH9605"],
+  [woodGrainSeriesCategoryName]: ["CA162", "CA164", "CA126"],
+  [cementCategoryName]: ["KS5002", "KS5007", "KS5007"],
+  [marbleseriesCategoryName]: ["KS6007", "KS6004", "KS6011"],
+  [metalseriesCategoryName]: ["KW006", "KW012", "KW013"],
+  [fabriceriesCategoryName]: ["KS8005", "KS8006", "KS8002"],
+};
+const specificImageIndexByCode:any = {
+  KS6007: 2, 
+  KS6004: 0,
+  KS6011: 2,
+  CA126: 2, 
+  KS5002: 2, 
+  KW013: 1, 
+  KS8005:2,
+  KS8002:2,
+
+};
+const categoryNameNormalized: any = categoryName?.trim();
+const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
+const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
+  const productImages: PRODUCTS_TYPES[] = [];
+  codes.forEach(code => {
+    const matchedProducts = products.filter(product => product.code.trim() === code.trim());
+    matchedProducts.forEach(product => {
+      productImages.push(product);
     });
-
-    return productImages;
-  };
-  const specificProductImages = getSpecificProductImages(filteredProductsByCategory, specificProductCodes);
-  const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
-    if (products.length <= 3) return products;
-    return products.sort(() => 0.5 - Math.random()).slice(0, 3);
-  };
-  const selectedProductImages = specificProductImages.length
-    ? specificProductImages
-    : getRandomProducts(filteredProductsByCategory);
-
+  });
+  return productImages;
+};
+const specificProductImages = getSpecificProductImages(filteredProductsByCategory, specificProductCodes);
+const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
+  if (products.length <= 3) return products;
+  return products.slice(0, 3);
+};
+const selectedProductImages = specificProductImages.length
+  ? specificProductImages
+  : getRandomProducts(filteredProductsByCategory);
   return (
     <>
       <Overlay
         title={activeLink?.name || "Products"}
       />
-      <div className="hidde md:grid grid-cols-3 mt-2 gap-6">
-        {selectedProductImages.map((array, index: number) => (
-          <div className="w-full cursor-pointer" key={index} onClick={() => route.push(`/product/${generateSlug(array.name)}`)}>
-            <Image
-              className={`object-cover w-full h-[300px] ${
-                index > 0 ? "hidden sm:block" : ""
-              }`}
-              width={500}
-              height={500}
-              src={array.posterImageUrl.imageUrl}
-              alt="product1"
-            />
-          </div>
-        ))}
+     <div className="hidden md:grid grid-cols-3 mt-2 gap-6">
+  {selectedProductImages.map((product, index: number) => {
+    const imageIndex = specificImageIndexByCode[product.code] || 0;
+    const selectedImage = product.imageUrl?.[imageIndex]?.imageUrl || product.posterImageUrl?.imageUrl;
+
+    return (
+      <div className="w-full cursor-pointer" key={index} onClick={() => route.push(`/product/${generateSlug(product.name)}`)}>
+        <Image
+          className={`object-cover w-full h-[300px] ${index > 0 ? "hidden sm:block" : ""}`}
+          width={500}
+          height={500}
+          src={selectedImage}
+          alt={`product-image-${product.name}`}
+        />
       </div>
+    );
+  })}
+</div>
       <Container className="mt-20 md:overflow-hidden">
         <div className="flex flex-wrap lg:flex-nowrap justify-between  gap-3">
           <div>
