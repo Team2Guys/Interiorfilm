@@ -5,7 +5,7 @@ import Container from "components/Layout/Container/Container";
 import Overlay from "components/widgets/Overlay/Overlay";
 import Link from "next/link";
 import React, { useState } from "react";
-import { FaFacebookSquare, FaInstagram } from "react-icons/fa";
+import { FaFacebookSquare, FaInstagram, FaPinterest } from "react-icons/fa";
 import { FiMail, FiPhone } from "react-icons/fi";
 import { TfiLocationPin } from "react-icons/tfi";
 import { useFormik } from "formik";
@@ -108,10 +108,8 @@ const Contact = () => {
             <div className="flex flex-col gap-4">
               <div className="flex gap-2 items-center">
                 <TfiLocationPin size={20} />
-                <p>
-                  Yellowzone Trading, Al Nabooda Tower A ,Shop 6, Oud Metha,
-                  Dubai, UAE
-                </p>
+                <Link target="_blank" href={"https://www.google.com/maps?ll=25.24485,55.299425&z=15&t=m&hl=en&gl=US&mapclient=embed&cid=14349723016612093106"} className="md:text-12 lg:text-base">Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha,
+                Dubai, UAE</Link>
               </div>
               <div className="flex gap-2 items-center">
                 <FiPhone size={20} />
@@ -139,6 +137,9 @@ const Contact = () => {
                 </Link>
                 <Link target="_blank" href={"https://www.instagram.com/interiorfilm.ae/"}>
                   <FaInstagram className="text-white" size={25} />
+                </Link>
+                <Link target="_blank" href={"https://www.pinterest.com/interiorfilmuae/"}>
+                  <FaPinterest className="text-white" size={25} />
                 </Link>
               </div>
             </div>

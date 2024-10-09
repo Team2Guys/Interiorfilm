@@ -7,7 +7,7 @@ const EnvironmentIcons: React.FC = () => {
       {EnvironmentData.map((item, i) => (
         <div key={i} className="flex flex-col items-center text-center ">
             <Image src={item.icon} alt={item.title} width={50} height={50} className="object-contain " />
-          <div className='font-light'>{item.title}</div>
+          <div className='font-light capitalize'>{item.title}</div>
         </div>
       ))}
     </div>

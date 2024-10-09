@@ -1,12 +1,23 @@
 "use client";
 import { useState } from "react";
-import Accordion from "components/widgets/Accordion";
 import ProductCollapse from "components/ui/Collapse/productCollpase";
 import Container from "components/Layout/Container/Container";
 import Image from "next/image";
 import { AccordionsArray } from "data/sideMenuData";
-
-
+import Kitchen from "../../../public/images/testimonial/Kitchen.jpg"
+import Bathroom from "../../../public/images/testimonial/Bathroom.jpg"
+import Hotel from "../../../public/images/testimonial/Hotel.jpg"
+import Office from "../../../public/images/testimonial/Office.jpg"
+import Restaurant from "../../../public/images/testimonial/Restaurant.jpg"
+import Furniture from "../../../public/images/testimonial/Furniture.jpg"
+const accordionImages = [
+  Kitchen,
+  Bathroom,
+  Hotel,
+  Office,
+  Restaurant,
+  Furniture,
+];
 
 
 function HomeAccordian() {
@@ -18,19 +29,19 @@ function HomeAccordian() {
   return (
     <Container>
       <div className="grid grid-cols-1 gap-10 mt-10 md:grid-cols-2">
-        <div>
+        <div className="block">
           <Image
-            src="/images/AcccodianImage.png"
+            src={accordionImages[openIndex || 0]}
             alt="Accordian Image"
-            className="object-cover w-full"
-            height={1000}
-            width={1000}
+            className="object-cover w-full h-[300px] md:h-[600px]"
+            height={800}
+            width={800}
           />
         </div>
 
         <div className="">
           <h3 className="font-futura font-bold text-3xl mb-8 text-center  md:text-start" >
-            Lorem Ipsum Dolor
+            Areas We Cover
           </h3>
           {AccordionsArray.map((item, index) => {
             return (
@@ -44,7 +55,7 @@ function HomeAccordian() {
                 titleClass={`font-futura group-hover:text-primary ${
                   openIndex === index ? "font-bold text-primary" : "font-normal"
                 }`}
-                className="flex gap-2 items-center my-3"
+                className="flex flex-col sm:flex-row gap-2 items-start sm:items-center my-3"
                 Icon={item.Icon}
               >
                 <p className="text-[14px] text-para">{item.Description}</p>

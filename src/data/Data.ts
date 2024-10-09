@@ -617,3 +617,35 @@ export const AccordionsArray: ACCORDINTYPES[] = [
       Description: "If you have any additional questions or need further assistance, feel free to reach out to our customer service team via our contact page or through email. We're here to help!",
   },
 ];
+
+
+const plainSeriesCategoryName: string = "plain-series";
+const woodGrainSeriesCategoryName: string = "wood-grain-series"; 
+const cementCategoryName: string = "cement-grey-series"; 
+const marbleseriesCategoryName: string = "marble-series"; 
+const metalseriesCategoryName: string = "metal-series"; 
+const fabriceriesCategoryName: string = "fabric-series"; 
+const skinCategoryName: string = "skin-texture-series"; 
+
+export const specificProductCodesByCategory = {
+[plainSeriesCategoryName]: ["KH9613", "KH9602", "KH9605"],
+[woodGrainSeriesCategoryName]: ["CA162", "CA164", "CA126"],
+[cementCategoryName]: ["KS5002", "KS5007", "KS5007"],
+[marbleseriesCategoryName]: ["KS6007", "KS6004", "KS6011"],
+[metalseriesCategoryName]: ["KW006", "KW012", "KW013"],
+[fabriceriesCategoryName]: ["KS8005", "KS8006", "KS8002"],
+[fabriceriesCategoryName]: ["KS8005", "KS8006", "KS8002"],
+[skinCategoryName]: ["KS7715", "KS7710", "KS7701"],
+};
+export const specificImageIndexByCode:any = {
+KS6007: 2, 
+KS6004: 0,
+KS6011: 2,
+CA126: 2, 
+KS5002: 2, 
+KW013: 1, 
+KS8005:2,
+KS8002:2,
+KS7701:2,
+
+};
