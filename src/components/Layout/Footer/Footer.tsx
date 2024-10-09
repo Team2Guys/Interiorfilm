@@ -60,7 +60,7 @@ const Footer: React.FC = () => {
 
       <div className="bg-secondary text-white pt-10  pb-10 md:px-2 lg:px-30">
         <div className="flex flex-wrap md:flex-nowrap justify-between border-b items-center border-slate-500 pb-10 ">
-          <div className=" hidden  md:w-4/12 md:flex  flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
+          <div className=" hidden  md:w-3/12 md:flex  flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
             <Image
               width={500}
               height={500}
@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
             />
           </div>
 
-          <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start gap-2 md:justify-end w-full px-3 md:w-8/12 text-white mt-4 md:mt-0">
+          <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start gap-2 md:justify-end w-full px-3 md:w-9/12 text-white mt-4 md:mt-0">
             <SlEnvolopeLetter
               className="text-primary ml-4 md:ml-12 sm:ml-0"
               size={35}
@@ -78,9 +78,9 @@ const Footer: React.FC = () => {
             <p className="lg:text-base text-sm capitalize text-white">
               SUBSCRIBE TO OUR NEWSLETTER.
             </p>
-            <div className=" flex items-center justify-center mt-5 md:mt-0 rounded-none h-13">
+            <div className=" flex items-center justify-center mt-5 md:mt-0 rounded-none h-13 lg:w-100">
               <input
-                className="bg-white border border-r-0  h-full rounded-none  px-4 outline-none w-4/6 md:w-auto text-black"
+                className="bg-white border border-r-0  h-full rounded-none  px-4 outline-none w-4/6 md:w-5/6 text-black"
                 type="email"
                 placeholder="Enter Email Address"
               />
