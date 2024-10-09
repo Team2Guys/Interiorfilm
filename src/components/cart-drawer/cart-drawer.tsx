@@ -56,7 +56,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
     );
     calculateSubtotal(validCartItems);
   };
-
+  
   const increment = (index: number) => {
     const newLengths = { ...lengths };
     if (newLengths[index] < 100) {
@@ -78,6 +78,9 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
       message.error("Length cannot be less than 1 meter.");
     }
   };
+  useEffect(()=>{
+    fetchCartItems()
+  },[increment,decrement])
 
   const onLengthChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);

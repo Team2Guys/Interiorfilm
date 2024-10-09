@@ -47,7 +47,7 @@ const ProductPage = () => {
   const [category, setCategory] = useState<category[]>([]);
   const [activeLink, setActiveLink] = useState<category | undefined>();
   const searchParams = useSearchParams();
-  const categoryName = searchParams.get("category");
+  const categoryName:string | null = searchParams.get("category");
   const dropdown = useRef<any>(null);
   const trigger = useRef<any>(null);
   const route =useRouter()
@@ -248,28 +248,38 @@ const ProductPage = () => {
     setColorName("");
   };
 
-  const plainSeriesCategoryName = "plain-series"; // Category for plain series
-  const woodGrainSeriesCategoryName = "wood-grain-series"; // Category for wood grain series
+    const plainSeriesCategoryName: string = "plain-series";
+    const woodGrainSeriesCategoryName: string = "wood-grain-series"; 
+    const cementCategoryName: string = "cement-grey-series"; 
 
   const specificProductCodesByCategory = {
-    [plainSeriesCategoryName]: ["KH9613", "KH9602", "KH9605"], // Codes for plain series
-    [woodGrainSeriesCategoryName]: ["CA162", "CA164", "CA126"], // Codes for wood grain series
+    [plainSeriesCategoryName]: ["KH9613", "KH9602", "KH9605"],
+    [woodGrainSeriesCategoryName]: ["CA162", "CA164", "CA126"],
+    [cementCategoryName]: ["KS5002", "KS5007", "KS5007"],
   };
-  //@ts-ignore
-  const specificProductCodes = specificProductCodesByCategory[categoryName] || [];
+  const categoryNameNormalized:any = categoryName?.trim();
+  const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
+  const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
+    const productImages: PRODUCTS_TYPES[] = [];
+    codes.forEach(code => {
+      const matchedProducts = products.filter(product => product.code.trim() === code.trim());
+      matchedProducts.forEach(product => {
+        for (let i = 0; i < 1; i++) {
+          productImages.push(product);
+        }
+      });
+    });
 
-  const specificProductImages = filteredProductsByCategory.filter(
-    (product) => specificProductCodes.includes(product.code)
-  );
-
+    return productImages;
+  };
+  const specificProductImages = getSpecificProductImages(filteredProductsByCategory, specificProductCodes);
   const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
     if (products.length <= 3) return products;
     return products.sort(() => 0.5 - Math.random()).slice(0, 3);
   };
-
   const selectedProductImages = specificProductImages.length
     ? specificProductImages
-    : getRandomProducts(filteredProductsByCategory); 
+    : getRandomProducts(filteredProductsByCategory);
 
   return (
     <>
