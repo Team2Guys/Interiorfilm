@@ -9,7 +9,7 @@ import Container from "../Container/Container";
 const TopNav = () => {
   return (
     <div className="bg-primary hidden sm:block border-b py-2 border-primary w-full z-99 relative   ">
-      <div className="grid grid-cols-1 md:grid-cols-3 text-center space-y-1 lg:space-y-0 items-center lg:max-w-[1140px] xl:max-w-[1390px] 2xl:max-w-[1810px] lg:ml-auto px-2 sm:px-4  lg:px-10 xl:px-14 ">
+      <Container className="grid grid-cols-1 md:grid-cols-3 text-center space-y-1 lg:space-y-0 items-center ">
         <div className="flex flex-wrap items-center justify-center lg:justify-start lg:text-start  gap-4 xl:gap-10">
           <Link
             href={`tel:+971 52 191 9327`}
@@ -64,7 +64,7 @@ const TopNav = () => {
             <FaPinterest className="text-[#E60023] rounded-md" size={18} />
           </Link>
         </div>
-      </div>
+      </Container>
     </div>
   );
 };
