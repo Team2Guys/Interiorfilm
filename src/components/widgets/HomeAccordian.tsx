@@ -34,8 +34,8 @@ function HomeAccordian() {
             src={accordionImages[openIndex || 0]}
             alt="Accordian Image"
             className="object-contain md:object-cover w-full h-[300px] md:h-[600px]"
-            height={600}
-            width={600}
+            height={800}
+            width={800}
           />
         </div>
 
