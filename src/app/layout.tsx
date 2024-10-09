@@ -5,8 +5,8 @@ import "./globals.css";
 import PathnameWrapper from "components/PathnameWrapper";
 import { ToastContainer } from 'react-toastify';
 import { Providers } from "./Providers";
-import "jsvectormap/dist/css/jsvectormap.css";
-import "flatpickr/dist/flatpickr.min.css";
+// import "jsvectormap/dist/css/jsvectormap.css";
+// import "flatpickr/dist/flatpickr.min.css";
 import "../css/style.css";
 import { GoogleTagManager } from '@next/third-parties/google';
 

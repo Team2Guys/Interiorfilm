@@ -46,7 +46,7 @@ export default function InfoTabs() {
       </div>
     <hr className=" relative bottom-1 bg-primary border-b-4 border-[#EAEBEC] -z-99999" />
       <div className="md:p-4 px-2 py-1">
-        <p className="text-15">{content[activeTab]}</p>
+        <div className="text-15">{content[activeTab]}</div>
       </div>
     </Container>
   );
