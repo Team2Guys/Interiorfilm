@@ -544,6 +544,7 @@ export const navarlink = [
   { ref: "fabric-series", title: "Fabric Series" },
   { ref: "skin-texture-series", title: "Skin Texture Series" },
   { ref: "symphony-series", title: "Symphony Series" },
+  { ref: "leather-series", title: "Leather Series" },
   { ref: "about", title: "About Us" },
   { ref: "contact", title: "Contact Us" },
   { title: "FAQs", ref: "frequently-asked-questions" },
