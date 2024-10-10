@@ -58,9 +58,9 @@ const Footer: React.FC = () => {
     <>
       {/* {pathname == "/" || pathname == "/about" ? null : <PreFooter />} */}
 
-      <div className="bg-secondary text-white pt-10  pb-10 md:px-8 lg:px-30">
+      <div className="bg-secondary text-white pt-10  pb-10 md:px-2 lg:px-30">
         <div className="flex flex-wrap md:flex-nowrap justify-between border-b items-center border-slate-500 pb-10 ">
-          <div className=" hidden  md:w-4/12 md:flex  flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
+          <div className=" hidden  md:w-3/12 md:flex  flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
             <Image
               width={500}
               height={500}
@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
             />
           </div>
 
-          <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start md:justify-end gap-2 w-full px-3 md:w-8/12 text-white mt-4 md:mt-0">
+          <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start gap-2 md:justify-end w-full px-3 md:w-9/12 text-white mt-4 md:mt-0">
             <SlEnvolopeLetter
               className="text-primary ml-4 md:ml-12 sm:ml-0"
               size={35}
@@ -78,13 +78,13 @@ const Footer: React.FC = () => {
             <p className="lg:text-base text-sm capitalize text-white">
               SUBSCRIBE TO OUR NEWSLETTER.
             </p>
-            <div className="ml-5 flex items-center justify-center mt-5 md:mt-0 rounded-none h-13">
+            <div className=" flex items-center justify-center mt-5 md:mt-0 rounded-none h-13 lg:w-100">
               <input
-                className="bg-white border border-r-0  h-full rounded-none  px-4 outline-none w-4/6 md:w-auto text-black"
+                className="bg-white border border-r-0  h-full rounded-none  px-4 outline-none w-4/6 md:w-5/6 text-black"
                 type="email"
                 placeholder="Enter Email Address"
               />
-              <Button className="text-sm px-5  h-full" title={"SUBSCRBE"} />
+              <Button className="text-sm px-5  h-full" title={"SUBSCRIBE"} />
             </div>
           </div>
         </div>
@@ -100,12 +100,10 @@ const Footer: React.FC = () => {
               />
             </div>
             <div className="lg:pb-0 pb-3">
-              <p className=" text-slate-200">
-                In publishing and graphic design, Lorem ipsum is a placeholder
-                text commonly used to demonstrate the visual form of a document
-                or a typeface without relying on meaningful content.
+              <p className=" text-slate-200 md:text-13 lg:text-base md:font-normal">
+              Our mission is to bring the latest and best architechtural vinyl film wrap at the lowest possible prices
               </p>
-
+  
               <div className="flex items-center flex-wrap gap-4 py-2 lg:order-2 order-1 text-white dark:text-black">
                 {socialLinks.map((link, index) => (
                   <Link
@@ -135,7 +133,7 @@ const Footer: React.FC = () => {
               </h3>
               <div className="flex md:block gap-16">
                 <ul
-                  className={`space-y-2 transition-all duration-300 overflow-hidden ${
+                  className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${
                     isCategoriesOpen ? "max-h-96" : "max-h-0"
                   } md:max-h-none`}
                 >
@@ -164,7 +162,7 @@ const Footer: React.FC = () => {
                 </span> */}
               </h3>
               <ul
-                className={`space-y-2 transition-all duration-300 overflow-hidden ${
+                className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${
                   isCustomerCareOpen ? "max-h-96" : "max-h-0"
                 } md:max-h-none`}
               >
@@ -191,7 +189,7 @@ const Footer: React.FC = () => {
                 </span> */}
               </h3>
               <ul
-                className={`space-y-2 transition-all duration-300 overflow-hidden ${
+                className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${
                   isPagesOpen ? "max-h-96" : "max-h-0"
                 } md:max-h-none`}
               >
@@ -208,11 +206,11 @@ const Footer: React.FC = () => {
               </ul>
             </div>
             <div className="lg:pb-0 pb-3 col-span-12 sm:col-span-12 md:col-span-3">
-              <p className="text-17 font-semibold">Contact us</p>
+              <p className="lg:text-lg text-sm font-semibold mb-4">Contact us</p>
 
               <div className="w-full lg:w-auto md:w-2/3 text-slate-400">
-                Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha,
-                Dubai, UAE
+                <Link target="_blank" href={"https://www.google.com/maps?ll=25.24485,55.299425&z=15&t=m&hl=en&gl=US&mapclient=embed&cid=14349723016612093106"} className="md:text-12 lg:text-base">Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha,
+                Dubai, UAE</Link>
                 <p>
                   <Link
                     href="mailto:info@interiorfilm.ae"
@@ -224,7 +222,7 @@ const Footer: React.FC = () => {
                 </p>
                 <p>
                   <Link
-                    className="text-12 lg:text-13 font-normal"
+                    className="text-12 lg:text-13 font-normal hover:text-primary"
                     href={`tel:+971 52 191 9327`}
                   >
                     +971 52 191 9327

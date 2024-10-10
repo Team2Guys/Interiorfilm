@@ -3,24 +3,14 @@ import Container from "components/Layout/Container/Container";
 import Overlay from "components/widgets/Overlay/Overlay";
 import React, { useState, useEffect, useRef } from "react";
 import Card from "components/ui/Card/Card";
-import Collapse from "components/ui/Collapse/Collapse";
-import { Select, Space } from "antd";
-import DrawerMenu from "components/ui/DrawerMenu/DrawerMenu";
-import { IoFunnelOutline } from "react-icons/io5";
+import { Select } from "antd";
 import PRODUCTS_TYPES, { product } from "types/interfaces";
-import Loader from "components/Loader/Loader";
-import type { CheckboxProps, RadioChangeEvent } from "antd";
-import { Radio } from "antd";
-import Input from "components/Common/regularInputs";
 import axios from "axios";
 import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
-import { Checkbox } from "antd";
 import { IoIosSearch } from "react-icons/io";
-import { useSearchParams } from "next/navigation";
-import { generateSlug, productimage } from "data/Data";
-import { Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { generateSlug, specificImageIndexByCode, specificProductCodesByCategory } from "data/Data";
 import Image from "next/image";
-import product1 from "../../../public/images/ProductsPage/product1.png";
 interface category {
   posterImageUrl: {
     public_id: string;
@@ -57,10 +47,13 @@ const ProductPage = () => {
   const [category, setCategory] = useState<category[]>([]);
   const [activeLink, setActiveLink] = useState<category | undefined>();
   const searchParams = useSearchParams();
-  const categoryName = searchParams.get("category");
+  const categoryName:string | null = searchParams.get("category");
   const dropdown = useRef<any>(null);
   const trigger = useRef<any>(null);
+  const route =useRouter()
 
+
+  // console.log(totalProducts,"totalProductstotalProducts")
   useEffect(() => {
     get_recordHandler();
   }, []);
@@ -101,22 +94,6 @@ const ProductPage = () => {
       setCategory(categories);
       setTotalProducts(products);
       productHandler(categoryName, categories, products);
-      // if (!categoryName) {
-      //   setActiveLink(StaticCategory);
-      // } else {
-      //   const activeCategory = categories.find((cat) => {
-      //     return generateSlug(cat.name) === categoryName
-      //   }
-      //   );
-      //   setActiveLink(activeCategory);
-      // }
-      
-      // const skinTextureCategory = categories.find(cat => cat.name === "Skin Texture Series");
-
-      // if (skinTextureCategory) {
-      //   const skinTextureProducts = products.filter(product => product.category === skinTextureCategory._id);
-      //   console.log("Skin Texture Series Products:", skinTextureProducts);
-      // }
     } catch (err) {
       console.error("Error loading products or categories", err);
     } finally {
@@ -124,7 +101,11 @@ const ProductPage = () => {
     }
   };
 
-  const productHandler = async (categoryName: string | null,newcategories?: category[],newProducts?: any) => {
+  const productHandler = async (
+    categoryName: any,
+    newcategories?: category[],
+    newProducts?: any
+  ) => {
     try {
       const activeCategory: any = (newcategories ? newcategories : category).find((cat) => generateSlug(cat.name) === categoryName);
       if (!activeCategory || activeCategory._id === "all") {
@@ -200,16 +181,12 @@ const ProductPage = () => {
           product.sizes.some((size: any) =>
             size.sizesDetails.toLowerCase().includes(Search)
           ));
-
-      // Check for color match if colorName is provided
       const colorMatch =
         !colorName ||
         (product.colors &&
           product.colors.some((color: any) => 
             color.colorName.toLowerCase() === colorName.toLowerCase()
           ));
-
-      // Return true only if both nameMatch and colorMatch are satisfied
       return nameMatch && colorMatch;
     })
   : [];
@@ -253,8 +230,6 @@ const ProductPage = () => {
         setShowColors(false);
         return;
       }
-
-      // setShowColors(false);
     };
     document.addEventListener("click", clickHandler);
     return () => document.removeEventListener("click", clickHandler);
@@ -269,32 +244,54 @@ const ProductPage = () => {
     document.addEventListener("keydown", keyHandler);
     return () => document.removeEventListener("keydown", keyHandler);
   });
-
   const handleColorReset = () => {
-    setColorName(""); // Clear the selected color
+    setColorName("");
   };
 
+
+const categoryNameNormalized: any = categoryName?.trim();
+const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
+const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
+  const productImages: PRODUCTS_TYPES[] = [];
+  codes.forEach(code => {
+    const matchedProducts = products.filter(product => product.code.trim() === code.trim());
+    matchedProducts.forEach(product => {
+      productImages.push(product);
+    });
+  });
+  return productImages;
+};
+const specificProductImages = getSpecificProductImages(filteredProductsByCategory, specificProductCodes);
+const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
+  if (products.length <= 3) return products;
+  return products.slice(0, 3);
+};
+const selectedProductImages = specificProductImages.length
+  ? specificProductImages
+  : getRandomProducts(filteredProductsByCategory);
   return (
     <>
       <Overlay
         title={activeLink?.name || "Products"}
-        bodyText="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, "
       />
-      <div className="hidde md:grid grid-cols-3 mt-2 gap-6">
-        {productimage.map((array: { img: string }, index: number) => (
-          <div className="w-full" key={index}>
-            <Image
-              className={`object-cover w-full ${
-                index > 0 ? "hidden sm:block" : ""
-              }`}
-              width={500}
-              height={500}
-              src={array.img}
-              alt="product1"
-            />
-          </div>
-        ))}
+     <div className="hidden md:grid grid-cols-3 mt-2 gap-6">
+  {selectedProductImages.map((product, index: number) => {
+    const imageIndex = specificImageIndexByCode[product.code] || 0;
+    const selectedImage = product.imageUrl?.[imageIndex]?.imageUrl || product.posterImageUrl?.imageUrl;
+
+    return (
+      <div className="w-full cursor-pointer" key={index} onClick={() => route.push(`/product/${generateSlug(product.name)}`)}>
+        <Image
+          className={`object-cover w-full h-[300px] ${index > 0 ? "hidden sm:block" : ""}`}
+          width={500}
+          height={500}
+          src={selectedImage}
+          alt={`product-image-${product.name}`}
+        />
       </div>
+    );
+  })}
+</div>
       <Container className="mt-20 md:overflow-hidden">
         <div className="flex flex-wrap lg:flex-nowrap justify-between  gap-3">
           <div>
@@ -415,7 +412,7 @@ const ProductPage = () => {
                   </div>
                 ))
               ) : (
-                <Card quickClass="right-8" ProductCard={sortedProducts} />
+                <Card quickClass="right-8" ProductCard={sortedProducts} slider={true} />
               )}
             </div>
           </>

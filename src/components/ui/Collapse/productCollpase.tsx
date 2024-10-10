@@ -1,9 +1,8 @@
 "use client";
 import { ReactNode } from "react";
 import { BsPlus } from "react-icons/bs";
-import { LuMinus, LuPlus } from "react-icons/lu";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-import { RxCross2 } from "react-icons/rx";
+import { HiMinusSm } from "react-icons/hi";
 
 interface CollapseProps {
   title: string;
@@ -31,7 +30,7 @@ const ProductCollapse: React.FC<CollapseProps> = ({
       <div className={`w-full ${className}`} >
         {
           Icon ?
-            <div className="w-fit">
+            <div className="w-fit ml-4 sm:ml-0">
               {Icon}
             </div> : null
         }
@@ -43,7 +42,7 @@ const ProductCollapse: React.FC<CollapseProps> = ({
           >
             <div className="flex w-full justify-between items-center  gap-3">
               <span className={`${titleClass }   `}>{title}</span>
-              <span>{isOpen ? isHome ? <RxCross2 className="text-2xl " /> : <MdKeyboardArrowUp className="text-3xl" /> : isHome ? <BsPlus className="text-3xl " /> : <MdKeyboardArrowDown className="text-3xl" />}</span>
+              <span>{isOpen ? isHome ? <HiMinusSm className="text-2xl " /> : <MdKeyboardArrowUp className="text-3xl" /> : isHome ? <BsPlus className="text-3xl " /> : <MdKeyboardArrowDown className="text-3xl" />}</span>
             </div>
           </button>
 

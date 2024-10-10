@@ -53,6 +53,20 @@ const Cart = () => {
     setCartItems(existingCart); // Set the cart items
     calculateTotals(existingCart); // Calculate totals based on the cart items
   }, []);
+  useEffect(() => {
+    const handleCartChange = () => {
+      const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+      setCartItems(updatedCart);
+      calculateTotals(updatedCart); // Update totals when cart changes
+    };
+  
+    window.addEventListener("cartChanged", handleCartChange);
+  
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("cartChanged", handleCartChange);
+    };
+  }, []);
 
   // Handle cart changes (e.g., when a product is added, removed, or modified)
   const handleCartChange = (updatedCart: any) => {

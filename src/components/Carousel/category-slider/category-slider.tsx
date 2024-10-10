@@ -103,8 +103,8 @@ const CategorySlider: React.FC = () => {
             slidesPerView: 2,
             spaceBetween: 20,
           },
-          768: {
-            slidesPerView: 2.5,
+          904: {
+            slidesPerView: 2.2,
             spaceBetween: 10,
           },
           1024: {

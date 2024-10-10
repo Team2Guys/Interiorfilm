@@ -217,7 +217,7 @@ const SideMenu: React.FC = () => {
 
       <div className="w-full">
         <div className="text-start mb-4">
-          <h2 className="font-semibold text-sm">Add on <span className="font-bold">5% Save</span></h2>
+          <h2 className="font-semibold text-sm"><span className="font-bold">You May Also Need</span></h2>
         </div>
         <div className="space-y-4">
           {products.map((product) => (
