@@ -2,6 +2,7 @@
 import axios from "axios";
 import ProductSlider from "components/Carousel/ProductSlider/ProductSlider";
 import Container from "components/Layout/Container/Container";
+import {specificProductCodesByCategory } from "data/Data";
 import React, { useEffect, useState } from "react";
 import PRODUCTS_TYPES from "types/interfaces";
 
@@ -30,8 +31,11 @@ const HomeFeature = () => {
   const getProductsByCodes = (codes: string[]) => {
     return allProducts.filter(product => codes.includes(product.code));
   };
+  console.log("=============== Hello ================")
 
-  const filteredProducts = getProductsByCodes(["KH6003", "KH6005", "KH6012", "KS6015", "KH6013", "KH6004", "KH6006", "KH6016", "KH6002", "KH6009", "KH6007", "KH6017", "KH6018", "KH6001", "KH6014"]);
+  console.log()
+const featureProducts=Object.values(specificProductCodesByCategory).flat();
+  const filteredProducts = getProductsByCodes(featureProducts);
 
   return (
     <Container className="mt-10 ">
@@ -45,5 +49,4 @@ const HomeFeature = () => {
     </Container>
   );
 };
-
 export default HomeFeature;
