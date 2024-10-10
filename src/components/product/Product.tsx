@@ -246,7 +246,10 @@ const ProductPage = () => {
 
 
 const categoryNameNormalized: any = categoryName?.trim();
+//@ts-expect-error
 const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
+console.log('+++++++++++++++++++++++')
+console.log(specificProductCodes)
 const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
   const productImages: PRODUCTS_TYPES[] = [];
   codes.forEach(code => {

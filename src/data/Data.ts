@@ -1,6 +1,6 @@
 
 import * as Yup from 'yup';
-import {Product, Category,FormValues, ITabbyList, ITabbyPayList, ITamaraList} from 'types/interfaces'
+import { Product, Category, FormValues, ITabbyList, ITabbyPayList, ITamaraList } from 'types/interfaces'
 import { PrivacyPolicyItem } from 'types/types';
 import masterCard from './../../public/images/payment-icons/Mastercard-Logo.png'
 import viseCard from './../../public/images/payment-icons/visacard-logo.png'
@@ -30,116 +30,116 @@ import { StaticImageData } from 'next/image';
 import { ACCORDINTYPES } from 'types/faq';
 
 export const validateForm = (formData: { fullName: string; email: string; password: string; confirmpassword: string }) => {
-    if (formData.password !== formData.confirmpassword) {
-      return 'Confirm password and password do not match.';
-    }
-  
-    if (!formData.fullName || !formData.email || !formData.password) {
-      return 'All fields are required.';
-    }
-  
-    if (formData.password.length < 8) {
-      return 'Password must be at least 8 characters long.';
-    }
-  
-    if (!/\d/.test(formData.password)) {
-      return 'Password must contain at least one number.';
-    }
-  
-    if (!/[!@#$%^&*]/.test(formData.password)) {
-      return 'Password must contain at least one special character.';
-    }
-  
-    return '';
-  };
+  if (formData.password !== formData.confirmpassword) {
+    return 'Confirm password and password do not match.';
+  }
 
-  export  const withoutHeaderPages = [
-    "/login",
-    '/register',
-    "/superAdminlogin"
-  ]
+  if (!formData.fullName || !formData.email || !formData.password) {
+    return 'All fields are required.';
+  }
+
+  if (formData.password.length < 8) {
+    return 'Password must be at least 8 characters long.';
+  }
+
+  if (!/\d/.test(formData.password)) {
+    return 'Password must contain at least one number.';
+  }
+
+  if (!/[!@#$%^&*]/.test(formData.password)) {
+    return 'Password must contain at least one special character.';
+  }
+
+  return '';
+};
+
+export const withoutHeaderPages = [
+  "/login",
+  '/register',
+  "/superAdminlogin"
+]
 
 
 
 
 export const inputFields = [
-    { name: "name", type: 'text' },
-    { name: "description", type: 'text' },
-    { name: "price", type: 'number' },
-    // { name: "category", type: 'text' },
-    { name: "discountPrice", type: 'number' },
-  ];
+  { name: "name", type: 'text' },
+  { name: "description", type: 'text' },
+  { name: "price", type: 'number' },
+  // { name: "category", type: 'text' },
+  { name: "discountPrice", type: 'number' },
+];
 
-  export const CategorinputFields = [
-    { name: "name", type: 'text' },
+export const CategorinputFields = [
+  { name: "name", type: 'text' },
 
-  ];
-  export const withoutVariation = [
-    { name: "totalStockQuantity", type: 'number' },
-  ];
-  
-  export const Variation = [
-    { name: "variant", type: 'text' },
-    { name: "quantity", type: 'number' },
-  ];
+];
+export const withoutVariation = [
+  { name: "totalStockQuantity", type: 'number' },
+];
 
-
-  export const validationSchema = Yup.object({
-    name: Yup.string().required('Required'),
-    description: Yup.string().required('Required'),
-    price: Yup.string().required('Required'),
-    category: Yup.string().required('Required'),
-  });
+export const Variation = [
+  { name: "variant", type: 'text' },
+  { name: "quantity", type: 'number' },
+];
 
 
-  export const loginValidationSchema = Yup.object({
-    name: Yup.string().required('Required'),
-    password: Yup.string().required('Required'),
+export const validationSchema = Yup.object({
+  name: Yup.string().required('Required'),
+  description: Yup.string().required('Required'),
+  price: Yup.string().required('Required'),
+  category: Yup.string().required('Required'),
+});
 
-  });
 
-  export const categoryValidationSchema = Yup.object({
-    name: Yup.string().required('Required'),
-    description: Yup.string().required('required')
+export const loginValidationSchema = Yup.object({
+  name: Yup.string().required('Required'),
+  password: Yup.string().required('Required'),
 
-  });
+});
 
-  
+export const categoryValidationSchema = Yup.object({
+  name: Yup.string().required('Required'),
+  description: Yup.string().required('required')
 
- export const initialValues: Product = {
-    name: '',
-    description: '',
-    price: '',
-    colors: [],
-    totalStockQuantity: 0,
-    variantStockQuantities: [],
-    modelDetails: [],
-    spacification: [],
-    discountPrice: '',
-    category: '' 
-  };
+});
 
-  export const categoryInitialValues: Category = {
-    name: '',
-    description: ""
-  };
 
-  
- export const loginInitialValue = {
+
+export const initialValues: Product = {
   name: '',
-  password:'' 
+  description: '',
+  price: '',
+  colors: [],
+  totalStockQuantity: 0,
+  variantStockQuantities: [],
+  modelDetails: [],
+  spacification: [],
+  discountPrice: '',
+  category: ''
+};
+
+export const categoryInitialValues: Category = {
+  name: '',
+  description: ""
+};
+
+
+export const loginInitialValue = {
+  name: '',
+  password: ''
 };
 
 
 
-export  const generateSlug = (text:string) => {
+export const generateSlug = (text: string) => {
   return text
     .toString()
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, '-')      
-    .replace(/[^\w\-]+/g, '') 
-    .replace(/\-\-+/g, '-'); 
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-');
 };
 
 export const AddProductvalidationSchema = Yup.object().shape({
@@ -156,7 +156,7 @@ export const AddProductvalidationSchema = Yup.object().shape({
   //   .required('Required'),
 
 
-  discountPrice: Yup.number().nullable(), 
+  discountPrice: Yup.number().nullable(),
   starRating: Yup.number()
     .min(1, "Rating must be at least 1")
     .max(5, 'Star Rating should be a maximum of 5')
@@ -191,7 +191,7 @@ export const AddproductsinitialValues: FormValues = {
   reviews: '',
   colors: [],
   variantStockQuantities: [],
-  totalStockQuantity:0,
+  totalStockQuantity: 0,
   modelDetails: [],
   spacification: [],
   category: "",
@@ -199,12 +199,12 @@ export const AddproductsinitialValues: FormValues = {
   Meta_Title: "",
   Meta_Description: "",
   URL: "",
- Canonical_Tag: "",
- Images_Alt_Text: "",
-// Og_title: "",
-// Og_description:"" ,
-// Og_Image:"" ,
-// OgUrl:"",
+  Canonical_Tag: "",
+  Images_Alt_Text: "",
+  // Og_title: "",
+  // Og_description:"" ,
+  // Og_Image:"" ,
+  // OgUrl:"",
 
 
 };
@@ -264,8 +264,8 @@ export const privacyPolicyData: PrivacyPolicyItem[] = [
       'Product marketing and promotion (directly or through one of our partners) to provide you with updates and other information relating to the website.',
       'Process your transactions and payments.',
       'Find and prevent fraud.',
-    
-      
+
+
     ],
   },
   {
@@ -281,12 +281,12 @@ export const privacyPolicyData: PrivacyPolicyItem[] = [
   {
     title: 'Data Security',
     text: 'We have a proper system of organizational and technical security measures in place to protect your data and privacy. However, no electronic transmission over the internet or information storage technology can be guaranteed to be 100% secure, so we cannot promise or guarantee that hackers, cybercriminals, or other unauthorized third parties will not be able to defeat our security and improperly collect, access, steal, or modify your information.',
- 
+
   },
   {
     title: 'Changes to This Privacy Policy',
     text: "We may update this Privacy Policy in accordance with the laws and regulations. The updated version will be indicated by an updated 'last updated' date and the updated version will be effective as soon as it is accessible. We encourage you to review this Privacy Policy frequently to be informed of how we are protecting your information.",
- 
+
   },
 
 ];
@@ -299,7 +299,7 @@ export const return__refund: PrivacyPolicyItem[] = [
       'To initiate a return, please send an email to customer service at cs@interiorfilm.ae, explaining clearly why you would like to return the item. Please also ensure your order number is included.',
       'Our team will get back to you within 24hrs and guide you through the return process and provide you with a return authorization number (RAN). Returns cannot be accepted without the RAN.',
       'Once in receipt of your return, if deemed acceptable, we will issue the refund right away. The time for the refund to reflect in your account again varies from card issuer to card issuer, but from our side, it will be executed within 24 hours of an approved return.',
-  
+
     ],
   },
   {
@@ -337,12 +337,12 @@ export const return__refund: PrivacyPolicyItem[] = [
   {
     title: '',
     text: "For orders paid by cash, we will refund via bank deposit or transfer upon providing the necessary details.",
-  
+
   },
   {
     title: 'Contact Us:',
     text: "If you have any questions or concerns about our return and refund policy, please contact us at cs@interiorfilm.ae. Our customer service team is available to assist you from 9 am to 6 pm, Monday to Saturday (excluding public holidays).",
-   
+
   },
   {
     text: "Thank you for choosing Interiorfilm.ae.",
@@ -370,7 +370,7 @@ export const Terms_Conditions: PrivacyPolicyItem[] = [
     text: "Please carefully consider this agreement before using this website. Yellowzone Trading LLC has all the rights to amend this site, its services, T&Cs and Delivery Policy, Refund and Return Policy, and Shipping Policy. Also, Yellowzone Trading LLC has all the right to modify the services offered on the website and these conditions at any moment without previous notice.",
   },
   {
-    title:"1) Introduction:",
+    title: "1) Introduction:",
     text: "The Yellowzone Trading LLC Terms and Conditions ('Terms') considered as a legal agreement between you and ('User,' 'you,' or 'your') and Yellowzone Trading LLC, Inc. ('Yellowzone Trading LLC,' 'Company,' 'we,' 'our,' or 'us'). These terms and conditions, incorporated and presented after careful consideration, govern and secure your use of our website located at www.interiorfilm.ae ('website'), including all content that is posted, functionality, and services offered on or through the website by Yellowzone Trading LLC.",
   },
   {
@@ -383,7 +383,7 @@ export const Terms_Conditions: PrivacyPolicyItem[] = [
     text: "To contact us please email us at: cs@interiorfilm.ae ",
   },
   {
-    title:"2) By using our website (www.interiorfilm.ae) and services, you accept these terms:",
+    title: "2) By using our website (www.interiorfilm.ae) and services, you accept these terms:",
     text: "By using our website, you agree and confirm that you accept these terms and our Privacy Policy, and are bound to comply with them, incorporated here by reference. If you do not feel comfortable with these terms and conditions and wish to disagree, we respect your decision.",
   },
   {
@@ -393,7 +393,7 @@ export const Terms_Conditions: PrivacyPolicyItem[] = [
     text: "By agreeing to these terms, you represent and warrant that you are of legal age to use the website and the services provided by Yellowzone Trading LLC, under the law of the United Arab Emirates to form a binding contract with Yellowzone Trading LLC.",
   },
   {
-    title:"3) Updates of Terms and Services",
+    title: "3) Updates of Terms and Services",
     text: "We may update or revise these Terms at any time at our sole discretion.",
   },
   {
@@ -401,9 +401,9 @@ export const Terms_Conditions: PrivacyPolicyItem[] = [
   },
   {
     text: "We strongly recommend you to regularly review and have a clear understanding of these Terms and Conditions that govern your use of the website and its services. Whenever these terms are updated, we will update the 'Last Updated' date at the top of this document.",
-  },  
+  },
   {
-    title:"4) User Conduct",
+    title: "4) User Conduct",
     text: "It is imperative to adhere and comply with the terms of use when accessing the website and its services. Users must avoid the following in order to access and engage with Yellowzone Trading LLC’s website and its services in future.",
     listItems: [
       "Any action that violates any applicable federal, state, local, or international law or regulation.",
@@ -411,29 +411,29 @@ export const Terms_Conditions: PrivacyPolicyItem[] = [
       "The sending or arranging for the sending of any promotional or advertising materials.",
       "Impersonating the company, an employee of the company, another user, or any other entity or persona, including the use of email addresses associated with any of the aforementioned.",
     ],
-  }, 
-   {
+  },
+  {
     text: "Subject to these Terms, Yellowzone Trading LLC grants you a non-transferable, non-exclusive, revocable, limited license to access and use the website exclusively for your personal, non-commercial use.",
-  }, 
-  
+  },
+
   {
     text: "It is advised that users abide by these rules to avoid any legal consequences or violation of the terms of service.",
-  }, 
+  },
 ];
 
 export const detaildot = [
-  {specsDetails:"Lorem ipsum dolor sit dsg"},
-  {specsDetails:"Aliquam tincidunt mau"},
-  {specsDetails:"Cras ornare tristique elit"},
-  {specsDetails:"Lorem ipsum dolor sit dsg"},
-  {specsDetails:"Fusce pellentesque"},
-  {specsDetails:"Cras iaculis ultricies nulla."},
-  {specsDetails:"Lorem ipsum dolor sit dsg"},
-  {specsDetails:"Aliquam tincidunt mau"},
-  {specsDetails:"Cras ornare tristique elit"},
-  {specsDetails:"Lorem ipsum dolor sit dsg"},
-  {specsDetails:"Fusce pellentesque"},
-  {specsDetails:"Cras iaculis ultricies nulla."},
+  { specsDetails: "Lorem ipsum dolor sit dsg" },
+  { specsDetails: "Aliquam tincidunt mau" },
+  { specsDetails: "Cras ornare tristique elit" },
+  { specsDetails: "Lorem ipsum dolor sit dsg" },
+  { specsDetails: "Fusce pellentesque" },
+  { specsDetails: "Cras iaculis ultricies nulla." },
+  { specsDetails: "Lorem ipsum dolor sit dsg" },
+  { specsDetails: "Aliquam tincidunt mau" },
+  { specsDetails: "Cras ornare tristique elit" },
+  { specsDetails: "Lorem ipsum dolor sit dsg" },
+  { specsDetails: "Fusce pellentesque" },
+  { specsDetails: "Cras iaculis ultricies nulla." },
 ]
 export const collapseData = [
   {
@@ -522,7 +522,7 @@ export const FooterPaymentMethods: ITabbyPayList[] = [
 
 
 
-export const EnvironmentData: {title:string,icon:StaticImageData}[] = [
+export const EnvironmentData: { title: string, icon: StaticImageData }[] = [
   { title: '100% waterproof', icon: icon1 },
   { title: 'Scratch Resistance', icon: icon2 },
   { title: 'Fully Wear Resistance', icon: icon3 },
@@ -552,10 +552,10 @@ export const navarlink = [
 
 ];
 
-export const productimage =[
-  {img:"/images/ProductsPage/product1.png"},
-  {img:"/images/ProductsPage/product2.png"},
-  {img:"/images/ProductsPage/product3.png"},
+export const productimage = [
+  { img: "/images/ProductsPage/product1.png" },
+  { img: "/images/ProductsPage/product2.png" },
+  { img: "/images/ProductsPage/product3.png" },
 ]
 
 
@@ -573,79 +573,73 @@ export const CountryCode = [
 
 export const AccordionsArray: ACCORDINTYPES[] = [
   {
-      Title: "What is architectural vinyl film wrap?",
-      Description: "Architectural vinyl film wrap is a high-quality, adhesive-backed film designed to cover and transform surfaces such as doors, kitchen counters, and furniture. It offers a cost-effective alternative to traditional remodeling by enhancing aesthetics without extensive renovations.",
+    Title: "What is architectural vinyl film wrap?",
+    Description: "Architectural vinyl film wrap is a high-quality, adhesive-backed film designed to cover and transform surfaces such as doors, kitchen counters, and furniture. It offers a cost-effective alternative to traditional remodeling by enhancing aesthetics without extensive renovations.",
   },
   {
-      Title: "What surfaces can I use vinyl film on?",
-      Description: "Our vinyl films are suitable for a variety of surfaces, including doors, kitchen counters, cabinets, walls, furniture, and backsplashes.",
+    Title: "What surfaces can I use vinyl film on?",
+    Description: "Our vinyl films are suitable for a variety of surfaces, including doors, kitchen counters, cabinets, walls, furniture, and backsplashes.",
   },
   {
-      Title: "Is vinyl film durable?",
-      Description: "Yes, our architectural vinyl films are designed to be durable and long-lasting. They are resistant to scratches, stains, and moisture, making them ideal for high-traffic areas like kitchens and bathrooms.",
+    Title: "Is vinyl film durable?",
+    Description: "Yes, our architectural vinyl films are designed to be durable and long-lasting. They are resistant to scratches, stains, and moisture, making them ideal for high-traffic areas like kitchens and bathrooms.",
   },
   {
-      Title: "Can I install the vinyl film myself?",
-      Description: "While many customers choose to install the film themselves, we recommend hiring a professional for the best results, especially for larger surfaces or intricate designs. We provide detailed installation instructions to assist DIY enthusiasts.",
+    Title: "Can I install the vinyl film myself?",
+    Description: "While many customers choose to install the film themselves, we recommend hiring a professional for the best results, especially for larger surfaces or intricate designs. We provide detailed installation instructions to assist DIY enthusiasts.",
   },
   {
-      Title: "How do I clean and maintain vinyl film?",
-      Description: "To maintain the appearance of your vinyl film, simply wipe it down with a soft cloth and mild soap. Avoid abrasive cleaners and scrubbing pads, as they can damage the surface.",
+    Title: "How do I clean and maintain vinyl film?",
+    Description: "To maintain the appearance of your vinyl film, simply wipe it down with a soft cloth and mild soap. Avoid abrasive cleaners and scrubbing pads, as they can damage the surface.",
   },
   {
-      Title: "Can I remove the vinyl film later?",
-      Description: "Yes, our vinyl films are designed for easy removal without damaging the underlying surface. If you decide to change the look of your space, you can safely peel off the film.",
+    Title: "Can I remove the vinyl film later?",
+    Description: "Yes, our vinyl films are designed for easy removal without damaging the underlying surface. If you decide to change the look of your space, you can safely peel off the film.",
   },
   {
-      Title: "What colors and textures are available?",
-      Description: "We offer a wide range of colors, patterns, and textures to suit your design needs. From sleek matte finishes to wood and stone textures, you can find the perfect match for your style.",
+    Title: "What colors and textures are available?",
+    Description: "We offer a wide range of colors, patterns, and textures to suit your design needs. From sleek matte finishes to wood and stone textures, you can find the perfect match for your style.",
   },
   {
-      Title: "How do I order vinyl film?",
-      Description: "You can browse our selection on Interiorfilm.ae and place your order directly through the website. If you need assistance, feel free to contact our customer service team.",
+    Title: "How do I order vinyl film?",
+    Description: "You can browse our selection on Interiorfilm.ae and place your order directly through the website. If you need assistance, feel free to contact our customer service team.",
   },
   {
-      Title: "What is the delivery time for my order?",
-      Description: "Delivery times for most addresses in mainland UAE is 24-48 hours. For outlying areas or off shore areas, please consider an extra day or 2. ",
+    Title: "What is the delivery time for my order?",
+    Description: "Delivery times for most addresses in mainland UAE is 24-48 hours. For outlying areas or off shore areas, please consider an extra day or 2. ",
   },
   {
-      Title: "Do you offer custom sizes or designs?",
-      Description: "Our material is delivered in roll width of 122cm but if you have a custom requirement, we can check with the factory if it’s possible. There will be a minimum order requirement but this can vary from style to style. .",
+    Title: "Do you offer custom sizes or designs?",
+    Description: "Our material is delivered in roll width of 122cm but if you have a custom requirement, we can check with the factory if it’s possible. There will be a minimum order requirement but this can vary from style to style. .",
   },
   {
-      Title: "What if I have more questions?",
-      Description: "If you have any additional questions or need further assistance, feel free to reach out to our customer service team via our contact page or through email. We're here to help!",
+    Title: "What if I have more questions?",
+    Description: "If you have any additional questions or need further assistance, feel free to reach out to our customer service team via our contact page or through email. We're here to help!",
   },
 ];
 
-
-const plainSeriesCategoryName: string = "plain-series";
-const woodGrainSeriesCategoryName: string = "wood-grain-series"; 
-const cementCategoryName: string = "cement-grey-series"; 
-const marbleseriesCategoryName: string = "marble-series"; 
-const metalseriesCategoryName: string = "metal-series"; 
-const fabriceriesCategoryName: string = "fabric-series"; 
-const skinCategoryName: string = "skin-texture-series"; 
-
 export const specificProductCodesByCategory = {
-[plainSeriesCategoryName]: ["KH9613", "KH9602", "KH9605"],
-[woodGrainSeriesCategoryName]: ["CA162", "CA164", "CA126"],
-[cementCategoryName]: ["KS5002", "KS5007", "KS5007"],
-[marbleseriesCategoryName]: ["KS6007", "KS6004", "KS6011"],
-[metalseriesCategoryName]: ["KW006", "KW012", "KW013"],
-[fabriceriesCategoryName]: ["KS8005", "KS8006", "KS8002"],
-[fabriceriesCategoryName]: ["KS8005", "KS8006", "KS8002"],
-[skinCategoryName]: ["KS7715", "KS7710", "KS7701"],
+  "plain-series": ["KH9613", "KH9602", "KH9605"],
+  "wood-grain-series": ["CA162", "CA164", "CA126"],
+  "cement-grey-series": ["KS5002", "KS5007", "KS5007"],
+  "marble-series": ["KS6007", "KS6004", "KS6011"],
+  "metal-series": ["KW006", "KW012", "KW013"],
+  "fabric-series": ["KS8005", "KS8006", "KS8002"],
+  "skin-texture-series": ["KS7715", "KS7710", "KS7701"],
 };
-export const specificImageIndexByCode:any = {
-KS6007: 2, 
-KS6004: 0,
-KS6011: 2,
-CA126: 2, 
-KS5002: 2, 
-KW013: 1, 
-KS8005:2,
-KS8002:2,
-KS7701:2,
+
+
+
+
+export const specificImageIndexByCode: any = {
+  KS6007: 2,
+  KS6004: 0,
+  KS6011: 2,
+  CA126: 2,
+  KS5002: 2,
+  KW013: 1,
+  KS8005: 2,
+  KS8002: 2,
+  KS7701: 2,
 
 };

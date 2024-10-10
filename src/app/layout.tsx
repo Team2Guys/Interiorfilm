@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Montserrat } from 'next/font/google';
+
 import Script from 'next/script'
 import "./globals.css";
 import PathnameWrapper from "components/PathnameWrapper";
 import { ToastContainer } from 'react-toastify';
 import { Providers } from "./Providers";
-// import "jsvectormap/dist/css/jsvectormap.css";
-// import "flatpickr/dist/flatpickr.min.css";
 import "../css/style.css";
 import { GoogleTagManager } from '@next/third-parties/google';
-
+const font = Montserrat({
+  weight: '500',
+  subsets: ['latin'],
+});
 const futuraCyrillic = localFont({
   src: [
     {
@@ -51,6 +54,7 @@ export const metadata: Metadata = {
   description: "Welcome to Interior Films",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -79,7 +83,7 @@ export default function RootLayout({
           />
         </head>
 
-        <body className={futuraCyrillic.className}>
+        <body className={font.className}>
           <GoogleTagManager gtmId="GTM-PFNKXKTR" />
           <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PFNKXKTR"
             height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
