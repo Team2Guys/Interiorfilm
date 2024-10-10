@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 import gitImg from "../../public/images/json/404.json";
-import Lottie from "components/Lottie/error-gif";
+import dynamic from "next/dynamic";
+const Lottie = dynamic(() => import('components/Lottie/error-gif'), {
+  ssr: false,
+})
+
 
 export default function NotFound() {
   return (

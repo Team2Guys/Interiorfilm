@@ -101,11 +101,7 @@ const ProductPage = () => {
     }
   };
 
-  const productHandler = async (
-    categoryName: any,
-    newcategories?: category[],
-    newProducts?: any
-  ) => {
+  const productHandler = async (categoryName: string | null,newcategories?: category[],newProducts?: any) => {
     try {
       const activeCategory: any = (newcategories ? newcategories : category).find((cat) => generateSlug(cat.name) === categoryName);
       if (!activeCategory || activeCategory._id === "all") {
