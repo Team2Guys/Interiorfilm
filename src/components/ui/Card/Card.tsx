@@ -319,7 +319,7 @@ const Card: React.FC<CardProps> = ({
                 />
                 <p className="absolute top-0 left-0 text-sm px-1 text-center text-black bg-[#fb701d]">
                   {product.totalStockQuantity === 0 && (
-                    'Sold out'
+                    'Limited Stock'
                   )}
                 </p>
               </div>
