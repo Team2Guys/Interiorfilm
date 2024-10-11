@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Image from "next/image";
 import { Modal, Rate, Spin, message } from "antd";
 import { LuShoppingCart } from "react-icons/lu";
@@ -309,13 +309,20 @@ const Card: React.FC<CardProps> = ({
               </button>
             </div>
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
-              <Image
-                className="bg-contain  w-full "
-                width={500}
-                height={500}
-                src={product.posterImageUrl.imageUrl}
-                alt="Image"
-              />
+              <div className='relative'>
+                <Image
+                  className="bg-contain  w-full "
+                  width={500}
+                  height={500}
+                  src={product.posterImageUrl.imageUrl}
+                  alt="Image"
+                />
+                <p className="absolute top-0 left-0 text-sm px-1 text-center text-black bg-[#fb701d]">
+                  {product.totalStockQuantity === 0 && (
+                    'Sold out'
+                  )}
+                </p>
+              </div>
             )}
           </div>
         </div>
@@ -329,11 +336,11 @@ const Card: React.FC<CardProps> = ({
           <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
 
             <p className="lg:text-lg text-md text-center text-[#fb701d]">
-              {product.totalStockQuantity>0 && (
-               'In Stock'
+              {product.totalStockQuantity > 0 && (
+                'In Stock'
               )}
             </p>
-        
+
             <p className="text-black font-bold text-18 flex gap-1">
               AED <span className={` text-20 ${product.discountPrice ? "text-red" : "text-black"}`}>{product.salePrice}</span>
             </p>
