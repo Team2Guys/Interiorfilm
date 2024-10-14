@@ -14,7 +14,7 @@ const PDF = () => {
         <div className='md:col-span-1'/>
         <div className='col-span-12 md:col-span-4 space-y-4'>
             <h1 className='text-3xl font-bold'>Where does it come from</h1>
-            <p className=''>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since Lorem Ipsum has been.</p>
+            <p className=''>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since Lorem Ipsum has been.</p>
             <div className='flex gap-4'>
                 <Link href='/' target='_blank' className='bg-primary text-white font-medium md:font-semibold px-4 py-2'>Download Now</Link>
             </div>
