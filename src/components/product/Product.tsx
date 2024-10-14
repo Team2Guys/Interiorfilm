@@ -9,7 +9,7 @@ import axios from "axios";
 import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
 import { IoIosSearch } from "react-icons/io";
 import { useRouter, useSearchParams } from "next/navigation";
-import { generateSlug, specificImageIndexByCode, specificProductCodesByCategory } from "data/Data";
+import { generateSlug, sortProductsByCode, specificImageIndexByCode, specificProductCodesByCategory } from "data/Data";
 import Image from "next/image";
 interface category {
   posterImageUrl: {
@@ -90,6 +90,8 @@ const ProductPage = () => {
         axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
       ]);
       let products = productResponse.data.products;
+      console.log("===============================");
+      console.log(products)
       const categories = [StaticCategory, ...categoryResponse.data];
       setCategory(categories);
       setTotalProducts(products);
@@ -197,24 +199,27 @@ const ProductPage = () => {
     };
 
     if (sortOption === "Default") {
-      return products.sort((a, b) => {
+      return sortProductsByCode(products.sort((a, b) => {
         const nameA = a.name.toUpperCase();
         const nameB = b.name.toUpperCase();
         return nameA.localeCompare(nameB, undefined, {
           numeric: true,
           sensitivity: "base",
         });
-      });
+      }));
     } else if (sortOption === "Low to High") {
-      return products.sort((a, b) => getPrice(a) - getPrice(b));
+      return sortProductsByCode(products.sort((a, b) => getPrice(a) - getPrice(b)));
     } else if (sortOption === "High to Low") {
-      return products.sort((a, b) => getPrice(b) - getPrice(a));
+      return sortProductsByCode(products.sort((a, b) => getPrice(b) - getPrice(a)));
     } else {
-      return products;
+      return sortProductsByCode(products);
     }
   };
 
+
+  
   const sortedProducts = sortProducts(filteredProducts);
+  
 
   useEffect(() => {
     const clickHandler = (event: MouseEvent) => {
