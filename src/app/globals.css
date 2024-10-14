@@ -641,3 +641,7 @@ gap: 10px;
     max-height:673px !important;
   }
 }
+.pdf-background{
+  background: rgb(230,230,230);
+background: linear-gradient(145deg, rgba(230,230,230,1) 0%, rgba(227,227,227,1) 35%, rgba(211,211,211,1) 54%, rgba(223,223,223,1) 100%);
+}

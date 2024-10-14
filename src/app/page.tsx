@@ -8,6 +8,7 @@ import Offer from "components/widgets/Offer/Offer";
 import PreFooter from "components/Layout/Footer/PreFooter";
 import HomeAccordian from "components/widgets/HomeAccordian";
 import { offers } from "data/sideMenuData";
+import PDF from "components/PDF/PDF";
 export default function Home() {
   return (
     <>
@@ -22,6 +23,7 @@ export default function Home() {
       <PreFooter />
       <InteriorVideo />
       <SearchProduct />
+      <PDF/>
       <HomeFeature />
       <Offer Offers={offers} />
     </>
