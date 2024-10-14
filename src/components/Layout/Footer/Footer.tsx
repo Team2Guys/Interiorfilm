@@ -74,6 +74,9 @@ const Footer: React.FC = () => {
       setLoading(false);
     }
   };
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
 
   return (
     <>
@@ -104,6 +107,9 @@ const Footer: React.FC = () => {
                 className="bg-white border border-r-0  h-full rounded-none  px-4 outline-none w-4/6 md:w-5/6 text-black"
                 type="email"
                 placeholder="Enter Email Address"
+                value={email}
+                onChange={handleEmailChange}
+                required
               />
               <Button className="text-sm px-5 h-full" title={loading ? "SUBSCRIBING..." : "SUBSCRIBE"} disabled ={loading}  />
           
