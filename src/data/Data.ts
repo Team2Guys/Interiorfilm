@@ -1,6 +1,6 @@
 
 import * as Yup from 'yup';
-import { Product, Category, FormValues, ITabbyList, ITabbyPayList, ITamaraList } from 'types/interfaces'
+import PRODUCTS_TYPES, { Product, Category, FormValues, ITabbyList, ITabbyPayList, ITamaraList } from 'types/interfaces'
 import { PrivacyPolicyItem } from 'types/types';
 import masterCard from './../../public/images/payment-icons/Mastercard-Logo.png'
 import viseCard from './../../public/images/payment-icons/visacard-logo.png'
@@ -642,4 +642,13 @@ export const specificImageIndexByCode: any = {
   KS8002: 2,
   KS7701: 2,
 
+};
+
+export const sortProductsByCode = (products: PRODUCTS_TYPES[]): PRODUCTS_TYPES[] => {
+  return products.sort((a, b) => {
+    return a.code.localeCompare(b.code, undefined, {
+      numeric: true,
+      sensitivity: 'base',
+    });
+  });
 };
