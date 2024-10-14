@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
             />
           </div>
 
-          <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start gap-2 md:justify-end w-full px-3 md:w-9/12 text-white mt-4 md:mt-0">
+          <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start gap-4 md:justify-end w-full px-3 md:w-9/12 text-white mt-4 md:mt-0">
             <SlEnvolopeLetter
               className="text-primary ml-4 md:ml-12 sm:ml-0"
               size={35}
@@ -78,7 +78,7 @@ const Footer: React.FC = () => {
             <p className="lg:text-base text-sm capitalize text-white">
               SUBSCRIBE TO OUR NEWSLETTER.
             </p>
-            <div className=" flex items-center justify-center mt-5 md:mt-0 rounded-none h-13 lg:w-100">
+            <div className=" flex items-center justify-center mt-5 md:mt-0 rounded-none h-13 lg:w-125">
               <input
                 className="bg-white border border-r-0  h-full rounded-none  px-4 outline-none w-4/6 md:w-5/6 text-black"
                 type="email"
