@@ -295,7 +295,7 @@ export const return__refund: PrivacyPolicyItem[] = [
     title: '',
     text: 'Can I return my Interiorfilm.ae product if I change my mind?',
     listItems: [
-      'Yes, you may return any item within 14 days of receiving your order from us, providing the item is unopened, unused and with all original packaging intact.',
+      'Yes, you may return any item within 7 days of receiving your order from us, providing the item is unopened, unused and with all original packaging intact.',
       'To initiate a return, please send an email to customer service at cs@interiorfilm.ae, explaining clearly why you would like to return the item. Please also ensure your order number is included.',
       'Our team will get back to you within 24hrs and guide you through the return process and provide you with a return authorization number (RAN). Returns cannot be accepted without the RAN.',
       'Once in receipt of your return, if deemed acceptable, we will issue the refund right away. The time for the refund to reflect in your account again varies from card issuer to card issuer, but from our side, it will be executed within 24 hours of an approved return.',

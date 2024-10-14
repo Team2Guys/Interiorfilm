@@ -120,7 +120,7 @@ const CategorySlider: React.FC = () => {
         className="mySwiper custom"
       >
         {
-          categories.map((category) => (
+          categories && categories.map((category) => (
             <SwiperSlide key={category._id}>
               <CategoryCard
                 name={category.name}
