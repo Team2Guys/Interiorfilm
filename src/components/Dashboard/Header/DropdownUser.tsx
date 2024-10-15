@@ -60,10 +60,10 @@ const DropdownUser = () => {
       <Link
         ref={trigger}
         onClick={() => setDropdownOpen(!dropdownOpen)}
-        className="flex items-center gap-4 text-black dark:text-white"
+        className="flex items-end xsm:items-center xsm:gap-4 text-black dark:text-white flex-wrap xsm:flex-nowrap flex-col-reverse xsm:flex-row"
         href="#"
       >
-        <span className="hidden text-right lg:block">
+        <span className=" text-right block">
           <span className="block text-sm font-medium text-black dark:text-white">
             {loggedInUser ? loggedInUser.fullname : null}
           </span>
