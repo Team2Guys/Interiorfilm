@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Image from "next/image";
 import { Modal, Rate, Spin, message } from "antd";
 import { LuShoppingCart } from "react-icons/lu";
@@ -49,13 +49,13 @@ const Card: React.FC<CardProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
 
-  
+
   const handleProductClick = (product: PRODUCTS_TYPES) => {
-    setIsLoading(true); 
+    setIsLoading(true);
     setSelectedProduct(product);
     setIsModalOpen(true);
     setTimeout(() => {
-      setIsLoading(false); 
+      setIsLoading(false);
     }, 100);
   };
 
@@ -286,7 +286,7 @@ const Card: React.FC<CardProps> = ({
           onClick={() => router.push(`/product/${generateSlug(product.name)}`)}
         >
           <div className="text-center ">
-            <div className="absolute bottom-32 hidden   z-20 w-full md:flex gap-5 justify-center opacity-0 group-hover:opacity-100 transition ease-in-out duration-400">
+            <div className="absolute bottom-32 hidden mb-5  z-20 w-full md:flex gap-5 justify-center opacity-0 group-hover:opacity-100 transition ease-in-out duration-400">
               <button
                 className="bg-white w-[90px] h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-11 z-10  py-1"
                 onClick={(e) => {
@@ -309,28 +309,41 @@ const Card: React.FC<CardProps> = ({
               </button>
             </div>
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
-              <Image
-                className="bg-contain  w-full "
-                width={500}
-                height={500}
-                src={product.posterImageUrl.imageUrl}
-                alt="Image"
-              />
+              <div className='relative'>
+                <Image
+                  className="bg-contain  w-full "
+                  width={500}
+                  height={500}
+                  src={product.posterImageUrl.imageUrl}
+                  alt="Image"
+                />
+                <p className="absolute top-0 left-0 text-sm px-1 text-center text-black bg-[#fb701d]">
+                  {product.totalStockQuantity === 0 && (
+                    'Limited Stock'
+                  )}
+                </p>
+              </div>
             )}
           </div>
         </div>
-          <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
-            <h1 className="lg:text-lg text-md text-center text-black font-bold ">
-              {product.name} 
-            </h1>
-            <h1 className="lg:text-lg text-md text-center text-dark  font-semibold">
-              {product.code}
-            </h1>
-            <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
+        <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
+          <h1 className="lg:text-lg text-md text-center text-black ">
+            {product.name}
+          </h1>
+          <h1 className="lg:text-lg text-md text-center text-dark ">
+            {product.code}
+          </h1>
+          <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
 
-              <p className="text-black font-bold text-18 flex gap-1">
-                AED <span className={` text-20 ${product.discountPrice ? "text-red" : "text-black"}`}>{product.salePrice}</span>
-              </p>
+            <p className="lg:text-lg text-md text-center text-[#fb701d]">
+              {product.totalStockQuantity > 0 && (
+                'In Stock'
+              )}
+            </p>
+
+            <p className="text-black font-bold text-18 flex gap-1">
+              AED <span className={` text-20 ${product.discountPrice ? "text-red" : "text-black"}`}>{product.salePrice}</span>
+            </p>
 
 
             {product.discountPrice > 0 && (
@@ -354,14 +367,14 @@ const Card: React.FC<CardProps> = ({
           )}
         </div>
 
-        
+
       </div>
     );
   };
 
   return (
     <>
-    <Modal
+      <Modal
         title={<h1 className="lg:text-xl text-sm text-dark font-bold">Code: <span>{selectedProduct?.name}</span></h1>}
         open={isModalOpen}
         width={700}
