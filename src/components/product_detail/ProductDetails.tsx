@@ -205,7 +205,7 @@ export default function ProductDetails({
       <div className="flex flex-wrap lg:flex-nowrap gap-4  mt-2 p-2 ">
         <div className={`w-full lg:w-8/12 xl:w-7/12 ${firstFlex} `}>
           <Thumbnail
-            detail={productDetail.modelDetails}
+            // detail={productDetail.modelDetails}
             product={productDetail}
             thumbs={productDetail.imageUrl}
           />

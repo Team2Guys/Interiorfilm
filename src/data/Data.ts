@@ -545,6 +545,7 @@ export const navarlink = [
   { ref: "skin-touch-series", title: "Skin Touch Series" },
   { ref: "symphony-series", title: "Symphony Series" },
   { ref: "leather-series", title: "Leather Series" },
+  { ref: "Accessories", title: "Accessories Series" },
   { ref: "about", title: "About Us" },
   { ref: "contact", title: "Contact Us" },
   { title: "FAQs", ref: "frequently-asked-questions" },
@@ -643,3 +644,4 @@ export const specificImageIndexByCode: any = {
   KS7701: 2,
 
 };
+

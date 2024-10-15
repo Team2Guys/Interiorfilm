@@ -503,7 +503,7 @@ export const AccordionsArray: ACCORDINTYPES[] = [
     },
     {
       icon: (
-        <Image width={100} height={100} src={'/images/icon/exclusive.png'} alt="image"/>
+        <Image className="rotate-45" width={50} height={50} src={'/images/icon/exclusive.png'} alt="image"/>
       ),
       title: "Exclusive Collection",
       detail:

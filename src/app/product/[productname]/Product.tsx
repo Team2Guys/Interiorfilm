@@ -97,7 +97,9 @@ const Product = ({ productname }:{ productname: string  }) => {
       {productDetail ? (
         <>
           <div className="block lg:hidden mt-5">
-            <Accordion detail={productDetail.modelDetails} />
+            <Accordion
+            //  detail={productDetail.modelDetails}
+              />
             <Collapse title="Customer Reviews">
               <Review
                 reviews={reviews}
