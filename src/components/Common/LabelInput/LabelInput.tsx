@@ -18,7 +18,7 @@ const LabelInput:React.FC<inputprops> = ({label,placeholder,type,id,name,value,o
   <label className="block uppercase tracking-wide text-dark text-sm font-bold mb-2">
     {label}
   </label>
-  <input className="appearance-none block w-full bg-gray-200 text-dark border border-gray mt-4 0 rounded py-5 px-5 leading-tight focus:outline-none focus:bg-white focus:border-dark outline-dark" 
+  <input className="appearance-none block w-full bg-gray-200 text-dark border border-gray mt-2 0 rounded py-5 px-5 leading-tight focus:outline-none focus:bg-white focus:border-dark outline-dark" 
   id={id} 
   type={type}
    placeholder={placeholder}

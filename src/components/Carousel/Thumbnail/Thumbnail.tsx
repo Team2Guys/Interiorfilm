@@ -138,7 +138,9 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
       </div>
 
       <div className="mt-13 hidden md:block">
-        <Accordion detail={detail} />
+        <Accordion 
+        // detail={detail}
+         />
         <hr className="h-1 border-stone-200" />
         <Collapse title="Customer Reviews">
           <Review
