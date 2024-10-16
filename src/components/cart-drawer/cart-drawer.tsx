@@ -113,7 +113,8 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
       const count = counts[index] || item.count;
       return acc + price * length * count;
     }, 0);
-    setSubtotal(sub);
+    const sub2 = items.reduce((acc: number, item: any) => { return acc + item.totalPrice; }, 0);
+    setSubtotal(sub2);
   };
 
   const removeItem = (index: number) => {
