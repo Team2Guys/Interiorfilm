@@ -273,6 +273,9 @@ const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
 const selectedProductImages = specificProductImages.length
   ? specificProductImages
   : getRandomProducts(filteredProductsByCategory);
+
+
+  
   return (
     <>
       <Overlay
