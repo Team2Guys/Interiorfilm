@@ -327,15 +327,15 @@ const Card: React.FC<CardProps> = ({
           </div>
         </div>
         <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
-          <h1 className="lg:text-lg text-md text-center text-black ">
+          <h1 className="lg:text-lg text-sm text-center text-black ">
             {product.name}
           </h1>
-          <h1 className="lg:text-lg text-md text-center text-dark ">
+          <h1 className="lg:text-lg text-sm text-center text-dark ">
             {product.code}
           </h1>
           <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
 
-            <p className="lg:text-lg text-md text-center text-[#fb701d]">
+            <p className="lg:text-lg text-12 text-center text-[#fb701d]">
               {product.totalStockQuantity > 0 && (
                 'In Stock'
               )}
