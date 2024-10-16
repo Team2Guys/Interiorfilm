@@ -305,7 +305,7 @@ const Card: React.FC<CardProps> = ({
                   setProductDetailModel(true);
                 }}
               >
-                Quick View{" "}
+                Quick View
               </button>
             </div>
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
