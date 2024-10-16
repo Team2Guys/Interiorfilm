@@ -1,6 +1,6 @@
 
 import * as Yup from 'yup';
-import { Product, Category, FormValues, ITabbyList, ITabbyPayList, ITamaraList } from 'types/interfaces'
+import PRODUCTS_TYPES, { Product, Category, FormValues, ITabbyList, ITabbyPayList, ITamaraList } from 'types/interfaces'
 import { PrivacyPolicyItem } from 'types/types';
 import masterCard from './../../public/images/payment-icons/Mastercard-Logo.png'
 import viseCard from './../../public/images/payment-icons/visacard-logo.png'
@@ -295,7 +295,7 @@ export const return__refund: PrivacyPolicyItem[] = [
     title: '',
     text: 'Can I return my Interiorfilm.ae product if I change my mind?',
     listItems: [
-      'Yes, you may return any item within 14 days of receiving your order from us, providing the item is unopened, unused and with all original packaging intact.',
+      'Yes, you may return any item within 7 days of receiving your order from us, providing the item is unopened, unused and with all original packaging intact.',
       'To initiate a return, please send an email to customer service at cs@interiorfilm.ae, explaining clearly why you would like to return the item. Please also ensure your order number is included.',
       'Our team will get back to you within 24hrs and guide you through the return process and provide you with a return authorization number (RAN). Returns cannot be accepted without the RAN.',
       'Once in receipt of your return, if deemed acceptable, we will issue the refund right away. The time for the refund to reflect in your account again varies from card issuer to card issuer, but from our side, it will be executed within 24 hours of an approved return.',
@@ -536,15 +536,16 @@ export const EnvironmentData: { title: string, icon: StaticImageData }[] = [
 
 export const navarlink = [
   { ref: "", title: "Home" },
-  { ref: "wood-grain-series", title: "Wood Grain Series" },
-  { ref: "plain-series", title: "Plain Series" },
-  { ref: "cement-grey-series", title: "Cement Grey Series" },
-  { ref: "marble-series", title: "Marble Series" },
   { ref: "metal-series", title: "Metal Series" },
-  { ref: "fabric-series", title: "Fabric Series" },
-  { ref: "skin-touch-series", title: "Skin Touch Series" },
   { ref: "symphony-series", title: "Symphony Series" },
+  { ref: "skin-touch-series", title: "Skin Touch Series" },
+  { ref: "plain-series", title: "Plain Series" },
+  { ref: "marble-series", title: "Marble Series" },
   { ref: "leather-series", title: "Leather Series" },
+  { ref: "cement-grey-series", title: "Cement Grey Series" },
+  { ref: "fabric-series", title: "Fabric Series" },
+  { ref: "wood-grain-series", title: "Wood Grain Series" },
+  { ref: "Accessories", title: "Accessories Series" },
   { ref: "about", title: "About Us" },
   { ref: "contact", title: "Contact Us" },
   { title: "FAQs", ref: "frequently-asked-questions" },
@@ -642,4 +643,13 @@ export const specificImageIndexByCode: any = {
   KS8002: 2,
   KS7701: 2,
 
+};
+
+export const sortProductsByCode = (products: PRODUCTS_TYPES[]): PRODUCTS_TYPES[] => {
+  return products.sort((a, b) => {
+    return a.code.localeCompare(b.code, undefined, {
+      numeric: true,
+      sensitivity: 'base',
+    });
+  });
 };

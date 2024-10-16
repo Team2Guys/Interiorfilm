@@ -2,7 +2,7 @@
 import axios from "axios";
 import ProductSlider from "components/Carousel/ProductSlider/ProductSlider";
 import Container from "components/Layout/Container/Container";
-import { specificProductCodesByCategory } from "data/Data";
+import { sortProductsByCode, specificProductCodesByCategory } from "data/Data";
 import React, { useEffect, useState } from "react";
 import PRODUCTS_TYPES from "types/interfaces";
 
@@ -29,7 +29,8 @@ const HomeFeature = () => {
   }, []);
 
   const getProductsByCodes = (codes: string[]) => {
-    return allProducts.filter(product => codes.includes(product.code));
+    const products = allProducts.filter(product => codes.includes(product.code));
+    return sortProductsByCode(products)
   };
 
   const featureProducts = Object.values(specificProductCodesByCategory).flat().sort();
