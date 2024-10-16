@@ -148,7 +148,7 @@ const SideMenu: React.FC = () => {
     const fetchedProducts=await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`)
     console.log("fetch product")
     console.log(fetchedProducts)
-     setSelectedProducts(fetchedProducts.data.products);
+     setSelectedProducts((fetchedProducts.data.products).slice(0, 3));
      setProducts(fetchedProducts.data.products);
    }
    fetch();
@@ -273,15 +273,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         />
       </div>
       <div className="flex-grow">
-        <h3 className="text-[12px] font-[#111111]">{product.name}</h3>
+        <h3 className="text-[12px] font-[#111111] font-semibold">{product.name}</h3>
         <p className="text-xs">{product.code}</p>
-        <div className="flex items-center gap-1">
+        {/* <div className="flex items-center gap-1">
           <div className="flex text-yellow-500 text-xs">
             <FaStar className='text-[10px]' />
             <FaStar className='text-[10px]' />
             <FaStar className='text-[10px]' />
           </div>
-        </div>
+        </div> */}
         <div className="text-[14.92px] font-bold">AED: {product.discountPrice ? product.discountPrice : product.salePrice }</div>
       </div>
     </div>

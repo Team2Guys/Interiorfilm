@@ -285,10 +285,10 @@ const Card: React.FC<CardProps> = ({
           className="cursor-pointer  transition-all m-1 "
           onClick={() => router.push(`/product/${generateSlug(product.name)}`)}
         >
-          <div className="text-center ">
-            <div className="absolute  bottom-33 hidden mb-5  z-20 w-full md:flex gap-5 justify-center opacity-0 group-hover:opacity-100 transition ease-in-out duration-400">
+          <div className="text-center">
+            <div className="absolute bottom-33 hidden mb-5  z-20 w-full md:flex gap-5 justify-center opacity-0 group-hover:opacity-100 transition ease-in-out duration-400">
               <button
-                className="bg-white w-[90px] h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-11 z-10  py-1"
+                className="bg-white w-[90px] h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-11   py-1"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleAddToCart(product);
@@ -298,7 +298,7 @@ const Card: React.FC<CardProps> = ({
                 Order Now
               </button>
               <button
-                className="bg-black z-10 w-[90px] l:h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-11 text-white  py-1"
+                className="bg-black  w-[90px] l:h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-11 text-white  py-1"
                 onClick={(e) => {
                   e.stopPropagation();
                   setproductDetails(product);
