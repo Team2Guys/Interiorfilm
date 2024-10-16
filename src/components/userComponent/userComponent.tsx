@@ -10,7 +10,6 @@ import { IoArrowBackSharp } from "react-icons/io5";
 import { usePathname, useRouter } from "next/navigation";
 import Container from "components/Layout/Container/Container";
 import { Select } from "antd";
-
 const { Option } = Select;
 
 export default function UserComponent({
@@ -29,14 +28,9 @@ export default function UserComponent({
   setadminType,
   adminType
 }: USRPROPS) {
-
-
-
   const router = useRouter();
   const pathname = usePathname()
-
   let adminFlag = pathname === "/dashboard/Admin-login";
-
   const selecthandleChange = (value: string) => {
     setadminType && setadminType(value)
   };
@@ -87,8 +81,6 @@ export default function UserComponent({
 
                     : null
                 }
-
-
 
                 <div className="inputs_container w-full">
                   <form className="space-y-4" onSubmit={handleSubmit}>

@@ -13,6 +13,7 @@ import card7 from "../../../../public/images/payment-icons/googlepay-logo.png";
 import card5 from "../../../../public/images/payment-icons/tabby-logo.png";
 import card3 from "../../../../public/images/payment-icons/tamara-logo.png";
 import card4 from "../../../../public/images/payment-icons/visacard-logo.png";
+import whitelogo from "../../../../public/images/logowhite.png";
 import Container from "../Container/Container";
 import { SlEnvolopeLetter } from "react-icons/sl";
 import Button from "components/ui/Button/Button";
@@ -123,7 +124,7 @@ const Footer: React.FC = () => {
               <Image
                 width={250}
                 height={250}
-                src="/images/logowhite.png"
+                src={whitelogo}
                 alt="Interior Film"
               />
             </div>
