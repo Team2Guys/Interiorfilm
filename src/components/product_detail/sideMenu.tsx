@@ -148,7 +148,13 @@ const SideMenu: React.FC = () => {
     const fetchedProducts=await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`)
     console.log("fetch product")
     console.log(fetchedProducts)
-     setSelectedProducts((fetchedProducts.data.products).slice(0, 3));
+     // Shuffle the products array to get random products
+     const shuffledProducts = fetchedProducts.data.products.sort(() => 0.5 - Math.random());
+
+     // Select the first 3 products from the shuffled array
+     setSelectedProducts(shuffledProducts.slice(0, 3));
+ 
+     // Set the full products array
      setProducts(fetchedProducts.data.products);
    }
    fetch();
@@ -227,7 +233,7 @@ const SideMenu: React.FC = () => {
           <h2 className="font-semibold text-sm"><span className="font-bold">You May Also Need</span></h2>
         </div>
         <div className="space-y-4">
-          {products.map((product) => (
+        {products.slice(0, 3).map((product) => (
             <div className='relative' key={product._id}>
               <input
                 type="checkbox"

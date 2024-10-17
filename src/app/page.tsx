@@ -21,7 +21,7 @@ export default function Home() {
       <CategorySlider />
       <HomeAccordian />
       <PreFooter />
-      <InteriorVideo />
+      {/* <InteriorVideo /> */}
       <SearchProduct />
       <PDF/>
       <HomeFeature />
