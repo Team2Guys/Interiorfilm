@@ -14,7 +14,7 @@ function Page() {
     };
     return (
         <Container className="mb-5">
-            <Overlay title="faqS" />
+            <Overlay title="Faqs" />
             <div className='flex justify-center my-7'>
                 <div>
                     <h1 className=' font-futura text-center font-semibold text-4xl'>We&apos;re here to help</h1>

@@ -2,18 +2,18 @@
 
 import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
+import ViewNewsletter from "components/Dashboard/Tables/ViewNewsletter";
 import ProtectedRoute from "hooks/AuthHookAdmin";
 import { useEffect, useState } from "react";
 import { product} from "types/interfaces";
-import AdsTable from "components/Dashboard/Tables/AdsTable";
-import AddAds from "components/AddAds/AddAds";
+import FormElements from "components/Dashboard/FormElements";
 
 const Products = () => {
   const [editProduct, setEditProduct] = useState<product | undefined>();
   const [products, setProducts] = useState<any[]>();
 
   const [productloading, setProductloading] = useState<boolean>(false);
-  const [selecteMenu, setselecteMenu] = useState<string>("All Products");
+  const [selecteMenu, setselecteMenu] = useState<string>("Add All Products");
 
   useEffect(() => {
 
@@ -21,7 +21,7 @@ const Products = () => {
       try {
         setProductloading(true);
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
         );
         const Allproducts = await response.json();
         setProducts(Allproducts.products);
@@ -50,28 +50,36 @@ const Products = () => {
     code: editProduct && editProduct.code,
     salePrice: editProduct && editProduct.salePrice,
     totalStockQuantity: editProduct && editProduct.totalStockQuantity,
-
+    hoverImageUrl: editProduct && editProduct.hoverImageUrl,
+    Meta_Title:editProduct && editProduct?.Meta_Title,
+    Meta_Description:editProduct && editProduct?.Meta_Title,
+    URL:editProduct && editProduct?.Meta_Title,
+    Canonical_Tag:editProduct && editProduct?.Meta_Title,
+    Images_Alt_Text:editProduct && editProduct?.Meta_Title,
+    Og_title:editProduct && editProduct?.Meta_Title,
+    Og_Image:editProduct && editProduct?.Meta_Title,
+    OgUrl:editProduct && editProduct?.Meta_Title,
   };  
 
 
-  let productFlag: boolean = selecteMenu === "All Products" ? true : false
+  let productFlag: boolean = selecteMenu === "Add All Products" ? true : false
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName={productFlag ? "Products" : "Adds on Products"} />
+      <Breadcrumb pageName={productFlag ? "Products" : "Add Products"} />
       {
         productFlag ?
 
-          <AdsTable
+          <ViewNewsletter
             Categories={products}
             setProduct={setProducts}
-            setselecteMenu={setselecteMenu}
+            // setselecteMenu={setselecteMenu}
             loading={productloading}
-            setEditProduct={setEditProduct}
+            // setEditProduct={setEditProduct}
           />
           :
 
-          <AddAds setselecteMenu={setselecteMenu} EditInitialValues={editProduct} setEditProduct={setEditProduct}
+          <FormElements setselecteMenu={setselecteMenu} EditInitialValues={editProduct} setEditProduct={setEditProduct}
             EditProductValue={(EditInitialValues &&
               (EditInitialValues.name !== undefined ||
                 EditInitialValues.category !== undefined))

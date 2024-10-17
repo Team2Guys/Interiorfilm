@@ -56,14 +56,14 @@ const Overlay: React.FC<OverlayProps> = ({ title, bodyText }) => {
             })}
           </div> :
 
-          <h1 className={`text-3xl font-medium ${uiFlag ? "text-black" : "text-white"} flex justify-center items-center gap-3 leading-loose uppercase`}>
+          <h1 className={`lg:text-3xl text-xl font-medium ${uiFlag ? "text-black" : "text-white"} flex justify-center items-center gap-3 leading-loose uppercase`}>
 
         
 
               <span className="cursor-pointer">
                 {/* {title.toLowerCase()==="shop"  ?  */}
                 
-                <svg onClick={()=>router.back()} className={`${uiFlag ? "fill-black" : "fill-white"}`} width="55" height="25" viewBox="0 0 55 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg onClick={()=>router.back()} className={`${uiFlag ? "fill-black" : "fill-white"}`} width="40" height="25" viewBox="0 0 55 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M54.6404 14.3224H4.87739L17.3712 1.82617L15.7027 0.157654L0.360352 15.5024L15.7004 30.8424L17.3689 29.1739L4.87739 16.6824H54.6404V14.3224Z" />
               </svg>
                 {/* :
@@ -88,7 +88,7 @@ const Overlay: React.FC<OverlayProps> = ({ title, bodyText }) => {
 {
   title !== "show_details" ?
   
-  <div className="flex justify-center space-x-2 text-slate-400">
+  <div className="flex justify-center space-x-2 text-slate-400 mt-3">
   <Link href="/">
     Home
   </Link>
