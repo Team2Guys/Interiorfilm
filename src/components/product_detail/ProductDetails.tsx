@@ -33,10 +33,11 @@ import tamaraLogo from "./../../../public/images/logo/tamara-transparent.png";
 import tabbyLogo from "./../../../public/images/logo/tabby-transparent.png";
 import { FaRegStar } from "react-icons/fa";
 import { BiMessageDetail } from "react-icons/bi";
-import SideMenu from "./sideMenu";
+import SideMenu, { Product } from "./sideMenu";
 import EnviromentIcons from "./enviroment-icon";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import showToast from "components/Toaster/Toaster";
 interface productDetailsProps {
   productDetail: PRODUCTS_TYPES;
   categoryName?: string;
@@ -53,6 +54,7 @@ export default function ProductDetails({
   const [reviews, setReviews] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [length, setLength] = useState<number>(1);
+  const [adsonProducts,setAdsonProducts]=useState<Product[]>([])
   const router = useRouter();
   const options =
     productDetail && productDetail.totalStockQuantity > 0
@@ -109,6 +111,9 @@ export default function ProductDetails({
   };
 
   const handleAddToCart = (product: any) => {
+    console.log("Adson Products");
+    console.log(adsonProducts)
+   
     const newCartItem = {
       id: product._id,
       name: product.name,
@@ -146,7 +151,52 @@ export default function ProductDetails({
     localStorage.setItem("cart", JSON.stringify(existingCart));
     message.success("Product added to cart successfully!");
     window.dispatchEvent(new Event("cartChanged"));
+    handleAdsonAddToCart()
+    showToast("success",'Product added to cart successfully🎉');
   };
+
+  const handleAdsonAddToCart = () => {
+    adsonProducts.forEach((product) => {
+      const newCartItem = {
+        id: product._id,
+        name: product.name,
+        price: product.salePrice,
+        imageUrl: product.posterImageUrl?.imageUrl,
+        discountPrice: product.discountPrice,
+        totalStockQuantity: product.totalStockQuantity,
+        count: 1,
+        length:product.length,
+        totalPrice: Number((product.discountPrice || product.salePrice)),
+        purchasePrice: product.purchasePrice,
+        // sizes: product.sizes || [], 
+        code: product.code
+      };
+
+      let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const existingItemIndex = existingCart.findIndex(
+        (item: any) => item.id === product._id 
+        // && item.length === length
+      );
+
+      console.log(existingItemIndex, "existingItemIndex")
+      if (existingItemIndex !== -1) {
+        const existingItem = existingCart[existingItemIndex];
+        // existingItem.count += quantity;
+
+        existingItem.count += 0;
+        existingItem.totalPrice = (product.discountPrice || product.salePrice) * existingItem.count * length;
+        existingCart[existingItemIndex] = existingItem;
+      } else {
+        existingCart.push(newCartItem);
+      }
+      localStorage.setItem('cart', JSON.stringify(existingCart));
+    });
+
+    // console.log('Products added to cart:', selectedProducts);
+    // showToast("success",'Products added to cart successfully!');
+    window.dispatchEvent(new Event('cartChanged'));
+  };
+
 
   const handleAddToWishlist = (product: any) => {
     const newWishlistItem = {
@@ -580,7 +630,7 @@ export default function ProductDetails({
             </div>
             {!isQuickView && (
               <div className="w-full xl:w-4/12  ">
-                <SideMenu />
+                <SideMenu  setAdsonProducts={setAdsonProducts}/>
               </div>
             )}
           </div>
