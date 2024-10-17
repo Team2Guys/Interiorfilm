@@ -151,7 +151,7 @@ export default function ProductDetails({
     localStorage.setItem("cart", JSON.stringify(existingCart));
     message.success("Product added to cart successfully!");
     window.dispatchEvent(new Event("cartChanged"));
-    handleAdsonAddToCart()
+    // handleAdsonAddToCart()
     showToast("success",'Product added to cart successfully🎉');
   };
 
