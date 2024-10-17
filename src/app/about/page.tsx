@@ -18,7 +18,7 @@ const About = () => {
   return (
     <>
     <Overlay title='About'/>
-    <Container className='mt-20 mb-20'>
+    <Container className='lg:my-20 my-14 '>
         <div className='grid grid-cols-1 lg:grid-cols-2 mt-2 justify-items-center sm:gap-1 md:gap-10'>
             <div className='relative'>
              <Image className='w-full bg-primary rounded-lg p-2 lg:p-0 lg:pr-4 lg:pt-4' width={600} height={600} src={about} alt='about'/>

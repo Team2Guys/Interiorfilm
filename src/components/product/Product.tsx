@@ -309,7 +309,7 @@ const selectedProductImages = specificProductImages.length
       <Container className="mt-20 md:overflow-hidden">
         <div className="flex flex-wrap lg:flex-nowrap justify-between  gap-3">
           <div>
-            <p className="uppercase text-[24px] text-lightdark">
+            <p className="uppercase lg:text-[24px] text-16 text-lightdark">
               Home
               <span className="capitalize text-black">/{activeLink?.name}</span>
             </p>
@@ -337,7 +337,7 @@ const selectedProductImages = specificProductImages.length
               >
                 <div ref={trigger} className="w-full">
                   <div
-                    className="w-full px-3 flex justify-between items-center text-[#3A393C] cursor-pointer"
+                    className="w-full px-3 flex justify-between items-center text-[#3A393C] cursor-pointer lg:text-16 text-12"
                     onClick={(e) => {
                       e.stopPropagation();
                       setShowColors(!showColors);
@@ -361,7 +361,7 @@ const selectedProductImages = specificProductImages.length
                   {showColors ? (
                     <div
                       ref={dropdown}
-                      className="border shadow-sm flex flex-wrap gap-3 m-auto z-30 p-3 right-0 top-10 border-gray rounded-sm absolute w-full bg-white"
+                      className="border shadow-sm flex flex-wrap gap-3 m-auto z-30 p-3 right-0 top-10 border-gray rounded-sm absolute w-full bg-white lg:text-16 text-12"
                       id="ColorDropdown"
                     >
                       {!(availableColors.length > 0)
