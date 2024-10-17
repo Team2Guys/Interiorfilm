@@ -45,7 +45,6 @@ const SideMenu: React.FC<SideMenuProps> = ({ setAdsonProducts }) => {
     const fetchedProducts=await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`)
     console.log("fetch product")
     console.log(fetchedProducts)
-
     const defaultProducts = fetchedProducts.data.products.slice(0, 3);
     setSelectedProducts(defaultProducts);
     setProducts(defaultProducts);
@@ -153,12 +152,12 @@ const SideMenu: React.FC<SideMenuProps> = ({ setAdsonProducts }) => {
             <span>Total Price:</span>
             <span>AED {totalPrice.toFixed(2)}</span>
           </div>
-          {/* <button
+          <button
             className="mt-4 w-full bg-black text-white py-2 rounded-sm flex items-center justify-center cursor-pointer"
             onClick={handleAddToCart}
           >
             🛒 Add To Cart
-          </button> */}
+          </button>
         </div>
       </div>
     </div>
