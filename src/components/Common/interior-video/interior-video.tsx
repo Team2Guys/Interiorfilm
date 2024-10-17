@@ -29,10 +29,10 @@ const InteriorVideo: React.FC = () => {
           ALL collection
         </p> */}
       </div>
-      <div className="relative w-full h-[483px] mt-5">
+      <div className="relative w-full h-[490px] mt-5">
         <video
           ref={videoRef}
-          className="w-full h-full object-cover"
+          className="w-full h-[490px] object-cover"
           loop
           muted
           playsInline
