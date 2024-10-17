@@ -136,7 +136,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ setAdsonProducts }) => {
           <h2 className="font-semibold text-sm"><span className="font-bold">You May Also Need</span></h2>
         </div>
         <div className="space-y-4">
-          {products.map((product) => (
+        {products.slice(0, 3).map((product) => (
             <div className='relative' key={product._id}>
               <input
                 type="checkbox"
