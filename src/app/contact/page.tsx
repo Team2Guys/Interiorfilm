@@ -163,11 +163,13 @@ const Contact = () => {
                 onChange={formik.handleChange}
                 value={formik.values.user_name}
               />
-              {formik.errors.user_name && formik.touched.user_name && (
-                <div className="text-primary pb-4">
+             <div className="mb-10">
+             {formik.errors.user_name && formik.touched.user_name && (
+                <div className="text-primary  text-12 px-3">
                   {formik.errors.user_name}
                 </div>
               )}
+             </div>
 
           
             <LabelInput
@@ -181,12 +183,13 @@ const Contact = () => {
                 inputMode="numeric"
                 maxLength={15}
               />
-
+<div className="mb-10">
               {formik.errors.user_phone && formik.touched.user_phone && (
-                <div className="text-primary pb-4">
+                <div className="text-primary  text-12 px-3">
                   {formik.errors.user_phone}
                 </div>
               )}
+              </div>
 
 
 <LabelInput
@@ -198,12 +201,13 @@ const Contact = () => {
                 onChange={formik.handleChange}
                 value={formik.values.user_email}
               />
+              <div className="mb-10">
               {formik.errors.user_email && formik.touched.user_email && (
-                <div className="text-primary pb-4">
+                <div className="text-primary  text-12 px-3">
                   {formik.errors.user_email}
                 </div>
               )}
-
+            </div>
               <div className="w-full px-3 mb-10">
                 <label className="block uppercase tracking-wide text-dark text-sm font-bold mb-2">
                   Comment
@@ -215,12 +219,13 @@ const Contact = () => {
                   className="appearance-none block w-full bg-gray-200 text-dark border border-gray mt-4 border-gray-200 rounded py-5 px-5 leading-tight focus:outline-none focus:bg-white focus:border-dark outline-dark"
                   placeholder={"Enter Comment"}
                 />
+                <div className="mb-10">
                 {formik.errors.comment && formik.touched.comment && (
-                  <div className="text-primary pt-4">
+                  <div className="text-primary text-12 ">
                     {formik.errors.comment}
                   </div>
                 )}
-
+</div>
                 <Button
                   className="text-center w-full bg-primary py-3 text-white mt-5"
                   type="submit"

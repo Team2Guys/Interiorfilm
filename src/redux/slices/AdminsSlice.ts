@@ -18,7 +18,6 @@ const usersSlice = createSlice({
       state.loggedInUser = action.payload;
     },
   },
-
 });
 
 export const { loggedInAdminAction} = usersSlice.actions;
