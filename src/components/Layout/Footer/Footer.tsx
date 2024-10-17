@@ -142,7 +142,7 @@ const Footer: React.FC = () => {
                     className="hover:text-primary link-footer"
                   >
                     {React.createElement(require("react-icons/fa")[link.icon], {
-                      className: "text-lg hover:text-primary link-footer",
+                      className: "text-xl hover:text-primary link-footer",
                     })}
                   </Link>
                 ))}

@@ -14,7 +14,7 @@ interface inputprops{
   }
 const LabelInput:React.FC<inputprops> = ({label,placeholder,type,id,name,value,onChange,pattern,inputMode,maxLength}) => {
   return (
-  <div className="w-full px-3 mb-10">
+  <div className="w-full px-3 ">
   <label className="block uppercase tracking-wide text-dark text-sm font-bold mb-2">
     {label}
   </label>
