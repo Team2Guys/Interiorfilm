@@ -43,6 +43,10 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProductV
   const [Categories, setCategories] = useState<any[]>();
   const [VariationOption, setVariationOption] = useState<string>("withoutVariation");
 
+  if (EditInitialValues) {
+    console.log("Aylo.....")
+    console.log(EditInitialValues)
+  }
   const handleOptionChange = (e: any) => {
     console.log(e);
     setVariationOption(e.target.value);
@@ -109,11 +113,18 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProductV
       let updateFlag = EditProductValue && EditInitialValues ? true : false;
 
       let addProductUrl = updateFlag
-        ? `/api/addsOn_product/updateProduct/${EditInitialValues._id} `
-        : null;
-      let url = `${process.env.NEXT_PUBLIC_BASE_URL}${updateFlag ? addProductUrl : "/api/addsOn_product/addProduct"
-        }`;
-      const response = await axios.post(url, newValue,{headers:headers});
+        ? `/api/addsOn_product/updateProduct/${EditInitialValues._id}`
+        : "/api/addsOn_product/addProduct";
+      
+      let url = `${process.env.NEXT_PUBLIC_BASE_URL}${addProductUrl}`;
+      
+      // Use PUT for updating and POST for adding a new product
+      const response = await axios({
+        method: updateFlag ? 'put' : 'post',
+        url: url,
+        data: newValue,
+        headers: headers,
+      });
       console.log(response, "response");
       Toaster("success", updateFlag ? "Product has been sucessufully Updated !" : "Product has been sucessufully Created !");
       setProductInitialValue(AddproductsinitialValues);
@@ -534,63 +545,65 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProductV
                       </FieldArray>
                     </div>
                   </div>
-
-                  <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
-                    <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                      <h3 className="font-medium text-black dark:text-white">
-                        Colors
-                      </h3>
-                    </div>
-                    <div className="flex flex-col gap-4 p-4">
-                      <FieldArray name="colors">
-                        {({ push, remove }) => (
-                          <div className="flex flex-col gap-2">
-                            {formik.values.colors.map(
-                              (spec: any, index: any) => (
-                                <div key={index} className="flex items-center">
-                                  <input
-                                    type="text"
-                                    name={`colors[${index}].colorName`}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={
-                                      formik.values.colors[index]
-                                        .colorName
-                                    }
-                                    placeholder="Add color Code"
-                                    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary 
-                                     ${formik.touched.colors &&
-                                        (formik.touched.colors && formik.touched.colors as FormikTouched<FormValues["colors"]>)[index]?.colorName &&
-                                        (formik.errors.color && (formik.errors.colors as FormikErrors<FormValues["colors"]>)[index]?.colorName)
-                                        ? "border-red-500"
-                                        : ""
+                  {!EditInitialValues && (
+                    <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
+                      <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
+                        <h3 className="font-medium text-black dark:text-white">
+                          Colors
+                        </h3>
+                      </div>
+                      <div className="flex flex-col gap-4 p-4">
+                        <FieldArray name="colors">
+                          {({ push, remove }) => (
+                            <div className="flex flex-col gap-2">
+                              {formik.values.colors.map(
+                                (spec: any, index: any) => (
+                                  <div key={index} className="flex items-center">
+                                    <input
+                                      type="text"
+                                      name={`colors[${index}].colorName`}
+                                      onChange={formik.handleChange}
+                                      onBlur={formik.handleBlur}
+                                      value={
+                                        formik.values.colors[index]
+                                          .colorName
                                       }
+                                      placeholder="Add color Code"
+                                      className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary 
+                                     ${formik.touched.colors &&
+                                          (formik.touched.colors && formik.touched.colors as FormikTouched<FormValues["colors"]>)[index]?.colorName &&
+                                          (formik.errors.color && (formik.errors.colors as FormikErrors<FormValues["colors"]>)[index]?.colorName)
+                                          ? "border-red-500"
+                                          : ""
+                                        }
                                       
                                       `}
-                                  />
-                                  <button
-                                    type="button"
-                                    onClick={() => remove(index)}
-                                    className="ml-2 text-red"
-                                  >
-                                    <RxCross2 className="text-red" size={25} />
-                                  </button>
-                                </div>
-                              )
-                            )}
-                            <button
+                                    />
+                                    <button
+                                      type="button"
+                                      onClick={() => remove(index)}
+                                      className="ml-2 text-red"
+                                    >
+                                      <RxCross2 className="text-red" size={25} />
+                                    </button>
+                                  </div>
+                                )
+                              )}
+                              <button
 
-                              type="button"
-                              onClick={() => push({ colorName: "" })}
-                              className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
-                            >
-                              Add Colors
-                            </button>
-                          </div>
-                        )}
-                      </FieldArray>
+                                type="button"
+                                onClick={() => push({ colorName: "" })}
+                                className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
+                              >
+                                Add Colors
+                              </button>
+                            </div>
+                          )}
+                        </FieldArray>
+                      </div>
                     </div>
-                  </div>
+                  )}
+
 
 
 
@@ -708,7 +721,7 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProductV
                     </div>
                   </div> */}
 
-             
+
 
                   <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
