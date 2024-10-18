@@ -20,7 +20,12 @@ import Button from "components/ui/Button/Button";
 import axios from "axios";
 import { CategoriesType } from "types/interfaces";
 import PreFooter from "./PreFooter";
-import { FooterPaymentMethods, generateSlug, PaymentMethods } from "data/Data";
+import {
+  footerlink,
+  FooterPaymentMethods,
+  generateSlug,
+  PaymentMethods,
+} from "data/Data";
 import { usePathname, useRouter } from "next/navigation";
 import PaymentMethod from "../PaymentMethod";
 import showToast from "components/Toaster/Toaster";
@@ -30,7 +35,7 @@ const Footer: React.FC = () => {
   const [isCustomerCareOpen, setIsCustomerCareOpen] = useState(true);
   const [isPagesOpen, setIsPagesOpen] = useState(true);
   const [loading, setLoading] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
   const [category, setCategory] = useState<CategoriesType[]>([]);
   const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
   const toggleCustomerCare = () => setIsCustomerCareOpen(!isCustomerCareOpen);
@@ -61,16 +66,18 @@ const Footer: React.FC = () => {
   const handleEmailSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
-    
 
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/promotion/Add_email`, { email });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/promotion/Add_email`,
+        { email }
+      );
       console.log(response);
-      showToast('success','Email subscribed successfully🎉');
-      setEmail(''); 
+      showToast("success", "Email subscribed successfully🎉");
+      setEmail("");
     } catch (err) {
-      showToast('error','Failed to subscribe. Please try again😢');
-      console.error('Error subscribing email:', err);
+      showToast("error", "Failed to subscribe. Please try again😢");
+      console.error("Error subscribing email:", err);
     } finally {
       setLoading(false);
     }
@@ -103,7 +110,10 @@ const Footer: React.FC = () => {
             <p className="lg:text-base text-sm capitalize text-white">
               SUBSCRIBE TO OUR NEWSLETTER.
             </p>
-            <form onSubmit={handleEmailSubmit} className=" flex items-center justify-center mt-5 md:mt-0 rounded-none h-13 lg:w-125">
+            <form
+              onSubmit={handleEmailSubmit}
+              className=" flex items-center justify-center mt-5 md:mt-0 rounded-none h-13 lg:w-125"
+            >
               <input
                 className="bg-white border border-r-0  h-full rounded-none  px-4 outline-none w-4/6 md:w-5/6 text-black"
                 type="email"
@@ -112,8 +122,11 @@ const Footer: React.FC = () => {
                 onChange={handleEmailChange}
                 required
               />
-              <Button className="text-sm px-5 h-full" title={loading ? "SUBSCRIBING..." : "SUBSCRIBE"} disabled ={loading}  />
-          
+              <Button
+                className="text-sm px-5 h-full"
+                title={loading ? "SUBSCRIBING..." : "SUBSCRIBE"}
+                disabled={loading}
+              />
             </form>
           </div>
         </div>
@@ -130,9 +143,10 @@ const Footer: React.FC = () => {
             </div>
             <div className="lg:pb-0 pb-3">
               <p className=" text-slate-200 md:text-13 lg:text-base md:font-normal">
-              Our mission is to bring the latest and best architechtural vinyl film wrap at the lowest possible prices
+                Our mission is to bring the latest and best architechtural vinyl
+                film wrap at the lowest possible prices
               </p>
-  
+
               <div className="flex items-center flex-wrap gap-4 py-2 lg:order-2 order-1 text-white dark:text-black">
                 {socialLinks.map((link, index) => (
                   <Link
@@ -151,118 +165,132 @@ const Footer: React.FC = () => {
           </div>
 
           <div className=" lg:pb-0 pb-3 col-span-12 2xsm:col-span-6 xsm:col-span-4 md:col-span-2 ">
-              <h3
-                className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
-                onClick={toggleCategories}
-              >
-                Collections
-                {/* <span className="ml-2 md:hidden ">
+            <h3
+              className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
+              onClick={toggleCategories}
+            >
+              Collections
+              {/* <span className="ml-2 md:hidden ">
                   {isCategoriesOpen ? <FaAngleUp /> : <FaAngleDown />}
                 </span> */}
-              </h3>
-              <div className="flex md:block gap-16">
-                <ul
-                  className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${
-                    isCategoriesOpen ? "max-h-96" : "max-h-0"
-                  } md:max-h-none`}
-                >
-                  {category.map((categoryItem, index) => (
+            </h3>
+            <div className="flex md:block gap-16">
+              <ul
+                className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${
+                  isCategoriesOpen ? "max-h-96" : "max-h-0"
+                } md:max-h-none`}
+              >
+                {footerlink.map((navItem, index) => {
+                  const slug = navItem.title.includes("Series")
+                    ? `/products?category=${navItem.ref}`
+                    : `/${navItem.ref}`;
+                  return (
                     <li key={index}>
-                      <div
-                        onClick={() => handleButtonClick(categoryItem.name)}
+                      <Link
+                        
+                        href={slug}
                         className="hover:text-primary link-footer text-slate-400 cursor-pointer whitespace-nowrap"
                       >
-                        {categoryItem.name.replace("Series", "")}
-                      </div>
+                        {navItem.title.replace("Series", "")}
+                      </Link>
                     </li>
-                  ))}
-                </ul>
-              </div>
+                  );
+                })}
+              </ul>
             </div>
+          </div>
 
-            <div className="lg:pb-0 pb-3 whitespace-nowrap col-span-12 2xsm:col-span-6 xsm:col-span-4 md:col-span-2 ">
-              <h3
-                className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
-                onClick={toggleCustomerCare}
-              >
-                Quick Links
-                {/* <span className="ml-2 md:hidden">
+          <div className="lg:pb-0 pb-3 whitespace-nowrap col-span-12 2xsm:col-span-6 xsm:col-span-4 md:col-span-2 ">
+            <h3
+              className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
+              onClick={toggleCustomerCare}
+            >
+              Quick Links
+              {/* <span className="ml-2 md:hidden">
                   {isCustomerCareOpen ? <FaAngleUp /> : <FaAngleDown />}
                 </span> */}
-              </h3>
-              <ul
-                className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${
-                  isCustomerCareOpen ? "max-h-96" : "max-h-0"
-                } md:max-h-none`}
-              >
-                {customerCare.map((item, index) => (
-                  <li key={index}>
-                    <Link
-                      href={item.href}
-                      className="hover:text-primary link-footer text-slate-400"
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="lg:pb-0 pb-3 whitespace-nowrap col-span-12 2xsm:col-span-12 xsm:col-span-4 md:col-span-2">
-              <h3
-                className="font-semibold mb-4 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
-                onClick={togglePages}
-              >
-                Policies
-                {/* <span className="ml-2 md:hidden">
+            </h3>
+            <ul
+              className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${
+                isCustomerCareOpen ? "max-h-96" : "max-h-0"
+              } md:max-h-none`}
+            >
+              {customerCare.map((item, index) => (
+                <li key={index}>
+                  <Link
+                    href={item.href}
+                    className="hover:text-primary link-footer text-slate-400"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="lg:pb-0 pb-3 whitespace-nowrap col-span-12 2xsm:col-span-12 xsm:col-span-4 md:col-span-2">
+            <h3
+              className="font-semibold mb-4 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
+              onClick={togglePages}
+            >
+              Policies
+              {/* <span className="ml-2 md:hidden">
                   {isPagesOpen ? <FaAngleUp /> : <FaAngleDown />}
                 </span> */}
-              </h3>
-              <ul
-                className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${
-                  isPagesOpen ? "max-h-96" : "max-h-0"
-                } md:max-h-none`}
+            </h3>
+            <ul
+              className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${
+                isPagesOpen ? "max-h-96" : "max-h-0"
+              } md:max-h-none`}
+            >
+              {pages.map((page, index) => (
+                <li key={index}>
+                  <Link
+                    href={`/${page.href}`}
+                    className="hover:text-primary link-footer text-slate-400"
+                  >
+                    {page.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="lg:pb-0 pb-3 col-span-12 sm:col-span-12 md:col-span-3">
+            <p className="lg:text-lg text-sm font-semibold mb-4">Contact us</p>
+
+            <div className="w-full lg:w-auto md:w-2/3 text-slate-400">
+              <Link
+                target="_blank"
+                href={
+                  "https://www.google.com/maps?ll=25.24485,55.299425&z=15&t=m&hl=en&gl=US&mapclient=embed&cid=14349723016612093106"
+                }
+                className="md:text-12 lg:text-base"
               >
-                {pages.map((page, index) => (
-                  <li key={index}>
-                    <Link
-                      href={`/${page.href}`}
-                      className="hover:text-primary link-footer text-slate-400"
-                    >
-                      {page.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+                Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha,
+                Dubai, UAE
+              </Link>
+              <p>
+                <Link
+                  href="mailto:info@interiorfilm.ae"
+                  target="_blank"
+                  className="hover:text-primary"
+                >
+                  info@interiorfilm.ae
+                </Link>
+              </p>
+              <p>
+                <Link
+                  className="text-12 lg:text-13 font-normal hover:text-primary"
+                  href={`tel:+971 52 191 9327`}
+                >
+                  +971 52 191 9327
+                </Link>
+              </p>
+              <br />
             </div>
-            <div className="lg:pb-0 pb-3 col-span-12 sm:col-span-12 md:col-span-3">
-              <p className="lg:text-lg text-sm font-semibold mb-4">Contact us</p>
 
-              <div className="w-full lg:w-auto md:w-2/3 text-slate-400">
-                <Link target="_blank" href={"https://www.google.com/maps?ll=25.24485,55.299425&z=15&t=m&hl=en&gl=US&mapclient=embed&cid=14349723016612093106"} className="md:text-12 lg:text-base">Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha,
-                Dubai, UAE</Link>
-                <p>
-                  <Link
-                    href="mailto:info@interiorfilm.ae"
-                    target="_blank"
-                    className="hover:text-primary"
-                  >
-                    info@interiorfilm.ae
-                  </Link>
-                </p>
-                <p>
-                  <Link
-                    className="text-12 lg:text-13 font-normal hover:text-primary"
-                    href={`tel:+971 52 191 9327`}
-                  >
-                    +971 52 191 9327
-                  </Link>
-                </p>
-                <br />
-              </div>
+            <PaymentMethod />
 
-              <PaymentMethod />
-
-              {/* <div className="flex items-center flex-wrap gap-2 py-2 lg:order-2 order-1 text-black dark:text-white">
+            {/* <div className="flex items-center flex-wrap gap-2 py-2 lg:order-2 order-1 text-black dark:text-white">
                 {bottomImages.map((image, index) => (
                   <Image
                     key={index}
@@ -274,10 +302,8 @@ const Footer: React.FC = () => {
                   />
                 ))}
               </div> */}
-            </div>
+          </div>
         </div>
-
-
       </div>
       <div className="bg-white  flex justify-center items-center">
         <p className="text-text h-12 flex items-center">
