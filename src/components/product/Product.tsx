@@ -297,7 +297,7 @@ const selectedProductImages = specificProductImages.length
           return (
             <div className="w-full cursor-pointer" key={index} onClick={() => route.push(`/product/${generateSlug(product.name)}`)}>
               <Image
-                className={`object-cover w-full h-[300px] ${index > 0 ? "hidden sm:block" : ""}`}
+                className={`object-cover w-full h-[450px] object-center ${index > 0 ? "hidden sm:block" : ""}`}
                 width={500}
                 height={500}
                 src={selectedImage}

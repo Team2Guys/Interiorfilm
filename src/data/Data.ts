@@ -552,6 +552,20 @@ export const navarlink = [
 
 
 ];
+export const footerlink = [
+  { ref: "metal-series", title: "Metal Series" },
+  { ref: "symphony-series", title: "Symphony Series" },
+  { ref: "skin-touch-series", title: "Skin Touch Series" },
+  { ref: "plain-series", title: "Plain Series" },
+  { ref: "marble-series", title: "Marble Series" },
+  { ref: "leather-series", title: "Leather Series" },
+  { ref: "cement-grey-series", title: "Cement Grey Series" },
+  { ref: "fabric-series", title: "Fabric Series" },
+  { ref: "wood-grain-series", title: "Wood Grain Series" },
+  { ref: "Accessories", title: "Accessories Series" },
+
+
+];
 
 export const productimage = [
   { img: "/images/ProductsPage/product1.png" },
@@ -626,12 +640,13 @@ export const specificProductCodesByCategory = {
   "marble-series": ["KS6007", "KS6004", "KS6011"],
   "metal-series": ["KW006", "KW012", "KW013"],
   "fabric-series": ["KS8005", "KS8006", "KS8002"],
-  "skin-touch-series": ["KH9615", "KH9606", "KH9604"],
+  "skin-touch-series": ["KH9603", "KH9612", "KH9611"],
   "leather-series":["KS7715","KS7710","KS7701"]
 };
 
 export const specificImageIndexByCode: any = {
   KH9615:0,
+  KH9603:1,
   KS5005:2,
   KS5007:1,
   KH9025:2,
