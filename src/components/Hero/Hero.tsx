@@ -8,7 +8,7 @@ import React from 'react';
 const Hero = () => {
   return (
     <>
-      <div className='bg-hero w-full h-[600px] lg:h-screen  relative'>
+      <div className='bg-hero w-full h-[640px] lg:h-screen  relative'>
       <Navbar/>
       <video
           className="w-full h-full object-cover"
