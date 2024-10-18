@@ -56,7 +56,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
     );
     calculateSubtotal(validCartItems);
   };
-
+  
   const increment = (index: number) => {
     const newLengths = { ...lengths };
     if (newLengths[index] < 100) {
@@ -78,6 +78,10 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
       message.error("Length cannot be less than 1 meter.");
     }
   };
+  
+  // useEffect(()=>{
+  //   fetchCartItems()
+  // },[lengths])
 
   const onLengthChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -109,7 +113,8 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
       const count = counts[index] || item.count;
       return acc + price * length * count;
     }, 0);
-    setSubtotal(sub);
+    const sub2 = items.reduce((acc: number, item: any) => { return acc + item.totalPrice; }, 0);
+    setSubtotal(sub2);
   };
 
   const removeItem = (index: number) => {
@@ -135,7 +140,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
     });
   };
 
-    // Function to close the drawer if clicked outside
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
         if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {

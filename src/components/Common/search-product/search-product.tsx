@@ -88,48 +88,27 @@ const SearchProduct = () => {
   }, []);
 
   const filteredProducts = Array.isArray(products)
-    ? products.filter((product) => {
-        let Search = searchTerm.toLowerCase();
-        product.name.toLowerCase().includes(searchTerm.toLowerCase());
+  ? products.filter((product) => {
+      const searchLower = searchTerm.toLowerCase();
+      const nameMatches = product.name.toLowerCase().includes(searchLower);
+      const descriptionMatches = product.description && product.description.toLowerCase().includes(searchLower);
+      
+      return nameMatches || descriptionMatches;
+    })
+  : [];
 
-        return (
-          product.name.toLowerCase().includes(Search) ||
-          (product.description &&
-            product.description.toLowerCase().includes(Search)) ||
-          (product.salePrice &&
-            product.salePrice.toString().toLowerCase().includes(Search)) ||
-          (product.purchasePrice &&
-            product.purchasePrice.toString().toLowerCase().includes(Search)) ||
-          (product.category &&
-            product.category.toString().toLowerCase().includes(Search)) ||
-          product.discountPrice?.toString().toLowerCase().includes(Search) ||
-          (product.colors &&
-            product.colors.some((color: any) =>
-              color.colorName.toLowerCase().includes(Search)
-            )) ||
-          product.modelDetails.some(
-            (model: any) =>
-              model.name.toLowerCase().includes(Search) ||
-              model.detail.toLowerCase().includes(Search)
-          ) ||
-          (product.spacification &&
-            product.spacification.some((spec: any) =>
-              spec.specsDetails.toLowerCase().includes(Search)
-            )) ||
-          product.starRating?.toString().toLowerCase().includes(Search) ||
-          product.reviews?.toLowerCase().includes(Search) ||
-          product.code.toLowerCase().includes(Search) ||
-          product.totalStockQuantity
-            ?.toString()
-            .toLowerCase()
-            .includes(Search) ||
-          (product.sizes &&
-            product.sizes.some((size: any) =>
-              size.sizesDetails.toLowerCase().includes(Search)
-            ))
-        );
-      })
-    : [];
+// Sort the products: name matches first, then description matches
+const sortedFilteredProducts = filteredProducts.sort((a, b) => {
+  const searchLower = searchTerm.toLowerCase();
+  const aNameMatches = a.name.toLowerCase().includes(searchLower);
+  const bNameMatches = b.name.toLowerCase().includes(searchLower);
+
+  // Prioritize name matches
+  if (aNameMatches && !bNameMatches) return -1;
+  if (!aNameMatches && bNameMatches) return 1;
+
+  return 0; // Keep the order for products that match in the same category
+});
 
   useEffect(() => {
     if (isModalOpen && searchInputRef.current) {

@@ -13,6 +13,7 @@ import card7 from "../../../../public/images/payment-icons/googlepay-logo.png";
 import card5 from "../../../../public/images/payment-icons/tabby-logo.png";
 import card3 from "../../../../public/images/payment-icons/tamara-logo.png";
 import card4 from "../../../../public/images/payment-icons/visacard-logo.png";
+import whitelogo from "../../../../public/images/logowhite.png";
 import Container from "../Container/Container";
 import { SlEnvolopeLetter } from "react-icons/sl";
 import Button from "components/ui/Button/Button";
@@ -22,11 +23,14 @@ import PreFooter from "./PreFooter";
 import { FooterPaymentMethods, generateSlug, PaymentMethods } from "data/Data";
 import { usePathname, useRouter } from "next/navigation";
 import PaymentMethod from "../PaymentMethod";
+import showToast from "components/Toaster/Toaster";
 
 const Footer: React.FC = () => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(true);
   const [isCustomerCareOpen, setIsCustomerCareOpen] = useState(true);
   const [isPagesOpen, setIsPagesOpen] = useState(true);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('');
   const [category, setCategory] = useState<CategoriesType[]>([]);
   const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
   const toggleCustomerCare = () => setIsCustomerCareOpen(!isCustomerCareOpen);
@@ -54,6 +58,27 @@ const Footer: React.FC = () => {
     router.push(`/products?category=${slug}`);
   };
 
+  const handleEmailSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+    
+
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/promotion/Add_email`, { email });
+      console.log(response);
+      showToast('success','Email subscribed successfully🎉');
+      setEmail(''); 
+    } catch (err) {
+      showToast('error','Failed to subscribe. Please try again😢');
+      console.error('Error subscribing email:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
   return (
     <>
       {/* {pathname == "/" || pathname == "/about" ? null : <PreFooter />} */}
@@ -70,7 +95,7 @@ const Footer: React.FC = () => {
             />
           </div>
 
-          <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start gap-2 md:justify-end w-full px-3 md:w-9/12 text-white mt-4 md:mt-0">
+          <div className="flex flex-wrap md:*:flex-nowrap items-center justify-start gap-4 md:justify-end w-full px-3 md:w-9/12 text-white mt-4 md:mt-0">
             <SlEnvolopeLetter
               className="text-primary ml-4 md:ml-12 sm:ml-0"
               size={35}
@@ -78,14 +103,18 @@ const Footer: React.FC = () => {
             <p className="lg:text-base text-sm capitalize text-white">
               SUBSCRIBE TO OUR NEWSLETTER.
             </p>
-            <div className=" flex items-center justify-center mt-5 md:mt-0 rounded-none h-13 lg:w-100">
+            <form onSubmit={handleEmailSubmit} className=" flex items-center justify-center mt-5 md:mt-0 rounded-none h-13 lg:w-125">
               <input
                 className="bg-white border border-r-0  h-full rounded-none  px-4 outline-none w-4/6 md:w-5/6 text-black"
                 type="email"
                 placeholder="Enter Email Address"
+                value={email}
+                onChange={handleEmailChange}
+                required
               />
-              <Button className="text-sm px-5  h-full" title={"SUBSCRIBE"} />
-            </div>
+              <Button className="text-sm px-5 h-full" title={loading ? "SUBSCRIBING..." : "SUBSCRIBE"} disabled ={loading}  />
+          
+            </form>
           </div>
         </div>
 
@@ -95,7 +124,7 @@ const Footer: React.FC = () => {
               <Image
                 width={250}
                 height={250}
-                src="/images/logowhite.png"
+                src={whitelogo}
                 alt="Interior Film"
               />
             </div>
@@ -113,7 +142,7 @@ const Footer: React.FC = () => {
                     className="hover:text-primary link-footer"
                   >
                     {React.createElement(require("react-icons/fa")[link.icon], {
-                      className: "text-lg hover:text-primary link-footer",
+                      className: "text-xl hover:text-primary link-footer",
                     })}
                   </Link>
                 ))}

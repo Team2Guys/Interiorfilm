@@ -462,7 +462,7 @@ const Navbar = () => {
                                 key={index}
                                 href={slug}
                               >
-                                {navItem.title}
+                                {navItem.title.replace("Series", "")}
                               </Link>
                             </li>
                           );
@@ -502,7 +502,7 @@ const Navbar = () => {
             href={slug}
             onClick={() => setActiveLink(slug)} // Update the active link on click
           >
-            {navItem.title}
+            {navItem.title.replace("Series", "")}
           </Link>
         );
       })}

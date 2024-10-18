@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 import gitImg from "../../public/images/json/404.json";
-import Lottie from "components/Lottie/error-gif";
+import dynamic from "next/dynamic";
+const Lottie = dynamic(() => import('components/Lottie/error-gif'), {
+  ssr: false,
+})
+
 
 export default function NotFound() {
   return (
@@ -13,7 +17,7 @@ export default function NotFound() {
           There&apos;s <span className="uppercase">Nothing</span> here ...
         </h2>
         <p className="text-center px-2 xsm:px-0 text-10 xsm:text-12 sm:text-base md:text-lg lg:text-xl">
-          ...maybe the page you are looking for is not fount or never exited.
+          ...maybe the page you are looking for is not found and exited.
         </p>
         <div className="flex items-center gap-4 justify-center">
           <Link

@@ -9,7 +9,7 @@ import axios from "axios";
 import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
 import { IoIosSearch } from "react-icons/io";
 import { useRouter, useSearchParams } from "next/navigation";
-import { generateSlug, specificImageIndexByCode, specificProductCodesByCategory } from "data/Data";
+import { generateSlug, sortProductsByCode, specificImageIndexByCode, specificProductCodesByCategory } from "data/Data";
 import Image from "next/image";
 interface category {
   posterImageUrl: {
@@ -37,20 +37,21 @@ const StaticCategory = {
 
 const ProductPage = () => {
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
+  const [adsontotalProducts, setTotaladsonProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [filteredProductsByCategory, setfilteredProductsByCategory] = useState<PRODUCTS_TYPES[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showColors, setShowColors] = useState<boolean>(false);
   const [colorName, setColorName] = useState<string>();
-  const [availableColors, setAvailableColors] = useState<{ value: string; label: string }[] | string[] >([]);
+  const [availableColors, setAvailableColors] = useState<{ value: string; label: string }[] | string[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortOption, setSortOption] = useState<string>("Default");
   const [category, setCategory] = useState<category[]>([]);
   const [activeLink, setActiveLink] = useState<category | undefined>();
   const searchParams = useSearchParams();
-  const categoryName:string | null = searchParams.get("category");
+  const categoryName: string | null = searchParams.get("category");
   const dropdown = useRef<any>(null);
   const trigger = useRef<any>(null);
-  const route =useRouter()
+  const route = useRouter()
 
 
   // console.log(totalProducts,"totalProductstotalProducts")
@@ -85,14 +86,18 @@ const ProductPage = () => {
   const get_recordHandler = async () => {
     try {
       setLoading(true);
-      const [categoryResponse, productResponse] = await Promise.all([
+      const [categoryResponse, productResponse,addsOnproductResponse] = await Promise.all([
         axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`),
         axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
+        axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`),
       ]);
       let products = productResponse.data.products;
+      console.log("===============================");
+      console.log(products)
       const categories = [StaticCategory, ...categoryResponse.data];
       setCategory(categories);
       setTotalProducts(products);
+      setTotaladsonProducts(addsOnproductResponse.data.products)
       productHandler(categoryName, categories, products);
     } catch (err) {
       console.error("Error loading products or categories", err);
@@ -101,15 +106,9 @@ const ProductPage = () => {
     }
   };
 
-  const productHandler = async (
-    categoryName: any,
-    newcategories?: category[],
-    newProducts?: any
-  ) => {
+  const productHandler = async (categoryName: string | null, newcategories?: category[], newProducts?: any) => {
     try {
-      const activeCategory: any = (
-        newcategories ? newcategories : category
-      ).find((cat) => generateSlug(cat.name) === categoryName);
+      const activeCategory: any = (newcategories ? newcategories : category).find((cat) => generateSlug(cat.name) === categoryName);
       if (!activeCategory || activeCategory._id === "all") {
         setfilteredProductsByCategory(newProducts ? newProducts : totalProducts);
         setActiveLink(StaticCategory);
@@ -121,7 +120,7 @@ const ProductPage = () => {
       ).filter((product: PRODUCTS_TYPES) => {
         return product.category === activeCategory._id;
       });
-  
+
       setfilteredProductsByCategory(filteredProductsByCategory);
       setActiveLink(activeCategory);
       Get_colors_handler(filteredProductsByCategory);
@@ -129,7 +128,7 @@ const ProductPage = () => {
       console.error("Error loading products or categories", err);
     }
   };
-  
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
@@ -144,7 +143,7 @@ const ProductPage = () => {
     colorName == value;
   };
 
-  const filteredProducts = Array.isArray(filteredProductsByCategory)
+  let filteredProducts = Array.isArray(filteredProductsByCategory)
     ? filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
       let Search = searchTerm.toLowerCase();
       
@@ -186,40 +185,46 @@ const ProductPage = () => {
       const colorMatch =
         !colorName ||
         (product.colors &&
-          product.colors.some((color: any) => 
+          product.colors.some((color: any) =>
             color.colorName.toLowerCase() === colorName.toLowerCase()
           ));
       return nameMatch && colorMatch;
     })
-  : [];
+    : [];
 
 
   const sortProducts = (products: PRODUCTS_TYPES[]) => {
     if (!products || products.length === 0) return [];
 
     const getPrice = (product: PRODUCTS_TYPES) => {
-      if (!product.salePrice) return 0; 
+      if (!product.salePrice) return 0;
       return product.salePrice;
     };
 
     if (sortOption === "Default") {
-      return products.sort((a, b) => {
+      return sortProductsByCode(products.sort((a, b) => {
         const nameA = a.name.toUpperCase();
         const nameB = b.name.toUpperCase();
         return nameA.localeCompare(nameB, undefined, {
           numeric: true,
           sensitivity: "base",
         });
-      });
+      }));
     } else if (sortOption === "Low to High") {
-      return products.sort((a, b) => getPrice(a) - getPrice(b));
+      return sortProductsByCode(products.sort((a, b) => getPrice(a) - getPrice(b)));
     } else if (sortOption === "High to Low") {
-      return products.sort((a, b) => getPrice(b) - getPrice(a));
+      return sortProductsByCode(products.sort((a, b) => getPrice(b) - getPrice(a)));
     } else {
-      return products;
+      return sortProductsByCode(products);
     }
   };
 
+
+
+  if (categoryName==='Accessories')
+  {
+    filteredProducts=adsontotalProducts;
+  }
   const sortedProducts = sortProducts(filteredProducts);
 
   useEffect(() => {
@@ -252,7 +257,10 @@ const ProductPage = () => {
 
 
 const categoryNameNormalized: any = categoryName?.trim();
+//@ts-expect-error
 const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
+console.log('+++++++++++++++++++++++')
+console.log(specificProductCodes)
 const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
   const productImages: PRODUCTS_TYPES[] = [];
   codes.forEach(code => {
@@ -271,33 +279,37 @@ const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
 const selectedProductImages = specificProductImages.length
   ? specificProductImages
   : getRandomProducts(filteredProductsByCategory);
+
+
+  
   return (
     <>
       <Overlay
         title={activeLink?.name || "Products"}
       />
-     <div className="hidden md:grid grid-cols-3 mt-2 gap-6">
-  {selectedProductImages.map((product, index: number) => {
-    const imageIndex = specificImageIndexByCode[product.code] || 0;
-    const selectedImage = product.imageUrl?.[imageIndex]?.imageUrl || product.posterImageUrl?.imageUrl;
+     
+      <div className="hidden md:grid grid-cols-3 mt-2 gap-6">
+        {selectedProductImages.map((product, index: number) => {
+          const imageIndex = specificImageIndexByCode[product.code] || 0;
+          const selectedImage = product.imageUrl?.[imageIndex]?.imageUrl || product.posterImageUrl?.imageUrl;
 
-    return (
-      <div className="w-full cursor-pointer" key={index} onClick={() => route.push(`/product/${generateSlug(product.name)}`)}>
-        <Image
-          className={`object-cover w-full h-[300px] ${index > 0 ? "hidden sm:block" : ""}`}
-          width={500}
-          height={500}
-          src={selectedImage}
-          alt={`product-image-${product.name}`}
-        />
+          return (
+            <div className="w-full cursor-pointer" key={index} onClick={() => route.push(`/product/${generateSlug(product.name)}`)}>
+              <Image
+                className={`object-cover w-full h-[300px] ${index > 0 ? "hidden sm:block" : ""}`}
+                width={500}
+                height={500}
+                src={selectedImage}
+                alt={`product-image-${product.name}`}
+              />
+            </div>
+          );
+        })}
       </div>
-    );
-  })}
-</div>
       <Container className="mt-20 md:overflow-hidden">
         <div className="flex flex-wrap lg:flex-nowrap justify-between  gap-3">
           <div>
-            <p className="uppercase text-[24px] text-lightdark">
+            <p className="uppercase lg:text-[24px] text-16 text-lightdark">
               Home
               <span className="capitalize text-black">/{activeLink?.name}</span>
             </p>
@@ -325,7 +337,7 @@ const selectedProductImages = specificProductImages.length
               >
                 <div ref={trigger} className="w-full">
                   <div
-                    className="w-full px-3 flex justify-between items-center text-[#3A393C] cursor-pointer"
+                    className="w-full px-3 flex justify-between items-center text-[#3A393C] cursor-pointer lg:text-16 text-12"
                     onClick={(e) => {
                       e.stopPropagation();
                       setShowColors(!showColors);
@@ -349,24 +361,23 @@ const selectedProductImages = specificProductImages.length
                   {showColors ? (
                     <div
                       ref={dropdown}
-                      className="border shadow-sm flex flex-wrap gap-3 m-auto z-30 p-3 right-0 top-10 border-gray rounded-sm absolute w-full bg-white"
+                      className="border shadow-sm flex flex-wrap gap-3 m-auto z-30 p-3 right-0 top-10 border-gray rounded-sm absolute w-full bg-white lg:text-16 text-12"
                       id="ColorDropdown"
                     >
                       {!(availableColors.length > 0)
                         ? "Colors not found"
                         : availableColors.map((item: any) => (
-                            <p
-                              id="ColorDropdown"
-                              className={`w-5 h-5 border ${
-                                colorName === item.label
-                                  ? "border-primary"
-                                  : "border-gray"
+                          <p
+                            id="ColorDropdown"
+                            className={`w-5 h-5 border ${colorName === item.label
+                                ? "border-primary"
+                                : "border-gray"
                               } cursor-pointer`}
-                              onClick={() => handleColorChange(item.label)}
-                              style={{ backgroundColor: `#${item.value}` }}
-                              key={item.label}
-                            />
-                          ))}
+                            onClick={() => handleColorChange(item.label)}
+                            style={{ backgroundColor: `#${item.value}` }}
+                            key={item.label}
+                          />
+                        ))}
                       {colorName && (
                         <button
                           className="bg-red-500 text-black rounded-md "

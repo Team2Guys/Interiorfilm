@@ -60,7 +60,10 @@ function Newpswd({ email }: NewPasswordProps) {
       );
       console.log(user.data);
       Toaster("success", "You Password has been sucessfully reseted !")
-
+      setFormData({
+        newPassword: "",
+        password: "",
+      })
       setTimeout(()=>{
         router.push("/");
       },1000)

@@ -8,51 +8,22 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import axios from 'axios'
 import { generateSlug } from "data/Data";
+import { useRouter } from "next/navigation";
+import { Order , Product} from "types/types";
 
-interface Product {
-  _id: string;
-  id: string;
-  name: string;
-  price: number;
-  discountPrice: number | null;
-  count: number;
-  totalPrice: number;
-  purchasePrice: number;
-  date: string;
-  imageUrl: string;
-  shippment_Fee: string;
-  order_id: string;
-  checkout: boolean;
-  paymentStatus: boolean;
-  is_refund: boolean;
-  success: boolean;
-  pending: boolean;
-  length: number;
-  createdAt: string;
-  amount_cents: string;
-  currency: string;
-  integration_id: string;
-  is_3d_secure: boolean;
-  transactionId: string;
-}
-
-interface Order {
-  _id: string;
-  usermail: string;
-  first_name: string;
-  last_name: string;
-  userAddress: string;
-  country: string;
-  city: string;
-  phone_number: string;
-  products: Product[];
-  date: string;
-  __v: number;
-}
 
 const OrderHistory = () => {
   const [orderHistory, setOrderHistory] = useState<Order[]>([]);
   const token = Cookies.get("user_token");
+  const router = useRouter()
+  
+  useEffect(()=>{
+    if(!token)
+    {
+      router.push('/login')
+    }
+  },[token])
+
 
   useEffect(() => {
     const fetchOrderHistory = async () => {
