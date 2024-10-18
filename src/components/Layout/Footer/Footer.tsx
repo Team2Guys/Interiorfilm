@@ -185,9 +185,9 @@ const Footer: React.FC = () => {
                     ? `/products?category=${navItem.ref}`
                     : `/${navItem.ref}`;
                   return (
-                    <li>
+                    <li key={index}>
                       <Link
-                        key={index}
+                        
                         href={slug}
                         className="hover:text-primary link-footer text-slate-400 cursor-pointer whitespace-nowrap"
                       >
