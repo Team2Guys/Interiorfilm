@@ -73,42 +73,26 @@ const CheckOut: React.FC = () => {
 
 
 
-const formatPhoneNumber = (value: string) => {
-
-  const numbers = value.replace(/\D/g, "");
-
-
-  if (numbers.length <= 1) return numbers;
-
-
-  if (numbers.length <= 4) return `${numbers.slice(0, 1)}-${numbers.slice(1)}`;
-
-
-  if (numbers.length <= 8) return `${numbers.slice(0, 1)}-${numbers.slice(1, 4)}-${numbers.slice(4)}`;
-
-
-  return `${numbers.slice(0, 1)}-${numbers.slice(1, 4)}-${numbers.slice(4, 8)}`;
-};
-
-
-const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  let value = e.target.value;
-
-
-  const lastChar = value[value.length - 1];
-  if (lastChar === "-") {
-    value = value.slice(0, -1);
-  }
-
-  value = value.slice(0, 8);
-
-
-  setBillingData((prevData) => ({
-    ...prevData,
-    phone_number: formatPhoneNumber(value),
-  }));
-};
-
+  const formatCode = (value: string) => {
+    const numbers = value.replace(/\D/g, "");
+    if (numbers.length <= 2) return numbers;
+    if (numbers.length <= 10) return `${numbers.slice(0, 2)}-${numbers.slice(2)}`;
+    return `${numbers.slice(0, 2)}-${numbers.slice(2, 10)}`;
+  };
+  
+  const handlePhoneNumberChange  = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    const lastChar = value[value.length - 1];
+    if (lastChar === "-") {
+      value = value.slice(0, -1);
+    }
+    value = value.slice(0, 10);
+    setBillingData((prevData) => ({
+      ...prevData,
+      phone_number: formatCode(value),
+    }));
+  };
+  
   
 
   useEffect(() => {

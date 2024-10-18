@@ -11,6 +11,7 @@ import { IoIosSearch } from "react-icons/io";
 import { useRouter, useSearchParams } from "next/navigation";
 import { generateSlug, sortProductsByCode, specificImageIndexByCode, specificProductCodesByCategory } from "data/Data";
 import Image from "next/image";
+import Link from "next/link";
 interface category {
   posterImageUrl: {
     public_id: string;
@@ -314,7 +315,7 @@ const selectedProductImages = specificProductImages.length
               <span className="capitalize text-black">/{activeLink?.name}</span>
             </p>
           </div>
-          <div className="flex flex-wrap lg:flex-nowrap justify-between  w-full md:w-auto sm:space-x-4 ">
+          <div className="flex flex-wrap lg:flex-nowrap justify-between  w-full md:w-auto sm:space-x-4 " >
             <div className="flex flex-wrap md:flex-nowrap gap-2 items-center mt-2 ">
               <h1>Sort By: </h1>
               <Select
