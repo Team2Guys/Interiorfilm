@@ -17,7 +17,7 @@ const futuraCyrillic = localFont({
   src: [
     {
       path: '../../public/fonts/FuturaCyrillicBold.ttf',
-      weight: '700', 
+      weight: '700',
       style: 'normal',
     },
     {
@@ -65,9 +65,22 @@ export default function RootLayout({
     <Providers>
 
       <html lang="en">
-        <GoogleTagManager gtmId="GTM-PFNKXKTR" />
+        {/* <GoogleTagManager gtmId="GTM-PFNKXKTR" /> */}
         <head>
           <GoogleTagManager gtmId="GTM-PFNKXKTR" />
+          <GoogleAnalytics gaId="G-FEG0017QNF"/>
+          <Script
+            id="google-tag-manager"
+            dangerouslySetInnerHTML={{
+              __html: `
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-PFNKXKTR');
+            `,
+            }}
+          />
           <Script
             id="google-analytics"
             src="https://www.googletagmanager.com/gtag/js?id=G-FEG0017QNF"
@@ -86,18 +99,24 @@ export default function RootLayout({
             }}
           />
           <Script
-            id="google-tag-manager"
+            id="google-analytics"
+            src="https://www.googletagmanager.com/gtag/js?id=G-FEG0017QNF"
+            strategy="afterInteractive"
+          />
+          <Script
+            id="gtag-init"
+            strategy="afterInteractive"
             dangerouslySetInnerHTML={{
               __html: `
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-PFNKXKTR');
-            `,
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-FEG0017QNF');
+              `,
             }}
           />
-       
+
+
         </head>
 
         <body className={font.className}>
