@@ -621,19 +621,18 @@ export const AccordionsArray: ACCORDINTYPES[] = [
 
 export const specificProductCodesByCategory = {
   "plain-series": ["KH9003", "KH9025", "KH9022"],
-  "cement-grey-series": ["KS5002", "KS5007", "KS5007"],
+  "cement-grey-series": ["KS5002", "KS5007", "KS5005"],
   "wood-grain-series": ["CA162", "CA164", "CA126"],
   "marble-series": ["KS6007", "KS6004", "KS6011"],
   "metal-series": ["KW006", "KW012", "KW013"],
   "fabric-series": ["KS8005", "KS8006", "KS8002"],
-  "skin-texture-series": ["KS7715", "KS7710", "KS7701"],
+  "skin-touch-series": ["KH9615", "KH9606", "KH9604"],
   "leather-series":["KS7715","KS7710","KS7701"]
 };
 
-
-
-
 export const specificImageIndexByCode: any = {
+  KH9615:0,
+  KS5005:2,
   KS5007:1,
   KH9025:2,
   KH9022:2,
