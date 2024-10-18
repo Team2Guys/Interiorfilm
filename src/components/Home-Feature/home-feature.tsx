@@ -40,7 +40,7 @@ const HomeFeature = () => {
   return (
     <Container className="mt-10 ">
       <h1 className="text-[24px] text-heading text-center tracking-widest">
-        FEATURE PRODUCT
+        FEATURE PRODUCTS
       </h1>
       <hr className="2xsm:w-80 mx-auto border-primary h-1" />
 
