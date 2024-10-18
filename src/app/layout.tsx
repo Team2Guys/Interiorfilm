@@ -8,7 +8,7 @@ import PathnameWrapper from "components/PathnameWrapper";
 import { ToastContainer } from 'react-toastify';
 import { Providers } from "./Providers";
 import "../css/style.css";
-import { GoogleTagManager } from '@next/third-parties/google';
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 const font = Montserrat({
   weight: '500',
   subsets: ['latin'],
@@ -68,7 +68,23 @@ export default function RootLayout({
         <GoogleTagManager gtmId="GTM-PFNKXKTR" />
         <head>
           <GoogleTagManager gtmId="GTM-PFNKXKTR" />
-
+          <Script
+            id="google-analytics"
+            src="https://www.googletagmanager.com/gtag/js?id=G-FEG0017QNF"
+            strategy="afterInteractive"
+          />
+          <Script
+            id="gtag-init"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-FEG0017QNF');
+              `,
+            }}
+          />
           <Script
             id="google-tag-manager"
             dangerouslySetInnerHTML={{
@@ -81,6 +97,7 @@ export default function RootLayout({
             `,
             }}
           />
+       
         </head>
 
         <body className={font.className}>
