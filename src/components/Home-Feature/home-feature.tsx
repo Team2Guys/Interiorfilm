@@ -31,7 +31,7 @@ const HomeFeature = () => {
     return allProducts.filter(product => codes.includes(product.code));
   };
 
-  const filteredProducts = getProductsByCodes(["KH6003", "KH6005", "KH6012", "KS6015", "KH6013", "KH6004", "KH6006", "KH6016", "KH6002", "KH6009", "KH6007", "KH6017", "KH6018", "KH6001", "KH6014"]);
+  const filteredProducts = getProductsByCodes(["KS6015", "KH6009", "KH6017", "KS6015", "KH6013", "KH6004", "KH6006", "KH6016", "KH6002", "KH6009", "KH6007", "KH6017", "KH6018", "KH6001", "KH6014"]);
 
   return (
     <Container className="mt-10 ">
@@ -39,9 +39,7 @@ const HomeFeature = () => {
         FEATURE PRODUCT
       </h1>
       <hr className="2xsm:w-80 mx-auto border-primary h-1" />
-
-      {/* Pass filtered products to the ProductSlider */}
-      <ProductSlider loading={loading} products={filteredProducts} />
+      <ProductSlider loading={loading} products={filteredProducts}  />
     </Container>
   );
 };

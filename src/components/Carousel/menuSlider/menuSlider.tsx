@@ -96,7 +96,7 @@ const MenuSlider: React.FC<PRODUCT_SLIDER_PROPS> = ({ products, loading,onProduc
       >
         {products && products.map((product, index) => (
           <SwiperSlide key={index} className="custom">
-            <Menucard ProductCard={[product]} slider={true} onClick={onProductClick}/>
+            <Menucard ProductCard={[product]} onClick={onProductClick}/>
           </SwiperSlide>
         ))}
       </Swiper>
