@@ -188,7 +188,7 @@ const sortedFilteredProducts = filteredProducts.sort((a, b) => {
                 <div className="bg-search bg-cover bg-no-repeat w-full md:h-[289px] py-4 sm:py-8 ">
                   <div className=" md:max-w-screen-md md:mx-auto  text-center w-full space-y-6 relative">
                     <p className="text-white text-16 sm:text-23 md:text-[26px] lg:text-[37px]">
-                      Products for every eventuality
+                     Products For Every Surface
                     </p>
                     <div className="flex items-center  w-full mx-auto md:max-w-screen-2xl  mt-10  shadow shadow-boxdark ">
                       <input

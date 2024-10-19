@@ -41,7 +41,7 @@ function HomeAccordian() {
 
         <div className="">
           <h3 className="font-futura font-bold text-3xl mb-8 text-center  md:text-start" >
-          Areas We Cover to Where to Wrap?
+          Wrap Any Of These Areas ?
           </h3>
           {AccordionsArray.map((item, index) => {
             return (
