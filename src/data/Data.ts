@@ -641,10 +641,12 @@ export const specificProductCodesByCategory = {
   "metal-series": ["KW006", "KW012", "KW013"],
   "fabric-series": ["KS8005", "KS8006", "KS8002"],
   "skin-touch-series": ["KH9603", "KH9612", "KH9611"],
-  "leather-series":["KS7715","KS7710","KS7701"]
+  "leather-series":["KS7715","KS7710","KS7701"],
+  "Accessories":["as1541","as122","as789"]
 };
 
 export const specificImageIndexByCode: any = {
+  
   KH9615:0,
   KH9603:1,
   KS5005:2,
