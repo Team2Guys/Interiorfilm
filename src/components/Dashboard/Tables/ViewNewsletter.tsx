@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Table, notification, Modal, Skeleton, Checkbox } from "antd"; // Import Skeleton and Checkbox
+import { Table, notification, Modal, Skeleton, Checkbox } from "antd";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import Loader from "components/Loader/Loader";
 import { useAppSelector } from "components/Others/HelperRedux";
+import axios from "axios"; // Import axios
+import Cookies from 'js-cookie';
 
 interface Product {
   _id: string;
@@ -13,26 +14,26 @@ interface Product {
 }
 
 interface CategoryProps {
-  Categories: any;
   setProduct: any;
+  products: Product[];  // Accept products as prop
   loading: boolean;
 }
 
 const ViewNewsletter: React.FC<CategoryProps> = ({
-  Categories,
   setProduct,
+  products,  // Destructure the products prop
   loading,
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-
   const [selectedEmails, setSelectedEmails] = useState<string[]>([]); // State to manage selected emails
+  const [isSelectAllChecked, setIsSelectAllChecked] = useState<boolean>(false); // State to manage select all checkbox
+  const token = Cookies.get('2guysAdminToken'); // Get token from cookies
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
   const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
-
   const canAddProduct =
     loggedInUser && (loggedInUser.role === "Admin" ? loggedInUser.canAddProduct : true);
   const canDeleteProduct =
@@ -65,33 +66,103 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
     }
   };
 
-  // Dummy emails
-  const dummyEmails = [
-    {
-      _id: "1",
-      email: "john.doe@example.com",
-      createdAt: "2024-10-07T10:30:00Z",
-    },
-    {
-      _id: "2",
-      email: "jane.smith@example.com",
-      createdAt: "2024-10-06T14:45:00Z",
-    },
-    {
-      _id: "3",
-      email: "david.jones@example.com",
-      createdAt: "2024-10-05T08:20:00Z",
-    },
-  ];
-
-  // Filter the emails based on search term
-  const filteredEmails = dummyEmails.filter((email) =>
+  // Filter the emails based on the search term
+  const filteredEmails = (products || []).filter((email) =>
     email.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleEmailSelection = (email: string) => {
+    if (selectedEmails.includes(email)) {
+      setSelectedEmails((prev) => prev.filter((selectedEmail) => selectedEmail !== email));
+    } else {
+      setSelectedEmails((prev) => [...prev, email]);
+    }
+  };
+
+  const handleSelectAllChange = () => {
+    if (isSelectAllChecked) {
+      setSelectedEmails([]); // Deselect all emails
+    } else {
+      const allEmails = filteredEmails.map((item) => item.email);
+      setSelectedEmails(allEmails); // Select all emails
+    }
+    setIsSelectAllChecked(!isSelectAllChecked); // Toggle the "Select All" checkbox state
+  };
+
+  const handleBroadcastEmails = async () => {
+    if (selectedEmails.length === 0) {
+      notification.error({
+        message: "No Emails Selected",
+        description: "Please select at least one email to broadcast.",
+        placement: "topRight",
+      });
+      return;
+    }
+  
+    if (!token) {
+      notification.error({
+        message: "Token Error",
+        description: "No token found. Please login again.",
+        placement: "topRight",
+      });
+      return;
+    }
+    
+    console.log("Selected emails for broadcasting:", selectedEmails);
+  
+    const content = "<p>This is the promotional content</p><img src='cid:image.png' alt='Promo Image' />";
+  
+    try {
+      const formData = new FormData();
+      formData.append("content", content);
+      formData.append("emails", JSON.stringify(selectedEmails));
+      const imageResponse = await fetch('/images/CA101.png'); 
+      const imageBlob = await imageResponse.blob();
+      formData.append("image", imageBlob, 'CA101.png'); 
+  
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/promotion/send_promotional_email`,
+        formData,
+        {
+          headers: { token },
+        }
+      );
+  
+      console.log("Network response:", response.data);
+  
+      if (response.status === 200) {
+        notification.success({
+          message: "Emails Broadcasted Successfully",
+          description: `Successfully sent to: ${selectedEmails.join(", ")}`,
+          placement: "topRight",
+        });
+      } else {
+        notification.error({
+          message: "Broadcast Failed",
+          description: response.data.message || "There was an error sending the emails.",
+          placement: "topRight",
+        });
+      }
+    } catch (err) {
+      console.error("Error broadcasting emails:", err);
+      notification.error({
+        message: "Broadcast Failed",
+        description: "There was an error sending the emails.",
+        placement: "topRight",
+      });
+    }
+  };
+
   const columns = [
     {
-      title: "Select",
+      title: (
+        <Checkbox
+          checked={isSelectAllChecked}
+          onChange={handleSelectAllChange}
+        >
+          Select All
+        </Checkbox>
+      ),
       dataIndex: "_id",
       key: "select",
       render: (text: any, record: Product) => (
@@ -105,30 +176,6 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
       title: "Email",
       dataIndex: "email",
       key: "email",
-    },
-    {
-      title: "Date",
-      dataIndex: "createdAt",
-      key: "date",
-      render: (text: any, record: Product) => {
-        const createdAt = new Date(record.createdAt);
-        const formattedDate = `${createdAt.getFullYear()}-${String(
-          createdAt.getMonth() + 1
-        ).padStart(2, "0")}-${String(createdAt.getDate()).padStart(2, "0")}`;
-        return <span>{formattedDate}</span>;
-      },
-    },
-    {
-      title: "Time",
-      dataIndex: "createdAt",
-      key: "time",
-      render: (text: any, record: Product) => {
-        const createdAt = new Date(record.createdAt);
-        const formattedTime = `${String(createdAt.getHours()).padStart(2, "0")}:${String(
-          createdAt.getMinutes()
-        ).padStart(2, "0")}`;
-        return <span>{formattedTime}</span>;
-      },
     },
     {
       title: "Action",
@@ -149,26 +196,10 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
     },
   ];
 
-  const handleEmailSelection = (email: string) => {
-    if (selectedEmails.includes(email)) {
-      setSelectedEmails((prev) => prev.filter((selectedEmail) => selectedEmail !== email));
-    } else {
-      setSelectedEmails((prev) => [...prev, email]);
-    }
-  };
-
-  const handleBroadcastEmails = () => {
-    if (selectedEmails.length > 0) {
-      alert(`Successfully broadcasted to: ${selectedEmails.join(", ")}`);
-    } else {
-      alert("No emails selected to broadcast.");
-    }
-  };
-
   return (
     <div>
       {loading ? (
-        <Skeleton active paragraph={{ rows: 10 }} /> // Display Skeleton when loading
+        <Skeleton active paragraph={{ rows: 10 }} />
       ) : (
         <>
           <div className="flex justify-between mb-4 items-center flex-wrap text-black dark:text-white">
