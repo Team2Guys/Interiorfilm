@@ -54,8 +54,6 @@ const ProductPage = () => {
   const trigger = useRef<any>(null);
   const route = useRouter()
 
-
-  // console.log(totalProducts,"totalProductstotalProducts")
   useEffect(() => {
     get_recordHandler();
   }, []);
@@ -110,18 +108,31 @@ const ProductPage = () => {
   const productHandler = async (categoryName: string | null, newcategories?: category[], newProducts?: any) => {
     try {
       const activeCategory: any = (newcategories ? newcategories : category).find((cat) => generateSlug(cat.name) === categoryName);
+      
+      if (categoryName === 'Accessories') {
+        setfilteredProductsByCategory(adsontotalProducts);
+        setActiveLink({
+          ...StaticCategory,  // Update the activeLink to use the static "Accessories" link
+          name: "Accessories"  // Manually set name to "Accessories"
+        });
+        Get_colors_handler(adsontotalProducts); // Ensure colors are handled correctly for "Accessories"
+        return;
+      }
+  
+      // Fallback for other categories
       if (!activeCategory || activeCategory._id === "all") {
         setfilteredProductsByCategory(newProducts ? newProducts : totalProducts);
         setActiveLink(StaticCategory);
         Get_colors_handler(newProducts ? newProducts : totalProducts);
         return;
       }
+  
       const filteredProductsByCategory = (
         newProducts ? newProducts : totalProducts
       ).filter((product: PRODUCTS_TYPES) => {
         return product.category === activeCategory._id;
       });
-
+  
       setfilteredProductsByCategory(filteredProductsByCategory);
       setActiveLink(activeCategory);
       Get_colors_handler(filteredProductsByCategory);
@@ -129,6 +140,7 @@ const ProductPage = () => {
       console.error("Error loading products or categories", err);
     }
   };
+  
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -222,10 +234,11 @@ const ProductPage = () => {
 
 
 
-  if (categoryName==='Accessories')
-  {
-    filteredProducts=adsontotalProducts;
+  if (categoryName === 'Accessories') {
+    filteredProducts = adsontotalProducts;
   }
+  
+  // Continue with sorting
   const sortedProducts = sortProducts(filteredProducts);
 
   useEffect(() => {
@@ -280,7 +293,6 @@ const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
 const selectedProductImages = specificProductImages.length
   ? specificProductImages
   : getRandomProducts(filteredProductsByCategory);
-
 
   
   return (
