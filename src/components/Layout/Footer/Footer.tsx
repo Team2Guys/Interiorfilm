@@ -90,7 +90,7 @@ const Footer: React.FC = () => {
     <>
       {/* {pathname == "/" || pathname == "/about" ? null : <PreFooter />} */}
 
-      <div className="bg-secondary text-white pt-10  pb-10 md:px-2 lg:px-30">
+      <div className="bg-secondary text-white pt-10  pb-10 md:px-2 lg:px-10 xl:px-30">
         <div className="flex flex-wrap md:flex-nowrap justify-between border-b items-center border-slate-500 pb-10 ">
           <div className=" hidden  md:w-3/12 md:flex  flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
             <Image
@@ -132,7 +132,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-12 px-2 pt-5 md:justify-items-center gap-4">
-          <div className="col-span-12  xsm:col-span-12 md:col-span-3">
+          <div className="col-span-12  xsm:col-span-12 md:col-span-2 lg:md:col-span-3">
             <div className="  md:hidden flex flex-wrap items-center  md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
               <Image
                 width={250}
@@ -189,7 +189,7 @@ const Footer: React.FC = () => {
                       <Link
                         
                         href={slug}
-                        className="hover:text-primary link-footer text-slate-400 cursor-pointer whitespace-nowrap"
+                        className="hover:text-primary link-footer text-slate-400 cursor-pointer whitespace-nowrap text-base md:text-14 xl:text-base"
                       >
                         {navItem.title.replace("Series", "")}
                       </Link>
@@ -219,7 +219,7 @@ const Footer: React.FC = () => {
                 <li key={index}>
                   <Link
                     href={item.href}
-                    className="hover:text-primary link-footer text-slate-400"
+                    className="hover:text-primary link-footer text-slate-400 text-base md:text-14 xl:text-base"
                   >
                     {item.name}
                   </Link>
@@ -227,7 +227,7 @@ const Footer: React.FC = () => {
               ))}
             </ul>
           </div>
-          <div className="lg:pb-0 pb-3 whitespace-nowrap col-span-12 2xsm:col-span-12 xsm:col-span-4 md:col-span-2">
+          <div className="lg:pb-0 pb-3 whitespace-nowrap col-span-12 2xsm:col-span-12 xsm:col-span-4 md:col-span-3 lg:col-span-2">
             <h3
               className="font-semibold mb-4 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
               onClick={togglePages}
@@ -246,7 +246,7 @@ const Footer: React.FC = () => {
                 <li key={index}>
                   <Link
                     href={`/${page.href}`}
-                    className="hover:text-primary link-footer text-slate-400"
+                    className="hover:text-primary link-footer text-slate-400 text-base md:text-14 xl:text-base"
                   >
                     {page.name}
                   </Link>
