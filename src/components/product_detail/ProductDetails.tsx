@@ -142,6 +142,7 @@ export default function ProductDetails({
       purchasePrice: product.purchasePrice,
       sizes: product.sizes,
       code: product.code,
+      categoryName:categoryName,
     };
 
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -665,11 +666,12 @@ export default function ProductDetails({
               </div>
             )}
           </div>
-
+          {!isAccessory && (
           <div className="flex flex-col gap-2 mt-2">
             <h1 className="text-[14px] font-bold">Healthy Green Environment</h1>
             <EnviromentIcons />
           </div>
+          )}
         </div>
       </div>
     </div>
