@@ -167,7 +167,7 @@ const CheckoutData: React.FC<TableProps> = ({
           {shipmentFee === "Free"}
           <h2 className="text-16">
             <span className="text-20">
-              {subtotal > 250 ? "Free" : `AED ${20}`}
+              {subtotal > 250 ? "Free" : `AED ${shipmentFee}`}
             </span>
           </h2>
         </div>
@@ -178,7 +178,7 @@ const CheckoutData: React.FC<TableProps> = ({
           <h2 className="text-20 ">
             AED{" "}
             <span>
-              {subtotal > 250 ? subtotal : Number(20) + subtotal}
+              {subtotal > 250 ? subtotal : Number(shipmentFee) + subtotal}
             </span>
           </h2>
         </div>
@@ -201,7 +201,7 @@ const CheckoutData: React.FC<TableProps> = ({
 
           <div className="flex flex-col justify-center h-full">
             <p className="p-0 m-0 text-primary font-futura text-sm">Buy with confidence</p>
-            <p className="p-0 m-0 text-[#827277] font-futura text-sm flex gap-5">Free easy returns up to 14 days. <Link href="/return-refund" className="text-[#9F9592] text-sm font-futura cursor-pointer">Learn more</Link></p>
+            <p className="p-0 m-0 text-[#827277] font-futura text-sm flex gap-5">Free easy returns up to 14 days. <Link href="/returns-refunds" className="text-[#9F9592] text-sm font-futura cursor-pointer">Learn more</Link></p>
           </div>
 
 
