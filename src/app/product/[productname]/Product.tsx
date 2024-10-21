@@ -13,9 +13,10 @@ import Accordion from "components/widgets/Accordion";
 import Collapse from "components/ui/Collapse/Collapse";
 import Review from "components/Common/Review";
 
-const Product = ({ productname }:{ productname: string  }) => {
+const Product = ({ productname }: { productname: string }) => {
   const parsedProduct = productname ? productname : null;
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
+  const [productsAdon, setProductsAdon] = useState<PRODUCTS_TYPES[]>([]);
   const [productDetail, setProductDetail] = useState<PRODUCTS_TYPES | null>(
     null
   );
@@ -29,7 +30,8 @@ const Product = ({ productname }:{ productname: string  }) => {
       const categoryRequest = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
       );
-      const productRequest = await axios.get( `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
+      const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
+
       const [categoryResponse, productResponse] = await Promise.all([
         categoryRequest,
         productRequest,
@@ -40,6 +42,8 @@ const Product = ({ productname }:{ productname: string  }) => {
         const foundProduct = productResponse.data.products.find(
           (item: any) => generateSlug(item.name) === parsedProduct
         );
+        console.log("============== foundProduct ===============")
+        console.log(foundProduct)
 
         if (foundProduct) {
           setProductDetail(foundProduct);
@@ -47,7 +51,18 @@ const Product = ({ productname }:{ productname: string  }) => {
           const foundCategory = categoryResponse.data.find(
             (cat: any) => cat._id === foundProduct.category
           );
+        
           setCategoryName(foundCategory ? foundCategory.name : null);
+        }
+        if (foundProduct === undefined) {
+          const adsonProducts = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`);
+          const foundProductAdon = adsonProducts.data.products.find(
+            (item: any) => generateSlug(item.name) === parsedProduct
+          );
+         
+          setProductDetail(foundProductAdon);
+          setProductsAdon(adsonProducts.data.products)
+          setCategoryName('Accessories');
         }
       }
     } catch (error) {
@@ -76,9 +91,15 @@ const Product = ({ productname }:{ productname: string  }) => {
     }
   }, [products]);
 
-  const filteredProducts = products.filter(
+  let filteredProducts = products.filter(
     (product) => product.category === productDetail?.category
   );
+
+  if (filteredProducts.length === 0) {
+    console.log("=========== FILTERED PRODUCT ==========")
+    console.log(filteredProducts)
+    filteredProducts = productsAdon
+  }
   return (
     <>
       <Overlay title="Shop" />
@@ -99,7 +120,7 @@ const Product = ({ productname }:{ productname: string  }) => {
           <div className="block lg:hidden mt-5">
             <Accordion
             //  detail={productDetail.modelDetails}
-              />
+            />
             <Collapse title="Customer Reviews">
               <Review
                 reviews={reviews}
