@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <>z
+    <>
       {/* {pathname == "/" || pathname == "/about" ? null : <PreFooter />} */}
 
       <div className="bg-secondary text-white pt-10  pb-10 md:px-2 lg:px-30">
