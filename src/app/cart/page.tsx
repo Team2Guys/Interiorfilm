@@ -40,14 +40,25 @@ const Cart = () => {
   }, []);
 
   const calculateTotals = (items: any) => {
-    const sub = items.reduce((acc: number, item: any) => { return acc + item.totalPrice; }, 0);
-    console.log(sub, "sub")
-    const totalItems = items.reduce((acc: number, item: any) => { return acc + item.count }, 0);
+    // Calculate subtotal based on totalPrice for all items
+    const sub = items.reduce((acc: number, item: any) => acc + item.totalPrice, 0);
+  
+    // Calculate total items:
+    // - Accessories: Count based on 'count'
+    // - Non-accessories: Sum based on 'length'
+    const totalItems = items.reduce((acc: number, item: any) => {
+      if (item.categoryName === 'Accessories') {
+        return acc + item.count;  // Count accessories by their quantity
+      } else {
+        return acc + item.length; // Count non-accessories by their length
+      }
+    }, 0);
+  
     setTotal(sub);
     setTotalItems(totalItems);
     return totalItems;
   };
-
+  
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     setCartItems(existingCart); // Set the cart items
@@ -137,10 +148,14 @@ const Cart = () => {
               </div>
 
               <div className="flex flex-col justify-center items-center space-y-2">
-                <p className="text-13 font-semibold text-[#6F6969] sm:text-15  text-start  w-full"> You have {totalItems} items in your cart </p>
-                <p className="text-13 font-semibold text-[#6F6969] sm:text-15  text-start  w-full">
-                  You have {cartItems && cartItems.length > 0 ? cartItems.reduce((total: number, item: any) => total + item.length, 0) : 0} (m) length in your cart
-                </p>
+              <p className="text-13 font-semibold text-[#6F6969] sm:text-15 text-start w-full">
+  You have {totalItems} items in your cart {/* Total items now reflect both accessories and non-accessories */}
+</p>
+<p className="text-13 font-semibold text-[#6F6969] sm:text-15 text-start w-full">
+  You have {cartItems && cartItems.length > 0 ? cartItems.reduce((total: number, item: any) => {
+    return item.categoryName !== 'Accessories' ? total + item.length : total;
+  }, 0) : 0} (m) length in your cart
+</p>
 
                 <p className="font-semibold sm:text-15 w-full flex justify-between text-[#6F6969]">Subtotal:<span>AED { total}</span></p>
                 <p className="font-normal  w-full flex justify-between text-[#6F6969]">Shipment Fee:<span> {total > 250 ?  "Free" : "AED 20"  }</span></p>
