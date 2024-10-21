@@ -8,10 +8,7 @@ import { generateSlug } from "data/Data";
 import PRODUCTS_TYPES from "types/interfaces";
 import ProductDetails from "components/product_detail/ProductDetails";
 import { ProductSkeleton } from "components/Skeleton-loading/ProductSkelton";
-import Loader from "components/Loader/Loader";
 import Accordion from "components/widgets/Accordion";
-import Collapse from "components/ui/Collapse/Collapse";
-import Review from "components/Common/Review";
 
 const Product = ({ productname }: { productname: string }) => {
   const parsedProduct = productname ? productname : null;
@@ -23,6 +20,7 @@ const Product = ({ productname }: { productname: string }) => {
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
   const [categoryName, setCategoryName] = useState<string | undefined>();
   const [reviews, setReviews] = useState<string[]>([]);
+
   const productHandler = async () => {
     try {
       setProductsLoading(true);
@@ -42,9 +40,7 @@ const Product = ({ productname }: { productname: string }) => {
         const foundProduct = productResponse.data.products.find(
           (item: any) => generateSlug(item.name) === parsedProduct
         );
-        console.log("============== foundProduct ===============")
-        console.log(foundProduct)
-
+   
         if (foundProduct) {
           setProductDetail(foundProduct);
 
@@ -96,8 +92,6 @@ const Product = ({ productname }: { productname: string }) => {
   );
 
   if (filteredProducts.length === 0) {
-    console.log("=========== FILTERED PRODUCT ==========")
-    console.log(filteredProducts)
     filteredProducts = productsAdon
   }
   return (
@@ -111,6 +105,7 @@ const Product = ({ productname }: { productname: string }) => {
           <ProductDetails
             productDetail={productDetail}
             categoryName={categoryName}
+            isAccessory={categoryName === 'Accessories'}
           />
         </>
       ) : null}
