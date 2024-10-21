@@ -120,14 +120,14 @@ const Product = ({ productname }: { productname: string }) => {
           <div className="block lg:hidden mt-5">
             <Accordion
             //  detail={productDetail.modelDetails}
-            />
-            <Collapse title="Customer Reviews">
+              />
+            {/* <Collapse title="Customer Reviews">
               <Review
                 reviews={reviews}
                 productId={productDetail?._id}
                 fetchReviews={fetchReviews}
               />
-            </Collapse>
+            </Collapse> */}
           </div>
         </>
       ) : null}

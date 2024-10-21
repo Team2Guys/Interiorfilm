@@ -126,6 +126,7 @@ const CategorySlider: React.FC = () => {
                 name={category.name}
                 posterImageUrl={category.posterImageUrl.imageUrl}
                 categoryId={generateSlug(category.name)}
+                nameClass={category.name === 'Accessories' ? 'text-black' : 'text-white'}
               />
             </SwiperSlide>
           ))

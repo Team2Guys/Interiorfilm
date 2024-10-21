@@ -141,14 +141,14 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
         <Accordion 
         // detail={detail}
          />
-        <hr className="h-1 border-stone-200" />
-        <Collapse title="Customer Reviews">
+        {/* <hr className="h-1 border-stone-200" /> */}
+        {/* <Collapse title="Customer Reviews">
           <Review
             reviews={reviews}
             productId={product?._id}
             fetchReviews={fetchReviews}
           />
-        </Collapse>
+        </Collapse> */}
         <hr className="h-1 border-stone-200" />
       </div>
     </Fragment>
