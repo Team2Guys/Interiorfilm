@@ -14,12 +14,12 @@ const Wishlist = () => {
   const token = Cookies.get("user_token");
   const router = useRouter()
   
-  useEffect(()=>{
-    if(!token)
-    {
-      router.push('/login')
-    }
-  },[token])
+  // useEffect(()=>{
+  //   if(!token)
+  //   {
+  //     router.push('/login')
+  //   }
+  // },[token])
   
   useEffect(() => {
     const existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
