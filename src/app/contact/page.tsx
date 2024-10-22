@@ -15,51 +15,55 @@ import Toaster from "components/Toaster/Toaster";
 import Loader from "components/Loader/Loader";
 
 const contact_us_Validation = Yup.object().shape({
-    user_name: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Name is Required"),
-    comment: Yup.string().required("Comment is Required"),
-    user_email: Yup.string().email("Invalid email").required("Email is Required"),
-    user_phone: Yup.string()    .required("Phone Number is Required"),
+  user_name: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Name is Required"),
+  comment: Yup.string().required("Comment is Required"),
+  user_email: Yup.string().email("Invalid email").required("Email is Required"),
+  user_phone: Yup.string().required("Phone Number is Required"),
+});
 
+const formatPhoneNumber = (value: any) => {
+  // Remove all characters except digits and "+"
+  const numbers = value.replace(/[^+\d]/g, "");
 
+  // Handle UAE-specific formatting when starting with "+971"
+  if (numbers.startsWith("+971")) {
+    if (numbers.length <= 5) return `${numbers}`; // "+971"
+    if (numbers.length <= 7)
+      return `${numbers.slice(0, 4)}-${numbers.slice(4)}`; // "+971-XX"
+    return `${numbers.slice(0, 4)}-${numbers.slice(4, 6)}-${numbers.slice(
+      6,
+      13
+    )}`; // "+971-XX-XXXXXXX"
+  }
+  // Handle numbers starting with "0" for UAE (assume "0971")
+  else if (numbers.startsWith("0")) {
+    if (numbers.length <= 3) return `${numbers}`;
+    if (numbers.length <= 6)
+      return `${numbers.slice(0, 3)}-${numbers.slice(3)}`; // "0971-XX"
+    return `${numbers.slice(0, 3)}-${numbers.slice(3, 5)}-${numbers.slice(
+      5,
+      12
+    )}`; // "0971-XX-XXXXXXX"
+  }
 
-  });
-  
-  const formatPhoneNumber = (value: any) => {
-    // Remove all characters except digits and "+"
-    const numbers = value.replace(/[^+\d]/g, "");
-  
-    // Handle UAE-specific formatting when starting with "+971"
-    if (numbers.startsWith("+971")) {
-      if (numbers.length <= 5) return `${numbers}`; // "+971"
-      if (numbers.length <= 7) return `${numbers.slice(0, 4)}-${numbers.slice(4)}`; // "+971-XX"
-      return `${numbers.slice(0, 4)}-${numbers.slice(4, 6)}-${numbers.slice(6, 13)}`; // "+971-XX-XXXXXXX"
-    } 
-    // Handle numbers starting with "0" for UAE (assume "0971")
-    else if (numbers.startsWith("0")) {
-      if (numbers.length <= 3) return `${numbers}`;
-      if (numbers.length <= 6) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`; // "0971-XX"
-      return `${numbers.slice(0, 3)}-${numbers.slice(3, 5)}-${numbers.slice(5, 12)}`; // "0971-XX-XXXXXXX"
-    } 
-  
-    return numbers; // If no valid prefix, return the input as-is.
-  };
-  
-  const handlePhoneNumberChange = (e: any, setFieldValue: any) => {
-    let value = e.target.value;
-  
-    // Allow only digits and '+' at the start
-    value = value.replace(/[^+\d]/g, "");
-  
-    // Limit the input to 14 characters (for full UAE number)
-    value = value.slice(0, 14);
-  
-    // Set the formatted phone number
-    setFieldValue("user_phone", formatPhoneNumber(value));
-  };
-  
+  return numbers; // If no valid prefix, return the input as-is.
+};
+
+const handlePhoneNumberChange = (e: any, setFieldValue: any) => {
+  let value = e.target.value;
+
+  // Allow only digits and '+' at the start
+  value = value.replace(/[^+\d]/g, "");
+
+  // Limit the input to 14 characters (for full UAE number)
+  value = value.slice(0, 14);
+
+  // Set the formatted phone number
+  setFieldValue("user_phone", formatPhoneNumber(value));
+};
 
 const Contact = () => {
   const [loading, setloading] = useState<boolean>(false);
@@ -102,14 +106,21 @@ const Contact = () => {
       <Container className="lg:my-16 my-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-primary rounded-md p-4  sm:p-4 md:p-8 text-white space-y-14">
-            
             <h1 className="text-2xl lg:text-4xl font-medium pt-10">Contact</h1>
 
             <div className="flex flex-col gap-4">
               <div className="flex gap-2 items-center">
                 <TfiLocationPin size={20} />
-                <Link target="_blank" href={"https://www.google.com/maps?ll=25.24485,55.299425&z=15&t=m&hl=en&gl=US&mapclient=embed&cid=14349723016612093106"} className="md:text-12 lg:text-base">Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha,
-                Dubai, UAE</Link>
+                <Link
+                  target="_blank"
+                  href={
+                    "https://www.google.com/maps?ll=25.24485,55.299425&z=15&t=m&hl=en&gl=US&mapclient=embed&cid=14349723016612093106"
+                  }
+                  className="md:text-12 lg:text-base"
+                >
+                  Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha,
+                  Dubai, UAE
+                </Link>
               </div>
               <div className="flex gap-2 items-center">
                 <FiPhone size={20} />
@@ -124,33 +135,40 @@ const Contact = () => {
                   info@interiorfilm.ae
                 </Link>
               </div>
-
-              
             </div>
             <div>
               <h1 className="text-lg md:text-xl lg:text-3xl font-medium flex flex-col gap-2">
                 Follow Us
               </h1>
               <div className="flex gap-5 ">
-                <Link target="_blank" href={"https://www.facebook.com/InteriorFilm.ae"}>
+                <Link
+                  target="_blank"
+                  href={"https://www.facebook.com/InteriorFilm.ae"}
+                >
                   <FaFacebookSquare className="text-white" size={25} />
                 </Link>
-                <Link target="_blank" href={"https://www.instagram.com/interiorfilm.ae/"}>
+                <Link
+                  target="_blank"
+                  href={"https://www.instagram.com/interiorfilm.ae/"}
+                >
                   <FaInstagram className="text-white" size={25} />
                 </Link>
-                <Link target="_blank" href={"https://www.pinterest.com/interiorfilmuae/"}>
+                <Link
+                  target="_blank"
+                  href={"https://www.pinterest.com/interiorfilmuae/"}
+                >
                   <FaPinterest className="text-white" size={25} />
                 </Link>
               </div>
             </div>
 
-<div>
-
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.7645284624414!2d55.29684471128044!3d25.244854829675067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f42d1e8f3abe7%3A0xc724750e36691cb2!2sYellow%20Zone%20Technical%20Services!5e0!3m2!1sen!2s!4v1726464310457!5m2!1sen!2s" className ="w-full max-h-300 min-h-50" loading="lazy"></iframe>
-
-</div>
-
-
+            <div>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.7645284624414!2d55.29684471128044!3d25.244854829675067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f42d1e8f3abe7%3A0xc724750e36691cb2!2sYellow%20Zone%20Technical%20Services!5e0!3m2!1sen!2s!4v1726464310457!5m2!1sen!2s"
+                className="w-full max-h-300 min-h-50"
+                loading="lazy"
+              ></iframe>
+            </div>
           </div>
           <div className="border border-gray rounded-md">
             <form className="p-4 pt-10" onSubmit={formik.handleSubmit}>
@@ -163,36 +181,36 @@ const Contact = () => {
                 onChange={formik.handleChange}
                 value={formik.values.user_name}
               />
-             <div className="mb-10">
-             {formik.errors.user_name && formik.touched.user_name && (
-                <div className="text-primary  text-12 px-3">
-                  {formik.errors.user_name}
-                </div>
-              )}
-             </div>
+              <div className="mb-10">
+                {formik.errors.user_name && formik.touched.user_name && (
+                  <div className="text-primary  text-12 px-3">
+                    {formik.errors.user_name}
+                  </div>
+                )}
+              </div>
 
-          
-            <LabelInput
+              <LabelInput
                 label="Phone Number"
                 placeholder="+971-XX-XXXXXXX"
                 type="text"
                 id="user_phone"
                 name="user_phone"
-                onChange={(e) => handlePhoneNumberChange(e, formik.setFieldValue)}
+                onChange={(e) =>
+                  handlePhoneNumberChange(e, formik.setFieldValue)
+                }
                 value={formik.values.user_phone}
                 inputMode="numeric"
                 maxLength={15}
               />
-<div className="mb-10">
-              {formik.errors.user_phone && formik.touched.user_phone && (
-                <div className="text-primary  text-12 px-3">
-                  {formik.errors.user_phone}
-                </div>
-              )}
+              <div className="mb-10">
+                {formik.errors.user_phone && formik.touched.user_phone && (
+                  <div className="text-primary  text-12 px-3">
+                    {formik.errors.user_phone}
+                  </div>
+                )}
               </div>
 
-
-<LabelInput
+              <LabelInput
                 label="Email"
                 placeholder="Enter Email"
                 type="email"
@@ -202,12 +220,12 @@ const Contact = () => {
                 value={formik.values.user_email}
               />
               <div className="mb-10">
-              {formik.errors.user_email && formik.touched.user_email && (
-                <div className="text-primary  text-12 px-3">
-                  {formik.errors.user_email}
-                </div>
-              )}
-            </div>
+                {formik.errors.user_email && formik.touched.user_email && (
+                  <div className="text-primary  text-12 px-3">
+                    {formik.errors.user_email}
+                  </div>
+                )}
+              </div>
               <div className="w-full px-3 mb-10">
                 <label className="block uppercase tracking-wide text-dark text-sm font-bold mb-2">
                   Comment
@@ -220,14 +238,14 @@ const Contact = () => {
                   placeholder={"Enter Comment"}
                 />
                 <div className="mb-10">
-                {formik.errors.comment && formik.touched.comment && (
-                  <div className="text-primary text-12 ">
-                    {formik.errors.comment}
-                  </div>
-                )}
-</div>
+                  {formik.errors.comment && formik.touched.comment && (
+                    <div className="text-primary text-12 ">
+                      {formik.errors.comment}
+                    </div>
+                  )}
+                </div>
                 <Button
-                  className="text-center w-full bg-primary py-3 text-white mt-5"
+                  className="text-center w-full bg-primary py-3 text-white mt-5 px-14 2xsm:px-20"
                   type="submit"
                   title={loading ? <Loader /> : "Submit Now"}
                   disable={loading}

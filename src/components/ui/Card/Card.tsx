@@ -285,9 +285,9 @@ const Card: React.FC<CardProps> = ({
                 <FiZoomIn className=" p-[0.50rem] lg:p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white text-[30px] lg:text-[40px]" />
               </button>
             </div>
-            <div className="absolute bottom-5 z-20 w-full flex gap-5 justify-center opacity-0 group-hover:opacity-100 transition ease-in-out duration-400">
+            <div className="absolute bottom-3 xsm:bottom-5 z-20 w-full flex gap-1 2xsm:gap-2 md:gap-5 justify-center opacity-0 group-hover:opacity-100 transition ease-in-out duration-400">
               <button
-                className="bg-white w-[90px] h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-11   py-1"
+                className="bg-white w-16 xsm:w-20 md:w-[90px] h-7 xsm:h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-9 md:text-11 py-1"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleAddToCart(product);
@@ -297,7 +297,7 @@ const Card: React.FC<CardProps> = ({
                 Order Now
               </button>
               <button
-                className="bg-black  w-[90px] l:h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-11 text-white  py-1"
+                className="bg-black w-16 xsm:w-20 md:w-[90px] h-7 xsm:h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-9 md:text-11 py-1 text-white"
                 onClick={(e) => {
                   e.stopPropagation();
                   setproductDetails(product);
