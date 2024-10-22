@@ -196,6 +196,7 @@ const Card: React.FC<CardProps> = ({
       discountPrice: product.discountPrice,
       count: 1,
       length: 1,
+      categoryName:categoryName,
       totalPrice: product.discountPrice
         ? product.discountPrice
         : product.salePrice,
