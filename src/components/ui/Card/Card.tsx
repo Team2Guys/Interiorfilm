@@ -50,8 +50,6 @@ const Card: React.FC<CardProps> = ({
   );
   const [isLoading, setIsLoading] = useState(false);
 
-
-
   const handleProductClick = (product: PRODUCTS_TYPES) => {
     setIsLoading(true);
     setSelectedProduct(product);
@@ -60,7 +58,6 @@ const Card: React.FC<CardProps> = ({
       setIsLoading(false);
     }, 100);
   };
-
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -155,7 +152,7 @@ const Card: React.FC<CardProps> = ({
       purchasePrice: product.purchasePrice,
       sizes: product.sizes,
       code: product.code,
-      categoryName:categoryName,
+      categoryName: categoryName,
     };
 
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -261,38 +258,37 @@ const Card: React.FC<CardProps> = ({
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
-      <div className={`relative group mb-5 z-20 ${cardClass}`} key={index}>
-        <div
-          className={`space-y-3 absolute top-6 right-6 opacity-0 group-hover:opacity-100  overflow-hidden transition ease-in-out duration-400 hidden md:block ${quickClass}`}
-        >
-          <button
-            onClick={() => handleAddToCart(product)}
-            className="flex justify-center items-center z-20"
-          >
-            <LuShoppingCart className=" p-[0.50rem] lg:p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white text-[30px] lg:text-[40px]" />
-          </button>
-          <button
-            onClick={() => handleAddToWishlist(product)}
-            className="flex justify-center items-center z-20"
-          >
-            <GoHeart className=" p-[0.50rem] lg:p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white text-[30px] lg:text-[40px]" />
-          </button>
-          <button
-            onClick={() => handleProductClick(product)}
-            className="flex justify-center items-center z-20"
-          >
-            <FiZoomIn className=" p-[0.50rem] lg:p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white text-[30px] lg:text-[40px]" />
-          </button>
-        </div>
-
+      <div className={`group mb-5 ${cardClass}`} key={index}>
         <div
           className="cursor-pointer  transition-all m-1 "
           onClick={() => router.push(`/product/${generateSlug(product.name)}`)}
         >
-          <div className="text-center">
-            <div className="absolute bottom-33 hidden mb-5  z-20 w-full md:flex gap-5 justify-center opacity-0 group-hover:opacity-100 transition ease-in-out duration-400">
+          <div className="text-center relative">
+            <div
+              className={`space-y-3 absolute top-6 right-6 opacity-0 group-hover:opacity-100  overflow-hidden transition ease-in-out duration-400 hidden md:block ${quickClass}`}
+            >
               <button
-                className="bg-white w-[90px] h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-11   py-1"
+                onClick={() => handleAddToCart(product)}
+                className="flex justify-center items-center z-20"
+              >
+                <LuShoppingCart className=" p-[0.50rem] lg:p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white text-[30px] lg:text-[40px]" />
+              </button>
+              <button
+                onClick={() => handleAddToWishlist(product)}
+                className="flex justify-center items-center z-20"
+              >
+                <GoHeart className=" p-[0.50rem] lg:p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white text-[30px] lg:text-[40px]" />
+              </button>
+              <button
+                onClick={() => handleProductClick(product)}
+                className="flex justify-center items-center z-20"
+              >
+                <FiZoomIn className=" p-[0.50rem] lg:p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white text-[30px] lg:text-[40px]" />
+              </button>
+            </div>
+            <div className="absolute bottom-3 xsm:bottom-5 z-20 w-full flex gap-1 2xsm:gap-2 md:gap-5 justify-center opacity-0 group-hover:opacity-100 transition ease-in-out duration-400">
+              <button
+                className="bg-white w-16 xsm:w-20 md:w-[90px] h-7 xsm:h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-9 md:text-11 py-1"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleAddToCart(product);
@@ -302,7 +298,7 @@ const Card: React.FC<CardProps> = ({
                 Order Now
               </button>
               <button
-                className="bg-black  w-[90px] l:h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-11 text-white  py-1"
+                className="bg-black w-16 xsm:w-20 md:w-[90px] h-7 xsm:h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-9 md:text-11 py-1 text-white"
                 onClick={(e) => {
                   e.stopPropagation();
                   setproductDetails(product);
@@ -313,7 +309,7 @@ const Card: React.FC<CardProps> = ({
               </button>
             </div>
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
-              <div className=''>
+              <div className="">
                 <Image
                   className="bg-contain  w-full "
                   width={500}
@@ -322,9 +318,7 @@ const Card: React.FC<CardProps> = ({
                   alt="Image"
                 />
                 <p className="absolute top-0 left-1 text-sm px-1 text-center text-black bg-[#fb701d]">
-                  {product.totalStockQuantity === 0 && (
-                    'Limited Stock'
-                  )}
+                  {product.totalStockQuantity === 0 && "Limited Stock"}
                 </p>
               </div>
             )}
@@ -338,7 +332,6 @@ const Card: React.FC<CardProps> = ({
             {product.code}
           </h1>
           <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
-
             {/* <p className="lg:text-lg text-md text-center text-[#fb701d]">
               {product.totalStockQuantity > 0 && (
                 'In Stock'
@@ -346,9 +339,15 @@ const Card: React.FC<CardProps> = ({
             </p> */}
 
             <p className="text-black font-bold text-18 flex gap-1">
-              AED <span className={` text-20 ${product.discountPrice ? "text-red" : "text-black"}`}>{product.salePrice}</span>
+              AED{" "}
+              <span
+                className={` text-20 ${
+                  product.discountPrice ? "text-red" : "text-black"
+                }`}
+              >
+                {product.salePrice}
+              </span>
             </p>
-
 
             {product.discountPrice > 0 && (
               <p className="line-through text-para text-xs font-medium">
@@ -370,8 +369,6 @@ const Card: React.FC<CardProps> = ({
             </div>
           )}
         </div>
-
-
       </div>
     );
   };
@@ -379,7 +376,11 @@ const Card: React.FC<CardProps> = ({
   return (
     <>
       <Modal
-        title={<h1 className="lg:text-xl text-sm text-dark font-bold">Code: <span>{selectedProduct?.name}</span></h1>}
+        title={
+          <h1 className="lg:text-xl text-sm text-dark font-bold">
+            Code: <span>{selectedProduct?.name}</span>
+          </h1>
+        }
         open={isModalOpen}
         width={700}
         onCancel={handleCancel}
@@ -389,12 +390,16 @@ const Card: React.FC<CardProps> = ({
           <div className="flex justify-center items-center h-64">
             <Spin size="large" />
           </div>
+        ) : selectedProduct?.posterImageUrl?.imageUrl ? (
+          <Image
+            className="mt-5 object-contain w-full h-full"
+            width={1000}
+            height={1000}
+            src={selectedProduct.posterImageUrl.imageUrl}
+            alt="Product Image"
+          />
         ) : (
-          selectedProduct?.posterImageUrl?.imageUrl ? (
-            <Image className="mt-5 object-contain w-full h-full" width={1000} height={1000} src={selectedProduct.posterImageUrl.imageUrl} alt="Product Image" />
-          ) : (
-            <p>No image available</p>
-          )
+          <p>No image available</p>
         )}
       </Modal>
       <Model
