@@ -13,14 +13,16 @@ const Orders = () => {
   const [ordersData, setOrdersData] = useState<any[]>([]);
   const [loading,setLoading]=useState(false);
   const [products, setProducts] = useState<any[]>([]);
-  const token = Cookies.get('2guysAdminToken');
+  const token = Cookies.get("2guysAdminToken");
+  const superAdminToken = Cookies.get("superAdminToken");
+  let finalToken = token ? token : superAdminToken;
 
   const getOrders = async () => {
     if (!token) return null;
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/getorders`, {
         headers: {
-          token,
+          finalToken,
         },
       });
       console.log(response.data, 'response');

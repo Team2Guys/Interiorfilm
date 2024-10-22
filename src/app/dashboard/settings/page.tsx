@@ -17,7 +17,10 @@ import { ImageRemoveHandler } from 'utils/helperFunctions';
 
 const Settings = () => {
   const { loggedInUser }: any = useAppSelector(state => state.usersSlice);
-  const token = Cookies.get('2guysAdminToken');
+  const token = Cookies.get("2guysAdminToken");
+  const superAdminToken = Cookies.get("superAdminToken");
+  let finalToken = token ? token : superAdminToken;
+
   const dispatch = useAppDispatch();
   let AdminType = loggedInUser && loggedInUser.role == "super-Admin"
 
@@ -73,7 +76,7 @@ const Settings = () => {
         let response: any = await axios.put(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/editAdmin/${loggedInUser._id}`, combinedData, {
           headers: {
-            "token": token
+            "token": finalToken
           }
         }
         );
