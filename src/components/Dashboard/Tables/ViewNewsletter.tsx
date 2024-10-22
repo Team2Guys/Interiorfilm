@@ -135,7 +135,7 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
       if (response.status === 200) {
         notification.success({
           message: "Emails Broadcasted Successfully",
-          description: `Successfully sent to: ${selectedEmails.join(", ")}`,
+          // description: `Successfully sent to: ${selectedEmails.join(", ")}`,
           placement: "topRight",
         });
       } else {
