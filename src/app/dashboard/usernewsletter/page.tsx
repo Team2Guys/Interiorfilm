@@ -1,5 +1,4 @@
 'use client';
-
 import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
 import ViewNewsletter from "components/Dashboard/Tables/ViewNewsletter";
@@ -10,7 +9,10 @@ import Cookies from 'js-cookie';
 const Newsletter = () => {
   const [newsletter, setNewsletter] = useState<any[]>([]);
   const [productLoading, setProductLoading] = useState<boolean>(false);
-  const token = Cookies.get('2guysAdminToken');
+
+  const token = Cookies.get("2guysAdminToken");
+  const superAdminToken = Cookies.get("superAdminToken");
+  let finalToken = token ? token : superAdminToken;
 
   useEffect(() => {
     const productHandler = async () => {
@@ -20,7 +22,7 @@ const Newsletter = () => {
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/promotion/get-all`,
           {
             headers: {
-              token: token ?? '',
+              token: finalToken ?? '',
             },
           }
         );
