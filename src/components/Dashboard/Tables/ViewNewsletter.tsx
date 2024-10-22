@@ -126,7 +126,7 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/promotion/send_promotional_email`,
         formData,
         {
-          headers: { finalToken },
+          headers: { token: finalToken },
         }
       );
   

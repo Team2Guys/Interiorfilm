@@ -21,9 +21,7 @@ const Orders = () => {
     if (!token) return null;
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/getorders`, {
-        headers: {
-          finalToken,
-        },
+        headers: { token: finalToken },
       });
       console.log(response.data, 'response');
       
