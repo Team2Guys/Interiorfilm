@@ -20,6 +20,7 @@ interface CardProps {
   carDetail?: string;
   cardClass?: string;
   quickClass?: string;
+  categoryName?: any;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -29,6 +30,7 @@ const Card: React.FC<CardProps> = ({
   carDetail,
   cardClass,
   quickClass,
+  categoryName,
 }) => {
   const router = useRouter();
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
@@ -153,6 +155,7 @@ const Card: React.FC<CardProps> = ({
       purchasePrice: product.purchasePrice,
       sizes: product.sizes,
       code: product.code,
+      categoryName:categoryName,
     };
 
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
