@@ -438,7 +438,7 @@ const selectedProductImages = specificProductImages.length
                   </div>
                 ))
               ) : (
-                <Card quickClass="right-8" ProductCard={sortedProducts} slider={true} />
+                <Card quickClass="right-8" ProductCard={sortedProducts} categoryName={categoryName} slider={true} />
               )}
             </div>
           </>

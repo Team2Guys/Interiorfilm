@@ -58,7 +58,6 @@ export default function ProductDetails({
   const [length, setLength] = useState<number>(1);
   const [adsonProducts,setAdsonProducts]=useState<Product[]>([])
   const router = useRouter();
-  console.log(productDetail,"productDetailprosadductDetailproductDetail")
 
   const Acessoptions =
   productDetail && productDetail.totalStockQuantity > 0
@@ -301,7 +300,7 @@ export default function ProductDetails({
                         ? productDetail.discountPrice
                         : productDetail.salePrice}
                     </span>
-                    /m
+                    {!isAccessory && (<span>/m</span>)}
                   </p>
                   {productDetail.discountPrice ? (
                     <p className="line-through text-[#808080]">

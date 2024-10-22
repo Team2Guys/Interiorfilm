@@ -85,7 +85,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ setAdsonProducts }) => {
         purchasePrice: product.purchasePrice,
         //@ts-expect-error
         sizes: product.sizes || [], 
-        code: product.code
+        code: product.code,
       };
 
       let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');

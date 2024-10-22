@@ -30,14 +30,10 @@ const Table: React.FC<TableProps> = ({
   const [lengths, setLengths] = useState<{ [key: number]: number }>({});
   const [totalItems, setTotalItems] = useState(0);
 
-
-
   useEffect(() => {
     const handleCartChange = () => {
-      ProductHandler(); 
-      console.log(
-        "function called", "sub"
-      )
+      ProductHandler();
+      console.log("function called", "sub");
     };
 
     window.addEventListener("cartChanged", handleCartChange);
@@ -59,12 +55,14 @@ const Table: React.FC<TableProps> = ({
   }, [data]);
 
   const ProductHandler = () => {
-    const Products = localStorage.getItem(pathName === "/wishlist" ? "wishlist" : "cart");
+    const Products = localStorage.getItem(
+      pathName === "/wishlist" ? "wishlist" : "cart"
+    );
     if (Products && JSON.parse(Products).length > 0) {
       const items: any = JSON.parse(Products || "[]");
-      console.log(items, "sub")
-      onCartChange(items)
-      
+      console.log(items, "sub");
+      onCartChange(items);
+
       setData(items);
       setCounts(
         items.reduce((acc: any, item: any, index: number) => {
@@ -191,7 +189,10 @@ const Table: React.FC<TableProps> = ({
     window.dispatchEvent(new Event("cartChanged"));
   };
 
-  const handleChange = (index: number,e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    index: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const value = parseInt(e.target.value, 10);
     if (isNaN(value) || value < 1 || value > 100) {
       message.error("Please select a quantity between 1 and 100.");
@@ -229,29 +230,47 @@ const Table: React.FC<TableProps> = ({
     return options;
   };
 
-
-
   return (
     <>
       <div className=" hidden md:block   ">
         <div className="flex justify-between items-center text-18 font-semibold px-4 bg-white text-black py-3 ">
-
-          <div className={` ${pathName === "/wishlist" ? "md:w-4/12 lg:w-6/12" : "md:w-4/12 lg:w-6/12"} `}>
+          <div
+            className={` ${
+              pathName === "/wishlist"
+                ? "md:w-4/12 lg:w-6/12"
+                : "md:w-4/12 lg:w-6/12"
+            } `}
+          >
             <p>Items</p>
           </div>
-          <div className={` ${pathName === "/wishlist" ? "md:w-2/12 lg:w-1/12" : "md:w-2/12 lg:w-2/12 "} `}>
+          <div
+            className={` ${
+              pathName === "/wishlist"
+                ? "md:w-2/12 lg:w-1/12"
+                : "md:w-2/12 lg:w-2/12 "
+            } `}
+          >
             <p>Price</p>
           </div>
-          <div className={` ${pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12" : "md:w-1/12 lg:w-2/12 text-center"} `}>
+          <div
+            className={` ${
+              pathName === "/wishlist"
+                ? "md:w-2/12 lg:w-2/12"
+                : "md:w-1/12 lg:w-2/12 text-center"
+            } `}
+          >
             <p>QTY(M)</p>
           </div>
 
-          <div className={`${pathName === "/wishlist" ? "md:w-2/12 lg:w-1/12" : "text-center md:w-2/12 lg:w-2/12"} `} >
+          <div
+            className={`${
+              pathName === "/wishlist"
+                ? "md:w-2/12 lg:w-1/12"
+                : "text-center md:w-2/12 lg:w-2/12"
+            } `}
+          >
             <p>Total</p>
           </div>
-
-
-          
 
           {pathName === "/wishlist" ? (
             <p className="md:w-2/12 lg:w-2/12">
@@ -270,40 +289,50 @@ const Table: React.FC<TableProps> = ({
                 className="flex justify-between items-center mt-5"
                 key={index}
               >
-
-              <div   className={`  ${pathName === "/wishlist" ? "md:w-4/12 lg:w-6/12" : "md:w-4/12 lg:w-6/12"}`}>
-
-              <Link
-                  href={`/product/${generateSlug(product.name)}`}
-                className="w-fit flex gap-1"
+                <div
+                  className={`  ${
+                    pathName === "/wishlist"
+                      ? "md:w-4/12 lg:w-6/12"
+                      : "md:w-4/12 lg:w-6/12"
+                  }`}
                 >
-                  <Image
-                    className="w-[184px] h-[130px] object-cover "
-                    width={300}
-                    height={300}
-                    src={product.posterImageUrl || product.imageUrl}
-                    alt="Product"
-                  />
-                  <div className="p-2 w-fit">
-                    <h1 className="text-sm md:text-base font-bold">
-                      {typeof product.name === "string" ? product.name : ""}
-                    </h1>
-                    <div>
-                      <p className="text-[#B9BBBF]">{product.code}</p>
+                  <Link
+                    href={`/product/${generateSlug(product.name)}`}
+                    className="w-fit flex gap-1"
+                  >
+                    <Image
+                      className="w-[184px] h-[130px] object-cover "
+                      width={300}
+                      height={300}
+                      src={product.posterImageUrl || product.imageUrl}
+                      alt="Product"
+                    />
+                    <div className="p-2 w-fit">
+                      <h1 className="text-sm md:text-base font-bold">
+                        {typeof product.name === "string" ? product.name : ""}
+                      </h1>
+                      <div>
+                        <p className="text-[#B9BBBF]">{product.code}</p>
 
-                      <p className="text-16 font-semibold text-[#535353]">
-                        Width: <span>Roll width is 122cm</span>
-                      </p>
+                        {product.categoryName !== "Accessories" && (
+                          <p className="font-medium text-16 text-text">
+                            Roll width is{" "}
+                            <span className="text-black">122cm</span>
+                          </p>
+                        )}
+
+                      </div>
                     </div>
-                  </div>
+                  </Link>
+                </div>
 
-
-                </Link>
-                
-              </div>
-        
-
-                <div className={` ${ pathName === "/wishlist" ? "md:w-2/12 lg:w-1/12" : " md:w-2/12 lg:w-2/12"} `}>
+                <div
+                  className={` ${
+                    pathName === "/wishlist"
+                      ? "md:w-2/12 lg:w-1/12"
+                      : " md:w-2/12 lg:w-2/12"
+                  } `}
+                >
                   <p>
                     AED
                     <span>
@@ -317,7 +346,13 @@ const Table: React.FC<TableProps> = ({
                     </span>
                   </p>
                 </div>
-                <div className={` ${ pathName === "/wishlist" ? "md:w-2/12 lg:w-2/12" : " md:w-2/12 lg:w-2/12 lg:flex lg:justify-center"} `}>
+                <div
+                  className={` ${
+                    pathName === "/wishlist"
+                      ? "md:w-2/12 lg:w-2/12"
+                      : " md:w-2/12 lg:w-2/12 lg:flex lg:justify-center"
+                  } `}
+                >
                   <div
                     className={`flex w-28 h-12  justify-between px-2  bg-[#F0F0F0]  ${
                       pathName === "/wishlist" ? "" : ""
@@ -349,7 +384,12 @@ const Table: React.FC<TableProps> = ({
                   </div>
                 </div>
 
-                <div className={` flex gap-4 ${pathName === "/wishlist" ? "md:w-2/12 lg:w-1/12 " : "justify-center lg:w-2/12 "} `}
+                <div
+                  className={` flex gap-4 ${
+                    pathName === "/wishlist"
+                      ? "md:w-2/12 lg:w-1/12 "
+                      : "justify-center lg:w-2/12 "
+                  } `}
                 >
                   <p>
                     AED
@@ -386,9 +426,6 @@ const Table: React.FC<TableProps> = ({
         </div>
       </div>
 
-
-
-
       {data.map((product, index) => {
         const options = lengthOptions(product.totalStockQuantity || 0);
         return (
@@ -409,7 +446,7 @@ const Table: React.FC<TableProps> = ({
                   {typeof product.name === "string" ? product.name : ""}
                 </h1>
                 <p className="text-13 font-semibold">
-                <span>Roll width is 122cm</span>
+                  <span>Roll width is 122cm</span>
                 </p>
               </div>
               <div className="text-center">
@@ -495,7 +532,6 @@ const Table: React.FC<TableProps> = ({
           </>
         );
       })}
-
     </>
   );
 };

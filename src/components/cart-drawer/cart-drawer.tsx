@@ -64,7 +64,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
       setLengths(newLengths);
       updateTotalPrice(index, counts[index], newLengths[index]);
     } else {
-      message.error("Length cannot be more than 100 meters.");
+      message.error("Cannot be more than 100.");
     }
   };
 
@@ -75,7 +75,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
       setLengths(newLengths);
       updateTotalPrice(index, counts[index], newLengths[index]);
     } else {
-      message.error("Length cannot be less than 1 meter.");
+      message.error("Cannot be less than 1.");
     }
   };
   
