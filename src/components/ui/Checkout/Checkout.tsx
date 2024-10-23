@@ -119,7 +119,7 @@ const CheckOut: React.FC = () => {
         (item) => item.state.toLowerCase() === billingData.city.toLowerCase()
       );
 
-      const charges = matchingItem ? subtotal > matchingItem.discountCharges ? "Free" : matchingItem.charges : subtotal > 250 ? "Free" : 125;
+      const charges = matchingItem ? subtotal > matchingItem.discountCharges ? "Free" : matchingItem.charges : subtotal > 250 ? "Free" : 25;
       setShipmentFee(charges);
     };
 

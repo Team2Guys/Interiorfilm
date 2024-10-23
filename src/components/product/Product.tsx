@@ -85,7 +85,7 @@ const ProductPage = () => {
   const get_recordHandler = async () => {
     try {
       setLoading(true);
-      const [categoryResponse, productResponse,addsOnproductResponse] = await Promise.all([
+      const [categoryResponse, productResponse, addsOnproductResponse] = await Promise.all([
         axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`),
         axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
         axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`),
@@ -108,7 +108,7 @@ const ProductPage = () => {
   const productHandler = async (categoryName: string | null, newcategories?: category[], newProducts?: any) => {
     try {
       const activeCategory: any = (newcategories ? newcategories : category).find((cat) => generateSlug(cat.name) === categoryName);
-      
+
       if (categoryName === 'Accessories') {
         setfilteredProductsByCategory(adsontotalProducts);
         setActiveLink({
@@ -118,7 +118,7 @@ const ProductPage = () => {
         Get_colors_handler(adsontotalProducts); // Ensure colors are handled correctly for "Accessories"
         return;
       }
-  
+
       // Fallback for other categories
       if (!activeCategory || activeCategory._id === "all") {
         setfilteredProductsByCategory(newProducts ? newProducts : totalProducts);
@@ -126,13 +126,13 @@ const ProductPage = () => {
         Get_colors_handler(newProducts ? newProducts : totalProducts);
         return;
       }
-  
+
       const filteredProductsByCategory = (
         newProducts ? newProducts : totalProducts
       ).filter((product: PRODUCTS_TYPES) => {
         return product.category === activeCategory._id;
       });
-  
+
       setfilteredProductsByCategory(filteredProductsByCategory);
       setActiveLink(activeCategory);
       Get_colors_handler(filteredProductsByCategory);
@@ -140,7 +140,7 @@ const ProductPage = () => {
       console.error("Error loading products or categories", err);
     }
   };
-  
+
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -159,7 +159,7 @@ const ProductPage = () => {
   let filteredProducts = Array.isArray(filteredProductsByCategory)
     ? filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
       let Search = searchTerm.toLowerCase();
-      
+
       const nameMatch =
         product.name.toLowerCase().includes(Search) ||
         (product.description &&
@@ -237,7 +237,7 @@ const ProductPage = () => {
   if (categoryName === 'Accessories') {
     filteredProducts = adsontotalProducts;
   }
-  
+
   // Continue with sorting
   const sortedProducts = sortProducts(filteredProducts);
 
@@ -270,38 +270,38 @@ const ProductPage = () => {
   };
 
 
-const categoryNameNormalized: any = categoryName?.trim();
-//@ts-expect-error
-const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
-console.log('+++++++++++++++++++++++')
-console.log(specificProductCodes)
-const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
-  const productImages: PRODUCTS_TYPES[] = [];
-  codes.forEach(code => {
-    const matchedProducts = products.filter(product => product.code.trim() === code.trim());
-    matchedProducts.forEach(product => {
-      productImages.push(product);
-    });
-  });
-  return productImages;
-};
-const specificProductImages = getSpecificProductImages(filteredProductsByCategory, specificProductCodes);
-const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
-  if (products.length <= 3) return products;
-  return products.slice(0, 3);
-};
-const selectedProductImages = specificProductImages.length
-  ? specificProductImages
-  : getRandomProducts(filteredProductsByCategory);
+  const categoryNameNormalized: any = categoryName?.trim();
 
-  
+
+  const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
+  console.log('+++++++++++++++++++++++')
+  console.log(specificProductCodes)
+  const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
+    const productImages: PRODUCTS_TYPES[] = [];
+    codes.forEach(code => {
+      const matchedProducts = products.filter(product => product.code.trim() === code.trim());
+      matchedProducts.forEach(product => {
+        productImages.push(product);
+      });
+    });
+    return productImages;
+  };
+  const specificProductImages = getSpecificProductImages(filteredProductsByCategory, specificProductCodes);
+  const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
+    if (products.length <= 3) return products;
+    return products.slice(0, 3);
+  };
+  const selectedProductImages = specificProductImages.length
+    ? specificProductImages
+    : getRandomProducts(filteredProductsByCategory);
+
+
   return (
     <>
       <Overlay
         title={activeLink?.name || "Products"}
       />
-     
-      <div className="hidden md:grid grid-cols-3 mt-2 gap-6">
+      {categoryName != "Accessories" && (<div className="hidden md:grid grid-cols-3 mt-2 gap-6">
         {selectedProductImages.map((product, index: number) => {
           const imageIndex = specificImageIndexByCode[product.code] || 0;
           const selectedImage = product.imageUrl?.[imageIndex]?.imageUrl || product.posterImageUrl?.imageUrl;
@@ -318,7 +318,7 @@ const selectedProductImages = specificProductImages.length
             </div>
           );
         })}
-      </div>
+      </div>)}
       <Container className="mt-20 md:overflow-hidden">
         <div className="flex flex-wrap lg:flex-nowrap justify-between  gap-3">
           <div>
@@ -383,8 +383,8 @@ const selectedProductImages = specificProductImages.length
                           <p
                             id="ColorDropdown"
                             className={`w-5 h-5 border ${colorName === item.label
-                                ? "border-primary"
-                                : "border-gray"
+                              ? "border-primary"
+                              : "border-gray"
                               } cursor-pointer`}
                             onClick={() => handleColorChange(item.label)}
                             style={{ backgroundColor: `#${item.value}` }}

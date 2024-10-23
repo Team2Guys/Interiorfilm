@@ -9,14 +9,14 @@ import Container from "../Container/Container";
 const TopNav = () => {
   return (
     <div className="bg-primary hidden sm:block border-b py-2 border-primary w-full z-99 relative   ">
-      <Container className="grid grid-cols-1 md:grid-cols-3 text-center space-y-1 lg:space-y-0 items-center ">
-        <div className="flex flex-wrap items-center justify-center lg:justify-start lg:text-start  gap-4 xl:gap-10">
+      <Container className="flex justify-between lg:grid grid-cols-1 md:grid-cols-3 text-center space-y-1 lg:space-y-0 items-center ">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center  justify-center md:justify-start  gap-1 lg:gap-4 xl:gap-10">
           <Link
             href={`tel:+971 52 191 9327`}
-            className="flex gap-2 items-center text-white"
+            className="flex gap-1 lg:gap-2 items-center text-white"
           >
-            <BsTelephone className="text-white text-14 lg:text-20" />
-            <div className="text-12 md:text-10 lg:text-13 font-normal">
+            <BsTelephone className="text-white text-12 lg:text-20" />
+            <div className="text-9 md:text-10 lg:text-12 font-normal">
               +971 52 191 9327
             </div>
           </Link>
@@ -26,14 +26,14 @@ const TopNav = () => {
             rel="noopener"
             className="flex gap-2 items-center text-white"
           >
-            <TfiEmail className="text-white text-14 lg:text-20" />
-            <div className="text-12 md:text-10 lg:text-13 font-normal">
+            <TfiEmail className="text-white text-12 lg:text-20" />
+            <div className="text-9 md:text-10 lg:text-12 font-normal">
               info@interiorfilm.ae
             </div>
           </Link>
         </div>
         <div>
-          <p className="uppercase text-white text-[10px] sm:text-xs md:text-10 lg:text-14 whitespace-normal md:whitespace-nowrap ">
+          <p className="uppercase text-white text-9 md:text-11 lg:text-12 xl:text-14 whitespace-nowrap">
             <Link href={"/shipment-policy"} className="cursor-pointer hover:underline">Free shipping</Link> throughout
             mainland UAE on all orders above AED 250
           </p>

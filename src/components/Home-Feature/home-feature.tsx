@@ -33,7 +33,7 @@ const HomeFeature = () => {
     return sortProductsByCode(products)
   };
 
-  const featureProducts = Object.values(specificProductCodesByCategory).flat().sort();
+  const featureProducts: any = Object.values(specificProductCodesByCategory).flat().sort();
   console.log(featureProducts)
   const filteredProducts = getProductsByCodes(featureProducts);
   console.log(filteredProducts)
