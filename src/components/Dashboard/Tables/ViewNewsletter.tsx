@@ -124,7 +124,7 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
   
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/promotion/send_promotional_email`,
-        formData,
+        {emails : selectedEmails},
         {
           headers: { token: finalToken },
         }
