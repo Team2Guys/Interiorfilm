@@ -42,7 +42,10 @@ const AdsTable: React.FC<CategoryProps> = ({
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-  const token = Cookies.get('2guysAdminToken');
+  const token = Cookies.get("2guysAdminToken");
+  const superAdminToken = Cookies.get("superAdminToken");
+  let finalToken = token ? token : superAdminToken;
+
   const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
 
   const canAddProduct=loggedInUser && (loggedInUser.role =='Admin' ?   loggedInUser.canAddProduct : true ) 
@@ -112,7 +115,7 @@ const AdsTable: React.FC<CategoryProps> = ({
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/deleteProduct/${key}`, {
           headers: {
-            token,
+            finalToken,
           },
         }
       );

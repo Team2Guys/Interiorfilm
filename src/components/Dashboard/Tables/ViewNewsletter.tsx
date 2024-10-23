@@ -27,7 +27,9 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedEmails, setSelectedEmails] = useState<string[]>([]); // State to manage selected emails
   const [isSelectAllChecked, setIsSelectAllChecked] = useState<boolean>(false); // State to manage select all checkbox
-  const token = Cookies.get('2guysAdminToken'); // Get token from cookies
+  const token = Cookies.get("2guysAdminToken");
+  const superAdminToken = Cookies.get("superAdminToken");
+  let finalToken = token ? token : superAdminToken;
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -99,7 +101,7 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
       return;
     }
   
-    if (!token) {
+    if (!finalToken) {
       notification.error({
         message: "Token Error",
         description: "No token found. Please login again.",
@@ -124,7 +126,7 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/promotion/send_promotional_email`,
         formData,
         {
-          headers: { token },
+          headers: { token: finalToken },
         }
       );
   
@@ -133,7 +135,7 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
       if (response.status === 200) {
         notification.success({
           message: "Emails Broadcasted Successfully",
-          description: `Successfully sent to: ${selectedEmails.join(", ")}`,
+          // description: `Successfully sent to: ${selectedEmails.join(", ")}`,
           placement: "topRight",
         });
       } else {

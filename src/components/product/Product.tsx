@@ -270,29 +270,30 @@ const ProductPage = () => {
   };
 
 
-const categoryNameNormalized: any = categoryName?.trim();
-//@ts-expect-error
-const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
-console.log('+++++++++++++++++++++++')
-console.log(specificProductCodes)
-const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
-  const productImages: PRODUCTS_TYPES[] = [];
-  codes.forEach(code => {
-    const matchedProducts = products.filter(product => product.code.trim() === code.trim());
-    matchedProducts.forEach(product => {
-      productImages.push(product);
-    });
-  });
-  return productImages;
-};
-const specificProductImages = getSpecificProductImages(filteredProductsByCategory, specificProductCodes);
-const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
-  if (products.length <= 3) return products;
-  return products.slice(0, 3);
-};
-const selectedProductImages = specificProductImages.length
-  ? specificProductImages
-  : getRandomProducts(filteredProductsByCategory);
+// const categoryNameNormalized: any = categoryName?.trim();
+
+
+// const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
+// console.log('+++++++++++++++++++++++')
+// console.log(specificProductCodes)
+// const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
+//   const productImages: PRODUCTS_TYPES[] = [];
+//   codes.forEach(code => {
+//     const matchedProducts = products.filter(product => product.code.trim() === code.trim());
+//     matchedProducts.forEach(product => {
+//       productImages.push(product);
+//     });
+//   });
+//   return productImages;
+// };
+// const specificProductImages = getSpecificProductImages(filteredProductsByCategory, specificProductCodes);
+// const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
+//   if (products.length <= 3) return products;
+//   return products.slice(0, 3);
+// };
+// const selectedProductImages = specificProductImages.length
+//   ? specificProductImages
+//   : getRandomProducts(filteredProductsByCategory);
 
   
   return (
@@ -301,7 +302,7 @@ const selectedProductImages = specificProductImages.length
         title={activeLink?.name || "Products"}
       />
      
-      <div className="hidden md:grid grid-cols-3 mt-2 gap-6">
+      {/* <div className="hidden md:grid grid-cols-3 mt-2 gap-6">
         {selectedProductImages.map((product, index: number) => {
           const imageIndex = specificImageIndexByCode[product.code] || 0;
           const selectedImage = product.imageUrl?.[imageIndex]?.imageUrl || product.posterImageUrl?.imageUrl;
@@ -318,7 +319,7 @@ const selectedProductImages = specificProductImages.length
             </div>
           );
         })}
-      </div>
+      </div> */}
       <Container className="mt-20 md:overflow-hidden">
         <div className="flex flex-wrap lg:flex-nowrap justify-between  gap-3">
           <div>
@@ -438,7 +439,7 @@ const selectedProductImages = specificProductImages.length
                   </div>
                 ))
               ) : (
-                <Card quickClass="right-8" ProductCard={sortedProducts} slider={true} />
+                <Card quickClass="right-8" ProductCard={sortedProducts} categoryName={categoryName} slider={true} />
               )}
             </div>
           </>

@@ -43,12 +43,14 @@ interface productDetailsProps {
   categoryName?: string;
   firstFlex?: string;
   isQuickView?: boolean;
+  isAccessory ?: boolean;
 }
 export default function ProductDetails({
   productDetail,
   categoryName,
   firstFlex,
   isQuickView,
+  isAccessory,
 }: productDetailsProps) {
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
   const [reviews, setReviews] = useState<any[]>([]);
@@ -56,6 +58,17 @@ export default function ProductDetails({
   const [length, setLength] = useState<number>(1);
   const [adsonProducts,setAdsonProducts]=useState<Product[]>([])
   const router = useRouter();
+
+  const Acessoptions =
+  productDetail && productDetail.totalStockQuantity > 0
+    ? Array.from(
+        { length: Math.floor(productDetail.totalStockQuantity) },
+        (_, i) => ({
+          label: `${i + 1}`,
+          value: i + 1,
+        })
+      )
+    : [];
   const options =
     productDetail && productDetail.totalStockQuantity > 0
       ? Array.from(
@@ -128,6 +141,7 @@ export default function ProductDetails({
       purchasePrice: product.purchasePrice,
       sizes: product.sizes,
       code: product.code,
+      categoryName:categoryName,
     };
 
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -286,7 +300,7 @@ export default function ProductDetails({
                         ? productDetail.discountPrice
                         : productDetail.salePrice}
                     </span>
-                    /m
+                    {!isAccessory && (<span>/m</span>)}
                   </p>
                   {productDetail.discountPrice ? (
                     <p className="line-through text-[#808080]">
@@ -316,20 +330,37 @@ export default function ProductDetails({
                 ) : null}
               </div>
 
-              <p className="font-medium text-16 text-text">
-                Roll width is <span className="text-black">122cm</span>
-              </p>
-              <div className="flex flex-wrap 2xl:flex-nowrap items-center gap-2">
+              {!isAccessory && (
+        <p className="font-medium text-16 text-text">
+          Roll width is <span className="text-black">122cm</span>
+        </p>
+      )}
+         {isAccessory ? (
+                <div className="flex flex-wrap 2xl:flex-nowrap items-center gap-2">
                 <p className="font-medium text-16 whitespace-nowrap text-text">
                   Select Quantity:
                 </p>
                 <ProductSelect
                   className="w-60 h-10 border outline-none shipment text-16"
                   onChange={onChange}
-                  options={options}
+                  options={Acessoptions}
                   value={length}
                 />
               </div>
+        
+      ) : (
+        <div className="flex flex-wrap 2xl:flex-nowrap items-center gap-2">
+          <p className="font-medium text-16 whitespace-nowrap text-text">
+            Select Quantity:
+          </p>
+          <ProductSelect
+            className="w-60 h-10 border outline-none shipment text-16"
+            onChange={onChange}
+            options={options}
+            value={length}
+          />
+        </div>
+      )}
               {/* <div className="flex border w-28 h-10 justify-between px-2">
               <div
                 onClick={handleDecrement}
@@ -634,11 +665,12 @@ export default function ProductDetails({
               </div>
             )}
           </div>
-
+          {!isAccessory && (
           <div className="flex flex-col gap-2 mt-2">
             <h1 className="text-[14px] font-bold">Healthy Green Environment</h1>
             <EnviromentIcons />
           </div>
+          )}
         </div>
       </div>
     </div>

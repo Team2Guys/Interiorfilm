@@ -53,8 +53,11 @@ function Admins({ setselecteMenu }: any) {
 
   const handleDelete = async (id: string) => {
     try {
-      const token = localStorage.getItem("superAdminToken");
-      if (!token) {
+      const token = Cookies.get("2guysAdminToken");
+      const superAdminToken = Cookies.get("superAdminToken");
+      let finalToken = token ? token : superAdminToken;
+    
+      if (!finalToken) {
         // Handle case where token is not available
         return;
       }
@@ -63,7 +66,7 @@ function Admins({ setselecteMenu }: any) {
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/deletAdmin/${id}`,
         {
           headers: {
-            token: token,
+            token: finalToken,
           },
         }
       );
