@@ -93,7 +93,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                           src={array.imageUrl}
                           width={270}
                           height={140}
-                          alt="Image"
+                          alt={array.altText || ''}
                         />
                       </SwiperSlide>
                     ))}
@@ -124,6 +124,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                       <SideBySideMagnifier
                         imageSrc={array.imageUrl}
                         largeImageSrc={array.imageUrl}
+                        altText={array.altText}
                         zoomScale={2}
                         inPlace={true}
                         alignTop={true}

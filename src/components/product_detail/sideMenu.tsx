@@ -11,6 +11,7 @@ export interface Product {
   posterImageUrl: {
     public_id: string;
     imageUrl: string;
+    altText?: string;
   };
   _id: string;
   name: string;
@@ -22,6 +23,7 @@ export interface Product {
     imageIndex: number;
     public_id: string;
     imageUrl: string;
+    altText?: string;
     _id: string;
   }>;
   discountPrice: number;
@@ -174,7 +176,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="flex items-center relative">
         <Image
           src={product.posterImageUrl.imageUrl}
-          alt={product.name}
+          alt={product.posterImageUrl.altText || ''}
           width={100}
           height={100}
           className="w-25 h-20 object-cover"

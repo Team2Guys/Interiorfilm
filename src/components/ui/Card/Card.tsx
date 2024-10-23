@@ -315,7 +315,7 @@ const Card: React.FC<CardProps> = ({
                   width={500}
                   height={500}
                   src={product.posterImageUrl.imageUrl}
-                  alt="Image"
+                  alt={product.posterImageUrl.altText || ''}
                 />
                 <p className="absolute top-0 left-1 text-sm px-1 text-center text-black bg-[#fb701d]">
                   {product.totalStockQuantity === 0 && "Limited Stock"}
