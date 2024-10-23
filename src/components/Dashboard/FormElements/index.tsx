@@ -29,6 +29,7 @@ import {
   AddProductvalidationSchema,
   AddproductsinitialValues,
 } from "data/Data";
+import Input from "components/Common/regularInputs";
 
 const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProductValue, setselecteMenu, setEditProduct,
 }) => {
@@ -113,6 +114,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
         : null;
       let url = `${process.env.NEXT_PUBLIC_BASE_URL}${updateFlag ? addProductUrl : "/api/addProduct"
         }`;
+        console.log(newValue, "newValuenewValue");
       const response = await axios.post(url, newValue,{headers:headers});
       console.log(response, "response");
       Toaster("success", updateFlag ? "Product has been sucessufully Updated !" : "Product has been sucessufully Created !");
@@ -163,7 +165,26 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
     );
     setImagesUrl(updatedImagesUrl);
   };
-
+  const handlealtText = (index: number, newaltText: number) => {
+    const updatedImagesUrl = imagesUrl.map((item, i) =>
+      i === index ? { ...item, altText: newaltText } : item
+    );
+    setImagesUrl(updatedImagesUrl);
+  };
+  const handlealtTextHover = (index: number, newaltText: number) => {
+    //@ts-expect-error
+    const updatedImagesUrl = hoverImage.map((item, i) =>
+      i === index ? { ...item, altText: newaltText } : item
+    );
+    sethoverImage(updatedImagesUrl);
+  };
+  const handlealtTextposterimageUrl = (index: number, newaltText: number) => {
+    //@ts-expect-error
+    const updatedImagesUrl = posterimageUrl.map((item, i) =>
+      i === index ? { ...item, altText: newaltText } : item
+    );
+    setposterimageUrl(updatedImagesUrl);
+  };
   return (
     <>
       <p
@@ -195,12 +216,16 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                       </div>
                       {(posterimageUrl && posterimageUrl?.length > 0) ? (
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
+
+                          <div>
                           {posterimageUrl.map((item: any, index) => {
                             return (
+                              <>
                               <div
                                 className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
                                 key={index}
-                              >
+                                >
+                              
                                 <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
                                   <RxCross2
                                     className="cursor-pointer text-red-500 hover:text-red-700"
@@ -211,7 +236,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                         setposterimageUrl
                                       );
                                     }}
-                                  />
+                                    />
                                 </div>
                                 <Image
                                   key={index}
@@ -220,10 +245,17 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                   height={400}
                                   src={item?.imageUrl}
                                   alt={`productImage-${index}`}
-                                />
-                              </div>
+                                  />
+                          </div>
+
+                          <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText} onChange={(e) =>
+                                    handlealtTextposterimageUrl(index, Number(e.target.value))
+                                  }/>
+
+                        </>
                             );
                           })}
+                          </div>
                         </div>
                       ) : (
                         <Imageupload setposterimageUrl={setposterimageUrl} />
@@ -833,10 +865,12 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
                         {hoverImage.map((item: any, index) => {
                           return (
+                            <div key={index}>
+
                             <div
                               className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
-                              key={index}
-                            >
+                              
+                              >
                               <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
                                 <RxCross2
                                   className="cursor-pointer text-red-500 hover:text-red-700"
@@ -847,7 +881,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                       sethoverImage
                                     );
                                   }}
-                                />
+                                  />
                               </div>
                               <Image
                                 key={index}
@@ -856,17 +890,21 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                 height={400}
                                 src={item?.imageUrl}
                                 alt={`productImage-${index}`}
-                              />
+                                />
                             </div>
+                            <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText} onChange={(e) =>
+                                    handlealtTextHover(index, Number(e.target.value))
+                                  }/>
+                        </div>
                           );
                         })}
                       </div>
                     ) : (
                       <Imageupload sethoverImage={sethoverImage} />
                     )}
-                  </div>
+                    </div>
 
-                  <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
+                    <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                       <h3 className="font-medium text-black dark:text-white">
                         Product Images
@@ -877,10 +915,12 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
                         {imagesUrl.map((item: any, index) => {
                           return (
+                            <div  key={index}>
+
                             <div
                               className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
-                              key={index}
-                            >
+                             
+                              >
                               <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full z-10">
                                 <RxCross2
                                   className="cursor-pointer btext-red-500 hover:text-red-700"
@@ -892,7 +932,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                       setImagesUrl
                                     );
                                   }}
-                                />
+                                  />
                               </div>
                               <div key={index} className=" relative ">
                                 <div className="h-[100px] w-full overflow-hidden">
@@ -902,7 +942,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                     height={200}
                                     src={item.imageUrl}
                                     alt={`productImage-${index}`}
-                                  />
+                                    />
                                 </div>
 
                                 <input
@@ -913,11 +953,15 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                   onChange={(e) =>
                                     handleImageIndex(index, Number(e.target.value))
                                   }
-                                />
+                                  />
 
                               </div>
 
                             </div>
+                            <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText}  onChange={(e) =>
+                                    handlealtText(index, Number(e.target.value))
+                                  }/>
+                                  </div>
                           );
                         })}
                       </div>
