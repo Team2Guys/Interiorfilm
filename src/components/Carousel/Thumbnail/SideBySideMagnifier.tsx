@@ -8,11 +8,13 @@ interface SideBySideMagnifierProps {
   inPlace?: boolean; 
   alignTop?: boolean;
   fillSpace?: boolean;
+  altText?: string;
 }
 
 const SideBySideMagnifier: React.FC<SideBySideMagnifierProps> = ({
   imageSrc,
   largeImageSrc,
+  altText,
   zoomScale = 2,
   inPlace = false,
   alignTop = false,
@@ -72,7 +74,7 @@ const SideBySideMagnifier: React.FC<SideBySideMagnifierProps> = ({
           src={imageSrc}
           width={800}
           height={800}
-          alt="Main"
+          alt={altText || ''}
           className="w-full h-full "
         />
       </div>

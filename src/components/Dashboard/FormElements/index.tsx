@@ -165,20 +165,20 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
     );
     setImagesUrl(updatedImagesUrl);
   };
-  const handlealtText = (index: number, newaltText: number) => {
+  const handlealtText = (index: number, newaltText: string) => {
     const updatedImagesUrl = imagesUrl.map((item, i) =>
       i === index ? { ...item, altText: newaltText } : item
     );
     setImagesUrl(updatedImagesUrl);
   };
-  const handlealtTextHover = (index: number, newaltText: number) => {
+  const handlealtTextHover = (index: number, newaltText: string) => {
     //@ts-expect-error
     const updatedImagesUrl = hoverImage.map((item, i) =>
       i === index ? { ...item, altText: newaltText } : item
     );
     sethoverImage(updatedImagesUrl);
   };
-  const handlealtTextposterimageUrl = (index: number, newaltText: number) => {
+  const handlealtTextposterimageUrl = (index: number, newaltText: string) => {
     //@ts-expect-error
     const updatedImagesUrl = posterimageUrl.map((item, i) =>
       i === index ? { ...item, altText: newaltText } : item
@@ -249,7 +249,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                           </div>
 
                           <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText} onChange={(e) =>
-                                    handlealtTextposterimageUrl(index, Number(e.target.value))
+                                    handlealtTextposterimageUrl(index, String(e.target.value))
                                   }/>
 
                         </>
@@ -893,7 +893,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                 />
                             </div>
                             <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText} onChange={(e) =>
-                                    handlealtTextHover(index, Number(e.target.value))
+                                    handlealtTextHover(index, String(e.target.value))
                                   }/>
                         </div>
                           );
@@ -959,7 +959,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
                             </div>
                             <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText}  onChange={(e) =>
-                                    handlealtText(index, Number(e.target.value))
+                                    handlealtText(index, String(e.target.value))
                                   }/>
                                   
                                   </div>
