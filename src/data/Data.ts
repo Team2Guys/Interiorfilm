@@ -633,7 +633,7 @@ export const AccordionsArray: ACCORDINTYPES[] = [
   },
 ];
 
-export const specificProductCodesByCategory = {
+export const specificProductCodesByCategory: any = {
   "plain-series": ["KH9003", "KH9025", "KH9022"],
   "cement-grey-series": ["KS5002", "KS5007", "KS5005"],
   "wood-grain-series": ["CA162", "CA164", "CA126"],
