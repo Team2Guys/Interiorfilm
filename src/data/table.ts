@@ -46,21 +46,27 @@ export const Orderdata = [
     },
     {
       title: 'Name',
-      dataIndex: 'Name',
-      key: 'Name',
+      dataIndex: 'name',
+      key: 'name',
       width: '20%',
     },
     {
-      title: 'Email',
-      dataIndex: 'Email',
-      key: 'Email',
+      title: 'Count',
+      dataIndex: 'count',
+      key: 'count',
+      width: '20%',
+    },
+    {
+      title: 'Total Price',
+      dataIndex: 'totalPrice',
+      key: 'totalPrice',
       width: '20%',
     },
     {
 
-      title: 'Address',
-      dataIndex: 'Address',
-      key: 'Address',
+      title: 'Date',
+      dataIndex: 'date',
+      key: 'date',
       width: '20%',
     },
 
