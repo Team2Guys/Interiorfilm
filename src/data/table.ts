@@ -40,8 +40,8 @@ export const Orderdata = [
   export const ordercolumns = [
     {
       title: 'OrderId',
-      dataIndex: 'OrderId',
-      key: 'OrderId',
+      dataIndex: 'order_id',
+      key: 'order_id',
       width: '10%',
     },
     {
@@ -55,12 +55,6 @@ export const Orderdata = [
       dataIndex: 'usermail',
       key: 'usermail',
       width: '20%',
-    },
-    {
-      title: 'Phone Number',
-      dataIndex: 'name',
-      key: 'name',
-      width: '10%',
     },
     {
       title: 'Address',
