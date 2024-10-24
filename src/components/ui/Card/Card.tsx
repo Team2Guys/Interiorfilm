@@ -193,7 +193,7 @@ const Card: React.FC<CardProps> = ({
       discountPrice: product.discountPrice,
       count: 1,
       length: 1,
-      categoryName:categoryName,
+      categoryName: categoryName,
       totalPrice: product.discountPrice
         ? product.discountPrice
         : product.salePrice,
@@ -268,19 +268,28 @@ const Card: React.FC<CardProps> = ({
               className={`space-y-3 absolute top-6 right-6 opacity-0 group-hover:opacity-100  overflow-hidden transition ease-in-out duration-400 hidden md:block ${quickClass}`}
             >
               <button
-                onClick={() => handleAddToCart(product)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAddToCart(product)
+                }}
                 className="flex justify-center items-center z-20"
               >
                 <LuShoppingCart className=" p-[0.50rem] lg:p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white text-[30px] lg:text-[40px]" />
               </button>
               <button
-                onClick={() => handleAddToWishlist(product)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAddToWishlist(product)
+                }}
                 className="flex justify-center items-center z-20"
               >
                 <GoHeart className=" p-[0.50rem] lg:p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white text-[30px] lg:text-[40px]" />
               </button>
               <button
-                onClick={() => handleProductClick(product)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleProductClick(product)
+                }}
                 className="flex justify-center items-center z-20"
               >
                 <FiZoomIn className=" p-[0.50rem] lg:p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white text-[30px] lg:text-[40px]" />
@@ -341,9 +350,8 @@ const Card: React.FC<CardProps> = ({
             <p className="text-black font-bold text-18 flex gap-1">
               AED{" "}
               <span
-                className={` text-20 ${
-                  product.discountPrice ? "text-red" : "text-black"
-                }`}
+                className={` text-20 ${product.discountPrice ? "text-red" : "text-black"
+                  }`}
               >
                 {product.salePrice}
               </span>

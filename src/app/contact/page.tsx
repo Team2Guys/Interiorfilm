@@ -102,7 +102,7 @@ const Contact = () => {
 
   return (
     <>
-      <Overlay title="Contact" />
+      <Overlay title="Contact Us" />
       <Container className="lg:my-16 my-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-primary rounded-md p-4  sm:p-4 md:p-8 text-white space-y-14">
