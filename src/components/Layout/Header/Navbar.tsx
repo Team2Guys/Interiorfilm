@@ -296,7 +296,7 @@ const Navbar = () => {
     <>
       <TopNav />
       <nav
-        className={`z-99 w-full py-2 px-2 sm:px-4 lg:px-8 xl:px-9 border-b-2 border-gray shadow-md  ${
+        className={`z-99 w-full py-2 px-4 sm:px-0 border-b-2 border-gray shadow-md  ${
           isHomePage
             ? isScrolled
               ? "bg-white text-black top-0 fixed"

@@ -164,7 +164,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className=" lg:pb-0 pb-3 col-span-12 2xsm:col-span-6 xsm:col-span-4 md:col-span-2 ">
+          <div className=" lg:pb-0 pb-3 col-span-12 2xsm:col-span-6 xsm:col-span-4 sm:col-span-4 md:col-span-2 ">
             <h3
               className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
               onClick={toggleCategories}
@@ -200,7 +200,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="lg:pb-0 pb-3 whitespace-nowrap col-span-12 2xsm:col-span-6 xsm:col-span-4 md:col-span-2 ">
+          <div className="lg:pb-0 pb-3 whitespace-nowrap col-span-12 2xsm:col-span-6 xsm:col-span-3 sm:col-span-4 md:col-span-2 ">
             <h3
               className="font-semibold lg:mb-4 mb-2 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
               onClick={toggleCustomerCare}
@@ -227,7 +227,7 @@ const Footer: React.FC = () => {
               ))}
             </ul>
           </div>
-          <div className="lg:pb-0 pb-3 whitespace-nowrap col-span-12 2xsm:col-span-12 xsm:col-span-4 md:col-span-3 lg:col-span-2">
+          <div className="lg:pb-0 pb-3 whitespace-nowrap col-span-12 2xsm:col-span-12 xsm:col-span-5 sm:col-span-4 md:col-span-3 lg:col-span-2">
             <h3
               className="font-semibold mb-4 cursor-pointer md:cursor-auto flex items-center lg:text-lg text-sm justify-between"
               onClick={togglePages}
@@ -279,7 +279,7 @@ const Footer: React.FC = () => {
               </p>
               <p>
                 <Link
-                  className="text-12 lg:text-13 font-normal hover:text-primary"
+                  className="text-14 font-normal hover:text-primary"
                   href={`tel:+971 52 191 9327`}
                 >
                   +971 52 191 9327

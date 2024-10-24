@@ -9,7 +9,7 @@ import { offers } from 'data/sideMenuData'
 const About = () => {
   return (
     <>
-    <Overlay title='About'/>
+    <Overlay title='About Us'/>
     <Container className='lg:my-20 my-14 '>
         <div className='grid grid-cols-1 lg:grid-cols-2 mt-2 justify-items-center sm:gap-1 md:gap-10'>
             <div className='relative'>

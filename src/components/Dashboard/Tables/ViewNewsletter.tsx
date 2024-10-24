@@ -112,19 +112,19 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
     
     console.log("Selected emails for broadcasting:", selectedEmails);
   
-    const content = "<p>This is the promotional content</p><img src='cid:image.png' alt='Promo Image' />";
+    // const content = "<p>This is the promotional content</p><img src='cid:image.png' alt='Promo Image' />";
   
     try {
       const formData = new FormData();
-      formData.append("content", content);
+      // formData.append("content", content);
       formData.append("emails", JSON.stringify(selectedEmails));
-      const imageResponse = await fetch('/images/CA101.png'); 
-      const imageBlob = await imageResponse.blob();
-      formData.append("image", imageBlob, 'CA101.png'); 
+      // const imageResponse = await fetch('/images/CA101.png'); 
+      // const imageBlob = await imageResponse.blob();
+      // formData.append("image", imageBlob, 'CA101.png'); 
   
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/promotion/send_promotional_email`,
-        formData,
+        {emails : selectedEmails},
         {
           headers: { token: finalToken },
         }

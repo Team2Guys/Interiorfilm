@@ -46,56 +46,23 @@ export const Orderdata = [
     },
     {
       title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'Name',
+      key: 'Name',
       width: '20%',
     },
     {
       title: 'Email',
-      dataIndex: 'usermail',
-      key: 'usermail',
+      dataIndex: 'Email',
+      key: 'Email',
       width: '20%',
     },
     {
+
       title: 'Address',
-      dataIndex: 'userAddress',
-      key: 'userAddress',
+      dataIndex: 'Address',
+      key: 'Address',
       width: '20%',
     },
-    // {
-    //   title: 'Payment Status',
-    //   dataIndex: 'PhoneNumber',
-    //   key: 'PhoneNumber',
-    //   width: '20%',
-    // },
-    {
-      title: 'Amount',
-      dataIndex: 'totalPrice',
-      key: 'totalPrice',
-      width: '20%',
-    },
-    // {
-    //   title: 'Transaction ID',
-    //   dataIndex: 'PhoneNumber',
-    //   key: 'PhoneNumber',
-    //   width: '20%',
-    // },
-    {
-      title: 'Payment Date',
-      dataIndex: 'date',
-      key: 'date',
-      width: '20%',
-    },
-    // {
-    //   title: 'View Products',
-    //   dataIndex: 'PhoneNumber',
-    //   key: 'PhoneNumber',
-    //   width: '20%',
-    // },
-    // {
-    //   title: 'Create Delivery',
-    //   dataIndex: 'PhoneNumber',
-    //   key: 'PhoneNumber',
-    //   width: '20%',
-    // },
+
+
   ];

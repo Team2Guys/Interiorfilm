@@ -114,9 +114,7 @@ const AdsTable: React.FC<CategoryProps> = ({
     try {
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/deleteProduct/${key}`, {
-          headers: {
-            finalToken,
-          },
+          headers: { token: finalToken }
         }
       );
       setProduct((prev: Product[]) => prev.filter((item) => item._id !== key));
