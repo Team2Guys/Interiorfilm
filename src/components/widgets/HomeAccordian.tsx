@@ -9,10 +9,9 @@ import Hotel from "../../../public/images/testimonial/Hotel.jpg"
 import Office from "../../../public/images/testimonial/Office.jpg"
 import Restaurant from "../../../public/images/testimonial/Restaurant.jpg"
 import Furniture from "../../../public/images/testimonial/Furniture.jpg"
-import Bathroom from "../../../public/images/testimonial/bathroom.jpg"
 const accordionImages = [
   Kitchen,
-  Bathroom,
+  "/images/testimonial/bath.jpg",
   Hotel,
   Office,
   Restaurant,
