@@ -58,7 +58,7 @@ const Product = ({ productname }: { productname: string }) => {
          
           setProductDetail(foundProductAdon);
           setProductsAdon(adsonProducts.data.products)
-          setCategoryName('Accessories');
+          setCategoryName('accessories');
         }
       }
     } catch (error) {
@@ -105,7 +105,7 @@ const Product = ({ productname }: { productname: string }) => {
           <ProductDetails
             productDetail={productDetail}
             categoryName={categoryName}
-            isAccessory={categoryName === 'Accessories'}
+            isAccessory={categoryName === 'accessories'}
           />
         </>
       ) : null}

@@ -1,6 +1,5 @@
 
 import Container from 'components/Layout/Container/Container';
-import Header from 'components/Layout/Header/Header';
 import Navbar from 'components/Layout/Header/Navbar';
 import Link from 'next/link';
 import React from 'react';
