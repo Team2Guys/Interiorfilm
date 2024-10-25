@@ -45,10 +45,10 @@ const Cart = () => {
     );
 
     // Calculate total items:
-    // - Accessories: Count based on 'count'
+    // - accessories: Count based on 'count'
     // - Non-accessories: Sum based on 'length'
     const totalItems = items.reduce((acc: number, item: any) => {
-      if (item.categoryName === "Accessories") {
+      if (item.categoryName === "accessories") {
         return acc + item.count; // Count accessories by their quantity
       } else {
         return acc + item.length; // Count non-accessories by their length
@@ -167,7 +167,7 @@ const Cart = () => {
                   You have{" "}
                   {cartItems && cartItems.length > 0
                     ? cartItems.reduce((total: number, item: any) => {
-                        return item.categoryName !== "Accessories"
+                        return item.categoryName !== "accessories"
                           ? total + item.length
                           : total;
                       }, 0)

@@ -596,7 +596,7 @@ export default function ProductDetails({
                             <div className="flex items-center flex-wrap 2xl:flex-nowrap justify-center 2xl:justify-between gap-4 pt-4">
                               {tamarawhy.map((item) => (
                                 <div
-                                  className="w-40 h-9 rounded-2xl bg-primary text-white flex items-center justify-center text-20 font-semibold"
+                                  className="w-auto px-2 h-9 rounded-2xl bg-primary text-white flex items-center justify-center text-20 font-semibold"
                                   key={item.id}
                                 >
                                   {item.para}

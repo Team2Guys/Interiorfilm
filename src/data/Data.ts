@@ -545,7 +545,7 @@ export const navarlink = [
   { ref: "cement-grey-series", title: "Cement Grey Series" },
   { ref: "fabric-series", title: "Fabric Series" },
   { ref: "wood-grain-series", title: "Wood Grain Series" },
-  { ref: "Accessories", title: "Accessories Series" },
+  { ref: "accessories", title: "accessories Series" },
   { ref: "about", title: "About Us" },
   { ref: "contact", title: "Contact Us" },
   { title: "FAQs", ref: "frequently-asked-questions" },
@@ -562,7 +562,7 @@ export const footerlink = [
   { ref: "cement-grey-series", title: "Cement Grey Series" },
   { ref: "fabric-series", title: "Fabric Series" },
   { ref: "wood-grain-series", title: "Wood Grain Series" },
-  { ref: "Accessories", title: "Accessories Series" },
+  { ref: "accessories", title: "accessories Series" },
 
 
 ];
@@ -642,7 +642,7 @@ export const specificProductCodesByCategory: any = {
   "fabric-series": ["KS8005", "KS8006", "KS8002"],
   "skin-touch-series": ["KH9603", "KH9612", "KH9611"],
   "leather-series":["KS7715","KS7710","KS7701"],
-  "Accessories":["as1541","as122","as789"]
+  "accessories":["as1541","as122","as789"]
 };
 
 export const specificImageIndexByCode: any = {

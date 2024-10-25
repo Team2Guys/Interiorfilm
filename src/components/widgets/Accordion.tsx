@@ -25,7 +25,7 @@ const Accordion = () =>
                 onClick={() => handleToggle(index)}
                 title={item.name}
                 titleClass="font-semibold text-[18px] capitalize"
-                className=" py-4 border-t border-stone-200 capitalize"
+                className=" py-4 border-t border-stone-200 "
               >
                 <p className="text-[15px]">{item.title}</p>
                 {

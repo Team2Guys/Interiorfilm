@@ -109,13 +109,13 @@ const ProductPage = () => {
     try {
       const activeCategory: any = (newcategories ? newcategories : category).find((cat) => generateSlug(cat.name) === categoryName);
 
-      if (categoryName === 'Accessories') {
+      if (categoryName === 'accessories') {
         setfilteredProductsByCategory(adsontotalProducts);
         setActiveLink({
-          ...StaticCategory,  // Update the activeLink to use the static "Accessories" link
-          name: "Accessories"  // Manually set name to "Accessories"
+          ...StaticCategory,  // Update the activeLink to use the static "accessories" link
+          name: "accessories"  // Manually set name to "accessories"
         });
-        Get_colors_handler(adsontotalProducts); // Ensure colors are handled correctly for "Accessories"
+        Get_colors_handler(adsontotalProducts); // Ensure colors are handled correctly for "accessories"
         return;
       }
 
@@ -234,7 +234,7 @@ const ProductPage = () => {
 
 
 
-  if (categoryName === 'Accessories') {
+  if (categoryName === 'accessories') {
     filteredProducts = adsontotalProducts;
   }
 
@@ -301,7 +301,7 @@ const ProductPage = () => {
       <Overlay
         title={activeLink?.name || "Products"}
       />
-      {categoryName != "Accessories" && (<div className="hidden md:grid grid-cols-3 mt-2 gap-6">
+      {categoryName != "accessories" && (<div className="hidden md:grid grid-cols-3 mt-2 gap-6">
         {selectedProductImages.map((product, index: number) => {
           const imageIndex = specificImageIndexByCode[product.code] || 0;
           const selectedImage = product.imageUrl?.[imageIndex]?.imageUrl || product.posterImageUrl?.imageUrl;
