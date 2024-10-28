@@ -114,7 +114,7 @@ const Contact = () => {
                 <Link
                   target="_blank"
                   href={
-                    "https://www.google.com/maps?ll=25.24485,55.299425&z=15&t=m&hl=en&gl=US&mapclient=embed&cid=14349723016612093106"
+                    "https://www.google.com/maps/place/interiorfilm.ae/@25.2365707,55.307743,21z/data=!4m14!1m7!3m6!1s0x3e5f439cc8bb1d43:0xd3d5fae1dc84d0c0!2sFloors+And+Walls+Dubai!8m2!3d25.2370265!4d55.3080125!16s%2Fg%2F11qrkn8_1q!3m5!1s0x3e5f43e5c67a5595:0xdb1aeea922163a0a!8m2!3d25.2364864!4d55.3079376!16s%2Fg%2F11sz9pys8k?hl=en&entry=ttu&g_ep=EgoyMDI0MTAyMy4wIKXMDSoASAFQAw%3D%3D"
                   }
                   className="md:text-12 lg:text-base"
                 >
@@ -160,10 +160,9 @@ const Contact = () => {
                 </Link>
               </div>
             </div>
-
             <div>
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.7645284624414!2d55.29684471128044!3d25.244854829675067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f42d1e8f3abe7%3A0xc724750e36691cb2!2sYellow%20Zone%20Technical%20Services!5e0!3m2!1sen!2s!4v1726464310457!5m2!1sen!2s"
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d225.56315739176367!2d55.307743!3d25.2365707!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43e5c67a5595%3A0xdb1aeea922163a0a!2sinteriorfilm.ae!5e0!3m2!1sen!2s!4v1730094852579!5m2!1sen!2s"
                 className="w-full max-h-300 min-h-50"
                 loading="lazy"
               ></iframe>

@@ -664,10 +664,9 @@ export const specificImageIndexByCode: any = {
   KS7701: 2,
 
 };
-
 export const sortProductsByCode = (products: PRODUCTS_TYPES[]): PRODUCTS_TYPES[] => {
   return products.sort((a, b) => {
-    return a.code.localeCompare(b.code, undefined, {
+    return (a.code ?? "").localeCompare(b.code ?? "", undefined, {
       numeric: true,
       sensitivity: 'base',
     });
