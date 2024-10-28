@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
 import { Drawer, message, Modal } from "antd";
 import Image from "next/image";
 import { IoCloseSharp } from "react-icons/io5";
@@ -12,11 +12,15 @@ interface CartDrawerProps {
   open: boolean;
   onClose: () => void;
   OpenDrawer?: React.ReactNode;
+  onMouseEnter?: MouseEventHandler<HTMLDivElement>;
+  onMouseLeave?: MouseEventHandler<HTMLDivElement>;
 }
 const CartDrawer: React.FC<CartDrawerProps> = ({
   open,
   onClose,
   OpenDrawer,
+  onMouseEnter,
+  onMouseLeave
 }) => {
   const [counts, setCounts] = useState<{ [key: number]: number }>({});
   const [lengths, setLengths] = useState<{ [key: number]: number }>({});
@@ -159,7 +163,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
   return (
     <>
     {open && (
-        <div className="  right-0 sm:right-5 top-20 mt-2 fixed z-999 ">
+        <div className="  right-0 sm:right-5 top-20 mt-2 fixed z-999 " onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
           <div className="border sm:w-96  bg-white p-2" ref={drawerRef}>
             <div className="flex items-center justify-between">
               <p className="font-bold text-md-h6">SHOPPING CART</p>
