@@ -26,6 +26,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [cartHover, setCartHover] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [WishlistItems, setWishlistItems] = useState([]);
   const pathname = usePathname(); // Get the current path
@@ -42,7 +43,7 @@ const Navbar = () => {
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const handleClickOutside = (event:any) => {
+    const handleClickOutside = (event: any) => {
       // Check if click is outside both the search input and dropdown
       if (
         searchInputRef.current &&
@@ -95,7 +96,7 @@ const Navbar = () => {
       const mainProducts = Array.isArray(mainResponse.data.products)
         ? mainResponse.data.products
         : [];
-  
+
       // Fetch add-on products
       const addOnResponse = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`
@@ -103,7 +104,7 @@ const Navbar = () => {
       const addOnProducts = Array.isArray(addOnResponse.data.products)
         ? addOnResponse.data.products
         : [];
-  
+
       // Combine main and add-on products
       const combinedProducts = [...mainProducts, ...addOnProducts];
       setProducts(combinedProducts);
@@ -111,37 +112,37 @@ const Navbar = () => {
       console.log(err, "err");
     }
   };
-  
+
   useEffect(() => {
     productHandler();
   }, []);
-  
+
   const filteredProducts = Array.isArray(products)
     ? products.filter((product) => {
-        const search = searchTerm.toLowerCase();
-        return (
-          product.name.toLowerCase().includes(search) ||
-          (product.description &&
-            product.description.toLowerCase().includes(search)) ||
-          (product.salePrice &&
-            product.salePrice.toString().toLowerCase().includes(search)) ||
-          (product.purchasePrice &&
-            product.purchasePrice.toString().toLowerCase().includes(search)) ||
-          (product.category &&
-            product.category.toString().toLowerCase().includes(search)) ||
-          product.discountPrice?.toString().toLowerCase().includes(search) ||
-          product.modelDetails.some(
-            (model) =>
-              model.name.toLowerCase().includes(search) ||
-              model.detail.toLowerCase().includes(search)
-          ) ||
-          product.starRating?.toString().toLowerCase().includes(search) ||
-          product.reviews?.toLowerCase().includes(search) ||
-          product.code.toLowerCase().includes(search) ||
-          product.totalStockQuantity?.toString().toLowerCase().includes(search)
-      
-        );
-      })
+      const search = searchTerm.toLowerCase();
+      return (
+        product.name.toLowerCase().includes(search) ||
+        (product.description &&
+          product.description.toLowerCase().includes(search)) ||
+        (product.salePrice &&
+          product.salePrice.toString().toLowerCase().includes(search)) ||
+        (product.purchasePrice &&
+          product.purchasePrice.toString().toLowerCase().includes(search)) ||
+        (product.category &&
+          product.category.toString().toLowerCase().includes(search)) ||
+        product.discountPrice?.toString().toLowerCase().includes(search) ||
+        product.modelDetails.some(
+          (model) =>
+            model.name.toLowerCase().includes(search) ||
+            model.detail.toLowerCase().includes(search)
+        ) ||
+        product.starRating?.toString().toLowerCase().includes(search) ||
+        product.reviews?.toLowerCase().includes(search) ||
+        product.code.toLowerCase().includes(search) ||
+        product.totalStockQuantity?.toString().toLowerCase().includes(search)
+
+      );
+    })
     : [];
 
   useEffect(() => {
@@ -267,9 +268,6 @@ const Navbar = () => {
       if (updatedCartItemCount > previousCartItemCount) {
         setCartItems(updatedCart);
         setDrawerOpen(true);
-        setTimeout(() => {
-          setDrawerOpen(false);
-        }, 8000);
       }
       previousCartItemCount = updatedCartItemCount;
     };
@@ -281,17 +279,24 @@ const Navbar = () => {
     };
   }, [cartItems]);
 
+  useEffect(() => {
+    if (drawerOpen && !cartHover) {
+      const timeoutId = setTimeout(() => {
+        setDrawerOpen(false);
+      }, 2000);
+      return () => clearTimeout(timeoutId); 
+    }
+  }, [drawerOpen, cartHover]);
   return (
     <>
       <TopNav />
       <nav
-        className={`z-99 w-full py-2 px-4 sm:px-0 border-b-2 border-gray shadow-md  ${
-          isHomePage
-            ? isScrolled
-              ? "bg-white text-black top-0 fixed"
-              : "bg-white text-black sticky top-0"
-            : "bg-white text-black sticky top-0 "
-        }`}
+        className={`z-99 w-full py-2 px-4 sm:px-0 border-b-2 border-gray shadow-md  ${isHomePage
+          ? isScrolled
+            ? "bg-white text-black top-0 fixed"
+            : "bg-white text-black sticky top-0"
+          : "bg-white text-black sticky top-0 "
+          }`}
       >
         <Container className="grid grid-cols-12 items-center mt-2">
           <div className="md:flex items-center  w-full rounded-3xl  shadow border border-gray-2  col-span-2 md:col-span-4 hidden relative ">
@@ -310,43 +315,43 @@ const Navbar = () => {
               <IoSearch size={25} />
             </button>
             {searchTerm && isFocused && (
-        <div className="px-4">
-          <div
-          className="absolute left-0 top-14  w-full max-h-[300px] bg-white  shadow-lg  overflow-y-auto z-10 custom-scrollbar x-3"
-          onBlur={() => setIsFocused(false)}
-          ref={dropdownRef}
-        >
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map((product, index) => (
-             <div className=" flex items-center mt-1 px-2"  key={index}>
-                {product.posterImageUrl && (
-                      <Image
-                        className="rounded-md"
-                        width={50}
-                        height={50}
-                        src={product.posterImageUrl.imageUrl}
-                        alt="image"
-                      />
-                    )}
-               <Link
-                href={{
-                  pathname: `/product/${generateSlug(product.name)}`,
-                }}
-                onClick={() => setIsFocused(false)}
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-              >
-                {product.name}
-              </Link>
-             </div>
-            ))
-          ) : (
-            <div className="px-4 py-2 text-gray-600">No products found</div>
-          )}
-        </div>
-        </div>
-      )}
+              <div className="px-4">
+                <div
+                  className="absolute left-0 top-14  w-full max-h-[300px] bg-white  shadow-lg  overflow-y-auto z-10 custom-scrollbar x-3"
+                  onBlur={() => setIsFocused(false)}
+                  ref={dropdownRef}
+                >
+                  {filteredProducts.length > 0 ? (
+                    filteredProducts.map((product, index) => (
+                      <div className=" flex items-center mt-1 px-2" key={index}>
+                        {product.posterImageUrl && (
+                          <Image
+                            className="rounded-md"
+                            width={50}
+                            height={50}
+                            src={product.posterImageUrl.imageUrl}
+                            alt="image"
+                          />
+                        )}
+                        <Link
+                          href={{
+                            pathname: `/product/${generateSlug(product.name)}`,
+                          }}
+                          onClick={() => setIsFocused(false)}
+                          className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                        >
+                          {product.name}
+                        </Link>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="px-4 py-2 text-gray-600">No products found</div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
-        
+
           <div
             className=" cursor-pointer text-22 sm:text-20 md:text-2xl w-fit col-span-1 sm:col-span-4 md:col-span-4 block md:hidden"
             onClick={showModal}
@@ -357,7 +362,7 @@ const Navbar = () => {
           <div className="text-center   flex justify-center col-span-5 sm:col-span-4 md:col-span-4 ml-3">
             <Link href="/" className="">
               <Image
-              className=" w-full h-full lg:w-[277px] lg:h-[60px] object-contain"
+                className=" w-full h-full lg:w-[277px] lg:h-[60px] object-contain"
                 src={
                   isHomePage ? (isScrolled ? blacklogo : blacklogo) : blacklogo
                 }
@@ -382,9 +387,8 @@ const Navbar = () => {
               className="relative text-22 sm:text-16 md:text-2xl"
             >
               <IoMdHeartEmpty
-                className={`cursor-pointer ${
-                  WishlistItems.length > 0 ? "text-primary" : "text-black"
-                }`}
+                className={`cursor-pointer ${WishlistItems.length > 0 ? "text-primary" : "text-black"
+                  }`}
               />
               {WishlistItems.length > 0 ? (
                 <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center shadow-2xl bg-white text-black absolute top-3 left-3 sm:left-2 sm:top-2 md:left-3 md:top-3">
@@ -401,9 +405,8 @@ const Navbar = () => {
               className="relative text-22 sm:text-16 md:text-2xl"
             >
               <SlHandbag
-                className={`cursor-pointer ${
-                  cartItems.length > 0 ? "text-primary" : "text-black"
-                }`}
+                className={`cursor-pointer ${cartItems.length > 0 ? "text-primary" : "text-black"
+                  }`}
               />
               {cartItems.length > 0 ? (
                 <>
@@ -467,34 +470,32 @@ const Navbar = () => {
 
         <div>
           <Container
-            className={`hidden lg:flex  lg:justify-between uppercase text-11 xl:text-13 py-3  ${
-              isHomePage
-                ? isScrolled
-                  ? "bg-white text-black"
-                  : "bg-white text-black"
+            className={`hidden lg:flex  lg:justify-between uppercase text-11 xl:text-13 py-3  ${isHomePage
+              ? isScrolled
+                ? "bg-white text-black"
                 : "bg-white text-black"
-            }`}
+              : "bg-white text-black"
+              }`}
           >
-           {navarlink.map((navItem, index) => {
-        const slug = navItem.title.includes("Series")
-          ? `/products?category=${navItem.ref}`
-          : `/${navItem.ref}`;
+            {navarlink.map((navItem, index) => {
+              const slug = navItem.title.includes("Series")
+                ? `/products?category=${navItem.ref}`
+                : `/${navItem.ref}`;
 
-        const isActive = activeLink === slug; // Check if the link is active
+              const isActive = activeLink === slug; // Check if the link is active
 
-        return (
-          <Link
-            className={`2xl:leading-7 2xl:tracking-[20%] ${
-              isActive ? "link-active" : "link-underline"
-            }`}
-            key={index}
-            href={slug}
-            onClick={() => setActiveLink(slug)} // Update the active link on click
-          >
-            {navItem.title.replace("Series", "")}
-          </Link>
-        );
-      })}
+              return (
+                <Link
+                  className={`2xl:leading-7 2xl:tracking-[20%] ${isActive ? "link-active" : "link-underline"
+                    }`}
+                  key={index}
+                  href={slug}
+                  onClick={() => setActiveLink(slug)} // Update the active link on click
+                >
+                  {navItem.title.replace("Series", "")}
+                </Link>
+              );
+            })}
           </Container>
         </div>
       </nav>
@@ -594,7 +595,8 @@ const Navbar = () => {
           )}
         </>
       </Modal>
-      <CartDrawer open={drawerOpen} onClose={handleCloseDrawer} />
+        <CartDrawer open={drawerOpen} onClose={handleCloseDrawer} onMouseEnter={() => setCartHover(true)}
+        onMouseLeave={() => setCartHover(false)} />
     </>
   );
 };
