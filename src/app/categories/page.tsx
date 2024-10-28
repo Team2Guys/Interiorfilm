@@ -7,12 +7,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useLayoutEffect, useState } from 'react';
 import { CategoriesType } from 'types/interfaces';
-
 function Categories() {
   const [category, setCategory] = useState<CategoriesType[]>([]);
   const [loading, setloading] = useState<boolean>(true);
-
-
   const CategoryHandler = async () => {
     try {
       setloading(true)
@@ -72,14 +69,8 @@ function Categories() {
                     <p className='text-12 xsm:text-14 lg:text-base text-center'>{item.description}</p>
                   </div>
                 </Link>
-
-
-
               );
             })}
-
-
-
       </div>
     </>
   );
