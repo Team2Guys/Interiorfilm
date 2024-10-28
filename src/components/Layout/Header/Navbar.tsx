@@ -283,7 +283,7 @@ const Navbar = () => {
     if (drawerOpen && !cartHover) {
       const timeoutId = setTimeout(() => {
         setDrawerOpen(false);
-      }, 2000);
+      }, 5000);
       return () => clearTimeout(timeoutId); 
     }
   }, [drawerOpen, cartHover]);
