@@ -63,7 +63,7 @@ function Categories() {
 
                     <Image
                       src={item.posterImageUrl.imageUrl}
-                      className="object-cover w-full"
+                      className="object-cover w-full h-[300px] 2xsm:h-[400px] xsm:h-[500px] sm:h-[600px] md:h-[450px] lg:h-[395px] 2xl:h-[580px] 3xl:h-[792px]"
                       alt='categories'
                       width={1000}
                       height={1000}

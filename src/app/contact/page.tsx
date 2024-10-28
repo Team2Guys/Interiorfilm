@@ -118,8 +118,7 @@ const Contact = () => {
                   }
                   className="md:text-12 lg:text-base"
                 >
-                  Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha,
-                  Dubai, UAE
+                  Shop No.6 Oud Metha Bldg, Block A - Oud Metha - Dubai, UAE
                 </Link>
               </div>
               <div className="flex gap-2 items-center">
