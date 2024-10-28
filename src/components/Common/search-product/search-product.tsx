@@ -33,7 +33,6 @@ const SearchProduct = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
-      // Check if click is outside both the search input and dropdown
       if (
         searchInputRef.current &&
         !searchInputRef.current.contains(event.target) &&
@@ -51,84 +50,67 @@ const SearchProduct = () => {
     };
   }, []);
 
-  const showModal = () => {
-    if (searchTerm.trim() !== "") {
-      // Only show modal if searchTerm is not empty
-      setIsModalOpen(true);
-    }
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
 
   const productHandler = async () => {
     try {
-      const response = await axios.get(
+      // Fetch main products
+      const mainResponse = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
       );
-
-      // Ensure products are an array
-      if (Array.isArray(response.data.products)) {
-        setProducts(response.data.products);
-      } else {
-        console.error("Product data is not an array", response.data.products);
-      }
+      const mainProducts = Array.isArray(mainResponse.data.products)
+        ? mainResponse.data.products
+        : [];
+  
+      // Fetch add-on products
+      const addOnResponse = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`
+      );
+      const addOnProducts = Array.isArray(addOnResponse.data.products)
+        ? addOnResponse.data.products
+        : [];
+  
+      // Combine main and add-on products
+      const combinedProducts = [...mainProducts, ...addOnProducts];
+      setProducts(combinedProducts);
     } catch (err) {
       console.log(err, "err");
     }
   };
-
+  
   useEffect(() => {
     productHandler();
   }, []);
-
+  
   const filteredProducts = Array.isArray(products)
-  ? products.filter((product) => {
-      const searchLower = searchTerm.toLowerCase();
-      const nameMatches = product.name.toLowerCase().includes(searchLower);
-      const descriptionMatches = product.description && product.description.toLowerCase().includes(searchLower);
+    ? products.filter((product) => {
+        const search = searchTerm.toLowerCase();
+        return (
+          product.name.toLowerCase().includes(search) ||
+          (product.description &&
+            product.description.toLowerCase().includes(search)) ||
+          (product.salePrice &&
+            product.salePrice.toString().toLowerCase().includes(search)) ||
+          (product.purchasePrice &&
+            product.purchasePrice.toString().toLowerCase().includes(search)) ||
+          (product.category &&
+            product.category.toString().toLowerCase().includes(search)) ||
+          product.discountPrice?.toString().toLowerCase().includes(search) ||
+          product.modelDetails.some(
+            (model) =>
+              model.name.toLowerCase().includes(search) ||
+              model.detail.toLowerCase().includes(search)
+          ) ||
+          product.starRating?.toString().toLowerCase().includes(search) ||
+          product.reviews?.toLowerCase().includes(search) ||
+          product.code.toLowerCase().includes(search) ||
+          product.totalStockQuantity?.toString().toLowerCase().includes(search)
       
-      return nameMatches || descriptionMatches;
-    })
-  : [];
+        );
+      })
+    : [];
 
-// Sort the products: name matches first, then description matches
-const sortedFilteredProducts = filteredProducts.sort((a, b) => {
-  const searchLower = searchTerm.toLowerCase();
-  const aNameMatches = a.name.toLowerCase().includes(searchLower);
-  const bNameMatches = b.name.toLowerCase().includes(searchLower);
 
-  // Prioritize name matches
-  if (aNameMatches && !bNameMatches) return -1;
-  if (!aNameMatches && bNameMatches) return 1;
-
-  return 0; // Keep the order for products that match in the same category
-});
-
-  useEffect(() => {
-    if (isModalOpen && searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
-  }, [isModalOpen]);
-
-  const truncateText = (text: any, maxLength: any) => {
-    return text.length > maxLength
-      ? text.substring(0, maxLength) + "..."
-      : text;
-  };
-
-  // Function to handle "Enter" key press
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      showModal();
-    }
-  };
-
+ 
   return (
     <>
       {/* <PreFooter /> */}
@@ -328,65 +310,7 @@ const sortedFilteredProducts = filteredProducts.sort((a, b) => {
           </div>
         </div>
       </div>
-      <Modal
-        title=""
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer=""
-        width={800}
-      >
-        <>
-          <div className="flex items-center  w-full max-w-md mx-auto md:max-w-screen-2xl  mt-10  shadow shadow-boxdark  mb-3">
-            <input
-              type="text"
-              ref={searchInputRef} // Assign the ref here
-              placeholder="Product Search..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full h-[51px] px-4 py-2 text-gray-700 bg-white border-none   focus:outline-none"
-            />
-            <button className="h-[51px] px-4 py-3 bg-white text-gray-600  hover:text-gray-800">
-              <IoSearch size={25} />
-            </button>
-          </div>
 
-          {searchTerm && ( // Render products only when there is a search term
-            <div className="max-h-[400px] overflow-y-scroll  pr-2 bg-white rounded-md p-2">
-              {filteredProducts.length > 0 ? (
-                filteredProducts.map((product, index) => (
-                  <Link
-                    key={index}
-                    href={{
-                      pathname: `/product/${generateSlug(product.name)}`,
-                    }}
-                    onClick={() => setIsModalOpen(false)}
-                    className="shadow p-2 flex gap-2 mt-2 rounded-md border text-black hover:text-black border-gray hover:border-primary"
-                  >
-                    {product.posterImageUrl && (
-                      <Image
-                        className="rounded-md"
-                        width={100}
-                        height={100}
-                        src={product.posterImageUrl.imageUrl}
-                        alt="image"
-                      />
-                    )}
-                    <div>
-                      <p className="font-semibold text-lg md:text-xl">
-                        {product.name}
-                      </p>
-                      <p>{truncateText(product.description, 160)}</p>
-                    </div>
-                  </Link>
-                ))
-              ) : (
-                <p className="text-dark dark:text-white">No products found</p>
-              )}
-            </div>
-          )}
-        </>
-      </Modal>
     </>
   );
 };

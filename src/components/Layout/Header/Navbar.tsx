@@ -88,69 +88,58 @@ const Navbar = () => {
 
   const productHandler = async () => {
     try {
-      const response = await axios.get(
+      // Fetch main products
+      const mainResponse = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
       );
-      if (Array.isArray(response.data.products)) {
-        setProducts(response.data.products);
-      } else {
-        console.error("Product data is not an array", response.data.products);
-      }
+      const mainProducts = Array.isArray(mainResponse.data.products)
+        ? mainResponse.data.products
+        : [];
+  
+      // Fetch add-on products
+      const addOnResponse = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`
+      );
+      const addOnProducts = Array.isArray(addOnResponse.data.products)
+        ? addOnResponse.data.products
+        : [];
+  
+      // Combine main and add-on products
+      const combinedProducts = [...mainProducts, ...addOnProducts];
+      setProducts(combinedProducts);
     } catch (err) {
       console.log(err, "err");
     }
   };
-
+  
   useEffect(() => {
     productHandler();
   }, []);
-
+  
   const filteredProducts = Array.isArray(products)
     ? products.filter((product) => {
-      let Search = searchTerm.toLowerCase();
-        product.name.toLowerCase().includes(searchTerm.toLowerCase());
-
+        const search = searchTerm.toLowerCase();
         return (
-          product.name.toLowerCase().includes(Search) ||
+          product.name.toLowerCase().includes(search) ||
           (product.description &&
-            product.description.toLowerCase().includes(Search)) ||
+            product.description.toLowerCase().includes(search)) ||
           (product.salePrice &&
-            product.salePrice.toString().toLowerCase().includes(Search)) ||
+            product.salePrice.toString().toLowerCase().includes(search)) ||
           (product.purchasePrice &&
-            product.purchasePrice
-              .toString()
-              .toLowerCase()
-              .includes(Search)) ||
+            product.purchasePrice.toString().toLowerCase().includes(search)) ||
           (product.category &&
-            product.category.toString().toLowerCase().includes(Search)) ||
-          product.discountPrice
-            ?.toString()
-            .toLowerCase()
-            .includes(Search) ||
-          (product.colors &&
-            product.colors.some((color: any) =>
-              color.colorName.toLowerCase().includes(Search)
-            )) ||
+            product.category.toString().toLowerCase().includes(search)) ||
+          product.discountPrice?.toString().toLowerCase().includes(search) ||
           product.modelDetails.some(
-            (model: any) =>
-              model.name.toLowerCase().includes(Search) ||
-              model.detail.toLowerCase().includes(Search)
+            (model) =>
+              model.name.toLowerCase().includes(search) ||
+              model.detail.toLowerCase().includes(search)
           ) ||
-          (product.spacification &&
-            product.spacification.some((spec: any) =>
-              spec.specsDetails.toLowerCase().includes(Search)
-            )) ||
-          product.starRating?.toString().toLowerCase().includes(Search) ||
-          product.reviews?.toLowerCase().includes(Search) ||
-          product.code.toLowerCase().includes(Search) ||
-          product.totalStockQuantity
-            ?.toString()
-            .toLowerCase()
-            .includes(Search) ||
-          (product.sizes &&
-            product.sizes.some((size: any) =>
-              size.sizesDetails.toLowerCase().includes(Search)
-            ))
+          product.starRating?.toString().toLowerCase().includes(search) ||
+          product.reviews?.toLowerCase().includes(search) ||
+          product.code.toLowerCase().includes(search) ||
+          product.totalStockQuantity?.toString().toLowerCase().includes(search)
+      
         );
       })
     : [];
