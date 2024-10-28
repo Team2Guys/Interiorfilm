@@ -258,7 +258,7 @@ const Footer: React.FC = () => {
               <Link
                 target="_blank"
                 href={
-                  "https://www.google.com/maps?ll=25.24485,55.299425&z=15&t=m&hl=en&gl=US&mapclient=embed&cid=14349723016612093106"
+                  "https://www.google.com/maps/place/interiorfilm.ae/@25.2365707,55.307743,21z/data=!4m14!1m7!3m6!1s0x3e5f439cc8bb1d43:0xd3d5fae1dc84d0c0!2sFloors+And+Walls+Dubai!8m2!3d25.2370265!4d55.3080125!16s%2Fg%2F11qrkn8_1q!3m5!1s0x3e5f43e5c67a5595:0xdb1aeea922163a0a!8m2!3d25.2364864!4d55.3079376!16s%2Fg%2F11sz9pys8k?hl=en&entry=ttu&g_ep=EgoyMDI0MTAyMy4wIKXMDSoASAFQAw%3D%3D"
                 }
                 className="md:text-12 lg:text-base"
               >
