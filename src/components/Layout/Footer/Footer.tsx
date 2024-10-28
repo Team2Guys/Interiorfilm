@@ -176,9 +176,8 @@ const Footer: React.FC = () => {
             </h3>
             <div className="flex md:block gap-16">
               <ul
-                className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${
-                  isCategoriesOpen ? "max-h-96" : "max-h-0"
-                } md:max-h-none`}
+                className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${isCategoriesOpen ? "max-h-96" : "max-h-0"
+                  } md:max-h-none`}
               >
                 {footerlink.map((navItem, index) => {
                   const slug = navItem.title.includes("Series")
@@ -187,7 +186,7 @@ const Footer: React.FC = () => {
                   return (
                     <li key={index}>
                       <Link
-                        
+
                         href={slug}
                         className="hover:text-primary link-footer text-slate-400 cursor-pointer whitespace-nowrap text-base md:text-14 xl:text-base"
                       >
@@ -211,9 +210,8 @@ const Footer: React.FC = () => {
                 </span> */}
             </h3>
             <ul
-              className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${
-                isCustomerCareOpen ? "max-h-96" : "max-h-0"
-              } md:max-h-none`}
+              className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${isCustomerCareOpen ? "max-h-96" : "max-h-0"
+                } md:max-h-none`}
             >
               {customerCare.map((item, index) => (
                 <li key={index}>
@@ -238,9 +236,8 @@ const Footer: React.FC = () => {
                 </span> */}
             </h3>
             <ul
-              className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${
-                isPagesOpen ? "max-h-96" : "max-h-0"
-              } md:max-h-none`}
+              className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${isPagesOpen ? "max-h-96" : "max-h-0"
+                } md:max-h-none`}
             >
               {pages.map((page, index) => (
                 <li key={index}>
@@ -265,8 +262,7 @@ const Footer: React.FC = () => {
                 }
                 className="md:text-12 lg:text-base"
               >
-                Yellowzone Trading, Al Nabooda Tower A, Shop 6, Oud Metha,
-                Dubai, UAE
+                Shop No.6 Oud Metha Bldg, Block A - Oud Metha - Dubai, UAE
               </Link>
               <p>
                 <Link
