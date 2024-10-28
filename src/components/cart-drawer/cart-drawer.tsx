@@ -121,14 +121,30 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
     setSubtotal(sub2);
   };
 
+  // const removeItem = (index: number) => {
+  //   Modal.confirm({
+  //     title: "Are you sure you want to remove this item?",
+  //     content: "This action cannot be undone.",
+  //     okText: "Yes",
+  //     okType: "danger",
+  //     cancelText: "No",
+  //     onOk: () => {
+  //       const newCartItems = cartItems.filter(
+  //         (_, itemIndex) => itemIndex !== index
+  //       );
+  //       setCartItems(newCartItems);
+  //       localStorage.setItem("cart", JSON.stringify(newCartItems));
+  //       calculateSubtotal(newCartItems);
+  //       message.success("Product removed from cart successfully!");
+  //       window.dispatchEvent(new Event("cartChanged"));
+  //     },
+  //     onCancel: () => {
+  //       message.info("Item removal canceled");
+  //     },
+  //   });
+  // };
+
   const removeItem = (index: number) => {
-    Modal.confirm({
-      title: "Are you sure you want to remove this item?",
-      content: "This action cannot be undone.",
-      okText: "Yes",
-      okType: "danger",
-      cancelText: "No",
-      onOk: () => {
         const newCartItems = cartItems.filter(
           (_, itemIndex) => itemIndex !== index
         );
@@ -137,11 +153,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
         calculateSubtotal(newCartItems);
         message.success("Product removed from cart successfully!");
         window.dispatchEvent(new Event("cartChanged"));
-      },
-      onCancel: () => {
-        message.info("Item removal canceled");
-      },
-    });
   };
 
     useEffect(() => {
@@ -174,7 +185,8 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
               />
             </div>
             <div className="max-h-52 border border-slate-100 overflow-y-scroll p-1 custom-scrollbar">
-            {cartItems.map((item: any, index: number) => {
+              
+            {cartItems.length > 0 ? cartItems.map((item: any, index: number) => {
           
 
           return (
@@ -251,7 +263,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
               </div>
             </div>
           );
-        })}
+        }) : ( <p className="font-bold p-4">Cart is empty</p>)}
             </div>
             <div className="text-end mt-2 mb-2">
               <p className="font-bold">
