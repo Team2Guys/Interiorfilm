@@ -25,10 +25,7 @@ const contact_us_Validation = Yup.object().shape({
 });
 
 const formatPhoneNumber = (value: any) => {
-  // Remove all characters except digits and "+"
   const numbers = value.replace(/[^+\d]/g, "");
-
-  // Handle UAE-specific formatting when starting with "+971"
   if (numbers.startsWith("+971")) {
     if (numbers.length <= 5) return `${numbers}`; // "+971"
     if (numbers.length <= 7)
@@ -38,7 +35,6 @@ const formatPhoneNumber = (value: any) => {
       13
     )}`; // "+971-XX-XXXXXXX"
   }
-  // Handle numbers starting with "0" for UAE (assume "0971")
   else if (numbers.startsWith("0")) {
     if (numbers.length <= 3) return `${numbers}`;
     if (numbers.length <= 6)
@@ -49,19 +45,13 @@ const formatPhoneNumber = (value: any) => {
     )}`; // "0971-XX-XXXXXXX"
   }
 
-  return numbers; // If no valid prefix, return the input as-is.
+  return numbers;
 };
 
 const handlePhoneNumberChange = (e: any, setFieldValue: any) => {
   let value = e.target.value;
-
-  // Allow only digits and '+' at the start
   value = value.replace(/[^+\d]/g, "");
-
-  // Limit the input to 14 characters (for full UAE number)
   value = value.slice(0, 14);
-
-  // Set the formatted phone number
   setFieldValue("user_phone", formatPhoneNumber(value));
 };
 
