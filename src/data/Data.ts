@@ -532,7 +532,7 @@ export const EnvironmentData: { title: string, icon: StaticImageData }[] = [
   
   { title: 'Fully Wear Resistance', icon: icon3 },
   { title: 'Ductile Reusable', icon: icon5 },
-  { title: 'Heat Resistance', icon: icon4 },
+  { title: 'Stain resistance', icon: icon6 },
   { title: 'Abrasion Resistance', icon: icon7 },
 
 ];
@@ -638,7 +638,7 @@ export const AccordionsArray: ACCORDINTYPES[] = [
 
 export const specificProductCodesByCategory: any = {
   "plain-series": ["KH9003", "KH9025", "KH9022"],
-  "cement-grey-series": ["KS5002", "KS5007", "KS5005"],
+  "cement-grey-series": ["KS5004", "KS5007", "KS5005"],
   "wood-grain-series": ["CA162", "CA164", "CA126"],
   "marble-series": ["KS6007", "KS6004", "KS6011"],
   "metal-series": ["KW006", "KW012", "KW013"],
@@ -649,13 +649,13 @@ export const specificProductCodesByCategory: any = {
 };
 
 export const specificImageIndexByCode: any = {
-
-  KH9615: 0,
-  KH9603: 1,
-  KS5005: 2,
-  KS5007: 1,
-  KH9025: 2,
-  KH9022: 2,
+  
+  KH9615:0,
+  KH9603:1,
+  KS5005:2,
+  KS5007:1,
+  KH9025:2,
+  KH9022:2,
   KS6007: 2,
   KS6004: 0,
   KS6011: 2,

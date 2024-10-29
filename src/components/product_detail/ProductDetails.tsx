@@ -666,7 +666,7 @@ export default function ProductDetails({
             )}
           </div>
           {!isAccessory && (
-          <div className="flex flex-col gap-2 mt-2">
+          <div className="flex flex-col gap-2 mt-5 md:mt-10">
             {/* <h1 className="text-[14px] font-bold">Healthy Green Environment</h1> */}
             <EnviromentIcons />
           </div>
