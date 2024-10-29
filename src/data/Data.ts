@@ -524,14 +524,14 @@ export const FooterPaymentMethods: ITabbyPayList[] = [
 
 export const EnvironmentData: { title: string, icon: StaticImageData }[] = [
   { title: '100% waterproof', icon: icon1 },
+  { title: 'Scratch Resistance', icon: icon2 },
   { title: 'Fully Wear Resistance', icon: icon3 },
   { title: 'Heat Resistance', icon: icon4 },
-  { title: 'Scratch Resistance', icon: icon2 },
-  { title: 'Eco-Friendly Material ', icon: icon8 },
+  { title: 'Stain resistance', icon: icon6 },
   { title: 'Ductile Reusable', icon: icon5 },
   { title: 'Abrasion Resistance', icon: icon7 },
-  { title: 'Stain resistance', icon: icon6 },
-  { title: 'Low Temperature Resistance', icon: icon9 },
+  { title: 'Eco-Friendly Material ', icon: icon8 },
+  { title: 'Low-Temperature Resistance', icon: icon9 },
 ];
 
 export const navarlink = [
