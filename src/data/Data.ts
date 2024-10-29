@@ -524,14 +524,17 @@ export const FooterPaymentMethods: ITabbyPayList[] = [
 
 export const EnvironmentData: { title: string, icon: StaticImageData }[] = [
   { title: '100% waterproof', icon: icon1 },
-  { title: 'Scratch Resistance', icon: icon2 },
-  { title: 'Fully Wear Resistance', icon: icon3 },
-  { title: 'Heat Resistance', icon: icon4 },
-  { title: 'Ductile Reusable', icon: icon5 },
-  { title: 'Stain resistance', icon: icon6 },
-  { title: 'Abrasion Resistance', icon: icon7 },
-  { title: 'Eco-Friendly Material ', icon: icon8 },
   { title: 'Low-Temperature Resistance', icon: icon9 },
+  { title: 'Eco-Friendly Material ', icon: icon8 },
+  
+  { title: 'Stain resistance', icon: icon6 },
+  { title: 'Scratch Resistance', icon: icon2 },
+  
+  { title: 'Fully Wear Resistance', icon: icon3 },
+  { title: 'Ductile Reusable', icon: icon5 },
+  { title: 'Heat Resistance', icon: icon4 },
+  { title: 'Abrasion Resistance', icon: icon7 },
+
 ];
 
 export const navarlink = [
@@ -641,18 +644,18 @@ export const specificProductCodesByCategory: any = {
   "metal-series": ["KW006", "KW012", "KW013"],
   "fabric-series": ["KS8005", "KS8006", "KS8002"],
   "skin-touch-series": ["KH9603", "KH9612", "KH9611"],
-  "leather-series":["KS7715","KS7710","KS7701"],
-  "accessories":["as1541","as122","as789"]
+  "leather-series": ["KS7715", "KS7710", "KS7701"],
+  "accessories": ["as1541", "as122", "as789"]
 };
 
 export const specificImageIndexByCode: any = {
-  
-  KH9615:0,
-  KH9603:1,
-  KS5005:2,
-  KS5007:1,
-  KH9025:2,
-  KH9022:2,
+
+  KH9615: 0,
+  KH9603: 1,
+  KS5005: 2,
+  KS5007: 1,
+  KH9025: 2,
+  KH9022: 2,
   KS6007: 2,
   KS6004: 0,
   KS6011: 2,
