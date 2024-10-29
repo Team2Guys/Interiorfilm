@@ -44,7 +44,6 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
-      // Check if click is outside both the search input and dropdown
       if (
         searchInputRef.current &&
         !searchInputRef.current.contains(event.target) &&
@@ -62,7 +61,6 @@ const Navbar = () => {
     };
   }, []);
 
-  // Handle setting the active link based on the current category or pathname
   useEffect(() => {
     if (category) {
       setActiveLink(`/products?category=${category}`);

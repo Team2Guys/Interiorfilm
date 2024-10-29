@@ -210,20 +210,20 @@ const CheckoutData: React.FC<TableProps> = ({
               <path
                 d="M1.64377 9.13623H5.33864V18.9736H1.64377C1.43703 18.9736 1.23876 18.8916 1.09257 18.7453C0.946384 18.5991 0.864258 18.4008 0.864258 18.1942V9.91574C0.864258 9.709 0.946384 9.51073 1.09257 9.36454C1.23876 9.21837 1.43703 9.13623 1.64377 9.13623Z"
                 stroke="black"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M5.33887 9.13568L9.29876 2.80607C9.45222 2.5559 9.66787 2.34973 9.92469 2.20766C10.1815 2.06558 10.4708 1.99247 10.7642 1.99539C10.9954 1.98705 11.2258 2.02512 11.442 2.10737C11.6582 2.18962 11.8557 2.31436 12.0228 2.47424C12.19 2.63411 12.3234 2.82586 12.4151 3.03817C12.5069 3.25047 12.5552 3.47902 12.5571 3.7103V8.24703H19.4012C19.654 8.25524 19.9023 8.31687 20.1297 8.42791C20.3571 8.53893 20.5584 8.69681 20.7204 8.8912C20.8824 9.08558 21.0014 9.31204 21.0696 9.55571C21.1378 9.79937 21.1537 10.0547 21.1161 10.3049L19.8689 18.3495C19.8157 18.7794 19.6072 19.1751 19.2829 19.4622C18.9585 19.7493 18.5404 19.908 18.1071 19.9085H7.88006C7.39321 19.9104 6.91268 19.7983 6.47694 19.581L5.35446 19.0198"
                 stroke="black"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M5.33887 9.13586V18.9733"
                 stroke="black"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </p>
@@ -233,7 +233,7 @@ const CheckoutData: React.FC<TableProps> = ({
               Buy with confidence
             </p>
             <p className="p-0 m-0 text-[#827277] font-futura text-sm flex gap-5">
-              Free easy returns up to 14 days.{" "}
+              Free easy returns up to 7 days.{" "}
               <Link
                 href="/returns-refunds"
                 className="text-[#9F9592] text-sm font-futura cursor-pointer"
