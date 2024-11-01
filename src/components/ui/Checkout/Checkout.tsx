@@ -219,7 +219,8 @@ const CheckOut: React.FC = () => {
 
     const proceedPayment = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/proceedPayment`, {
       data:billingData,
-      amount: billingData.totalAmount
+      amount: billingData.totalAmount,
+      shipmentFee
       
     },
   );
