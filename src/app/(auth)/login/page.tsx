@@ -100,7 +100,7 @@ export default function Page() {
       error={error}
       loading={loading}
       inputFields={inputFields}
-      title="Sign In" descrition="Please login using account detail bellow."
+      title="Sign In" descrition="Please login using account detail below."
       InstructionText="Don't Have an Account?"
       routingText='Create account'
       buttonTitle="Sign In"

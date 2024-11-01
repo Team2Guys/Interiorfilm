@@ -18,8 +18,8 @@ const useColorMode = () => {
   const setMode = (mode: 'light' | 'dark') => {
     setColorMode(mode);
     localStorage.setItem('colorMode', mode);
-    // document.documentElement.classList.remove('light', 'dark');
-    // document.documentElement.classList.add(mode);
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(mode);
   };
 
   return [colorMode, setMode] as const;
