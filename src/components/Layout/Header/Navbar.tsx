@@ -165,6 +165,8 @@ const Navbar = () => {
           ? `products?category=${navItem.ref}`
           : `/${navItem.ref}`;
         setActiveLink(slug);
+        
+
       }
     }
   }, [pathname]);
@@ -435,29 +437,27 @@ const Navbar = () => {
                 }
                 content={
                   <>
-                    <ul className="space-y-2">
-                      {navarlink.map(
-                        (
-                          navItem: { ref: string; title: string },
-                          index: number
-                        ) => {
-                          const slug = navItem.title.includes("Series")
-                            ? `products?category=${navItem.ref}`
-                            : `/${navItem.ref}`;
+                    <ul className="space-y-4 flex flex-col " >
+                    {navarlink.map((navItem, index) => {
+                      const slug = navItem.title.includes("Series")
+                        ? `/products?category=${navItem.ref}`
+                        : `/${navItem.ref}`;
 
-                          return (
-                            <li onClick={onClose} key={index}>
-                              <Link
-                                className="text-14 font-medium text-black hover:text-black"
-                                key={index}
-                                href={slug}
-                              >
-                                {navItem.title.replace("Series", "")}
-                              </Link>
-                            </li>
-                          );
-                        }
-                      )}
+                      const isActive = activeLink === slug; // Check if the link is active
+
+                      return (
+                        <div onClick={onClose} key={index}>
+                        <Link
+                          className={`font-semibold text-16 text-black hover:text-black capitalize w-fit ${isActive ? "link-active" : "link-underline"
+                          }`}
+                          href={slug}
+                          onClick={() =>setActiveLink(slug)} 
+                          >
+                          {navItem.title.replace("Series", "")}
+                        </Link>
+                          </div>
+                      );
+                    })}
                     </ul>
                   </>
                 }
