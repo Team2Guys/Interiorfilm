@@ -6,7 +6,7 @@ import ViewOrder from 'components/Dashboard/view-order/ViewOrder';
 const Orders = () => {
 
   return (
-    <DefaultLayout>
+    <DefaultLayout> 
       <Breadcrumb pageName="View Orders" />
        <ViewOrder/>
     </DefaultLayout>
