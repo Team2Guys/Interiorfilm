@@ -437,7 +437,7 @@ const Navbar = () => {
                 }
                 content={
                   <>
-                    <ul className="space-y-2 flex flex-col " >
+                    <ul className="space-y-4 flex flex-col " >
                     {navarlink.map((navItem, index) => {
                       const slug = navItem.title.includes("Series")
                         ? `/products?category=${navItem.ref}`
