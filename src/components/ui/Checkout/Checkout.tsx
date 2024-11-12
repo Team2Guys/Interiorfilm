@@ -14,6 +14,7 @@ import { FiTag } from "react-icons/fi";
 import Overlay from 'components/widgets/Overlay/Overlay'
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import showToast from "components/Toaster/Toaster";
 
 
 const CheckOut: React.FC = () => {
@@ -215,33 +216,51 @@ const CheckOut: React.FC = () => {
 
     let date = Date.now();
 
-    const authResponse = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/authenticate`);
-    const token = authResponse.data.token;
-    console.log(token, "token")
 
-
-    const orderResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/createOrder`, { token, amount: billingData.totalAmount });
-    const orderId = orderResponse.data.orderId;
-
-    console.log(orderId, "orderId")
-
-
-    const paymentKeyResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/recordSale`, {
-      token, orderId: orderId, ...extractedData,
-      date, shipmentFee, phone_number: phone_number, email, address, products: productItems, state: city, city: city,
-      street: '-',
-      floor: '-',
-      shipping_method: 'Courier',
-      building: "-",
-      apartment: "-",
+    const proceedPayment = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/proceedPayment`, {
+      data:billingData,
+      amount: billingData.totalAmount,
+      shipmentFee
+      
     },
-    );
+  );
+  console.log(proceedPayment, "proceedPayment")
 
-    console.log(paymentKeyResponse, "paymentKeyResponse")
+  if(proceedPayment.status === 201){
+    showToast("success", "Order Placed Successfully")
+    window.location.href = `https://uae.paymob.com/unifiedcheckout/?publicKey=${process.env.NEXT_PUBLIC_PAYMOB_PUBLIC_KEY}&clientSecret=${proceedPayment.data.data.client_secret}`;
+  
+  }
 
-    const paymentKey = paymentKeyResponse.data.paymentKey;
 
-    window.location.href = `${process.env.NEXT_PUBLIC_PAYMOD_BASE_URL}/iframes/${process.env.NEXT_PUBLIC_PAYMOB_IFRAME_ID}?payment_token=${paymentKey}`;
+
+    // const authResponse = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/authenticate`);
+    // const token = authResponse.data.token;
+    // console.log(token, "token")
+
+
+    // const orderResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/createOrder`, { token, amount: billingData.totalAmount });
+    // const orderId = orderResponse.data.orderId;
+
+    // console.log(orderId, "orderId")
+
+
+    // const paymentKeyResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/recordSale`, {
+    //   token, orderId: orderId, ...extractedData,
+    //   date, shipmentFee, phone_number: phone_number, email, address, products: productItems, state: city, city: city,
+    //   street: '-',
+    //   floor: '-',
+    //   shipping_method: 'Courier',
+    //   building: "-",
+    //   apartment: "-",
+    // },
+    // );
+
+    // console.log(paymentKeyResponse, "paymentKeyResponse")
+
+    // const paymentKey = paymentKeyResponse.data.paymentKey;
+
+    // window.location.href = `${process.env.NEXT_PUBLIC_PAYMOD_BASE_URL}/iframes/${process.env.NEXT_PUBLIC_PAYMOB_IFRAME_ID}?payment_token=${paymentKey}`;
 
 
   };
