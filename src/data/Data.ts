@@ -565,7 +565,7 @@ export const footerlink = [
   { ref: "cement-grey-series", title: "Cement Grey Series" },
   { ref: "fabric-series", title: "Fabric Series" },
   { ref: "wood-grain-series", title: "Wood Grain Series" },
-  { ref: "accessories", title: "accessories Series" },
+  { ref: "accessories", title: "Accessories Series" },
 
 
 ];
