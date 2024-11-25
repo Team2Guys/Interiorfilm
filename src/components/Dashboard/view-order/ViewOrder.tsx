@@ -241,16 +241,21 @@ const ViewOrder = () => {
             rowKey="_id"
           />
           <Modal title="Order Detail" visible={visible} onOk={handleOk} onCancel={handleCancel} footer={null}>
-            {selectedProducts.map((product) => (
-              <div className='flex gap-2 items-center mt-2' key={product._id}>
-                <Image className='rounded-md' width={100} height={100} src={product.imageUrl} alt={product.name} />
-                <div>
-                  <h3>{product.name}</h3>
-                  <p>Price: {product.price} {product.currency}</p>
-                  <p>Quantity: {product.count}</p>
+            {selectedProducts.map((product) => {
+
+              return (
+
+                <div className='flex gap-2 items-center mt-2' key={product._id}>
+                  <Image className='rounded-md' width={100} height={100} src={product.imageUrl} alt={product.name} />
+                  <div>
+                    <h3>{product.name}</h3>
+                    <p>Price: {product.price} {product.currency}</p>
+                    <p>Quantity: {product.count}</p>
+                    <p>Length: {product.length}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </Modal>
         </>
       )}
