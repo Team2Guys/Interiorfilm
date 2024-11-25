@@ -230,6 +230,7 @@ const ViewOrder = () => {
                   <h3>{product.name}</h3>
                   <p>Price: {product.price} {product.currency}</p>
                   <p>Quantity: {product.count}</p>
+                  <p>Length: {product.length}</p>
                 </div>
               </div>
             ))}
