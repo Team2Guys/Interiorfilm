@@ -30,7 +30,7 @@ const Thankyou = () => {
   const searchParams = useSearchParams()
 
 
-  
+
   const id = searchParams.get('id')
   const amount_cents = searchParams.get('amount_cents')
   const success = searchParams.get('success')
@@ -41,12 +41,13 @@ const Thankyou = () => {
   const order_id = searchParams.get('order')
   const pending = searchParams.get('pending')
   const is_3d_secure = searchParams.get('is_3d_secure')
+  const merchant_order_id = searchParams.get('merchant_order_id')
 
-  let successFlag :boolean = success ? success.toLowerCase() === "true" : false
+  let successFlag: boolean = success ? success.toLowerCase() === "true" : false
 
   let paymentObject = {
     id,
-    success ,
+    success,
     amount_cents,
     integration_id,
     currency,
@@ -54,7 +55,8 @@ const Thankyou = () => {
     order_id,
     pending,
     is_3d_secure,
-    created_at
+    created_at,
+    merchant_order_id
   }
   const [payementDetails, setpayementDetails] = useState<PaymentQueryParams>(paymentObject)
 
@@ -63,7 +65,7 @@ const Thankyou = () => {
 
 
     try {
-      if (!id || !success || !amount_cents || !integration_id || !currency || !order_id || !pending || !is_3d_secure || !created_at) {
+      if (!id || !success || !amount_cents || !integration_id || !currency || !order_id || !pending || !is_3d_secure || !created_at || !merchant_order_id) {
         throw new Error('Missing required fields in request body')
       }
       if (successFlag) {
@@ -85,59 +87,59 @@ const Thankyou = () => {
   }, [])
 
   return (
-<>
+    <>
 
-{
+      {
         successFlag ? <Confetti /> : null
 
       }
 
-<Overlay title="show_details"/>
+      <Overlay title="show_details" />
 
-{
-  successFlag ? 
-     <div className='max-w-full flex flex-col space-y-6 justify-center items-center mb-20 p-4'>
-        <div className='mt-6'><Image src={"/images/thankyou/check.png"} 
-        alt=""
-        height={"100"}
-        width={"100"}/>
-        </div>
-        <div className='text-2xl sm:text-4xl text-center'><h2>Your Order Is Completed!</h2></div>
-        <div className='sm:max-w-[90%] max-w-[80%] lg:max-w-[55%] text-center'><p className='text-sm text-lightdark leading-6'>Thank you for your order! Your order is being processed and will be completed within 3-6 hours. You will receive an email confirmation when your order is completed.</p></div>
-        <div className='bg-black text-white text-sm text-center py-5 px-9'>
-        <Link href='/products'>
-        Continue Shopping
-        </Link>
-        </div>
-    </div> : 
-     
-     <div>
+      {
+        successFlag ?
+          <div className='max-w-full flex flex-col space-y-6 justify-center items-center mb-20 p-4'>
+            <div className='mt-6'><Image src={"/images/thankyou/check.png"}
+              alt=""
+              height={"100"}
+              width={"100"} />
+            </div>
+            <div className='text-2xl sm:text-4xl text-center'><h2>Your Order Is Completed!</h2></div>
+            <div className='sm:max-w-[90%] max-w-[80%] lg:max-w-[55%] text-center'><p className='text-sm text-lightdark leading-6'>Thank you for your order! Your order is being processed and will be completed within 3-6 hours. You will receive an email confirmation when your order is completed.</p></div>
+            <div className='bg-black text-white text-sm text-center py-5 px-9'>
+              <Link href='/products'>
+                Continue Shopping
+              </Link>
+            </div>
+          </div> :
 
-     <div className="flex justify-center my-20 '">
-       <div className="w-full max-w-md">
-         <div className="border-b-4 border-red shadow-lg p-12 text-center flex flex-col items-center">
-           <Image className='flex justify-center' src='/images/remove.png' alt='remove image' height={50} width={50} />
-           <h2 className="text-4xl font-bold mt-2 mb-3">Payment Unsuccessful</h2>
-           <p className="text-lg text-gray-700 font-medium"> Your payment was not completed. Please try again or contact our support team for assistance.</p>
-         </div>
-       </div>
-     </div>
+          <div>
 
-
+            <div className="flex justify-center my-20 '">
+              <div className="w-full max-w-md">
+                <div className="border-b-4 border-red shadow-lg p-12 text-center flex flex-col items-center">
+                  <Image className='flex justify-center' src='/images/remove.png' alt='remove image' height={50} width={50} />
+                  <h2 className="text-4xl font-bold mt-2 mb-3">Payment Unsuccessful</h2>
+                  <p className="text-lg text-gray-700 font-medium"> Your payment was not completed. Please try again or contact our support team for assistance.</p>
+                </div>
+              </div>
+            </div>
 
 
 
-   </div>
 
 
-}
+          </div>
+
+
+      }
 
 
 
-</>
+    </>
   )
 
-  
+
 }
 
 export default Thankyou;
