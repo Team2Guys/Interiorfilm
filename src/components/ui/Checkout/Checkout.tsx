@@ -231,12 +231,21 @@ const CheckOut: React.FC = () => {
 
   if(proceedPayment.status === 201){
     showToast("success", "Order Placed Successfully")
-    
     let redirect_url = `https://uae.paymob.com/unifiedcheckout/?publicKey=${process.env.NEXT_PUBLIC_PAYMOB_PUBLIC_KEY}&clientSecret=${proceedPayment.data.data.client_secret}`;
-    setPaymentKey(redirect_url)
+    
 
+    if(window.innerWidth < 768){
+      window.location.href =redirect_url
+      setPaymentProcess(false);
+
+      return 
+    }
+    else {
+      setPaymentKey(redirect_url)
+      setPaymentProcess(true);
    
-    setPaymentProcess(true);
+      
+    }
   }
 
 
