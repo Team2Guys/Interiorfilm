@@ -25,6 +25,9 @@ const CheckOut: React.FC = () => {
   const [shipmentFee, setShipmentFee] = useState<number | string>(0);
   const [isChecked, setIsChecked] = useState(true);
   const router = useRouter()
+  const [paymentProcess, setPaymentProcess] = useState(false);
+  const [paymentkey, setPaymentKey] = useState('');
+
 
   const handleCheckboxChange = (e: any) => {
     setIsChecked(e.target.checked);
@@ -228,8 +231,12 @@ const CheckOut: React.FC = () => {
 
   if(proceedPayment.status === 201){
     showToast("success", "Order Placed Successfully")
-    window.location.href = `https://uae.paymob.com/unifiedcheckout/?publicKey=${process.env.NEXT_PUBLIC_PAYMOB_PUBLIC_KEY}&clientSecret=${proceedPayment.data.data.client_secret}`;
-  
+    
+    let redirect_url = `https://uae.paymob.com/unifiedcheckout/?publicKey=${process.env.NEXT_PUBLIC_PAYMOB_PUBLIC_KEY}&clientSecret=${proceedPayment.data.data.client_secret}`;
+    setPaymentKey(redirect_url)
+
+   
+    setPaymentProcess(true);
   }
 
 
@@ -274,7 +281,23 @@ const CheckOut: React.FC = () => {
   return (
     <>
       <Overlay title="show_details" />
-
+{
+paymentProcess ? (
+  <div className=" flex items-center">
+    <iframe
+      id="paymobIframe"
+      className="h-[60vh] sm:h-[80vh] md:h-[90vh] lg:h-[100vh] xl:h-[105vh]"
+      style={{
+        width: '100%',
+        display: paymentProcess ? 'block' : 'none',
+        border: 'none',
+        flexGrow: 1,
+      }}
+      scrolling="no"
+      src={paymentkey}
+    ></iframe>
+  </div>
+) :
       <Container className=" mt-10 md:mt-20 py-2 px-4">
         <button className="flex gap-3 items-center my-2" onClick={() => router.push('/cart')}>
 
@@ -543,6 +566,7 @@ const CheckOut: React.FC = () => {
           </div>
         </div>
       </Container>
+}
     </>
   );
 };
