@@ -31,7 +31,7 @@ const Thankyou = () => {
 
 
 
-  const id = searchParams.get('order')
+  const id = searchParams.get('id')
   const amount_cents = searchParams.get('amount_cents')
   const success = searchParams.get('success')
   const integration_id = searchParams.get('integration_id')
