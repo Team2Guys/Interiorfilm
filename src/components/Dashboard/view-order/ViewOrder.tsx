@@ -136,7 +136,7 @@ const ViewOrder = () => {
     orders.forEach(order => {
       order.products.forEach((product: any) => {
         // Only process products with success: true
-        if (product.success) {
+        if (product.paymentStatus) {
           const currentOrder = grouped[product.order_id];
 
           if (currentOrder) {
@@ -163,13 +163,14 @@ const ViewOrder = () => {
       });
     });
 
-    // Convert grouped object back to array, filtering out any orders without products
-    const filteredGroupedOrders = Object.values(grouped).filter(order => order.products.length > 0);
-    setGroupedOrders(filteredGroupedOrders);
-    setFilteredOrders(filteredGroupedOrders); // Initialize filtered orders
-  };
+    const filteredGroupedOrders = Object.values(grouped)
+    .filter(order => order.products.length > 0)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  // Function to fetch all orders
+  setGroupedOrders(filteredGroupedOrders);
+  setFilteredOrders(filteredGroupedOrders); 
+};
+
   const getAllOrder = async () => {
     const token = Cookies.get("2guysAdminToken");
     const superAdminToken = Cookies.get("superAdminToken");
