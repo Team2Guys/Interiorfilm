@@ -59,11 +59,11 @@ const ViewOrder = () => {
     },
     {
       title: 'Amount',
-      dataIndex: 'amount_cents',
-      key: 'amount_cents',
+      dataIndex: 'totalPrice',
+      key: 'totalPrice',
       render: (text: any, record: any) => {
-        const transactionAmount = record.amount_cents
-          ? (record.amount_cents / 100).toFixed(2)
+        const transactionAmount = record.totalPrice
+          ? record.totalPrice
           : 'Amount not Available';
         return <span>{transactionAmount}</span>;
       },
@@ -142,7 +142,7 @@ const ViewOrder = () => {
           if (currentOrder) {
             currentOrder.products.push(product);
             currentOrder.paymentStatus = currentOrder.paymentStatus || product.paymentStatus;
-            currentOrder.amount_cents = currentOrder.amount_cents || product.amount_cents;
+            currentOrder.totalPrice = currentOrder.totalPrice || product.totalPrice;
             currentOrder.transactionId = currentOrder.transactionId || product.transactionId;
           } else {
             grouped[product.order_id] = {
@@ -155,7 +155,7 @@ const ViewOrder = () => {
               date: order.date,
               paymentStatus: product.paymentStatus, // Initial value
               transactionId: product.transactionId, // Initial value
-              amount_cents: product.amount_cents, // Initial value
+              totalPrice: product.totalPrice, // Initial value
               products: [product],
             };
           }
@@ -187,6 +187,7 @@ const ViewOrder = () => {
         },
       );
       groupOrders(response.data);
+      console.log(response.data,"ordersordersorders")
     } catch (error) {
       console.log('Error fetching data:', error);
     } finally {
