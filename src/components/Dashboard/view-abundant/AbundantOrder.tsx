@@ -54,13 +54,13 @@ const ViewOrder = () => {
       dataIndex: 'paymentStatus',
       key: 'paymentStatus',
       render: (text: any, record: any) => (
-        <span>{record.paymentStatus ? 'Paid' : 'Not Paid'}</span>
+        <span>{record.paymentStatus == true ? 'Paid' : 'Not Paid'}</span>
       ),
     },
 
     {
       title: 'Date',
-      dataIndex: 'date',
+      dataIndex: 'date',   
       key: 'date',
       render: (text: any, record: any) => {
         let formattedDate;
@@ -111,14 +111,15 @@ const ViewOrder = () => {
     setVisible(false);
   };
 
-  // Function to group orders by order ID and filter by product success
+  
   const groupOrders = (orders: any[]) => {
     const grouped: { [key: string]: any } = {};
 
     orders.forEach(order => {
       order.products.forEach((product: any) => {
-        // Only process products with success: true
-        if (product.success === false) {
+        if (product.paymentStatus === false) {
+
+        console.log(typeof(product.success), "success")
           const currentOrder = grouped[product.order_id];
 
           if (currentOrder) {
@@ -145,13 +146,14 @@ const ViewOrder = () => {
       });
     });
 
-    // Convert grouped object back to array, filtering out any orders without products
-    const filteredGroupedOrders = Object.values(grouped).filter(order => order.products.length > 0);
-    setGroupedOrders(filteredGroupedOrders);
-    setFilteredOrders(filteredGroupedOrders); // Initialize filtered orders
-  };
+    const filteredGroupedOrders = Object.values(grouped)
+    .filter(order => order.products.length > 0)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  // Function to fetch all orders
+  setGroupedOrders(filteredGroupedOrders);
+  setFilteredOrders(filteredGroupedOrders); 
+};
+
   const getAllOrder = async () => {
     const token = Cookies.get("2guysAdminToken");
     const superAdminToken = Cookies.get("superAdminToken");
@@ -168,6 +170,7 @@ const ViewOrder = () => {
         },
       );
       groupOrders(response.data);
+      console.log(response.data,"groupOrdersgroupOrders")
     } catch (error) {
       console.log('Error fetching data:', error);
     } finally {
