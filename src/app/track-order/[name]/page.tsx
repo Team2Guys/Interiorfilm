@@ -41,13 +41,11 @@ const ViewOrder = () => {
           setProducts(fetchedProducts);
           setUserDetail(userDetails);
           const totalAmount = fetchedProducts.reduce(
-            //@ts-expect-error
             (sum: number, product: Product) => sum + parseFloat(product.totalPrice.toString()),
             0
           );
           const totalShipping = fetchedProducts.reduce(
             (sum: number, product: Product) => {
-              //@ts-expect-error
               const fee = parseFloat(product.shippment_Fee) || 0;
               return sum + fee;
             },
