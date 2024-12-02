@@ -54,7 +54,7 @@ const ViewOrder = () => {
       dataIndex: 'paymentStatus',
       key: 'paymentStatus',
       render: (text: any, record: any) => (
-        <span>{record.paymentStatus == true ? 'Paid' : 'Not Paid'}</span>
+        <span>{record.paymentStatus ? 'Paid' : 'Not Paid'}</span>
       ),
     },
 
@@ -117,9 +117,7 @@ const ViewOrder = () => {
 
     orders.forEach(order => {
       order.products.forEach((product: any) => {
-        if (product.paymentStatus === false) {
-
-        console.log(typeof(product.success), "success")
+        if (!product.paymentStatus) {
           const currentOrder = grouped[product.order_id];
 
           if (currentOrder) {
