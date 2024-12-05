@@ -15,6 +15,7 @@ import OrderSkeleton from "components/Skeleton-loading/OrderSkeleton";
 
 const OrderHistory = () => {
   const [orderHistory, setOrderHistory] = useState<Order[]>([]);
+  const [loading, setLoading] = useState<boolean>();
   const token = Cookies.get("user_token");
   const router = useRouter()
   
@@ -29,6 +30,9 @@ const OrderHistory = () => {
   useEffect(() => {
     const fetchOrderHistory = async () => {
       try {
+        
+        
+        setLoading(true)
         const res = await axios.get<{ products: Order[] }>(`${process.env.NEXT_PUBLIC_BASE_URL}/api/order-history`, {
           headers: {
             token: token || '',
@@ -37,6 +41,9 @@ const OrderHistory = () => {
         setOrderHistory(res.data.products);
       } catch (error) {
         console.error("Error fetching order history:", error);
+      }finally{
+        setLoading(false)
+
       }
     };
 
@@ -68,7 +75,7 @@ const OrderHistory = () => {
             </div>
           </div>
           <div className='p-2 rounded-md shadow w-full md:w-8/12'>
-          {orderHistory.length > 0 ? (
+          {(orderHistory.length > 0 && !loading) ? (
           orderHistory.map((order, index) => (
             <div key={index} className="max-h-[500px] overflow-y-scroll custom-scrollbar1 px-2">
               {/* <div className="flex gap-10 items-center border-b-2 border-gray">
@@ -122,7 +129,7 @@ const OrderHistory = () => {
               ))}
             </div>
           ))
-        ) : (
+        ) : (!loading && !(orderHistory.length > 0)) ? <div className="flex items-center justify-center text-3xl h-full">Order Not Found</div> : (
           <OrderSkeleton/>
         )}
 
