@@ -168,7 +168,7 @@ const ViewOrder = () => {
            
           </div>
         ))}
-
+        {/* 
         <div className="flex justify-between mt-5">
           <p className="text-18 font-semibold">Subtotal</p>
           <p>
@@ -181,7 +181,7 @@ const ViewOrder = () => {
             AED <span>{shippingFee}</span> 
           </p>
         </div>
-       
+       */}
         <hr />
         <div className="flex justify-between">
           <p className="text-18 font-semibold">Total</p>
