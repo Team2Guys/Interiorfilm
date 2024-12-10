@@ -140,7 +140,6 @@ const ViewOrder = () => {
 )}
       </div>
 
-      {/* Product Details Section */}
       <div className="space-y-3">
         {products.map((product) => (
           <div key={product.id}>
