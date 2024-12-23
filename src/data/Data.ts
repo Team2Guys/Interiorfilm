@@ -15,6 +15,7 @@ import icon3 from './../../public/images/enviroment-icon/icon3.png'
 import icon4 from './../../public/images/enviroment-icon/icon4.png'
 import icon5 from './../../public/images/enviroment-icon/icon5.png'
 import icon6 from './../../public/images/enviroment-icon/icon6.png'
+import oil from './../../public/images/enviroment-icon/oil.png'
 import icon7 from './../../public/images/enviroment-icon/icon7.png'
 import icon8 from './../../public/images/enviroment-icon/icon8.png'
 import icon9 from './../../public/images/enviroment-icon/icon9.png'
@@ -532,7 +533,7 @@ export const EnvironmentData: { title: string, icon: StaticImageData }[] = [
   
   { title: 'Fully Wear Resistance', icon: icon3 },
   { title: 'Ductile Reusable', icon: icon5 },
-  { title: 'Stain resistance', icon: icon6 },
+  { title: '100% Oil-proof', icon: oil },
   { title: 'Abrasion Resistance', icon: icon7 },
 
 ];
