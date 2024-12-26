@@ -59,11 +59,11 @@ const ViewOrder = () => {
     },
     {
       title: 'Amount',
-      dataIndex: 'amount_cents',
-      key: 'amount_cents',
+      dataIndex: 'totalPrice',
+      key: 'totalPrice',
       render: (text: any, record: any) => {
-        const transactionAmount = record.amount_cents
-          ? (record.amount_cents / 100).toFixed(2)
+        const transactionAmount = record.totalPrice
+          ? record.totalPrice
           : 'Amount not Available';
         return <span>{transactionAmount}</span>;
       },
@@ -136,13 +136,13 @@ const ViewOrder = () => {
     orders.forEach(order => {
       order.products.forEach((product: any) => {
         // Only process products with success: true
-        if (product.success) {
+        if (product.paymentStatus) {
           const currentOrder = grouped[product.order_id];
 
           if (currentOrder) {
             currentOrder.products.push(product);
             currentOrder.paymentStatus = currentOrder.paymentStatus || product.paymentStatus;
-            currentOrder.amount_cents = currentOrder.amount_cents || product.amount_cents;
+            currentOrder.totalPrice = currentOrder.totalPrice || product.totalPrice;
             currentOrder.transactionId = currentOrder.transactionId || product.transactionId;
           } else {
             grouped[product.order_id] = {
@@ -155,7 +155,7 @@ const ViewOrder = () => {
               date: order.date,
               paymentStatus: product.paymentStatus, // Initial value
               transactionId: product.transactionId, // Initial value
-              amount_cents: product.amount_cents, // Initial value
+              totalPrice: product.totalPrice, // Initial value
               products: [product],
             };
           }
@@ -163,13 +163,14 @@ const ViewOrder = () => {
       });
     });
 
-    // Convert grouped object back to array, filtering out any orders without products
-    const filteredGroupedOrders = Object.values(grouped).filter(order => order.products.length > 0);
-    setGroupedOrders(filteredGroupedOrders);
-    setFilteredOrders(filteredGroupedOrders); // Initialize filtered orders
-  };
+    const filteredGroupedOrders = Object.values(grouped)
+    .filter(order => order.products.length > 0)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  // Function to fetch all orders
+  setGroupedOrders(filteredGroupedOrders);
+  setFilteredOrders(filteredGroupedOrders); 
+};
+
   const getAllOrder = async () => {
     const token = Cookies.get("2guysAdminToken");
     const superAdminToken = Cookies.get("superAdminToken");
@@ -186,6 +187,7 @@ const ViewOrder = () => {
         },
       );
       groupOrders(response.data);
+      console.log(response.data,"ordersordersorders")
     } catch (error) {
       console.log('Error fetching data:', error);
     } finally {

@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import { Product } from "types/product"; // Make sure the Product type is correctly defined
+import Overlay from "components/widgets/Overlay/Overlay";
 
 interface OrderDetail {
   shippingAddress: string;
@@ -40,13 +41,14 @@ const ViewOrder = () => {
           setProducts(fetchedProducts);
           setUserDetail(userDetails);
           const totalAmount = fetchedProducts.reduce(
-            //@ts-expect-error
             (sum: number, product: Product) => sum + parseFloat(product.totalPrice.toString()),
             0
           );
           const totalShipping = fetchedProducts.reduce(
-            //@ts-expect-error
-            (sum: number, product: Product) => sum + parseFloat(product.shippment_Fee),
+            (sum: number, product: Product) => {
+              const fee = parseFloat(product.shippment_Fee) || 0;
+              return sum + fee;
+            },
             0
           );
 
@@ -60,9 +62,11 @@ const ViewOrder = () => {
 
     fetchOrders();
   }, [name]);
-
+ console.log(userDetail,"userDetailuserDetail")
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 my-10 max-w-screen-lg mx-auto">
+    <>
+      <Overlay title="Track Order" />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 my-10 max-w-screen-lg mx-auto">
       <div>
       {userDetail && (
         <div className="max-w-screen-sm mx-auto">
@@ -98,7 +102,7 @@ const ViewOrder = () => {
           </div> */}
       
         
-          <div className="border border-gray p-2 rounded-md mt-10">
+          <div className="border border-gray p-2 rounded-md">
             <p className="font-medium text-23">
              {userDetail.first_name} {userDetail.last_name} 
             </p>
@@ -136,7 +140,6 @@ const ViewOrder = () => {
 )}
       </div>
 
-      {/* Product Details Section */}
       <div className="space-y-3">
         {products.map((product) => (
           <div key={product.id}>
@@ -149,15 +152,14 @@ const ViewOrder = () => {
                 alt={product.name} // Dynamic product name as alt text
               />
               <div>
-                <p>{product.name}</p> {/* Dynamic product name */}
+                <p>{product.name}</p> 
                 <div className="flex justify-between">
-                  <p className="font-medium text-lightdark">Product</p>
                   <p>
-                    AED<span>{product.price}</span> {/* Dynamic product price */}
+                    AED<span>{product.price}</span>
                   </p>
                 </div>
                 <p className="font-medium">
-                  Quantity: <span>{product.count}</span> {/* Dynamic product quantity */}
+                  Quantity: <span>{product.count}</span>
                 </p>
               </div>
             </div>
@@ -165,30 +167,31 @@ const ViewOrder = () => {
            
           </div>
         ))}
-
-        {/* Display Shipping Fee and Total Only Once */}
+        {/* 
         <div className="flex justify-between mt-5">
           <p className="text-18 font-semibold">Subtotal</p>
           <p>
-            AED<span>{total}</span> 
+            AED <span>{total}</span> 
           </p>
         </div>
         <div className="flex justify-between mt-5">
           <p className="text-18 font-semibold">Shipping Fee</p>
           <p>
-            AED<span>{shippingFee}</span> 
+            AED <span>{shippingFee}</span> 
           </p>
         </div>
-       
+       */}
         <hr />
         <div className="flex justify-between">
           <p className="text-18 font-semibold">Total</p>
           <p>
-            AED<span>{total+shippingFee }</span>
+            AED <span>{total+shippingFee}</span>
           </p>
         </div>
       </div>
     </div>
+    </>
+   
   );
 };
 
