@@ -56,6 +56,7 @@ let url = `${fullUrl}/product/${params.productname}`
 }
 
 const Page = ({ params }: { params: { productname: string } }) => {
+  
   return (
     <>
       <Product productname={params.productname} />

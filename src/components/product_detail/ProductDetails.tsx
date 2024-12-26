@@ -404,7 +404,7 @@ export default function ProductDetails({
                 AED <span>{totalPrice}</span>
               </p>
 
-              {productDetail.totalStockQuantity == 0 ? (
+              {productDetail.totalStockQuantity == 0 || productDetail.totalStockQuantity <= 0 ? (
                <>
                <p className="text-primary text-center text-2xl">
                   Product is out of stock
