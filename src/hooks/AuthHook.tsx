@@ -32,10 +32,16 @@ function UserprotectedRoute(WrappedComponent: any) {
     }
     
     useEffect(() => {
-      const token = Cookies.get("user_token");
-      if (token) {
-        AddminProfileTriggerHandler(token);
-      } 
+      const token = Cookies.get('2guysAdminToken');
+      const superAdmintoken  = Cookies.get('superAdminToken');
+      let Finaltoken = superAdmintoken ? superAdmintoken : token
+      if (!Finaltoken) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        router.push("/dashboard/Admin-login");
+      } else {
+        AddminProfileTriggerHandler( Finaltoken)
+        setLoading(false);
+      }
     }, [router]);
 
     if (loading) {
