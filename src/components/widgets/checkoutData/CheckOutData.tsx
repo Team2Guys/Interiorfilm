@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { Fragment, SetStateAction, useEffect, useState } from "react";
 import { Modal } from "antd";
 import { usePathname } from "next/navigation";
 import PRODUCTS_TYPES from "types/interfaces";
@@ -8,6 +8,8 @@ import { FaArrowRight } from "react-icons/fa";
 import Link from "next/link";
 import PaymentMethod from "components/Layout/PaymentMethod";
 import { FooterPaymentMethods } from "data/Data";
+import Button from "components/Common/Button";
+import Loader from "components/Loader/Loader";
 interface TableProps {
   cartdata: PRODUCTS_TYPES[];
   onCartChange: (updatedCart: PRODUCTS_TYPES[]) => void;
@@ -16,6 +18,7 @@ interface TableProps {
   shipmentFee: number | string;
   cartItems?: PRODUCTS_TYPES[];
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  isLoading?: boolean;
 }
 const CheckoutData: React.FC<TableProps> = ({
   cartdata,
@@ -25,6 +28,7 @@ const CheckoutData: React.FC<TableProps> = ({
   shipmentFee,
   cartItems,
   onClick,
+  isLoading
 }) => {
   const pathName = usePathname();
   const [data, setData] = useState<PRODUCTS_TYPES[]>([]);
@@ -50,7 +54,6 @@ const CheckoutData: React.FC<TableProps> = ({
       );
       setSubtotal(sub);
 
-      // Calculate total count of products
       const total = items.reduce(
         (sum: number, item: any) => sum + (item._id || 1),
         0
@@ -110,8 +113,8 @@ const CheckoutData: React.FC<TableProps> = ({
                         : product.imageUrl &&
                           product.imageUrl[0] &&
                           product.imageUrl[0].imageUrl
-                        ? product.imageUrl[0].imageUrl
-                        : ""
+                          ? product.imageUrl[0].imageUrl
+                          : ""
                     }
                     alt="Product"
                   />
@@ -192,10 +195,18 @@ const CheckoutData: React.FC<TableProps> = ({
         </div>
         <div className="flex justify-center items-center">
           <button
-            className="w-full bg-black hover:bg-dark text-white py-3 flex justify-center items-center gap-3"
+            className={`w-full bg-black ${isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-dark'
+              } text-white py-3 flex justify-center items-center gap-3`}
             onClick={onClick}
+            disabled={isLoading}
           >
-            proceed to payment <FaArrowRight />
+            {isLoading ? (
+              <Loader color="#ffff" />
+            ) : (
+              <Fragment>
+                Proceed to Payment <FaArrowRight />
+              </Fragment>
+            )}
           </button>
         </div>
         <div className="flex justify-center items-center  gap-5">

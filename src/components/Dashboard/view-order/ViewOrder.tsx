@@ -68,14 +68,14 @@ const ViewOrder = () => {
         return <span>{transactionAmount}</span>;
       },
     },
-    {
-      title: 'Transaction ID',
-      dataIndex: 'transactionId',
-      key: 'transactionId',
-      render: (text: any, record: any) => (
-        <span>{record.transactionId || 'ID Not Available'}</span>
-      ),
-    },
+    // {
+    //   title: 'Transaction ID',
+    //   dataIndex: 'transactionId',
+    //   key: 'transactionId',
+    //   render: (text: any, record: any) => (
+    //     <span>{record.transactionId || 'ID Not Available'}</span>
+    //   ),
+    // },
     {
       title: 'Date',
       dataIndex: 'date',
