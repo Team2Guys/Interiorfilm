@@ -47,6 +47,6 @@ jobs:
           npm -v
           npm install
           npm run build
-          pm2 restart 6
+          pm2 restart 3
           exit
           EOF
