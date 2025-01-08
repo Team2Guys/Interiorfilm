@@ -230,7 +230,6 @@ const CheckOut: React.FC = () => {
   console.log(proceedPayment, "proceedPayment")
 
   if(proceedPayment.status === 201){
-    showToast("success", "Order Placed Successfully")
     let redirect_url = `https://uae.paymob.com/unifiedcheckout/?publicKey=${process.env.NEXT_PUBLIC_PAYMOB_PUBLIC_KEY}&clientSecret=${proceedPayment.data.data.client_secret}`;
     
 
