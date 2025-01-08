@@ -17,7 +17,7 @@ export default function InfoTabs() {
     <ul className="px-6 list-disc">
       <li>We hold stocks</li>
       <li>We have been around for years and know the market very well</li>
-      <li>We have a very service sentric approach to customers</li>
+      <li>We have a very service centric approach to customers</li>
       <li>Our prices are literally unbeatable</li>
     </ul>
     </>,

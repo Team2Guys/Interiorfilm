@@ -31,13 +31,13 @@ function UserprotectedRoute(WrappedComponent: any) {
       }
     }
     
+    
     useEffect(() => {
       const token = Cookies.get("user_token");
       if (token) {
         AddminProfileTriggerHandler(token);
       } 
     }, [router]);
-
     if (loading) {
       return (
         <div

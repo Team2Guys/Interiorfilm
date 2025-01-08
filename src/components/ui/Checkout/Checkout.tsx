@@ -27,6 +27,7 @@ const CheckOut: React.FC = () => {
   const router = useRouter()
   const [paymentProcess, setPaymentProcess] = useState(false);
   const [paymentkey, setPaymentKey] = useState('');
+  const [loading, setLoading] = useState(false);
 
 
   const handleCheckboxChange = (e: any) => {
@@ -211,7 +212,9 @@ const CheckOut: React.FC = () => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     if (!validateFields()) {
+      setLoading(false);
       return;
     }
     const { phone_number: newPhone, phone_code, email, address, productItems, city, ...extractedData } = billingData
@@ -226,7 +229,9 @@ const CheckOut: React.FC = () => {
       shipmentFee
       
     },
+    
   );
+  setPaymentProcess(false);
   console.log(proceedPayment, "proceedPayment")
 
   if(proceedPayment.status === 201){
@@ -236,13 +241,12 @@ const CheckOut: React.FC = () => {
     if(window.innerWidth < 768){
       window.location.href =redirect_url
       setPaymentProcess(false);
-
       return 
     }
     else {
       setPaymentKey(redirect_url)
       setPaymentProcess(true);
-   
+      
       
     }
   }
@@ -569,6 +573,7 @@ paymentProcess ? (
                 setSubtotal={setSubtotal}
                 shipmentFee={shipmentFee}
                 onClick={handleSubmit}
+                isLoading={loading}
               />
             </div>
           </div>
