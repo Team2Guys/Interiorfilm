@@ -71,6 +71,7 @@ const Product = ({ productname }: { productname: string }) => {
   useEffect(() => {
     productHandler();
   }, [parsedProduct]);
+  
   const fetchReviews = async (productId: string) => {
     try {
       const response = await axios.get(

@@ -10,6 +10,7 @@ import PRODUCTS_TYPES from "types/interfaces";
 import Link from "next/link";
 import { generateSlug } from "data/Data";
 import { FiMinus, FiPlus } from "react-icons/fi";
+import showToast from "components/Toaster/Toaster";
 
 interface TableProps {
   cartdata?: PRODUCTS_TYPES[];
@@ -62,22 +63,12 @@ const Table: React.FC<TableProps> = ({
       onCartChange(items);
 
       setData(items);
-      setCounts(
-        items.reduce((acc: any, item: any, index: number) => {
-          acc[index] = item.count || 1;
-          return acc;
-        }, {})
+      setCounts(items.reduce((acc: any, item: any, index: number) => { acc[index] = item.count || 1; return acc; }, {})
       );
       setLengths(
-        items.reduce((acc: any, item: any, index: number) => {
-          acc[index] = item.length || 1;
-          return acc;
-        }, {})
+        items.reduce((acc: any, item: any, index: number) => { acc[index] = item.length || 1; return acc; }, {})
       );
-      const sub = items.reduce(
-        (total: number, item: any) => total + item.totalPrice,
-        0
-      );
+      const sub = items.reduce((total: number, item: any) => total + item.totalPrice, 0);
       setSubtotal(sub);
     }
   };
@@ -155,42 +146,44 @@ const Table: React.FC<TableProps> = ({
     onCartChange(updatedData);
   };
 
-  const addToCart = (product: PRODUCTS_TYPES, index: number) => {
+  const addToCart = (product: any, index: number) => {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const maxPerProduct = 100; // Maximum quantity a user can buy for a single product
+    const currentStock = product.totalStockQuantity;
 
     if (lengths[index] > product.totalStockQuantity) {
       message.error("Cannot add to cart. Exceeds available stock!");
       return;
     }
 
-    const existingIndex = cart.findIndex(
-      (item: any) => item.id === product._id && item.length === lengths[index]
-    );
+    const existingIndex = cart.findIndex((item: any) => item.id === product.id && item.length === lengths[index]);
+    console.log(product, "existingIndex", existingIndex, cart, lengths[index], index)
+    
 
-    if (existingIndex !== -1) {
-      cart[existingIndex].count += counts[index] || 1;
-      cart[existingIndex].totalPrice =
-        (product.discountPrice || product.price) *
-        cart[existingIndex].count *
-        lengths[index];
-    } else {
-      const totalPrice =
-        (product.discountPrice || product.price) *
-        (counts[index] || 1) *
-        lengths[index];
-      cart.push({
-        ...product,
-        count: counts[index] || 1,
-        length: lengths[index],
-        totalPrice: totalPrice,
-      });
+     if (existingIndex !== -1) {
+      // cart[existingIndex].count += counts[index] || 1;
+      cart[existingIndex].length += lengths[index] || 1;
+
+      let totalLength = cart[existingIndex].length
+      cart[existingIndex].totalPrice = (product.discountPrice || product.price) * (totalLength);
+    }
+    else {
+        const totalPrice = (product.discountPrice || product.price)  * lengths[index];
+
+        cart.push({
+          ...product,
+          count: counts[index],
+          length: lengths[index],
+          totalPrice: totalPrice,
+        });
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
     setData(cart);
-    removeItemFromCart(index);
+    // removeItemFromCart(index);
     window.dispatchEvent(new Event("cartChanged"));
   };
+
 
   const handleChange = (
     index: number,
@@ -250,39 +243,35 @@ const Table: React.FC<TableProps> = ({
       <div className=" hidden md:block   ">
         <div className="flex justify-between items-center text-18 font-semibold px-4 bg-white text-black py-3 ">
           <div
-            className={` ${
-              pathName === "/wishlist"
+            className={` ${pathName === "/wishlist"
                 ? "md:w-4/12 lg:w-6/12"
                 : "md:w-4/12 lg:w-6/12"
-            } `}
+              } `}
           >
             <p>Items</p>
           </div>
           <div
-            className={` ${
-              pathName === "/wishlist"
+            className={` ${pathName === "/wishlist"
                 ? "md:w-2/12 lg:w-1/12"
                 : "md:w-2/12 lg:w-2/12 "
-            } `}
+              } `}
           >
             <p>Price</p>
           </div>
           <div
-            className={` ${
-              pathName === "/wishlist"
+            className={` ${pathName === "/wishlist"
                 ? "md:w-2/12 lg:w-2/12"
                 : "md:w-1/12 lg:w-2/12 text-center"
-            } `}
+              } `}
           >
             <p>QTY(M)</p>
           </div>
 
           <div
-            className={`${
-              pathName === "/wishlist"
+            className={`${pathName === "/wishlist"
                 ? "md:w-2/12 lg:w-1/12"
                 : "text-center md:w-2/12 lg:w-2/12"
-            } `}
+              } `}
           >
             <p>Total</p>
           </div>
@@ -305,11 +294,10 @@ const Table: React.FC<TableProps> = ({
                 key={index}
               >
                 <div
-                  className={`  ${
-                    pathName === "/wishlist"
+                  className={`  ${pathName === "/wishlist"
                       ? "md:w-4/12 lg:w-6/12"
                       : "md:w-4/12 lg:w-6/12"
-                  }`}
+                    }`}
                 >
                   <Link
                     href={`/product/${generateSlug(product.name)}`}
@@ -342,11 +330,10 @@ const Table: React.FC<TableProps> = ({
                 </div>
 
                 <div
-                  className={` ${
-                    pathName === "/wishlist"
+                  className={` ${pathName === "/wishlist"
                       ? "md:w-2/12 lg:w-1/12"
                       : " md:w-2/12 lg:w-2/12"
-                  } `}
+                    } `}
                 >
                   <p>
                     AED
@@ -356,22 +343,20 @@ const Table: React.FC<TableProps> = ({
                           ? product.discountPrice * (counts[index] || 1)
                           : product.price * (counts[index] || 1)
                         : product.discountPrice
-                        ? product.discountPrice
-                        : product.price}
+                          ? product.discountPrice
+                          : product.price}
                     </span>
                   </p>
                 </div>
                 <div
-                  className={` ${
-                    pathName === "/wishlist"
+                  className={` ${pathName === "/wishlist"
                       ? "md:w-2/12 lg:w-2/12"
                       : " md:w-2/12 lg:w-2/12 lg:flex lg:justify-center"
-                  } `}
+                    } `}
                 >
                   <div
-                    className={`flex w-28 h-12  justify-between px-2  bg-[#F0F0F0]  ${
-                      pathName === "/wishlist" ? "" : ""
-                    }`}
+                    className={`flex w-28 h-12  justify-between px-2  bg-[#F0F0F0]  ${pathName === "/wishlist" ? "" : ""
+                      }`}
                   >
                     <div
                       onClick={() => decrement(index)}
@@ -400,22 +385,21 @@ const Table: React.FC<TableProps> = ({
                 </div>
 
                 <div
-                  className={` flex gap-4 ${
-                    pathName === "/wishlist"
+                  className={` flex gap-4 ${pathName === "/wishlist"
                       ? "md:w-2/12 lg:w-1/12 "
                       : "justify-center lg:w-2/12 "
-                  } `}
+                    } `}
                 >
                   <p>
                     AED
                     <span>
                       {product.discountPrice
                         ? product.discountPrice *
-                          (counts[index] || 1) *
-                          (lengths[index] || product.length)
+                        (counts[index] || 1) *
+                        (lengths[index] || product.length)
                         : product.price *
-                          (counts[index] || 1) *
-                          (lengths[index] || product.length)}
+                        (counts[index] || 1) *
+                        (lengths[index] || product.length)}
                     </span>
                   </p>
                   <div
@@ -474,8 +458,8 @@ const Table: React.FC<TableProps> = ({
                         ? product.discountPrice * (counts[index] || 1)
                         : product.price * (counts[index] || 1)
                       : product.discountPrice
-                      ? product.discountPrice
-                      : product.price}
+                        ? product.discountPrice
+                        : product.price}
                   </span>
                 </p>
               </div>
@@ -513,11 +497,11 @@ const Table: React.FC<TableProps> = ({
                     <span>
                       {product.discountPrice
                         ? product.discountPrice *
-                          (counts[index] || 1) *
-                          (lengths[index] || product.length)
+                        (counts[index] || 1) *
+                        (lengths[index] || product.length)
                         : product.price *
-                          (counts[index] || 1) *
-                          (lengths[index] || product.length)}
+                        (counts[index] || 1) *
+                        (lengths[index] || product.length)}
                     </span>
                   </p>
                 </div>

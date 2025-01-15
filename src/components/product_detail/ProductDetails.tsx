@@ -128,9 +128,7 @@ export default function ProductDetails({
     const currentStock = product.totalStockQuantity;
   
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const existingItemIndex = existingCart.findIndex(
-      (item: any) => item.id === product._id
-    );
+    const existingItemIndex = existingCart.findIndex((item: any) => item.id === product._id);
   
     if (existingItemIndex !== -1) {
       const existingItem = existingCart[existingItemIndex];
