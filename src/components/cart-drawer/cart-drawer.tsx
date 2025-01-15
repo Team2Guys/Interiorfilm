@@ -63,15 +63,21 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
   
   const increment = (index: number) => {
     const newLengths = { ...lengths };
-    if (newLengths[index] < 100) {
+    const item = cartItems[index];
+  
+    if (newLengths[index] < item.totalStockQuantity && newLengths[index] < 100) {
       newLengths[index] = (newLengths[index] || 1) + 1;
       setLengths(newLengths);
       updateTotalPrice(index, counts[index], newLengths[index]);
     } else {
-      message.error("Cannot be more than 100.");
+      message.error(
+        newLengths[index] >= item.totalStockQuantity
+          ? `Cannot exceed available stock (${item.totalStockQuantity}).`
+          : "Cannot be more than 100."
+      );
     }
   };
-
+  
   const decrement = (index: number) => {
     const newLengths = { ...lengths };
     if (newLengths[index] > 1) {
@@ -89,22 +95,43 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
 
   const onLengthChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
-    if (!isNaN(value) && value >= 1 && value <= 100) {
-      const newLengths = { ...lengths, [index]: value };
-      setLengths(newLengths);
-      updateTotalPrice(index, counts[index], value);
+    const item = cartItems[index];
+  
+    if (!isNaN(value)) {
+      if (value >= 1 && value <= 100 && value <= item.totalStockQuantity) {
+        const newLengths = { ...lengths, [index]: value };
+        setLengths(newLengths);
+        updateTotalPrice(index, counts[index], value);
+      } else {
+        message.error(
+          value > item.totalStockQuantity
+            ? `Cannot exceed available stock (${item.totalStockQuantity}).`
+            : "Please enter a valid length between 1 and 100 meters."
+        );
+      }
     } else {
-      message.error("Please enter a valid length between 1 and 100 meters.");
+      message.error("Please enter a valid number.");
     }
   };
-
   const updateTotalPrice = (index: number, newCount: number, length: number) => {
     const updatedData = [...cartItems];
-    updatedData[index].count = newCount;
-    updatedData[index].length = length;
-    updatedData[index].totalPrice =
-      (updatedData[index].discountPrice || updatedData[index].price) * length * newCount;
-    updatedData[index].totalPrice = Number(updatedData[index].totalPrice) || 0;
+    const item = updatedData[index];
+  
+    if (length > item.totalStockQuantity || length > 100) {
+      message.error(
+        length > item.totalStockQuantity
+          ? `Cannot exceed available stock (${item.totalStockQuantity}).`
+          : "Cannot be more than 100."
+      );
+      return;
+    }
+  
+    item.count = newCount;
+    item.length = length;
+    item.totalPrice =
+      (item.discountPrice || item.price) * length * newCount;
+    item.totalPrice = Number(item.totalPrice) || 0;
+  
     setCartItems(updatedData);
     localStorage.setItem("cart", JSON.stringify(updatedData));
     calculateSubtotal(updatedData);
@@ -120,29 +147,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
     const sub2 = items.reduce((acc: number, item: any) => { return acc + item.totalPrice; }, 0);
     setSubtotal(sub2);
   };
-
-  // const removeItem = (index: number) => {
-  //   Modal.confirm({
-  //     title: "Are you sure you want to remove this item?",
-  //     content: "This action cannot be undone.",
-  //     okText: "Yes",
-  //     okType: "danger",
-  //     cancelText: "No",
-  //     onOk: () => {
-  //       const newCartItems = cartItems.filter(
-  //         (_, itemIndex) => itemIndex !== index
-  //       );
-  //       setCartItems(newCartItems);
-  //       localStorage.setItem("cart", JSON.stringify(newCartItems));
-  //       calculateSubtotal(newCartItems);
-  //       message.success("Product removed from cart successfully!");
-  //       window.dispatchEvent(new Event("cartChanged"));
-  //     },
-  //     onCancel: () => {
-  //       message.info("Item removal canceled");
-  //     },
-  //   });
-  // };
 
   const removeItem = (index: number) => {
         const newCartItems = cartItems.filter(
@@ -187,8 +191,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
             <div className="max-h-52 border border-slate-100 overflow-y-scroll p-1 custom-scrollbar">
               
             {cartItems.length > 0 ? cartItems.map((item: any, index: number) => {
-          
-
           return (
             <div key={index} className="rounded-md shadow p-2 mt-5 bg-white">
               <div className="space-y-2">

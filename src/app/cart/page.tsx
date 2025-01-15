@@ -9,20 +9,18 @@ import axios from "axios";
 import PRODUCTS_TYPES from "types/interfaces";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import { GoLock } from "react-icons/go";
+import { message } from "antd";
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
+  const [cartItems, setCartItems] = useState([]);  // Holds the cart items
+  const [total, setTotal] = useState(0);  // Holds the total price
+  const [totalItems, setTotalItems] = useState(0);  // Holds the total item count
+  const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);  // Product data fetched from API
   const router = useRouter();
-  const [totalItems, setTotalItems] = useState(0);
 
-  console.log(cartItems, "cartItemscartItems");
   const productHandler = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
-      );
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
       if (Array.isArray(response.data.products)) {
         setProducts(response.data.products);
       } else {
@@ -33,25 +31,22 @@ const Cart = () => {
     }
   };
 
+  // Fetch products when the component mounts
   useEffect(() => {
     productHandler();
   }, []);
 
+  // Calculate total price and total items based on the cart
   const calculateTotals = (items: any) => {
-    // Calculate subtotal based on totalPrice for all items
     const sub = items.reduce(
       (acc: number, item: any) => acc + item.totalPrice,
       0
     );
-
-    // Calculate total items:
-    // - accessories: Count based on 'count'
-    // - Non-accessories: Sum based on 'length'
     const totalItems = items.reduce((acc: number, item: any) => {
       if (item.categoryName === "accessories") {
-        return acc + item.count; // Count accessories by their quantity
+        return acc + item.count;  // For accessories, count by quantity
       } else {
-        return acc + item.length; // Count non-accessories by their length
+        return acc + item.length;  // For non-accessories, count by length
       }
     }, 0);
 
@@ -60,33 +55,82 @@ const Cart = () => {
     return totalItems;
   };
 
+  // Fetch cart items from localStorage and calculate totals
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    setCartItems(existingCart); // Set the cart items
-    calculateTotals(existingCart); // Calculate totals based on the cart items
+    setCartItems(existingCart);
+    calculateTotals(existingCart);
   }, []);
+
+  // Listen for cart changes and update state and totals
   useEffect(() => {
     const handleCartChange = () => {
       const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
       setCartItems(updatedCart);
-      calculateTotals(updatedCart); // Update totals when cart changes
+      calculateTotals(updatedCart);  // Recalculate totals when cart changes
     };
 
     window.addEventListener("cartChanged", handleCartChange);
-
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("cartChanged", handleCartChange);
     };
   }, []);
 
+  const addToCart = (product: PRODUCTS_TYPES, index: number) => {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const existingIndex = cart.findIndex(
+      (item: any) => item.name === product.name && item.length === product.length
+    );
+    if (existingIndex !== -1) {
+      const updatedProduct = cart[existingIndex];
+      if (updatedProduct.count + 1 > updatedProduct.totalStockQuantity) {
+        message.error(`Cannot add more than ${updatedProduct.totalStockQuantity} units of this product.`);
+        return;
+      }
+
+      if (updatedProduct.count + 1 > 100) {
+        message.error("Cannot add more than 100 units of this product.");
+        return;
+      }
+      updatedProduct.count += 1;
+      updatedProduct.totalPrice = updatedProduct.count * (updatedProduct.discountPrice || updatedProduct.price);
+      cart[existingIndex] = updatedProduct;
+      localStorage.setItem("cart", JSON.stringify(cart));
+      setCartItems(cart);
+      calculateTotals(cart);
+      window.dispatchEvent(new Event("cartChanged"));
+      message.success("Product quantity updated in the cart.");
+    } else {
+      // If the product doesn't exist in the cart, add it
+      if (product.count > product.totalStockQuantity) {
+        message.error(`Cannot add more than ${product.totalStockQuantity} units of this product.`);
+        return;
+      }
+
+      if (product.count > 100) {
+        message.error("Cannot add more than 100 units.");
+        return;
+      }
+
+      const newProduct = {
+        ...product,
+        count: 1, // Initially add 1 unit
+        totalPrice: (product.discountPrice || product.price) * 1, // Total price calculation
+      };
+
+      cart.push(newProduct);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      setCartItems(cart);
+      calculateTotals(cart);
+      window.dispatchEvent(new Event("cartChanged"));
+      message.success("Product added to the cart.");
+    }
+  };
+
   // Handle cart changes (e.g., when a product is added, removed, or modified)
   const handleCartChange = (updatedCart: any) => {
     setCartItems(updatedCart);
     calculateTotals(updatedCart);
-    console.log(updatedCart, "sub");
-    const totalItems = calculateTotals(updatedCart);
-    setTotalItems(totalItems);
   };
 
   return (

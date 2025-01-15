@@ -26,14 +26,13 @@ const Table: React.FC<TableProps> = ({
   const [data, setData] = useState<PRODUCTS_TYPES[]>([]);
   const [counts, setCounts] = useState<{ [key: number]: number }>({});
   const [subtotal, setSubtotal] = useState(0);
-  const [changeId, setChangeId] = useState<number | null>(null);
   const [lengths, setLengths] = useState<{ [key: number]: number }>({});
   const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
     const handleCartChange = () => {
       ProductHandler();
-      console.log("function called", "sub");
+      console.log("Cart or Wishlist updated");
     };
 
     window.addEventListener("cartChanged", handleCartChange);
@@ -47,7 +46,7 @@ const Table: React.FC<TableProps> = ({
 
   useEffect(() => {
     ProductHandler();
-  }, [pathName, changeId]);
+  }, [pathName]);
 
   useEffect(() => {
     const total = data.reduce((sum, product) => sum + (product.count || 1), 0);
@@ -55,12 +54,11 @@ const Table: React.FC<TableProps> = ({
   }, [data]);
 
   const ProductHandler = () => {
-    const Products = localStorage.getItem(
+    const products = localStorage.getItem(
       pathName === "/wishlist" ? "wishlist" : "cart"
     );
-    if (Products && JSON.parse(Products).length > 0) {
-      const items: any = JSON.parse(Products || "[]");
-      console.log(items, "sub");
+    if (products) {
+      const items: any = JSON.parse(products || "[]");
       onCartChange(items);
 
       setData(items);
@@ -85,16 +83,25 @@ const Table: React.FC<TableProps> = ({
   };
 
   const increment = (index: number) => {
+    const product = data[index];
     const newLengths = { ...lengths };
-    if (newLengths[index] < 100) {
-      newLengths[index] = (newLengths[index] || 1) + 1;
-      setLengths(newLengths);
-      updateTotalPrice(index, newLengths[index]);
-      window.dispatchEvent(new Event("cartChanged"));
-      window.dispatchEvent(new Event("WishlistChanged"));
-    } else {
-      message.error("Length cannot be more than 100 meters.");
+
+    if (newLengths[index] >= product.totalStockQuantity) {
+      message.error(
+        "Cannot add more. You have reached the product's total stock!"
+      );
+      return;
     }
+    if (newLengths[index] >= 100) {
+      message.error("Length cannot exceed 100 meters.");
+      return;
+    }
+
+    newLengths[index] = (newLengths[index] || 1) + 1;
+    setLengths(newLengths);
+    updateTotalPrice(index, newLengths[index]);
+    window.dispatchEvent(new Event("cartChanged"));
+    window.dispatchEvent(new Event("WishlistChanged"));
   };
 
   const decrement = (index: number) => {
@@ -112,11 +119,16 @@ const Table: React.FC<TableProps> = ({
 
   const updateTotalPrice = (index: number, newLength: number) => {
     const updatedData = [...data];
+    const product = updatedData[index];
+
+    if (newLength > product.totalStockQuantity) {
+      message.error("Cannot exceed available stock!");
+      return;
+    }
+
     updatedData[index].length = newLength;
     updatedData[index].totalPrice =
-      (updatedData[index].discountPrice || updatedData[index].price) *
-      (counts[index] || 1) *
-      newLength;
+      (product.discountPrice || product.price) * newLength;
     setData(updatedData);
     localStorage.setItem(
       pathName === "/wishlist" ? "wishlist" : "cart",
@@ -140,25 +152,16 @@ const Table: React.FC<TableProps> = ({
     );
     window.dispatchEvent(new Event("cartChanged"));
     window.dispatchEvent(new Event("WishlistChanged"));
-    setChangeId(index);
     onCartChange(updatedData);
-  };
-
-  const showDeleteConfirm = (index: number) => {
-    Modal.confirm({
-      title: "Are you sure you want to delete this item?",
-      content: "This action cannot be undone.",
-      okText: "Yes",
-      okType: "danger",
-      cancelText: "No",
-      onOk() {
-        removeItemFromCart(index);
-      },
-    });
   };
 
   const addToCart = (product: PRODUCTS_TYPES, index: number) => {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    if (lengths[index] > product.totalStockQuantity) {
+      message.error("Cannot add to cart. Exceeds available stock!");
+      return;
+    }
 
     const existingIndex = cart.findIndex(
       (item: any) => item.id === product._id && item.length === lengths[index]
@@ -194,22 +197,20 @@ const Table: React.FC<TableProps> = ({
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = parseInt(e.target.value, 10);
+    const product = data[index];
+
     if (isNaN(value) || value < 1 || value > 100) {
       message.error("Please select a quantity between 1 and 100.");
-    } else {
-      setCounts({ ...counts, [index]: value });
-      updateTotalPrice(index, value);
-      window.dispatchEvent(new Event("cartChanged"));
-      window.dispatchEvent(new Event("WishlistChanged"));
+      return;
     }
-  };
+    if (value > product.totalStockQuantity) {
+      message.error("Cannot exceed available stock!");
+      return;
+    }
 
-  const handleLengthChange = (index: number, value: number) => {
-    const newLengths = { ...lengths, [index]: value };
-    setLengths(newLengths);
+    setCounts({ ...counts, [index]: value });
     updateTotalPrice(index, value);
     window.dispatchEvent(new Event("cartChanged"));
-    window.dispatchEvent(new Event("WishlistChanged"));
   };
 
   const lengthOptions = (totalStockQuantity: number) => {
@@ -228,6 +229,20 @@ const Table: React.FC<TableProps> = ({
       });
     }
     return options;
+  };
+
+
+  const showDeleteConfirm = (index: number) => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this item?",
+      content: "This action cannot be undone.",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
+      onOk() {
+        removeItemFromCart(index);
+      },
+    });
   };
 
   return (

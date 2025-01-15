@@ -124,50 +124,69 @@ export default function ProductDetails({
   };
 
   const handleAddToCart = (product: any) => {
-    console.log("Adson Products");
-    console.log(adsonProducts)
-   
-    const newCartItem = {
-      id: product._id,
-      name: product.name,
-      price: product.salePrice,
-      imageUrl: product.posterImageUrl?.imageUrl,
-      discountPrice: product.discountPrice,
-      totalStockQuantity: product.totalStockQuantity,
-      count: 1,
-      length,
-      totalPrice:
-        (product.discountPrice || product.salePrice) * length * quantity,
-      purchasePrice: product.purchasePrice,
-      sizes: product.sizes,
-      code: product.code,
-      categoryName:categoryName,
-    };
-
+    const maxPerProduct = 100; // Maximum quantity a user can buy for a single product
+    const currentStock = product.totalStockQuantity;
+  
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     const existingItemIndex = existingCart.findIndex(
       (item: any) => item.id === product._id
-
-      // && item.length === length
     );
-
+  
     if (existingItemIndex !== -1) {
       const existingItem = existingCart[existingItemIndex];
+      const totalRequestedQuantity = existingItem.length + length;
+  
+      if (totalRequestedQuantity > currentStock) {
+        message.error(`You can't add more than the available stock (${currentStock}).`);
+        return;
+      }
+  
+      if (totalRequestedQuantity > maxPerProduct) {
+        message.error(`You can't buy more than ${maxPerProduct} units of this product.`);
+        return;
+      }
+  
       existingItem.length += length;
       existingItem.totalPrice =
-        (product.discountPrice || product.salePrice) *
-        existingItem.count *
-        length;
+        (product.discountPrice || product.salePrice) * existingItem.length;
       existingCart[existingItemIndex] = existingItem;
     } else {
+      if (length > currentStock) {
+        message.error(`You can't add more than the available stock (${currentStock}).`);
+        return;
+      }
+  
+      if (length > maxPerProduct) {
+        message.error(`You can't buy more than ${maxPerProduct} units of this product.`);
+        return;
+      }
+  
+      const newCartItem = {
+        id: product._id,
+        name: product.name,
+        price: product.salePrice,
+        imageUrl: product.posterImageUrl?.imageUrl,
+        discountPrice: product.discountPrice,
+        totalStockQuantity: product.totalStockQuantity,
+        count: 1,
+        length,
+        totalPrice:
+          (product.discountPrice || product.salePrice) * length,
+        purchasePrice: product.purchasePrice,
+        sizes: product.sizes,
+        code: product.code,
+        categoryName: categoryName,
+      };
+  
       existingCart.push(newCartItem);
     }
+  
     localStorage.setItem("cart", JSON.stringify(existingCart));
     message.success("Product added to cart successfully!");
     window.dispatchEvent(new Event("cartChanged"));
-    // handleAdsonAddToCart()
-    showToast("success",'Product added to cart successfully🎉');
+    showToast("success", "Product added to cart successfully🎉");
   };
+  
 
   const handleAdsonAddToCart = () => {
     adsonProducts.forEach((product) => {
@@ -182,14 +201,12 @@ export default function ProductDetails({
         length:product.length,
         totalPrice: Number((product.discountPrice || product.salePrice)),
         purchasePrice: product.purchasePrice,
-        // sizes: product.sizes || [], 
         code: product.code
       };
 
       let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
       const existingItemIndex = existingCart.findIndex(
         (item: any) => item.id === product._id 
-        // && item.length === length
       );
 
       console.log(existingItemIndex, "existingItemIndex")
