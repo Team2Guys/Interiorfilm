@@ -128,7 +128,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
             className="mySwiper custom"
           >
             {featuredProducts && featuredProducts.map((product, index) => (
-              <SwiperSlide key={index} className="mb-10 custom" onMouseEnter={handleMouseEnter}
+              <SwiperSlide key={index} className="my-5 custom" onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}>
                 <Card ProductCard={[product]} slider={true} />
               </SwiperSlide>

@@ -7,7 +7,7 @@ import React from 'react';
 const Hero = () => {
   return (
     <>
-      <div className='bg-hero w-full h-full  lg:h-screen  relative'>
+      <div className='w-full h-full  lg:h-screen  relative'>
       <Navbar/>
       <video
           className="w-full h-full sm:object-cover"
@@ -16,7 +16,7 @@ const Hero = () => {
           playsInline
           autoPlay
         >
-          <source src="/video/Agsons.mp4" type="video/mp4" />
+          <source src="/video/Agsons.mp4" type="video/mp4" aria-label='autoPlay' />
         </video>
         <Container className='text-white text-end absolute bottom-10 md:bottom-20 right-1 md:right-20 space-y-5'>
           <p className='text-14 font-medium'>ARCHITECTURAL VINYL FILM WRAP</p>

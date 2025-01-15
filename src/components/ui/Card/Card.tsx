@@ -12,6 +12,7 @@ import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
 import { FiZoomIn } from "react-icons/fi";
 import Model from "components/ui/Modal/Model";
 import ProductDetails from "components/product_detail/ProductDetails";
+import Link from "next/link";
 
 interface CardProps {
   ProductCard?: PRODUCTS_TYPES[];
@@ -137,30 +138,22 @@ const Card: React.FC<CardProps> = ({
   }, [carDetail]);
 
   const handleAddToCart = (product: any) => {
-    const newCartItem = {
-      id: product._id,
-      name: product.name,
-      price: product.salePrice,
-      imageUrl: product.posterImageUrl?.imageUrl,
-      totalStockQuantity: product.totalStockQuantity,
-      discountPrice: product.discountPrice,
-      length: 1,
-      count: 1,
-      totalPrice: product.discountPrice
-        ? product.discountPrice
-        : product.salePrice,
-      purchasePrice: product.purchasePrice,
-      sizes: product.sizes,
-      code: product.code,
-      categoryName: categoryName,
-    };
-
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     const existingItemIndex = existingCart.findIndex(
       (item: any) => item.id === product._id
     );
-
+  console.log(categoryName,"categoryNamecategoryName")
     if (existingItemIndex !== -1) {
+      const existingItem = existingCart[existingItemIndex];
+      if (existingItem.length >= 100) {
+        message.error("Cannot add more than 100 units of this product to the cart!");
+        return; // Prevent adding
+      }
+      if (existingItem.length + 1 > product.totalStockQuantity) {
+        message.error("Cannot add to cart. Exceeds available stock!");
+        return; // Prevent adding
+      }
+  
       const updatedCart = existingCart.map((item: any, index: number) => {
         if (index === existingItemIndex) {
           return {
@@ -175,37 +168,54 @@ const Card: React.FC<CardProps> = ({
       });
       localStorage.setItem("cart", JSON.stringify(updatedCart));
     } else {
+      if (product.totalStockQuantity < 1) {
+        message.error("Product is out of stock!");
+        return; // Prevent adding if stock is zero
+      }
+  
+      const newCartItem = {
+        id: product._id,
+        name: product.name,
+        price: product.salePrice,
+        imageUrl: product.posterImageUrl?.imageUrl,
+        totalStockQuantity: product.totalStockQuantity,
+        discountPrice: product.discountPrice,
+        length: 1,
+        count: 1,
+        totalPrice: product.discountPrice
+          ? product.discountPrice
+          : product.salePrice,
+        purchasePrice: product.purchasePrice,
+        sizes: product.sizes,
+        code: product.code,
+        categoryName: categoryName,
+      };
+  
       existingCart.push(newCartItem);
       localStorage.setItem("cart", JSON.stringify(existingCart));
     }
-
+  
     message.success("Product added to cart successfully!");
     window.dispatchEvent(new Event("cartChanged"));
   };
-
+  
   const handleAddToWishlist = (product: any) => {
-    const newWishlistItem = {
-      id: product._id,
-      name: product.name,
-      price: product.salePrice,
-      imageUrl: product.posterImageUrl?.imageUrl,
-      totalStockQuantity: product.totalStockQuantity,
-      discountPrice: product.discountPrice,
-      count: 1,
-      length: 1,
-      categoryName: categoryName,
-      totalPrice: product.discountPrice
-        ? product.discountPrice
-        : product.salePrice,
-    };
-
     let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
-
     const existingItemIndex = existingWishlist.findIndex(
       (item: any) => item.id === product._id
     );
-
+  
     if (existingItemIndex !== -1) {
+      const existingItem = existingWishlist[existingItemIndex];
+      if (existingItem.length >= 100) {
+        message.error("Cannot add more than 100 units of this product to the wishlist!");
+        return; // Prevent adding
+      }
+      if (existingItem.length + 1 > product.totalStockQuantity) {
+        message.error("Cannot add to wishlist. Exceeds available stock!");
+        return; // Prevent adding
+      }
+  
       const updatedWishlist = existingWishlist.map(
         (item: any, index: number) => {
           if (index === existingItemIndex) {
@@ -222,11 +232,31 @@ const Card: React.FC<CardProps> = ({
       );
       localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
     } else {
+      if (product.totalStockQuantity < 1) {
+        message.error("Product is out of stock!");
+        return; // Prevent adding if stock is zero
+      }
+  
+      const newWishlistItem = {
+        id: product._id,
+        name: product.name,
+        price: product.salePrice,
+        imageUrl: product.posterImageUrl?.imageUrl,
+        totalStockQuantity: product.totalStockQuantity,
+        discountPrice: product.discountPrice,
+        count: 1,
+        length: 1,
+        categoryName: categoryName,
+        totalPrice: product.discountPrice
+          ? product.discountPrice
+          : product.salePrice,
+      };
+  
       existingWishlist.push(newWishlistItem);
       localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
     }
-
-    message.success("Product added to Wishlist successfully!");
+  
+    message.success("Product added to wishlist successfully!");
     window.dispatchEvent(new Event("WishlistChanged"));
   };
 
@@ -261,7 +291,6 @@ const Card: React.FC<CardProps> = ({
       <div className={`group mb-5 ${cardClass}`} key={index}>
         <div
           className="cursor-pointer  transition-all m-1 "
-          onClick={() => router.push(`/product/${generateSlug(product.name)}`)}
         >
           <div className="text-center relative">
             <div
@@ -318,7 +347,7 @@ const Card: React.FC<CardProps> = ({
               </button>
             </div>
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
-              <div className="">
+              <Link href={`/product/${generateSlug(product.name)}`} className="">
                 <Image
                   className="bg-contain  w-full "
                   width={500}
@@ -329,7 +358,7 @@ const Card: React.FC<CardProps> = ({
                 <p className="absolute top-0 left-1 text-sm px-1 text-center text-black bg-[#fb701d]">
                   {product.totalStockQuantity === 0 && "Limited Stock"}
                 </p>
-              </div>
+              </Link>
             )}
           </div>
         </div>
