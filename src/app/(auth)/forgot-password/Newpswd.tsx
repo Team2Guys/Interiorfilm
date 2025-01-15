@@ -1,23 +1,10 @@
 "use client";
-
-import Input from "components/Common/Input";
-import Button from "components/Common/Button";
-
-import Link from "next/link";
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Toaster from "components/Toaster/Toaster";
-import Loader from "components/Loader/Loader";
 import { IoIosLock } from "react-icons/io";
 import USRcomponent from 'components/userComponent/userComponent'
-
-
-
-
-
-
-
 interface NewPasswordProps {
   email: string | any; // Define the type of email parameter
 }
@@ -43,7 +30,6 @@ function Newpswd({ email }: NewPasswordProps) {
       [name]: value,
     }));
   };
-
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -1,7 +1,6 @@
 "use client";
 import React, { useLayoutEffect, useState } from "react";
 import ChartOne from "./Charts/ChartOne";
-// import ChartThree from "./Charts/ChartThree";
 import ChartTwo from "./Charts/ChartTwo";
 import CardDataStats from "./CardDataStats";
 import Cookies from "js-cookie";
@@ -17,10 +16,6 @@ const ECommerce: React.FC = () => {
   const [loading, setloading] = useState(false);
   const [records, setRecords] = useState<RECORDS | undefined>();
   const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
-
-  // const canCheckProfit =
-  //   loggedInUser &&
-  //   (loggedInUser.role == "Admin" ? loggedInUser.canCheckProfit : true);
   const CanCheckRevnue =loggedInUser &&(loggedInUser.role == "Admin" ? loggedInUser.CanCheckRevnue : true);
   const canViewUsers =
     loggedInUser &&
@@ -88,16 +83,6 @@ const ECommerce: React.FC = () => {
             <IoMdEye size={25} className="fill-primary dark:fill-white" />
           </CardDataStats>
         )}
-
-        {/* {!canCheckProfit ? null : (
-          <CardDataStats
-            title="Total Profit"
-            total={records?.totalProfit ? records?.totalProfit : ""}
-          >
-            <FiShoppingCart size={25} className="text-primary dark:text-white" />
-          </CardDataStats>
-        )} */}
-
         {!CanCheckRevnue ? null : (
           <CardDataStats
             title="Total Revenue"
@@ -149,7 +134,6 @@ const ECommerce: React.FC = () => {
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <ChartOne />
         <ChartTwo />
-        {/* <ChartThree /> */}
       </div>
     </>
   );

@@ -2,12 +2,9 @@
 
 import React, { Fragment, useEffect, useState } from "react";
 import Thumbnail from "components/Carousel/Thumbnail/Thumbnail";
-import { Rate, message } from "antd";
-import { GoHeart } from "react-icons/go";
+import { message } from "antd";
 import PRODUCTS_TYPES from "types/interfaces";
 import ProductSelect from "components/ui/Select/ProductSelect";
-import { RxMinus, RxPlus } from "react-icons/rx";
-import Button from "components/Common/Button";
 import { BsWhatsapp } from "react-icons/bs";
 import Link from "next/link";
 import {
@@ -58,7 +55,6 @@ export default function ProductDetails({
   const [length, setLength] = useState<number>(1);
   const [adsonProducts,setAdsonProducts]=useState<Product[]>([])
   const router = useRouter();
-
   const Acessoptions =
   productDetail && productDetail.totalStockQuantity > 0
     ? Array.from(
@@ -79,7 +75,7 @@ export default function ProductDetails({
           })
         )
       : [];
-
+      console.log(adsonProducts,setQuantity)
   const fetchReviews = async (productId: string) => {
     try {
       const response = await axios.get(
@@ -98,30 +94,6 @@ export default function ProductDetails({
 
   const averageRating = calculateAverageRating();
   
-  const handleIncrement = () => {
-    if (quantity < 100) {
-      setQuantity(quantity + 1);
-    } else {
-      message.error("Quantity cannot exceed 100.");
-    }
-  };
-
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    } else {
-      message.error("Quantity cannot be less than 1.");
-    }
-  };
-
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value, 10);
-    if (!isNaN(value) && value >= 1 && value <= 100) {
-      setQuantity(value);
-    } else {
-      message.error("Please enter a quantity between 1 and 100.");
-    }
-  };
 
   const handleAddToCart = (product: any) => {
     const maxPerProduct = 100; // Maximum quantity a user can buy for a single product
@@ -187,83 +159,6 @@ export default function ProductDetails({
     showToast("success", "Product added to cart successfully🎉");
   };
   
-
-  const handleAdsonAddToCart = () => {
-    adsonProducts.forEach((product) => {
-      const newCartItem = {
-        id: product._id,
-        name: product.name,
-        price: product.salePrice,
-        imageUrl: product.posterImageUrl?.imageUrl,
-        discountPrice: product.discountPrice,
-        totalStockQuantity: product.totalStockQuantity,
-        count: 1,
-        length:product.length,
-        totalPrice: Number((product.discountPrice || product.salePrice)),
-        purchasePrice: product.purchasePrice,
-        code: product.code
-      };
-
-      let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
-      const existingItemIndex = existingCart.findIndex(
-        (item: any) => item.id === product._id 
-      );
-
-      console.log(existingItemIndex, "existingItemIndex")
-      if (existingItemIndex !== -1) {
-        const existingItem = existingCart[existingItemIndex];
-        // existingItem.count += quantity;
-
-        existingItem.count += 0;
-        existingItem.totalPrice = (product.discountPrice || product.salePrice) * existingItem.count * length;
-        existingCart[existingItemIndex] = existingItem;
-      } else {
-        existingCart.push(newCartItem);
-      }
-      localStorage.setItem('cart', JSON.stringify(existingCart));
-    });
-
-    // console.log('Products added to cart:', selectedProducts);
-    // showToast("success",'Products added to cart successfully!');
-    window.dispatchEvent(new Event('cartChanged'));
-  };
-
-
-  const handleAddToWishlist = (product: any) => {
-    const newWishlistItem = {
-      id: product._id,
-      name: product.name,
-      price: product.salePrice,
-      imageUrl: product.posterImageUrl?.imageUrl,
-      discountPrice: product.discountPrice,
-      totalStockQuantity: product.totalStockQuantity,
-      count: quantity,
-      length,
-      totalPrice:
-        (product.discountPrice || product.salePrice) * length * quantity,
-    };
-
-    let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
-    const existingItemIndex = existingWishlist.findIndex(
-      (item: any) => item.id === product._id && item.length === length
-    );
-
-    if (existingItemIndex !== -1) {
-      const existingItem = existingWishlist[existingItemIndex];
-      existingItem.count += quantity; // Increment count based on quantity
-      existingItem.totalPrice =
-        (product.discountPrice || product.salePrice) *
-        existingItem.count *
-        length;
-      existingWishlist[existingItemIndex] = existingItem;
-    } else {
-      existingWishlist.push(newWishlistItem);
-    }
-    localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
-    message.success("Product added to Wishlist successfully!");
-    window.dispatchEvent(new Event("WishlistChanged"));
-  };
-
   useEffect(() => {
     if (productDetail) {
       const price = productDetail.discountPrice || productDetail.salePrice;
@@ -281,13 +176,10 @@ export default function ProductDetails({
   }, [productDetail]);
 
   return (
-    // xl:max-w-screen-2xl
     <div className="mt-10 mb-5 px-2 md:px-10  mx-auto xl:max-w-screen-3xl">
       <div className="flex flex-wrap lg:flex-nowrap gap-4  mt-2 p-2 ">
         <div className={`w-full lg:w-8/12 xl:w-7/12 ${firstFlex} `}>
           <Thumbnail
-            // detail={productDetail.modelDetails}
-            product={productDetail}
             thumbs={productDetail.imageUrl}
           />
         </div>
@@ -336,13 +228,6 @@ export default function ProductDetails({
                         {reviews.length} Review
                       </div>
                     </div>
-                    {/* <div className="text-[#B9BBBF]">
-                      {" "}
-                      <span className="text-[#3E9242]">
-                        {(averageRating / 5) * 100}%{" "}
-                      </span>{" "}
-                      of buyers have recommended this.
-                    </div> */}
                   </div>
                 ) : null}
               </div>
@@ -378,30 +263,6 @@ export default function ProductDetails({
           />
         </div>
       )}
-              {/* <div className="flex border w-28 h-10 justify-between px-2">
-              <div
-                onClick={handleDecrement}
-                className="  flex justify-center items-center"
-              >
-                <RxMinus size={20} />
-              </div>
-              <div className="  flex justify-center items-center">
-                <input
-                  className="h-7 w-8 text-center"
-                  type="text"
-                  min={1}
-                  max={100}
-                  value={quantity}
-                  onChange={handleQuantityChange}
-                />
-              </div>
-              <div
-                onClick={handleIncrement}
-                className="  flex justify-center items-center"
-              >
-                <RxPlus size={20} />
-              </div>
-            </div> */}
               <div>
                 <p className="text-16">
                   <span className=" text-text font-medium text-16 mr-2">
@@ -455,15 +316,6 @@ export default function ProductDetails({
                     </button>
                   </div>
 
-                  {/*                   
-                  <Link
-                    className="bg-[#2AB200]  w-full flex items-center gap-2 justify-center py-2 text-white"
-                    href={`tel:${process.env.NEXT_PUBLIC_CONTACT_NUMBER}`}
-                    
-                  >
-                    <BsWhatsapp /> Order on WhatsApp
-                  </Link> */}
-
                   <Link
                     target="_blank"
                     href="https://wa.link/mb359y"
@@ -499,7 +351,7 @@ export default function ProductDetails({
 
                       <DialogOverlay className="bg-black/60 z-999999" />
                       <DialogContent className="sm:max-w-[80%] mt-10 lg:max-w-[60%] z-999999 bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180 ">
-                        {/* <DialogContent className="bg-red h-10"> */}
+                 
                         <DialogHeader>
                           <DialogTitle className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10">
                             Easy Monthly Installments
@@ -684,7 +536,6 @@ export default function ProductDetails({
           </div>
           {!isAccessory && (
           <div className="flex flex-col gap-2 mt-5 md:mt-10">
-            {/* <h1 className="text-[14px] font-bold">Healthy Green Environment</h1> */}
             <EnviromentIcons />
           </div>
           )}

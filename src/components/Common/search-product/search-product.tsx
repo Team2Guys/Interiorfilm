@@ -19,13 +19,11 @@ import axios from "axios";
 import PRODUCTS_TYPES from "types/interfaces";
 import { generateSlug } from "data/Data";
 import Link from "next/link";
-import { Modal } from "antd";
 import { useRouter } from "next/navigation";
 
 const SearchProduct = () => {
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const route = useRouter();

@@ -1,4 +1,3 @@
-
 'use client'
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import React, { useState } from "react";
@@ -18,7 +17,7 @@ interface InputProps {
   togglePasswordVisibility? : any
 }
 
-const Input: React.FC<InputProps> = ({ type, name, placeholder, onChange, value,Icons, }: InputProps): JSX.Element => {
+const Input: React.FC<InputProps> = ({ type, name, placeholder, onChange, value,Icons, }: InputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {

@@ -12,22 +12,16 @@ import { generateSlug } from "data/Data";
 import { FiMinus, FiPlus } from "react-icons/fi";
 
 interface TableProps {
-  cartdata?: PRODUCTS_TYPES[];
-  wishlistdata?: PRODUCTS_TYPES[];
-  onCartChange: (updatedCart: PRODUCTS_TYPES[]) => void;
+  onCartChange: any;
 }
 
 const Table: React.FC<TableProps> = ({
-  cartdata,
-  wishlistdata,
   onCartChange,
 }) => {
   const pathName = usePathname();
   const [data, setData] = useState<PRODUCTS_TYPES[]>([]);
   const [counts, setCounts] = useState<{ [key: number]: number }>({});
-  const [subtotal, setSubtotal] = useState(0);
   const [lengths, setLengths] = useState<{ [key: number]: number }>({});
-  const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
     const handleCartChange = () => {
@@ -48,10 +42,6 @@ const Table: React.FC<TableProps> = ({
     ProductHandler();
   }, [pathName]);
 
-  useEffect(() => {
-    const total = data.reduce((sum, product) => sum + (product.count || 1), 0);
-    setTotalItems(total);
-  }, [data]);
 
   const ProductHandler = () => {
     const products = localStorage.getItem(
@@ -74,11 +64,6 @@ const Table: React.FC<TableProps> = ({
           return acc;
         }, {})
       );
-      const sub = items.reduce(
-        (total: number, item: any) => total + item.totalPrice,
-        0
-      );
-      setSubtotal(sub);
     }
   };
 
@@ -134,11 +119,6 @@ const Table: React.FC<TableProps> = ({
       pathName === "/wishlist" ? "wishlist" : "cart",
       JSON.stringify(updatedData)
     );
-    const sub = updatedData.reduce(
-      (total: number, item: any) => total + item.totalPrice,
-      0
-    );
-    setSubtotal(sub);
     onCartChange(updatedData);
   };
 
@@ -213,25 +193,6 @@ const Table: React.FC<TableProps> = ({
     window.dispatchEvent(new Event("cartChanged"));
   };
 
-  const lengthOptions = (totalStockQuantity: number) => {
-    const options = [];
-    for (let i = 1; i <= Math.floor(totalStockQuantity); i++) {
-      options.push({
-        label: `1.22cm x ${i} METERS`,
-        value: i,
-      });
-    }
-    if (options.length === 0) {
-      options.push({
-        label: "No sizes available",
-        value: 0,
-        disabled: true,
-      });
-    }
-    return options;
-  };
-
-
   const showDeleteConfirm = (index: number) => {
     Modal.confirm({
       title: "Are you sure you want to delete this item?",
@@ -298,7 +259,6 @@ const Table: React.FC<TableProps> = ({
 
         <div className="max-h-[529px] overflow-auto table-scrollbar ">
           {data.map((product, index) => {
-            const options = lengthOptions(product.totalStockQuantity || 0);
             return (
               <div
                 className="flex justify-between items-center mt-5"
@@ -442,7 +402,6 @@ const Table: React.FC<TableProps> = ({
       </div>
 
       {data.map((product, index) => {
-        const options = lengthOptions(product.totalStockQuantity || 0);
         return (
           <>
             <div

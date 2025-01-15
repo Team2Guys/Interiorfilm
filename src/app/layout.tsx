@@ -1,3 +1,4 @@
+import React from "react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Montserrat } from 'next/font/google';
@@ -12,7 +13,7 @@ const font = Montserrat({
   weight: '500',
   subsets: ['latin'],
 });
-const futuraCyrillic = localFont({
+export const futuraCyrillic = localFont({
   src: [
     {
       path: '../../public/fonts/FuturaCyrillicBold.ttf',
@@ -64,6 +65,7 @@ export default function RootLayout({
     <Providers>
 
       <html lang="en">
+        {/* <GoogleTagManager gtmId="GTM-PFNKXKTR" /> */}
         <head>
           <GoogleTagManager gtmId="GTM-PFNKXKTR" />
           <Script

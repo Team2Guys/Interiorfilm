@@ -6,7 +6,6 @@ import Image from "next/image";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
 import Loader from "components/Loader/Loader";
-import { useRouter } from "next/navigation";
 import { FaRegEye } from "react-icons/fa";
 import { LiaEdit } from "react-icons/lia";
 import { useAppSelector } from "components/Others/HelperRedux";
@@ -23,7 +22,7 @@ interface Product {
 interface CategoryProps {
   Categories: any;
   setProduct: any;
-  setselecteMenu: (menu: string) => void;
+  setselecteMenu: any;
   loading: boolean;
   setEditProduct: any;
 }
@@ -35,7 +34,6 @@ const ViewProduct: React.FC<CategoryProps> = ({
   loading,
   setEditProduct,
 }) => {
-  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,7 +106,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
 
   const handleDelete = async (key: string) => {
     try {
-      const response = await axios.delete(
+     await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteProduct/${key}`
       );
       setProduct((prev: Product[]) => prev.filter((item) => item._id !== key));

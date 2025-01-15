@@ -1,3 +1,4 @@
+import { StaticImageData } from "next/image";
 import React, {FormEventHandler, SetStateAction } from "react";
 
 React.FormEvent<HTMLFormElement>
@@ -49,10 +50,13 @@ export interface USRPROPS {
   
   }
 
-  interface CategoriesType {
-    posterImageUrl: IMAGE_INTERFACE
-  }
-  export interface CategoriesType extends  Category {}
+/* eslint-disable */
+interface CategoriesType {
+  posterImageUrl: IMAGE_INTERFACE;
+}
+
+export interface CategoriesType extends Category {}
+/* eslint-enable */
   
   interface CloudinaryImage {
     public_id: string | undefined;
@@ -110,11 +114,12 @@ export interface USRPROPS {
 interface Color {
   colorName?: string;
 }
+/* eslint-disable */
 interface ModelDetail {
   name?: string;
   detail?: string;
 }
-
+/* eslint-enable */
 interface Specification {
   specsDetails?: string;
 }

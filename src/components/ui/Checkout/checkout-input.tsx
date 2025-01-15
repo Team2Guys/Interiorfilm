@@ -6,7 +6,8 @@ interface InputProps {
   name: string;
   id: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  // eslint-disable-next-line no-unused-vars, unused-imports/no-unused-vars
+onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
 }
 

@@ -29,7 +29,7 @@ const data = [
 ]
 
 
-const Overlay: React.FC<OverlayProps> = ({ title, bodyText }) => {
+const Overlay: React.FC<OverlayProps> = ({ title }) => {
   let overLay = ['cart', "shop","faqs"]
   let uiFlag = overLay.includes(title.toLowerCase());
   const router = useRouter()

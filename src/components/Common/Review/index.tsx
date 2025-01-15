@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { AiOutlineUser } from "react-icons/ai";
-import { HeadingH3, HeadingH6 } from "components/Common/Heading";
+import {  HeadingH6 } from "components/Common/Heading";
 import { message, Modal, Rate } from "antd";
 import { IoIosSend } from "react-icons/io";
 import feedback from "../../../../public/images/review.png";
@@ -8,12 +7,11 @@ import Image from "next/image";
 import axios from "axios";
 import Loader from "components/Loader/Loader";
 import Pagination from "../Pagination";
-import { MdStar } from "react-icons/md";
 const ITEMS_PER_PAGE = 2;
 interface ReviewProps {
   reviews: any[];
   productId: string;
-  fetchReviews: (productId: string) => Promise<void>;
+  fetchReviews: any;
 }
 const Review: React.FC<ReviewProps> = ({
   reviews,
@@ -30,7 +28,7 @@ const Review: React.FC<ReviewProps> = ({
   });
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  console.log(productId ,"productId")
   const showModal = () => {
     setIsModalOpen(true);
   };

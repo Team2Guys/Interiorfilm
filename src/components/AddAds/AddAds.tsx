@@ -8,7 +8,6 @@ import {
   Form,
   ErrorMessage,
   Field,
-  FormikValues,
   FormikTouched,
 } from "formik";
 
@@ -36,7 +35,6 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
   setselecteMenu,
   setEditProduct,
 }) => {
-  const [selectedOption, setSelectedOption] = useState<string>("");
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
   const [imagesUrl, setImagesUrl] = useState<any[]>([]);
   const [posterimageUrl, setposterimageUrl] = useState<any[] | null>(
@@ -53,17 +51,12 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
   >(EditProductValue);
   const [imgError, setError] = useState<string | null | undefined>();
   const [Categories, setCategories] = useState<any[]>();
-  const [VariationOption, setVariationOption] =
-    useState<string>("withoutVariation");
+ 
 
+  console.log(setIsOptionSelected,"Aylo.....");
   if (EditInitialValues) {
-    console.log("Aylo.....");
     console.log(EditInitialValues);
   }
-  const handleOptionChange = (e: any) => {
-    console.log(e);
-    setVariationOption(e.target.value);
-  };
   const token = Cookies.get("2guysAdminToken");
   const superAdminToken = Cookies.get("superAdminToken");
   let finalToken = token ? token : superAdminToken;
@@ -72,9 +65,6 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
     token: finalToken,
   };
 
-  const changeTextColor = () => {
-    setIsOptionSelected(true);
-  };
 
   useLayoutEffect(() => {
     const CategoryHandler = async () => {
@@ -90,6 +80,14 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
           hoverImage,
           ...EditInitialProductValues
         } = EditInitialValues as any;
+        console.log(  posterImageUrl,
+          imageUrl,
+          _id,
+          createdAt,
+          updatedAt,
+          __v,
+          hoverImage,
+          EditInitialProductValues)
         imageUrl ? setImagesUrl(imageUrl) : null;
         posterImageUrl ? setposterimageUrl([posterImageUrl]) : null;
         console.log(hoverImage, "EditInitialValues.hoverImageUrl");
@@ -373,35 +371,6 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
                           ) : null}
                         </div>
 
-                        {/* <div className="w-[33%]">
-                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                            Purchase Price
-                          </label>
-                          <input
-                            type="number"
-                            name="purchasePrice"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.purchasePrice}
-                            placeholder="Purchase Price"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.purchasePrice &&
-                              formik.errors.purchasePrice
-                              ? "border-red-500"
-                              : ""
-                              }`}
-                          />
-                          {formik.touched.purchasePrice &&
-                            formik.errors.purchasePrice ? (
-                            <div className="text-red text-sm">
-                              {
-                                formik.errors.purchasePrice as FormikErrors<
-                                  FormValues["purchasePrice"]
-                                >
-                              }
-                            </div>
-                          ) : null}
-                        </div> */}
-
                         <div className="w-[50%]">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                             Discount Price
@@ -459,9 +428,6 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
                             changeHandler={formik.handleChange}
                             value={formik.values.category}
                             Categories={Categories}
-                            selectedOption={selectedOption}
-                            setSelectedOption={setSelectedOption}
-                            changeTextColor={changeTextColor}
                             isOptionSelected={isOptionSelected}
                           />
 
@@ -483,8 +449,6 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
                         Add Stock Quantity
                       </label>
                     </div>
-
-                    {VariationOption === "withoutVariation" && (
                       <>
                         {withoutVariation.map((inputField, index) => (
                           <div key={index} className="mb-4">
@@ -501,7 +465,7 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
                           </div>
                         ))}
                       </>
-                    )}
+                    
                   </div>
 
                   <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
@@ -690,21 +654,21 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
                                     }
                                     placeholder="Specification Details"
                                     className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary 
-               ${
-                 formik.touched.spacification &&
-                 (
-                   formik.touched.spacification as FormikTouched<
-                     FormValues["spacification"]
-                   >
-                 )?.[index]?.specsDetails &&
-                 (
-                   formik.errors.spacification as FormikErrors<
-                     FormValues["spacification"]
-                   >
-                 )?.[index]?.specsDetails
-                   ? "border-red-500"
-                   : ""
-               }`}
+                                      ${
+                                        formik.touched.spacification &&
+                                        (
+                                          formik.touched.spacification as FormikTouched<
+                                            FormValues["spacification"]
+                                          >
+                                        )?.[index]?.specsDetails &&
+                                        (
+                                          formik.errors.spacification as FormikErrors<
+                                            FormValues["spacification"]
+                                          >
+                                        )?.[index]?.specsDetails
+                                          ? "border-red-500"
+                                          : ""
+                                      }`}
                                   />
                                   <button
                                     type="button"

@@ -5,18 +5,14 @@ import Button from "components/Common/regularButton";
 import { HeadingH3 } from "components/Common/Heading";
 import Input from "components/Common/regularInputs";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import Loader from "components/Loader/Loader";
 import Toaster from "components/Toaster/Toaster";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
 
 const AddAdmin = ({setselecteMenu}:any) => {
-  const router = useRouter();
   const [error, setError] = useState<string | null | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
-
-  // Initialize state for form data
   const [formData, setFormData] = useState({
     fullname: "",
     email: "",

@@ -1,14 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 
-const canvasStyles = {
-  position: 'fixed',
-  pointerEvents: 'none',
-  width: '100%',
-  height: '100%',
-  top: 0,
-  left: 0,
-};
 
 export default function RealisticConfetti() {
   const refAnimationInstance = useRef<any>(null);
@@ -18,6 +10,7 @@ export default function RealisticConfetti() {
 
     return () => {
       if (refAnimationInstance.current) {
+        return
       }
     };
   }, []);
@@ -25,7 +18,6 @@ export default function RealisticConfetti() {
   const getInstance = useCallback((instance: any) => {
     refAnimationInstance.current = instance;
   }, []);
-
   const makeShot = useCallback((particleRatio: number, opts: any) => {
     refAnimationInstance.current?.confetti({
       ...opts,

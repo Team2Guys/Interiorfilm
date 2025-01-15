@@ -29,7 +29,7 @@ const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps)
   const [category, setCategory] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [colorMode, toggleColorMode] = useColorMode();
-
+  console.log(toggleColorMode,editCategory,"toggleColorMode")
   const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
 
   const canAddCategory = loggedInUser && (loggedInUser.role == 'Admin' ? loggedInUser.canAddCategory : true)
@@ -77,7 +77,7 @@ const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps)
 
   const handleDelete = async (key: any) => {
     try {
-      const response = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteCategory/${key}`);
+      await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteCategory/${key}`);
       setCategory((prev: any) => prev.filter((item: any) => item._id != key));
       notification.success({
         message: 'Category Deleted',

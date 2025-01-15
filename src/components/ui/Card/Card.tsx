@@ -43,14 +43,10 @@ const Card: React.FC<CardProps> = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [populated_categoryName, setCategoryName] = useState<string | any>(
-    null
-  );
-  const [selectedProduct, setSelectedProduct] = useState<PRODUCTS_TYPES | null>(
-    null
-  );
+  const [populated_categoryName, setCategoryName] = useState<string | any>(null);
+  const [selectedProduct, setSelectedProduct] = useState<PRODUCTS_TYPES | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
+console.log(error,selectedValue,"error")
   const handleProductClick = (product: PRODUCTS_TYPES) => {
     setIsLoading(true);
     setSelectedProduct(product);

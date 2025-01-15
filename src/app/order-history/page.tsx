@@ -3,13 +3,13 @@ import Container from "components/Layout/Container/Container";
 import Overlay from "components/widgets/Overlay/Overlay";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { TiShoppingCart, TiTick } from "react-icons/ti";
+import { TiTick } from "react-icons/ti";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import axios from 'axios'
 import { generateSlug } from "data/Data";
 import { useRouter } from "next/navigation";
-import { Order , Product} from "types/types";
+import { Order } from "types/types";
 import OrderSkeleton from "components/Skeleton-loading/OrderSkeleton";
 
 
