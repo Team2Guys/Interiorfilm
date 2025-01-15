@@ -1,7 +1,7 @@
 "use client";
 import React, { useLayoutEffect, useState } from "react";
 import ChartOne from "./Charts/ChartOne";
-import ChartThree from "./Charts/ChartThree";
+// import ChartThree from "./Charts/ChartThree";
 import ChartTwo from "./Charts/ChartTwo";
 import CardDataStats from "./CardDataStats";
 import Cookies from "js-cookie";
@@ -18,12 +18,10 @@ const ECommerce: React.FC = () => {
   const [records, setRecords] = useState<RECORDS | undefined>();
   const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
 
-  const canCheckProfit =
-    loggedInUser &&
-    (loggedInUser.role == "Admin" ? loggedInUser.canCheckProfit : true);
-  const CanCheckRevnue =
-    loggedInUser &&
-    (loggedInUser.role == "Admin" ? loggedInUser.CanCheckRevnue : true);
+  // const canCheckProfit =
+  //   loggedInUser &&
+  //   (loggedInUser.role == "Admin" ? loggedInUser.canCheckProfit : true);
+  const CanCheckRevnue =loggedInUser &&(loggedInUser.role == "Admin" ? loggedInUser.CanCheckRevnue : true);
   const canViewUsers =
     loggedInUser &&
     (loggedInUser.role == "Admin" ? loggedInUser.canViewUsers : true);
@@ -77,7 +75,7 @@ const ECommerce: React.FC = () => {
   }, []);
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
       {loading ? (
         new Array(5).fill(0).map((item:number, index: number)=> <Skeleton key={index} avatar active  />))
          : (
@@ -91,14 +89,14 @@ const ECommerce: React.FC = () => {
           </CardDataStats>
         )}
 
-        {!canCheckProfit ? null : (
+        {/* {!canCheckProfit ? null : (
           <CardDataStats
             title="Total Profit"
             total={records?.totalProfit ? records?.totalProfit : ""}
           >
             <FiShoppingCart size={25} className="text-primary dark:text-white" />
           </CardDataStats>
-        )}
+        )} */}
 
         {!CanCheckRevnue ? null : (
           <CardDataStats
@@ -151,7 +149,7 @@ const ECommerce: React.FC = () => {
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <ChartOne />
         <ChartTwo />
-        <ChartThree />
+        {/* <ChartThree /> */}
       </div>
     </>
   );

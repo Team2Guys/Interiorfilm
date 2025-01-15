@@ -14,6 +14,8 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { categoryInitialValues, categoryValidationSchema } from "data/Data";
 import ProtectedRoute from "hooks/AuthHookAdmin";
 import Loader from "components/Loader/Loader";
+import Cookies from "js-cookie";
+
 
 interface editCategoryNameType {
   name: string;
@@ -32,6 +34,15 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
   const [posterimageUrl, setposterimageUrl] = useState<any[] | null >(CategorImageUrl ? [CategorImageUrl] : null);
   const [loading, setloading] = useState<boolean>(false);
   const [editCategoryName, setEditCategoryName] = useState<editCategoryNameType | null | undefined>(CategoryName);
+  const token = Cookies.get("2guysAdminToken");
+  const superAdminToken = Cookies.get("superAdminToken");
+  let finalToken = token ? token : superAdminToken;
+
+  if (!finalToken) {
+    return;
+  }
+
+
 
   const onSubmit = async (values: Category, { resetForm }: any) => {
     try {
@@ -47,7 +58,7 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
       let url = `${process.env.NEXT_PUBLIC_BASE_URL}${updateFlag ? addProductUrl : "/api/AddCategory"
         }`;
 
-      const response = await axios.post(url, newValue);
+      const response = await axios.post(url, newValue, {headers: {token}});
       console.log(response, "response");
       setloading(false);
       Toaster(

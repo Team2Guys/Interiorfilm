@@ -44,7 +44,7 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, cardClass ,onClick }) => {
       totalPrice: product.discountPrice ? product.discountPrice : product.salePrice,
       purchasePrice: product.purchasePrice,
       sizes: product.sizes,
-      product_code : product.code
+      code : product.code
     };
 
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -56,8 +56,8 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, cardClass ,onClick }) => {
         if (index === existingItemIndex) {
           return {
             ...item,
-            count: item.count + 1,
-            totalPrice: (item.count + 1) * (item.discountPrice ? item.discountPrice : item.price),
+            length: item.length + 1,
+            totalPrice: (item.length + 1) * (item.discountPrice ? item.discountPrice : item.price),
           };
         }
         return item;
@@ -118,6 +118,7 @@ const Menucard: React.FC<CardProps> = ({ ProductCard, cardClass ,onClick }) => {
 
     message.success('Product added to Wishlist successfully!');
     window.dispatchEvent(new Event("WishlistChanged"));
+    
     console.log(existingWishlist, "existingWishlist")
   };
   const Homepage = pathname.startsWith('/');

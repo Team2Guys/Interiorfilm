@@ -44,6 +44,10 @@ const Header = () => {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
+  const token = Cookies.get("2guysAdminToken");
+  const superAdminToken = Cookies.get("superAdminToken");
+  let finalToken = token ? token : superAdminToken;
+
   useEffect(() => {
     const productHandler = async () => {
       setLoading(true);
@@ -72,14 +76,16 @@ const Header = () => {
     productHandler();
   }, []);
 
+
+
   const AddminProfileTriggerHandler = async (token: string) => {
     try {
-      if (!token) return null;
+      if (!finalToken) return null;
       let user: any = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/getuserHandler`,
         {
           headers: {
-            token: token,
+            token: finalToken,
           },
         }
       );
@@ -231,7 +237,7 @@ const Header = () => {
     <>
       <div className="bg-black  border-b py-2 border-black  w-full z-99 relative">
         <p className="uppercase text-white text-center text-[10px] sm:text-xs md:text-14">
-          Free Shipping on over AED 250 EVERYWHERE (WITHIN DUBAI CITY LIMITS.)
+          Free Shipping on above AED 250 EVERYWHERE (WITHIN DUBAI CITY LIMITS.)
         </p>
       </div>
       <nav

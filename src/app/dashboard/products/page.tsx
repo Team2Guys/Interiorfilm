@@ -49,12 +49,18 @@ const Products = () => {
     reviews: editProduct && editProduct.starRating,
     code: editProduct && editProduct.code,
     salePrice: editProduct && editProduct.salePrice,
-    purchasePrice: editProduct && editProduct.purchasePrice,
     totalStockQuantity: editProduct && editProduct.totalStockQuantity,
     hoverImageUrl: editProduct && editProduct.hoverImageUrl,
+    Meta_Title:editProduct && editProduct?.Meta_Title,
+    Meta_Description:editProduct && editProduct?.Meta_Title,
+    URL:editProduct && editProduct?.Meta_Title,
+    Canonical_Tag:editProduct && editProduct?.Meta_Title,
+    Images_Alt_Text:editProduct && editProduct?.Meta_Title,
+    Og_title:editProduct && editProduct?.Meta_Title,
+    Og_Image:editProduct && editProduct?.Meta_Title,
+    OgUrl:editProduct && editProduct?.Meta_Title,
   };  
 
-  console.log(editProduct?.colors, "colors")
 
   let productFlag: boolean = selecteMenu === "Add All Products" ? true : false
 
@@ -66,10 +72,9 @@ const Products = () => {
 
           <ViewProduct
             Categories={products}
-            setCategory={setProducts}
+            setProduct={setProducts}
             setselecteMenu={setselecteMenu}
             loading={productloading}
-
             setEditProduct={setEditProduct}
           />
           :

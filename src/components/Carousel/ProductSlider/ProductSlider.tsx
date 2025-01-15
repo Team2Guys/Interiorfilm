@@ -1,16 +1,14 @@
 "use client";
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import Card from 'components/ui/Card/Card';
 import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import PRODUCTS_TYPES from 'types/interfaces';
 import { RiArrowLeftSFill, RiArrowRightSFill } from 'react-icons/ri';
-import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi';
 
 interface ProductSliderProps {
   products: PRODUCTS_TYPES[];
@@ -39,8 +37,17 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
     updateSwiperNavigation();
   }, [updateSwiperNavigation]);
 
-  console.log(products, "productsproductsproductsproductsproductsproducts")
+  const handleMouseEnter = () => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.autoplay.stop();
+    }
+  };
 
+  const handleMouseLeave = () => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.autoplay.start();
+    }
+  };
 
   return (
     <>
@@ -74,21 +81,8 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
           ))}
         </div>
       ) : (
-        <div className="relative mt-2">
-          <div className='float-end flex gap-2 mb-5'>
-            <button
-              ref={prevRef}
-              className="bg-white text-black h-8 w-8 shadow-lg  flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
-            >
-              <RiArrowLeftSFill size={30} />
-            </button>
-            <button
-              ref={nextRef}
-              className="bg-white text-black h-8 w-8 shadow-lg flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
-            >
-              <RiArrowRightSFill size={30} />
-            </button>
-          </div>
+        <div className="relative mt-10" >
+         
           <Swiper
             ref={swiperRef}
             autoplay={{
@@ -108,7 +102,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
                 slidesPerView: 2.2,
                 spaceBetween: 20,
               },
-              768: {
+              800: {
                 slidesPerView: 2.6,
                 spaceBetween: 10,
               },
@@ -116,7 +110,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
                 slidesPerView: 3.2,
                 spaceBetween: 20,
               },
-              1220: {
+              1280: {
                 slidesPerView: 4,
                 spaceBetween: 20,
               },
@@ -125,9 +119,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
             pagination={{
               dynamicBullets: true,
               clickable: true,
-              renderBullet: function (index: number, className: string) {
-                return `<span class="custom-pag ${className}">${index + 1}</span>`;
-              },
+             
             }}
             navigation={{
               prevEl: prevRef.current,
@@ -136,11 +128,28 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
             className="mySwiper custom"
           >
             {featuredProducts && featuredProducts.map((product, index) => (
-              <SwiperSlide key={index} className="mb-10 custom">
+              <SwiperSlide key={index} className="mb-10 custom" onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}>
                 <Card ProductCard={[product]} slider={true} />
               </SwiperSlide>
             ))}
           </Swiper>
+
+          
+           <div className=' flex justify-center gap-54 absolute w-full bottom-5'>
+            <button
+              ref={prevRef}
+              className="text-black h-8 w-8 shadow  flex justify-center items-center z-10 "
+            >
+              <RiArrowLeftSFill size={30} />
+            </button>
+            <button
+              ref={nextRef}
+              className="text-black h-8 w-8 shadow flex justify-center items-center z-10 "
+            >
+              <RiArrowRightSFill size={30} />
+            </button>
+          </div>
         </div>
       )}
     </>

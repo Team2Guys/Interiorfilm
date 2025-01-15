@@ -13,7 +13,19 @@ const PrivacyPolicyPage: React.FC = () => {
         {privacyPolicyData.map((item, index) => (
           <div key={index} className='space-y-3'>
             <h2 className='text-xl font-bold'>{item.title}</h2>
-            <p>{item.text}</p>
+            <div>
+            {item.text.includes('www.interiorfilm.ae') ? (
+                      <>
+                        {item.text.split('www.interiorfilm.ae')[0]}
+                        <Link href='/' className='text-primary hover:text-primary'>
+                          www.interiorfilm.ae
+                        </Link>
+                        {item.text.split('www.interiorfilm.ae')[1]}
+                      </>
+                    ) : (
+                      item.text
+                    )}
+            </div>
             {item.listItems && (
               <ul className='px-4 space-y-1'>
                 {item.listItems.map((listItem, listItemIndex) => (

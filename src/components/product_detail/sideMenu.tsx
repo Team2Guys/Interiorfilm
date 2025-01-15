@@ -5,11 +5,13 @@ import Image from 'next/image';
 import { FaStar } from 'react-icons/fa';
 import { TextWithIconData } from 'data/sideMenuData';
 import showToast from 'components/Toaster/Toaster';
+import axios from 'axios';
 
-interface Product {
+export interface Product {
   posterImageUrl: {
     public_id: string;
     imageUrl: string;
+    altText?: string;
   };
   _id: string;
   name: string;
@@ -21,6 +23,7 @@ interface Product {
     imageIndex: number;
     public_id: string;
     imageUrl: string;
+    altText?: string;
     _id: string;
   }>;
   discountPrice: number;
@@ -29,124 +32,44 @@ interface Product {
   code: string;
   totalStockQuantity: number;
   variantStockQuantities: Array<any>;
+  length:number
 }
-
-const SideMenu: React.FC = () => {
+interface SideMenuProps {
+  setAdsonProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+}
+const SideMenu: React.FC<SideMenuProps> = ({ setAdsonProducts }) => {
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    const fetchedProducts: Product[] = [
-      {
-        posterImageUrl: {
-          public_id: 'interiorFilms/cqzkqjcykjaafevr9cgi',
-          imageUrl: 'http://res.cloudinary.com/dhh6gp5tr/image/upload/v1723790134/interiorFilms/cqzkqjcykjaafevr9cgi.jpg'
-        },
-        _id: '668bc6aeddbcasa58b0a2f93619',
-        name: 'KH6015',
-        description: 'test',
-        salePrice: 100,
-        purchasePrice: 80,
-        category: '66867ce543c6399137eb296c',
-        imageUrl: [
-          {
-            imageIndex: 1,
-            public_id: 'interiorFilms/fhffxuv96loqhhjkvcr1',
-            imageUrl: 'http://res.cloudinary.com/dqvywckz8/image/upload/v1720436201/interiorFilms/fhffxuv96loqhhjkvcr1.jpg',
-            _id: '668bc6eddbca58b0a2f9361a'
-          },
-          {
-            imageIndex: 2,
-            public_id: 'interiorFilms/pnwlgv6had0dx4erysq5',
-            imageUrl: 'http://res.cloudinary.com/dqvywckz8/image/upload/v1720436202/interiorFilms/pnwlgv6had0dx4erysq5.jpg',
-            _id: '668bc6eddbca58b0a2f9361c'
-          }
-        ],
-        discountPrice: 20,
-        starRating: '',
-        reviews: '',
-        code: 'KH6015',
-        totalStockQuantity: 10,
-        variantStockQuantities: []
-      },
-      {
-        posterImageUrl: {
-          public_id: 'interiorFilms/cqzkqjcykjaafevr9cgi',
-          imageUrl: 'http://res.cloudinary.com/dhh6gp5tr/image/upload/v1723790134/interiorFilms/cqzkqjcykjaafevr9cgi.jpg'
-        },
-        _id: '668bc6eddbca58sab0a2f93619',
-        name: 'KH6015',
-        description: 'test',
-        salePrice: 100,
-        purchasePrice: 80,
-        category: '66867ce543c6399137eb296c',
-        imageUrl: [
-          {
-            imageIndex: 1,
-            public_id: 'interiorFilms/fhffxuv96loqhhjkvcr1',
-            imageUrl: 'http://res.cloudinary.com/dqvywckz8/image/upload/v1720436201/interiorFilms/fhffxuv96loqhhjkvcr1.jpg',
-            _id: '668bc6eddbca58b0a2f9361a'
-          },
-          {
-            imageIndex: 2,
-            public_id: 'interiorFilms/pnwlgv6had0dx4erysq5',
-            imageUrl: 'http://res.cloudinary.com/dqvywckz8/image/upload/v1720436202/interiorFilms/pnwlgv6had0dx4erysq5.jpg',
-            _id: '668bc6eddbca58b0a2f9361c'
-          }
-        ],
-        discountPrice: 20,
-        starRating: '',
-        reviews: '',
-        code: 'KH6015',
-        totalStockQuantity: 10,
-        variantStockQuantities: []
-      },
-      {
-        posterImageUrl: {
-          public_id: 'interiorFilms/cqzkqjcykjaafevr9cgi',
-          imageUrl: 'http://res.cloudinary.com/dhh6gp5tr/image/upload/v1723790134/interiorFilms/cqzkqjcykjaafevr9cgi.jpg'
-        },
-        _id: '668bc6eddbca58b0a2f93619',
-        name: 'KH6015',
-        description: 'test',
-        salePrice: 100,
-        purchasePrice: 80,
-        category: '66867ce543c6399137eb296c',
-        imageUrl: [
-          {
-            imageIndex: 1,
-            public_id: 'interiorFilms/fhffxuv96loqhhjkvcr1',
-            imageUrl: 'http://res.cloudinary.com/dqvywckz8/image/upload/v1720436201/interiorFilms/fhffxuv96loqhhjkvcr1.jpg',
-            _id: '668bc6eddbca58b0a2f9361a'
-          },
-          {
-            imageIndex: 2,
-            public_id: 'interiorFilms/pnwlgv6had0dx4erysq5',
-            imageUrl: 'http://res.cloudinary.com/dqvywckz8/image/upload/v1720436202/interiorFilms/pnwlgv6had0dx4erysq5.jpg',
-            _id: '668bc6eddbca58b0a2f9361c'
-          }
-        ],
-        discountPrice: 20,
-        starRating: '',
-        reviews: '',
-        code: 'KH6015',
-        totalStockQuantity: 10,
-        variantStockQuantities: []
-      },
-      
-    ];
-
-    // Set all products as selected initially
-    setSelectedProducts(fetchedProducts);
-    setProducts(fetchedProducts);
+    
+   const fetch=async()=>{
+    const fetchedProducts=await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`)
+    console.log("fetch product")
+    console.log(fetchedProducts)
+    const defaultProducts = fetchedProducts.data.products.slice(0, 3);
+    setSelectedProducts(defaultProducts);
+    setProducts(defaultProducts);
+    setAdsonProducts(defaultProducts);
+   }
+   fetch();
   }, []);
 
   const handleCheckboxChange = (product: Product) => {
-    setSelectedProducts((prevSelected) =>
-      prevSelected.includes(product)
-        ? prevSelected.filter((p) => p !== product)
-        : [...prevSelected, product]
-    );
+    setSelectedProducts((prevSelectedProducts) => {
+      let updatedSelectedProducts;
+      if (prevSelectedProducts.some((p) => p._id === product._id)) {
+        // If product is already selected, remove it from the array
+        updatedSelectedProducts = prevSelectedProducts.filter((p) => p._id !== product._id);
+      } else {
+        // Otherwise, add it to the array
+        updatedSelectedProducts = [...prevSelectedProducts, product];
+      }
+
+      // Update the parent state as well
+      setAdsonProducts(updatedSelectedProducts);
+      return updatedSelectedProducts;
+    });
   };
 
   const handleAddToCart = () => {
@@ -159,27 +82,27 @@ const SideMenu: React.FC = () => {
         discountPrice: product.discountPrice,
         totalStockQuantity: product.totalStockQuantity,
         count: 1,
-        length,
-        totalPrice: (product.discountPrice || product.salePrice), 
+        length:product.length,
+        totalPrice: Number((product.discountPrice || product.salePrice)),
         purchasePrice: product.purchasePrice,
         //@ts-expect-error
         sizes: product.sizes || [], 
-        product_code: product.code
+        code: product.code,
       };
 
       let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
       const existingItemIndex = existingCart.findIndex(
-        (item: any) => item.id === product._id && item.length === length
+        (item: any) => item.id === product._id 
+        // && item.length === length
       );
 
+      console.log(existingItemIndex, "existingItemIndex")
       if (existingItemIndex !== -1) {
         const existingItem = existingCart[existingItemIndex];
         // existingItem.count += quantity;
+
         existingItem.count += 0;
-        existingItem.totalPrice =
-          (product.discountPrice || product.salePrice) *
-          existingItem.count *
-          length;
+        existingItem.totalPrice = (product.discountPrice || product.salePrice) * existingItem.count * length;
         existingCart[existingItemIndex] = existingItem;
       } else {
         existingCart.push(newCartItem);
@@ -192,11 +115,11 @@ const SideMenu: React.FC = () => {
     window.dispatchEvent(new Event('cartChanged'));
   };
 
-  const totalPrice = selectedProducts.reduce((total, product) => total + product.discountPrice, 0);
+  const totalPrice = selectedProducts.reduce((total, product) => total + (product.discountPrice || product.salePrice), 0);
 
   return (
-    <div className='flex md:flex-col gap-2'>
-      <div className='divide-y-2 p-2 divide-[#E4E4E4] border-2 border-[#E4E4E4]'>
+    <div className='flex flex-wrap lg:flex-nowrap lg:flex-col gap-2'>
+      <div className='divide-y-2 p-2 divide-[#E4E4E4] border-2 border-[#E4E4E4] hidden lg:block'>
         {TextWithIconData.map((item, index) => (
           <TextwithIcon
             key={index}
@@ -209,12 +132,12 @@ const SideMenu: React.FC = () => {
         ))}
       </div>
 
-      <div className="">
-        <div className="text-center mb-4">
-          <h2 className="font-semibold text-sm">Add on <span className="font-bold">5% Save</span></h2>
+      <div className="w-full">
+        <div className="text-start mb-4">
+          <h2 className="font-semibold text-sm"><span className="font-bold">You May Also Need</span></h2>
         </div>
         <div className="space-y-4">
-          {products.map((product) => (
+        {products.slice(0, 3).map((product) => (
             <div className='relative' key={product._id}>
               <input
                 type="checkbox"
@@ -253,24 +176,23 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="flex items-center relative">
         <Image
           src={product.posterImageUrl.imageUrl}
-          alt={product.name}
+          alt={product.posterImageUrl.altText || ''}
           width={100}
           height={100}
           className="w-25 h-20 object-cover"
         />
       </div>
       <div className="flex-grow">
-        <h3 className="text-[12px] font-[#111111]">{product.name}</h3>
+        <h3 className="text-[12px] font-[#111111] font-semibold">{product.name}</h3>
         <p className="text-xs">{product.code}</p>
-        <div className="flex items-center gap-1">
+        {/* <div className="flex items-center gap-1">
           <div className="flex text-yellow-500 text-xs">
             <FaStar className='text-[10px]' />
             <FaStar className='text-[10px]' />
             <FaStar className='text-[10px]' />
           </div>
-        </div>
-        <div className="text-[14.92px] font-bold">AED: {product.discountPrice}</div>
-        <div className="text-xs line-through text-gray-500">AED: {product.salePrice}</div>
+        </div> */}
+        <div className="text-[14.92px] font-bold">AED: {product.discountPrice ? product.discountPrice : product.salePrice }</div>
       </div>
     </div>
   );

@@ -1,38 +1,48 @@
+import ProductCollapse from "components/ui/Collapse/productCollpase";
+import { productAccordion } from "data/ProductAccordion";
+import React, { useState } from "react";
+import PRODUCTS_TYPES from "types/interfaces";
 
-import ProductCollapse from 'components/ui/Collapse/productCollpase';
-import React, { useState } from 'react'
-import PRODUCTS_TYPES from 'types/interfaces';
+// interface accordionprop {
+//   detail: PRODUCTS_TYPES[] | any;
+// }
 
-interface accordionprop {
-  detail: PRODUCTS_TYPES[] | any;
-}
+const Accordion = () =>
+  // { detail }: any
+  {
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-const Accordion: React.FC<accordionprop> = ({ detail }: any) => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const handleToggle = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-  return (
-    <>
-      {detail?.map((item: any, index: any) => (
-        <>
-          <div className='px-4 md:px-0'>
+    const handleToggle = (index: number) => {
+      setOpenIndex(openIndex === index ? null : index);
+    };
+    return (
+      <>
+        {productAccordion.map((item: any, index: any) => (
+          <>
             <React.Fragment key={index}>
-              <ProductCollapse isOpen={openIndex === index}
-                onClick={() => handleToggle(index)} title={item.name} titleClass="text-[14px]" className=" py-4 border-t border-stone-200">
-                <p className="text-[14px]">{item.detail}</p>
+              <ProductCollapse
+                isOpen={openIndex === index}
+                onClick={() => handleToggle(index)}
+                title={item.name}
+                titleClass="font-semibold text-[18px] capitalize"
+                className=" py-4 border-t border-stone-200 "
+              >
+                <p className="text-[15px]">{item.title}</p>
+                {
+                  item.details.map((detail: any, index: any) => (
+                <div className="border-b-2 py-5 border-[#F9F9F8]" key={index}>
+                    <p className="text-[15px]">
+                      {detail}
+                    </p>
+                    </div>
+                  ))
+                }
               </ProductCollapse>
             </React.Fragment>
-            
-            {/* <hr className=" h-1 border-stone-200" /> */}
-          </div>
-        </>
-      ))}
+          </>
+        ))}
+      </>
+    );
+  };
 
-    </>
-
-  )
-}
-
-export default Accordion
+export default Accordion;

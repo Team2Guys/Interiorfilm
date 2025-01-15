@@ -1,24 +1,25 @@
 export const socialLinks = [
-  {href: "https://instagram.com/interiorfilm.ae/", icon: "FaInstagram" },
-  { href: "https://www.facebook.com/InteriorFilm.ae", icon: "FaFacebook" },
-  { href: "", icon: "FaTiktok" },
-  { href: "", icon: "FaYoutube" },
-  { href: "", icon: "FaTwitter" },
+  {href: "https://www.instagram.com/interiorfilmuae/", icon: "FaInstagram" },
+  { href: "https://www.facebook.com/Interiorfilmuae", icon: "FaFacebook" },
+  { href: "https://www.pinterest.com/interiorfilmuae/", icon: "FaPinterest" },
+  // { href: "", icon: "FaTiktok" },
+  // { href: "", icon: "FaYoutube" },
+  // { href: "", icon: "FaTwitter" },
   ];
   
 
   
   export const customerCare = [
+    { name: "FAQs", href: "/frequently-asked-questions" },
     { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Trade Enquiries", href: "/trade" },
+    { name: "About Us", href: "/about" },
     { name: "Contact Us", href: "/contact" },
   ];
   
   export const pages = [
     { name: "Privacy Policy", href: "privacy-policy" },
-    { name: "Terms & Conditions", href: "terms-condition" },
-    { name: "Return and Refund", href: "return-refund" },
+    { name: "Terms & Conditions", href: "terms-conditions" },
+    { name: "Returns and Refunds", href: "returns-refunds" },
     { name: "Shipment Policy", href: "shipment-policy" },
 
   ];

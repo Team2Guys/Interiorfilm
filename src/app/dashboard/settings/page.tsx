@@ -12,15 +12,19 @@ import Cookies from 'js-cookie';
 import { useAppDispatch } from "components/Others/HelperRedux";
 import { loggedInAdminAction } from '../../../redux/slices/AdminsSlice';
 import { ImageRemoveHandler } from 'utils/helperFunctions';
+import Toaster from "components/Toaster/Toaster";
 
 
 
 const Settings = () => {
   const { loggedInUser }: any = useAppSelector(state => state.usersSlice);
-  const token = Cookies.get('2guysAdminToken');
+  const token = Cookies.get("2guysAdminToken");
+  const superAdminToken = Cookies.get("superAdminToken");
+  let finalToken = token ? token : superAdminToken;
+
   const dispatch = useAppDispatch();
   let AdminType = loggedInUser && loggedInUser.role == "super-Admin"
-
+  const [loading, setLoading] = useState(false);
   const initialFormData = {
     fullname: loggedInUser ? `${loggedInUser.fullname}` : "",
 
@@ -73,7 +77,7 @@ const Settings = () => {
         let response: any = await axios.put(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/editAdmin/${loggedInUser._id}`, combinedData, {
           headers: {
-            "token": token
+          token: finalToken
           }
         }
         );
@@ -96,20 +100,29 @@ const Settings = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+    setLoading(true); 
+
     try {
       await adminUpdateHandler();
-      await AddminProfileTriggerHandler()
-    }
-    catch (err) {
-      console.log(err, "err")
+      try {
+        await AddminProfileTriggerHandler();
+        Toaster("success", "Your Profile has been successfully updated!");
+      } catch (err) {
+        console.log(err, "Error in AddminProfileTriggerHandler");
+      }
+    } catch (err) {
+      console.log(err, "Error in adminUpdateHandler");
+    } finally {
+      setLoading(false);
     }
   };
+  
 
   const AddminProfileTriggerHandler = async () => {
     try {
       let user: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admins/getAdminHandler`, {
         headers: {
-          "token": token
+          token: finalToken
         }
       })
       dispatch(loggedInAdminAction(user.data.user))
@@ -147,94 +160,74 @@ const Settings = () => {
                 </h3>
               </div>
               <div className="px-7 py-5">
-                <div>
-                  <div className="mb-4 flex items-center gap-3">
+              <div>
+              <div className="mb-4 flex items-center gap-3">
 
-                    {
-                      profilePhoto.map((profilePhoto) => {
-                        return (
-                          <>
+                {
+                  profilePhoto.map((profilePhoto) => {
+                    return (
+                      <>
 
-                            <div className="h-14 w-14 rounded-full overflow-hidden">
-                              <Image
-                                src={(profilePhoto && profilePhoto.imageUrl) ? profilePhoto.imageUrl : '/images/dummy-avatar.jpg'}
-                                width={55}
-                                height={55}
-                                alt="User"
-                              />
-                            </div>
-
-
-                            <div>
-                              <span className="mb-1.5 text-black dark:text-white">
-                                Edit your photo
-                              </span>
-                              <span className="flex gap-2.5">
-                                <button className="text-sm hover:text-primary text-black dark:text-white" type="button" onClick={() => ImageRemoveHandler(profilePhoto?.public_id ? profilePhoto?.public_id : '', setProfilePhoto)}>
-                                  Delete
-                                </button>
-                                <button className="text-sm hover:text-primary text-black dark:text-white" type="button" >
-                                  Update
-                                </button>
-                              </span>
-                            </div>
-
-                          </>
-
-                        )
-
-                      })
-
-                    }
+                        <div className="h-14 w-14 rounded-full overflow-hidden">
+                          <Image
+                            src={(profilePhoto && profilePhoto.imageUrl) ? profilePhoto.imageUrl : '/images/dummy-avatar.jpg'}
+                            width={55}
+                            height={55}
+                            alt="User"
+                          />
+                        </div>
 
 
+                        <div>
+                          <span className="mb-1.5 text-black dark:text-white">
+                            Edit your photo
+                          </span>
+                          <span className="flex gap-2.5">
+                            <button className="text-sm hover:text-primary text-black dark:text-white" type="button" onClick={() => ImageRemoveHandler(profilePhoto?.public_id ? profilePhoto?.public_id : '', setProfilePhoto)}>
+                              Delete
+                            </button>
+                            <button className="text-sm hover:text-primary text-black dark:text-white" type="button" >
+                              Update
+                            </button>
+                          </span>
+                        </div>
 
-                    {/* <div className="h-14 w-14 rounded-full overflow-hidden">
-                      <Image
-                        src={profilePhoto ? profilePhoto.imageUrl : '/images/dummy-avatar.jpg'}
-                        width={55}
-                        height={55}
-                        alt="User"
-                      />
-                    </div>
-                    <div>
-                      <span className="mb-1.5 text-black dark:text-white">
-                        Edit your photo
-                      </span>
-                      <span className="flex gap-2.5">
-                        <button className="text-sm hover:text-primary text-black dark:text-white" type="button" disabled={AdminType}>
-                          Delete
-                        </button>
-                        <button className="text-sm hover:text-primary text-black dark:text-white" type="button" disabled={AdminType}>
-                          Update
-                        </button>
-                      </span>
-                    </div> */}
+                      </>
 
-                  </div>
-                  <div className="relative mb-4 h-36 rounded-md border-dashed border-stroke dark:border-strokedark bg-gray dark:bg-meta-4">
-                    <input
-                      disabled={AdminType}
-                      type="file"
-                      accept="image/*"
-                      onChange={handlePhotoChange}
-                      className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                    />
-                    <div className="flex flex-col items-center justify-center">
-                      <span className="my-2 inline-block rounded-full bg-white border-primary border  p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-                          <path fill="#c72031" d="M10 16v-5h4v5h5l-7 7-7-7h5zm-4-16v2h12v-2h-12zm-4 4h20v2h-20v-2z" />
-                        </svg>
-                      </span>
-                      <p className="text-black dark:text-white text-sm">
-                        <span className="text-primary dark:text-white text-sm">Click to upload</span> or drag and drop
-                      </p>
-                      <p className="mt-1.5 text-black dark:text-white text-sm">SVG, PNG, JPG or GIF</p>
-                      <p className="text-black dark:text-white text-sm">(max, 800 X 800px)</p>
-                    </div>
-                  </div>
+                    )
 
+                  })
+
+                }
+
+
+
+
+
+              </div>
+              <div className="relative mb-4 h-36 rounded-md border-dashed border-stroke dark:border-strokedark bg-gray dark:bg-meta-4">
+                <input
+
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoChange}
+                  className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                />
+                <div className="flex flex-col items-center justify-center">
+                  <span className="my-2 inline-block rounded-full bg-white border-primary border  p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                      <path fill="#c72031" d="M10 16v-5h4v5h5l-7 7-7-7h5zm-4-16v2h12v-2h-12zm-4 4h20v2h-20v-2z" />
+                    </svg>
+                  </span>
+                  <p className="text-black dark:text-white text-sm">
+                    <span className="text-primary dark:text-white text-sm">Click to upload</span> or drag and drop
+                  </p>
+                  <p className="mt-1.5 text-black dark:text-white text-sm">SVG, PNG, JPG or GIF</p>
+                  <p className="text-black dark:text-white text-sm">(max, 800 X 800px)</p>
                 </div>
+              </div>
+
+            </div>
 
 
               </div>
@@ -328,7 +321,15 @@ const Settings = () => {
                       className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
                       type="submit"
                     >
-                      Save
+                      {
+                        loading ? (
+                          <>
+                          Saving...
+                          </>
+                        ):(
+                          <>Save</>
+                        )
+                      }
                     </button>
                   </div>
                 </form>

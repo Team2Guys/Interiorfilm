@@ -5,25 +5,16 @@ import Overlay from 'components/widgets/Overlay/Overlay';
 import { generateSlug } from 'data/Data';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useLayoutEffect, useState } from 'react';
 import { CategoriesType } from 'types/interfaces';
-
 function Categories() {
   const [category, setCategory] = useState<CategoriesType[]>([]);
   const [loading, setloading] = useState<boolean>(true);
-  const router = useRouter();
-
-  const handleButtonClick = (categoryID: string) => {
-    router.push(`/products?category=${categoryID}`);
-  };
-
-
   const CategoryHandler = async () => {
     try {
       setloading(true)
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
-      console.log(response, "response")
+
       setCategory(response.data);
     } catch (err) {
       console.log(err, "err")
@@ -58,47 +49,28 @@ function Categories() {
 
               )
             })
-
             : category.map((item: any, index) => {
-
               return (
-
-                <div key={index} className='group w-full space-4 cursor-pointer '>
-
+                <Link href={`/products?category=${generateSlug(item.name)}`} key={index} className='group w-full space-4 cursor-pointer '>
                   <div className='relative'>
-
                     <Image
                       src={item.posterImageUrl.imageUrl}
-                      className="object-cover w-full"
+                      className="object-cover w-full h-[300px] 2xsm:h-[400px] xsm:h-[500px] sm:h-[600px] md:h-[450px] lg:h-[395px] 2xl:h-[580px] 3xl:h-[792px]"
                       alt='categories'
                       width={1000}
                       height={1000}
                     />
                     <div className='hidden group-hover:block cursor-point absolute bg-white bottom-4 left-1/2 transform -translate-x-1/2 z-10 text-center py-1 px-4'>
                       <Link className='text-black' href={`/products?category=${generateSlug(item.name)}`}>VIEW ALL</Link>
-
-
                     </div>
-
                   </div>
-
-
                   <div className='flex items-center flex-col gap-2 mt-3'>
                     <p className='group-hover:text-primary uppercase font-poppins font-bold text-title-xsm'>{item.name}</p>
-                    <p className='text-center'>{item.description}</p>
-
+                    <p className='text-12 xsm:text-14 lg:text-base text-center'>{item.description}</p>
                   </div>
-
-
-                </div>
-
-
-
+                </Link>
               );
             })}
-
-
-
       </div>
     </>
   );

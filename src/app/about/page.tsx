@@ -4,23 +4,13 @@ import Image from 'next/image'
 import React from 'react'
 import about from "../../../public/images/about.png"
 import Offer from 'components/widgets/Offer/Offer'
-import Testimonial from 'components/widgets/Testimonial/Testimonial'
-import { SlDiamond } from 'react-icons/sl'
-import { CgBulb } from 'react-icons/cg'
-import { GiPayMoney } from 'react-icons/gi'
-import { RiCustomerService2Line } from 'react-icons/ri'
-import Link from 'next/link'
-const offers = [
-    { icon:<SlDiamond className='text-primary  group-hover:text-white text-23 md:text-[40px]'  /> ,title: 'Savings to your pocket', detail: 'We cut out the middle man, passing the savings on to you.' },
-    { icon:<CgBulb className='text-primary  group-hover:text-white text-23 md:text-[40px]'  /> ,title: 'Fast Delivery ', detail: 'Choose your material, select quantity, check out and receive by the next working day.' },
-    { icon:<GiPayMoney className='text-primary  group-hover:text-white text-23 md:text-[40px]'  /> ,title: 'Exclusive Collection', detail: 'We buy direct from the factory and are exclusive distributors for the GCC.' },
-    { icon:<RiCustomerService2Line className='text-primary  group-hover:text-white text-23 md:text-[40px]'  /> ,title: 'Service Promise', detail: 'Our professional team are on hand 365 days a year to help with any queries you may have.' },
-  ];
+import { offers } from 'data/sideMenuData'
+
 const About = () => {
   return (
     <>
-    <Overlay title='About'/>
-    <Container className='mt-20 mb-20'>
+    <Overlay title='About Us'/>
+    <Container className='lg:my-20 my-14 '>
         <div className='grid grid-cols-1 lg:grid-cols-2 mt-2 justify-items-center sm:gap-1 md:gap-10'>
             <div className='relative'>
              <Image className='w-full bg-primary rounded-lg p-2 lg:p-0 lg:pr-4 lg:pt-4' width={600} height={600} src={about} alt='about'/>
@@ -36,7 +26,7 @@ const About = () => {
         <p className='text-12 sm:text-14 md:text-17'>Our range is now a stunning collection of over 150 designs, from elegant marble vinyl and sleek metallic finishes to rich textured fabrics and luxurious leather vinyl looks. </p>
         <p className='text-12 sm:text-14 md:text-17'>Our customers are the most important element of our journey to success. Hand in hand, we have transformed 1000’s of homes in Dubai and the wider UAE areas and hope to continue this for many years to come. We would love to hear any feedback from you about our products or services. Listening is what we are best at and has played a massive role in taking us to where are today. </p>
         </div>
-    <Offer Offers={offers}/>
+        <Offer Offers={offers} />
     </Container>
       {/* <Testimonial/> */}
     </>

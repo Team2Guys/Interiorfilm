@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
 import { Drawer, message, Modal } from "antd";
 import Image from "next/image";
 import { IoCloseSharp } from "react-icons/io5";
@@ -12,20 +12,24 @@ interface CartDrawerProps {
   open: boolean;
   onClose: () => void;
   OpenDrawer?: React.ReactNode;
+  onMouseEnter?: MouseEventHandler<HTMLDivElement>;
+  onMouseLeave?: MouseEventHandler<HTMLDivElement>;
 }
 const CartDrawer: React.FC<CartDrawerProps> = ({
   open,
   onClose,
   OpenDrawer,
+  onMouseEnter,
+  onMouseLeave
 }) => {
   const [counts, setCounts] = useState<{ [key: number]: number }>({});
   const [lengths, setLengths] = useState<{ [key: number]: number }>({});
   const [cartItems, setCartItems] = useState<PRODUCTS_TYPES[]>([]);
   const [subtotal, setSubtotal] = useState(0);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetchCartItems();
-
     const handleCartChange = () => {
       fetchCartItems();
     };
@@ -56,7 +60,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
     );
     calculateSubtotal(validCartItems);
   };
-
+  
   const increment = (index: number) => {
     const newLengths = { ...lengths };
     if (newLengths[index] < 100) {
@@ -64,7 +68,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
       setLengths(newLengths);
       updateTotalPrice(index, counts[index], newLengths[index]);
     } else {
-      message.error("Length cannot be more than 100 meters.");
+      message.error("Cannot be more than 100.");
     }
   };
 
@@ -75,9 +79,13 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
       setLengths(newLengths);
       updateTotalPrice(index, counts[index], newLengths[index]);
     } else {
-      message.error("Length cannot be less than 1 meter.");
+      message.error("Cannot be less than 1.");
     }
   };
+  
+  // useEffect(()=>{
+  //   fetchCartItems()
+  // },[lengths])
 
   const onLengthChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -109,17 +117,34 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
       const count = counts[index] || item.count;
       return acc + price * length * count;
     }, 0);
-    setSubtotal(sub);
+    const sub2 = items.reduce((acc: number, item: any) => { return acc + item.totalPrice; }, 0);
+    setSubtotal(sub2);
   };
 
+  // const removeItem = (index: number) => {
+  //   Modal.confirm({
+  //     title: "Are you sure you want to remove this item?",
+  //     content: "This action cannot be undone.",
+  //     okText: "Yes",
+  //     okType: "danger",
+  //     cancelText: "No",
+  //     onOk: () => {
+  //       const newCartItems = cartItems.filter(
+  //         (_, itemIndex) => itemIndex !== index
+  //       );
+  //       setCartItems(newCartItems);
+  //       localStorage.setItem("cart", JSON.stringify(newCartItems));
+  //       calculateSubtotal(newCartItems);
+  //       message.success("Product removed from cart successfully!");
+  //       window.dispatchEvent(new Event("cartChanged"));
+  //     },
+  //     onCancel: () => {
+  //       message.info("Item removal canceled");
+  //     },
+  //   });
+  // };
+
   const removeItem = (index: number) => {
-    Modal.confirm({
-      title: "Are you sure you want to remove this item?",
-      content: "This action cannot be undone.",
-      okText: "Yes",
-      okType: "danger",
-      cancelText: "No",
-      onOk: () => {
         const newCartItems = cartItems.filter(
           (_, itemIndex) => itemIndex !== index
         );
@@ -128,17 +153,29 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
         calculateSubtotal(newCartItems);
         message.success("Product removed from cart successfully!");
         window.dispatchEvent(new Event("cartChanged"));
-      },
-      onCancel: () => {
-        message.info("Item removal canceled");
-      },
-    });
   };
+
+    useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+          onClose();
+        }
+      };
+  
+      if (open) {
+        document.addEventListener("mousedown", handleClickOutside);
+      }
+  
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [open, onClose]);
+
   return (
     <>
     {open && (
-        <div className="  right-0 sm:right-5 top-20 mt-2 fixed z-999 ">
-          <div className="border sm:w-96  bg-white p-2">
+        <div className="  right-0 sm:right-5 top-20 mt-2 fixed z-999 " onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+          <div className="border sm:w-96  bg-white p-2" ref={drawerRef}>
             <div className="flex items-center justify-between">
               <p className="font-bold text-md-h6">SHOPPING CART</p>
               <IoIosClose
@@ -148,7 +185,8 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
               />
             </div>
             <div className="max-h-52 border border-slate-100 overflow-y-scroll p-1 custom-scrollbar">
-            {cartItems.map((item: any, index: number) => {
+              
+            {cartItems.length > 0 ? cartItems.map((item: any, index: number) => {
           
 
           return (
@@ -175,9 +213,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
                     </div>
                   </div>
                   <div className="space-y-1 w-8/12">
-                    <h1 className="text-12 md:text-14 font-semibold">
-                     <span>{item.count}*</span>( {item.name} )
-                    </h1>
+                    <h1 className="text-12 md:text-14 font-semibold">{item.name}</h1>
                     <p className="text-12 md:text-14">
                       AED
                       <span>
@@ -227,7 +263,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
               </div>
             </div>
           );
-        })}
+        }) : ( <p className="font-bold p-4">Cart is empty</p>)}
             </div>
             <div className="text-end mt-2 mb-2">
               <p className="font-bold">

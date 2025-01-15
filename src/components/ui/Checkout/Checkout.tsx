@@ -12,6 +12,9 @@ import CheckoutInput from "./checkout-input";
 import { CountryCode } from "data/Data";
 import { FiTag } from "react-icons/fi";
 import Overlay from 'components/widgets/Overlay/Overlay'
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import showToast from "components/Toaster/Toaster";
 
 
 const CheckOut: React.FC = () => {
@@ -21,27 +24,32 @@ const CheckOut: React.FC = () => {
   const [total, setTotal] = useState(0);
   const [shipmentFee, setShipmentFee] = useState<number | string>(0);
   const [isChecked, setIsChecked] = useState(true);
+  const router = useRouter()
+  const [paymentProcess, setPaymentProcess] = useState(false);
+  const [paymentkey, setPaymentKey] = useState('');
+  const [loading, setLoading] = useState(false);
+
 
   const handleCheckboxChange = (e: any) => {
     setIsChecked(e.target.checked);
   };
   const [billingData, setBillingData] = useState({
-    name: "",
+    first_name: "",
+    last_name: '',
     email: "",
     phone_number: "",
-    state: "Dubai",
-    city: "",
+    city: "Dubai",
     country: "United Arab Emirates",
     address: "",
-    additionalAddressFields: [] as { id: string; address: string }[],
-    orderNote: "",
     productItems: [] as PRODUCTS_TYPES[],
     subtotalAmount: 0,
     totalAmount: 0,
+    phone_code: "+971"
   });
   const [showOrderNote, setShowOrderNote] = useState(false);
   const [errors, setErrors] = useState({
-    name: "",
+    first_name: "",
+    last_name: "",
     email: "",
     phone_number: "",
     address: "",
@@ -49,6 +57,9 @@ const CheckOut: React.FC = () => {
 
   const { Option } = Select;
 
+  const countSelectoption = [
+    { title: "United Arab Emirates" },
+  ];
   const selectoption = [
     { title: "Dubai" },
     { title: "Abu Dhabi" },
@@ -60,42 +71,34 @@ const CheckOut: React.FC = () => {
   ];
 
   const AddresAAray = [
-    { state: "dubai", charges: 15, discountCharges: 150 },
-    { state: "sharjah", charges: 20, discountCharges: 200 },
-    { state: "abu dhabi", charges: 20, discountCharges: 200 },
+    { state: "dubai", charges: 15, discountCharges: 250 },
+    { state: "sharjah", charges: 20, discountCharges: 250 },
+    { state: "abu dhabi", charges: 20, discountCharges: 250 },
   ];
 
 
-  const formatPhoneNumber = (value: string) => {
 
+  const formatCode = (value: string) => {
     const numbers = value.replace(/\D/g, "");
-
-    if (numbers.length <= 1) return numbers; // 1
-    if (numbers.length <= 4) return `${numbers.slice(0, 1)}-${numbers.slice(1)}`; 
-    if (numbers.length <= 7) return `${numbers.slice(0, 1)}-${numbers.slice(1, 4)}-${numbers.slice(4)}`; 
-  
-
-    return `${numbers.slice(0, 1)}-${numbers.slice(1, 4)}-${numbers.slice(4, 8)}`;
+    if (numbers.length <= 2) return numbers;
+    if (numbers.length <= 10) return `${numbers.slice(0, 2)}-${numbers.slice(2)}`;
+    return `${numbers.slice(0, 2)}-${numbers.slice(2, 10)}`;
   };
-  
+
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
     const lastChar = value[value.length - 1];
-  
-
     if (lastChar === "-") {
       value = value.slice(0, -1);
     }
-  
-    value = value.slice(0, 9);
-  
+    value = value.slice(0, 10);
     setBillingData((prevData) => ({
       ...prevData,
-      phone_number: formatPhoneNumber(value),
+      phone_number: formatCode(value),
     }));
   };
-  
-  
+
+
 
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -118,21 +121,15 @@ const CheckOut: React.FC = () => {
   useEffect(() => {
     const calculateCharges = () => {
       const matchingItem = AddresAAray.find(
-        (item) => item.state.toLowerCase() === billingData.state.toLowerCase()
+        (item) => item.state.toLowerCase() === billingData.city.toLowerCase()
       );
 
-      const charges = matchingItem
-        ? subtotal > matchingItem.discountCharges
-          ? "Free"
-          : matchingItem.charges
-        : subtotal > 250
-        ? "Free"
-        : 25;
+      const charges = matchingItem ? subtotal > matchingItem.discountCharges ? "Free" : matchingItem.charges : subtotal > 250 ? "Free" : 25;
       setShipmentFee(charges);
     };
 
     calculateCharges();
-  }, [billingData.state, subtotal, AddresAAray]);
+  }, [billingData.city, subtotal, AddresAAray]);
 
   const calculateTotals = (items: any) => {
     const sub = items.reduce((acc: any, item: any) => {
@@ -151,50 +148,49 @@ const CheckOut: React.FC = () => {
   };
 
   const handleSelectChange = (value: string) => {
-    setBillingData({ ...billingData, state: value });
+    setBillingData({ ...billingData, city: value });
   };
 
-  const addAddressField = (value: any) => {
-    setBillingData({
-      ...billingData,
-      additionalAddressFields: [
-        ...billingData.additionalAddressFields,
-        { id: Date.now().toString(), address: "" },
-      ],
-    });
+  const handleSelectChangeCountey = (value: string) => {
+    setBillingData({ ...billingData, country: value });
   };
 
-  const handleAddressFieldChange = (id: string, value: string) => {
-    setBillingData({
-      ...billingData,
-      additionalAddressFields: billingData.additionalAddressFields.map(
-        (field) => (field.id === id ? { ...field, address: value } : field)
-      ),
-    });
-  };
 
-  const handleAddressFieldDelete = (id: string) => {
-    setBillingData({
-      ...billingData,
-      additionalAddressFields: billingData.additionalAddressFields.filter(
-        (field) => field.id !== id
-      ),
-    });
-  };
+  // const addAddressField = (value: any) => {
+  //   setBillingData({
+  //     ...billingData,additionalAddressFields: [
+  //       ...billingData.additionalAddressFields,
+  //       { id: Date.now().toString(), address: "" },
+  //     ],
+  //   });
+  // };
 
-  const handleOrderNoteChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setBillingData({
-      ...billingData,
-      orderNote: e.target.value,
-    });
-  };
+  // const handleAddressFieldChange = (id: string, value: string) => {
+  //   setBillingData({
+  //     ...billingData,
+  //     additionalAddressFields: billingData.additionalAddressFields.map(
+  //       (field) => (field.id === id ? { ...field, address: value } : field)
+  //     ),
+  //   });
+  // };
+
+  // const handleAddressFieldDelete = (id: string) => {
+  //   setBillingData({
+  //     ...billingData,
+  //     additionalAddressFields: billingData.additionalAddressFields.filter(
+  //       (field) => field.id !== id
+  //     ),
+  //   });
+  // };
+
+
 
   const validateFields = () => {
     let isValid = true;
-    const newErrors = { name: "", email: "", phone_number: "", address: "" };
+    const newErrors = { first_name: "", email: "", phone_number: "", address: "", last_name: "" };
 
-    if (!billingData.name || /\d/.test(billingData.name)) {
-      newErrors.name = "Invalid name. No numbers allowed.";
+    if (!billingData.first_name || /\d/.test(billingData.first_name)) {
+      newErrors.first_name = "Invalid name. No numbers allowed.";
       isValid = false;
     }
     if (!billingData.address) {
@@ -205,31 +201,123 @@ const CheckOut: React.FC = () => {
       newErrors.email = "Invalid email address.";
       isValid = false;
     }
-    if (!billingData.phone_number || !/^\d+$/.test(billingData.phone_number)) {
-      newErrors.phone_number =
-        "Invalid phone number. Only numbers are allowed.";
-      isValid = false;
-    }
 
+    // console.log(billingData.phone_number)
+    // if (!billingData.phone_number || !/^\d{1}-\d{3}-\d{4}$/.test(billingData.phone_number)) {
+    //   newErrors.phone_number = "Invalid phone number. Format should be 1-XXX-XXXX.";
+    //   isValid = false;
+    // }
     setErrors(newErrors);
     return isValid;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setLoading(true);
     if (!validateFields()) {
+      setLoading(false);
       return;
     }
-    console.log("Shipping Data:", billingData);
+    const { phone_number: newPhone, phone_code, email, address, productItems, city, ...extractedData } = billingData
+    let phone_number = 0 + phone_code.split('+')[1] + newPhone.split('-').join("")
+
+    let date = Date.now();
+
+
+    const proceedPayment = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/proceedPayment`, {
+      data:billingData,
+      amount: billingData.totalAmount,
+      shipmentFee
+      
+    },
+    
+  );
+  setPaymentProcess(false);
+  console.log(proceedPayment, "proceedPayment")
+
+  if(proceedPayment.status === 201){
+    let redirect_url = `https://uae.paymob.com/unifiedcheckout/?publicKey=${process.env.NEXT_PUBLIC_PAYMOB_PUBLIC_KEY}&clientSecret=${proceedPayment.data.data.client_secret}`;
+    
+
+    if(window.innerWidth < 768){
+      window.location.href =redirect_url
+      setPaymentProcess(false);
+      return 
+    }
+    else {
+      setPaymentKey(redirect_url)
+      setPaymentProcess(true);
+      
+      
+    }
+  }
+
+
+
+    // const authResponse = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/authenticate`);
+    // const token = authResponse.data.token;
+    // console.log(token, "token")
+
+
+    // const orderResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/createOrder`, { token, amount: billingData.totalAmount });
+    // const orderId = orderResponse.data.orderId;
+
+    // console.log(orderId, "orderId")
+
+
+    // const paymentKeyResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/recordSale`, {
+    //   token, orderId: orderId, ...extractedData,
+    //   date, shipmentFee, phone_number: phone_number, email, address, products: productItems, state: city, city: city,
+    //   street: '-',
+    //   floor: '-',
+    //   shipping_method: 'Courier',
+    //   building: "-",
+    //   apartment: "-",
+    // },
+    // );
+
+    // console.log(paymentKeyResponse, "paymentKeyResponse")
+
+    // const paymentKey = paymentKeyResponse.data.paymentKey;
+
+    // window.location.href = `${process.env.NEXT_PUBLIC_PAYMOD_BASE_URL}/iframes/${process.env.NEXT_PUBLIC_PAYMOB_IFRAME_ID}?payment_token=${paymentKey}`;
+
+
   };
   const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
+    setBillingData((prevData) => ({
+      ...prevData,
+      phone_code: value,
+    }));
   };
 
   return (
     <>
-      <Overlay title="show_details"/>
-
+      <Overlay title="show_details" />
+{
+paymentProcess ? (
+  <div className=" flex items-center">
+    <iframe
+      id="paymobIframe"
+      className="h-[60vh] sm:h-[80vh] md:h-[90vh] lg:h-[100vh] xl:h-[105vh]"
+      style={{
+        width: '100%',
+        display: paymentProcess ? 'block' : 'none',
+        border: 'none',
+        flexGrow: 1,
+      }}
+      scrolling="no"
+      src={paymentkey}
+    ></iframe>
+  </div>
+) :
       <Container className=" mt-10 md:mt-20 py-2 px-4">
+        <button className="flex gap-3 items-center my-2" onClick={() => router.push('/cart')}>
+
+          <svg className={`${"fill-black"}`} width="30" height="30" viewBox="0 0 55 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M54.6404 14.3224H4.87739L17.3712 1.82617L15.7027 0.157654L0.360352 15.5024L15.7004 30.8424L17.3689 29.1739L4.87739 16.6824H54.6404V14.3224Z" />
+          </svg>
+          Back</button>
+
         <div className="flex flex-wrap md:flex-nowrap gap-4">
           <div className="border border-gray py-2 px-4 w-full md:w-7/12">
             <p className="text-16 md:text-22 font-semibold md:tracking-[2px]">
@@ -239,21 +327,21 @@ const CheckOut: React.FC = () => {
               <div className="col-span-12 md:col-span-6">
                 <div className="flex flex-col text-lightdark">
                   <CheckoutInput
-                    label="Full Name"
+                    label="First Name"
                     type="text"
-                    placeholder="e.g. John"
+
                     name="name"
                     id="checkoutFullName"
-                    value={billingData.name}
+                    value={billingData.first_name}
                     onChange={(e) =>
                       setBillingData({
                         ...billingData,
-                        name: e.target.value,
+                        first_name: e.target.value,
                       })
                     }
                   />
-                  {errors.name && (
-                    <p className="text-red text-sm">{errors.name}</p>
+                  {errors.first_name && (
+                    <p className="text-red text-sm">{errors.first_name}</p>
                   )}
                 </div>
               </div>
@@ -262,18 +350,19 @@ const CheckOut: React.FC = () => {
                   <CheckoutInput
                     label="Last name"
                     type="text"
-                    name="name"
+                    name="last_name"
                     id="checkoutFullName"
-                    value={billingData.name}
+
+                    value={billingData.last_name}
                     onChange={(e) =>
                       setBillingData({
                         ...billingData,
-                        name: e.target.value,
+                        last_name: e.target.value,
                       })
                     }
                   />
-                  {errors.name && (
-                    <p className="text-red text-sm">{errors.name}</p>
+                  {errors.last_name && (
+                    <p className="text-red text-sm">{errors.last_name}</p>
                   )}
                 </div>
               </div>
@@ -283,7 +372,7 @@ const CheckOut: React.FC = () => {
                     label="Email"
                     type="email"
                     name="email"
-                    placeholder="e.g.mail@example.com"
+
                     id="checkoutEmail"
                     value={billingData.email}
                     onChange={(e) =>
@@ -301,14 +390,14 @@ const CheckOut: React.FC = () => {
               <div className="col-span-5 md:col-span-3">
                 <div className="flex flex-col">
                   <label htmlFor="checkout" className="text-lightdark">
-                    Phone Code <span className="text-red">*</span>
+                    Country Code <span className="text-red">*</span>
                   </label>
 
                   <Select
                     showSearch
                     className="w-full h-11 border outline-none shipment text-20 mt-5 border-[#D2D2D2]"
                     placeholder="Select your state"
-                    defaultValue={"+971"}
+                    defaultValue="+971"
                     onChange={handleChange}
                   >
                     {CountryCode.map((option, index) => (
@@ -322,9 +411,9 @@ const CheckOut: React.FC = () => {
               <div className="col-span-7 md:col-span-9">
                 <div className="flex flex-col">
                   <CheckoutInput
-                    label="Phone Number*"
+                    label="Phone Number"
                     type="tel"
-                    placeholder="e.g.92123456"
+
                     name="number"
                     id="checkout"
                     value={billingData.phone_number}
@@ -335,27 +424,55 @@ const CheckOut: React.FC = () => {
                   )}
                 </div>
               </div>
+
+
               <div className="col-span-12">
-                <div className="flex flex-col">
-                  <label htmlFor="checkout" className="text-lightdark">
-                    City <span className="text-red">*</span>
-                  </label>
-                  <Select
-                    showSearch
-                    className="w-full h-11 border outline-none shipment text-20 mt-5 border-[#D2D2D2]"
-                    defaultValue="Select your state"
-                    value={billingData.state}
-                    onChange={handleSelectChange}
-                  >
-                    {selectoption.map((option, index) => (
-                      <Option value={option.title} key={index}>
-                        {option.title}
-                      </Option>
-                    ))}
-                  </Select>
+                <div className="flex justify-between gap-5 ">
+
+                  <div className="flex flex-col w-1/2">
+                    <label htmlFor="checkout" className="text-lightdark">
+                      Country <span className="text-red">*</span>
+                    </label>
+                    <Select
+                      showSearch
+                      className="w-full h-11 border outline-none shipment text-20 mt-5 border-[#D2D2D2]"
+                      defaultValue="Select your state"
+                      value={billingData.country}
+                      onChange={handleSelectChangeCountey}
+                    >
+                      {countSelectoption.map((option, index) => (
+                        <Option value={option.title} key={index}>
+                          {option.title}
+                        </Option>
+                      ))}
+                    </Select>
+
+                  </div>
+
+                  <div className="flex flex-col w-1/2">
+                    <label htmlFor="checkout" className="text-lightdark">
+                      City <span className="text-red">*</span>
+                    </label>
+                    <Select
+                      showSearch
+                      className="w-full h-11 border outline-none shipment text-20 mt-5 border-[#D2D2D2]"
+                      defaultValue="Select your state"
+                      value={billingData.city}
+                      onChange={handleSelectChange}
+                    >
+                      {selectoption.map((option, index) => (
+                        <Option value={option.title} key={index}>
+                          {option.title}
+                        </Option>
+                      ))}
+                    </Select>
+
+                  </div>
+
                 </div>
               </div>
-              <div className="col-span-12">
+
+              {/* <div className="col-span-12">
                 <div className="flex flex-col text-lightdark">
                   <label htmlFor="checkoutstreetAddress">
                     Area <span className="text-red">*</span>
@@ -378,7 +495,8 @@ const CheckOut: React.FC = () => {
                     <p className="text-red text-sm">{errors.address}</p>
                   )}
                 </div>
-              </div>
+              </div> */}
+
               <div className="col-span-12">
                 <div className="flex flex-col text-lightdark">
                   <label htmlFor="checkoutstreetAddress">
@@ -388,7 +506,7 @@ const CheckOut: React.FC = () => {
                     type="text"
                     className="border-[#D2D2D2] border shadow-0 mt-5 outline-0 p-2"
                     name="streetAddress"
-                    placeholder="e.g. 11 Kaiyuan Road"
+
                     id="checkoutstreetAddress"
                     value={billingData.address}
                     onChange={(e) =>
@@ -403,7 +521,8 @@ const CheckOut: React.FC = () => {
                   )}
                 </div>
               </div>
-              <div className="col-span-12">
+
+              {/* <div className="col-span-12">
                 <div className="flex flex-col text-lightdark">
                   <label htmlFor="checkoutstreetAddress">
                     Apartment#/Hotel Room/Villa (optional){" "}
@@ -427,7 +546,7 @@ const CheckOut: React.FC = () => {
                     <p className="text-red text-sm">{errors.address}</p>
                   )}
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="w-full md:w-5/12">
@@ -454,11 +573,13 @@ const CheckOut: React.FC = () => {
                 setSubtotal={setSubtotal}
                 shipmentFee={shipmentFee}
                 onClick={handleSubmit}
+                isLoading={loading}
               />
             </div>
           </div>
         </div>
       </Container>
+}
     </>
   );
 };

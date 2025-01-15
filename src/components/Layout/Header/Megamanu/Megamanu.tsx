@@ -56,7 +56,7 @@ const Megamanu: React.FC<MegamanuProps> = ({
                   height={200}
                   className="mx-auto w-full"
                 />
-                <h3 className="link-underline after:bg-[#FF914E] font-semibold text-12 lg:text-[10px] 2xl:text-16" >
+                <h3 className="link-underline after:bg-primary font-semibold text-12 lg:text-[10px] 2xl:text-16" >
                   {item.name}
                 </h3>
               </div>

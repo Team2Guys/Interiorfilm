@@ -1,120 +1,67 @@
-"use client"
-import Container from 'components/Layout/Container/Container';
-import Overlay from 'components/widgets/Overlay/Overlay';
-import React, { useState, useEffect } from 'react';
-import { Tabs } from 'antd';
-import ProductSlider from 'components/Carousel/ProductSlider/ProductSlider';
+import type { Metadata } from 'next'
+import Product from './Product';
 import axios from 'axios';
-import Loader from 'components/Loader/Loader';
-import Review from 'components/Common/Review';
+import { headers } from "next/headers";
 import { generateSlug } from 'data/Data';
-import PRODUCTS_TYPES from 'types/interfaces';
-import ProductDetails from 'components/product_detail/ProductDetails';
-import Accordion from 'components/widgets/Accordion';
-import { ProductSkeleton } from 'components/Skeleton-loading/ProductSkelton';
 
-const { TabPane } = Tabs;
 
-const Product = ({ params }: { params: { productname: string } }) => {
-  const parsedProduct = params.productname ? params.productname : null;
-  const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
-  const [productDetail, setProductDetail] = useState<PRODUCTS_TYPES | null>(null);
-  const [productsLoading, setProductsLoading] = useState<boolean>(false);
-  const [relatedProducts, setRelatedProducts] = useState<PRODUCTS_TYPES[]>([]);
-  const [relatedProductsLoading, setRelatedProductsLoading] = useState<boolean>(false);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [categoryName, setCategoryName] = useState<string | undefined>();
 
-  const productHandler = async () => {
-    try {
-      setProductsLoading(true);
+type Props = {
+  params: { productname: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
 
-      const categoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
-      const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
+export async function generateMetadata({ params, searchParams }: Props,): Promise<Metadata> {
 
-      const [categoryResponse, productResponse] = await Promise.all([categoryRequest, productRequest]);
+  const headersList = headers();
+  const domain = headersList.get('x-forwarded-host') || headersList.get('host') || ''; // Fallback to host if x-forwarded-host is not present
+  const protocol = headersList.get('x-forwarded-proto') || 'https'; // Default to https if no protocol is set
+  const pathname = headersList.get('x-invoke-path') || '/'; // Fallback to root if no path
 
-      setProducts(productResponse.data.products);
-      setCategories(categoryResponse.data);
+  const fullUrl = `${protocol}://${domain}${pathname}`;
+  console.log(fullUrl, "fullurl")
 
-      if (parsedProduct && productResponse.data.products.length > 0) {
-        const foundProduct = productResponse.data.products.find((item: any) => generateSlug(item.name) === parsedProduct);
+  const categoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+  const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
+  const [categoryResponse, productResponse] = await Promise.all([categoryRequest, productRequest]);
 
-        if (foundProduct) {
-          setProductDetail(foundProduct);
-          fetchRelatedProducts(foundProduct.category);
+  const { products } = productResponse.data
 
-          const foundCategory = categoryResponse.data.find((cat: any) => cat._id === foundProduct.category);
-          setCategoryName(foundCategory ? foundCategory.name : null);
-        }
-      }
-    } catch (error) {
-      console.log('Error fetching data:', error);
-    } finally {
-      setProductsLoading(false);
-    }
-  };
+  let Product = products?.find((item: any) => generateSlug(item.name) == params.productname)
 
-  const fetchRelatedProducts = async (categoryId: string) => {
-    try {
-      setRelatedProductsLoading(true);
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
-      const relatedProducts = response.data.products.filter(
-        (product: any) => product.category === categoryId && generateSlug(product.name) !== parsedProduct
-      );
-      setRelatedProducts(relatedProducts.slice(0, 4));
-    } catch (error) {
-      console.log('Error fetching related products:', error);
-    } finally {
-      setRelatedProductsLoading(false);
-    }
-  };
+  let ImageUrl = Product?.posterImageUrl?.imageUrl || "interiorfilm";
+  let alt = Product?.Images_Alt_Text || "Interior films";
 
-  useEffect(() => {
-    productHandler();
-  }, [parsedProduct]);
+  let NewImage = [
+    {
+      url: ImageUrl, 
+      alt: alt}
+  ];
+  let title = Product && Product.Meta_Title ? Product.Meta_Title : "Interior Films"
+  let description = Product && Product.description ? Product.description : "Welcome to Interior films"
+let url = `${fullUrl}/product/${params.productname}`
+  return {
+    title: title,
+    description: description,
+    openGraph: {
+      title: title,
+      description: description,
+      url: url,
+      images: NewImage,
+    },
+    alternates: {
+      canonical:Product && Product.Canonical_Tag? Product.Canonical_Tag : url , 
+    },
+  }
+}
 
-  // Filter products for the current category
-  const filteredProducts = products.filter(product => product.category === productDetail?.category);
-
+const Page = ({ params }: { params: { productname: string } }) => {
+  
   return (
     <>
-      <Overlay title='Product Detail' />
-      
-      {
-        productsLoading ? (
-         <ProductSkeleton/>
-        ) : productDetail ? (
-          <>
-            <ProductDetails
-              productDetail={productDetail}
-              categoryName={categoryName}
-            />
-
-
-          </>
-        ) : null
-      }
-      {/* {
-        productsLoading ? (
-          <div className='flex justify-center items-center h-[20vh]'><Loader /></div>
-        ) : productDetail ? (
-          <>
-            <div className='block lg:hidden mt-5'>
-              <Accordion detail={productDetail.modelDetails} />
-            </div>
-          </>
-        ) : null
-      } */}
-
-      <Container className='mt-20'>
-        <div className='flex justify-center items-center'>
-          <h1 className='w-fit text-center text-lg border-b-2 border-[#FF914E] md:text-3xl mb-5 up tracking-[0.5rem]'>FEATURE PRODUCT</h1>
-        </div>
-        <ProductSlider loading={productsLoading} products={filteredProducts} />
-      </Container>
+      <Product productname={params.productname} />
     </>
   );
 };
 
-export default Product;
+export default Page;

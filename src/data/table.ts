@@ -40,8 +40,8 @@ export const Orderdata = [
   export const ordercolumns = [
     {
       title: 'OrderId',
-      dataIndex: 'OrderId',
-      key: 'OrderId',
+      dataIndex: 'order_id',
+      key: 'order_id',
       width: '10%',
     },
     {
@@ -51,57 +51,24 @@ export const Orderdata = [
       width: '20%',
     },
     {
-      title: 'Email',
-      dataIndex: 'usermail',
-      key: 'usermail',
+      title: 'Count',
+      dataIndex: 'count',
+      key: 'count',
       width: '20%',
     },
     {
-      title: 'Phone Number',
-      dataIndex: 'name',
-      key: 'name',
-      width: '10%',
-    },
-    {
-      title: 'Address',
-      dataIndex: 'userAddress',
-      key: 'userAddress',
-      width: '20%',
-    },
-    // {
-    //   title: 'Payment Status',
-    //   dataIndex: 'PhoneNumber',
-    //   key: 'PhoneNumber',
-    //   width: '20%',
-    // },
-    {
-      title: 'Amount',
+      title: 'Total Price',
       dataIndex: 'totalPrice',
       key: 'totalPrice',
       width: '20%',
     },
-    // {
-    //   title: 'Transaction ID',
-    //   dataIndex: 'PhoneNumber',
-    //   key: 'PhoneNumber',
-    //   width: '20%',
-    // },
     {
-      title: 'Payment Date',
+
+      title: 'Date',
       dataIndex: 'date',
       key: 'date',
       width: '20%',
     },
-    // {
-    //   title: 'View Products',
-    //   dataIndex: 'PhoneNumber',
-    //   key: 'PhoneNumber',
-    //   width: '20%',
-    // },
-    // {
-    //   title: 'Create Delivery',
-    //   dataIndex: 'PhoneNumber',
-    //   key: 'PhoneNumber',
-    //   width: '20%',
-    // },
+
+
   ];

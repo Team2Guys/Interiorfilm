@@ -62,8 +62,9 @@ export interface USRPROPS {
 
   export interface IMAGE_INTERFACE {
     public_id?: string;
-    imageUrl?: string;
+    imageUrl?: any;
     name?: string;
+    altText?:string;
     imageIndex?:number;
   }
 
@@ -80,7 +81,7 @@ export interface USRPROPS {
     name: string;
     description: string;
     salePrice: string;
-    purchasePrice: string;
+    purchasePrice?: string;
     discountPrice: string;
     starRating: string;
     reviews: string;
@@ -91,6 +92,15 @@ export interface USRPROPS {
     code:string
     totalStockQuantity: number;
     variantStockQuantities: { variant: string; quantity: number }[]
+    Meta_Title: string
+   Meta_Description: string
+   URL: string
+   Canonical_Tag: string
+   Images_Alt_Text: string
+  // Og_title : string
+  // Og_description: string
+  // Og_Image: string
+  // OgUrl:string
   
   }
 
@@ -135,14 +145,15 @@ interface PRODUCTS_TYPES {
   totalStockQuantity?: any;
   sizes?: sizes[];
   isFeatured?: any;
-  price?: number;
+  price?: any;
   count?: any;
   length?: any;
   totalPrice?:any;
   customOrder?: number;
   createdAt?:any;
   updatedAt?: any;
-  code?:string
+  code?:string;
+  categoryName?: string;
 }
 
 export default PRODUCTS_TYPES;
@@ -175,15 +186,15 @@ export interface Categories_Types {
 
 
 export interface product {
-  posterImageUrl: { public_id: string, imageUrl: string };
-  hoverImageUrl: { public_id: string, imageUrl: string };
+  posterImageUrl: { public_id: string, imageUrl: string, altText:string};
+  hoverImageUrl: { public_id: string, imageUrl: string, altText:string };
   _id: string;
   name: string;
   description: string;
   salePrice: number;
   purchasePrice: number;
   category: string;
-  imageUrl: Array<{ public_id: string, imageUrl: string, _id: string }>;
+  imageUrl: Array<{ public_id: string, imageUrl: string, _id: string, altText:string }>;
   discountPrice: number;
   colors: Array<{ colorName: string, _id: string }>;
   modelDetails: Array<{ name: string, detail: string, _id: string }>;
@@ -197,6 +208,16 @@ export interface product {
   price: string;
   __v: number;
   code: string
+
+  Meta_Title: string
+Meta_Description: string
+URL: string
+Canonical_Tag: string
+Images_Alt_Text: string
+Og_title : string
+Og_description: string
+Og_Image: string
+OgUrl:string
 }
 
 export interface ITabbyList {

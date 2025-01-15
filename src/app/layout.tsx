@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Montserrat } from 'next/font/google';
 import Script from 'next/script'
 import "./globals.css";
 import PathnameWrapper from "components/PathnameWrapper";
 import { ToastContainer } from 'react-toastify';
 import { Providers } from "./Providers";
-import "jsvectormap/dist/css/jsvectormap.css";
-import "flatpickr/dist/flatpickr.min.css";
 import "../css/style.css";
-import { GoogleTagManager } from '@next/third-parties/google';
-
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
+const font = Montserrat({
+  weight: '500',
+  subsets: ['latin'],
+});
 const futuraCyrillic = localFont({
   src: [
     {
       path: '../../public/fonts/FuturaCyrillicBold.ttf',
-      weight: '700', 
+      weight: '700',
       style: 'normal',
     },
     {
@@ -51,6 +53,7 @@ export const metadata: Metadata = {
   description: "Welcome to Interior Films",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -61,11 +64,12 @@ export default function RootLayout({
     <Providers>
 
       <html lang="en">
-        <GoogleTagManager gtmId="GTM-PFNKXKTR" />
+        {/* <GoogleTagManager gtmId="GTM-PFNKXKTR" /> */}
         <head>
           <GoogleTagManager gtmId="GTM-PFNKXKTR" />
-
-          <script
+          <GoogleAnalytics gaId="G-FEG0017QNF" />
+          <Script
+            id="google-tag-manager"
             dangerouslySetInnerHTML={{
               __html: `
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -76,9 +80,58 @@ export default function RootLayout({
             `,
             }}
           />
+          <Script
+            id="clarity-script"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+            (function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "or4hq4vi39");
+          `,
+            }}
+          />
+          <Script
+            id="google-analytics"
+            src="https://www.googletagmanager.com/gtag/js?id=G-FEG0017QNF"
+            strategy="afterInteractive"
+          />
+          <Script
+            id="gtag-init"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-FEG0017QNF');
+              `,
+            }}
+          />
+          <Script
+            id="google-analytics"
+            src="https://www.googletagmanager.com/gtag/js?id=G-FEG0017QNF"
+            strategy="afterInteractive"
+          />
+          <Script
+            id="gtag-init"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-FEG0017QNF');
+              `,
+            }}
+          />
+
+
         </head>
 
-        <body className={futuraCyrillic.className}>
+        <body className={font.className} >
           <GoogleTagManager gtmId="GTM-PFNKXKTR" />
           <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PFNKXKTR"
             height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>

@@ -1,4 +1,3 @@
-//@ts-nocheck
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
@@ -8,8 +7,9 @@ import { usePathname } from "next/navigation";
 import { message, Modal } from "antd";
 import Button from "../Button/Button";
 import PRODUCTS_TYPES from "types/interfaces";
-import SelectList from "../Select/Select";
-import ProductSelect from "../Select/ProductSelect";
+import Link from "next/link";
+import { generateSlug } from "data/Data";
+import { FiMinus, FiPlus } from "react-icons/fi";
 
 interface TableProps {
   cartdata?: PRODUCTS_TYPES[];
@@ -31,16 +31,38 @@ const Table: React.FC<TableProps> = ({
   const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
-    // Calculate the total number of items
+    const handleCartChange = () => {
+      ProductHandler();
+      console.log("function called", "sub");
+    };
+
+    window.addEventListener("cartChanged", handleCartChange);
+    window.addEventListener("WishlistChanged", handleCartChange);
+
+    return () => {
+      window.removeEventListener("cartChanged", handleCartChange);
+      window.removeEventListener("WishlistChanged", handleCartChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    ProductHandler();
+  }, [pathName, changeId]);
+
+  useEffect(() => {
     const total = data.reduce((sum, product) => sum + (product.count || 1), 0);
     setTotalItems(total);
   }, [data]);
+
   const ProductHandler = () => {
     const Products = localStorage.getItem(
       pathName === "/wishlist" ? "wishlist" : "cart"
     );
     if (Products && JSON.parse(Products).length > 0) {
-      const items = JSON.parse(Products || "[]");
+      const items: any = JSON.parse(Products || "[]");
+      console.log(items, "sub");
+      onCartChange(items);
+
       setData(items);
       setCounts(
         items.reduce((acc: any, item: any, index: number) => {
@@ -61,10 +83,6 @@ const Table: React.FC<TableProps> = ({
       setSubtotal(sub);
     }
   };
-
-  useEffect(() => {
-    ProductHandler();
-  }, [pathName, changeId]);
 
   const increment = (index: number) => {
     const newLengths = { ...lengths };
@@ -142,20 +160,17 @@ const Table: React.FC<TableProps> = ({
   const addToCart = (product: PRODUCTS_TYPES, index: number) => {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-    // Find index of existing product with the same ID and length
     const existingIndex = cart.findIndex(
-      (item) => item.id === product.id && item.length === lengths[index]
+      (item: any) => item.id === product._id && item.length === lengths[index]
     );
 
     if (existingIndex !== -1) {
-      // Update quantity and totalPrice if product with the same ID and length already exists
       cart[existingIndex].count += counts[index] || 1;
       cart[existingIndex].totalPrice =
         (product.discountPrice || product.price) *
         cart[existingIndex].count *
         lengths[index];
     } else {
-      // Add new item to cart if no matching product found
       const totalPrice =
         (product.discountPrice || product.price) *
         (counts[index] || 1) *
@@ -168,18 +183,9 @@ const Table: React.FC<TableProps> = ({
       });
     }
 
-    // Ensure all totalPrices are numbers
-    cart.forEach((item) => {
-      item.totalPrice = Number(item.totalPrice) || 0;
-    });
-
-    // Update local storage
     localStorage.setItem("cart", JSON.stringify(cart));
-
-    // Remove item from wishlist if added to cart
+    setData(cart);
     removeItemFromCart(index);
-
-    // Trigger cart changed event
     window.dispatchEvent(new Event("cartChanged"));
   };
 
@@ -226,84 +232,108 @@ const Table: React.FC<TableProps> = ({
 
   return (
     <>
-      <div className=" border border-gray py-3">
-        <div className="text-end p-2">
-          <p className="text-16">
-            *total <span className="text-primary">{totalItems}</span> Items
-          </p>
+      <div className=" hidden md:block   ">
+        <div className="flex justify-between items-center text-18 font-semibold px-4 bg-white text-black py-3 ">
+          <div
+            className={` ${
+              pathName === "/wishlist"
+                ? "md:w-4/12 lg:w-6/12"
+                : "md:w-4/12 lg:w-6/12"
+            } `}
+          >
+            <p>Items</p>
+          </div>
+          <div
+            className={` ${
+              pathName === "/wishlist"
+                ? "md:w-2/12 lg:w-1/12"
+                : "md:w-2/12 lg:w-2/12 "
+            } `}
+          >
+            <p>Price</p>
+          </div>
+          <div
+            className={` ${
+              pathName === "/wishlist"
+                ? "md:w-2/12 lg:w-2/12"
+                : "md:w-1/12 lg:w-2/12 text-center"
+            } `}
+          >
+            <p>QTY(M)</p>
+          </div>
+
+          <div
+            className={`${
+              pathName === "/wishlist"
+                ? "md:w-2/12 lg:w-1/12"
+                : "text-center md:w-2/12 lg:w-2/12"
+            } `}
+          >
+            <p>Total</p>
+          </div>
+
+          {pathName === "/wishlist" ? (
+            <p className="md:w-2/12 lg:w-2/12">
+              <div className=" text-end text-14  font-semibold text-white whitespace-nowrap ">
+                Action
+              </div>
+            </p>
+          ) : null}
         </div>
-        <div className=" hidden lg:block   ">
-          <div className="">
-            <div className="flex justify-between items-center text-22 font-bold px-6">
-              <p className="w-3/12">Products</p>
-              <p className="w-3/12">Price</p>
-              <p className={`w-3/12 ${pathName === "/wishlist" ?"":"text-end"} `}>Quantity (M) </p>
-             {pathName === "/wishlist" ? (
-             <p className="w-3/12">
-                        <div
-                          scope="col"
-                          className="px-6 py-3 text-end text-23 xl:text-[30px] font-medium text-dark whitespace-nowrap "
-                        >
-                          Action
-                        </div>
-             </p>
-                      ) : null}
-            </div>
 
-            <div className="max-h-[529px] overflow-y-auto table-scrollbar px-4 mx-2">
-
-            
-            {data.map((product, index) => {
-              const options = lengthOptions(product.totalStockQuantity || 0);
-              return (
-                <div className="flex justify-between items-center mt-5" key={index}>
-                  <div className="flex gap-1 w-3/12 ">
-                    <div className="relative">
-                      <Image
-                        className="w-[184px] h-[124px] "
-                        width={100}
-                        height={100}
-                        src={product.imageUrl[0]?.imageUrl || product.imageUrl}
-                        alt="Product"
-                      />
-                      <div className="absolute -top-2 -right-2">
-                        <div
-                          onClick={() => showDeleteConfirm(index)}
-                          className="bg-white shadow h-5 w-5 flex justify-center items-center rounded-full cursor-pointer hover:text-white hover:bg-primary"
-                        >
-                          <IoCloseSharp size={18} />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="p-2 w-full ">
+        <div className="max-h-[529px] overflow-auto table-scrollbar ">
+          {data.map((product, index) => {
+            const options = lengthOptions(product.totalStockQuantity || 0);
+            return (
+              <div
+                className="flex justify-between items-center mt-5"
+                key={index}
+              >
+                <div
+                  className={`  ${
+                    pathName === "/wishlist"
+                      ? "md:w-4/12 lg:w-6/12"
+                      : "md:w-4/12 lg:w-6/12"
+                  }`}
+                >
+                  <Link
+                    href={`/product/${generateSlug(product.name)}`}
+                    className="w-fit flex gap-1"
+                  >
+                    <Image
+                      className="w-[184px] h-[130px] object-cover "
+                      width={300}
+                      height={300}
+                      src={product.posterImageUrl || product.imageUrl}
+                      alt="Product"
+                    />
+                    <div className="p-2 w-fit">
                       <h1 className="text-sm md:text-base font-bold">
-                        <span>{counts[index] || 1}* </span>
                         {typeof product.name === "string" ? product.name : ""}
                       </h1>
                       <div>
-                        <p className="text-[#B9BBBF]">{product.product_code}</p>
+                        <p className="text-[#B9BBBF]">{product.code}</p>
 
-                        <p className="text-16 font-semibold text-[#535353]">
-                          Width: <span>1.22cm (28inch)</span>
-                        </p>
+                        {product.categoryName !== "Accessories" && (
+                          <p className="font-medium text-16 text-text">
+                            Roll width is{" "}
+                            <span className="text-black">122cm</span>
+                          </p>
+                        )}
+
                       </div>
-                      {/* <div className="flex gap-2 items-center w-full">
-                                <ProductSelect
-                                  className="w-[70%] h-10 border outline-none shipment text-20"
-                                  onChange={(value) =>
-                                    handleLengthChange(index, value)
-                                  }
-                                  options={options}
-                                  defaultValue={`1.22cm x ${
-                                    lengths[index] || product.length
-                                  } METERS`}
-                                />
-                              </div> */}
                     </div>
-                  </div>
+                  </Link>
+                </div>
 
-              <div  className=" w-3/12 ">
-              <p>
+                <div
+                  className={` ${
+                    pathName === "/wishlist"
+                      ? "md:w-2/12 lg:w-1/12"
+                      : " md:w-2/12 lg:w-2/12"
+                  } `}
+                >
+                  <p>
                     AED
                     <span>
                       {pathName === "/wishlist"
@@ -315,9 +345,19 @@ const Table: React.FC<TableProps> = ({
                         : product.price}
                     </span>
                   </p>
-              </div>
-                  <div className="w-3/12">
-                  <div className={`flex w-28 h-12  justify-between px-2  bg-[#F0F0F0]  ${pathName === "/wishlist" ?"":"ml-auto"}`}>
+                </div>
+                <div
+                  className={` ${
+                    pathName === "/wishlist"
+                      ? "md:w-2/12 lg:w-2/12"
+                      : " md:w-2/12 lg:w-2/12 lg:flex lg:justify-center"
+                  } `}
+                >
+                  <div
+                    className={`flex w-28 h-12  justify-between px-2  bg-[#F0F0F0]  ${
+                      pathName === "/wishlist" ? "" : ""
+                    }`}
+                  >
                     <div
                       onClick={() => decrement(index)}
                       className="  flex justify-center items-center"
@@ -342,111 +382,15 @@ const Table: React.FC<TableProps> = ({
                       <RxPlus size={20} className="cursor-pointer" />
                     </div>
                   </div>
-                  </div>
-                 
-                  {pathName === "/wishlist" ? (
-                  <div className="w-3/12 text-end">
-                    <Button
-                      onClick={() => addToCart(product, index)}
-                      className="px-4 rounded-md"
-                      title={"Add To Cart"}
-                    />
-                  </div>
-                  ) : null}
-                 
                 </div>
-              );
-            })}
-          </div>
-          </div>
-        </div>
-      </div>
 
-      {data.map((product, index) => {
-        const options = lengthOptions(product.totalStockQuantity || 0);
-        return (
-          <div
-            className="p-2 rounded-md mt-5 bg-white shadow block lg:hidden"
-            key={index}
-          >
-            <div className="space-y-2">
-              <div className="flex gap-3">
-                <div className="relative">
-                  <div className="bg-gray p-1 rounded-md">
-                    <Image
-                      className="w-20 h-20 bg-contain"
-                      width={80}
-                      height={80}
-                      src={product.imageUrl[0]?.imageUrl || product.imageUrl}
-                      alt="Product"
-                    />
-                  </div>
-                  <div className="absolute -top-2 -right-2">
-                    <div
-                      onClick={() => showDeleteConfirm(index)}
-                      className="bg-white shadow h-5 w-5 rounded-full cursor-pointer flex justify-center items-center"
-                    >
-                      <IoCloseSharp size={14} />
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-1 w-8/12">
-                  <h1 className="text-14 font-medium">
-                    <span>{counts[index] || 1}</span>* (
-                    {typeof product.name === "string" ? product.name : ""} )
-                  </h1>
-                  <p className="text-14 font-medium">
-                    AED{" "}
-                    <span>
-                      {pathName === "/wishlist"
-                        ? product.discountPrice
-                          ? product.discountPrice * (counts[index] || 1)
-                          : product.price * (counts[index] || 1)
-                        : product.discountPrice
-                        ? product.discountPrice
-                        : product.price}
-                    </span>
-                  </p>
-                  <div>
-                    <p className="text-12 font-medium">
-                      Width: <span>1.22cm (28inch)</span>
-                    </p>
-                  </div>
-                  <div className="flex border w-20 h-8 justify-between px-2 ">
-                    <div
-                      onClick={() => decrement(index)}
-                      className="  flex justify-center items-center"
-                    >
-                      <RxMinus size={14} />
-                    </div>
-                    <div className="  flex justify-center items-center">
-                      <input
-                        className="h-7 w-8 text-center"
-                        type="text"
-                        min={1}
-                        max={100}
-                        disabled
-                        value={lengths[index] || product.length}
-                        onChange={(e) => handleChange(index, e)}
-                      />
-                    </div>
-                    <div
-                      onClick={() => increment(index)}
-                      className="  flex justify-center items-center"
-                    >
-                      <RxPlus size={14} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex gap-2 items-center">
-                {pathName === "/wishlist" ? (
-                  <Button
-                    onClick={() => addToCart(product, index)}
-                    className="px-4 rounded-md"
-                    title={"Add To Cart"}
-                  />
-                ) : (
+                <div
+                  className={` flex gap-4 ${
+                    pathName === "/wishlist"
+                      ? "md:w-2/12 lg:w-1/12 "
+                      : "justify-center lg:w-2/12 "
+                  } `}
+                >
                   <p>
                     AED
                     <span>
@@ -459,10 +403,133 @@ const Table: React.FC<TableProps> = ({
                           (lengths[index] || product.length)}
                     </span>
                   </p>
-                )}
+                  <div
+                    onClick={() => showDeleteConfirm(index)}
+                    className="bg-black/20 shadow h-5 w-5  flex justify-center items-center rounded-full cursor-pointer hover:text-white hover:bg-primary"
+                  >
+                    <IoCloseSharp size={18} />
+                  </div>
+                </div>
+
+                {pathName === "/wishlist" ? (
+                  <div className="w-2/12 text-end">
+                    <Button
+                      onClick={() => addToCart(product, index)}
+                      className="px-4 rounded-md"
+                      title={"Add To Cart"}
+                    />
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {data.map((product, index) => {
+        const options = lengthOptions(product.totalStockQuantity || 0);
+        return (
+          <>
+            <div
+              className="border border-gray space-y-2 flex flex-col text-center justify-center items-center py-5  md:hidden"
+              key={index}
+            >
+              <Image
+                className="w-32 h-32 bg-contain rounded-md"
+                width={80}
+                height={80}
+                src={product.posterImageUrl || product.imageUrl}
+                alt="Product"
+              />
+              <div className="text-center">
+                <h1 className="text-14 font-semibold">
+                  {typeof product.name === "string" ? product.name : ""}
+                </h1>
+                <p className="text-13 font-semibold">
+                  <span>Roll width is 122cm</span>
+                </p>
+              </div>
+              <div className="text-center">
+                <p className="font-semibold">Unit Price:</p>
+                <p className="">
+                  AED{" "}
+                  <span>
+                    {pathName === "/wishlist"
+                      ? product.discountPrice
+                        ? product.discountPrice * (counts[index] || 1)
+                        : product.price * (counts[index] || 1)
+                      : product.discountPrice
+                      ? product.discountPrice
+                      : product.price}
+                  </span>
+                </p>
+              </div>
+              <div className="flex flex-col items-center space-y-2">
+                <p className="font-semibold">QTY(M):</p>
+                <div className="flex  justify-between px-2 ">
+                  <div
+                    onClick={() => decrement(index)}
+                    className=" h-6 w-6 flex justify-center items-center border rounded-full bg-primary text-white"
+                  >
+                    <FiMinus size={14} />
+                  </div>
+                  <div className="  flex justify-center items-center">
+                    <input
+                      className="h-6 w-6 text-center"
+                      type="text"
+                      min={1}
+                      max={100}
+                      disabled
+                      value={lengths[index] || product.length}
+                      onChange={(e) => handleChange(index, e)}
+                    />
+                  </div>
+                  <div
+                    onClick={() => increment(index)}
+                    className="  h-6 w-6 flex justify-center items-center border rounded-full bg-primary text-white"
+                  >
+                    <FiPlus size={14} />
+                  </div>
+                </div>
+                <div>
+                  <p className="font-semibold">Total:</p>
+                  <p>
+                    AED
+                    <span>
+                      {product.discountPrice
+                        ? product.discountPrice *
+                          (counts[index] || 1) *
+                          (lengths[index] || product.length)
+                        : product.price *
+                          (counts[index] || 1) *
+                          (lengths[index] || product.length)}
+                    </span>
+                  </p>
+                </div>
+                <div className="flex flex-col items-center space-y-2">
+                  <p className="font-semibold">Remove:</p>
+                  <div
+                    onClick={() => showDeleteConfirm(index)}
+                    className="bg-primary text-white shadow h-5 w-5 rounded-full cursor-pointer flex justify-center items-center"
+                  >
+                    <IoCloseSharp size={14} />
+                  </div>
+                </div>
+
+                <div>
+                  {pathName === "/wishlist" ? (
+                    <Button
+                      onClick={() => addToCart(product, index)}
+                      className="px-4 rounded-md"
+                      title={"Add To Cart"}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          </>
         );
       })}
     </>

@@ -5,4 +5,6 @@ export type Product = {
   price: number;
   sold: number;
   profit: number;
+  totalPrice:number;
+  shippment_Fee: string;
 };
