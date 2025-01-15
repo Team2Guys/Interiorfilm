@@ -1,5 +1,6 @@
 'use client';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -16,9 +17,23 @@ const CategorySlider: React.FC = () => {
   const swiperRef = useRef<any>(null);
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-
-  const updateSwiperNavigation = useCallback(() => {
-    if (swiperRef.current && swiperRef.current.swiper) {
+  const [error, setError] = useState<string | null>(null);
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+      setCategories(response.data);
+      setLoading(false);
+    } catch (err) {
+      console.error("Error fetching categories:", err);
+      setError('Failed to fetch categories.');
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+  useEffect(() => {
+    if (swiperRef.current?.swiper) {
       const swiper = swiperRef.current.swiper;
       swiper.params.navigation.prevEl = prevRef.current;
       swiper.params.navigation.nextEl = nextRef.current;
@@ -27,66 +42,51 @@ const CategorySlider: React.FC = () => {
       swiper.navigation.update();
     }
   }, [categories]);
-
-  useEffect(() => {
-    updateSwiperNavigation();
-  }, [updateSwiperNavigation]);
-
-  const fetchCategories = async () => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
-      const data = await response.json();
-      setCategories(data);
-    } catch (err) {
-      console.error("Error fetching categories:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-
   const handleMouseEnter = () => {
-    if (swiperRef.current && swiperRef.current.swiper) {
+    if (swiperRef.current?.swiper) {
       swiperRef.current.swiper.autoplay.stop();
     }
   };
 
   const handleMouseLeave = () => {
-    if (swiperRef.current && swiperRef.current.swiper) {
+    if (swiperRef.current?.swiper) {
       swiperRef.current.swiper.autoplay.start();
     }
   };
-  
-  return (
-<>
 
-    {loading ? (
-      <div className="flex flex-wrap items-center justify-center gap-5 md:flex-wrap mt-5">
-        {Array.from({ length: 3 }).map((_, index) => (
-          <div key={index} className="w-[20%] min-w-[250px] flex gap-2">
-            <SkeletonLoading
-              avatar={{ shape: 'square', size: 250 }}
-              title={false}
-              paragraph={{ rows: 3 }}
-              style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
-              className="w-full"
-              active={true}
-            />
+  if (error) {
+    return <div className="text-center text-red-500">{error}</div>;
+  }
+
+  return (
+    <>
+    {
+      loading ? 
+      <div className="flex gap-6 px-4 lg:px-6 xl:px-10 mt-10 w-full max-md:overflow-x-scroll">
+      {Array.from({ length: 3 }).map((_, index) => (
+        <div key={index} className="animate-pulse max-sm:flex-shrink-0 flex flex-col gap-4 w-full md:w-[45%] lg:w-4/12 bg-[gray] rounded-lg overflow-hidden shadow-md">
+          <div className="bg-[gray] h-48 md:h-[300px] xl:h-[460px] w-full"></div>
+          <div className="flex flex-col gap-2 px-4 pb-4">
+            <div className="bg-[gray] h-6 w-3/4 rounded-md"></div>
+            <div className="bg-[gray] h-6 w-1/2 rounded-md"></div>
+            <div className="bg-[gray] h-10 w-1/3 rounded-md"></div>
           </div>
-        ))}
-      </div>
-    ) : (
-      <div className="px-0 md:px-4 flex items-center relative mt-10"  onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}>
+        </div>
+      ))}
+    </div>
+      :
+      <div
+      className="px-0 md:px-4 flex items-center relative mt-10"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <button
         ref={prevRef}
         className="relative left-4 bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
       >
         <MdArrowBackIos size={20} />
       </button>
+
       <Swiper
         ref={swiperRef}
         autoplay={{
@@ -113,38 +113,29 @@ const CategorySlider: React.FC = () => {
           },
         }}
         modules={[Autoplay, Navigation]}
-        navigation={{
-          prevEl: prevRef.current,
-          nextEl: nextRef.current,
-        }}
         className="mySwiper custom"
       >
-        {
-          categories && categories.map((category) => (
-            <SwiperSlide key={category._id}>
-              <CategoryCard
-                name={category.name}
-                posterImageUrl={category.posterImageUrl.imageUrl}
-                categoryId={generateSlug(category.name)}
-                nameClass={category.name === 'Accessories' ? 'text-black' : 'text-white'}
-              />
-            </SwiperSlide>
-          ))
-        }
+        {categories.map((category: any) => (
+          <SwiperSlide key={category._id}>
+            <CategoryCard
+              name={category.name}
+              posterImageUrl={category.posterImageUrl.imageUrl}
+              categoryId={generateSlug(category.name)}
+              nameClass={category.name === 'Accessories' ? 'text-black' : 'text-white'}
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
+
       <button
         ref={nextRef}
-        className="relative right-4  bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
+        className="relative right-4 bg-white text-black h-8 w-8 shadow-lg p-2 flex justify-center items-center z-10 hover:scale-110 transition duration-300 ease-in-out"
       >
         <MdArrowForwardIos size={20} />
       </button>
     </div>
-    )}
-
-   
-
-</>
-  
+    }
+    </>
   );
 };
 
