@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { BsInstagram, BsTelephone } from "react-icons/bs";
-import { FaFacebook, FaPinterest } from "react-icons/fa";
+import { FaPinterest } from "react-icons/fa";
 import { TfiEmail } from "react-icons/tfi";
 import { TiSocialFacebook } from "react-icons/ti";
 import Container from "../Container/Container";

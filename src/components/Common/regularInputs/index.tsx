@@ -15,7 +15,7 @@ interface InputProps {
   className?: string;
 }
 
-const Input: React.FC<InputProps> = ({ type, name, placeholder, label, onChange, value, id, checked, className }): JSX.Element => {
+const Input: React.FC<InputProps> = ({ type, name, placeholder, label, onChange, value, id, checked, className })=> {
   const [inputType, setInputType] = useState(type);
 
   const togglePasswordVisibility = () => {

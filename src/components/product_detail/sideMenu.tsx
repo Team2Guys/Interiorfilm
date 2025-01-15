@@ -2,7 +2,6 @@
 import TextwithIcon from 'components/TextwithIcon';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { FaStar } from 'react-icons/fa';
 import { TextWithIconData } from 'data/sideMenuData';
 import showToast from 'components/Toaster/Toaster';
 import axios from 'axios';
@@ -134,7 +133,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ setAdsonProducts }) => {
 
       <div className="w-full">
         <div className="text-start mb-4">
-          <h2 className="font-semibold text-sm"><span className="font-bold">You May Also Need</span></h2>
+          <h2 className="font-semibold text-sm"><span className="font-bold">You May Also Need</span></h2>
         </div>
         <div className="space-y-4">
         {products.slice(0, 3).map((product) => (

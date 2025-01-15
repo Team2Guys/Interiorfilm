@@ -17,7 +17,6 @@ const HomeFeature = () => {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
         );
-        console.log(response.data.products,"responseresponseresponseresponse")
         setAllProducts(response.data.products);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -44,8 +43,6 @@ const HomeFeature = () => {
         FEATURE PRODUCTS
       </h1>
       <hr className="2xsm:w-80 mx-auto border-primary h-1" />
-
-      {/* Pass filtered products to the ProductSlider */}
       <ProductSlider loading={loading} products={filteredProducts} />
     </Container>
   );

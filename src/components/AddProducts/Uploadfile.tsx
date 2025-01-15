@@ -11,9 +11,7 @@ interface PROPS {
 
 const UploadFile = ({setImagesUrl,handleFileChange,handleDrop}:PROPS) => {
   const [isDraggableArea, setIsDraggableArea] = useState<boolean>(false);
-  
-
-
+  console.log(setImagesUrl,"setImagesUrl")
   return (
     <div 
       className={`border-2 ${isDraggableArea ? 'border-sky-500' : 'border-gray-300'}`}

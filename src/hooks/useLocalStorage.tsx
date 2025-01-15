@@ -28,7 +28,7 @@ function useLocalStorage(key: string,initialValue: any): any {
         typeof storedValue === "function"
           ? storedValue(storedValue)
           : storedValue;
-
+    console.log(valueToStore,"valueToStore")
     } catch (error) {
       // A more advanced implementation would handle the error case
       console.log(error);

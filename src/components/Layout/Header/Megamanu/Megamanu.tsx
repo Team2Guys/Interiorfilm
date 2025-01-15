@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import PRODUCTS_TYPES, { Categories_Types } from "types/interfaces";
+import { Categories_Types } from "types/interfaces";
 import { Skeleton } from "antd";
 import { generateSlug } from "data/Data";
 
 interface MegamanuProps {
   Categories: Categories_Types[];
-  products: PRODUCTS_TYPES[];
   loading?: boolean;
   onProductClick: () => void;
 }
 
 const Megamanu: React.FC<MegamanuProps> = ({
   Categories,
-
-  products,
   onProductClick,
   loading,
 }) => {

@@ -1,12 +1,8 @@
 "use client";
 import CheckoutData from "components/widgets/checkoutData/CheckOutData";
 import React, { useEffect, useState } from "react";
-import { Checkbox, Button, Select } from "antd";
-import Link from "next/link";
-import Product from "app/product/[productname]/page";
+import { Select } from "antd";
 import PRODUCTS_TYPES from "types/interfaces";
-import { number } from "yup";
-import { IoCloseSharp } from "react-icons/io5";
 import Container from "components/Layout/Container/Container";
 import CheckoutInput from "./checkout-input";
 import { CountryCode } from "data/Data";
@@ -14,25 +10,16 @@ import { FiTag } from "react-icons/fi";
 import Overlay from 'components/widgets/Overlay/Overlay'
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import showToast from "components/Toaster/Toaster";
 
 
 const CheckOut: React.FC = () => {
   const [cartItems, setCartItems] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
-  const [shippingCharges, setShippingCharges] = useState(0);
-  const [total, setTotal] = useState(0);
   const [shipmentFee, setShipmentFee] = useState<number | string>(0);
-  const [isChecked, setIsChecked] = useState(true);
   const router = useRouter()
   const [paymentProcess, setPaymentProcess] = useState(false);
   const [paymentkey, setPaymentKey] = useState('');
   const [loading, setLoading] = useState(false);
-
-
-  const handleCheckboxChange = (e: any) => {
-    setIsChecked(e.target.checked);
-  };
   const [billingData, setBillingData] = useState({
     first_name: "",
     last_name: '',
@@ -46,7 +33,6 @@ const CheckOut: React.FC = () => {
     totalAmount: 0,
     phone_code: "+971"
   });
-  const [showOrderNote, setShowOrderNote] = useState(false);
   const [errors, setErrors] = useState({
     first_name: "",
     last_name: "",
@@ -137,15 +123,8 @@ const CheckOut: React.FC = () => {
       return acc + price * item.count * item.length;
     }, 0);
     setSubtotal(sub);
-    const shipping = sub < 100 ? 30 : 0;
-    setShippingCharges(shipping);
-    setTotal(sub + shipping);
   };
 
-  const handleCartChange = (updatedCart: any) => {
-    setCartItems(updatedCart);
-    calculateTotals(updatedCart);
-  };
 
   const handleSelectChange = (value: string) => {
     setBillingData({ ...billingData, city: value });
@@ -154,37 +133,6 @@ const CheckOut: React.FC = () => {
   const handleSelectChangeCountey = (value: string) => {
     setBillingData({ ...billingData, country: value });
   };
-
-
-  // const addAddressField = (value: any) => {
-  //   setBillingData({
-  //     ...billingData,additionalAddressFields: [
-  //       ...billingData.additionalAddressFields,
-  //       { id: Date.now().toString(), address: "" },
-  //     ],
-  //   });
-  // };
-
-  // const handleAddressFieldChange = (id: string, value: string) => {
-  //   setBillingData({
-  //     ...billingData,
-  //     additionalAddressFields: billingData.additionalAddressFields.map(
-  //       (field) => (field.id === id ? { ...field, address: value } : field)
-  //     ),
-  //   });
-  // };
-
-  // const handleAddressFieldDelete = (id: string) => {
-  //   setBillingData({
-  //     ...billingData,
-  //     additionalAddressFields: billingData.additionalAddressFields.filter(
-  //       (field) => field.id !== id
-  //     ),
-  //   });
-  // };
-
-
-
   const validateFields = () => {
     let isValid = true;
     const newErrors = { first_name: "", email: "", phone_number: "", address: "", last_name: "" };
@@ -201,12 +149,6 @@ const CheckOut: React.FC = () => {
       newErrors.email = "Invalid email address.";
       isValid = false;
     }
-
-    // console.log(billingData.phone_number)
-    // if (!billingData.phone_number || !/^\d{1}-\d{3}-\d{4}$/.test(billingData.phone_number)) {
-    //   newErrors.phone_number = "Invalid phone number. Format should be 1-XXX-XXXX.";
-    //   isValid = false;
-    // }
     setErrors(newErrors);
     return isValid;
   };
@@ -218,11 +160,7 @@ const CheckOut: React.FC = () => {
       return;
     }
     const { phone_number: newPhone, phone_code, email, address, productItems, city, ...extractedData } = billingData
-    let phone_number = 0 + phone_code.split('+')[1] + newPhone.split('-').join("")
-
-    let date = Date.now();
-
-
+    console.log(newPhone, phone_code, email, address, productItems, city,extractedData,"extractedData")
     const proceedPayment = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/proceedPayment`, {
       data:billingData,
       amount: billingData.totalAmount,
@@ -250,38 +188,6 @@ const CheckOut: React.FC = () => {
       
     }
   }
-
-
-
-    // const authResponse = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/authenticate`);
-    // const token = authResponse.data.token;
-    // console.log(token, "token")
-
-
-    // const orderResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/createOrder`, { token, amount: billingData.totalAmount });
-    // const orderId = orderResponse.data.orderId;
-
-    // console.log(orderId, "orderId")
-
-
-    // const paymentKeyResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/recordSale`, {
-    //   token, orderId: orderId, ...extractedData,
-    //   date, shipmentFee, phone_number: phone_number, email, address, products: productItems, state: city, city: city,
-    //   street: '-',
-    //   floor: '-',
-    //   shipping_method: 'Courier',
-    //   building: "-",
-    //   apartment: "-",
-    // },
-    // );
-
-    // console.log(paymentKeyResponse, "paymentKeyResponse")
-
-    // const paymentKey = paymentKeyResponse.data.paymentKey;
-
-    // window.location.href = `${process.env.NEXT_PUBLIC_PAYMOD_BASE_URL}/iframes/${process.env.NEXT_PUBLIC_PAYMOB_IFRAME_ID}?payment_token=${paymentKey}`;
-
-
   };
   const handleChange = (value: string) => {
     setBillingData((prevData) => ({
@@ -471,32 +377,6 @@ paymentProcess ? (
 
                 </div>
               </div>
-
-              {/* <div className="col-span-12">
-                <div className="flex flex-col text-lightdark">
-                  <label htmlFor="checkoutstreetAddress">
-                    Area <span className="text-red">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="border-[#D2D2D2] border shadow-0 mt-5 outline-0 p-2"
-                    name="streetAddress"
-                    placeholder="e.g. Al Ghubrah Ash-Shamaliyyah"
-                    id="checkoutstreetAddress"
-                    value={billingData.address}
-                    onChange={(e) =>
-                      setBillingData({
-                        ...billingData,
-                        address: e.target.value,
-                      })
-                    }
-                  />
-                  {errors.address && (
-                    <p className="text-red text-sm">{errors.address}</p>
-                  )}
-                </div>
-              </div> */}
-
               <div className="col-span-12">
                 <div className="flex flex-col text-lightdark">
                   <label htmlFor="checkoutstreetAddress">
@@ -521,32 +401,6 @@ paymentProcess ? (
                   )}
                 </div>
               </div>
-
-              {/* <div className="col-span-12">
-                <div className="flex flex-col text-lightdark">
-                  <label htmlFor="checkoutstreetAddress">
-                    Apartment#/Hotel Room/Villa (optional){" "}
-                    <span className="text-red">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="border-[#D2D2D2] border shadow-0 mt-5 outline-0 p-2"
-                    name="streetAddress"
-                    placeholder="e.g. Apartment 2101"
-                    id="checkoutstreetAddress"
-                    value={billingData.address}
-                    onChange={(e) =>
-                      setBillingData({
-                        ...billingData,
-                        address: e.target.value,
-                      })
-                    }
-                  />
-                  {errors.address && (
-                    <p className="text-red text-sm">{errors.address}</p>
-                  )}
-                </div>
-              </div> */}
             </div>
           </div>
           <div className="w-full md:w-5/12">
@@ -567,8 +421,6 @@ paymentProcess ? (
             </div>
             <div className="mt-20 border border-gray ">
               <CheckoutData
-                cartdata={cartItems}
-                onCartChange={handleCartChange}
                 subtotal={subtotal}
                 setSubtotal={setSubtotal}
                 shipmentFee={shipmentFee}

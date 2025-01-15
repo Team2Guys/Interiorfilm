@@ -1,8 +1,7 @@
 import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
-import { Drawer, message, Modal } from "antd";
+import {message } from "antd";
 import Image from "next/image";
 import { IoCloseSharp } from "react-icons/io5";
-import ProductSelect from "components/ui/Select/ProductSelect";
 import Link from "next/link";
 import PRODUCTS_TYPES from "types/interfaces";
 import { IoIosClose } from "react-icons/io";
@@ -11,14 +10,12 @@ import { RxMinus, RxPlus } from "react-icons/rx";
 interface CartDrawerProps {
   open: boolean;
   onClose: () => void;
-  OpenDrawer?: React.ReactNode;
   onMouseEnter?: MouseEventHandler<HTMLDivElement>;
   onMouseLeave?: MouseEventHandler<HTMLDivElement>;
 }
 const CartDrawer: React.FC<CartDrawerProps> = ({
   open,
   onClose,
-  OpenDrawer,
   onMouseEnter,
   onMouseLeave
 }) => {
@@ -144,6 +141,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
       const count = counts[index] || item.count;
       return acc + price * length * count;
     }, 0);
+    console.log(sub)
     const sub2 = items.reduce((acc: number, item: any) => { return acc + item.totalPrice; }, 0);
     setSubtotal(sub2);
   };

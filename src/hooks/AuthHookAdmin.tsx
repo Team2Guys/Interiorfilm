@@ -7,7 +7,6 @@ import { useAppDispatch } from "components/Others/HelperRedux";
 import { loggedInAdminAction } from '../redux/slices/AdminsSlice';
 import axios from 'axios'
 import Cookies from 'js-cookie';
-import { useAppSelector } from "components/Others/HelperRedux";
 
 
 function ProtectedRoute(WrappedComponent: any) {

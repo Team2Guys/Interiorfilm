@@ -6,27 +6,17 @@ import masterCard from './../../public/images/payment-icons/Mastercard-Logo.png'
 import viseCard from './../../public/images/payment-icons/visacard-logo.png'
 import gPayCard from './../../public/images/payment-icons/googlepay-logo.png'
 import applypayCard from './../../public/images/payment-icons/apply-pay-black.png'
-import amexLogo from './../../public/images/payment-icons/american-express.png'
 import tabbyLogo from "./../../public/images/payment-icons/tabby-logo.png";
 import tamaraLogo from "./../../public/images/payment-icons/tamara-logo.png";
 import icon1 from './../../public/images/enviroment-icon/icon1.png'
 import icon2 from './../../public/images/enviroment-icon/icon2.png'
 import icon3 from './../../public/images/enviroment-icon/icon3.png'
-import icon4 from './../../public/images/enviroment-icon/icon4.png'
 import icon5 from './../../public/images/enviroment-icon/icon5.png'
 import icon6 from './../../public/images/enviroment-icon/icon6.png'
 import oil from './../../public/images/enviroment-icon/oil.png'
 import icon7 from './../../public/images/enviroment-icon/icon7.png'
 import icon8 from './../../public/images/enviroment-icon/icon8.png'
 import icon9 from './../../public/images/enviroment-icon/icon9.png'
-
-import { SlDiamond } from 'react-icons/sl'
-import { CgBulb } from 'react-icons/cg'
-import { GiPayMoney } from 'react-icons/gi'
-import { RiCustomerService2Line } from 'react-icons/ri'
-
-
-
 import { StaticImageData } from 'next/image';
 import { ACCORDINTYPES } from 'types/faq';
 
@@ -132,7 +122,7 @@ export const loginInitialValue = {
 };
 
 
-
+/* eslint-disable */
 export const generateSlug = (text: string) => {
   return text
     .toString()
@@ -142,7 +132,7 @@ export const generateSlug = (text: string) => {
     .replace(/[^\w\-]+/g, '')
     .replace(/\-\-+/g, '-');
 };
-
+/* eslint-enable */
 export const AddProductvalidationSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, 'Too Short!')

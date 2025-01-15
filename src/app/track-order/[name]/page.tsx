@@ -1,5 +1,4 @@
 'use client'
-import Container from "components/Layout/Container/Container";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -8,21 +7,6 @@ import axios from "axios";
 import { Product } from "types/product"; // Make sure the Product type is correctly defined
 import Overlay from "components/widgets/Overlay/Overlay";
 
-interface OrderDetail {
-  shippingAddress: string;
-  billingAddress: string;
-  shippingMethod: string;
-  paymentMethod: string;
-}
-
-const orderDetails: OrderDetail[] = [
-  {
-    shippingAddress: "123 Dummy St, City, Country",
-    billingAddress: "456 Fake Rd, City, Country",
-    shippingMethod: "Standard Shipping",
-    paymentMethod: "Credit Card",
-  },
-];
 
 const ViewOrder = () => {
   const [products, setProducts] = useState<any[]>([]);

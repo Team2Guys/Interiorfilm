@@ -26,7 +26,7 @@ const About = () => {
         <p className='text-12 sm:text-14 md:text-17'>Our range is now a stunning collection of over 150 designs, from elegant marble vinyl and sleek metallic finishes to rich textured fabrics and luxurious leather vinyl looks. </p>
         <p className='text-12 sm:text-14 md:text-17'>Our customers are the most important element of our journey to success. Hand in hand, we have transformed 1000’s of homes in Dubai and the wider UAE areas and hope to continue this for many years to come. We would love to hear any feedback from you about our products or services. Listening is what we are best at and has played a massive role in taking us to where are today. </p>
         </div>
-        <Offer Offers={offers} />
+        <Offer OffersData={offers} />
     </Container>
       {/* <Testimonial/> */}
     </>

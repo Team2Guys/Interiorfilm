@@ -1,18 +1,18 @@
 
 "use client"
 import Container from 'components/Layout/Container/Container';
-import { useState, ReactNode } from 'react';
+import React, { useState, ReactNode } from 'react';
 
 interface Tab  {
   label: string;
   content: ReactNode;
-};
+}
 
 interface TabsProps  {
   tabs: Tab[];
   className?: string;
   classContent?: string;
-};
+}
 
 const Tabs: React.FC<TabsProps> = ({ tabs,className,classContent }) => {
   const [activeTab, setActiveTab] = useState(0);

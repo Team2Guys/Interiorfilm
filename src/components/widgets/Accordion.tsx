@@ -1,14 +1,10 @@
 import ProductCollapse from "components/ui/Collapse/productCollpase";
 import { productAccordion } from "data/ProductAccordion";
 import React, { useState } from "react";
-import PRODUCTS_TYPES from "types/interfaces";
 
-// interface accordionprop {
-//   detail: PRODUCTS_TYPES[] | any;
-// }
+
 
 const Accordion = () =>
-  // { detail }: any
   {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
 

@@ -261,7 +261,6 @@ const config: Config = {
         'client': "url('/images/Clints.png')",
         'overlay': "url('/images/overlay.png')",
         'Offer': "url('/images/back.png')",
-        'hero': "url('/images/herohead.jpg')",
         'search': "url('/images/Searchimage/main.png')",
       },
       content: {

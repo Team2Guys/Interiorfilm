@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import { BRAND } from "types/types";
 import Image from "next/image";
 import DropdownDefault from "../Dropdowns/DropdownDefault";
