@@ -7,7 +7,6 @@ interface SideBySideMagnifierProps {
   zoomScale?: number;
   inPlace?: boolean; 
   alignTop?: boolean;
-  fillSpace?: boolean;
   altText?: string;
 }
 
@@ -18,7 +17,6 @@ const SideBySideMagnifier: React.FC<SideBySideMagnifierProps> = ({
   zoomScale = 2,
   inPlace = false,
   alignTop = false,
-  fillSpace = false,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 });

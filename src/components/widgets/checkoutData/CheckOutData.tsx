@@ -1,59 +1,39 @@
 import Image from "next/image";
 import React, { Fragment, SetStateAction, useEffect, useState } from "react";
-import { Modal } from "antd";
 import { usePathname } from "next/navigation";
 import PRODUCTS_TYPES from "types/interfaces";
 import { IoIosClose } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import Link from "next/link";
-import PaymentMethod from "components/Layout/PaymentMethod";
 import { FooterPaymentMethods } from "data/Data";
-import Button from "components/Common/Button";
 import Loader from "components/Loader/Loader";
 interface TableProps {
-  cartdata: PRODUCTS_TYPES[];
-  onCartChange: (updatedCart: PRODUCTS_TYPES[]) => void;
   subtotal: number;
   setSubtotal: React.Dispatch<SetStateAction<number>>;
   shipmentFee: number | string;
-  cartItems?: PRODUCTS_TYPES[];
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: any;
   isLoading?: boolean;
 }
 const CheckoutData: React.FC<TableProps> = ({
-  cartdata,
-  onCartChange,
   subtotal,
   setSubtotal,
   shipmentFee,
-  cartItems,
   onClick,
   isLoading
 }) => {
   const pathName = usePathname();
   const [data, setData] = useState<PRODUCTS_TYPES[]>([]);
-  const [counts, setCounts] = useState<{ [key: number]: number }>({});
-
-  const [totalCount, setTotalCount] = useState(0); // New state variable for total count
-  const [changeId, setChangeId] = useState<number | null>(null);
-
+  const [totalCount, setTotalCount] = useState(0);
   const ProductHandler = () => {
     const Products = localStorage.getItem("cart");
     if (Products && JSON.parse(Products).length > 0) {
       const items = JSON.parse(Products || "[]");
       setData(items);
-      const itemCounts = items.reduce((acc: any, item: any, index: number) => {
-        acc[index] = item.count || 1;
-        return acc;
-      }, {});
-      setCounts(itemCounts);
-
       const sub = items.reduce(
         (total: number, item: any) => total + item.totalPrice,
         0
       );
       setSubtotal(sub);
-
       const total = items.reduce(
         (sum: number, item: any) => sum + (item._id || 1),
         0
@@ -63,30 +43,7 @@ const CheckoutData: React.FC<TableProps> = ({
   };
   useEffect(() => {
     ProductHandler();
-  }, [pathName, changeId]);
-
-  const removeItemFromCart = (index: number) => {
-    const updatedData = [...data];
-    updatedData.splice(index, 1);
-    setData(updatedData);
-    localStorage.setItem("cart", JSON.stringify(updatedData));
-    window.dispatchEvent(new Event("cartChanged"));
-    setChangeId(index);
-    onCartChange(updatedData);
-  };
-
-  const showDeleteConfirm = (index: number) => {
-    Modal.confirm({
-      title: "Are you sure you want to delete this item?",
-      content: "This action cannot be undone.",
-      okText: "Yes",
-      okType: "danger",
-      cancelText: "No",
-      onOk() {
-        removeItemFromCart(index);
-      },
-    });
-  };
+  }, [pathName]);
 
   return (
     <div className="bg-transparent ">
@@ -121,8 +78,6 @@ const CheckoutData: React.FC<TableProps> = ({
                   <div>
                     <h1 className="text-16 sm:text-18 font-medium">
                       {product.name}
-                      {/* {counts[index] || 1}X (
-                    {typeof product.name === "string" ? product.name : ""}) */}
                     </h1>
                     <h1 className="text-16 sm:text-18 font-medium text-[#B9BBBF]">
                       {product.code}
@@ -147,18 +102,7 @@ const CheckoutData: React.FC<TableProps> = ({
                     </div>
                   </div>
                 </div>
-                {/* <div className="space-y-1 w-4/12">
-                <p className="float-end text-16 sm:text-18 font-medium">
-                  AED{" "}
-                  <span>
-                    {product.discountPrice
-                      ? product.discountPrice *
-                        (counts[index] || 1) *
-                        product.length
-                      : product.price * (counts[index] || 1) * product.length}
-                  </span>
-                </p>
-              </div> */}
+
               </div>
             </div>
           ))}

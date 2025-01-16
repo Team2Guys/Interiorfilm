@@ -4,14 +4,13 @@ import Overlay from "components/widgets/Overlay/Overlay";
 import React, { useState, useEffect, useRef } from "react";
 import Card from "components/ui/Card/Card";
 import { Select } from "antd";
-import PRODUCTS_TYPES, { product } from "types/interfaces";
+import PRODUCTS_TYPES from "types/interfaces";
 import axios from "axios";
 import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
 import { IoIosSearch } from "react-icons/io";
 import { useRouter, useSearchParams } from "next/navigation";
 import { generateSlug, sortProductsByCode, specificImageIndexByCode, specificProductCodesByCategory } from "data/Data";
 import Image from "next/image";
-import Link from "next/link";
 interface category {
   posterImageUrl: {
     public_id: string;

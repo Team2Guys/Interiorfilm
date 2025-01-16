@@ -4,12 +4,12 @@ import React from 'react';
 interface skeletonProps extends SkeletonProps {
   skeletonType?: string;}
 
-const SkeletonLoading: React.FC<skeletonProps> = ({ avatar, paragraph, round, title, style, active, className, skeletonType }) => {
+const SkeletonLoading: React.FC<skeletonProps> = ({ avatar, paragraph, round, title, style,  className, skeletonType }) => {
   return (
     <>
       {skeletonType === "Image" ? (
 
-        <Skeleton.Image style={{width:"100%"}} className={className}    active={true}  />
+        <Skeleton.Image style={{width:"100%"}} className={className} active={true}  />
       ) : (
         <Skeleton 
           avatar={avatar} 
@@ -17,7 +17,6 @@ const SkeletonLoading: React.FC<skeletonProps> = ({ avatar, paragraph, round, ti
           round={round} 
           title={title} 
           style={style} 
-          active={true} 
           className={className} 
         />
       )}

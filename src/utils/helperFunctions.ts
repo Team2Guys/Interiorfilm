@@ -1,3 +1,4 @@
+import React from "react";
 import axios, { AxiosResponse,AxiosRequestConfig } from "axios";
 import PRODUCTS_TYPES from 'types/interfaces'
 import Cookies from "js-cookie";
@@ -91,6 +92,7 @@ export let getPRODUCTS = async( setTotalProducts:setTotalProducts, setError:setE
   try{
       setLoading(true)
       const { products, totalPages, currentPage,totalProducts }:any = await getPaginatedproducts(pageNumber)
+      console.log(currentPage,"currentPage")
       setTotalProducts(products)
       setTotalPage && setTotalPage(totalPages)
       setTotalProductscount && setTotalProductscount(totalProducts)

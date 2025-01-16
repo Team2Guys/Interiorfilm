@@ -11,9 +11,7 @@ import { useAppDispatch } from "components/Others/HelperRedux";
 import { loggedInAdminAction } from '../../../../redux/slices/AdminsSlice';
 import USRcomponent from 'components/userComponent/userComponent'
 import { IoIosLock, IoMdMail } from "react-icons/io";
-import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";;
 import NoneAuth from 'hooks/None-AuthHook'
-
 import Cookies from 'js-cookie';
 
 
@@ -68,8 +66,6 @@ const DashboardLogin = () => {
       setTimeout(() => {
         router.push('/dashboard')
       }, 1000)
-
-
     } catch (err: any) {
       console.log(err, "err")
       if (err.response && err.response.data && err.response.data.message) {

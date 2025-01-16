@@ -8,7 +8,6 @@ import ProductSlider from "components/Carousel/ProductSlider/ProductSlider";
 import PRODUCTS_TYPES from "types/interfaces";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import { GoLock } from "react-icons/go";
-import { message } from "antd";
 
 const Cart = ({products}: {products: PRODUCTS_TYPES[]}) => {
   const [cartItems, setCartItems] = useState([]);  // Holds the cart items
@@ -56,56 +55,56 @@ const Cart = ({products}: {products: PRODUCTS_TYPES[]}) => {
     };
   }, []);
 
-  const addToCart = (product: PRODUCTS_TYPES, index: number) => {
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const existingIndex = cart.findIndex(
-      (item: any) => item.name === product.name && item.length === product.length
-    );
-    if (existingIndex !== -1) {
-      const updatedProduct = cart[existingIndex];
-      if (updatedProduct.count + 1 > updatedProduct.totalStockQuantity) {
-        message.error(`Cannot add more than ${updatedProduct.totalStockQuantity} units of this product.`);
-        return;
-      }
+  // const addToCart = (product: PRODUCTS_TYPES, index: number) => {
+  //   const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  //   const existingIndex = cart.findIndex(
+  //     (item: any) => item.name === product.name && item.length === product.length
+  //   );
+  //   if (existingIndex !== -1) {
+  //     const updatedProduct = cart[existingIndex];
+  //     if (updatedProduct.count + 1 > updatedProduct.totalStockQuantity) {
+  //       message.error(`Cannot add more than ${updatedProduct.totalStockQuantity} units of this product.`);
+  //       return;
+  //     }
 
-      if (updatedProduct.count + 1 > 100) {
-        message.error("Cannot add more than 100 units of this product.");
-        return;
-      }
-      updatedProduct.count += 1;
-      updatedProduct.totalPrice = updatedProduct.count * (updatedProduct.discountPrice || updatedProduct.price);
-      cart[existingIndex] = updatedProduct;
-      localStorage.setItem("cart", JSON.stringify(cart));
-      setCartItems(cart);
-      calculateTotals(cart);
-      window.dispatchEvent(new Event("cartChanged"));
-      message.success("Product quantity updated in the cart.");
-    } else {
-      // If the product doesn't exist in the cart, add it
-      if (product.count > product.totalStockQuantity) {
-        message.error(`Cannot add more than ${product.totalStockQuantity} units of this product.`);
-        return;
-      }
+  //     if (updatedProduct.count + 1 > 100) {
+  //       message.error("Cannot add more than 100 units of this product.");
+  //       return;
+  //     }
+  //     updatedProduct.count += 1;
+  //     updatedProduct.totalPrice = updatedProduct.count * (updatedProduct.discountPrice || updatedProduct.price);
+  //     cart[existingIndex] = updatedProduct;
+  //     localStorage.setItem("cart", JSON.stringify(cart));
+  //     setCartItems(cart);
+  //     calculateTotals(cart);
+  //     window.dispatchEvent(new Event("cartChanged"));
+  //     message.success("Product quantity updated in the cart.");
+  //   } else {
+  //     // If the product doesn't exist in the cart, add it
+  //     if (product.count > product.totalStockQuantity) {
+  //       message.error(`Cannot add more than ${product.totalStockQuantity} units of this product.`);
+  //       return;
+  //     }
 
-      if (product.count > 100) {
-        message.error("Cannot add more than 100 units.");
-        return;
-      }
+  //     if (product.count > 100) {
+  //       message.error("Cannot add more than 100 units.");
+  //       return;
+  //     }
 
-      const newProduct = {
-        ...product,
-        count: 1, // Initially add 1 unit
-        totalPrice: (product.discountPrice || product.price) * 1, // Total price calculation
-      };
+  //     const newProduct = {
+  //       ...product,
+  //       count: 1, // Initially add 1 unit
+  //       totalPrice: (product.discountPrice || product.price) * 1, // Total price calculation
+  //     };
 
-      cart.push(newProduct);
-      localStorage.setItem("cart", JSON.stringify(cart));
-      setCartItems(cart);
-      calculateTotals(cart);
-      window.dispatchEvent(new Event("cartChanged"));
-      message.success("Product added to the cart.");
-    }
-  };
+  //     cart.push(newProduct);
+  //     localStorage.setItem("cart", JSON.stringify(cart));
+  //     setCartItems(cart);
+  //     calculateTotals(cart);
+  //     window.dispatchEvent(new Event("cartChanged"));
+  //     message.success("Product added to the cart.");
+  //   }
+  // };
 
   // Handle cart changes (e.g., when a product is added, removed, or modified)
   const handleCartChange = (updatedCart: any) => {

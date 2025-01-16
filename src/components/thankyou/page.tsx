@@ -59,7 +59,7 @@ const Thankyou = () => {
     merchant_order_id
   }
   const [payementDetails, setpayementDetails] = useState<PaymentQueryParams>(paymentObject)
-
+  console.log(setpayementDetails,"setpayementDetails")
 
   const dbFunctionHandler = async () => {
 

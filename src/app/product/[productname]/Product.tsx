@@ -14,12 +14,9 @@ const Product = ({ productname }: { productname: string }) => {
   const parsedProduct = productname ? productname : null;
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [productsAdon, setProductsAdon] = useState<PRODUCTS_TYPES[]>([]);
-  const [productDetail, setProductDetail] = useState<PRODUCTS_TYPES | null>(
-    null
-  );
+  const [productDetail, setProductDetail] = useState<PRODUCTS_TYPES | null>(null);
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
   const [categoryName, setCategoryName] = useState<string | undefined>();
-  const [reviews, setReviews] = useState<string[]>([]);
 
   const productHandler = async () => {
     try {
@@ -71,21 +68,23 @@ const Product = ({ productname }: { productname: string }) => {
   useEffect(() => {
     productHandler();
   }, [parsedProduct]);
-  const fetchReviews = async (productId: string) => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`
-      );
-      setReviews(response.data.reviews);
-    } catch (err) {
-      console.log("Failed to fetch reviews:", err);
-    }
-  };
-  useEffect(() => {
-    if (productDetail?._id) {
-      fetchReviews(productDetail?._id);
-    }
-  }, [products]);
+
+
+  // const fetchReviews = async (productId: string) => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`
+  //     );
+  //     setReviews(response.data.reviews);
+  //   } catch (err) {
+  //     console.log("Failed to fetch reviews:", err);
+  //   }
+  // };
+  // useEffect(() => {
+  //   if (productDetail?._id) {
+  //     fetchReviews(productDetail?._id);
+  //   }
+  // }, [products]);
 
   let filteredProducts = products.filter(
     (product) => product.category === productDetail?.category

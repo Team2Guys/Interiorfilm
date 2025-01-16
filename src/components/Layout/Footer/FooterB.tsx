@@ -1,5 +1,4 @@
 import React from 'react'
-import Container from '../Container/Container'
 import paypal from "../../../../public/images/paypal.jpg";
 import visacard from "../../../../public/images/visacard.jpg";
 import mastercard from "../../../../public/images/mastercard.jpg";

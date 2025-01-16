@@ -5,7 +5,6 @@ import Overlay from 'components/widgets/Overlay/Overlay';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import PRODUCTS_TYPES from 'types/interfaces';
-import { message } from 'antd';
 
 const Wishlist = () => {
   const [WishlistItems, setWishlistItems] = useState<PRODUCTS_TYPES[]>([]);

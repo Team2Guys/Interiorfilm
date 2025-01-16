@@ -14,23 +14,18 @@ import Megamanu from "./Megamanu/Megamanu";
 import { generateSlug } from "data/Data";
 import axios from "axios";
 import { useAppSelector } from "components/Others/HelperRedux";
-import Cookies from "js-cookie";
-import { loggedInUserAction } from "../../../redux/slices/userSlice";
-import { useAppDispatch } from "components/Others/HelperRedux";
 import Profile from "components/user_profile/Profile";
 import { Categories_Types } from "types/interfaces";
 import { usePathname } from "next/navigation";
-import PRODUCTS_TYPES, { Category } from "types/interfaces";
+import PRODUCTS_TYPES from "types/interfaces";
 import whatsapp from "../../../../public/images/whatsapp.png";
 import { SlHandbag } from "react-icons/sl";
 import CartDrawer from "components/cart-drawer/cart-drawer";
 
 const Header = () => {
-  const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [activeLink, setActiveLink] = useState<Category | undefined>();
   const [Categories, setCategories] = useState<Categories_Types[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -44,9 +39,6 @@ const Header = () => {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
-  const token = Cookies.get("2guysAdminToken");
-  const superAdminToken = Cookies.get("superAdminToken");
-  let finalToken = token ? token : superAdminToken;
 
   useEffect(() => {
     const productHandler = async () => {
@@ -65,7 +57,6 @@ const Header = () => {
         ]);
         setCategories(categoryResponse.data);
         setProducts(productResponse.data.products);
-        setActiveLink(categoryResponse.data[0]);
       } catch (err) {
         console.log(err, "err");
       } finally {
@@ -77,23 +68,6 @@ const Header = () => {
   }, []);
 
 
-
-  const AddminProfileTriggerHandler = async (token: string) => {
-    try {
-      if (!finalToken) return null;
-      let user: any = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/getuserHandler`,
-        {
-          headers: {
-            token: finalToken,
-          },
-        }
-      );
-      dispatch(loggedInUserAction(user.data.user));
-    } catch (err: any) {
-      console.log(err, "err");
-    }
-  };
   const handleVisibleChange = (visible: boolean) => {
     setVisible(visible);
   };
@@ -281,7 +255,7 @@ const Header = () => {
           //  onVisibleChange={handleVisibleChange}
            open={visible}
            onOpenChange={handleVisibleChange}
-           content={<Megamanu  Categories={Categories} products={products} loading={loading} onProductClick={closePopover} />}
+           content={<Megamanu  Categories={Categories} loading={loading} onProductClick={closePopover} />}
            title=""
           >
             <span onClick={() => router.push("/categories")}>
@@ -400,7 +374,7 @@ const Header = () => {
                         title={"Category"}
                         content={
                           <>
-                          <Megamanu  Categories={Categories} products={products} loading={loading} onProductClick={CategoryHandlerclose} />
+                          <Megamanu  Categories={Categories} loading={loading} onProductClick={CategoryHandlerclose} />
                             {/* <MobileMenu
                               onClick={CategoryHandlerclose}
                               Categories={Categories}

@@ -19,7 +19,7 @@ export default function Home() {
       <SearchProduct />
       <PDF/>
       <HomeFeature />
-      <Offer Offers={offers} />
+      <Offer OffersData={offers} />
     </>
   );
 }

@@ -6,7 +6,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
-import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading';
 import { Autoplay, Navigation } from 'swiper/modules';
 import CategoryCard from './card';
 import { generateSlug } from 'data/Data';
