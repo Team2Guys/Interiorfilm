@@ -19,8 +19,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
+
       - name: Set environment variables
-        run:  echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }}" >> $GITHUB_ENV 
+        run: echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }}" >> $GITHUB_ENV
+
+      # Debug the environment variable
+      - name: Debug environment variable
+        run: echo $NEXT_PUBLIC_API_URL
 
       - name: Install Dependencies
         run: npm install
