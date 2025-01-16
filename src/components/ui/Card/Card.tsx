@@ -135,10 +135,22 @@ console.log(error,selectedValue,"error")
 
   const handleAddToCart = (product: any) => {
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    const Total_length = existingCart.reduce((accum: any, value: any) => {
+      if (value.id == product.id) {
+        return (accum += value.length)
+      }
+    }, 0)
+
+        if (Total_length >= product.totalStockQuantity) {
+          message.error("Cannot add to cart. Exceeds available stock!");
+          return;
+        }
+
     const existingItemIndex = existingCart.findIndex(
       (item: any) => item.id === product._id
     );
-  console.log(categoryName,"categoryNamecategoryName")
+
     if (existingItemIndex !== -1) {
       const existingItem = existingCart[existingItemIndex];
       if (existingItem.length >= 100) {
