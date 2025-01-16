@@ -177,7 +177,7 @@ const Table: React.FC<TableProps> = ({
 
     localStorage.setItem("cart", JSON.stringify(cart));
     setData(cart);
-    // removeItemFromCart(index);
+    removeItemFromCart(index);
     window.dispatchEvent(new Event("cartChanged"));
   };
 
