@@ -74,7 +74,8 @@ export default function ProductDetails({
         })
       )
       : [];
-  console.log(adsonProducts, setQuantity)
+
+
   const fetchReviews = async (productId: string) => {
     try {
       const response = await axios.get(
@@ -100,15 +101,20 @@ export default function ProductDetails({
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
 
     const Total_length = existingCart.reduce((accum: any, value: any) => {
+
       if (value.id == product.id) {
+        
         return (accum += value.length)
       }
     }, 0)
 
     if (Total_length >= product.totalStockQuantity) {
+
       message.error("Cannot add to cart. Exceeds available stock!");
+
       return;
     }
+
     const existingItemIndex = existingCart.findIndex((item: any) => item.id === product._id);
 
     if (existingItemIndex !== -1) {
@@ -160,9 +166,13 @@ export default function ProductDetails({
       existingCart.push(newCartItem);
     }
 
+
     localStorage.setItem("cart", JSON.stringify(existingCart));
+
     message.success("Product added to cart successfully!");
+
     window.dispatchEvent(new Event("cartChanged"));
+
     buynow ? router.push("/checkout") : null
   };
 
