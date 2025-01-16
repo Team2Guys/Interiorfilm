@@ -157,6 +157,8 @@ console.log(error,selectedValue,"error")
     );
 
 
+    
+
     if (existingItemIndex !== -1) {
 
       const existingItem = existingCart[existingItemIndex];
