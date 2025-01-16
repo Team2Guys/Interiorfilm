@@ -54,6 +54,7 @@ export default function ProductDetails({
   const [length, setLength] = useState<number>(1);
   const [adsonProducts, setAdsonProducts] = useState<Product[]>([])
   const router = useRouter();
+  console.log(setQuantity, "setQuantity", adsonProducts)
   const Acessoptions =
     productDetail && productDetail.totalStockQuantity > 0
       ? Array.from(
@@ -103,7 +104,7 @@ export default function ProductDetails({
     const Total_length = existingCart.reduce((accum: any, value: any) => {
 
       if (value.id == product.id) {
-        
+
         return (accum += value.length)
       }
     }, 0)
