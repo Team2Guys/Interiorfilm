@@ -107,6 +107,7 @@ const Cart = ({products}: {products: PRODUCTS_TYPES[]}) => {
   // };
 
   // Handle cart changes (e.g., when a product is added, removed, or modified)
+  
   const handleCartChange = (updatedCart: any) => {
     setCartItems(updatedCart);
     calculateTotals(updatedCart);
