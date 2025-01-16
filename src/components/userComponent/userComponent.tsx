@@ -1,6 +1,5 @@
 "use client";
-import React, { useState } from "react";
-import Image from "next/image";
+import React from "react";
 import Button from "components/Common/Button";
 import Link from "next/link";
 import Loader from "components/Loader/Loader";
@@ -10,7 +9,6 @@ import { IoArrowBackSharp } from "react-icons/io5";
 import { usePathname, useRouter } from "next/navigation";
 import Container from "components/Layout/Container/Container";
 import { Select } from "antd";
-const { Option } = Select;
 
 export default function UserComponent({
   handleSubmit,

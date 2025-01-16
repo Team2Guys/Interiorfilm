@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react'
-import { IconType } from 'react-icons/lib';
 interface IIconText {
   Icon?: ReactNode;
   title: string;

@@ -1,20 +1,17 @@
 "use client";
-import React, { SetStateAction, useState } from "react";
+import React from "react";
 import { MdOutlineCategory } from "react-icons/md";
 
 
 interface PROPS {
   isOptionSelected: boolean
-  setSelectedOption: React.Dispatch<SetStateAction<string>>
-  changeTextColor: Function
   Categories: any[] | undefined
-  selectedOption: string
   name: string
   value: string
   changeHandler: any
 }
 
-const SelectGroupTwo: React.FC<PROPS> = ({ name, value, changeHandler, isOptionSelected, setSelectedOption, changeTextColor, Categories, selectedOption }) => {
+const SelectGroupTwo: React.FC<PROPS> = ({ name, value, changeHandler, isOptionSelected, Categories }) => {
 
 
   return (

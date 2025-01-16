@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import {
   Formik,
@@ -8,7 +7,6 @@ import {
   Form,
   ErrorMessage,
   Field,
-  FormikValues,
   FormikTouched,
 } from "formik";
 
@@ -23,17 +21,14 @@ import axios from "axios";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import Loader from "components/Loader/Loader";
 import Cookies from "js-cookie";
-
 import {
   withoutVariation,
   AddProductvalidationSchema,
   AddproductsinitialValues,
 } from "data/Data";
-import Input from "components/Common/regularInputs";
 
 const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProductValue, setselecteMenu, setEditProduct,
 }) => {
-  const [selectedOption, setSelectedOption] = useState<string>("");
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
   const [imagesUrl, setImagesUrl] = useState<any[]>([]);
   const [posterimageUrl, setposterimageUrl] = useState<any[] | null>((EditInitialValues && EditInitialValues.posterImageUrl) && [EditInitialValues.posterImageUrl]);
@@ -42,12 +37,6 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
   const [productInitialValue, setProductInitialValue] = useState<any | null | undefined>(EditProductValue);
   const [imgError, setError] = useState<string | null | undefined>();
   const [Categories, setCategories] = useState<any[]>();
-  const [VariationOption, setVariationOption] = useState<string>("withoutVariation");
-
-  const handleOptionChange = (e: any) => {
-    console.log(e);
-    setVariationOption(e.target.value);
-  };
   const token = Cookies.get("2guysAdminToken");
   const superAdminToken = Cookies.get("superAdminToken");
   let finalToken = token ? token : superAdminToken;
@@ -60,7 +49,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
   const changeTextColor = () => {
     setIsOptionSelected(true);
   };
-
+console.log(changeTextColor,"changeTextColor")
   useLayoutEffect(() => {
     const CategoryHandler = async () => {
       try {
@@ -75,6 +64,13 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
           hoverImage,
           ...EditInitialProductValues
         } = EditInitialValues as any;
+        console.log( posterImageUrl,
+          imageUrl,
+          _id,
+          createdAt,
+          updatedAt,
+          __v,
+          hoverImage,EditInitialProductValues)
         imageUrl ? setImagesUrl(imageUrl) : null;
         posterImageUrl ? setposterimageUrl([posterImageUrl]) : null;
         console.log(hoverImage, "EditInitialValues.hoverImageUrl")
@@ -430,12 +426,8 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                           <SelectGroupTwo
                             name="category"
                             changeHandler={formik.handleChange}
-
                             value={formik.values.category}
                             Categories={Categories}
-                            selectedOption={selectedOption}
-                            setSelectedOption={setSelectedOption}
-                            changeTextColor={changeTextColor}
                             isOptionSelected={isOptionSelected}
                           />
 
@@ -580,8 +572,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
                     </div>
 
-                    {VariationOption === "withoutVariation" && (
-                      <>
+               
                         {withoutVariation.map((inputField, index) => (
                           <div key={index} className="mb-4">
 
@@ -598,8 +589,6 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                             />
                           </div>
                         ))}
-                      </>
-                    )}
 
                   </div>
 

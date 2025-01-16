@@ -28,7 +28,7 @@ export default function InfoTabs() {
   ];
   
   return (
-    <Container className="mt-10 relative">
+    <Container className="">
       <div className="flex justify-between  text-center overflow-x-scroll md:overflow-hidden  z-10">
         {tabs.map((tab, index) => (
           <button

@@ -37,13 +37,10 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
   const token = Cookies.get("2guysAdminToken");
   const superAdminToken = Cookies.get("superAdminToken");
   let finalToken = token ? token : superAdminToken;
-
   if (!finalToken) {
     return;
   }
-
-
-
+  console.log(setEditCategoryName)
   const onSubmit = async (values: Category, { resetForm }: any) => {
     try {
       setloading(true);

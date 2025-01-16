@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import {  useRouter } from "next/navigation";
 import Loader from "components/Loader/Loader";
 import Cookies from 'js-cookie';
 import axios from "axios";
@@ -15,9 +15,10 @@ function UserprotectedRoute(WrappedComponent: any) {
 
     const AddminProfileTriggerHandler = async (token: string | undefined | null) => {
       try {
-        setLoading(true);
 
         if(!token) return
+        setLoading(token? false : true);
+
         let user: any = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/getuserHandler`, {
           headers: {
             "token": token

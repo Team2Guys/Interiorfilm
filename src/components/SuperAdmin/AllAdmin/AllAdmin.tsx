@@ -4,17 +4,11 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
 import Loader from "components/Loader/Loader";
 import Cookies from 'js-cookie';
-import { FaEdit } from "react-icons/fa";
-
-      const superAdmintoken  = Cookies.get('superAdminToken');
-
 
 function Admins({ setselecteMenu }: any) {
   const [admins, setAdmins] = useState([]);
   const [loading, setloading] = useState<boolean>(false);
   const [delLoading, setDelLoading] = useState<string | null>(null);
-  const [editLoading, setEditLoading] = useState<string | null>(null);
-  const superAdmintoken  = Cookies.get('superAdminToken');
 
 
   useEffect(() => {

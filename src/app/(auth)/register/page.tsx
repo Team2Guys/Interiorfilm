@@ -15,7 +15,7 @@ interface FormData {
   password: string;
   confirmpassword: string;
 }
-const initialFormData =        {
+const initialFormData ={
   fullName: "",
   email: "",
   password: "",
@@ -54,6 +54,7 @@ const Register: React.FC = () => {
       return setError("All fields are rquired");
     setloading(true);
     let { confirmpassword, ...withoutconfirmPassword } = formData;
+    console.log(confirmpassword,"confirmpassword")
     try {
       let user = await axios.post(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/signup`,withoutconfirmPassword);

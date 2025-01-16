@@ -4,27 +4,18 @@ import axios from 'axios';
 import { headers } from "next/headers";
 import { generateSlug } from 'data/Data';
 
-
-
 type Props = {
   params: { productname: string }
-  searchParams: { [key: string]: string | string[] | undefined }
 }
-
-export async function generateMetadata({ params, searchParams }: Props,): Promise<Metadata> {
-
+export async function generateMetadata({ params }: Props,): Promise<Metadata> {
   const headersList = headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || ''; // Fallback to host if x-forwarded-host is not present
   const protocol = headersList.get('x-forwarded-proto') || 'https'; // Default to https if no protocol is set
   const pathname = headersList.get('x-invoke-path') || '/'; // Fallback to root if no path
-
   const fullUrl = `${protocol}://${domain}${pathname}`;
   console.log(fullUrl, "fullurl")
-
-  const categoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
   const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
-  const [categoryResponse, productResponse] = await Promise.all([categoryRequest, productRequest]);
-
+  const [productResponse] = await Promise.all([ productRequest]);
   const { products } = productResponse.data
 
   let Product = products?.find((item: any) => generateSlug(item.name) == params.productname)

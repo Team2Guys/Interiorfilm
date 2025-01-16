@@ -1,7 +1,6 @@
 'use client';
-
+import React from 'react';
 import { usePathname } from 'next/navigation';
-// import Header from 'components/Layout/Header/Header';
 import Footer from './Layout/Footer/Footer';
 import Authhook from 'hooks/AuthHook'
 import Navbar from './Layout/Header/Navbar';

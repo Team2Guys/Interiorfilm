@@ -1,7 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import Button from 'components/Common/Button';
-import { generateSlug } from 'data/Data';
 
 interface CategoryCardProps {
   name: string;

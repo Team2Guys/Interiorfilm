@@ -1,41 +1,23 @@
-import React, { useState, useRef, Fragment, useEffect } from "react";
+import React, { useState, useRef, Fragment } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import { Navigation, Thumbs } from "swiper/modules";
 import Image from "next/image";
 import { IMAGE_INTERFACE } from "types/interfaces";
-import Collapse from "components/ui/Collapse/Collapse";
 import Accordion from "components/widgets/Accordion";
-import axios from "axios";
-import Review from "components/Common/Review";
 import SideBySideMagnifier from "./SideBySideMagnifier";
 
 interface ThumbProps {
   thumbs?: IMAGE_INTERFACE[];
-  detail?: IMAGE_INTERFACE[];
-  product?: any;
 }
 
-const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
+const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>();
-  const [reviews, setReviews] = useState<string[]>([]);
-  const [showArrow, setShowArrow] = useState(false);
   const swiperContainerRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState<number>(0); // This tracks the active main image index
-
-  const fetchReviews = async (productId: string) => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`
-      );
-      setReviews(response.data.reviews);
-    } catch (err) {
-      console.log("Failed to fetch reviews:", err);
-    }
-  };
+  const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const sortedThumbs = thumbs?.slice().sort((a, b) => {
     const indexA = a.imageIndex ?? Number.MAX_SAFE_INTEGER;
@@ -43,19 +25,6 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
     return indexA - indexB;
   });
 
-  useEffect(() => {
-    if (product?._id) {
-      fetchReviews(product?._id);
-    }
-  }, [product]);
-
-  useEffect(() => {
-    const container: any = swiperContainerRef.current;
-    if (container) {
-      const isScrollable = container.scrollHeight > container.clientHeight;
-      setShowArrow(isScrollable);
-    }
-  }, [sortedThumbs]);
 
   const handleSlideClick = (index: number) => {
     setActiveIndex(index);
@@ -128,7 +97,6 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
                         zoomScale={2}
                         inPlace={true}
                         alignTop={true}
-                        fillSpace={false}
                       />
                     </SwiperSlide>
                   ))}
@@ -139,17 +107,8 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs, detail, product }) => {
       </div>
 
       <div className="mt-13 hidden md:block">
-        <Accordion 
-        // detail={detail}
-         />
-        {/* <hr className="h-1 border-stone-200" /> */}
-        {/* <Collapse title="Customer Reviews">
-          <Review
-            reviews={reviews}
-            productId={product?._id}
-            fetchReviews={fetchReviews}
-          />
-        </Collapse> */}
+        <Accordion  />
+     
         <hr className="h-1 border-stone-200" />
       </div>
     </Fragment>

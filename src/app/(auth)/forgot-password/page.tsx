@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 import Newpswd from "./Newpswd";
 import Loader from "components/Loader/Loader";
@@ -10,7 +9,6 @@ import USRcomponent from 'components/userComponent/userComponent';
 import OtpInput from 'react-otp-input';
 import Button from "components/Common/Button";
 const Forgot: React.FC = () => {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [forgotEmail, setForgotEmail] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);

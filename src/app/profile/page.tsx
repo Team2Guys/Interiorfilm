@@ -6,7 +6,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useAppSelector } from "components/Others/HelperRedux";
 import { uploadPhotosToBackend } from 'utils/helperFunctions'
 import { IMAGE_INTERFACE } from 'types/interfaces'
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 import Cookies from 'js-cookie';
 
 import { loggedInUserAction } from '../../redux/slices/userSlice';
@@ -79,7 +79,7 @@ const Profile: React.FC = () => {
 
       if (loggedInUser) {
         let { fullName, ProfilePhoto, ...extractedData } = loggedInUser;
-
+        console.log(fullName, ProfilePhoto ,"loggedInUser")
         if (!initialFormData.fullName) throw new Error('Full name is required or Full is required')
         let combinedData = {
           ...initialFormData,

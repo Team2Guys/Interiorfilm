@@ -1,32 +1,14 @@
 "use client";
 
-import React, { useState, useLayoutEffect } from "react";
-import { Layout } from "antd";
-import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { socialLinks, customerCare, pages } from "data/FooterData";
-import card6 from "../../../../public/images/payment-icons/Mastercard-Logo.png";
-import card2 from "../../../../public/images/payment-icons/applepay-logo.png";
-import card1 from "../../../../public/images/payment-icons/amex_82052.png";
-import card7 from "../../../../public/images/payment-icons/googlepay-logo.png";
-import card5 from "../../../../public/images/payment-icons/tabby-logo.png";
-import card3 from "../../../../public/images/payment-icons/tamara-logo.png";
-import card4 from "../../../../public/images/payment-icons/visacard-logo.png";
 import whitelogo from "../../../../public/images/logowhite.png";
-import Container from "../Container/Container";
 import { SlEnvolopeLetter } from "react-icons/sl";
 import Button from "components/ui/Button/Button";
 import axios from "axios";
-import { CategoriesType } from "types/interfaces";
-import PreFooter from "./PreFooter";
-import {
-  footerlink,
-  FooterPaymentMethods,
-  generateSlug,
-  PaymentMethods,
-} from "data/Data";
-import { usePathname, useRouter } from "next/navigation";
+import {footerlink,} from "data/Data";
 import PaymentMethod from "../PaymentMethod";
 import showToast from "components/Toaster/Toaster";
 
@@ -36,33 +18,9 @@ const Footer: React.FC = () => {
   const [isPagesOpen, setIsPagesOpen] = useState(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
-  const [category, setCategory] = useState<CategoriesType[]>([]);
   const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
   const toggleCustomerCare = () => setIsCustomerCareOpen(!isCustomerCareOpen);
-
-  const pathname = usePathname();
   const togglePages = () => setIsPagesOpen(!isPagesOpen);
-  const bottomImages = [card1, card2, card3, card4, card5, card6, card7];
-  const CategoryHandler = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
-      );
-      setCategory(response.data);
-    } catch (err) {
-      console.log(err, "err");
-    }
-  };
-
-  useLayoutEffect(() => {
-    CategoryHandler();
-  }, []);
-  const router = useRouter();
-  const handleButtonClick = (categoryName: string) => {
-    const slug = generateSlug(categoryName);
-    router.push(`/products?category=${slug}`);
-  };
-
   const handleEmailSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
@@ -88,8 +46,6 @@ const Footer: React.FC = () => {
 
   return (
     <>
-      {/* {pathname == "/" || pathname == "/about" ? null : <PreFooter />} */}
-
       <div className="bg-secondary text-white pt-10  pb-10 md:px-2 lg:px-10 xl:px-30">
         <div className="flex flex-wrap md:flex-nowrap justify-between border-b items-center border-slate-500 pb-10 ">
           <div className=" hidden  md:w-3/12 md:flex  flex-wrap items-center justify-between md:justify-start md:flex-nowrap md:gap-4 mx-auto md:mx-0 ">
@@ -170,9 +126,7 @@ const Footer: React.FC = () => {
               onClick={toggleCategories}
             >
               Collections
-              {/* <span className="ml-2 md:hidden ">
-                  {isCategoriesOpen ? <FaAngleUp /> : <FaAngleDown />}
-                </span> */}
+         
             </h3>
             <div className="flex md:block gap-16">
               <ul
@@ -205,9 +159,6 @@ const Footer: React.FC = () => {
               onClick={toggleCustomerCare}
             >
               Quick Links
-              {/* <span className="ml-2 md:hidden">
-                  {isCustomerCareOpen ? <FaAngleUp /> : <FaAngleDown />}
-                </span> */}
             </h3>
             <ul
               className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${isCustomerCareOpen ? "max-h-96" : "max-h-0"
@@ -231,9 +182,6 @@ const Footer: React.FC = () => {
               onClick={togglePages}
             >
               Policies
-              {/* <span className="ml-2 md:hidden">
-                  {isPagesOpen ? <FaAngleUp /> : <FaAngleDown />}
-                </span> */}
             </h3>
             <ul
               className={`space-y-2 md:space-y-0 lg:space-y-2 transition-all duration-300 overflow-hidden ${isPagesOpen ? "max-h-96" : "max-h-0"
@@ -285,19 +233,6 @@ const Footer: React.FC = () => {
             </div>
 
             <PaymentMethod />
-
-            {/* <div className="flex items-center flex-wrap gap-2 py-2 lg:order-2 order-1 text-black dark:text-white">
-                {bottomImages.map((image, index) => (
-                  <Image
-                    key={index}
-                    width={100}
-                    height={0}
-                    src={image}
-                    alt="Interior Film"
-                    className="w-10 rounded-sm"
-                  />
-                ))}
-              </div> */}
           </div>
         </div>
       </div>
