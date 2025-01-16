@@ -221,16 +221,18 @@ console.log(error,selectedValue,"error")
     if (existingItemIndex !== -1) {
 
       const existingItem = existingWishlist[existingItemIndex];
-      if (existingItem.length >= 100) {
+
+   if (existingItem.length >= 100) {
 
         message.error("Cannot add more than 100 units of this product to the wishlist!");
         return; // Prevent adding
       }
-      if (existingItem.length + 1 > product.totalStockQuantity) {
-        message.error("Cannot add to wishlist. Exceeds available stock!");
+      
+      // if (existingItem.length + 1 > product.totalStockQuantity) {
+      //   message.error("Cannot add to wishlist. Exceeds available stock!");
 
-        return; // Prevent adding
-      }
+      //   return; // Prevent adding
+      // }
 
 
   
