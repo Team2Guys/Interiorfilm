@@ -113,7 +113,6 @@ const Product = ({ productname }: { productname: string }) => {
         <>
           <div className="block lg:hidden mt-5">
             <Accordion/>
-           
           </div>
         </>
       ) : null}
