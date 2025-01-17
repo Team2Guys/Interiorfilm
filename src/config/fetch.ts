@@ -17,6 +17,25 @@ export const getAllproducts = async () => {
   return products;
 };
 
+
+export const getAlladsproducts = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/addsOn_product/getAllproducts`,
+    {
+      next: { tags: ['products'] },
+    },
+  );
+  if (!response.ok) {
+    throw new Error('Failed to fetch products');
+  }
+
+  const productsData = await response.json();
+  const products = productsData.products;
+  return products;
+};
+
+
+
 export const getAllCategories = async () => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`,

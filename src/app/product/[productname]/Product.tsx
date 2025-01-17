@@ -1,73 +1,74 @@
 "use client";
 import Container from "components/Layout/Container/Container";
 import Overlay from "components/widgets/Overlay/Overlay";
-import React, { useState, useEffect } from "react";
+import React, { useState, 
+  // useEffect
+ } from "react";
 import ProductSlider from "components/Carousel/ProductSlider/ProductSlider";
-import axios from "axios";
-import { generateSlug } from "data/Data";
-import PRODUCTS_TYPES from "types/interfaces";
+// import axios from "axios";
+// import { generateSlug } from "data/Data";
+// import PRODUCTS_TYPES from "types/interfaces";
 import ProductDetails from "components/product_detail/ProductDetails";
 import { ProductSkeleton } from "components/Skeleton-loading/ProductSkelton";
 import Accordion from "components/widgets/Accordion";
 
-const Product = ({ productname }: { productname: string }) => {
+const Product = ({ productname,filteredProducts, productDetail,categoryName }: { productname: string,filteredProducts:any, productDetail:any, categoryName: any  }) => {
+
   const parsedProduct = productname ? productname : null;
-  const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
-  const [productsAdon, setProductsAdon] = useState<PRODUCTS_TYPES[]>([]);
-  const [productDetail, setProductDetail] = useState<PRODUCTS_TYPES | null>(null);
+  console.log(parsedProduct)
+  // const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
+  // const [productsAdon, setProductsAdon] = useState<PRODUCTS_TYPES[]>([]);
+  // const [productDetail, setProductDetail] = useState<PRODUCTS_TYPES | null>(null);
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
-  const [categoryName, setCategoryName] = useState<string | undefined>();
+  // const [categoryName, setCategoryName] = useState<string | undefined>();
 
-  const productHandler = async () => {
-    try {
-      setProductsLoading(true);
+  console.log(parsedProduct, setProductsLoading)
 
-      const categoryRequest = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
-      );
-      const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
+  // const productHandler = async () => {
+  //   try {
+  //     setProductsLoading(true);
 
-      const [categoryResponse, productResponse] = await Promise.all([
-        categoryRequest,
-        productRequest,
-      ]);
-      setProducts(productResponse.data.products);
+  //     const categoryRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
+  //     const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
 
-      if (parsedProduct && productResponse.data.products.length > 0) {
-        const foundProduct = productResponse.data.products.find(
-          (item: any) => generateSlug(item.name) === parsedProduct
-        );
+  //     const [categoryResponse, productResponse] = await Promise.all([categoryRequest,productRequest,]);
+  //     setProducts(productResponse.data.products);
+
+  //     if (parsedProduct && productResponse.data.products.length > 0) {
+  //       const foundProduct = productResponse.data.products.find(
+  //         (item: any) => generateSlug(item.name) === parsedProduct
+  //       );
    
-        if (foundProduct) {
-          setProductDetail(foundProduct);
+  //       if (foundProduct) {
+  //         setProductDetail(foundProduct);
 
-          const foundCategory = categoryResponse.data.find(
-            (cat: any) => cat._id === foundProduct.category
-          );
+  //         const foundCategory = categoryResponse.data.find(
+  //           (cat: any) => cat._id === foundProduct.category
+  //         );
         
-          setCategoryName(foundCategory ? foundCategory.name : null);
-        }
-        if (foundProduct === undefined) {
-          const adsonProducts = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`);
-          const foundProductAdon = adsonProducts.data.products.find(
-            (item: any) => generateSlug(item.name) === parsedProduct
-          );
+  //         setCategoryName(foundCategory ? foundCategory.name : null);
+  //       }
+  //       if (foundProduct === undefined) {
+  //         const adsonProducts = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`);
+  //         const foundProductAdon = adsonProducts.data.products.find(
+  //           (item: any) => generateSlug(item.name) === parsedProduct
+  //         );
          
-          setProductDetail(foundProductAdon);
-          setProductsAdon(adsonProducts.data.products)
-          setCategoryName('accessories');
-        }
-      }
-    } catch (error) {
-      console.log("Error fetching data:", error);
-    } finally {
-      setProductsLoading(false);
-    }
-  };
+  //         setProductDetail(foundProductAdon);
+  //         setProductsAdon(adsonProducts.data.products)
+  //         setCategoryName('accessories');
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log("Error fetching data:", error);
+  //   } finally {
+  //     setProductsLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    productHandler();
-  }, [parsedProduct]);
+  // useEffect(() => {
+  //   productHandler();
+  // }, [parsedProduct]);
 
 
   // const fetchReviews = async (productId: string) => {
@@ -86,13 +87,12 @@ const Product = ({ productname }: { productname: string }) => {
   //   }
   // }, [products]);
 
-  let filteredProducts = products.filter(
-    (product) => product.category === productDetail?.category
-  );
+  // let filteredProducts = products.filter((product) => product.category === productDetail?.category
+  // );
 
-  if (filteredProducts.length === 0) {
-    filteredProducts = productsAdon
-  }
+  // if (filteredProducts.length === 0) {
+  //   filteredProducts = productsAdon
+  // }
   return (
     <>
       <Overlay title="Shop" />
