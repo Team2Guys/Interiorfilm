@@ -133,14 +133,30 @@ console.log(error,selectedValue,"error")
     ProductFilterHandler();
   }, [carDetail]);
 
+
+
   const handleAddToCart = (product: any) => {
-    let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    let existingCart = JSON.parse(localStorage.getItem("cart") || "[]")
+    ;
+
     const existingItemIndex = existingCart.findIndex(
       (item: any) => item.id === product._id
     );
-  console.log(categoryName,"categoryNamecategoryName")
+
+    const Total_length = existingCart.reduce((accum: any, value: any) => {
+      if (value.id == product.id) {
+        return (accum += value.length)
+      }
+    }, 0)
+        if (Total_length >= product.totalStockQuantity) {
+          message.error("Cannot add to cart. Exceeds available stock!");
+          return;
+        }
+
     if (existingItemIndex !== -1) {
+
       const existingItem = existingCart[existingItemIndex];
+
       if (existingItem.length >= 100) {
         message.error("Cannot add more than 100 units of this product to the cart!");
         return; // Prevent adding
@@ -150,6 +166,7 @@ console.log(error,selectedValue,"error")
         return; // Prevent adding
       }
   
+      
       const updatedCart = existingCart.map((item: any, index: number) => {
         if (index === existingItemIndex) {
           return {
@@ -202,15 +219,22 @@ console.log(error,selectedValue,"error")
     );
   
     if (existingItemIndex !== -1) {
+
       const existingItem = existingWishlist[existingItemIndex];
-      if (existingItem.length >= 100) {
+
+   if (existingItem.length >= 100) {
+
         message.error("Cannot add more than 100 units of this product to the wishlist!");
         return; // Prevent adding
       }
-      if (existingItem.length + 1 > product.totalStockQuantity) {
-        message.error("Cannot add to wishlist. Exceeds available stock!");
-        return; // Prevent adding
-      }
+      
+      // if (existingItem.length + 1 > product.totalStockQuantity) {
+      //   message.error("Cannot add to wishlist. Exceeds available stock!");
+
+      //   return; // Prevent adding
+      // }
+
+
   
       const updatedWishlist = existingWishlist.map(
         (item: any, index: number) => {

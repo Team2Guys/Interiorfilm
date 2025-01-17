@@ -62,6 +62,8 @@ const Table: React.FC<TableProps> = ({
     }
   };
 
+
+
   const increment = (index: number) => {
     const product = data[index];
     const newLengths = { ...lengths };
@@ -131,23 +133,31 @@ const Table: React.FC<TableProps> = ({
   };
 
   const addToCart = (product: any, index: number) => {
+    console.log('function called')
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const maxPerProduct = 100; // Maximum quantity a user can buy for a single product
+    const maxPerProduct = 100;
+    const Total_length = cart.reduce((accum: any, value: any) => {
+      if (value.id == product.id) {
+        return (accum += value.length)
+      }
+    }, 0)
 
-    if (lengths[index] > product.totalStockQuantity) {
+    console.log(Total_length, "Totalamount")
+
+    if (lengths[index] > product.totalStockQuantity || Total_length >= product.totalStockQuantity) {
       message.error("Cannot add to cart. Exceeds available stock!");
       return;
     }
-          if (length > maxPerProduct) {
-            message.error(`You can't buy more than ${maxPerProduct} units of this product.`);
-            return;
-          }
+    if (length > maxPerProduct) {
+      message.error(`You can't buy more than ${maxPerProduct} units of this product.`);
+      return;
+    }
 
     const existingIndex = cart.findIndex((item: any) => item.id === product.id && item.length === lengths[index]);
     console.log(product, "existingIndex", existingIndex, cart, lengths[index], index)
-    
 
-     if (existingIndex !== -1) {
+
+    if (existingIndex !== -1) {
       // cart[existingIndex].count += counts[index] || 1;
       cart[existingIndex].length += lengths[index] || 1;
 
@@ -155,19 +165,19 @@ const Table: React.FC<TableProps> = ({
       cart[existingIndex].totalPrice = (product.discountPrice || product.price) * (totalLength);
     }
     else {
-        const totalPrice = (product.discountPrice || product.price)  * lengths[index];
+      const totalPrice = (product.discountPrice || product.price) * lengths[index];
 
-        cart.push({
-          ...product,
-          count: counts[index],
-          length: lengths[index],
-          totalPrice: totalPrice,
-        });
+      cart.push({
+        ...product,
+        count: counts[index],
+        length: lengths[index],
+        totalPrice: totalPrice,
+      });
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
     setData(cart);
-    // removeItemFromCart(index);
+    removeItemFromCart(index);
     window.dispatchEvent(new Event("cartChanged"));
   };
 
@@ -212,24 +222,24 @@ const Table: React.FC<TableProps> = ({
         <div className="flex justify-between items-center text-18 font-semibold px-4 bg-white text-black py-3 ">
           <div
             className={` ${pathName === "/wishlist"
-                ? "md:w-4/12 lg:w-6/12"
-                : "md:w-4/12 lg:w-6/12"
+              ? "md:w-4/12 lg:w-6/12"
+              : "md:w-4/12 lg:w-6/12"
               } `}
           >
             <p>Items</p>
           </div>
           <div
             className={` ${pathName === "/wishlist"
-                ? "md:w-2/12 lg:w-1/12"
-                : "md:w-2/12 lg:w-2/12 "
+              ? "md:w-2/12 lg:w-1/12"
+              : "md:w-2/12 lg:w-2/12 "
               } `}
           >
             <p>Price</p>
           </div>
           <div
             className={` ${pathName === "/wishlist"
-                ? "md:w-2/12 lg:w-2/12"
-                : "md:w-1/12 lg:w-2/12 text-center"
+              ? "md:w-2/12 lg:w-2/12"
+              : "md:w-1/12 lg:w-2/12 text-center"
               } `}
           >
             <p>QTY(M)</p>
@@ -237,8 +247,8 @@ const Table: React.FC<TableProps> = ({
 
           <div
             className={`${pathName === "/wishlist"
-                ? "md:w-2/12 lg:w-1/12"
-                : "text-center md:w-2/12 lg:w-2/12"
+              ? "md:w-2/12 lg:w-1/12"
+              : "text-center md:w-2/12 lg:w-2/12"
               } `}
           >
             <p>Total</p>
@@ -261,12 +271,14 @@ const Table: React.FC<TableProps> = ({
                 key={index}
               >
                 <div
+                               key={index}
                   className={`  ${pathName === "/wishlist"
-                      ? "md:w-4/12 lg:w-6/12"
-                      : "md:w-4/12 lg:w-6/12"
+                    ? "md:w-4/12 lg:w-6/12"
+                    : "md:w-4/12 lg:w-6/12"
                     }`}
                 >
                   <Link
+                                 key={index}
                     href={`/product/${generateSlug(product.name)}`}
                     className="w-fit flex gap-1"
                   >
@@ -298,8 +310,8 @@ const Table: React.FC<TableProps> = ({
 
                 <div
                   className={` ${pathName === "/wishlist"
-                      ? "md:w-2/12 lg:w-1/12"
-                      : " md:w-2/12 lg:w-2/12"
+                    ? "md:w-2/12 lg:w-1/12"
+                    : " md:w-2/12 lg:w-2/12"
                     } `}
                 >
                   <p>
@@ -317,8 +329,8 @@ const Table: React.FC<TableProps> = ({
                 </div>
                 <div
                   className={` ${pathName === "/wishlist"
-                      ? "md:w-2/12 lg:w-2/12"
-                      : " md:w-2/12 lg:w-2/12 lg:flex lg:justify-center"
+                    ? "md:w-2/12 lg:w-2/12"
+                    : " md:w-2/12 lg:w-2/12 lg:flex lg:justify-center"
                     } `}
                 >
                   <div
@@ -353,8 +365,8 @@ const Table: React.FC<TableProps> = ({
 
                 <div
                   className={` flex gap-4 ${pathName === "/wishlist"
-                      ? "md:w-2/12 lg:w-1/12 "
-                      : "justify-center lg:w-2/12 "
+                    ? "md:w-2/12 lg:w-1/12 "
+                    : "justify-center lg:w-2/12 "
                     } `}
                 >
                   <p>
@@ -380,7 +392,7 @@ const Table: React.FC<TableProps> = ({
                 {pathName === "/wishlist" ? (
                   <div className="w-2/12 text-end">
                     <Button
-                      onClick={() => addToCart(product, index)}
+                      onClick={() => {addToCart(product, index)}}
                       className="px-4 rounded-md"
                       title={"Add To Cart"}
                     />

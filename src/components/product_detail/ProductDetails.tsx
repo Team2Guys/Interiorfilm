@@ -34,13 +34,12 @@ import SideMenu, { Product } from "./sideMenu";
 import EnviromentIcons from "./enviroment-icon";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import showToast from "components/Toaster/Toaster";
 interface productDetailsProps {
   productDetail: PRODUCTS_TYPES;
   categoryName?: string;
   firstFlex?: string;
   isQuickView?: boolean;
-  isAccessory ?: boolean;
+  isAccessory?: boolean;
 }
 export default function ProductDetails({
   productDetail,
@@ -53,29 +52,31 @@ export default function ProductDetails({
   const [reviews, setReviews] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [length, setLength] = useState<number>(1);
-  const [adsonProducts,setAdsonProducts]=useState<Product[]>([])
+  const [adsonProducts, setAdsonProducts] = useState<Product[]>([])
   const router = useRouter();
+  console.log(setQuantity, "setQuantity", adsonProducts)
   const Acessoptions =
-  productDetail && productDetail.totalStockQuantity > 0
-    ? Array.from(
+    productDetail && productDetail.totalStockQuantity > 0
+      ? Array.from(
         { length: Math.floor(productDetail.totalStockQuantity) },
         (_, i) => ({
           label: `${i + 1}`,
           value: i + 1,
         })
       )
-    : [];
+      : [];
   const options =
     productDetail && productDetail.totalStockQuantity > 0
       ? Array.from(
-          { length: Math.floor(productDetail.totalStockQuantity) },
-          (_, i) => ({
-            label: `1.22m x ${i + 1}m`,
-            value: i + 1,
-          })
-        )
+        { length: Math.floor(productDetail.totalStockQuantity) },
+        (_, i) => ({
+          label: `1.22m x ${i + 1}m`,
+          value: i + 1,
+        })
+      )
       : [];
-      console.log(adsonProducts,setQuantity)
+
+
   const fetchReviews = async (productId: string) => {
     try {
       const response = await axios.get(
@@ -93,29 +94,44 @@ export default function ProductDetails({
   };
 
   const averageRating = calculateAverageRating();
-  
 
-  const handleAddToCart = (product: any) => {
-    const maxPerProduct = 100; // Maximum quantity a user can buy for a single product
+
+  const handleAddToCart = (product: any, buynow?: string) => {
+    const maxPerProduct = 100;
     const currentStock = product.totalStockQuantity;
-  
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    const Total_length = existingCart.reduce((accum: any, value: any) => {
+
+      if (value.id == product.id) {
+
+        return (accum += value.length)
+      }
+    }, 0)
+
+    if (Total_length >= product.totalStockQuantity) {
+
+      message.error("Cannot add to cart. Exceeds available stock!");
+
+      return;
+    }
+
     const existingItemIndex = existingCart.findIndex((item: any) => item.id === product._id);
-  
+
     if (existingItemIndex !== -1) {
       const existingItem = existingCart[existingItemIndex];
       const totalRequestedQuantity = existingItem.length + length;
-  
+
       if (totalRequestedQuantity > currentStock) {
         message.error(`You can't add more than the available stock (${currentStock}).`);
         return;
       }
-  
+
       if (totalRequestedQuantity > maxPerProduct) {
         message.error(`You can't buy more than ${maxPerProduct} units of this product.`);
         return;
       }
-  
+
       existingItem.length += length;
       existingItem.totalPrice =
         (product.discountPrice || product.salePrice) * existingItem.length;
@@ -125,12 +141,12 @@ export default function ProductDetails({
         message.error(`You can't add more than the available stock (${currentStock}).`);
         return;
       }
-  
+
       if (length > maxPerProduct) {
         message.error(`You can't buy more than ${maxPerProduct} units of this product.`);
         return;
       }
-  
+
       const newCartItem = {
         id: product._id,
         name: product.name,
@@ -147,16 +163,20 @@ export default function ProductDetails({
         code: product.code,
         categoryName: categoryName,
       };
-  
+
       existingCart.push(newCartItem);
     }
-  
+
+
     localStorage.setItem("cart", JSON.stringify(existingCart));
+
     message.success("Product added to cart successfully!");
+
     window.dispatchEvent(new Event("cartChanged"));
-    showToast("success", "Product added to cart successfully🎉");
+
+    buynow ? router.push("/checkout") : null
   };
-  
+
   useEffect(() => {
     if (productDetail) {
       const price = productDetail.discountPrice || productDetail.salePrice;
@@ -184,9 +204,8 @@ export default function ProductDetails({
         <div className="flex lg:w-4/12 xl:w-5/12  flex-col ">
           <div className="flex flex-wrap xl:flex-nowrap w-full justify-between flex-col md:flex-row gap-4">
             <div
-              className={`w-full md:px-2 space-y-2 md:space-y-4 ${
-                !isQuickView ? "md:w-3/3 xl:w-8/12" : "w-full xl:w-12/12"
-              }`}
+              className={`w-full md:px-2 space-y-2 md:space-y-4 ${!isQuickView ? "md:w-3/3 xl:w-8/12" : "w-full xl:w-12/12"
+                }`}
             >
               <span className="divide-8">
                 <h1 className="text-22 lg:text-[28px] text-[#000000] font-medium">
@@ -231,43 +250,43 @@ export default function ProductDetails({
               </div>
 
               {!isAccessory && (
-        <p className="font-medium text-16 text-text">
-          Roll width is <span className="text-black">122cm</span>
-        </p>
-      )}
-         {isAccessory ? (
-                <div className="flex flex-wrap 2xl:flex-nowrap items-center gap-2">
-                <p className="font-medium text-16 whitespace-nowrap text-text">
-                  Select Quantity:
+                <p className="font-medium text-16 text-text">
+                  Roll width is <span className="text-black">122cm</span>
                 </p>
-                <ProductSelect
-                  className="w-60 h-10 border outline-none shipment text-16"
-                  onChange={onChange}
-                  options={Acessoptions}
-                  value={length}
-                />
-              </div>
-        
-      ) : (
-        <div className="flex flex-wrap 2xl:flex-nowrap items-center gap-2">
-          <p className="font-medium text-16 whitespace-nowrap text-text">
-            Select Quantity:
-          </p>
-          <ProductSelect
-            className="w-60 h-10 border outline-none shipment text-16"
-            onChange={onChange}
-            options={options}
-            value={length}
-          />
-        </div>
-      )}
+              )}
+              {isAccessory ? (
+                <div className="flex flex-wrap 2xl:flex-nowrap items-center gap-2">
+                  <p className="font-medium text-16 whitespace-nowrap text-text">
+                    Select Quantity:
+                  </p>
+                  <ProductSelect
+                    className="w-60 h-10 border outline-none shipment text-16"
+                    onChange={onChange}
+                    options={Acessoptions}
+                    value={length}
+                  />
+                </div>
+
+              ) : (
+                <div className="flex flex-wrap 2xl:flex-nowrap items-center gap-2">
+                  <p className="font-medium text-16 whitespace-nowrap text-text">
+                    Select Quantity:
+                  </p>
+                  <ProductSelect
+                    className="w-60 h-10 border outline-none shipment text-16"
+                    onChange={onChange}
+                    options={options}
+                    value={length}
+                  />
+                </div>
+              )}
               <div>
                 <p className="text-16">
                   <span className=" text-text font-medium text-16 mr-2">
                     Available Quantity:
                   </span>
                   {productDetail.totalStockQuantity &&
-                  productDetail.totalStockQuantity > 0
+                    productDetail.totalStockQuantity > 0
                     ? "In Stock"
                     : "Out Of Stock"}
                 </p>
@@ -281,27 +300,27 @@ export default function ProductDetails({
               </p>
 
               {productDetail.totalStockQuantity == 0 || productDetail.totalStockQuantity <= 0 ? (
-               <>
-               <p className="text-primary text-center text-2xl">
-                  Product is out of stock
-                </p>
-                <Link
+                <>
+                  <p className="text-primary text-center text-2xl">
+                    Product is out of stock
+                  </p>
+                  <Link
                     target="_blank"
                     href="https://wa.link/mb359y"
                     className="bg-[#2AB200]  w-full flex items-center gap-2 justify-center py-2 text-white"
                   >
                     <BsWhatsapp /> Order on WhatsApp
                   </Link>
-               </>
-                
+                </>
+
               ) : (
                 <Fragment>
                   <div className="flex  gap-1 md:gap-2">
                     <button
                       className="bg-secondary w-full  text-12 md:text-14 2xl:text-16  py-2 px-3 md:px-5 text-white "
                       onClick={() => {
-                        handleAddToCart(productDetail);
-                        router.push("/checkout");
+                        handleAddToCart(productDetail, "buynow");
+
                       }}
                     >
                       Buy Now
@@ -342,14 +361,14 @@ export default function ProductDetails({
                     {totalPrice && (totalPrice / 4).toFixed()}{" "}
                     <Dialog>
                       <DialogTrigger asChild className="text-red">
-                        <span className=" underline cursor-pointer" style={{color:"red"}}>
+                        <span className=" underline cursor-pointer" style={{ color: "red" }}>
                           Learn more
                         </span>
                       </DialogTrigger>
 
                       <DialogOverlay className="bg-black/60 z-999999" />
                       <DialogContent className="sm:max-w-[80%] mt-10 lg:max-w-[60%] z-999999 bg-white px-0 sm:rounded-none border border-black shadow-none gap-0 pb-0 h-180 ">
-                 
+
                         <DialogHeader>
                           <DialogTitle className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-wide border-b-2 pb-3 sm:ps-5 md:ps-10 pe-10">
                             Easy Monthly Installments
@@ -528,14 +547,14 @@ export default function ProductDetails({
             </div>
             {!isQuickView && (
               <div className="w-full xl:w-4/12  ">
-                <SideMenu  setAdsonProducts={setAdsonProducts}/>
+                <SideMenu setAdsonProducts={setAdsonProducts} />
               </div>
             )}
           </div>
           {!isAccessory && (
-          <div className="flex flex-col gap-2 mt-5 md:mt-10">
-            <EnviromentIcons />
-          </div>
+            <div className="flex flex-col gap-2 mt-5 md:mt-10">
+              <EnviromentIcons />
+            </div>
           )}
         </div>
       </div>
