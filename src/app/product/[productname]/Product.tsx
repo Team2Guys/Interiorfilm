@@ -112,8 +112,7 @@ const Product = ({ productname }: { productname: string }) => {
       {productDetail ? (
         <>
           <div className="block lg:hidden mt-5">
-            <Accordion
-              />
+            <Accordion/>
           </div>
         </>
       ) : null}

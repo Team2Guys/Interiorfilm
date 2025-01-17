@@ -5,7 +5,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import Card from 'components/ui/Card/Card';
-import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import PRODUCTS_TYPES from 'types/interfaces';
 import { RiArrowLeftSFill, RiArrowRightSFill } from 'react-icons/ri';
@@ -52,34 +51,13 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
   return (
     <>
       {loading ? (
-        <div className="flex flex-wrap items-center justify-center gap-5 md:flex-wrap mt-5 mb-5">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <div key={index} className="w-full sm:w-[48%] md:w-[20%] min-w-[250px]">
-              <SkeletonLoading
-                avatar={{
-                  shape: 'square',
-                  size: 300,
-                }}
-                title={false}
-                paragraph={{ rows: 2 }}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '10px',
-                }}
-                className="w-full"
-                active={true}
-              />
-              <div
-                className="avatar mx-auto bg-gray-300"
-                style={{
-                  width: '250px',
-                  height: '250px',
-                }}
-              />
-            </div>
-          ))}
-        </div>
+             <div className="flex gap-6 px-4 lg:px-6 xl:px-10 mt-10 w-full max-md:overflow-x-scroll">
+             {Array.from({ length: 4 }).map((_, index) => (
+               <div key={index} className="animate-pulse max-sm:flex-shrink-0 flex flex-col gap-4 w-full md:w-[45%] lg:w-4/12 bg-gray rounded-lg overflow-hidden ">
+                 <div className="bg-gray h-48 md:h-[250px] lg:h-[350px] w-full"></div>
+               </div>
+             ))}
+           </div>
       ) : (
         <div className="relative mt-10" >
          
