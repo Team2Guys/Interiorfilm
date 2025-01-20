@@ -20,7 +20,9 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<any>(null);
 
-  const featuredProducts = products.slice(0, 10);
+console.log(products, "loading")
+
+  const featuredProducts = products?.slice(0, 10) || [];
 
   const updateSwiperNavigation = useCallback(() => {
     if (swiperRef.current && swiperRef.current.swiper) {

@@ -1,26 +1,24 @@
 import type { Metadata } from 'next'
 import Product from './Product';
-import axios from 'axios';
 import { headers } from "next/headers";
 import { generateSlug } from 'data/Data';
 import { getAlladsproducts, getAllCategories, getAllproducts } from 'config/fetch';
+import { meta_props } from 'types/interfaces';
 
-type Props = {
-  params: { productname: string }
-}
-export async function generateMetadata({ params }: Props,): Promise<Metadata> {
-  const headersList = headers();
+
+export async function generateMetadata({ params }: meta_props,): Promise<Metadata> {
+  const headersList = await headers();
+  const { productname } = await params;
+
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || ''; // Fallback to host if x-forwarded-host is not present
   const protocol = headersList.get('x-forwarded-proto') || 'https'; // Default to https if no protocol is set
   const pathname = headersList.get('x-invoke-path') || '/'; // Fallback to root if no path
   const fullUrl = `${protocol}://${domain}${pathname}`;
   console.log(fullUrl, "fullurl")
-  const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
-  const [productResponse] = await Promise.all([productRequest]);
-  const { products } = productResponse.data
+  const [prod, addsOn_product] = await Promise.all([getAllproducts(), getAlladsproducts()]);
+  let products = [...prod, ...addsOn_product]
 
-  let Product = products?.find((item: any) => generateSlug(item.name) == params.productname)
-
+  let Product = products?.find((item: any) => generateSlug(item.name) == productname)
   let ImageUrl = Product?.posterImageUrl?.imageUrl || "interiorfilm";
   let alt = Product?.Images_Alt_Text || "Interior films";
 
@@ -31,8 +29,8 @@ export async function generateMetadata({ params }: Props,): Promise<Metadata> {
     }
   ];
   let title = Product && Product.Meta_Title ? Product.Meta_Title : "Interior Films"
-  let description = Product && Product.description ? Product.description : "Welcome to Interior films"
-  let url = `${fullUrl}/product/${params.productname}`
+  let description = Product && Product.Meta_Description ? Product.Meta_Description : "Welcome to Interior films"
+  let url = `${fullUrl}/product/${productname}`
   return {
     title: title,
     description: description,
@@ -48,84 +46,71 @@ export async function generateMetadata({ params }: Props,): Promise<Metadata> {
   }
 }
 
-export async function getStaticPaths() {
-  const [products, addsOn_product] = await Promise.all([getAllCategories(), getAllproducts(), getAlladsproducts()]);
+const Page = async ({ params, }: meta_props) => {
 
-
-  const paths = [...products, ...addsOn_product].map((product: any) => ({
-    params: { productName: generateSlug(product.name) },
-  }));
-
-  return {
-    paths,
-    fallback: 'blocking',
-  };
-}
-
-
-export async function getStaticProps({ params }: { params: { productname: string } }) {
-  const { productname } = params;
-  const [categories, products, addsOn_product] = await Promise.all([getAllCategories(), getAllproducts(), getAlladsproducts()]);
+  const { productname } = await params;
 
   let productDetail: any;
   let categoryName;
   let productsAdon;
-  let filteredProducts
-
-  if (productname && products.length > 0) {
-    const foundProduct = products.find((item: any) => generateSlug(item.name) === productname);
+  let filteredProducts;
+  try {
 
 
-    if (!foundProduct) {
-      const foundProductAdon = addsOn_product.find((item: any) => generateSlug(item.name) === productname);
+    const [categories, products, addsOn_product] = await Promise.all([
+      getAllCategories(),
+      getAllproducts(),
+      getAlladsproducts(),
+    ]);
 
-      productDetail = foundProductAdon
-      productsAdon = foundProductAdon
-      categoryName = 'accessories'
+
+
+    if (productname && products.length > 0) {
+      const foundProduct = products.find((item: any) => generateSlug(item.name) === productname);
+
+
+      if (!foundProduct) {
+        const foundProductAdon = addsOn_product.find((item: any) => generateSlug(item.name) === productname);
+        productDetail = foundProductAdon
+        productsAdon = addsOn_product
+        categoryName = 'accessories'
+      }
+      else if (foundProduct) {
+        productDetail = foundProduct
+        const foundCategory = categories?.find((cat: any) => cat._id === foundProduct.category);
+        categoryName = foundCategory ? foundCategory.name : null
+      }
     }
-    else if (foundProduct) {
-      productDetail = foundProduct
-      const foundCategory = categories.find((cat: any) => cat._id === foundProduct.category);
-      categoryName = foundCategory ? foundCategory.name : null
+
+    filteredProducts = products?.filter((product: any) => product.category === productDetail?.category && product.name !== productname);
+
+    if (filteredProducts.length === 0) {
+      filteredProducts = productsAdon
     }
+    if (!filteredProducts) {
+      return {
+        notFound: true,
+      };
+    }
+
+  } catch (error) {
+    console.log(error, "error")
+
   }
 
-  filteredProducts = products.filter((product: any) => product.category === productDetail?.category && product.name !==productname);
 
-  if (filteredProducts.length === 0) {
-    filteredProducts = productsAdon
-  }
 
-  if (!filteredProducts) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: {
-      filteredProducts: filteredProducts,
-      productDetail:productDetail,
-      categoryName:categoryName
-      
-    },
-    revalidate: 10,
-  };
-}
-
-const Page = ({ params,filteredProducts,productDetail,categoryName }: { params: { productname: string },filteredProducts:any, productDetail:any, categoryName: any }) => {
-console.log(categoryName, productDetail, productDetail)
   return (
     <>
-      <Product 
-      productname={params.productname}
-      filteredProducts={filteredProducts}
-      productDetail={productDetail}
-      categoryName={categoryName}
-      
+      <Product
+        productname={productname}
+        filteredProducts={filteredProducts}
+        productDetail={productDetail}
+        categoryName={categoryName}
 
 
-       />
+
+      />
     </>
   );
 };

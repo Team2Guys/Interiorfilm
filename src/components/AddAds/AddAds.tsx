@@ -28,6 +28,7 @@ import {
   AddProductvalidationSchema,
   AddproductsinitialValues,
 } from "data/Data";
+import revalidateTag_handler from "config/ServerActions";
 
 const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
   EditInitialValues,
@@ -128,13 +129,14 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
       let url = `${process.env.NEXT_PUBLIC_BASE_URL}${addProductUrl}`;
 
       // Use PUT for updating and POST for adding a new product
-      const response = await axios({
+     await axios({
         method: updateFlag ? "put" : "post",
         url: url,
         data: newValue,
         headers: headers,
       });
-      console.log(response, "response");
+      revalidateTag_handler("products")
+   
       Toaster(
         "success",
         updateFlag

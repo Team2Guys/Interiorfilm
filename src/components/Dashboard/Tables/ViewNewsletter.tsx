@@ -60,6 +60,7 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
         placement: "topRight",
       });
     } catch (err) {
+      console.log(err, 'ERRO')
       notification.error({
         message: "Deletion Failed",
         description: "There was an error deleting the Newsletter.",

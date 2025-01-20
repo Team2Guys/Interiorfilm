@@ -27,7 +27,7 @@ const Products = () => {
         setProducts(Allproducts.products);
         setProductloading(false);
       } catch (err) {
-        console.log("error Occured");
+        console.log("error Occured",err);
         setProductloading(false);
       }
     };

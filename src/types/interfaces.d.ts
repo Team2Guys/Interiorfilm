@@ -249,3 +249,9 @@ export interface RECORDS {
   totalSales: string;
   totalRevenue: string;
 }
+
+
+
+export type meta_props = {
+  params: Promise<{ productname: string }>;
+};

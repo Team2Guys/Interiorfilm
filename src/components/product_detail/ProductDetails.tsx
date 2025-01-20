@@ -55,8 +55,7 @@ export default function ProductDetails({
   const [adsonProducts, setAdsonProducts] = useState<Product[]>([])
   const router = useRouter();
   console.log(setQuantity, "setQuantity", adsonProducts)
-  const Acessoptions =
-    productDetail && productDetail.totalStockQuantity > 0
+  const Acessoptions =productDetail && productDetail.totalStockQuantity > 0
       ? Array.from(
         { length: Math.floor(productDetail.totalStockQuantity) },
         (_, i) => ({

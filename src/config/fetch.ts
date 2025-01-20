@@ -2,38 +2,40 @@ import axios from "axios";
 import { Order } from "types/types";
 
 export const getAllproducts = async () => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`,
-    {
-      next: { tags: ['products'] },
-    },
-  );
-  if (!response.ok) {
-    throw new Error('Failed to fetch products');
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`,
+      {
+        next: { tags: ['products'] }
+      }
+    );
+    const productsData = await response.json();
+    const products =productsData.products;
+    return products;   
+  } catch (error:any) {
+    console.log(error, "error")
+    throw new Error(error?.message || "Internal server error")
   }
-
-  const productsData = await response.json();
-  const products = productsData.products;
-  return products;
+ 
 };
 
 
 export const getAlladsproducts = async () => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/addsOn_product/getAllproducts`,
-    {
-      next: { tags: ['products'] },
-    },
-  );
-  if (!response.ok) {
-    throw new Error('Failed to fetch products');
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`,
+      {
+        next: { tags: ['products'] }
+      }
+    );
+    const productsData = await response.json();
+    const products = productsData.products;
+    return products;    
+  } catch (error) {
+    console.log(error, "error")
   }
 
-  const productsData = await response.json();
-  const products = productsData.products;
-  return products;
 };
-
 
 
 export const getAllCategories = async () => {
@@ -43,13 +45,12 @@ export const getAllCategories = async () => {
       next: { tags: ['categories'] },
     },
   );
-  if (!response.ok) {
-    throw new Error('Failed to fetch products');
-  }
-
+ 
   const categories = await response.json();
   return categories;
 };
+
+
 
 export const fetchOrderHistory = async (token: any) => {
   try {

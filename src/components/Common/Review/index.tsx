@@ -84,6 +84,7 @@ const Review: React.FC<ReviewProps> = ({
       });
       await fetchReviews(productId);
     } catch (error) {
+      console.log(error, "error")
       message.error("Error submitting the form:");
     } finally {
       setLoading(false);
