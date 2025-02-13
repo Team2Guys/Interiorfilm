@@ -370,6 +370,7 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
 
 
                         </div>
+                        
                         <div className="w-2/4">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                             Canonical Tag

@@ -114,7 +114,10 @@ export const initialValues: Product = {
 
 export const categoryInitialValues: Category = {
   name: '',
-  description: ""
+  description: "",
+  Meta_Title: "",
+  Meta_Description: "",
+  Canonical_Tag: "",
 };
 
 
