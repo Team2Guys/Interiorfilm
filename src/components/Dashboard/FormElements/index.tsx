@@ -49,7 +49,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
   const changeTextColor = () => {
     setIsOptionSelected(true);
   };
-console.log(changeTextColor,"changeTextColor")
+  console.log(changeTextColor, "changeTextColor")
   useLayoutEffect(() => {
     const CategoryHandler = async () => {
       try {
@@ -64,13 +64,13 @@ console.log(changeTextColor,"changeTextColor")
           hoverImage,
           ...EditInitialProductValues
         } = EditInitialValues as any;
-        console.log( posterImageUrl,
+        console.log(posterImageUrl,
           imageUrl,
           _id,
           createdAt,
           updatedAt,
           __v,
-          hoverImage,EditInitialProductValues)
+          hoverImage, EditInitialProductValues)
         imageUrl ? setImagesUrl(imageUrl) : null;
         posterImageUrl ? setposterimageUrl([posterImageUrl]) : null;
         console.log(hoverImage, "EditInitialValues.hoverImageUrl")
@@ -110,8 +110,8 @@ console.log(changeTextColor,"changeTextColor")
         : null;
       let url = `${process.env.NEXT_PUBLIC_BASE_URL}${updateFlag ? addProductUrl : "/api/addProduct"
         }`;
-        console.log(newValue, "newValuenewValue");
-      const response = await axios.post(url, newValue,{headers:headers});
+      console.log(newValue, "newValuenewValue");
+      const response = await axios.post(url, newValue, { headers: headers });
       console.log(response, "response");
       Toaster("success", updateFlag ? "Product has been sucessufully Updated !" : "Product has been sucessufully Created !");
       setProductInitialValue(AddproductsinitialValues);
@@ -214,43 +214,43 @@ console.log(changeTextColor,"changeTextColor")
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
 
                           <div>
-                          {posterimageUrl.map((item: any, index) => {
-                            return (
-                              <>
-                              <div
-                                className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
-                                key={index}
-                                >
-                              
-                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
-                                  <RxCross2
-                                    className="cursor-pointer text-red-500 hover:text-red-700"
-                                    size={17}
-                                    onClick={() => {
-                                      ImageRemoveHandler(
-                                        item.public_id,
-                                        setposterimageUrl
-                                      );
-                                    }}
+                            {posterimageUrl.map((item: any, index) => {
+                              return (
+                                <>
+                                  <div
+                                    className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                                    key={index}
+                                  >
+
+                                    <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
+                                      <RxCross2
+                                        className="cursor-pointer text-red-500 hover:text-red-700"
+                                        size={17}
+                                        onClick={() => {
+                                          ImageRemoveHandler(
+                                            item.public_id,
+                                            setposterimageUrl
+                                          );
+                                        }}
+                                      />
+                                    </div>
+                                    <Image
+                                      key={index}
+                                      className="object-cover w-full h-full"
+                                      width={300}
+                                      height={400}
+                                      src={item?.imageUrl}
+                                      alt={`productImage-${index}`}
                                     />
-                                </div>
-                                <Image
-                                  key={index}
-                                  className="object-cover w-full h-full"
-                                  width={300}
-                                  height={400}
-                                  src={item?.imageUrl}
-                                  alt={`productImage-${index}`}
-                                  />
-                          </div>
+                                  </div>
 
-                          <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText} onChange={(e) =>
+                                  <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText} onChange={(e) =>
                                     handlealtTextposterimageUrl(index, String(e.target.value))
-                                  }/>
+                                  } />
 
-                        </>
-                            );
-                          })}
+                                </>
+                              );
+                            })}
                           </div>
                         </div>
                       ) : (
@@ -572,23 +572,23 @@ console.log(changeTextColor,"changeTextColor")
 
                     </div>
 
-               
-                        {withoutVariation.map((inputField, index) => (
-                          <div key={index} className="mb-4">
 
-                            <Field
-                              type={inputField.type}
-                              name={inputField.name}
+                    {withoutVariation.map((inputField, index) => (
+                      <div key={index} className="mb-4">
 
-                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary "
-                            />
-                            <ErrorMessage
-                              name={inputField.name}
-                              component="div"
-                              className="text-red-500"
-                            />
-                          </div>
-                        ))}
+                        <Field
+                          type={inputField.type}
+                          name={inputField.name}
+
+                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary "
+                        />
+                        <ErrorMessage
+                          name={inputField.name}
+                          component="div"
+                          className="text-red-500"
+                        />
+                      </div>
+                    ))}
 
                   </div>
 
@@ -856,44 +856,44 @@ console.log(changeTextColor,"changeTextColor")
                           return (
                             <div key={index}>
 
-                            <div
-                              className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
-                              
+                              <div
+                                className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+
                               >
-                              <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
-                                <RxCross2
-                                  className="cursor-pointer text-red-500 hover:text-red-700"
-                                  size={17}
-                                  onClick={() => {
-                                    ImageRemoveHandler(
-                                      item.public_id,
-                                      sethoverImage
-                                    );
-                                  }}
+                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full">
+                                  <RxCross2
+                                    className="cursor-pointer text-red-500 hover:text-red-700"
+                                    size={17}
+                                    onClick={() => {
+                                      ImageRemoveHandler(
+                                        item.public_id,
+                                        sethoverImage
+                                      );
+                                    }}
                                   />
-                              </div>
-                              <Image
-                                key={index}
-                                className="object-cover w-full h-full"
-                                width={300}
-                                height={400}
-                                src={item?.imageUrl}
-                                alt={`productImage-${index}`}
+                                </div>
+                                <Image
+                                  key={index}
+                                  className="object-cover w-full h-full"
+                                  width={300}
+                                  height={400}
+                                  src={item?.imageUrl}
+                                  alt={`productImage-${index}`}
                                 />
+                              </div>
+                              <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText} onChange={(e) =>
+                                handlealtTextHover(index, String(e.target.value))
+                              } />
                             </div>
-                            <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText} onChange={(e) =>
-                                    handlealtTextHover(index, String(e.target.value))
-                                  }/>
-                        </div>
                           );
                         })}
                       </div>
                     ) : (
                       <Imageupload sethoverImage={sethoverImage} />
                     )}
-                    </div>
+                  </div>
 
-                    <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
+                  <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                       <h3 className="font-medium text-black dark:text-white">
                         Product Images
@@ -904,54 +904,54 @@ console.log(changeTextColor,"changeTextColor")
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
                         {imagesUrl.map((item: any, index) => {
                           return (
-                            <div  key={index}>
+                            <div key={index}>
 
-                            <div
-                              className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
-                             
+                              <div
+                                className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+
                               >
-                              <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full z-10">
-                                <RxCross2
-                                  className="cursor-pointer btext-red-500 hover:text-red-700"
-                                  size={17}
-                                  onClick={() => {
-                                    console.log("funciton called");
-                                    ImageRemoveHandler(
-                                      item.public_id,
-                                      setImagesUrl
-                                    );
-                                  }}
+                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full z-10">
+                                  <RxCross2
+                                    className="cursor-pointer btext-red-500 hover:text-red-700"
+                                    size={17}
+                                    onClick={() => {
+                                      console.log("funciton called");
+                                      ImageRemoveHandler(
+                                        item.public_id,
+                                        setImagesUrl
+                                      );
+                                    }}
                                   />
-                              </div>
-                              <div key={index} className=" relative ">
-                                <div className="h-[100px] w-full overflow-hidden">
-                                  <Image
-                                    className="object-cover w-full h-full"
-                                    width={300}
-                                    height={200}
-                                    src={item.imageUrl}
-                                    alt={`productImage-${index}`}
+                                </div>
+                                <div key={index} className=" relative ">
+                                  <div className="h-[100px] w-full overflow-hidden">
+                                    <Image
+                                      className="object-cover w-full h-full"
+                                      width={300}
+                                      height={200}
+                                      src={item.imageUrl}
+                                      alt={`productImage-${index}`}
                                     />
+                                  </div>
+
+                                  <input
+                                    type="number"
+                                    placeholder="Add Image Index"
+                                    className=" rounded-b-md p-2 text-sm focus:outline-none w-full "
+                                    value={item.imageIndex}
+                                    onChange={(e) =>
+                                      handleImageIndex(index, Number(e.target.value))
+                                    }
+                                  />
+
                                 </div>
 
-                                <input
-                                  type="number"
-                                  placeholder="Add Image Index"
-                                  className=" rounded-b-md p-2 text-sm focus:outline-none w-full "
-                                  value={item.imageIndex}
-                                  onChange={(e) =>
-                                    handleImageIndex(index, Number(e.target.value))
-                                  }
-                                  />
-
                               </div>
+                              <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText} onChange={(e) =>
+                                handlealtText(index, String(e.target.value))
+                              } />
 
                             </div>
-                            <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText}  onChange={(e) =>
-                                    handlealtText(index, String(e.target.value))
-                                  }/>
-                                  
-                                  </div>
                           );
                         })}
                       </div>

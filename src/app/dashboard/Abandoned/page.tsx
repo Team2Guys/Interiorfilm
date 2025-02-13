@@ -10,7 +10,7 @@ const Abundant  = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName={'Abundant Order'} />
+      <Breadcrumb pageName={'Abandoned Orders'} />
       <AbundantOrder/>
     </DefaultLayout>
   );

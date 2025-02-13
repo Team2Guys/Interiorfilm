@@ -194,11 +194,6 @@ export const AddproductsinitialValues: FormValues = {
   URL: "",
   Canonical_Tag: "",
   Images_Alt_Text: "",
-  // Og_title: "",
-  // Og_description:"" ,
-  // Og_Image:"" ,
-  // OgUrl:"",
-
 
 };
 

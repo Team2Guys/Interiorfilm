@@ -312,6 +312,8 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
                         ) : null}
                       </div>
 
+
+
                       <div>
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                           Description{" "}
@@ -339,6 +341,88 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
                           </div>
                         ) : null}
                       </div>
+
+
+
+                      <div className="flex gap-4">
+                        <div className="w-2/4">
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                            Meta Title
+                          </label>
+                          <input
+                            type="text"
+                            name="Meta_Title"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.Meta_Title}
+                            placeholder="Meta Title"
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                              ? "border-red-500"
+                              : ""
+                              }`}
+                          />
+                          {formik.touched.Meta_Title && formik.errors.Meta_Title ? (
+                            <div className="text-red text-sm">
+                              {formik.errors.errors as String}
+                            </div>
+                          ) : null}
+
+
+
+                        </div>
+                        <div className="w-2/4">
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                            Canonical Tag
+
+                          </label>
+                          <input
+                            onBlur={formik.handleBlur}
+
+                            type="text"
+                            name="Canonical_Tag"
+                            onChange={formik.handleChange}
+                            value={formik.values.Canonical_Tag}
+                            placeholder="Canonical Tag"
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                              ? "border-red-500"
+                              : ""
+                              }`}
+
+
+                          />
+
+                          {formik.touched.Canonical_Tag && formik.errors.Canonical_Tag ? (
+                            <div className="text-red text-sm">
+                              {formik.errors.code as String}
+                            </div>
+                          ) : null}
+                        </div>
+
+
+                      </div>
+                      <div>
+                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                          Meta Description
+
+                        </label>
+                        <textarea
+                          name="Meta_Description"
+                          onChange={formik.handleChange}
+                          value={formik.values.Meta_Description}
+                          placeholder="Meta Description"
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.description &&
+                            formik.errors.Meta_Description
+                            ? "border-red-500"
+                            : ""
+                            }`}
+                        />
+                        {formik.touched.Meta_Description && formik.errors.Meta_Description ? (
+                          <div className="text-red text-sm">
+                            {formik.errors.code as String}
+                          </div>
+                        ) : null}
+                      </div>
+
 
                       <div className="flex full gap-4">
                         <div className="w-[50%]">

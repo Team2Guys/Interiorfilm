@@ -19,6 +19,16 @@ export async function generateMetadata({ params }: Props,): Promise<Metadata> {
   const { products } = productResponse.data
 
   let Product = products?.find((item: any) => generateSlug(item.name) == params.productname)
+  if(!Product){
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`
+    );
+    const Allproducts = await response.json();
+   Product = Allproducts?.products?.find((item: any) => generateSlug(item.name) == params.productname)
+
+  }
+
+  console.log(Product, "Product")
 
   let ImageUrl = Product?.posterImageUrl?.imageUrl || "interiorfilm";
   let alt = Product?.Images_Alt_Text || "Interior films";

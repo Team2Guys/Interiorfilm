@@ -50,6 +50,10 @@ const Products = () => {
     code: editProduct && editProduct.code,
     salePrice: editProduct && editProduct.salePrice,
     totalStockQuantity: editProduct && editProduct.totalStockQuantity,
+    Meta_Title:editProduct &&  editProduct?.Meta_Title,
+    Meta_Description:editProduct &&  editProduct?.Meta_Description,
+    Canonical_Tag:editProduct &&  editProduct?.Canonical_Tag ,
+
 
   };  
 
