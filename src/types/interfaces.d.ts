@@ -47,6 +47,9 @@ export interface USRPROPS {
   export interface Category {
     name: string;
     description: string
+    Meta_Description?: string
+    Canonical_Tag?: string
+    Meta_Title?: string
   
   }
 

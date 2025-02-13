@@ -19,7 +19,11 @@ import Cookies from "js-cookie";
 
 interface editCategoryNameType {
   name: string;
-  description: string
+  description: string,
+  Meta_Description?: string
+  Canonical_Tag?: string
+  Meta_Title?: string
+
 }
 
 interface editCategoryProps {
@@ -29,7 +33,13 @@ interface editCategoryProps {
 }
 
 const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategoryProps) => {
-  let CategoryName = editCategory && editCategory.name ? { name: editCategory.name, description: editCategory.description } : null;
+  let CategoryName = editCategory && editCategory.name ? { name: editCategory.name,
+     description: editCategory.description,
+     Meta_Title:editCategory.Meta_Title ,
+     Canonical_Tag:editCategory.Canonical_Tag ,
+     Meta_Description:editCategory.Meta_Description 
+    
+    } : null;
   let CategorImageUrl = editCategory && editCategory.posterImageUrl;
   const [posterimageUrl, setposterimageUrl] = useState<any[] | null >(CategorImageUrl ? [CategorImageUrl] : null);
   const [loading, setloading] = useState<boolean>(false);
@@ -55,7 +65,7 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
       let url = `${process.env.NEXT_PUBLIC_BASE_URL}${updateFlag ? addProductUrl : "/api/AddCategory"
         }`;
 
-      const response = await axios.post(url, newValue, {headers: {token}});
+      const response = await axios.post(url, newValue, {headers: {token:finalToken}});
       console.log(response, "response");
       setloading(false);
       Toaster(
@@ -188,6 +198,90 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
                           </div>
                         ) : null}
                       </div>
+
+
+                      
+                      
+                      <div className="flex gap-4">
+                        <div className="w-2/4">
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                            Meta Title
+                          </label>
+                          <input
+                            type="text"
+                            name="Meta_Title"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.Meta_Title}
+                            placeholder="Meta Title"
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                              ? "border-red-500"
+                              : ""
+                              }`}
+                          />
+                          {formik.touched.Meta_Title && formik.errors.Meta_Title ? (
+                            <div className="text-red text-sm">
+                              {formik.errors.Meta_Title as String}
+                            </div>
+                          ) : null}
+
+
+
+                        </div>
+                        
+                        <div className="w-2/4">
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                            Canonical Tag
+
+                          </label>
+                          <input
+                            onBlur={formik.handleBlur}
+
+                            type="text"
+                            name="Canonical_Tag"
+                            onChange={formik.handleChange}
+                            value={formik.values.Canonical_Tag}
+                            placeholder="Canonical Tag"
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                              ? "border-red-500"
+                              : ""
+                              }`}
+
+
+                          />
+
+                          {formik.touched.Canonical_Tag && formik.errors.Canonical_Tag ? (
+                            <div className="text-red text-sm">
+                              {formik.errors.Canonical_Tag as String}
+                            </div>
+                          ) : null}
+                        </div>
+
+
+                      </div>
+                      <div>
+                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                          Meta Description
+
+                        </label>
+                        <textarea
+                          name="Meta_Description"
+                          onChange={formik.handleChange}
+                          value={formik.values.Meta_Description}
+                          placeholder="Meta Description"
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.description &&
+                            formik.errors.Meta_Description
+                            ? "border-red-500"
+                            : ""
+                            }`}
+                        />
+                        {formik.touched.Meta_Description && formik.errors.Meta_Description ? (
+                          <div className="text-red text-sm">
+                            {formik.errors.Meta_Description as String}
+                          </div>
+                        ) : null}
+                      </div>
+
                     </div>
 
                   </div>
@@ -209,4 +303,4 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
   );
 };
 
-export default ProtectedRoute(FormLayout);
+export default FormLayout
