@@ -8,6 +8,27 @@ import PreFooter from "components/Layout/Footer/PreFooter";
 import HomeAccordian from "components/widgets/HomeAccordian";
 import { offers } from "data/sideMenuData";
 import PDF from "components/PDF/PDF";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Premium Quality, Vinyl Wraps, Quick Installation | Interior Film ',
+  description: 'Discover premium vinyl wraps to match any style, from sleek modern designs to cosy, traditional looks. We have products that suit everyone.',
+  openGraph: {
+    title: 'Premium Quality, Vinyl Wraps, Quick Installation | Interior Film ',
+    description: 'Discover premium vinyl wraps to match any style, from sleek modern designs to cosy, traditional looks. We have products that suit everyone.',
+    url: '/',
+    images: [
+      {
+        url: '/',
+        alt: 'Interior Film',
+      },
+    ],
+  },
+  alternates: {
+    canonical: '',
+  },
+};
+
 export default function Home() {
   return (
     <>

@@ -5,6 +5,28 @@ import React from 'react'
 import about from "../../../public/images/about.png"
 import Offer from 'components/widgets/Offer/Offer'
 import { offers } from 'data/sideMenuData'
+import { Metadata } from 'next'
+
+
+export const metadata: Metadata = {
+  title: 'Top Notch Quality, Quick Delivery, Affordable Prices | Interior Film',
+  description: 'Interior Film, based in Dubai, offers top-quality vinyl wrapping solutions from Yellowzone General Trading. Expert service for all your wrapping needs.',
+  openGraph: {
+    title: 'Top Notch Quality, Quick Delivery, Affordable Prices | Interior Film',
+    description: 'Interior Film, based in Dubai, offers top-quality vinyl wrapping solutions from Yellowzone General Trading. Expert service for all your wrapping needs.',
+    url: '/',
+    images: [
+      {
+        url: '/',
+        alt: 'Interior Film',
+      },
+    ],
+  },
+  alternates: {
+    canonical: '',
+  },
+};
+
 
 const About = () => {
   return (
