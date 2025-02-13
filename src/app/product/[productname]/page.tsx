@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props,): Promise<Metadata> {
       alt: alt}
   ];
   let title = Product && Product.Meta_Title ? Product.Meta_Title : "Interior Films"
-  let description = Product && Product.description ? Product.description : "Welcome to Interior films"
+  let description = Product && Product.Meta_Description ? Product.Meta_Description : "Welcome to Interior films"
 let url = `${fullUrl}/product/${params.productname}`
   return {
     title: title,

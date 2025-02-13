@@ -51,14 +51,14 @@ const Products = () => {
     salePrice: editProduct && editProduct.salePrice,
     totalStockQuantity: editProduct && editProduct.totalStockQuantity,
     hoverImageUrl: editProduct && editProduct.hoverImageUrl,
-    Meta_Title:editProduct && editProduct?.Meta_Title,
-    Meta_Description:editProduct && editProduct?.Meta_Description,
-    URL:editProduct && editProduct?.URL,
-    Canonical_Tag:editProduct && editProduct?.Canonical_Tag,
-    Images_Alt_Text:editProduct && editProduct?.Images_Alt_Text,
-    Og_title:editProduct && editProduct?.Og_title,
-    Og_Image:editProduct && editProduct?.Og_Image,
-    OgUrl:editProduct && editProduct?.OgUrl,
+    Meta_Title:editProduct &&  editProduct?.Meta_Title,
+    Meta_Description:editProduct &&  editProduct?.Meta_Description,
+    URL:editProduct &&  editProduct?.URL ,
+    Canonical_Tag:editProduct &&  editProduct?.Canonical_Tag ,
+    Images_Alt_Text:editProduct &&  editProduct?.Images_Alt_Text ,
+    Og_title:editProduct &&  editProduct?.Og_title ,
+    Og_Image:editProduct &&  editProduct?.Og_Image ,
+    OgUrl:editProduct &&  editProduct?.OgUrl ,
   };  
 
 
