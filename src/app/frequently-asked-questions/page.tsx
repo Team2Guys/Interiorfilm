@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: '',
+    canonical: '/frequently-asked-questions',
   },
 };
 
