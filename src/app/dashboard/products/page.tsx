@@ -52,13 +52,13 @@ const Products = () => {
     totalStockQuantity: editProduct && editProduct.totalStockQuantity,
     hoverImageUrl: editProduct && editProduct.hoverImageUrl,
     Meta_Title:editProduct && editProduct?.Meta_Title,
-    Meta_Description:editProduct && editProduct?.Meta_Title,
-    URL:editProduct && editProduct?.Meta_Title,
-    Canonical_Tag:editProduct && editProduct?.Meta_Title,
-    Images_Alt_Text:editProduct && editProduct?.Meta_Title,
-    Og_title:editProduct && editProduct?.Meta_Title,
-    Og_Image:editProduct && editProduct?.Meta_Title,
-    OgUrl:editProduct && editProduct?.Meta_Title,
+    Meta_Description:editProduct && editProduct?.Meta_Description,
+    URL:editProduct && editProduct?.URL,
+    Canonical_Tag:editProduct && editProduct?.Canonical_Tag,
+    Images_Alt_Text:editProduct && editProduct?.Images_Alt_Text,
+    Og_title:editProduct && editProduct?.Og_title,
+    Og_Image:editProduct && editProduct?.Og_Image,
+    OgUrl:editProduct && editProduct?.OgUrl,
   };  
 
 
