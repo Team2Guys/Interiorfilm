@@ -25,6 +25,8 @@ export const validateForm = (formData: { fullName: string; email: string; passwo
     return 'Confirm password and password do not match.';
   }
 
+
+  
   if (!formData.fullName || !formData.email || !formData.password) {
     return 'All fields are required.';
   }
