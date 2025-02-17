@@ -62,9 +62,7 @@ const ViewOrder = () => {
       dataIndex: 'totalPrice',
       key: 'totalPrice',
       render: (text: any, record: any) => {
-        const transactionAmount = record.totalPrice
-          ? record.totalPrice
-          : 'Amount not Available';
+        const transactionAmount =  record.products.reduce((accum:number, curr:any)=>{return accum+=curr.totalPrice},0)
         return <span>{transactionAmount}</span>;
       },
     },
@@ -214,6 +212,9 @@ const ViewOrder = () => {
 
     setFilteredOrders(filteredData);
   };
+
+
+  console.log(filteredOrders, "filteredOrders")
 
   return (
     <div>
