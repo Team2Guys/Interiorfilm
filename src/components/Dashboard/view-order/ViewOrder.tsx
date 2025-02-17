@@ -62,18 +62,13 @@ const ViewOrder = () => {
       dataIndex: 'totalPrice',
       key: 'totalPrice',
       render: (text: any, record: any) => {
-        const transactionAmount =  record.products.reduce((accum:number, curr:any)=>{return accum+=curr.totalPrice},0)
-        return <span>{transactionAmount}</span>;
+        let shipmentFee = record.products[0]?.shippment_Fee;
+        let fee = shipmentFee ? (shipmentFee === 'Free' || shipmentFee === 'undefine' ? 0 : Number(shipmentFee)) : 0
+
+        const transactionAmount = record.products.reduce((accum: number, curr: any) => { return accum += curr.totalPrice }, 0)
+        return <span>{transactionAmount + fee}</span>;
       },
     },
-    // {
-    //   title: 'Transaction ID',
-    //   dataIndex: 'transactionId',
-    //   key: 'transactionId',
-    //   render: (text: any, record: any) => (
-    //     <span>{record.transactionId || 'ID Not Available'}</span>
-    //   ),
-    // },
     {
       title: 'Date',
       dataIndex: 'date',
@@ -162,12 +157,12 @@ const ViewOrder = () => {
     });
 
     const filteredGroupedOrders = Object.values(grouped)
-    .filter(order => order.products.length > 0)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      .filter(order => order.products.length > 0)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  setGroupedOrders(filteredGroupedOrders);
-  setFilteredOrders(filteredGroupedOrders); 
-};
+    setGroupedOrders(filteredGroupedOrders);
+    setFilteredOrders(filteredGroupedOrders);
+  };
 
   const getAllOrder = async () => {
     const token = Cookies.get("2guysAdminToken");
@@ -184,8 +179,11 @@ const ViewOrder = () => {
           },
         },
       );
-      groupOrders(response.data);
-      console.log(response.data,"ordersordersorders")
+      const sortedOrders = response.data.sort((a: any, b: any) => {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      });
+      groupOrders(sortedOrders);
+      console.log(response.data, "ordersordersorders")
     } catch (error) {
       console.log('Error fetching data:', error);
     } finally {
@@ -214,7 +212,7 @@ const ViewOrder = () => {
   };
 
 
-  console.log(filteredOrders, "filteredOrders")
+  let shippingfree = selectedProducts[0]?.shippment_Fee;
 
   return (
     <div>
@@ -255,6 +253,7 @@ const ViewOrder = () => {
                     <p>Price: {product.price} {product.currency}</p>
                     <p>Quantity: {product.count}</p>
                     <p>Length: {product.length}</p>
+                    {shippingfree ? <p>Shipping Fee: {shippingfree}</p> : null}
                   </div>
                 </div>
               )

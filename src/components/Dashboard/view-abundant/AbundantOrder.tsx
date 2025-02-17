@@ -57,6 +57,18 @@ const ViewOrder = () => {
         <span>{record.paymentStatus ? 'Paid' : 'Not Paid'}</span>
       ),
     },
+    {
+      title: 'Amount',
+      dataIndex: 'totalPrice',
+      key: 'totalPrice',
+      render: (text: any, record: any) => {
+        let shipmentFee = record.products[0]?.shippment_Fee;
+let fee = shipmentFee  ? (shipmentFee === 'Free' || shipmentFee === 'undefine' ? 0 : Number(shipmentFee)) : 0
+    
+        const transactionAmount =  record.products.reduce((accum:number, curr:any)=>{return accum+=curr.totalPrice},0)
+        return <span>{transactionAmount + fee }</span>;
+      },
+    },
 
     {
       title: 'Date',
@@ -196,6 +208,9 @@ const ViewOrder = () => {
     setFilteredOrders(filteredData);
   };
 
+  console.log(filteredOrders, "filteredOrders")
+
+let shippingfree =selectedProducts[0]?.shippment_Fee;
   return (
     <div>
       {orderLoading ? (
@@ -223,8 +238,10 @@ const ViewOrder = () => {
             pagination={false}
             rowKey="_id"
           />
-          <Modal title="Order Detail" visible={visible} onOk={handleOk} onCancel={handleCancel} footer={null}>
-            {selectedProducts.map((product) => (
+          <Modal title="Order Detail" open={visible} onOk={handleOk} onCancel={handleCancel} footer={null}>
+            {selectedProducts.map((product) => {
+
+              return (
               <div className='flex gap-2 items-center mt-2' key={product._id}>
                 <Image className='rounded-md' width={100} height={100} src={product.imageUrl} alt={product.name} />
                 <div>
@@ -232,9 +249,12 @@ const ViewOrder = () => {
                   <p>Price: {product.price} {product.currency}</p>
                   <p>Quantity: {product.count}</p>
                   <p>Length: {product.length}</p>
+                  {shippingfree ? <p>Shipping Fee: {shippingfree}</p> : null}
                 </div>
               </div>
-            ))}
+
+              )
+})}
           </Modal>
         </>
       )}
