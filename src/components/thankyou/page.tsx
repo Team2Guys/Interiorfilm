@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, { useRef } from 'react';
 import Overlay from 'components/widgets/Overlay/Overlay'
 
 
@@ -28,7 +28,7 @@ interface PaymentQueryParams {
 
 const Thankyou = () => {
   const searchParams = useSearchParams()
-
+  const hasFetched = useRef(false);
 
 
   const id = searchParams.get('id')
@@ -82,9 +82,11 @@ const Thankyou = () => {
 
 
   useEffect(() => {
-    dbFunctionHandler()
-
-  }, [])
+    if (!hasFetched.current) {
+      hasFetched.current = true;
+      dbFunctionHandler();
+    }
+  }, []);
 
   return (
     <>
