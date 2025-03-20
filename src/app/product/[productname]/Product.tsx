@@ -9,6 +9,7 @@ import PRODUCTS_TYPES from "types/interfaces";
 import ProductDetails from "components/product_detail/ProductDetails";
 import { ProductSkeleton } from "components/Skeleton-loading/ProductSkelton";
 import Accordion from "components/widgets/Accordion";
+import { useRouter } from "next/navigation";
 
 const Product = ({ productname }: { productname: string }) => {
   const parsedProduct = productname ? productname : null;
@@ -17,7 +18,7 @@ const Product = ({ productname }: { productname: string }) => {
   const [productDetail, setProductDetail] = useState<PRODUCTS_TYPES | null>(null);
   const [productsLoading, setProductsLoading] = useState<boolean>(false);
   const [categoryName, setCategoryName] = useState<string | undefined>();
-
+  const router = useRouter();
   const productHandler = async () => {
     try {
       setProductsLoading(true);
@@ -56,6 +57,10 @@ const Product = ({ productname }: { productname: string }) => {
           setProductDetail(foundProductAdon);
           setProductsAdon(adsonProducts.data.products)
           setCategoryName('accessories');
+          if(!foundProductAdon) {
+            router.push('/404');
+            return;
+          }
         }
       }
     } catch (error) {
@@ -68,8 +73,6 @@ const Product = ({ productname }: { productname: string }) => {
   useEffect(() => {
     productHandler();
   }, [parsedProduct]);
-
-
   // const fetchReviews = async (productId: string) => {
   //   try {
   //     const response = await axios.get(
