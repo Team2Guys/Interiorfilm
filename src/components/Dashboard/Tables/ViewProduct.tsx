@@ -44,7 +44,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
 
   const canAddProduct=loggedInUser && (loggedInUser.role =='Admin' ?   loggedInUser.canAddProduct : true ) 
   const canDeleteProduct=loggedInUser && (loggedInUser.role =='Admin' ?  loggedInUser.canDeleteProduct : true )
-  const canEditproduct = loggedInUser && (loggedInUser.role =='Admin'  ? loggedInUser.canEditproduct : true )  
+  const canEditproduct = loggedInUser && (loggedInUser.role =='Admin'  ? loggedInUser.canEditProduct : true )  
   console.log(canEditproduct, "canAddProduct"
   )
 
