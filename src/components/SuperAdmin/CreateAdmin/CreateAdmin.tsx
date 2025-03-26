@@ -67,9 +67,13 @@ const CreateAdmin = ({ setselecteMenu }: any) => {
 
   const handleCheckboxChange: CheckboxProps['onChange'] = (e: any) => {
     const { name, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: checked
+  
+    setFormData((prevFormData) => {
+      const updatedFormData = {
+        ...prevFormData,
+        [name]: checked,
+      };
+      return updatedFormData;
     });
   };
 

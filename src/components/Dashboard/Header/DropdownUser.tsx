@@ -55,6 +55,8 @@ const DropdownUser = () => {
     }
 
   }
+
+  const profilephotoUrl = (loggedInUser && loggedInUser.profilePhoto) && Object.keys(loggedInUser.profilePhoto).length > 0 ? loggedInUser?.profilePhoto?.imageUrl: "/images/dummy-avatar.jpg"
   return (
     <div className="relative">
       <Link
@@ -75,7 +77,7 @@ const DropdownUser = () => {
           <div className="h-14 w-14 rounded-full overflow-hidden">
             <Image
 
-              src={loggedInUser && loggedInUser.profilePhoto ? loggedInUser.profilePhoto.imageUrl : "/images/dummy-avatar.jpg"}
+              src={profilephotoUrl}
 
               width={55}
               height={55}
