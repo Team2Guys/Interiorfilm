@@ -12,12 +12,12 @@ const TopNav = () => {
       <Container className="flex justify-between lg:grid grid-cols-1 md:grid-cols-3 text-center space-y-1 lg:space-y-0 items-center ">
         <div className="flex flex-col lg:flex-row items-start lg:items-center  justify-center md:justify-start  gap-1 lg:gap-4 xl:gap-10">
           <Link
-            href={`tel:+971 52 191 9327`}
+            href={`tel:+971 04 589 9888`}
             className="flex gap-1 lg:gap-2 items-center text-white"
           >
             <BsTelephone className="text-white text-12 lg:text-20" />
             <div className="text-9 md:text-10 lg:text-12 font-normal">
-              +971 52 191 9327
+              +971 04 589 9888
             </div>
           </Link>
           <Link
