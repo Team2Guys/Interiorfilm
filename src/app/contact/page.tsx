@@ -108,13 +108,14 @@ const Contact = () => {
                   }
                   className="md:text-12 lg:text-base"
                 >
-                  Shop No.6 Oud Metha Bldg, Block A - Oud Metha - Dubai, UAE
+                  ELITE CONCEPTS GENERAL TRADING LLC <br />
+                Shop 5 Khalil Al Sayegh Building, Oud Metha, Umm Hurrair Dubai UAE
                 </Link>
               </div>
               <div className="flex gap-2 items-center">
                 <FiPhone size={20} />
-                <Link target="_blank" href={"tel:+971 52 191 9327"}>
-                  +971 52 191 9327
+                <Link target="_blank" href={"tel:+971 04 589 9888"}>
+                  +971 04 589 9888
                 </Link>
               </div>
 
