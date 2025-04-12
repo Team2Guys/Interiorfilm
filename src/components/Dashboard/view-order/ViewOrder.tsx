@@ -247,9 +247,10 @@ const ViewOrder = () => {
               return (
 
                 <div className='flex gap-2 items-center mt-2' key={product._id}>
-                  <Image className='rounded-md' width={100} height={100} src={product.imageUrl} alt={product.name} />
+                  <Image className='rounded-md h-32 w-32' width={100} height={100} src={product.imageUrl} alt={product.name} />
                   <div>
                     <h3>{product.name}</h3>
+                    <p>Code: {product.code}</p>
                     <p>Price: {product.price} {product.currency}</p>
                     <p>Quantity: {product.count}</p>
                     <p>Length: {product.length}</p>
