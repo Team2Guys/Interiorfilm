@@ -70,7 +70,7 @@ const OrderHistory = ({ orderHistory }: { orderHistory?: Order[] }) => {
                               <div className="col-span-12 md:col-span-10 2xl:space-y-2">
                                  <p className="font-bold">{product.name}</p>
                                  <p className="font-medium">
-                                    <span>{order.country === 'United Arab Emirates' ? 'AED' : product.currency}</span> {product.totalPrice}
+                                    <span>{order.country === 'United Arab Emirates' ? <span className="font-currency font-medium"></span> : product.currency}</span> {product.totalPrice}
                                  </p>
                                  <p className="text-12">
                                     {product.checkout ? "This product has been checked out." : !product.paymentStatus ? "Pending checkout." : "Paid"}

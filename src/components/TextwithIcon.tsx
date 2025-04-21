@@ -14,7 +14,7 @@ const TextwithIcon = ({ Icon, title, subTitle, titleCSS, SubtitleCSS}: IIconText
   {Icon && Icon}
   <div className='flex flex-col w-full'>
     <h1 className={`sm:font-semibold font-medium text-13 md:text-[20px] ${titleCSS && titleCSS}`}>{title}</h1>
-    <h3 className={`text-11 sm:text-base ${SubtitleCSS && SubtitleCSS}`}>{subTitle}</h3>
+    <h3 className={`text-11 sm:text-base ${SubtitleCSS && SubtitleCSS}`} dangerouslySetInnerHTML={{ __html: subTitle}}></h3>
   </div>
 </div>
 

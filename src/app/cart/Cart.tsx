@@ -144,7 +144,7 @@ const Cart = ({products}: {products: PRODUCTS_TYPES[]}) => {
         <div className="col-span-12 md:col-span-4 2xl:col-span-2 ">
           <p className="text-13 font-medium">Free Delivery</p>
           <div className="flex justify-between items-center">
-            <p className="text-11">Applies to orders of above AED 250.</p>
+            <p className="text-11">Applies to orders of above <span className="font-currency font-normal"></span> 250.</p>
             <Link
               href={"/shipment-policy"}
               className="text-11 font-medium underline"
@@ -200,16 +200,16 @@ const Cart = ({products}: {products: PRODUCTS_TYPES[]}) => {
                 </p>
 
                 <p className="font-semibold sm:text-15 w-full flex justify-between text-[#6F6969]">
-                  Subtotal:<span>AED {total}</span>
+                  Subtotal:<span><span className="font-currency font-semibold"></span> {total}</span>
                 </p>
-                <p className="font-normal  w-full flex justify-between text-[#6F6969]">
-                  Shipment Fee:<span> {total > 250 ? "Free" : "AED 20"}</span>
+                <p className="font-normal w-full flex justify-between text-[#6F6969]">
+                  Shipment Fee:<span> {total > 250 ? "Free" : <><span className="font-currency font-normal"></span> 20</>}</span>
                 </p>
 
                 <div className="flex flex-col gap-1 text-12 text-[#6F6969] border-t pt-3">
                   <p className="font-bold text-lg items-center w-full text-black flex justify-between">
                     Grand total:
-                    <span>AED {total < 250 ? ` ${20 + total}` : total}</span>
+                    <span><span className="font-currency font-bold"></span> {total < 250 ? ` ${20 + total}` : total}</span>
                   </p>
 
                   <p className="flex items-center gap-1">

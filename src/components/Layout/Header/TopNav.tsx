@@ -35,7 +35,7 @@ const TopNav = () => {
         <div>
           <p className="uppercase text-white text-9 md:text-11 lg:text-12 xl:text-14 whitespace-nowrap">
             <Link href={"/shipment-policy"} className="cursor-pointer hover:underline">Free shipping</Link> throughout
-            mainland UAE on all orders above AED 250
+            mainland UAE on all orders above <span className="font-currency font-normal"></span> 250
           </p>
         </div>
         <div className="flex items-center justify-center md:justify-end gap-3 ">
