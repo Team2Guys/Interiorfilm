@@ -12,7 +12,7 @@ const ShipmentPolicy: React.FC = () => {
         <h1 className='text-2xl font-bold'>Shipping policy</h1>
         {ShipmentPolicydata.map((item, index) => (
           <div key={index} className='space-y-3'>
-            <h2 className='text-xl font-bold'>{item.title}</h2>
+            <h2 className='text-xl font-bold' dangerouslySetInnerHTML={{ __html: item.title || ''}}></h2>
             <div>
             {item.text.includes('cs@interiorfilm.ae') ? (
                       <>
@@ -23,7 +23,7 @@ const ShipmentPolicy: React.FC = () => {
                         {item.text.split('cs@interiorfilm.ae')[1]}
                       </>
                     ) : (
-                      item.text
+                     <span dangerouslySetInnerHTML={{ __html: item.text}}></span>
                     )}
             </div>
             {item.listItems && (

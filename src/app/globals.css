@@ -8,6 +8,7 @@
   --antd-text-color: #000000;
   --antd-border-color: #d9d9d9;
   --primary:#FB701E;
+   --font-currency: 'currency', 'currency Fallback'
   /* --primary:#FF914E; */
 }
 
@@ -19,6 +20,10 @@
 
 .font-poppins-light {
   font-family: 'Poppins', sans-serif;
+}
+
+.font-currency {
+  font-family: var(--font-currency);
 }
 
 
