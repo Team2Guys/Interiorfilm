@@ -215,7 +215,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
                   <div className="space-y-1 w-8/12">
                     <h1 className="text-12 md:text-14 font-semibold">{item.name}</h1>
                     <p className="text-12 md:text-14">
-                      AED
+                    <span className="font-currency font-normal"></span>
                       <span>
                         {item.discountPrice || item.price}
                       </span>
@@ -252,7 +252,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
                 <div className="flex gap-2 items-center">
                   <h1 className="font-bold">Total: </h1>
                   <p>
-                      AED <span>
+                  <span className="font-currency font-bold"></span> <span>
                         {item.totalPrice !== null && item.totalPrice !== undefined && !isNaN(item.totalPrice)
                           ? item.totalPrice.toFixed()
                           : null}
@@ -267,7 +267,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
             </div>
             <div className="text-end mt-2 mb-2">
               <p className="font-bold">
-                Total: AED <span>{subtotal}</span>
+                Total: <span className="font-currency font-bold"></span> <span>{subtotal}</span>
               </p>
             </div>
             <p>*ALL ORDERS MAY TAKE 48 HOURS TO BE DELIVERED TO YOUR DOORSTEP</p>

@@ -49,6 +49,16 @@ export const futuraCyrillic = localFont({
   variable: '--font-futura',
 });
 
+const currency = localFont({ src: [
+  {
+    path: '../../public/fonts/currency-symbol-v2.otf',
+    weight: '400',
+    style: 'normal',
+  }
+],
+ variable: '--font-currency'
+});
+
 export const metadata: Metadata = {
   title: "Interior Film",
   description: "Welcome to Interior Films",
@@ -131,7 +141,7 @@ export default function RootLayout({
 
         </head>
 
-        <body className={font.className} >
+        <body className={`${font.className} ${currency.variable}`} >
           <GoogleTagManager gtmId="GTM-PFNKXKTR" />
           <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PFNKXKTR"
             height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
