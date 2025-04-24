@@ -112,7 +112,7 @@ const CheckoutData: React.FC<TableProps> = ({
         <div className="flex justify-between items-center">
           <h2 className="text-16">SUBTOTAL</h2>
           <h2 className="text-20">
-          <span className="font-currency font-normal"></span> <span>{subtotal}</span>
+          <span className="font-currency text-22"></span> <span>{subtotal}</span>
           </h2>
         </div>
         <hr className="w-full mx-auto border-[#D2D2D2]" />
@@ -122,7 +122,7 @@ const CheckoutData: React.FC<TableProps> = ({
           {shipmentFee === "Free"}
           <h2 className="text-16">
             <span className="text-20">
-              {subtotal > 250 ? "Free" : <><span className="font-currency font-normal"></span> {shipmentFee}</>}
+              {subtotal > 250 ? "Free" : <><span className="font-currency text-22"></span> {shipmentFee}</>}
             </span>
           </h2>
         </div>
@@ -131,7 +131,7 @@ const CheckoutData: React.FC<TableProps> = ({
         <div className="flex justify-between items-center">
           <h2 className="text-16 ">TOTAL</h2>
           <h2 className="text-20 ">
-          <span className="font-currency font-normal"></span>{" "}
+          <span className="font-currency text-22"></span>{" "}
             <span>
               {subtotal > 250 ? subtotal : Number(shipmentFee) + subtotal}
             </span>

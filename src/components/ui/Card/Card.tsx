@@ -397,7 +397,7 @@ console.log(error,selectedValue,"error")
             </p> */}
 
             <p className="text-black font-bold text-18 flex gap-1">
-            <span className="font-currency font-bold"></span>{" "}
+            <span className="font-currency font-bold text-[24px]"></span>{" "}
               <span
                 className={` text-20 ${product.discountPrice ? "text-red" : "text-black"
                   }`}
@@ -408,7 +408,7 @@ console.log(error,selectedValue,"error")
 
             {product.discountPrice > 0 && (
               <p className="line-through text-para text-xs font-medium">
-                <span className="font-currency font-medium"></span> <span className="">{product.discountPrice}</span>
+                <span className="font-currency font-medium text-15"></span> <span className="">{product.discountPrice}</span>
               </p>
             )}
           </div>

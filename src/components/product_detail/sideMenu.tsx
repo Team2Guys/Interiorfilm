@@ -151,7 +151,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ setAdsonProducts }) => {
         <div className="mt-4">
           <div className="flex justify-between text-lg font-semibold">
             <span>Total Price:</span>
-            <span><span className="font-currency font-semibold"></span> {totalPrice.toFixed(2)}</span>
+            <span><span className="font-currency text-20"></span> {totalPrice.toFixed(2)}</span>
           </div>
           <button
             className="mt-4 w-full bg-black text-white py-2 rounded-sm flex items-center justify-center cursor-pointer"
@@ -191,7 +191,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <FaStar className='text-[10px]' />
           </div>
         </div> */}
-        <div className="text-[14.92px] font-bold"><span className="font-currency font-bold"></span>: {product.discountPrice ? product.discountPrice : product.salePrice }</div>
+        <div className="text-[14.92px] font-bold"><span className="font-currency font-bold text-17"></span> {product.discountPrice ? product.discountPrice : product.salePrice }</div>
       </div>
     </div>
   );

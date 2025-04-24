@@ -63,10 +63,10 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products,loading }) => {
          
           <Swiper
             ref={swiperRef}
-            autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
-            }}
+            // autoplay={{
+            //   delay: 2500,
+            //   disableOnInteraction: false,
+            // }}
             breakpoints={{
               320: {
                 slidesPerView: 1.3,
