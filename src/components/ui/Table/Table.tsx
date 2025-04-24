@@ -315,7 +315,7 @@ const Table: React.FC<TableProps> = ({
                     } `}
                 >
                   <p>
-                  <span className="font-currency font-normal"></span>
+                  <span className="font-currency text-18"></span>{' '}
                     <span>
                       {pathName === "/wishlist"
                         ? product.discountPrice
@@ -370,7 +370,7 @@ const Table: React.FC<TableProps> = ({
                     } `}
                 >
                   <p>
-                  <span className="font-currency font-normal"></span>
+                  <span className="font-currency text-18"></span>{' '}
                     <span>
                       {product.discountPrice
                         ? product.discountPrice *
@@ -429,7 +429,7 @@ const Table: React.FC<TableProps> = ({
               <div className="text-center">
                 <p className="font-semibold">Unit Price:</p>
                 <p className="">
-                <span className="font-currency font-semibold"></span>{" "}
+                <span className="font-currency text-18"></span>{" "}
                   <span>
                     {pathName === "/wishlist"
                       ? product.discountPrice
@@ -471,7 +471,7 @@ const Table: React.FC<TableProps> = ({
                 <div>
                   <p className="font-semibold">Total:</p>
                   <p>
-                  <span className="font-currency font-semibold"></span>
+                  <span className="font-currency text-18"></span>{' '}
                     <span>
                       {product.discountPrice
                         ? product.discountPrice *

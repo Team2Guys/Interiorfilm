@@ -139,7 +139,7 @@ const ViewOrder = () => {
                 <p>{product.name}</p> 
                 <div className="flex justify-between">
                   <p>
-                  <span className="font-currency font-normal"></span><span>{product.price}</span>
+                  <span className="font-currency text-18"></span><span>{product.price}</span>
                   </p>
                 </div>
                 <p className="font-medium">
@@ -169,7 +169,7 @@ const ViewOrder = () => {
         <div className="flex justify-between">
           <p className="text-18 font-semibold">Total</p>
           <p>
-          <span className="font-currency font-normal"></span> <span>{total+shippingFee}</span>
+          <span className="font-currency text-18"></span> <span>{total+shippingFee}</span>
           </p>
         </div>
       </div>
