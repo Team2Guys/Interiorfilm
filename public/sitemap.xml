@@ -1,7 +1,4 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<script id="eppiocemhmnlbhjplcgkofciiegomcon"/>
-<script/>
-<script/>
 <!--   Home   -->
 <url>
 <loc>https://interiorfilm.ae/</loc>
@@ -51,7 +48,7 @@
 <priority>0.8</priority>
 </url>
 <url>
-<loc>https://interiorfilm.ae/product/dark-slatevinyl-wrap</loc>
+<loc>https://interiorfilm.ae/product/dark-slate-vinyl-wrap</loc>
 <priority>0.8</priority>
 </url>
 <url>
@@ -150,8 +147,8 @@
 <loc>https://interiorfilm.ae/product/metallic-gold-lines-vinyl-wrap</loc>
 <priority>0.8</priority>
 </url>
-</url>
------------------------------------------------------------
+
+
 <!--   Symphony Series   -->
 <url>
 <loc>https://interiorfilm.ae/products?category=symphony-series</loc>
@@ -186,7 +183,7 @@
 <loc>https://interiorfilm.ae/product/prism-motion-gloss-vinyl-film</loc>
 <priority>0.8</priority>
 </url>
-......................................................................
+
 <!--   Skin Touch Series   -->
 <url>
 <loc>https://interiorfilm.ae/products?category=skin-touch-series</loc>
@@ -257,7 +254,7 @@
 <loc>https://interiorfilm.ae/product/night-black-interior-film</loc>
 <priority>0.8</priority>
 </url>
-...................................................................
+
 <!--   Plain Series   -->
 <url>
 <loc>https://interiorfilm.ae/products?category=plain-series</loc>
@@ -376,8 +373,7 @@
 <loc>https://interiorfilm.ae/product/matt-charcoal-black-interior-film</loc>
 <priority>0.8</priority>
 </url>
-</url>
-............................................................................
+
 <!--   Marble Series   -->
 <url>
 <loc>https://interiorfilm.ae/products?category=marble-series</loc>
@@ -456,7 +452,7 @@
 <loc>https://interiorfilm.ae/product/girgio-carnico-marble</loc>
 <priority>0.8</priority>
 </url>
-................................................................
+
 <!--   Leather Series   -->
 <url>
 <loc>https://interiorfilm.ae/products?category=leather-series</loc>
@@ -547,7 +543,7 @@
 <loc>https://interiorfilm.ae/product/shiny-black-vinyl-wrap</loc>
 <priority>0.8</priority>
 </url>
-.................................................................
+
 <!--   Cement Grey Series  -->
 <url>
 <loc>https://interiorfilm.ae/products?category=cement-grey-series</loc>
@@ -582,7 +578,7 @@
 <loc>https://interiorfilm.ae/product/stone-cement-vinyl-wrap</loc>
 <priority>0.8</priority>
 </url>
-..................................................................
+
 <!--   Fabric Series  -->
 <url>
 <loc>https://interiorfilm.ae/products?category=fabric-series</loc>
@@ -617,7 +613,7 @@
 <loc>https://interiorfilm.ae/product/grey-wood-vinyl</loc>
 <priority>0.8</priority>
 </url>
-..........................................................
+
 <!--   Wood Grain Series  -->
 <url>
 <loc>https://interiorfilm.ae/products?category=wood-grain-series</loc>
@@ -961,7 +957,7 @@
 <priority>0.8</priority>
 </url>
 <url>
-<loc>https://interiorfilm.ae/product/wooden-royal-timber-viny-wrap</loc>
+<loc>https://interiorfilm.ae/product/wooden-royal-timber-vinyl-wrap</loc>
 <priority>0.8</priority>
 </url>
 <url>
@@ -1025,7 +1021,7 @@
 <priority>0.8</priority>
 </url>
 <url>
-<loc>https://interiorfilm.ae/product/beige-elm-finish-vintl-wrap</loc>
+<loc>https://interiorfilm.ae/product/beige-elm-finish-vinyl-wrap</loc>
 <priority>0.8</priority>
 </url>
 <url>
@@ -1051,7 +1047,8 @@
 <url>
 <loc>https://interiorfilm.ae/product/soft-oak-finish-vinyl-wrap</loc>
 <priority>0.8</priority>
-</url><url>
+</url>
+<url>
 <loc>https://interiorfilm.ae/product/classic-cherry-finish-film</loc>
 <priority>0.8</priority>
 </url>
@@ -1111,7 +1108,7 @@
 <loc>https://interiorfilm.ae/product/gray-cedar-mist-vinyl-wrap</loc>
 <priority>0.8</priority>
 </url>
-.....................................................................
+
 <!--   Accessories   -->
 <url>
 <loc>https://interiorfilm.ae/products?category=accessories</loc>
@@ -1160,26 +1157,26 @@
 <!--   FAQs   -->
 <url>
 <loc>https://interiorfilm.ae/frequently-asked-questions</loc>
-<priority>0.8</priority>
+<priority>0.6</priority>
 </url>
 <!--   Privacy Policy   -->
 <url>
 <loc>https://interiorfilm.ae/privacy-policy</loc>
-<priority>0.8</priority>
+<priority>0.6</priority>
 </url>
 <!--   Terms and Conditions   -->
 <url>
 <loc>https://interiorfilm.ae/terms-conditions</loc>
-<priority>0.8</priority>
+<priority>0.6</priority>
 </url>
 <!--   Returns and Refunds   -->
 <url>
 <loc>https://interiorfilm.ae/returns-refunds</loc>
-<priority>0.8</priority>
+<priority>0.6</priority>
 </url>
 <!--   Shipment Policy   -->
 <url>
 <loc>https://interiorfilm.ae/shipment-policy</loc>
-<priority>0.8</priority>
+<priority>0.6</priority>
 </url>
 </urlset>
