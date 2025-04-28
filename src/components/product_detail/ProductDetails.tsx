@@ -220,7 +220,7 @@ export default function ProductDetails({
               <div className="flex flex-wrap w-full justify-between items-center">
                 <div className="flex flex-col">
                   <p className="text-secondary font-poppins text-[25.92px] font-bold ">
-                  <span className="font-currency font-bold"></span>{" "}
+                  <span className="font-currency text-[28px]"></span>{" "}
                     <span>
                       {productDetail.discountPrice
                         ? productDetail.discountPrice
@@ -230,7 +230,7 @@ export default function ProductDetails({
                   </p>
                   {productDetail.discountPrice ? (
                     <p className="line-through text-[#808080]">
-                      <span className="font-currency font-bold"></span> <span>{productDetail.salePrice}</span>
+                      <span className="font-currency text-18"></span> <span>{productDetail.salePrice}</span>
                     </p>
                   ) : null}
                 </div>
@@ -296,7 +296,7 @@ export default function ProductDetails({
                 <span className="font-medium 	text-[#535353]  mr-2">
                   Total Price :
                 </span>
-                <span className="font-currency font-bold"></span> <span>{totalPrice}</span>
+                <span className="font-currency text-23"></span> <span>{totalPrice}</span>
               </p>
 
               {productDetail.totalStockQuantity == 0 || productDetail.totalStockQuantity <= 0 ? (
@@ -357,7 +357,7 @@ export default function ProductDetails({
                     tabby
                   </span>
                   <p className="text-12 ">
-                    Pay 4 interest-free payments of <span className="font-currency font-normal"></span>{" "}
+                    Pay 4 interest-free payments of <span className="font-currency text-14"></span>{" "}
                     {totalPrice && (totalPrice / 4).toFixed()}{" "}
                     <Dialog>
                       <DialogTrigger asChild className="text-red">
@@ -429,7 +429,7 @@ export default function ProductDetails({
                     tamara
                   </span>
                   <p className="text-12">
-                    Pay 4 interest-free payments of <span className="font-currency font-normal"></span>{" "}
+                    Pay 4 interest-free payments of <span className="font-currency text-14"></span>{" "}
                     {totalPrice && (totalPrice / 4).toFixed()}{" "}
                     <Dialog>
                       <DialogTrigger asChild className="text-red">

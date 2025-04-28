@@ -342,11 +342,11 @@ export const return__refund: PrivacyPolicyItem[] = [
 export const ShipmentPolicydata: PrivacyPolicyItem[] = [
 
   {
-    title: 'Free shipping throughout mainland UAE on all orders above <span class="font-currency font-normal"></span> 250',
-    text: 'If your order exceeds Above <span class="font-currency font-normal"></span> 250 and you are located inside the UAE, you will be offered free standard delivery at checkout. ',
+    title: 'Free shipping throughout mainland UAE on all orders above <span class="font-currency text-22"></span> 250',
+    text: 'If your order exceeds Above <span class="font-currency text-18"></span> 250 and you are located inside the UAE, you will be offered free standard delivery at checkout. ',
   },
   {
-    text: 'If your order is below <span class="font-currency font-normal"></span> 250, we will offer standard delivery anywhere in the UAE for only <span class="font-currency font-normal"></span> 20. ',
+    text: 'If your order is below <span class="font-currency text-18"></span> 250, we will offer standard delivery anywhere in the UAE for only <span class="font-currency text-18"></span> 20. ',
   },
   {
     text: "CASH ON DELIVERY: NOT AVAILABLE",
