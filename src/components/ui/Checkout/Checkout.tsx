@@ -154,6 +154,11 @@ const CheckOut: React.FC = () => {
   };
 
   const handleSubmit = async () => {
+
+
+    try {
+      
+
     setLoading(true);
     if (!validateFields()) {
       setLoading(false);
@@ -169,6 +174,7 @@ const CheckOut: React.FC = () => {
     },
     
   );
+
   setPaymentProcess(false);
   console.log(proceedPayment, "proceedPayment")
 
@@ -188,7 +194,32 @@ const CheckOut: React.FC = () => {
       
     }
   }
+  } catch (error) {
+    console.log(error)    
+    } finally{
+      setLoading(false);
+
+    }
+
+
+
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   const handleChange = (value: string) => {
     setBillingData((prevData) => ({
       ...prevData,
