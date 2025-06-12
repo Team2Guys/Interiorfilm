@@ -39,9 +39,9 @@ const HomeFeature = () => {
   console.log(filteredProducts)
   return (
     <Container className="mt-10 ">
-      <h1 className="text-[24px] text-heading text-center tracking-widest">
+      <p className="text-[24px] text-heading text-center tracking-widest">
         FEATURE PRODUCTS
-      </h1>
+      </p>
       <hr className="2xsm:w-80 mx-auto border-primary h-1" />
       <ProductSlider loading={loading} products={filteredProducts} />
     </Container>

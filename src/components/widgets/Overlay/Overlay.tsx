@@ -56,7 +56,7 @@ const Overlay: React.FC<OverlayProps> = ({ title }) => {
             })}
           </div> :
 
-          <h1 className={`lg:text-3xl text-xl font-medium ${uiFlag ? "text-black" : "text-white"} flex justify-center items-center gap-3 leading-loose uppercase`}>
+          <p className={`lg:text-3xl text-xl font-medium ${uiFlag ? "text-black" : "text-white"} flex justify-center items-center gap-3 leading-loose uppercase`}>
 
         
 
@@ -78,7 +78,7 @@ const Overlay: React.FC<OverlayProps> = ({ title }) => {
 
               </span>
 
-            {title}</h1>
+            {title}</p>
       }
 
 

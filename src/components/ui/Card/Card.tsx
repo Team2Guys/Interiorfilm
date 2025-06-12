@@ -383,12 +383,12 @@ console.log(error,selectedValue,"error")
           </div>
         </div>
         <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
-          <h1 className="lg:text-lg text-sm text-center text-black ">
+          <p className="lg:text-lg text-sm text-center text-black ">
             {product.name}
-          </h1>
-          <h1 className="lg:text-lg text-sm text-center text-dark ">
+          </p>
+          <p className="lg:text-lg text-sm text-center text-dark ">
             {product.code}
-          </h1>
+          </p>
           <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
             {/* <p className="lg:text-lg text-md text-center text-[#fb701d]">
               {product.totalStockQuantity > 0 && (

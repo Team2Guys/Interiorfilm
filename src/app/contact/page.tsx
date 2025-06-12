@@ -127,9 +127,9 @@ const Contact = () => {
               </div>
             </div>
             <div>
-              <h1 className="text-lg md:text-xl lg:text-3xl font-medium flex flex-col gap-2">
+              <p className="text-lg md:text-xl lg:text-3xl font-medium flex flex-col gap-2">
                 Follow Us
-              </h1>
+              </p>
               <div className="flex gap-5 ">
                 <Link
                   target="_blank"

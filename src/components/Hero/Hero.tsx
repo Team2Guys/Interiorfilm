@@ -10,7 +10,7 @@ const Hero = () => {
       <div className='relative'>
       <Container className="absolute bottom-10 md:bottom-20 right-1 md:right-20 text-white text-end space-y-5 z-20">
         <p className="text-14 font-medium">ARCHITECTURAL VINYL FILM WRAP</p>
-        <p className="text-[25px]">FRESH LOOK, SAVE BIG</p>
+        <h1 className="text-[25px]">FRESH LOOK, SAVE BIG</h1>
         <div>
           <Link href="/categories" className=" bg-white px-8 py-2 hover:bg-primary hover:text-white text-black transition duration-300">
               SHOP OUR FULL RANGE
