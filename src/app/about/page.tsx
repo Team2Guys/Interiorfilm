@@ -38,7 +38,8 @@ const About = () => {
              <Image className='w-full bg-primary rounded-lg p-2 lg:p-0 lg:pr-4 lg:pt-4' width={600} height={600} src={about} alt='about'/>
             </div>
             <div className=' md:p-8 space-y-3 mt-4 md:mt-0'>
-                <p className='text-12 sm:text-14 md:text-17'>Interiorfilm.ae is a venture born from Yellowzone General Trading’s passion for the vinyl wrapping industry. Based in Oud Metha, Dubai, we are a growing business, dedicated to bringing you the very best vinyl wrapping solutions available. </p>
+              <h1 className='hidden'>About Us</h1>
+                <p className='text-12 sm:text-14 md:text-17'>Interiorfilm.ae is a venture born from Yellowzone General Trading’s passion for the vinyl wrapping industry. Based in Oud Metha, Dubai, we are a growing business, dedicated to bringing you the very best vinyl wrapping solutions available.</p>
                 <p className='text-12 sm:text-14 md:text-17'>Having spent years buying from distributors and selling to the public, we now source directly from the factory to cut out the middleman. This has several benefits, from price reductions (which are then passed on to you) as well as being involved in the quality control process.</p>
                 <p className='text-12 sm:text-14 md:text-17'>Those years of experience made it easy for us to have one of the global leaders in the vinyl wrapping industry by our side. With a strong foothold in the industry and already manufacturing for major household names, their trusted expertise was shared with us at a fraction of the cost.</p>
                 <p className='text-12 sm:text-14 md:text-17'>Having such a close relationship with the factory allows us to share our feedback and ensure that the latest trends reach our shelves in record time. </p>

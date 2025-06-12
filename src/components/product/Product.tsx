@@ -316,14 +316,14 @@ const ProductPage = () => {
       <Container className="mt-20 md:overflow-hidden">
         <div className="flex flex-wrap lg:flex-nowrap justify-between  gap-3">
           <div>
-            <p className="uppercase lg:text-[24px] text-16 text-lightdark">
+            <h1 className="uppercase lg:text-[24px] text-16 text-lightdark">
               Home
               <span className="capitalize text-black">/{activeLink?.name}</span>
-            </p>
+            </h1>
           </div>
           <div className="flex flex-wrap lg:flex-nowrap justify-between  w-full md:w-auto sm:space-x-4 " >
             <div className="flex flex-wrap md:flex-nowrap gap-2 items-center mt-2 ">
-              <h1>Sort By: </h1>
+              <p>Sort By: </p>
               <Select
                 defaultValue="Price"
                 className="w-32 md:w-40 h-10 rounded-none"
@@ -337,7 +337,7 @@ const ProductPage = () => {
             </div>
 
             <div className="flex flex-wrap md:flex-nowrap gap-2 items-center mt-2 ">
-              <h1>Sort By: </h1>
+              <p>Sort By: </p>
               <div
                 className="w-32 md:w-40 h-10 flex items-center border relative"
                 id="DropdownContainer"
