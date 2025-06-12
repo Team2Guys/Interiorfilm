@@ -1,4 +1,4 @@
-'use client'
+
 import React from 'react';
 import Overlay from 'components/widgets/Overlay/Overlay';
 import { privacyPolicyData } from 'data/Data';
@@ -9,7 +9,7 @@ const PrivacyPolicyPage: React.FC = () => {
     <>
       <Overlay title='Privacy Policy'/>
       <div className='px-2 sm:px-4 md:px-8 max-w-screen-xl mx-auto space-y-3 py-20'>
-        <h1 className='text-2xl font-bold'>Privacy Policy</h1>
+        <h2 className='text-2xl font-bold'>Privacy Policy</h2>
         {privacyPolicyData.map((item, index) => (
           <div key={index} className='space-y-3'>
             <h2 className='text-xl font-bold'>{item.title}</h2>

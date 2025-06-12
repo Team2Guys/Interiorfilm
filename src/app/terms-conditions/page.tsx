@@ -45,7 +45,7 @@ const TermsAndCondition: React.FC = () => {
     <>
       <Overlay title='Terms & Conditions'/>
       <div className='px-2 sm:px-4 md:px-8 max-w-screen-xl mx-auto space-y-3 py-20'>
-        <h1 className='text-2xl font-bold'>Terms & Conditions–Yellowzone Trading LLC</h1>
+        <h2 className='text-2xl font-bold'>Terms & Conditions–Yellowzone Trading LLC</h2>
         {Terms_Conditions.map((item, index) => (
           <div key={index} className='space-y-3'>
             <h2 className='text-xl font-bold'>

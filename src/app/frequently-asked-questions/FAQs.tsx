@@ -17,7 +17,7 @@ function FAQs() {
             <Overlay title="Faqs" />
             <div className='flex justify-center my-7'>
                 <div>
-                    <h1 className=' font-futura text-center font-semibold text-4xl'>We&apos;re here to help</h1>
+                    <h2 className=' font-futura text-center font-semibold text-4xl'>We&apos;re here to help</h2>
                     <p className='text-[#9DA3AE] font-semibold text-13 text-center'>Have questions? We&apos;re here to help.</p>
 
                 </div>
@@ -58,7 +58,7 @@ function FAQs() {
                 )
             })}
             <div className='flex justify-center flex-col items-center font-futura mt-8 gap-5'>
-                <h1 className='font-semibold text-23'>Still have questions?</h1>
+                <h2 className='font-semibold text-23'>Still have questions?</h2>
                 <p className='font-light text-16 text-center text-[#A3A9B3] flex flex-col'>Can&apos;t find the answer you&apos;re looking for?
                     <span>Please chat to our friendly team.</span> </p>
 
