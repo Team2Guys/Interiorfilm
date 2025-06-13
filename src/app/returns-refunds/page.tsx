@@ -9,7 +9,7 @@ const ReturnRefund: React.FC = () => {
     <>
       <Overlay title='Return & Refund'/>
       <div className='px-2 sm:px-4 md:px-8 max-w-screen-xl mx-auto space-y-3 py-20'>
-        <h1 className='text-2xl font-bold'>Return & Refund</h1>
+        <h2 className='text-2xl font-bold'>Return & Refund</h2>
         {return__refund.map((item, index) => (
           <div key={index} className='space-y-3'>
             <h2 className='text-xl font-bold'>{item.title}</h2>

@@ -58,7 +58,7 @@ function FAQs() {
                 )
             })}
             <div className='flex justify-center flex-col items-center font-futura mt-8 gap-5'>
-                <p className='font-semibold text-23'>Still have questions?</p>
+                <h2 className='font-semibold text-23'>Still have questions?</h2>
                 <p className='font-light text-16 text-center text-[#A3A9B3] flex flex-col'>Can&apos;t find the answer you&apos;re looking for?
                     <span>Please chat to our friendly team.</span> </p>
 

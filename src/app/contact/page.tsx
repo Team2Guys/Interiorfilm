@@ -96,7 +96,7 @@ const Contact = () => {
       <Container className="lg:my-16 my-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-primary rounded-md p-4  sm:p-4 md:p-8 text-white space-y-14">
-            <h1 className="text-2xl lg:text-4xl font-medium pt-10">Contact</h1>
+            <h2 className="text-2xl lg:text-4xl font-medium pt-10">Contact</h2>
 
             <div className="flex flex-col gap-4">
               <div className="flex gap-2 items-center">
@@ -127,9 +127,9 @@ const Contact = () => {
               </div>
             </div>
             <div>
-              <p className="text-lg md:text-xl lg:text-3xl font-medium flex flex-col gap-2">
+              <h3 className="text-lg md:text-xl lg:text-3xl font-medium flex flex-col gap-2">
                 Follow Us
-              </p>
+              </h3>
               <div className="flex gap-5 ">
                 <Link
                   target="_blank"

@@ -383,9 +383,9 @@ console.log(error,selectedValue,"error")
           </div>
         </div>
         <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
-          <p className="lg:text-lg text-sm text-center text-black ">
+          <h3 className="lg:text-lg text-sm text-center text-black ">
             {product.name}
-          </p>
+          </h3>
           <p className="lg:text-lg text-sm text-center text-dark ">
             {product.code}
           </p>
