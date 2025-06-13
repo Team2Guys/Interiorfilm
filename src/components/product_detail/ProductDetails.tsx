@@ -211,9 +211,9 @@ export default function ProductDetails({
                 <h1 className="text-22 lg:text-[28px] text-[#000000] font-medium">
                   {productDetail.name}
                 </h1>
-                <h3 className="text-30  text-[#B9BBBF] font-medium">
+                <p className="text-30  text-[#B9BBBF] font-medium">
                   {productDetail.code}
-                </h3>
+                </p>
               </span>
               <hr className="text-[#E4E4E4]" />
 

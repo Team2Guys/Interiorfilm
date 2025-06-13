@@ -43,7 +43,7 @@ const Category = ({ category }: { category: CategoriesType[] }) => {
                            </div>
                         </div>
                         <div className='flex items-center flex-col gap-2 mt-3'>
-                           <p className='group-hover:text-primary uppercase font-poppins font-bold text-title-xsm'>{item.name}</p>
+                           <h3 className='group-hover:text-primary uppercase font-poppins font-bold text-title-xsm'>{item.name}</h3>
                            <p className='text-12 xsm:text-14 lg:text-base text-center'>{item.description}</p>
                         </div>
                      </div>

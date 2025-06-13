@@ -236,9 +236,9 @@ const Cart = ({products}: {products: PRODUCTS_TYPES[]}) => {
 
         <div className="mt-10 md:mt-20">
           <div className="flex justify-center items-center">
-            <h1 className="w-fit text-center text-lg border-b-2 border-primary md:text-3xl mb-5  uppercase tracking-widest">
+            <h2 className="w-fit text-center text-lg border-b-2 border-primary md:text-3xl mb-5  uppercase tracking-widest">
               Similar Products
-            </h1>
+            </h2>
           </div>
           <ProductSlider products={products} />
         </div>

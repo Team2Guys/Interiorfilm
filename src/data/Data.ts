@@ -233,7 +233,7 @@ export const options = [
 
 export const privacyPolicyData: PrivacyPolicyItem[] = [
   {
-    title: '',
+    title: 'Privacy Policy',
     text: 'This Privacy Policy explains how Interiorfilm.ae collects, uses, disclose, and safeguard your information when you visit our website (www.interiorfilm.ae), engage with our services (collectively, services). We value your privacy and we make sure to protect your personal data in compliance with the laws of the United Arab Emirates.',
     listItems: [
       'We present this Privacy Policy to clarify how we handle your information when you use our Services.',
@@ -339,20 +339,7 @@ export const return__refund: PrivacyPolicyItem[] = [
     text: "Thank you for choosing Interiorfilm.ae.",
   },
 ];
-export const ShipmentPolicydata: PrivacyPolicyItem[] = [
 
-  {
-    title: 'Free shipping throughout mainland UAE on all orders above <span class="font-currency text-22"></span> 250',
-    text: 'If your order exceeds Above <span class="font-currency text-18"></span> 250 and you are located inside the UAE, you will be offered free standard delivery at checkout. ',
-  },
-  {
-    text: 'If your order is below <span class="font-currency text-18"></span> 250, we will offer standard delivery anywhere in the UAE for only <span class="font-currency text-18"></span> 20. ',
-  },
-  {
-    text: "CASH ON DELIVERY: NOT AVAILABLE",
-  },
-
-];
 
 export const Terms_Conditions: PrivacyPolicyItem[] = [
 

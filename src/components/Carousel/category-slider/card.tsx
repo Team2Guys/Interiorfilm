@@ -27,7 +27,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ name, posterImageUrl, categ
       className='w-full h-[400px] md:h-[603px] bg-cover bg-center relative flex items-end sm:items-start sm:justify-start justify-center pb-10'
     >
       <div className='sm:absolute  sm:bottom-8   md:bottom-16  sm:right-8 md:right-16 space-y-5 text-center sm:text-end'>
-        <p className={`text-22  font-bold md:tracking-widest ${nameClass}`}>{name}</p>
+        <h2 className={`text-22  font-bold md:tracking-widest ${nameClass}`}>{name}</h2>
         <Button className='bg-white hover:bg-primary hover:text-white font-12 whitespace-nowrap' title={"VIEW ALL"} onClick={(e:React.MouseEvent<HTMLButtonElement>)=>handleButtonClick(e)} />
       </div>
     </div>

@@ -39,9 +39,9 @@ function HomeAccordian() {
         </div>
 
         <div className="">
-          <h3 className="font-futura font-bold text-3xl mb-8 text-center  md:text-start" >
+          <h2 className="font-futura font-bold text-3xl mb-8 text-center  md:text-start" >
           Wrap Any Of These Areas ?
-          </h3>
+          </h2>
           {AccordionsArray.map((item, index) => {
             return (
            <div className="cursor-pointer group" onClick={() => handleToggle(index)}  key={index}>
