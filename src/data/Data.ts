@@ -536,3 +536,18 @@ export const sortProductsByCode = (products: PRODUCTS_TYPES[]): PRODUCTS_TYPES[]
     });
   });
 };
+
+export const ShipmentPolicydata: PrivacyPolicyItem[] = [
+
+  {
+    title: 'Free shipping throughout mainland UAE on all orders above AED 250',
+    text: 'If your order exceeds Above AED 250 and you are located inside the UAE, you will be offered free standard delivery at checkout. ',
+  },
+  {
+    text: 'If your order is below AED 250, we will offer standard delivery anywhere in the UAE for only AED 20. ',
+  },
+  {
+    text: "CASH ON DELIVERY: NOT AVAILABLE",
+  },
+
+];
