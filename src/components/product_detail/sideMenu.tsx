@@ -175,7 +175,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="flex items-center relative">
         <Image
           src={product.posterImageUrl.imageUrl}
-          alt={product.posterImageUrl.altText || ''}
+          alt={product.posterImageUrl.altText || product.name}
           width={100}
           height={100}
           className="w-25 h-20 object-cover"

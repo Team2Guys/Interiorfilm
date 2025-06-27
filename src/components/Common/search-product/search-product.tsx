@@ -15,14 +15,12 @@ import search12 from "../../../../public/images/Searchimage/12.png";
 import Image from "next/image";
 import { IoSearch } from "react-icons/io5";
 import Button from "../Button";
-import axios from "axios";
 import PRODUCTS_TYPES from "types/interfaces";
 import { generateSlug } from "data/Data";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const SearchProduct = () => {
-  const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
+const SearchProduct = ({products}: {products: PRODUCTS_TYPES[]}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
@@ -47,37 +45,7 @@ const SearchProduct = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-
-  const productHandler = async () => {
-    try {
-      // Fetch main products
-      const mainResponse = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
-      );
-      const mainProducts = Array.isArray(mainResponse.data.products)
-        ? mainResponse.data.products
-        : [];
   
-      // Fetch add-on products
-      const addOnResponse = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`
-      );
-      const addOnProducts = Array.isArray(addOnResponse.data.products)
-        ? addOnResponse.data.products
-        : [];
-  
-      // Combine main and add-on products
-      const combinedProducts = [...mainProducts, ...addOnProducts];
-      setProducts(combinedProducts);
-    } catch (err) {
-      console.log(err, "err");
-    }
-  };
-  
-  useEffect(() => {
-    productHandler();
-  }, []);
   
   const filteredProducts = Array.isArray(products)
     ? products.filter((product) => {
@@ -123,6 +91,7 @@ const SearchProduct = () => {
                   height={400}
                   src={search1}
                   alt="search1"
+                  loading="lazy"
                 />
               </div>
               <div className="space-y-2">
@@ -132,6 +101,7 @@ const SearchProduct = () => {
                   height={400}
                   src={search2}
                   alt="search2"
+                  loading="lazy"
                 />
                 <Image
                   className="h-[80px] sm:h-[174px]"
@@ -139,6 +109,7 @@ const SearchProduct = () => {
                   height={400}
                   src={search3}
                   alt="search3"
+                  loading="lazy"
                 />
               </div>
               <div>
@@ -148,6 +119,7 @@ const SearchProduct = () => {
                   height={400}
                   src={search4}
                   alt="search4"
+                  loading="lazy"
                 />
               </div>
               <div>
@@ -157,6 +129,7 @@ const SearchProduct = () => {
                   height={400}
                   src={search5}
                   alt="search5"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -204,6 +177,7 @@ const SearchProduct = () => {
                                     height={50}
                                     src={product.posterImageUrl.imageUrl}
                                     alt="image"
+                                    loading="lazy"
                                   />
                                 )}
                                 <Link
@@ -243,6 +217,7 @@ const SearchProduct = () => {
                   height={226}
                   src={search6}
                   alt="search6"
+                  loading="lazy"
                 />
               </div>
               <div className="col-span-1">
@@ -252,6 +227,7 @@ const SearchProduct = () => {
                   height={226}
                   src={search7}
                   alt="search7"
+                  loading="lazy"
                 />
               </div>
               <div className="col-span-1">
@@ -261,6 +237,7 @@ const SearchProduct = () => {
                   height={226}
                   src={search8}
                   alt="search8"
+                  loading="lazy"
                 />
               </div>
               <div className="col-span-6">
@@ -270,6 +247,7 @@ const SearchProduct = () => {
                   height={226}
                   src={search9}
                   alt="search9"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -284,6 +262,7 @@ const SearchProduct = () => {
                   height={400}
                   src={search10}
                   alt="search10"
+                  loading="lazy"
                 />
               </div>
               <div className="col-span-2">
@@ -293,6 +272,7 @@ const SearchProduct = () => {
                   height={400}
                   src={search11}
                   alt="search11"
+                  loading="lazy"
                 />
               </div>
               <div className="col-span-1">
@@ -302,6 +282,7 @@ const SearchProduct = () => {
                   height={400}
                   src={search12}
                   alt="search12"
+                  loading="lazy"
                 />
               </div>
             </div>

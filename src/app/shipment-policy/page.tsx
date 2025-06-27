@@ -1,6 +1,27 @@
-'use client'
 import React from 'react';
 import Overlay from 'components/widgets/Overlay/Overlay';
+import blacklogo from "../../../public/images/logoblack.png";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Interior Film',
+  description: 'Welcome to Interior Films',
+  openGraph: {
+    title: 'Interior Film',
+    description: 'Welcome to Interior Films',
+    url: '/shipment-policy',
+    images: [
+      {
+        url: `${blacklogo.src}`,
+        alt: 'Interior Film',
+      },
+    ],
+  },
+  alternates: {
+    canonical: '/shipment-policy',
+  },
+};
+
 
 const ShipmentPolicy: React.FC = () => {
   return (

@@ -2,6 +2,27 @@ import React from 'react';
 import Overlay from 'components/widgets/Overlay/Overlay';
 import { privacyPolicyData } from 'data/Data';
 import Link from 'next/link';
+import blacklogo from "../../../public/images/logoblack.png";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Interior Film',
+  description: 'Welcome to Interior Films',
+  openGraph: {
+    title: 'Interior Film',
+    description: 'Welcome to Interior Films',
+    url: '/privacy-policy',
+    images: [
+      {
+        url: `${blacklogo.src}`,
+        alt: 'Interior Film',
+      },
+    ],
+  },
+  alternates: {
+    canonical: '/privacy-policy',
+  },
+};
 
 const PrivacyPolicyPage: React.FC = () => {
   return (
