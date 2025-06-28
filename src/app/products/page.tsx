@@ -7,9 +7,9 @@ import { Metadata } from "next";
 import axios from "axios";
 
 
-export async function generateMetadata({searchParams}: {searchParams: { category?: string }}): Promise<Metadata> {
-const category = searchParams.category
-  const headersList = headers();
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ category?: string }> }): Promise<Metadata> {
+  const { category } = await searchParams
+  const headersList = await headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || ''; // Fallback to host if x-forwarded-host is not present
   const protocol = headersList.get('x-forwarded-proto') || 'https'; // Default to https if no protocol is set
   const pathname = headersList.get('x-invoke-path') || '/'; // Fallback to root if no path
@@ -25,12 +25,13 @@ const category = searchParams.category
 
   let NewImage = [
     {
-      url: ImageUrl, 
-      alt: alt}
+      url: ImageUrl,
+      alt: alt
+    }
   ];
   let title = Product && Product.Meta_Title ? Product.Meta_Title : "Interior Films"
   let description = Product && Product.Meta_Description ? Product.Meta_Description : "Welcome to Interior films"
-let url = `${fullUrl}/products?category=${category}`
+  let url = `${fullUrl}/products?category=${category}`
   return {
     title: title,
     description: description,
@@ -41,14 +42,14 @@ let url = `${fullUrl}/products?category=${category}`
       images: NewImage,
     },
     alternates: {
-      canonical:Product && Product.Canonical_Tag? Product.Canonical_Tag : url , 
+      canonical: Product && Product.Canonical_Tag ? Product.Canonical_Tag : url,
     },
   }
 }
 
-function Products({searchParams}: {searchParams: { category?: string }}) {
-
-  console.log(searchParams, "searchParams")
+async function Products({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
+  const { category } = await searchParams
+  console.log(category, "searchParams")
   return (
     <Suspense fallback={<SkeletonLoading />}>
       <ProductPage />

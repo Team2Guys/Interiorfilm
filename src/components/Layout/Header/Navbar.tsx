@@ -358,12 +358,13 @@ const Navbar = () => {
           </div>
 
           <div className="text-center   flex justify-center col-span-5 sm:col-span-4 md:col-span-4 ml-3">
-            <Link href="/" className="block w-full lg:w-[277px]">
+            <Link href="/" className="block relative w-full lg:w-[277px]">
               <Image
                 className="!relative"
                 src={blacklogo}
                 alt="logo"
                 fill
+                sizes=""
                 priority
                 fetchPriority="high"
               />

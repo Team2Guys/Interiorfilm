@@ -10,7 +10,7 @@ type Props = {
 }
 export async function generateMetadata({ params }: Props,): Promise<Metadata> {
   const { productname } = await params;
-  const headersList = headers();
+  const headersList = await headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || ''; // Fallback to host if x-forwarded-host is not present
   const protocol = headersList.get('x-forwarded-proto') || 'https'; // Default to https if no protocol is set
   const pathname = headersList.get('x-invoke-path') || '/'; // Fallback to root if no path

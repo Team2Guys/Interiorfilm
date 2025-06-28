@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import Hero from 'components/Hero/Hero';
 const CategorySlider = dynamic(() => import('components/Carousel/category-slider/category-slider'));
 const HomeFeature = dynamic(() => import('components/Home-Feature/home-feature'));
 const InfoTabs = dynamic(() => import('components/Info-Tabs/info-tabs'));
@@ -14,7 +15,6 @@ import { Metadata } from "next";
 import blacklogo from "../../public/images/logoblack.png";
 import axios from 'axios';
 import { Suspense } from 'react';
-import Hero from 'components/Hero/Hero';
 
 export const metadata: Metadata = {
   title: 'Premium Quality, Vinyl Wraps, Quick Installation | Interior Film ',

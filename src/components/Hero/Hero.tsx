@@ -21,7 +21,7 @@ const Hero = () => {
         muted
         playsInline
         autoPlay
-        preload="auto"
+        preload="meta"
         aria-label="Background video showcasing product"
       >
         <source src="/video/Agsons.mp4" type="video/mp4" />

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Image from "next/image";
 import { IoCloseSharp } from "react-icons/io5";
 import { RxMinus, RxPlus } from "react-icons/rx";
@@ -256,9 +256,9 @@ const Table: React.FC<TableProps> = ({
 
           {pathName === "/wishlist" ? (
             <p className="md:w-2/12 lg:w-2/12">
-              <div className=" text-end text-14  font-semibold text-white whitespace-nowrap ">
+              <span className=" text-end text-14 block font-semibold text-white whitespace-nowrap ">
                 Action
-              </div>
+              </span>
             </p>
           ) : null}
         </div>
@@ -406,7 +406,6 @@ const Table: React.FC<TableProps> = ({
 
       {data.map((product, index) => {
         return (
-          <>
             <div
               className="border border-gray space-y-2 flex flex-col text-center justify-center items-center py-5  md:hidden"
               key={index}
@@ -506,7 +505,6 @@ const Table: React.FC<TableProps> = ({
                 </div>
               </div>
             </div>
-          </>
         );
       })}
     </>
