@@ -33,6 +33,7 @@ function HomeAccordian() {
             src={accordionImages[openIndex || 0]}
             alt="Accordian Image"
             className="object-cover w-full h-[300px] md:h-[600px]"
+            loading="lazy"
             height={800}
             width={800}
           />

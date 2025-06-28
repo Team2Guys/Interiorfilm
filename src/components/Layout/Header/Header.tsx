@@ -229,6 +229,7 @@ const Header = () => {
         className="w-24 h-6 md:w-44 lg:w-50 md:h-8 lg:h-10"
         src={isHomePage ? (isScrolled ? blacklogo : whitelogo) : blacklogo}
         alt="logo"
+        priority
         width={500}
         height={500}
       />

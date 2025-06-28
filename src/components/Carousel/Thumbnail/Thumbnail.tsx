@@ -62,7 +62,7 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
                           src={array.imageUrl}
                           width={270}
                           height={140}
-                          alt={array.altText || ''}
+                          alt={array.altText || array.public_id || 'product image'}
                         />
                       </SwiperSlide>
                     ))}

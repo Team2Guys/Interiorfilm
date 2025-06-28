@@ -375,7 +375,7 @@ export default function ProductDetails({
                           </DialogTitle>
                         </DialogHeader>
                         <div className="py-5 ps-5 xs:ps-10 md:ps-20 pe-4 me-4 xs:me-7 max-h-[80vh] overflow-y-auto custom-scroll">
-                          <Image src={tabbyLogo} alt="logo" />
+                          <Image src={tabbyLogo} alt="tabby logo" />
                           <h2 className="text-xl xs:text-2xl sm:text-lg md:text-xl font-bold mt-5 leading-10 xs:leading-tight">
                             <span className="rounded-full bg-[#3BFFC1] px-4 py-0 text-nowrap">
                               Shop now,
@@ -413,7 +413,7 @@ export default function ProductDetails({
                             {tabbypayicon.map((item, index) => (
                               <Image
                                 src={item.imageUrl}
-                                alt="master"
+                                alt="card icon"
                                 className="w-20 h-20 object-contain"
                                 key={index}
                               />
@@ -449,7 +449,7 @@ export default function ProductDetails({
                           <div className="text-center">
                             <Image
                               src={tamaraLogo}
-                              alt="logo"
+                              alt="tamara logo"
                               className="mx-auto"
                             />
                           </div>
@@ -513,7 +513,7 @@ export default function ProductDetails({
                 {PaymentMethods.map((item, index) => (
                   <Image
                     src={item.imageUrl}
-                    alt="master"
+                    alt="card icon"
                     width={60}
                     height={60}
                     className="object-contain shadow p-1 "
