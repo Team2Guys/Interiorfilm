@@ -1,12 +1,9 @@
 import Container from 'components/Layout/Container/Container';
-import Navbar from 'components/Layout/Header/Navbar';
 import Link from 'next/link';
-import React from 'react';
 
 const Hero = () => {
   return (
-    <div>
-      <Navbar />
+    <>
       <div className='relative'>
       <Container className="absolute bottom-10 md:bottom-20 right-1 md:right-20 text-white text-end space-y-5 z-20">
         <h1 className="text-14 font-medium">ARCHITECTURAL VINYL FILM WRAP</h1>
@@ -19,7 +16,7 @@ const Hero = () => {
         </div>
       </Container>
       <video
-        className="w-full h-full object-cover sm:object-fill md:h-[55vh] lg:h-[65vh] xl:h-[100vh]  z-10"
+        className="w-full h-full object-cover sm:object-fill md:h-[55vh] lg:h-[65vh] xl:h-[100vh] z-10"
         loop
         muted
         playsInline
@@ -31,7 +28,7 @@ const Hero = () => {
       </video>
       </div>
     
-    </div>
+    </>
   );
 };
 
