@@ -14,11 +14,9 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
   const protocol = headersList.get('x-forwarded-proto') || 'https'; // Default to https if no protocol is set
   const pathname = headersList.get('x-invoke-path') || '/'; // Fallback to root if no path
   const fullUrl = `${protocol}://${domain}${pathname}`;
-  console.log(fullUrl, "fullurl")
   const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
 
   let Product = productRequest.data?.find((item: any) => generateSlug(item.name) == category)
-  console.log(Product, "Product")
 
   let ImageUrl = Product?.posterImageUrl?.imageUrl || "interiorfilm";
   let alt = Product?.Images_Alt_Text || "Interior films";
