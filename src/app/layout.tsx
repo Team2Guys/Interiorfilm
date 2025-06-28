@@ -1,3 +1,4 @@
+import '@ant-design/v5-patch-for-react-19';
 import React from "react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";

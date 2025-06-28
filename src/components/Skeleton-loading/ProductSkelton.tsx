@@ -1,39 +1,46 @@
 import React from 'react';
-import { Skeleton, Row, Col } from 'antd';
 
-export const ProductSkeleton: React.FC = () => {
+const ProductSkeleton = () => {
   return (
-    <Row className="flex flex-col md:flex-row my-10  justify-center">
-      <Col xs={24} md={12} className="">
-        <Skeleton.Image style={{ width: '50rem', height: '400px', borderRadius: '8px' }} />
-      </Col>
+    <div className="flex flex-col md:flex-row gap-10 mt-10 w-full px-4 lg:px-6 xl:px-10 animate-pulse">
+      {/* Image Section */}
+      <div className="w-full md:w-1/2 bg-gray rounded-lg">
+        <div className="h-[400px] w-full bg-gray rounded-lg" />
+      </div>
 
-      <Col xs={24} md={12} lg={6}>
-        <div className="flex flex-col gap-4 pt-2">
-          <div className="flex gap-2">
-            <Skeleton.Button style={{ width: 80, height: 24 }} shape="round" active />
-            <Skeleton.Button style={{ width: 80, height: 24 }} shape="round" active />
-            <Skeleton.Button style={{ width: 80, height: 24 }} shape="round" active />
-          </div>
+      {/* Content Section */}
+      <div className="w-full md:w-1/2 flex flex-col gap-6">
+        {/* Title */}
+        <div className="h-8 w-2/3 bg-gray rounded-md" />
 
-          <Skeleton.Input style={{ width: 150, height: 24 }} active />
-          <Skeleton.Input style={{ width: 250, height: 16 }} active />
-          <Skeleton.Input style={{ width: 200, height: 16 }} active />
-
-          <Skeleton.Input style={{ width: 100, height: 16 }} active />
-
-          <Skeleton.Input style={{ width: 300, height: 16 }} active />
-
-          <div className="flex gap-2 mb-4">
-            <Skeleton.Button style={{ width: '50%', height: 48 }} shape="round" active />
-            <Skeleton.Button style={{ width: '50%', height: 48 }} shape="round" active />
-          </div>
-         
-          <Skeleton.Button style={{ width: '100%', height: 48 }} shape="round" active />
-
-
+        {/* Tags */}
+        <div className="flex gap-4">
+          <div className="h-6 w-20 bg-gray rounded-full" />
+          <div className="h-6 w-20 bg-gray rounded-full" />
+          <div className="h-6 w-20 bg-gray rounded-full" />
         </div>
-      </Col>
-    </Row>
+
+        {/* Price */}
+        <div className="h-6 w-40 bg-gray rounded-md" />
+
+        {/* Description */}
+        <div className="flex flex-col gap-2">
+          <div className="h-4 w-3/4 bg-gray rounded-md" />
+          <div className="h-4 w-2/3 bg-gray rounded-md" />
+          <div className="h-4 w-1/2 bg-gray rounded-md" />
+          <div className="h-4 w-full bg-gray rounded-md" />
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-4">
+          <div className="h-12 w-1/2 bg-gray rounded-md" />
+          <div className="h-12 w-1/2 bg-gray rounded-md" />
+        </div>
+
+        <div className="h-12 w-full bg-gray rounded-md" />
+      </div>
+    </div>
   );
 };
+
+export default ProductSkeleton;

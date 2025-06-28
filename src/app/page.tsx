@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-const Hero = dynamic(() => import('components/Hero/Hero'));
+import Hero from 'components/Hero/Hero';
 const CategorySlider = dynamic(() => import('components/Carousel/category-slider/category-slider'));
 const HomeFeature = dynamic(() => import('components/Home-Feature/home-feature'));
 const InfoTabs = dynamic(() => import('components/Info-Tabs/info-tabs'));

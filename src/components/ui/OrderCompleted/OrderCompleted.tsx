@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 
-export const OrderCompleted = () => {
+const OrderCompleted = () => {
   return (
     <div className=" py-20 flex flex-col items-center justify-center">
       <Image src="/images/tick.png" alt="Order Completed" width={128} height={128} className=" lg:w-32 w-28 mb-4" />

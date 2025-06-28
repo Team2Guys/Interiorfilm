@@ -4,7 +4,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import Thumbnail from "components/Carousel/Thumbnail/Thumbnail";
 import { message } from "antd";
 import PRODUCTS_TYPES from "types/interfaces";
-import ProductSelect from "components/ui/Select/ProductSelect";
 import { BsWhatsapp } from "react-icons/bs";
 import Link from "next/link";
 import {
@@ -34,6 +33,7 @@ import SideMenu, { Product } from "./sideMenu";
 import EnviromentIcons from "./enviroment-icon";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import ProductSelect from "components/ui/Select/ProductSelect";
 interface productDetailsProps {
   productDetail: PRODUCTS_TYPES;
   categoryName?: string;
