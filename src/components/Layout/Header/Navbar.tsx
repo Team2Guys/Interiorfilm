@@ -327,7 +327,8 @@ const Navbar = () => {
                             width={50}
                             height={50}
                             src={product.posterImageUrl.imageUrl}
-                            alt="image"
+                            alt={product.posterImageUrl.altText || product.name}
+                            loading="lazy"
                           />
                         )}
                         <Link
@@ -357,15 +358,15 @@ const Navbar = () => {
           </div>
 
           <div className="text-center   flex justify-center col-span-5 sm:col-span-4 md:col-span-4 ml-3">
-            <Link href="/" className="">
+            <Link href="/" className="block relative w-full lg:w-[277px]">
               <Image
-                className=" w-full h-full lg:w-[277px] lg:h-[60px] object-contain"
-                src={
-                  isHomePage ? (isScrolled ? blacklogo : blacklogo) : blacklogo
-                }
+                className="!relative"
+                src={blacklogo}
                 alt="logo"
-                width={700}
-                height={700}
+                fill
+                sizes=""
+                priority
+                fetchPriority="high"
               />
             </Link>
           </div>
@@ -572,7 +573,8 @@ const Navbar = () => {
                         width={100}
                         height={100}
                         src={product.posterImageUrl.imageUrl}
-                        alt="image"
+                        alt={product.posterImageUrl.altText || product.name}
+                        loading="lazy"
                       />
                     )}
                     <div>

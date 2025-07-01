@@ -1,6 +1,6 @@
 
 import * as Yup from 'yup';
-import PRODUCTS_TYPES, { Product, Category, FormValues, ITabbyList, ITabbyPayList, ITamaraList } from 'types/interfaces'
+import PRODUCTS_TYPES, { Category, FormValues, ITabbyList, ITabbyPayList, ITamaraList } from 'types/interfaces'
 import { PrivacyPolicyItem } from 'types/types';
 import masterCard from './../../public/images/payment-icons/Mastercard-Logo.png'
 import viseCard from './../../public/images/payment-icons/visacard-logo.png'
@@ -46,50 +46,10 @@ export const validateForm = (formData: { fullName: string; email: string; passwo
   return '';
 };
 
-export const withoutHeaderPages = [
-  "/login",
-  '/register',
-  "/superAdminlogin"
-]
-
-
-
-
-export const inputFields = [
-  { name: "name", type: 'text' },
-  { name: "description", type: 'text' },
-  { name: "price", type: 'number' },
-  // { name: "category", type: 'text' },
-  { name: "discountPrice", type: 'number' },
-];
-
-export const CategorinputFields = [
-  { name: "name", type: 'text' },
-
-];
 export const withoutVariation = [
   { name: "totalStockQuantity", type: 'number' },
 ];
 
-export const Variation = [
-  { name: "variant", type: 'text' },
-  { name: "quantity", type: 'number' },
-];
-
-
-export const validationSchema = Yup.object({
-  name: Yup.string().required('Required'),
-  description: Yup.string().required('Required'),
-  price: Yup.string().required('Required'),
-  category: Yup.string().required('Required'),
-});
-
-
-export const loginValidationSchema = Yup.object({
-  name: Yup.string().required('Required'),
-  password: Yup.string().required('Required'),
-
-});
 
 export const categoryValidationSchema = Yup.object({
   name: Yup.string().required('Required'),
@@ -97,20 +57,6 @@ export const categoryValidationSchema = Yup.object({
 
 });
 
-
-
-export const initialValues: Product = {
-  name: '',
-  description: '',
-  price: '',
-  colors: [],
-  totalStockQuantity: 0,
-  variantStockQuantities: [],
-  modelDetails: [],
-  spacification: [],
-  discountPrice: '',
-  category: ''
-};
 
 export const categoryInitialValues: Category = {
   name: '',
@@ -120,11 +66,6 @@ export const categoryInitialValues: Category = {
   Canonical_Tag: "",
 };
 
-
-export const loginInitialValue = {
-  name: '',
-  password: ''
-};
 
 
 /* eslint-disable */
@@ -200,36 +141,6 @@ export const AddproductsinitialValues: FormValues = {
 
 };
 
-export const options = [
-  {
-    value: 'abu_dhabi',
-    label: 'Abu Dhabi',
-  },
-  {
-    value: 'dubai',
-    label: 'Dubai',
-  },
-  {
-    value: 'sharjah',
-    label: 'Sharjah',
-  },
-  {
-    value: 'ajman',
-    label: 'Ajman',
-  },
-  {
-    value: 'umm_al_quwain',
-    label: 'Umm Al Quwain',
-  },
-  {
-    value: 'ras_al_khaimah',
-    label: 'Ras Al Khaimah',
-  },
-  {
-    value: 'fujairah',
-    label: 'Fujairah',
-  },
-];
 
 export const privacyPolicyData: PrivacyPolicyItem[] = [
   {
@@ -281,37 +192,6 @@ export const privacyPolicyData: PrivacyPolicyItem[] = [
   },
 
 ];
-
-export const detaildot = [
-  { specsDetails: "Lorem ipsum dolor sit dsg" },
-  { specsDetails: "Aliquam tincidunt mau" },
-  { specsDetails: "Cras ornare tristique elit" },
-  { specsDetails: "Lorem ipsum dolor sit dsg" },
-  { specsDetails: "Fusce pellentesque" },
-  { specsDetails: "Cras iaculis ultricies nulla." },
-  { specsDetails: "Lorem ipsum dolor sit dsg" },
-  { specsDetails: "Aliquam tincidunt mau" },
-  { specsDetails: "Cras ornare tristique elit" },
-  { specsDetails: "Lorem ipsum dolor sit dsg" },
-  { specsDetails: "Fusce pellentesque" },
-  { specsDetails: "Cras iaculis ultricies nulla." },
-]
-export const collapseData = [
-  {
-    title: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR',
-    content: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR LOREM IPSUM DOLOR SIT AMET, CONSECTETUR...',
-  },
-  {
-    title: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR',
-    content: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR LOREM IPSUM DOLOR SIT AMET, CONSECTETUR...',
-  },
-  {
-    title: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR',
-    content: 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUR LOREM IPSUM DOLOR SIT AMET, CONSECTETUR...',
-  },
-];
-
-
 
 
 export const tabbyfeature: ITabbyList[] = [
@@ -430,14 +310,6 @@ export const footerlink = [
 
 
 ];
-
-export const productimage = [
-  { img: "/images/ProductsPage/product1.png" },
-  { img: "/images/ProductsPage/product2.png" },
-  { img: "/images/ProductsPage/product3.png" },
-]
-
-
 
 export const CountryCode = [
   { title: "+971", code: "+971" },

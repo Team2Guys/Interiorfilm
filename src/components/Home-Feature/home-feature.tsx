@@ -8,13 +8,6 @@ import PRODUCTS_TYPES from "types/interfaces";
 const HomeFeature = ({ allProducts }: { allProducts: PRODUCTS_TYPES[] }) => {
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (allProducts.length > 0) {
-      setTimeout(() => {
-        setLoading(false)
-      }, 1000)
-    }
-  }, [allProducts]);
 
   const getProductsByCodes = (codes: string[]) => {
     const products = allProducts.filter(product => codes.includes(product.code));
@@ -25,6 +18,14 @@ const HomeFeature = ({ allProducts }: { allProducts: PRODUCTS_TYPES[] }) => {
   console.log(featureProducts)
   const filteredProducts = getProductsByCodes(featureProducts);
   console.log(filteredProducts)
+
+  useEffect(() => {
+    if (filteredProducts.length > 0) {
+      setTimeout(() => {
+        setLoading(false)
+      }, 1000)
+    }
+  }, [filteredProducts]);
   return (
     <Container className="mt-10 ">
       <h2 className="text-[24px] text-heading text-center tracking-widest">

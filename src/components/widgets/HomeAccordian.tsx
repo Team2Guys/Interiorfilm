@@ -28,14 +28,13 @@ function HomeAccordian() {
   return (
     <Container>
       <div className="grid grid-cols-1 gap-10 mt-10 md:grid-cols-2">
-        <div className="block">
+        <div className="h-[300px] md:h-[600px]">
           <Image
             src={accordionImages[openIndex || 0]}
             alt="Accordian Image"
-            className="object-cover w-full h-[300px] md:h-[600px]"
+            className="object-cover !relative"
             loading="lazy"
-            height={800}
-            width={800}
+            fill
           />
         </div>
 
