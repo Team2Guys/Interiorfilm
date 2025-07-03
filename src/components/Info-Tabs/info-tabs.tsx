@@ -31,9 +31,9 @@ export default function InfoTabs() {
     <Container className="">
       <div className="flex justify-between  text-center overflow-x-scroll md:overflow-hidden  z-10">
         {tabs.map((tab, index) => (
-          <button
+          <h3
             key={index}
-            className={`text-black py-2 md:py-6 whitespace-nowrap w-full px-4 text-17 hover:text-black focus:outline-none transition duration-300 ${
+            className={`text-black py-2 md:py-6 whitespace-nowrap w-full px-4 text-17 hover:text-black focus:outline-none transition duration-300 cursor-pointer ${
               activeTab === index
                 ? "border-b-4 border-primary text-black font-bold"
                 : "border-b-4 border-transparent hover:border-primary font-black"
@@ -41,7 +41,7 @@ export default function InfoTabs() {
             onClick={() => setActiveTab(index)}
           >
             {tab}
-          </button>
+          </h3>
         ))}
       </div>
     <hr className=" relative bottom-1 bg-primary border-b-4 border-[#EAEBEC] -z-99999" />

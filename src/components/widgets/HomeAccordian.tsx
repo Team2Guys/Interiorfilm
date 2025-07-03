@@ -28,20 +28,20 @@ function HomeAccordian() {
   return (
     <Container>
       <div className="grid grid-cols-1 gap-10 mt-10 md:grid-cols-2">
-        <div className="block">
+        <div className="h-[300px] md:h-[600px]">
           <Image
             src={accordionImages[openIndex || 0]}
             alt="Accordian Image"
-            className="object-cover w-full h-[300px] md:h-[600px]"
-            height={800}
-            width={800}
+            className="object-cover !relative"
+            loading="lazy"
+            fill
           />
         </div>
 
         <div className="">
-          <h3 className="font-futura font-bold text-3xl mb-8 text-center  md:text-start" >
+          <h2 className="font-futura font-bold text-3xl mb-8 text-center  md:text-start" >
           Wrap Any Of These Areas ?
-          </h3>
+          </h2>
           {AccordionsArray.map((item, index) => {
             return (
            <div className="cursor-pointer group" onClick={() => handleToggle(index)}  key={index}>

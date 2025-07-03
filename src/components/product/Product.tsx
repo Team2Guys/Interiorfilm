@@ -316,10 +316,10 @@ const ProductPage = () => {
       <Container className="mt-20 md:overflow-hidden">
         <div className="flex flex-wrap lg:flex-nowrap justify-between  gap-3">
           <div>
-            <h1 className="uppercase lg:text-[24px] text-16 text-lightdark">
+            <h2 className="uppercase lg:text-[24px] text-16 text-lightdark">
               Home
               <span className="capitalize text-black">/{activeLink?.name}</span>
-            </h1>
+            </h2>
           </div>
           <div className="flex flex-wrap lg:flex-nowrap justify-between  w-full md:w-auto sm:space-x-4 " >
             <div className="flex flex-wrap md:flex-nowrap gap-2 items-center mt-2 ">

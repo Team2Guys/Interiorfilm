@@ -605,6 +605,13 @@ gap: 10px;
   max-height: 100% !important;
 }
 
+.mySwiper.custom .swiper-button-next, .mySwiper.custom .swiper-button-prev{
+  display: none;
+}
+.mySwiper.custom .swiper-pagination-bullets-dynamic {
+  bottom: -4px;
+}
+
 /* .ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled){
   width: 100% !important;
 } */

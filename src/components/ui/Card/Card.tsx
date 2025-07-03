@@ -374,7 +374,7 @@ console.log(error,selectedValue,"error")
                   width={500}
                   height={500}
                   src={product.posterImageUrl.imageUrl}
-                  alt={product.posterImageUrl.altText || ''}
+                  alt={product.posterImageUrl.altText || product.name}
                 />
                 <p className="absolute top-0 left-1 text-sm px-1 text-center text-black bg-[#fb701d]">
                   {product.totalStockQuantity === 0 && "Limited Stock"}
@@ -384,9 +384,9 @@ console.log(error,selectedValue,"error")
           </div>
         </div>
         <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
-          <p className="lg:text-lg text-sm text-center text-black ">
+          <h3 className="lg:text-lg text-sm text-center text-black ">
             {product.name}
-          </p>
+          </h3>
           <p className="lg:text-lg text-sm text-center text-dark ">
             {product.code}
           </p>

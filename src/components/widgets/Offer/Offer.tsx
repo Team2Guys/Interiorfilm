@@ -14,7 +14,7 @@ interface OfferData {
   const Offer: React.FC<OffersProps> = ({ OffersData = [] }) => {
   return (
     <Container className='mt-20'>
-        <p className=' font-semibold text-lg lg:text-5xl text-center capitalize'>What does interior Film offer you!</p>
+        <h2 className=' font-semibold text-lg lg:text-5xl text-center capitalize'>What does interior Film offer you!</h2>
 
         <div className='grid grid-cols-2  lg:grid-cols-4 mt-10 gap-2 md:gap-4'>
             {
@@ -24,7 +24,7 @@ interface OfferData {
                     <div className='w-16 h-16 md:w-24 md:h-24 rounded-full bg-white group-hover:bg-primary transition duration-500 ease-in-out flex justify-center items-center'>
                         {array.icon}
                     </div>
-                    <p className='font-semibold text-14 sm:text-base md:text-20 font-futura text-center text-heading capitalize'>{array.title}</p>
+                    <h3 className='font-semibold text-14 sm:text-base md:text-20 font-futura text-center text-heading capitalize'>{array.title}</h3>
                     <p className='text-center  text-10 sm:text-16 md:text-base text-para'>{array.detail}</p>
                  </div>
                  </div>

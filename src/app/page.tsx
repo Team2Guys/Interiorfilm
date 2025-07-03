@@ -1,14 +1,20 @@
-import Hero from "components/Hero/Hero";
-import CategorySlider from "components/Carousel/category-slider/category-slider";
-import HomeFeature from "components/Home-Feature/home-feature";
-import InfoTabs from "components/Info-Tabs/info-tabs";
-import SearchProduct from "components/Common/search-product/search-product";
-import Offer from "components/widgets/Offer/Offer";
-import PreFooter from "components/Layout/Footer/PreFooter";
-import HomeAccordian from "components/widgets/HomeAccordian";
+import dynamic from 'next/dynamic';
+import Hero from 'components/Hero/Hero';
+const CategorySlider = dynamic(() => import('components/Carousel/category-slider/category-slider'));
+const HomeFeature = dynamic(() => import('components/Home-Feature/home-feature'));
+const InfoTabs = dynamic(() => import('components/Info-Tabs/info-tabs'));
+const SearchProduct = dynamic(() => import('components/Common/search-product/search-product'));
+const Offer = dynamic(() => import('components/widgets/Offer/Offer'));
+const PreFooter = dynamic(() => import('components/Layout/Footer/PreFooter'));
+const HomeAccordian = dynamic(() => import('components/widgets/HomeAccordian'));
+const PDF = dynamic(() => import('components/PDF/PDF'));
+const CategorySliderSkeleton = dynamic(() => import('components/Skeleton-loading/CategorySliderSkeleton'));
+const ProductSliderSkeleton = dynamic(() => import('components/Skeleton-loading/ProductSliderSkeleton'));
 import { offers } from "data/sideMenuData";
-import PDF from "components/PDF/PDF";
 import { Metadata } from "next";
+import blacklogo from "../../public/images/logoblack.png";
+import axios from 'axios';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Premium Quality, Vinyl Wraps, Quick Installation | Interior Film ',
@@ -19,7 +25,7 @@ export const metadata: Metadata = {
     url: '/',
     images: [
       {
-        url: '/',
+        url: `${blacklogo.src}`,
         alt: 'Interior Film',
       },
     ],
@@ -29,17 +35,33 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const [categoriesRes, mainResponse, addOnResponse] = await Promise.all([axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`), axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`), axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`
+  )]);
+  const categories = categoriesRes.data;
+  const mainProducts = Array.isArray(mainResponse.data.products)
+    ? mainResponse.data.products
+    : [];
+  const addOnProducts = Array.isArray(addOnResponse.data.products)
+    ? addOnResponse.data.products
+    : [];
+  const combinedProducts = [...mainProducts, ...addOnProducts];
+
   return (
     <>
       <Hero />
       <InfoTabs />
-      <CategorySlider />
+      <Suspense fallback={<CategorySliderSkeleton />}>
+        <CategorySlider categories={categories} />
+      </Suspense>
       <HomeAccordian />
       <PreFooter />
-      <SearchProduct />
-      <PDF/>
-      <HomeFeature />
+      <SearchProduct products={combinedProducts} />
+      <PDF />
+      <Suspense fallback={<ProductSliderSkeleton />}>
+        <HomeFeature allProducts={mainProducts || []} />
+      </Suspense>
       <Offer OffersData={offers} />
     </>
   );
