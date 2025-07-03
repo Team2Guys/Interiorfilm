@@ -162,7 +162,7 @@ const Navbar = () => {
           ? `products?category=${navItem.ref}`
           : `/${navItem.ref}`;
         setActiveLink(slug);
-        
+
 
       }
     }
@@ -281,7 +281,7 @@ const Navbar = () => {
       const timeoutId = setTimeout(() => {
         setDrawerOpen(false);
       }, 5000);
-      return () => clearTimeout(timeoutId); 
+      return () => clearTimeout(timeoutId);
     }
   }, [drawerOpen, cartHover]);
   return (
@@ -436,26 +436,26 @@ const Navbar = () => {
                 content={
                   <>
                     <ul className="space-y-4 flex flex-col " >
-                    {navarlink.map((navItem, index) => {
-                      const slug = navItem.title.includes("Series")
-                        ? `/products?category=${navItem.ref}`
-                        : `/${navItem.ref}`;
+                      {navarlink.map((navItem, index) => {
+                        const slug = navItem.title.includes("Series")
+                          ? `/products?category=${navItem.ref}`
+                          : `/${navItem.ref}`;
 
-                      const isActive = activeLink === slug; // Check if the link is active
+                        const isActive = activeLink === slug; // Check if the link is active
 
-                      return (
-                        <div onClick={onClose} key={index}>
-                        <Link
-                          className={`font-semibold text-16 text-black hover:text-black capitalize w-fit ${isActive ? "link-active" : "link-underline"
-                          }`}
-                          href={slug}
-                          onClick={() =>setActiveLink(slug)} 
-                          >
-                          {navItem.title.replace("Series", "")}
-                        </Link>
+                        return (
+                          <div onClick={onClose} key={index}>
+                            <Link
+                              className={`font-semibold text-16 text-black hover:text-black capitalize w-fit ${isActive ? "link-active" : "link-underline"
+                                }`}
+                              href={slug}
+                              onClick={() => setActiveLink(slug)}
+                            >
+                              {navItem.title.replace("Series", "")}
+                            </Link>
                           </div>
-                      );
-                    })}
+                        );
+                      })}
                     </ul>
                   </>
                 }
@@ -496,9 +496,9 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <div className="fixed top-auto bottom-12 right-7 z-999  ">
+      <div className="fixed top-auto bottom-12 right-7 z-999  " id="whatsapp-IF">
         <Link
-       id="whatsapp-IF"
+          id="whatsapp-IF"
           target="_blank"
           href={"https://wa.link/mb359y"}
           className="sticky top-1 "
@@ -593,7 +593,7 @@ const Navbar = () => {
           )}
         </>
       </Modal>
-        <CartDrawer open={drawerOpen} onClose={handleCloseDrawer} onMouseEnter={() => setCartHover(true)}
+      <CartDrawer open={drawerOpen} onClose={handleCloseDrawer} onMouseEnter={() => setCartHover(true)}
         onMouseLeave={() => setCartHover(false)} />
     </>
   );
