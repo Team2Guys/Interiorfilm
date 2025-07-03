@@ -496,14 +496,15 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <div className="fixed top-auto bottom-12 right-7 z-999  " id="whatsapp-IF">
+      <div className="fixed top-auto bottom-12 right-7 z-999" id="WHTSAPP-IF-PPC">
         <Link
-          id="whatsapp-IF"
+          id="WHTSAPP-IF-PPC"
           target="_blank"
           href={"https://wa.link/mb359y"}
           className="sticky top-1 "
         >
           <svg
+          id="WHTSAPP-IF-PPC"
             width="54"
             height="54"
             viewBox="0 0 54 54"
@@ -525,7 +526,7 @@ const Navbar = () => {
               />
             </g>
             <defs>
-              <clipPath id="clip0_648_1287">
+              <clipPath id="WHTSAPP-IF-PPC">
                 <rect width="54" height="54" fill="white" />
               </clipPath>
             </defs>
