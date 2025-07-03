@@ -497,6 +497,7 @@ const Navbar = () => {
 
       <div className="fixed top-auto bottom-12 right-7 z-999  ">
         <Link
+       id="whatsapp-IF"
           target="_blank"
           href={"https://wa.link/mb359y"}
           className="sticky top-1 "
