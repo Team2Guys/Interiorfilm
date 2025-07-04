@@ -504,8 +504,8 @@ const Navbar = () => {
           className="sticky top-1"
         >
 
-          <Image   id="WHTSAPP-IF-PPC" src="https://res.cloudinary.com/de6owjeap/image/upload/v1751629199/whatsapp-icon-design_23-2147900929__1_-removebg-preview_nu9kae.png" onClick={(e) => {e.stopPropagation(); e.preventDefault(); window.open("https://wa.link/mb359y", "_blank")}} alt='teximagte'   width={80}
-            height={90}></Image>
+          <Image className="w-14"  id="WHTSAPP-IF-PPC" src="/images/whatsapp.png" onClick={(e) => {e.stopPropagation(); e.preventDefault(); window.open("https://wa.link/mb359y", "_blank")}} alt='teximagte'   width={100}
+            height={100}></Image>
         </p>
       </div>
 
