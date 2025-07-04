@@ -496,21 +496,17 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <div className=" bottom-12 right-7 z-999 sticky top-1" id="WHTSAPP-IF-PPC">
-        <Link
-          id="WHTSAPP-IF-PPC"
-          target="_blank"
-          href={"https://wa.link/mb359y"}
-          className="sticky top-1 "
+      <div className="fixed top-auto bottom-12 right-7 z-999 cursor-pointer"   id="WHTSAPP-IF-PPC">
+
+        <p
+  id="WHTSAPP-IF-PPC"
+
+          className="sticky top-1"
         >
-       <Image
-          src="/images/whatsapp.png"
-          alt="WhatsApp"
-          width={40}
-          height={40}
-          className="rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300"
-        />
-        </Link>
+
+          <Image className="w-14"  id="WHTSAPP-IF-PPC" src="/images/whatsapp.png" onClick={(e) => {e.stopPropagation(); e.preventDefault(); window.open("https://wa.link/mb359y", "_blank")}} alt='teximagte'   width={100}
+            height={100}></Image>
+        </p>
       </div>
 
       <Modal
