@@ -39,14 +39,11 @@ const Card: React.FC<CardProps> = ({
     {}
   );
   const [productDetailModel, setProductDetailModel] = useState<boolean>(false);
-  const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
-  const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [populated_categoryName, setCategoryName] = useState<string | any>(null);
   const [selectedProduct, setSelectedProduct] = useState<PRODUCTS_TYPES | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-console.log(error,selectedValue,"error")
   const handleProductClick = (product: PRODUCTS_TYPES) => {
     setIsLoading(true);
     setSelectedProduct(product);
@@ -92,21 +89,21 @@ console.log(error,selectedValue,"error")
         setTotalProducts(products);
       }
 
-      if (
-        products.length > 0 &&
-        products[0].colors &&
-        products[0].colors.length > 0
-      ) {
-        setSelectedValue(products[0].colors[0]);
-      }
+      // if (
+      //   products.length > 0 &&
+      //   products[0].colors &&
+      //   products[0].colors.length > 0
+      // ) {
+      //   setSelectedValue(products[0].colors[0]);
+      // }
     } catch (err: any) {
       console.log(err, "err");
       if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
+        console.log(err.response.data.message);
       } else if (err.message) {
-        setError(err.message);
+         console.log(err.message);
       } else {
-        setError("An unexpected error occurred.");
+         console.log("An unexpected error occurred.");
       }
     } finally {
       setLoading(false);
