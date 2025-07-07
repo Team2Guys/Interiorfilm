@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Premium Quality, Vinyl Wraps, Quick Installation | Interior Film ',
     description: 'Discover premium vinyl wraps to match any style, from sleek modern designs to cosy, traditional looks. We have products that suit everyone.',
-    url: '/',
+    url: 'https://interiorfilm.ae',
     images: [
       {
         url: `${blacklogo.src}`,
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: '/',
+    canonical: 'https://interiorfilm.ae',
   },
 };
 

@@ -53,9 +53,9 @@ jobs:
           nvm use 20
           cd /var/www/interior/client
           git pull origin main --no-rebase
-          node -v
-          npm -v
-          npm install
+          npm cache clean --force
+          npm install --legacy-peer-deps
+          rm -rf .next
           npm run build
           pm2 restart interrior-fe
           exit

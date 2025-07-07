@@ -496,15 +496,24 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <div className="fixed top-auto bottom-12 right-7 z-999" id="WHTSAPP-IF-PPC">
-        <Link
+      <div className="fixed top-auto bottom-12 right-7 z-999" id="WHTSAPP-IF-PPC"
+      >
+        <button
+          onClick={() => {
+            // window.open("https://wa.link/mb359y",)
+
+            if (typeof window !== "undefined" && window.gtag) {
+              window.gtag("event", "conversion", {
+                send_to: "AW-16732495333/g_BZCN_M7N0ZEOW71qo-",
+              });
+            }
+          }}
+
           id="WHTSAPP-IF-PPC"
-          target="_blank"
-          href={"https://wa.link/mb359y"}
-          className="sticky top-1 "
+          className="sticky top-1 cursor-pointer "
         >
           <svg
-          id="WHTSAPP-IF-PPC"
+            id="WHTSAPP-IF-PPC"
             width="54"
             height="54"
             viewBox="0 0 54 54"
@@ -531,7 +540,7 @@ const Navbar = () => {
               </clipPath>
             </defs>
           </svg>
-        </Link>
+        </button>
       </div>
 
       <Modal
