@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import blacklogo from "../../../../public/images/logoblack.png";
@@ -19,175 +19,101 @@ import CartDrawer from "components/cart-drawer/cart-drawer";
 import TopNav from "./TopNav";
 import { IoSearch } from "react-icons/io5";
 import Container from "../Container/Container";
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [cartHover, setCartHover] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
-  const [WishlistItems, setWishlistItems] = useState([]);
-  const pathname = usePathname(); // Get the current path
-  const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
-  const isHomePage = pathname === "/";
-  const [activeLink, setActiveLink] = useState<string>("/");
+  const [cartItems, setCartItems] = useState<any[]>([]);
+  const [wishlistItems, setWishlistItems] = useState<any[]>([]);
   const [products, setProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const searchInputRef = useRef<HTMLInputElement>(null);
-  const searchParams = useSearchParams();
   const [isFocused, setIsFocused] = useState(false);
+
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
+  const isHomePage = pathname === "/";
   const category = searchParams.get("category");
-  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  const activeLink = useMemo(() => {
+    if (pathname === "/") return "/";
+    
+    if (category) {
+      const navItem = navarlink.find(item => item.ref === category);
+      if (navItem) return `/products?category=${navItem.ref}`;
+    }
+    
+    const navItem = navarlink.find(item => 
+      pathname.startsWith(`/${item.ref}`) || 
+      (pathname === "/products" && category === item.ref)
+    );
+    
+    return navItem 
+      ? navItem.title.includes("Series") 
+        ? `/products?category=${navItem.ref}`
+        : `/${navItem.ref}`
+      : "";
+  }, [pathname, category]);
+
+  const showModal = () => setIsModalOpen(true);
+  const handleCancel = () => setIsModalOpen(false);
+  const handleCloseDrawer = () => setDrawerOpen(false);
+  const showDrawer = () => setOpen(true);
+  const onClose = () => setOpen(false);
+
+  const truncateText = (text: string, maxLength: number) => {
+    return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+  };
 
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (
-        searchInputRef.current &&
-        !searchInputRef.current.contains(event.target) &&
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target)
-      ) {
-        setIsFocused(false); // Close the dropdown
+    const fetchProducts = async () => {
+      try {
+        const [mainResponse, addOnResponse] = await Promise.all([
+          axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
+          axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`)
+        ]);
+        
+        setProducts([
+          ...(mainResponse.data.products || []),
+          ...(addOnResponse.data.products || [])
+        ]);
+      } catch (err) {
+        console.error("Error fetching products:", err);
       }
     };
+    fetchProducts();
+  }, []);
 
-    document.addEventListener("mousedown", handleClickOutside);
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+   useEffect(() => {
+    const handleCartChange = () => {
+      const updatedCart = JSON.parse(
+        localStorage.getItem("cart") || "[]"
+      );
+      setCartItems(updatedCart);
+      setDrawerOpen(true)
+    };
+
+    window.addEventListener("cartChanged", handleCartChange);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("cartChanged", handleCartChange);
     };
   }, []);
-
-  useEffect(() => {
-    if (category) {
-      setActiveLink(`/products?category=${category}`);
-    } else if (pathname) {
-      const activeNavLink = navarlink.find((nav) =>
-        pathname.includes(nav.ref)
-      );
-      setActiveLink(activeNavLink?.ref || "");
-    }
-  }, [category, pathname]);
-
-  const showModal = () => {
-    // if (searchTerm.trim() !== "") {
-    setIsModalOpen(true);
-    // }
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  const productHandler = async () => {
-    try {
-      // Fetch main products
-      const mainResponse = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
-      );
-      const mainProducts = Array.isArray(mainResponse.data.products)
-        ? mainResponse.data.products
-        : [];
-
-      // Fetch add-on products
-      const addOnResponse = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`
-      );
-      const addOnProducts = Array.isArray(addOnResponse.data.products)
-        ? addOnResponse.data.products
-        : [];
-
-      // Combine main and add-on products
-      const combinedProducts = [...mainProducts, ...addOnProducts];
-      setProducts(combinedProducts);
-    } catch (err) {
-      console.log(err, "err");
-    }
-  };
-
-  useEffect(() => {
-    productHandler();
-  }, []);
-
-  const filteredProducts = Array.isArray(products)
-    ? products.filter((product) => {
-      const search = searchTerm.toLowerCase();
-      return (
-        product.name.toLowerCase().includes(search) ||
-        (product.description &&
-          product.description.toLowerCase().includes(search)) ||
-        (product.salePrice &&
-          product.salePrice.toString().toLowerCase().includes(search)) ||
-        (product.purchasePrice &&
-          product.purchasePrice.toString().toLowerCase().includes(search)) ||
-        (product.category &&
-          product.category.toString().toLowerCase().includes(search)) ||
-        product.discountPrice?.toString().toLowerCase().includes(search) ||
-        product.modelDetails.some(
-          (model) =>
-            model.name.toLowerCase().includes(search) ||
-            model.detail.toLowerCase().includes(search)
-        ) ||
-        product.starRating?.toString().toLowerCase().includes(search) ||
-        product.reviews?.toLowerCase().includes(search) ||
-        product.code.toLowerCase().includes(search) ||
-        product.totalStockQuantity?.toString().toLowerCase().includes(search)
-
-      );
-    })
-    : [];
-
-  useEffect(() => {
-    if (isModalOpen && searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
-  }, [isModalOpen]);
-
-
-
-  useEffect(() => {
-    if (pathname === "/") {
-      setActiveLink("/");
-    } else {
-      const navItem = navarlink.find(
-        (item: { ref: string; title: string }) =>
-          pathname === `/${item.ref}` ||
-          pathname === `products?category=${item.ref}`
-      );
-      if (navItem) {
-        const slug = navItem.title.includes("Series")
-          ? `products?category=${navItem.ref}`
-          : `/${navItem.ref}`;
-        setActiveLink(slug);
-
-
-      }
-    }
-  }, [pathname]);
-
-  useEffect(() => {
-    productHandler();
-  }, []);
-
-  const handleCloseDrawer = () => setDrawerOpen(false);
-
-  useEffect(() => {
-    const existingWishlist = JSON.parse(
-      localStorage.getItem("wishlist") || "[]"
-    );
-    setWishlistItems(existingWishlist);
-  }, []);
-
-  useEffect(() => {
+    useEffect(() => {
     const handleWishlistChange = () => {
       const updatedWishlist = JSON.parse(
         localStorage.getItem("wishlist") || "[]"
       );
-
-      console.log(updatedWishlist, "WishlistChanged");
       setWishlistItems(updatedWishlist);
     };
 
@@ -198,92 +124,35 @@ const Navbar = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    setCartItems(existingCart);
-  }, []);
-
-  useEffect(() => {
-    const handleCartChange = () => {
-      const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
-      setCartItems(updatedCart);
-    };
-
-    window.addEventListener("cartChanged", handleCartChange);
-
-    return () => {
-      window.removeEventListener("cartChanged", handleCartChange);
-    };
-  }, []);
-
-  const showDrawer = () => {
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setOpen(false);
-  };
-
-  useEffect(() => {
-    const handleCartChange = () => {
-      setOpen(false);
-    };
-
-    window.addEventListener("cartChanged", handleCartChange);
-
-    return () => {
-      window.removeEventListener("cartChanged", handleCartChange);
-    };
-  }, []);
-
-  const truncateText = (text: any, maxLength: any) => {
-    return text.length > maxLength
-      ? text.substring(0, maxLength) + "..."
-      : text;
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    let previousCartItemCount = cartItems.reduce(
-      (count, item: any) => count + item.count,
-      0
-    );
-
-    const handleCartChange = () => {
-      const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
-      const updatedCartItemCount = updatedCart.reduce(
-        (count: number, item: any) => count + item.count,
-        0
+  const filteredProducts = useMemo(() => {
+    if (!searchTerm.trim()) return [];
+    
+    const search = searchTerm.toLowerCase();
+    return products.filter((product) => {
+      return (
+        product.name?.toLowerCase().includes(search) ||
+        product.description?.toLowerCase().includes(search) ||
+        product.salePrice?.toString().toLowerCase().includes(search) ||
+        product.purchasePrice?.toString().toLowerCase().includes(search) ||
+        product.category?.toString().toLowerCase().includes(search) ||
+        product.discountPrice?.toString().toLowerCase().includes(search) ||
+        product.modelDetails?.some(model => 
+          model.name?.toLowerCase().includes(search) || 
+          model.detail?.toLowerCase().includes(search)
+        ) ||
+        product.starRating?.toString().toLowerCase().includes(search) ||
+        product.reviews?.toLowerCase().includes(search) ||
+        product.code?.toLowerCase().includes(search) ||
+        product.totalStockQuantity?.toString().toLowerCase().includes(search)
       );
-      if (updatedCartItemCount > previousCartItemCount) {
-        setCartItems(updatedCart);
-        setDrawerOpen(true);
-      }
-      previousCartItemCount = updatedCartItemCount;
-    };
+    });
+  }, [products, searchTerm]);
 
-    window.addEventListener("cartChanged", handleCartChange);
+  const cartItemCount = useMemo(() => 
+    cartItems.reduce((count, item) => count + (item.count || 0), 0), 
+    [cartItems]
+  );
 
-    return () => {
-      window.removeEventListener("cartChanged", handleCartChange);
-    };
-  }, [cartItems]);
-
-  useEffect(() => {
-    if (drawerOpen && !cartHover) {
-      const timeoutId = setTimeout(() => {
-        setDrawerOpen(false);
-      }, 5000);
-      return () => clearTimeout(timeoutId);
-    }
-  }, [drawerOpen, cartHover]);
   return (
     <>
       <TopNav />
@@ -385,39 +254,32 @@ const Navbar = () => {
               className="relative text-22 sm:text-16 md:text-2xl"
             >
               <IoMdHeartEmpty
-                className={`cursor-pointer ${WishlistItems.length > 0 ? "text-primary" : "text-black"
-                  }`}
+                className={`cursor-pointer ${wishlistItems.length > 0 ? "text-primary" : "text-black"}`}
               />
-              {WishlistItems.length > 0 ? (
+              {wishlistItems.length > 0 && 
                 <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center shadow-2xl bg-white text-black absolute top-3 left-3 sm:left-2 sm:top-2 md:left-3 md:top-3">
                   <span className="font-medium text-11 md:text-18">
-                    {WishlistItems.length}
+                    {wishlistItems.length}
                   </span>
                 </div>
-              ) : (
-                <></>
-              )}
+              }
             </Link>
-            <Link
-              href={"/cart"}
+             <Link
+              href="/cart"
               className="relative text-22 sm:text-16 md:text-2xl"
             >
               <SlHandbag
-                className={`cursor-pointer ${cartItems.length > 0 ? "text-primary" : "text-black"
-                  }`}
+                className={`cursor-pointer ${
+                  cartItems.length > 0 ? "text-primary" : "text-black"
+                }`}
               />
-              {cartItems.length > 0 ? (
-                <>
-                  <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center bg-white  text-black absolute top-3 left-3 sm:left-2 sm:top-2 md:left-3 md:top-3">
-                    <span className="font-medium text-11 md:text-18">
-                      {cartItems.reduce(
-                        (count: any, item: any) => count + item.count,
-                        0
-                      )}
-                    </span>
-                  </div>
-                </>
-              ) : null}
+              {cartItemCount > 0 && (
+                <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center bg-white text-black absolute top-3 left-3 sm:left-2 sm:top-2 md:left-3 md:top-3">
+                  <span className="font-medium text-11 md:text-18">
+                    {cartItemCount}
+                  </span>
+                </div>
+              )}
             </Link>
 
             <div className=" block lg:hidden">
@@ -449,7 +311,6 @@ const Navbar = () => {
                               className={`font-semibold text-16 text-black hover:text-black capitalize w-fit ${isActive ? "link-active" : "link-underline"
                                 }`}
                               href={slug}
-                              onClick={() => setActiveLink(slug)}
                             >
                               {navItem.title.replace("Series", "")}
                             </Link>
@@ -486,7 +347,6 @@ const Navbar = () => {
                     }`}
                   key={index}
                   href={slug}
-                  onClick={() => setActiveLink(slug)} // Update the active link on click
                 >
                   {navItem.title.replace("Series", "")}
                 </Link>
@@ -512,7 +372,7 @@ const Navbar = () => {
       <Modal
         title=""
         open={isModalOpen}
-        onOk={handleOk}
+        onOk={handleCancel}
         onCancel={handleCancel}
         footer=""
         width={800}
@@ -558,7 +418,7 @@ const Navbar = () => {
                       <p className="font-semibold text-14 md:text-xl">
                         {product.name}
                       </p>
-                      <p className="text-10 md:text-base">{truncateText(product.description, 60)}</p>
+                      <p className="text-10 md:text-base">{truncateText(product.description || '', 60)}</p>
                     </div>
                   </Link>
                 ))
@@ -569,8 +429,10 @@ const Navbar = () => {
           )}
         </>
       </Modal>
-      <CartDrawer open={drawerOpen} onClose={handleCloseDrawer} onMouseEnter={() => setCartHover(true)}
-        onMouseLeave={() => setCartHover(false)} />
+      <CartDrawer 
+        open={drawerOpen} 
+        onClose={handleCloseDrawer} 
+      />
     </>
   );
 };
