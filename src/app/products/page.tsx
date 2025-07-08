@@ -1,9 +1,9 @@
-import ProductPage from "components/product/Product";
 import React from "react";
 import { generateSlug } from "data/Data";
 import { headers } from "next/headers";
 import { Metadata } from "next";
 import axios from "axios";
+import ProductPage from "components/product/Product";
 
 
 export async function generateMetadata({ searchParams }: { searchParams: Promise<{ category?: string }> }): Promise<Metadata> {
@@ -46,8 +46,16 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
 
 async function Products({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
   const { category } = await searchParams
+    const [categoryRes, productRes, addOnRes] = await Promise.all([
+    axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`),
+    axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
+    axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`),
+  ]);
   return (
-    <ProductPage  initialCategory={category ?? ''} />
+    <ProductPage initialCategory={category ?? ''}  
+    category={categoryRes.data}
+      products={productRes.data.products}
+      addons={addOnRes.data.products} />
   );
 }
 

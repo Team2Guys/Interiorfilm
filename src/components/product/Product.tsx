@@ -5,13 +5,11 @@ import React, { useState, useEffect, useRef } from "react";
 import Card from "components/ui/Card/Card";
 import { Select } from "antd";
 import PRODUCTS_TYPES from "types/interfaces";
-import axios from "axios";
-import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
 import { IoIosSearch } from "react-icons/io";
-// import { useRouter } from "next/navigation";
 import { generateSlug, sortProductsByCode, specificImageIndexByCode, specificProductCodesByCategory } from "data/Data";
 import Image from "next/image";
 import Link from "next/link";
+
 interface category {
   posterImageUrl: {
     public_id: string;
@@ -36,32 +34,25 @@ const StaticCategory = {
   __v: "any",
 };
 
-const ProductPage = ({ initialCategory }:{initialCategory:string}) => {
-  const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
-  const [adsontotalProducts, setTotaladsonProducts] = useState<PRODUCTS_TYPES[]>([]);
+interface ProductPageProps {
+  initialCategory: string;
+  category: category[];
+  products: PRODUCTS_TYPES[];
+  addons: PRODUCTS_TYPES[];
+}
+
+const ProductPage = ({ initialCategory, category, products: propProducts, addons: propAddons }: ProductPageProps) => {
   const [filteredProductsByCategory, setfilteredProductsByCategory] = useState<PRODUCTS_TYPES[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
   const [showColors, setShowColors] = useState<boolean>(false);
   const [colorName, setColorName] = useState<string>();
   const [availableColors, setAvailableColors] = useState<{ value: string; label: string }[] | string[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortOption, setSortOption] = useState<string>("Default");
-  const [category, setCategory] = useState<category[]>([]);
   const [activeLink, setActiveLink] = useState<category | undefined>()
-  let categoryName= initialCategory || null; // Use the initialCategory prop or set to null if not provided
-  // const [categoryName, setCategoryName] = useState<string | null>(null);
+  let categoryName = initialCategory || null;
+
   const dropdown = useRef<any>(null);
   const trigger = useRef<any>(null);
-  // const router = useRouter();
-
-//   useEffect(() => {
-//   const qs = new URLSearchParams(window.location.search);
-//   setCategoryName(qs.get('category'));
-// }, [router]);
-
-  useEffect(() => {
-    get_recordHandler();
-  }, []);
 
   useEffect(() => {
     productHandler(initialCategory);
@@ -87,54 +78,28 @@ const ProductPage = ({ initialCategory }:{initialCategory:string}) => {
     }
   };
 
-  const get_recordHandler = async () => {
+  const productHandler = async (categoryName: string | null) => {
     try {
-      setLoading(true);
-      const [categoryResponse, productResponse, addsOnproductResponse] = await Promise.all([
-        axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`),
-        axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
-        axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`),
-      ]);
-      let products = productResponse.data.products;
-      console.log("===============================");
-      console.log(products)
-      const categories = [StaticCategory, ...categoryResponse.data];
-      setCategory(categories);
-      setTotalProducts(products);
-      setTotaladsonProducts(addsOnproductResponse.data.products)
-      productHandler(categoryName, categories, products);
-    } catch (err) {
-      console.error("Error loading products or categories", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const productHandler = async (categoryName: string | null, newcategories?: category[], newProducts?: any) => {
-    try {
-      const activeCategory: any = (newcategories ? newcategories : category).find((cat) => generateSlug(cat.name) === categoryName);
+      const activeCategory: any = category.find((cat) => generateSlug(cat.name) === categoryName);
 
       if (categoryName === 'accessories') {
-        setfilteredProductsByCategory(adsontotalProducts);
+        setfilteredProductsByCategory(propAddons);
         setActiveLink({
-          ...StaticCategory,  // Update the activeLink to use the static "accessories" link
-          name: "accessories"  // Manually set name to "accessories"
+          ...StaticCategory,
+          name: "accessories"
         });
-        Get_colors_handler(adsontotalProducts); // Ensure colors are handled correctly for "accessories"
+        Get_colors_handler(propAddons);
         return;
       }
 
-      // Fallback for other categories
       if (!activeCategory || activeCategory._id === "all") {
-        setfilteredProductsByCategory(newProducts ? newProducts : totalProducts);
+        setfilteredProductsByCategory(propProducts);
         setActiveLink(StaticCategory);
-        Get_colors_handler(newProducts ? newProducts : totalProducts);
+        Get_colors_handler(propProducts);
         return;
       }
 
-      const filteredProductsByCategory = (
-        newProducts ? newProducts : totalProducts
-      ).filter((product: PRODUCTS_TYPES) => {
+      const filteredProductsByCategory = propProducts.filter((product: PRODUCTS_TYPES) => {
         return product.category === activeCategory._id;
       });
 
@@ -145,7 +110,6 @@ const ProductPage = ({ initialCategory }:{initialCategory:string}) => {
       console.error("Error loading products or categories", err);
     }
   };
-
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -210,44 +174,39 @@ const ProductPage = ({ initialCategory }:{initialCategory:string}) => {
     })
     : [];
 
-    const sortProducts = (products: PRODUCTS_TYPES[]) => {
-      if (!products || products.length === 0) return [];
-      const getPrice = (product: PRODUCTS_TYPES) => product.salePrice ?? 0;
-    
-      if (sortOption === "Low to High") {
-        return products.sort((a, b) => getPrice(a) - getPrice(b));
-      } else if (sortOption === "High to Low") {
-        return products.sort((a, b) => getPrice(b) - getPrice(a));
-      } else {
-        return sortProductsByCode(
-          products.sort((a, b) => {
-            const nameA = a.name.toUpperCase();
-            const nameB = b.name.toUpperCase();
-            return nameA.localeCompare(nameB, undefined, {
-              numeric: true,
-              sensitivity: "base",
-            });
-          })
-        );
-      }
-    };
-    
+  const sortProducts = (products: PRODUCTS_TYPES[]) => {
+    if (!products || products.length === 0) return [];
+    const getPrice = (product: PRODUCTS_TYPES) => product.salePrice ?? 0;
 
+    if (sortOption === "Low to High") {
+      return products.sort((a, b) => getPrice(a) - getPrice(b));
+    } else if (sortOption === "High to Low") {
+      return products.sort((a, b) => getPrice(b) - getPrice(a));
+    } else {
+      return sortProductsByCode(
+        products.sort((a, b) => {
+          const nameA = a.name.toUpperCase();
+          const nameB = b.name.toUpperCase();
+          return nameA.localeCompare(nameB, undefined, {
+            numeric: true,
+            sensitivity: "base",
+          });
+        })
+      );
+    }
+  };
 
   if (categoryName === 'accessories') {
-    filteredProducts = adsontotalProducts;
+    filteredProducts = propAddons;
   }
 
-  // Continue with sorting
   const sortedProducts = sortProducts(filteredProducts);
 
   useEffect(() => {
     const clickHandler = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       let id = ["ColorDropdown"];
-      console.log(target.id, "target");
       if (!id.includes(target.id)) {
-        console.log(target.id);
         setShowColors(false);
         return;
       }
@@ -259,23 +218,18 @@ const ProductPage = ({ initialCategory }:{initialCategory:string}) => {
   useEffect(() => {
     const keyHandler = ({ code }: KeyboardEvent) => {
       if (!showColors || code !== "Escape") return;
-      console.log(code, "code");
       setShowColors(false);
     };
     document.addEventListener("keydown", keyHandler);
     return () => document.removeEventListener("keydown", keyHandler);
   });
+
   const handleColorReset = () => {
     setColorName("");
   };
 
-
   const categoryNameNormalized: any = categoryName?.trim();
-
-
   const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
-  console.log('+++++++++++++++++++++++')
-  console.log(specificProductCodes)
   const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
     const productImages: PRODUCTS_TYPES[] = [];
     codes.forEach(code => {
@@ -294,7 +248,6 @@ const ProductPage = ({ initialCategory }:{initialCategory:string}) => {
   const selectedProductImages = specificProductImages.length
     ? specificProductImages
     : getRandomProducts(filteredProductsByCategory);
-
 
   return (
     <>
@@ -420,37 +373,9 @@ const ProductPage = ({ initialCategory }:{initialCategory:string}) => {
         <div className="w-full">
           <>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 gap-2 mt-10">
-              {loading ? (
-                Array.from({ length: 9 }).map((_, index) => (
-                  <div key={index} className="gap-10 flex flex-col mt-3">
-                    <SkeletonLoading
-                      avatar={{
-                        shape: "square",
-                        size: 150,
-                        className: "w-full flex flex-col",
-                      }}
-                      title={false}
-                      style={{ flexDirection: "column" }}
-                      paragraph={{ rows: 3 }}
-                      className="gap-10 flex"
-                      active={true}
-                    />
-                  </div>
-                ))
-              ) : (
-                <Card quickClass="right-8" ProductCard={sortedProducts} categoryName={categoryName ?? ''} slider={true} />
-              )}
+                <Card quickClass="right-8" ProductCard={sortedProducts} categoryName={categoryName ?? ''} slider={true} />       
             </div>
           </>
-
-          {/* {productsToShow < sortedProducts.length && (
-              <button
-                className='px-5 py-2 bg-primary text-white rounded-md flex items-center mx-auto'
-                onClick={loadMoreProducts}
-              >
-                Load More
-              </button>
-            )} */}
         </div>
       </Container>
     </>

@@ -4,11 +4,8 @@ import Image from "next/image";
 import { Modal, Rate, Spin, message } from "antd";
 import { LuShoppingCart } from "react-icons/lu";
 import { GoHeart } from "react-icons/go";
-import { usePathname, useRouter } from "next/navigation";
 import PRODUCTS_TYPES from "types/interfaces";
-import axios from "axios";
 import { generateSlug } from "data/Data";
-import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
 import { FiZoomIn } from "react-icons/fi";
 import Model from "components/ui/Modal/Model";
 import ProductDetails from "components/product_detail/ProductDetails";
@@ -26,20 +23,16 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({
   ProductCard,
-  slider,
   categoryId,
   carDetail,
   cardClass,
   quickClass,
   categoryName,
 }) => {
-  const router = useRouter();
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [productDetails, setproductDetails] = useState<PRODUCTS_TYPES | any>({});
   const [productDetailModel, setProductDetailModel] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [populated_categoryName, setCategoryName] = useState<string | any>(null);
   const [selectedProduct, setSelectedProduct] = useState<PRODUCTS_TYPES | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const handleProductClick = (product: PRODUCTS_TYPES) => {
@@ -55,58 +48,9 @@ const Card: React.FC<CardProps> = ({
     setIsModalOpen(false);
   };
 
-  const pathname = usePathname();
-
   let CategoryId = categoryId ? categoryId : "demo";
 
-  const getallProducts = async () => {
-    try {
-      if (pathname.startsWith("/products") || slider) return;
-      console.log("slider false");
 
-      setLoading(true);
-      let response: any = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
-      );
-      let products = response.data.products;
-      products.sort((a: PRODUCTS_TYPES, b: PRODUCTS_TYPES) => {
-        // Extract numeric part of product names
-        const nameA = a.name.match(/\d+/);
-        const nameB = b.name.match(/\d+/);
-        const numA = nameA ? parseInt(nameA[0], 10) : 0;
-        const numB = nameB ? parseInt(nameB[0], 10) : 0;
-
-        return numA - numB;
-      });
-      if (CategoryId !== "demo" && CategoryId) {
-        let filtered = products.filter((item: any) => {
-          return item.category === CategoryId;
-        });
-        setTotalProducts(filtered);
-      } else {
-        setTotalProducts(products);
-      }
-
-      // if (
-      //   products.length > 0 &&
-      //   products[0].colors &&
-      //   products[0].colors.length > 0
-      // ) {
-      //   setSelectedValue(products[0].colors[0]);
-      // }
-    } catch (err: any) {
-      console.log(err, "err");
-      if (err.response && err.response.data && err.response.data.message) {
-        console.log(err.response.data.message);
-      } else if (err.message) {
-         console.log(err.message);
-      } else {
-         console.log("An unexpected error occurred.");
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const ProductFilterHandler = () => {
     if (CategoryId != "demo" && CategoryId) {
@@ -119,10 +63,6 @@ const Card: React.FC<CardProps> = ({
       setTotalProducts(filtered);
     }
   };
-
-  useEffect(() => {
-    getallProducts();
-  }, []);
 
   useEffect(() => {
     ProductFilterHandler();
@@ -275,31 +215,6 @@ const Card: React.FC<CardProps> = ({
     window.dispatchEvent(new Event("WishlistChanged"));
   };
 
-  const Homepage = pathname.startsWith("/");
-  const slicedArray =
-    Homepage && totalProducts ? totalProducts.slice(0, 6) : [];
-  const productsToRender = slicedArray.length > 0 ? slicedArray : totalProducts;
-
-  const productHandler = async () => {
-    try {
-      const categoryRequest = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
-      );
-      const [categoryResponse] = await Promise.all([categoryRequest]);
-      if (categoryRequest && ProductCard && categoryResponse.data.length > 0) {
-        const foundCategory = categoryResponse.data.find(
-          (cat: any) => cat._id === productDetails.category
-        );
-        setCategoryName(foundCategory ? foundCategory.name : null);
-      }
-    } catch (error) {
-      console.log("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    productHandler();
-  }, [productDetails]);
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
@@ -348,7 +263,6 @@ const Card: React.FC<CardProps> = ({
                 onClick={(e) => {
                   e.stopPropagation();
                   handleAddToCart(product);
-                  router.push("/checkout");
                 }}
               >
                 Order Now
@@ -466,37 +380,14 @@ const Card: React.FC<CardProps> = ({
         <ProductDetails
           firstFlex="xl:w-9/12 2xl:w-8/12"
           isQuickView={true}
-          categoryName={populated_categoryName}
+          categoryName={categoryName}
           productDetail={productDetails}
         />
       </Model>
 
-      {ProductCard && ProductCard.length > 0 && !loading ? (
+      {ProductCard && ProductCard.length > 0 &&
         ProductCard.map((product, index) => renderProduct(product, index))
-      ) : productsToRender.length > 0 ? (
-        productsToRender.map(renderProduct)
-      ) : !loading ? (
-        <div className="flex justify-center">No Product Found</div>
-      ) : (
-        <>
-          {Array.from({ length: 3 }).map((_, index) => (
-            <div key={index} className="gap-10 flex flex-col">
-              <SkeletonLoading
-                avatar={{
-                  shape: "square",
-                  size: 280,
-                  className: "w-full flex flex-col",
-                }}
-                title={false}
-                style={{ flexDirection: "column" }}
-                paragraph={{ rows: 2 }}
-                className="gap-10 flex"
-                active={true}
-              />
-            </div>
-          ))}
-        </>
-      )}
+      }
     </>
   );
 };

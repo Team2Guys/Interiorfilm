@@ -30,10 +30,10 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-
+ const [currentCategory, setCurrentCategory] = useState<string | null>(null);
+  const [activeLink, setActiveLink] = useState<string>('');
   const searchInputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [category, setCategory] = useState<string | null>(null);
   const pathname = usePathname();
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
@@ -48,22 +48,37 @@ const Navbar = () => {
     if (drawerTimerRef.current) clearTimeout(drawerTimerRef.current);
   };
   
- useEffect(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      setCategory(params.get("category"));
+ const getUrlParams = () => {
+    if (typeof window === 'undefined') return {};
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+    return {
+      category: params.get('category')
+    };
+  };
+
+  // Update active link when URL changes
+  useEffect(() => {
+    const { category } = getUrlParams();
+    setCurrentCategory(category ?? null);
+
+    if (pathname === "/") {
+      setActiveLink("/");
+    } else if (pathname === "/products") {
+      setActiveLink(category ? `/products?category=${category}` : "/products");
+    } else {
+      setActiveLink(pathname);
     }
   }, [pathname]);
-  const toSlug = (ref: string, title: string) =>
-    title.includes("Series") ? `/products?category=${ref}` : `/${ref || ""}`;
-const activeLink = useMemo(() => {
-    if (pathname === "/") return "/";
-    if (pathname === "/products" && category) {
-      return `/products?category=${category}`;
+
+  // Handle link clicks to force update active state
+  const handleLinkClick = (slug: string, ref: string) => {
+    setActiveLink(slug);
+    // For series links, also update current category
+    if (slug.startsWith('/products?category=')) {
+      setCurrentCategory(ref);
     }
-    const navItem = navarlink.find(item => pathname === `/${item.ref}`);
-    return navItem ? toSlug(navItem.ref, navItem.title) : "";
-  }, [pathname, category]);
+  };
 
   const showModal = () => setIsModalOpen(true);
   const handleCancel = () => setIsModalOpen(false);
@@ -305,17 +320,21 @@ const activeLink = useMemo(() => {
                   <>
                     <ul className="space-y-4 flex flex-col " >
                       {navarlink.map((navItem, index) => {
-                        const slug = navItem.title.includes("Series")
-                          ? `/products?category=${navItem.ref}`
-                          : `/${navItem.ref}`;
+                          const isSeriesLink = navItem.title.includes("Series");
+                const slug = isSeriesLink 
+                  ? `/products?category=${navItem.ref}`
+                  : `/${navItem.ref || ''}`;
 
-                        const isActive = activeLink === slug; // Check if the link is active
+                // Precise active state comparison
+                const isActive = isSeriesLink
+                  ? currentCategory === navItem.ref
+                  : activeLink === slug || pathname === `/${navItem.ref}`;
 
                         return (
                           <div onClick={onClose} key={index}>
                             <Link
                               className={`font-semibold text-16 text-black hover:text-black capitalize w-fit ${isActive ? "link-active" : "link-underline"
-                                }`}
+                                }`} onClick={() => handleLinkClick(slug, navItem.ref)}
                               href={slug}
                             >
                               {navItem.title.replace("Series", "")}
@@ -341,18 +360,22 @@ const activeLink = useMemo(() => {
               }`}
           >
             {navarlink.map((navItem, index) => {
-              const slug = navItem.title.includes("Series")
-                ? `/products?category=${navItem.ref}`
-                : `/${navItem.ref}`;
+               const isSeriesLink = navItem.title.includes("Series");
+                const slug = isSeriesLink 
+                  ? `/products?category=${navItem.ref}`
+                  : `/${navItem.ref || ''}`;
 
-              const isActive = activeLink === slug; // Check if the link is active
+                // Precise active state comparison
+                const isActive = isSeriesLink
+                  ? currentCategory === navItem.ref
+                  : activeLink === slug || pathname === `/${navItem.ref}`;
 
               return (
                 <Link
                   className={`2xl:leading-7 2xl:tracking-[20%] ${isActive ? "link-active" : "link-underline"
                     }`}
                   key={index}
-                  href={slug}
+                  href={slug} onClick={() => handleLinkClick(slug, navItem.ref)}
                 >
                   {navItem.title.replace("Series", "")}
                 </Link>
