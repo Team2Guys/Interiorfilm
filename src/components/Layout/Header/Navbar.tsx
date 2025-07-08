@@ -12,7 +12,7 @@ import { generateSlug, navarlink } from "data/Data";
 import axios from "axios";
 import { useAppSelector } from "components/Others/HelperRedux";
 import Profile from "components/user_profile/Profile";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import PRODUCTS_TYPES from "types/interfaces";
 import { SlHandbag } from "react-icons/sl";
 import CartDrawer from "components/cart-drawer/cart-drawer";
@@ -33,30 +33,26 @@ const Navbar = () => {
 
   const searchInputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [category, setCategory] = useState<string | null>(null);
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
-  const category = searchParams.get("category");
 
-  const activeLink = useMemo(() => {
-    if (pathname === "/") return "/";
-    
-    if (category) {
-      const navItem = navarlink.find(item => item.ref === category);
-      if (navItem) return `/products?category=${navItem.ref}`;
+ useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      setCategory(params.get("category"));
     }
-    
-    const navItem = navarlink.find(item => 
-      pathname.startsWith(`/${item.ref}`) || 
-      (pathname === "/products" && category === item.ref)
-    );
-    
-    return navItem 
-      ? navItem.title.includes("Series") 
-        ? `/products?category=${navItem.ref}`
-        : `/${navItem.ref}`
-      : "";
+  }, [pathname]);
+  const toSlug = (ref: string, title: string) =>
+    title.includes("Series") ? `/products?category=${ref}` : `/${ref || ""}`;
+const activeLink = useMemo(() => {
+    if (pathname === "/") return "/";
+    if (pathname === "/products" && category) {
+      return `/products?category=${category}`;
+    }
+    const navItem = navarlink.find(item => pathname === `/${item.ref}`);
+    return navItem ? toSlug(navItem.ref, navItem.title) : "";
   }, [pathname, category]);
 
   const showModal = () => setIsModalOpen(true);

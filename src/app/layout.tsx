@@ -78,7 +78,7 @@ export default function RootLayout({
       <html lang="en">
         {/* <GoogleTagManager gtmId="GTM-PFNKXKTR" /> */}
         <head>
-          <GoogleTagManager gtmId="GTM-PFNKXKTR" />
+          {/* <GoogleTagManager gtmId="GTM-PFNKXKTR" /> */}
           <Script
             id="google-tag-manager"
             dangerouslySetInnerHTML={{
@@ -121,25 +121,7 @@ export default function RootLayout({
               `,
             }}
           />
-          <Script
-            id="google-analytics"
-            src="https://www.googletagmanager.com/gtag/js?id=G-FEG0017QNF"
-            strategy="afterInteractive"
-          />
-          <Script
-            id="gtag-init"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'G-FEG0017QNF');
-              `,
-            }}
-          />
-
-
+    
         </head>
 
         <body className={`${font.className} ${currency.variable}`} >
