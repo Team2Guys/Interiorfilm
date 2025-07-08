@@ -225,9 +225,9 @@ const Footer: React.FC = () => {
               <p>
                 <Link
                   className="text-14 font-normal hover:text-primary"
-                  href={`tel:+971 04 589 9888`}
+                  href={`tel:+97145899888`}
                 >
-                  +971 04 589 9888
+                  +971 4 589 9888
                 </Link>
               </p>
               <br />

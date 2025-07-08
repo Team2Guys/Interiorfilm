@@ -114,8 +114,8 @@ const ContactUs = () => {
               </div>
               <div className="flex gap-2 items-center">
                 <FiPhone size={20} />
-                <Link target="_blank" href={"tel:+971 04 589 9888"}>
-                  +971 04 589 9888
+                <Link target="_blank" href={"tel:+97145899888"}>
+                  +971 4 589 9888
                 </Link>
               </div>
 
