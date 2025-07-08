@@ -47,8 +47,8 @@ const Navbar = () => {
   const stopAutoCloseTimer = () => {
     if (drawerTimerRef.current) clearTimeout(drawerTimerRef.current);
   };
-  
- useEffect(() => {
+
+  useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       setCategory(params.get("category"));
@@ -56,7 +56,7 @@ const Navbar = () => {
   }, [pathname]);
   const toSlug = (ref: string, title: string) =>
     title.includes("Series") ? `/products?category=${ref}` : `/${ref || ""}`;
-const activeLink = useMemo(() => {
+  const activeLink = useMemo(() => {
     if (pathname === "/") return "/";
     if (pathname === "/products" && category) {
       return `/products?category=${category}`;
@@ -82,7 +82,7 @@ const activeLink = useMemo(() => {
           axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
           axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`)
         ]);
-        
+
         setProducts([
           ...(mainResponse.data.products || []),
           ...(addOnResponse.data.products || [])
@@ -100,7 +100,7 @@ const activeLink = useMemo(() => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     const handleCartChange = () => {
       const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
       setCartItems(updatedCart);
@@ -112,7 +112,7 @@ const activeLink = useMemo(() => {
     return () => window.removeEventListener("cartChanged", handleCartChange);
   }, []);
 
-    useEffect(() => {
+  useEffect(() => {
     const handleWishlistChange = () => {
       const updatedWishlist = JSON.parse(
         localStorage.getItem("wishlist") || "[]"
@@ -132,7 +132,7 @@ const activeLink = useMemo(() => {
 
   const filteredProducts = useMemo(() => {
     if (!searchTerm.trim()) return [];
-    
+
     const search = searchTerm.toLowerCase();
     return products.filter((product) => {
       return (
@@ -142,8 +142,8 @@ const activeLink = useMemo(() => {
         product.purchasePrice?.toString().toLowerCase().includes(search) ||
         product.category?.toString().toLowerCase().includes(search) ||
         product.discountPrice?.toString().toLowerCase().includes(search) ||
-        product.modelDetails?.some(model => 
-          model.name?.toLowerCase().includes(search) || 
+        product.modelDetails?.some(model =>
+          model.name?.toLowerCase().includes(search) ||
           model.detail?.toLowerCase().includes(search)
         ) ||
         product.starRating?.toString().toLowerCase().includes(search) ||
@@ -154,8 +154,8 @@ const activeLink = useMemo(() => {
     });
   }, [products, searchTerm]);
 
-  const cartItemCount = useMemo(() => 
-    cartItems.reduce((count, item) => count + (item.count || 0), 0), 
+  const cartItemCount = useMemo(() =>
+    cartItems.reduce((count, item) => count + (item.count || 0), 0),
     [cartItems]
   );
 
@@ -262,7 +262,7 @@ const activeLink = useMemo(() => {
               <IoMdHeartEmpty
                 className={`cursor-pointer ${wishlistItems.length > 0 ? "text-primary" : "text-black"}`}
               />
-              {wishlistItems.length > 0 && 
+              {wishlistItems.length > 0 &&
                 <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center shadow-2xl bg-white text-black absolute top-3 left-3 sm:left-2 sm:top-2 md:left-3 md:top-3">
                   <span className="font-medium text-11 md:text-18">
                     {wishlistItems.length}
@@ -270,14 +270,13 @@ const activeLink = useMemo(() => {
                 </div>
               }
             </Link>
-             <Link
+            <Link
               href="/cart"
               className="relative text-22 sm:text-16 md:text-2xl"
             >
               <SlHandbag
-                className={`cursor-pointer ${
-                  cartItems.length > 0 ? "text-primary" : "text-black"
-                }`}
+                className={`cursor-pointer ${cartItems.length > 0 ? "text-primary" : "text-black"
+                  }`}
               />
               {cartItemCount > 0 && (
                 <div className="md:w-5 md:h-5 w-3 h-3 rounded-full z-50 flex justify-center items-center bg-white text-black absolute top-3 left-3 sm:left-2 sm:top-2 md:left-3 md:top-3">
@@ -362,15 +361,14 @@ const activeLink = useMemo(() => {
         </div>
       </nav>
 
-      <div className="fixed top-auto bottom-12 right-7 z-999 cursor-pointer"   id="WHTSAPP-IF-PPC">
+      <div className="fixed top-auto bottom-12 right-7 z-999 cursor-pointer" id="WHTSAPP-IF-PPC">
 
         <p
-  id="WHTSAPP-IF-PPC"
-
+          id="WHTSAPP-IF-PPC"
           className="sticky top-1"
         >
 
-          <Image className="w-14"  id="WHTSAPP-IF-PPC" src="/images/whatsapp.png" onClick={(e) => {e.stopPropagation(); e.preventDefault(); window.open("https://wa.link/mb359y", "_blank")}} alt='teximagte'   width={100}
+          <Image className="sticky top-1" id="WHTSAPP-IF-PPC" src="/images/whatsapp.png" onClick={(e) => { e.stopPropagation(); e.preventDefault(); window.open("https://wa.link/mb359y", "_blank") }} alt='teximagte' width={50}
             height={100}></Image>
         </p>
       </div>
@@ -435,9 +433,9 @@ const activeLink = useMemo(() => {
           )}
         </>
       </Modal>
-      <CartDrawer 
-        open={drawerOpen} 
-        onClose={handleCloseDrawer} 
+      <CartDrawer
+        open={drawerOpen}
+        onClose={handleCloseDrawer}
         onMouseEnter={stopAutoCloseTimer}   // ← pause countdown
         onMouseLeave={startAutoCloseTimer} // ← resume countdown
       />
