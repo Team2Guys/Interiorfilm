@@ -1,6 +1,5 @@
 import ProductPage from "components/product/Product";
-import React, { Suspense } from "react";
-import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
+import React from "react";
 import { generateSlug } from "data/Data";
 import { headers } from "next/headers";
 import { Metadata } from "next";
@@ -10,9 +9,9 @@ import axios from "axios";
 export async function generateMetadata({ searchParams }: { searchParams: Promise<{ category?: string }> }): Promise<Metadata> {
   const { category } = await searchParams
   const headersList = await headers();
-  const domain = headersList.get('x-forwarded-host') || headersList.get('host') || ''; // Fallback to host if x-forwarded-host is not present
-  const protocol = headersList.get('x-forwarded-proto') || 'https'; // Default to https if no protocol is set
-  const pathname = headersList.get('x-invoke-path') || '/'; // Fallback to root if no path
+  const domain = headersList.get('x-forwarded-host') || headersList.get('host') || '';
+  const protocol = headersList.get('x-forwarded-proto') || 'https';
+  const pathname = headersList.get('x-invoke-path') || '/';
   const fullUrl = `${protocol}://${domain}${pathname}`;
   const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
 
@@ -47,11 +46,8 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
 
 async function Products({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
   const { category } = await searchParams
-  console.log(category, "searchParams")
   return (
-    <Suspense fallback={<SkeletonLoading />}>
-      <ProductPage />
-    </Suspense>
+    <ProductPage  initialCategory={category ?? ''} />
   );
 }
 

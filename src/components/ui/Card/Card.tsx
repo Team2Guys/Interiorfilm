@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Modal, Rate, Spin, message } from "antd";
 import { LuShoppingCart } from "react-icons/lu";
@@ -21,7 +21,7 @@ interface CardProps {
   carDetail?: string;
   cardClass?: string;
   quickClass?: string;
-  categoryName?: any;
+  categoryName?: string;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -35,9 +35,7 @@ const Card: React.FC<CardProps> = ({
 }) => {
   const router = useRouter();
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
-  const [productDetails, setproductDetails] = useState<PRODUCTS_TYPES | any>(
-    {}
-  );
+  const [productDetails, setproductDetails] = useState<PRODUCTS_TYPES | any>({});
   const [productDetailModel, setProductDetailModel] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState(false);

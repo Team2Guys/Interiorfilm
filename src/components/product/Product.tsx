@@ -8,9 +8,10 @@ import PRODUCTS_TYPES from "types/interfaces";
 import axios from "axios";
 import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
 import { IoIosSearch } from "react-icons/io";
-import { useRouter, useSearchParams } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { generateSlug, sortProductsByCode, specificImageIndexByCode, specificProductCodesByCategory } from "data/Data";
 import Image from "next/image";
+import Link from "next/link";
 interface category {
   posterImageUrl: {
     public_id: string;
@@ -35,7 +36,7 @@ const StaticCategory = {
   __v: "any",
 };
 
-const ProductPage = () => {
+const ProductPage = ({ initialCategory }:{initialCategory:string}) => {
   const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [adsontotalProducts, setTotaladsonProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [filteredProductsByCategory, setfilteredProductsByCategory] = useState<PRODUCTS_TYPES[]>([]);
@@ -46,20 +47,25 @@ const ProductPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortOption, setSortOption] = useState<string>("Default");
   const [category, setCategory] = useState<category[]>([]);
-  const [activeLink, setActiveLink] = useState<category | undefined>();
-  const searchParams = useSearchParams();
-  const categoryName: string | null = searchParams.get("category");
+  const [activeLink, setActiveLink] = useState<category | undefined>()
+  let categoryName= initialCategory || null; // Use the initialCategory prop or set to null if not provided
+  // const [categoryName, setCategoryName] = useState<string | null>(null);
   const dropdown = useRef<any>(null);
   const trigger = useRef<any>(null);
-  const route = useRouter()
+  // const router = useRouter();
+
+//   useEffect(() => {
+//   const qs = new URLSearchParams(window.location.search);
+//   setCategoryName(qs.get('category'));
+// }, [router]);
 
   useEffect(() => {
     get_recordHandler();
   }, []);
 
   useEffect(() => {
-    productHandler(categoryName);
-  }, [categoryName]);
+    productHandler(initialCategory);
+  }, [initialCategory]);
 
   const Get_colors_handler = (products: any) => {
     let uniqcolorArray: string[] = [];
@@ -301,7 +307,7 @@ const ProductPage = () => {
           const selectedImage = product.imageUrl?.[imageIndex]?.imageUrl || product.posterImageUrl?.imageUrl;
 
           return (
-            <div className="w-full cursor-pointer" key={index} onClick={() => route.push(`/product/${generateSlug(product.name)}`)}>
+            <Link href={`/product/${generateSlug(product.name)}`} className="w-full cursor-pointer" key={index}>
               <Image
                 className={`object-cover w-full h-[450px] object-center ${index > 0 ? "hidden sm:block" : ""}`}
                 width={500}
@@ -309,7 +315,7 @@ const ProductPage = () => {
                 src={selectedImage}
                 alt={`product-image-${product.name}`}
               />
-            </div>
+            </Link>
           );
         })}
       </div>)}
@@ -432,7 +438,7 @@ const ProductPage = () => {
                   </div>
                 ))
               ) : (
-                <Card quickClass="right-8" ProductCard={sortedProducts} categoryName={categoryName} slider={true} />
+                <Card quickClass="right-8" ProductCard={sortedProducts} categoryName={categoryName ?? ''} slider={true} />
               )}
             </div>
           </>
