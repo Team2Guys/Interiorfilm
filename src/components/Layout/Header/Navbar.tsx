@@ -19,7 +19,7 @@ import CartDrawer from "components/cart-drawer/cart-drawer";
 import TopNav from "./TopNav";
 import { IoSearch } from "react-icons/io5";
 import Container from "../Container/Container";
-
+type Timer = ReturnType<typeof setTimeout>;
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -38,6 +38,16 @@ const Navbar = () => {
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
 
+  const drawerTimerRef = useRef<Timer | null>(null);
+  const startAutoCloseTimer = () => {
+    if (drawerTimerRef.current) clearTimeout(drawerTimerRef.current);
+    drawerTimerRef.current = setTimeout(() => setDrawerOpen(false), 5000);
+  };
+
+  const stopAutoCloseTimer = () => {
+    if (drawerTimerRef.current) clearTimeout(drawerTimerRef.current);
+  };
+  
  useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
@@ -92,19 +102,16 @@ const activeLink = useMemo(() => {
 
    useEffect(() => {
     const handleCartChange = () => {
-      const updatedCart = JSON.parse(
-        localStorage.getItem("cart") || "[]"
-      );
+      const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
       setCartItems(updatedCart);
-      setDrawerOpen(true)
+      setDrawerOpen(true);
+      startAutoCloseTimer();
     };
 
     window.addEventListener("cartChanged", handleCartChange);
-
-    return () => {
-      window.removeEventListener("cartChanged", handleCartChange);
-    };
+    return () => window.removeEventListener("cartChanged", handleCartChange);
   }, []);
+
     useEffect(() => {
     const handleWishlistChange = () => {
       const updatedWishlist = JSON.parse(
@@ -119,6 +126,9 @@ const activeLink = useMemo(() => {
       window.removeEventListener("WishlistChanged", handleWishlistChange);
     };
   }, []);
+  useEffect(() => {
+    if (!drawerOpen) stopAutoCloseTimer();
+  }, [drawerOpen]);
 
   const filteredProducts = useMemo(() => {
     if (!searchTerm.trim()) return [];
@@ -428,6 +438,8 @@ const activeLink = useMemo(() => {
       <CartDrawer 
         open={drawerOpen} 
         onClose={handleCloseDrawer} 
+        onMouseEnter={stopAutoCloseTimer}   // ← pause countdown
+        onMouseLeave={startAutoCloseTimer} // ← resume countdown
       />
     </>
   );
