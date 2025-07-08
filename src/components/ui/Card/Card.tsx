@@ -10,6 +10,7 @@ import { FiZoomIn } from "react-icons/fi";
 import Model from "components/ui/Modal/Model";
 import ProductDetails from "components/product_detail/ProductDetails";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface CardProps {
   ProductCard?: PRODUCTS_TYPES[];
@@ -35,6 +36,7 @@ const Card: React.FC<CardProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<PRODUCTS_TYPES | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const route = useRouter();
   const handleProductClick = (product: PRODUCTS_TYPES) => {
     setIsLoading(true);
     setSelectedProduct(product);
@@ -263,6 +265,7 @@ const Card: React.FC<CardProps> = ({
                 onClick={(e) => {
                   e.stopPropagation();
                   handleAddToCart(product);
+                  route.push(`/checkout`);
                 }}
               >
                 Order Now
