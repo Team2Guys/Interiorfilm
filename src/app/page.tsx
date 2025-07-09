@@ -8,13 +8,10 @@ const Offer = dynamic(() => import('components/widgets/Offer/Offer'));
 const PreFooter = dynamic(() => import('components/Layout/Footer/PreFooter'));
 const HomeAccordian = dynamic(() => import('components/widgets/HomeAccordian'));
 const PDF = dynamic(() => import('components/PDF/PDF'));
-const CategorySliderSkeleton = dynamic(() => import('components/Skeleton-loading/CategorySliderSkeleton'));
-const ProductSliderSkeleton = dynamic(() => import('components/Skeleton-loading/ProductSliderSkeleton'));
 import { offers } from "data/sideMenuData";
 import { Metadata } from "next";
 import blacklogo from "../../public/images/logoblack.png";
 import axios from 'axios';
-import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Premium Quality, Vinyl Wraps, Quick Installation | Interior Film ',
@@ -36,8 +33,10 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const [categoriesRes, mainResponse, addOnResponse] = await Promise.all([axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`), axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`), axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`
+  const [categoriesRes, mainResponse, addOnResponse] = await Promise.all([
+  axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`), 
+  axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
+  axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`
   )]);
   const categories = categoriesRes.data;
   const mainProducts = Array.isArray(mainResponse.data.products)
@@ -52,16 +51,16 @@ export default async function Home() {
     <>
       <Hero />
       <InfoTabs />
-      <Suspense fallback={<CategorySliderSkeleton />}>
+      {/* <Suspense fallback={<CategorySliderSkeleton />}> */}
         <CategorySlider categories={categories} />
-      </Suspense>
+      {/* </Suspense> */}
       <HomeAccordian />
       <PreFooter />
       <SearchProduct products={combinedProducts} />
       <PDF />
-      <Suspense fallback={<ProductSliderSkeleton />}>
+      {/* <Suspense fallback={<ProductSliderSkeleton />}> */}
         <HomeFeature allProducts={mainProducts || []} />
-      </Suspense>
+      {/* </Suspense> */}
       <Offer OffersData={offers} />
     </>
   );

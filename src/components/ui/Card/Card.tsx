@@ -394,7 +394,12 @@ const Card: React.FC<CardProps> = ({
       </Model>
 
       {
+
      (  Homepage ? ProductCard?.slice(0, 6) :  ProductCard)?.map((product, index) => renderProduct(product, index))
+
+
+
+    
     
       }
     </>
