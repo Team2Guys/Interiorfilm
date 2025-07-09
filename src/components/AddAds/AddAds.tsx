@@ -28,6 +28,7 @@ import {
   AddProductvalidationSchema,
   AddproductsinitialValues,
 } from "data/Data";
+import revalidateTagHanlder from "components/serverAction/ServerAction";
 
 const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
   EditInitialValues,
@@ -141,6 +142,8 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
           ? "Product has been sucessufully Updated !"
           : "Product has been sucessufully Created !"
       );
+            revalidateTagHanlder("addonProducts")
+
       setProductInitialValue(AddproductsinitialValues);
       resetForm();
       setloading(false);

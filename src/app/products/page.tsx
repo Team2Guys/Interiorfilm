@@ -4,9 +4,10 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { headers } from "next/headers";
 import ProductPage from "components/product/Product";
+import NotFound from "app/not-found";
 
 
-export async function generateMetadata({ searchParams }: { searchParams: Promise<{ category?: string }> }): Promise<Metadata> {
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ category?: string }> }): Promise< Metadata | undefined> {
   const { category } = await searchParams
   const headersList = await headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || '';
@@ -15,6 +16,10 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
   const fullUrl = `${protocol}://${domain}${pathname}`;
   const { category:paramsCategory } = await searchParams
 let Product =  await fetchCategoryMeta(paramsCategory?? "", true)
+if(!Product){
+NotFound()
+   return  
+}
 
   let ImageUrl = Product?.posterImageUrl?.imageUrl || "interiorfilm";
   let alt = Product?.Images_Alt_Text || "Interior films";

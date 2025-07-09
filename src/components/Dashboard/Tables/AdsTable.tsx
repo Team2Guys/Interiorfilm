@@ -11,6 +11,7 @@ import { LiaEdit } from "react-icons/lia";
 import { useAppSelector } from "components/Others/HelperRedux";
 import { generateSlug } from "data/Data";
 import Cookies from 'js-cookie';
+import revalidateTagHanlder from "components/serverAction/ServerAction";
 
 interface Product {
   _id: string;
@@ -115,6 +116,8 @@ const AdsTable: React.FC<CategoryProps> = ({
           headers: { token: finalToken }
         }
       );
+                  revalidateTagHanlder("addonProducts")
+
       setProduct((prev: Product[]) => prev.filter((item) => item._id !== key));
       notification.success({
         message: "Product Deleted",

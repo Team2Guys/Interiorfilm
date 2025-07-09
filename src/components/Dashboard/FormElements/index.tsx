@@ -26,6 +26,7 @@ import {
   AddProductvalidationSchema,
   AddproductsinitialValues,
 } from "data/Data";
+import revalidateTagHanlder from "components/serverAction/ServerAction";
 
 const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProductValue, setselecteMenu, setEditProduct,
 }) => {
@@ -111,8 +112,9 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
       let url = `${process.env.NEXT_PUBLIC_BASE_URL}${updateFlag ? addProductUrl : "/api/addProduct"
         }`;
       console.log(newValue, "newValuenewValue");
-      const response = await axios.post(url, newValue, { headers: headers });
-      console.log(response, "response");
+    await axios.post(url, newValue, { headers: headers });
+        revalidateTagHanlder("products")
+
       Toaster("success", updateFlag ? "Product has been sucessufully Updated !" : "Product has been sucessufully Created !");
       setProductInitialValue(AddproductsinitialValues);
       resetForm();

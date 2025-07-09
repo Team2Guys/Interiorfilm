@@ -63,16 +63,16 @@ const ViewOrder = () => {
       key: 'totalPrice',
       render: (text: any, record: any) => {
         let shipmentFee = record.products[0]?.shippment_Fee;
-let fee = shipmentFee  ? (shipmentFee === 'Free' || shipmentFee === 'undefine' ? 0 : Number(shipmentFee)) : 0
-    
-        const transactionAmount =  record.products.reduce((accum:number, curr:any)=>{return accum+=curr.totalPrice},0)
-        return <span>{transactionAmount + fee }</span>;
+        let fee = shipmentFee ? (shipmentFee === 'Free' || shipmentFee === 'undefine' ? 0 : Number(shipmentFee)) : 0
+
+        const transactionAmount = record.products.reduce((accum: number, curr: any) => { return accum += curr.totalPrice }, 0)
+        return <span>{transactionAmount + fee}</span>;
       },
     },
 
     {
       title: 'Date',
-      dataIndex: 'date',   
+      dataIndex: 'date',
       key: 'date',
       render: (text: any, record: any) => {
         let formattedDate;
@@ -123,7 +123,7 @@ let fee = shipmentFee  ? (shipmentFee === 'Free' || shipmentFee === 'undefine' ?
     setVisible(false);
   };
 
-  
+
   const groupOrders = (orders: any[]) => {
     const grouped: { [key: string]: any } = {};
 
@@ -157,12 +157,12 @@ let fee = shipmentFee  ? (shipmentFee === 'Free' || shipmentFee === 'undefine' ?
     });
 
     const filteredGroupedOrders = Object.values(grouped)
-    .filter(order => order.products.length > 0)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      .filter(order => order.products.length > 0)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  setGroupedOrders(filteredGroupedOrders);
-  setFilteredOrders(filteredGroupedOrders); 
-};
+    setGroupedOrders(filteredGroupedOrders);
+    setFilteredOrders(filteredGroupedOrders);
+  };
 
   const getAllOrder = async () => {
     const token = Cookies.get("2guysAdminToken");
@@ -180,7 +180,8 @@ let fee = shipmentFee  ? (shipmentFee === 'Free' || shipmentFee === 'undefine' ?
         },
       );
       groupOrders(response.data);
-      console.log(response.data,"groupOrdersgroupOrders")
+
+      console.log(response.data, "groupOrdersgroupOrders")
     } catch (error) {
       console.log('Error fetching data:', error);
     } finally {
@@ -210,7 +211,7 @@ let fee = shipmentFee  ? (shipmentFee === 'Free' || shipmentFee === 'undefine' ?
 
   console.log(filteredOrders, "filteredOrders")
 
-let shippingfree =selectedProducts[0]?.shippment_Fee;
+  let shippingfree = selectedProducts[0]?.shippment_Fee;
   return (
     <div>
       {orderLoading ? (
@@ -242,20 +243,20 @@ let shippingfree =selectedProducts[0]?.shippment_Fee;
             {selectedProducts.map((product) => {
 
               return (
-              <div className='flex gap-2 items-center mt-2' key={product._id}>
-                <Image className='rounded-md borde h-32 w-32' width={100} height={150} src={product.imageUrl} alt={product.name} />
-                <div>
-                  <h3>{product.name}</h3>
-                  <p>Code: {product.code}</p>
-                  <p>Price: {product.price} {product.currency}</p>
-                  <p>Quantity: {product.count}</p>
-                  <p>Length: {product.length}</p>
-                  {shippingfree ? <p>Shipping Fee: {shippingfree}</p> : null}
+                <div className='flex gap-2 items-center mt-2' key={product._id}>
+                  <Image className='rounded-md borde h-32 w-32' width={100} height={150} src={product.imageUrl} alt={product.name} />
+                  <div>
+                    <h3>{product.name}</h3>
+                    <p>Code: {product.code}</p>
+                    <p>Price: {product.price} {product.currency}</p>
+                    <p>Quantity: {product.count}</p>
+                    <p>Length: {product.length}</p>
+                    {shippingfree ? <p>Shipping Fee: {shippingfree}</p> : null}
+                  </div>
                 </div>
-              </div>
 
               )
-})}
+            })}
           </Modal>
         </>
       )}

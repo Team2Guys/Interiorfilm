@@ -14,6 +14,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { categoryInitialValues, categoryValidationSchema } from "data/Data";
 import Loader from "components/Loader/Loader";
 import Cookies from "js-cookie";
+import revalidateTagHanlder from "components/serverAction/ServerAction";
 
 
 interface editCategoryNameType {
@@ -73,6 +74,8 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
           ? "Category has been sucessufully updated !"
           : "Category has been sucessufully Created !"
       );
+
+      revalidateTagHanlder("categories")
       updateFlag ? seteditCategory(null) : null;
       setposterimageUrl(null);
 

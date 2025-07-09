@@ -10,6 +10,7 @@ import { FaRegEye } from "react-icons/fa";
 import { LiaEdit } from "react-icons/lia";
 import { useAppSelector } from "components/Others/HelperRedux";
 import { generateSlug } from "data/Data";
+import revalidateTagHanlder from "components/serverAction/ServerAction";
 
 interface Product {
   _id: string;
@@ -109,6 +110,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
      await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteProduct/${key}`
       );
+      revalidateTagHanlder("products")
       setProduct((prev: Product[]) => prev.filter((item) => item._id !== key));
       notification.success({
         message: "Product Deleted",

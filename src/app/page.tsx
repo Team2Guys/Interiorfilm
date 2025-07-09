@@ -12,6 +12,7 @@ import { offers } from "data/sideMenuData";
 import { Metadata } from "next";
 import blacklogo from "../../public/images/logoblack.png";
 import axios from 'axios';
+import { getCategorywihtCustomorizeField } from 'utils/fetch';
 
 export const metadata: Metadata = {
   title: 'Premium Quality, Vinyl Wraps, Quick Installation | Interior Film ',
@@ -34,11 +35,11 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const [categoriesRes, mainResponse, addOnResponse] = await Promise.all([
-  axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`), 
+getCategorywihtCustomorizeField("name _id posterImageUrl"),
   axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
   axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`
   )]);
-  const categories = categoriesRes.data;
+  const categories =  categoriesRes.categories
   const mainProducts = Array.isArray(mainResponse.data.products)
     ? mainResponse.data.products
     : [];
@@ -51,16 +52,12 @@ export default async function Home() {
     <>
       <Hero />
       <InfoTabs />
-      {/* <Suspense fallback={<CategorySliderSkeleton />}> */}
         <CategorySlider categories={categories} />
-      {/* </Suspense> */}
       <HomeAccordian />
       <PreFooter />
       <SearchProduct products={combinedProducts} />
       <PDF />
-      {/* <Suspense fallback={<ProductSliderSkeleton />}> */}
         <HomeFeature allProducts={mainProducts || []} />
-      {/* </Suspense> */}
       <Offer OffersData={offers} />
     </>
   );

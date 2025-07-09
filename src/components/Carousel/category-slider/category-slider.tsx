@@ -23,6 +23,7 @@ const CategorySlider = ({ categories }: { categories: any[] }) => {
       swiper.navigation.update();
     }
   }, [categories]);
+  
   const handleMouseEnter = () => {
     if (swiperRef.current?.swiper) {
       swiperRef.current.swiper.autoplay.stop();
@@ -35,9 +36,6 @@ const CategorySlider = ({ categories }: { categories: any[] }) => {
     }
   };
 
-  if (categories.length === 0) {
-    return <div className="text-center text-red-500">No Product found.</div>;
-  }
 
   return (
     <>

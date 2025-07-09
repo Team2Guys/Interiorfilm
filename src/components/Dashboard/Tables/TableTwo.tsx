@@ -10,6 +10,7 @@ import { LiaEdit } from "react-icons/lia";
 import { CategoriesType } from "types/interfaces";
 import { useAppSelector } from "components/Others/HelperRedux";
 import useColorMode from "hooks/useColorMode";
+import revalidateTagHanlder from "components/serverAction/ServerAction";
 
 interface Product {
   _id: string;
@@ -78,6 +79,7 @@ const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps)
   const handleDelete = async (key: any) => {
     try {
       await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteCategory/${key}`);
+      revalidateTagHanlder("categories")
       setCategory((prev: any) => prev.filter((item: any) => item._id != key));
       notification.success({
         message: 'Category Deleted',
