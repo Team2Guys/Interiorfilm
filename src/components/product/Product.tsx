@@ -9,7 +9,6 @@ import { IoIosSearch } from "react-icons/io";
 import { generateSlug, sortProductsByCode, specificImageIndexByCode, specificProductCodesByCategory } from "data/Data";
 import Image from "next/image";
 import Link from "next/link";
-
 interface category {
   posterImageUrl: {
     public_id: string;
@@ -22,41 +21,20 @@ interface category {
   __v: any;
 }
 
-const StaticCategory = {
-  posterImageUrl: {
-    public_id: "string",
-    imageUrl: "string",
-  },
-  _id: "all",
-  name: "View All",
-  createdAt: "string",
-  updatedAt: "string",
-  __v: "any",
-};
-
-interface ProductPageProps {
-  initialCategory: string;
-  category: category[];
-  products: PRODUCTS_TYPES[];
-  addons: PRODUCTS_TYPES[];
-}
-
-const ProductPage = ({ initialCategory, category, products: propProducts, addons: propAddons }: ProductPageProps) => {
-  const [filteredProductsByCategory, setfilteredProductsByCategory] = useState<PRODUCTS_TYPES[]>([]);
+const ProductPage = ({ initialCategory, category, totalProducts }: { initialCategory: string, category: category, totalProducts: PRODUCTS_TYPES[] }) => {
+  const [filteredProductsByCategory, setfilteredProductsByCategory] = useState<PRODUCTS_TYPES[]>(totalProducts ? totalProducts : []);
+  const [selectedProductImages, seselectedProductImages] = useState<PRODUCTS_TYPES[]>([]);
   const [showColors, setShowColors] = useState<boolean>(false);
   const [colorName, setColorName] = useState<string>();
   const [availableColors, setAvailableColors] = useState<{ value: string; label: string }[] | string[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortOption, setSortOption] = useState<string>("Default");
-  const [activeLink, setActiveLink] = useState<category | undefined>()
+  const [activeLink, setActiveLink] = useState<category | undefined>(category)
   let categoryName = initialCategory || null;
-
   const dropdown = useRef<any>(null);
   const trigger = useRef<any>(null);
 
-  useEffect(() => {
-    productHandler(initialCategory);
-  }, [initialCategory]);
+  console.log(initialCategory, "categoryData", totalProducts)
 
   const Get_colors_handler = (products: any) => {
     let uniqcolorArray: string[] = [];
@@ -78,37 +56,27 @@ const ProductPage = ({ initialCategory, category, products: propProducts, addons
     }
   };
 
-  const productHandler = async (categoryName: string | null) => {
-    try {
-      const activeCategory: any = category.find((cat) => generateSlug(cat.name) === categoryName);
+  const productHandler = async () => {
 
-      if (categoryName === 'accessories') {
-        setfilteredProductsByCategory(propAddons);
-        setActiveLink({
-          ...StaticCategory,
-          name: "accessories"
-        });
-        Get_colors_handler(propAddons);
-        return;
-      }
+    setfilteredProductsByCategory(totalProducts);
+    setActiveLink(category);
+    Get_colors_handler(totalProducts);
 
-      if (!activeCategory || activeCategory._id === "all") {
-        setfilteredProductsByCategory(propProducts);
-        setActiveLink(StaticCategory);
-        Get_colors_handler(propProducts);
-        return;
-      }
+    const categoryNameNormalized: any = categoryName?.trim();
+    const specificProductImages = getSpecificProductImages(
+      totalProducts,
+      specificProductCodesByCategory[categoryNameNormalized] || []
+    );
 
-      const filteredProductsByCategory = propProducts.filter((product: PRODUCTS_TYPES) => {
-        return product.category === activeCategory._id;
-      });
 
-      setfilteredProductsByCategory(filteredProductsByCategory);
-      setActiveLink(activeCategory);
-      Get_colors_handler(filteredProductsByCategory);
-    } catch (err) {
-      console.error("Error loading products or categories", err);
-    }
+    const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
+      if (products.length <= 3) return products;
+      return products.slice(0, 3);
+    };
+    const selectedProductImages = specificProductImages.length ? specificProductImages : getRandomProducts(totalProducts);
+
+    console.log(selectedProductImages, "categoryNameNormalized", specificProductCodesByCategory[categoryNameNormalized] )
+    seselectedProductImages(selectedProductImages)
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -125,8 +93,9 @@ const ProductPage = ({ initialCategory, category, products: propProducts, addons
     colorName == value;
   };
 
-  let filteredProducts = Array.isArray(filteredProductsByCategory)
-    ? filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
+  useEffect(() => {
+
+    let filteredprod = filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
       let Search = searchTerm.toLowerCase();
 
       const nameMatch =
@@ -172,7 +141,10 @@ const ProductPage = ({ initialCategory, category, products: propProducts, addons
           ));
       return nameMatch && colorMatch;
     })
-    : [];
+    setfilteredProductsByCategory(filteredprod)
+
+  }, [searchTerm])
+
 
   const sortProducts = (products: PRODUCTS_TYPES[]) => {
     if (!products || products.length === 0) return [];
@@ -196,63 +168,67 @@ const ProductPage = ({ initialCategory, category, products: propProducts, addons
     }
   };
 
-  if (categoryName === 'accessories') {
-    filteredProducts = propAddons;
-  }
+  useEffect(() => {
+    const sortedProducts = sortProducts(filteredProductsByCategory);
 
-  const sortedProducts = sortProducts(filteredProducts);
+    setfilteredProductsByCategory(sortedProducts)
+  }, [sortOption])
+
+  useEffect(() => {
+    productHandler();
+  }, [categoryName]);
+
 
   useEffect(() => {
     const clickHandler = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       let id = ["ColorDropdown"];
+      console.log(target.id, "target");
       if (!id.includes(target.id)) {
+        console.log(target.id);
         setShowColors(false);
         return;
       }
     };
     document.addEventListener("click", clickHandler);
     return () => document.removeEventListener("click", clickHandler);
-  });
+  },);
 
   useEffect(() => {
     const keyHandler = ({ code }: KeyboardEvent) => {
       if (!showColors || code !== "Escape") return;
+      console.log(code, "code");
       setShowColors(false);
     };
     document.addEventListener("keydown", keyHandler);
     return () => document.removeEventListener("keydown", keyHandler);
-  });
+  },);
 
   const handleColorReset = () => {
     setColorName("");
   };
 
-  const categoryNameNormalized: any = categoryName?.trim();
-  const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
-  const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
-    const productImages: PRODUCTS_TYPES[] = [];
-    codes.forEach(code => {
-      const matchedProducts = products.filter(product => product.code.trim() === code.trim());
-      matchedProducts.forEach(product => {
-        productImages.push(product);
-      });
-    });
-    return productImages;
-  };
-  const specificProductImages = getSpecificProductImages(filteredProductsByCategory, specificProductCodes);
-  const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
-    if (products.length <= 3) return products;
-    return products.slice(0, 3);
-  };
-  const selectedProductImages = specificProductImages.length
-    ? specificProductImages
-    : getRandomProducts(filteredProductsByCategory);
+
+const getSpecificProductImages = (
+  products: PRODUCTS_TYPES[],
+  colorNames: string[]
+): PRODUCTS_TYPES[] => {
+  const colorSet = new Set(colorNames.map(c => c.trim().toLowerCase()));
+  
+  return products.filter(product =>
+    product.colors?.some((color) =>
+      colorSet.has(color.colorName?.trim().toLowerCase() ?? "")
+    )
+  );
+};
+
+
 
   return (
     <>
+    <button onClick={productHandler}>productHandler</button>
       <Overlay
-        title={activeLink?.name || "Products"}
+        title={activeLink?.name || "Products"} 
       />
       {categoryName != "accessories" && (<div className="hidden md:grid grid-cols-3 mt-2 gap-6">
         {selectedProductImages.map((product, index: number) => {
@@ -373,7 +349,8 @@ const ProductPage = ({ initialCategory, category, products: propProducts, addons
         <div className="w-full">
           <>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 gap-2 mt-10">
-                <Card quickClass="right-8" ProductCard={sortedProducts} categoryName={categoryName ?? ''} slider={true} />       
+              <Card quickClass="right-8" ProductCard={filteredProductsByCategory} categoryName={categoryName ?? ''} slider={true} />
+
             </div>
           </>
         </div>

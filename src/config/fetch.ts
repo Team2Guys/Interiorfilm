@@ -45,3 +45,19 @@ export const fetchOrderHistory = async (token: any) => {
     console.error("Error fetching order history:", error);
   }
 };
+
+export const getAlladdsOnproducts = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`,
+    {
+      next: { tags: ['products'] },
+    },
+  );
+  if (!response.ok) {
+    throw new Error('Failed to fetch products');
+  }
+
+  const productsData = await response.json();
+  const products = productsData.products;
+  return products;
+};

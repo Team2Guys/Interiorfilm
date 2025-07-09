@@ -1,8 +1,8 @@
 import React from "react";
-import { generateSlug } from "data/Data";
-import { headers } from "next/headers";
+import {fetchCategoryMeta, } from "utils/fetch";
+import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import axios from "axios";
+import { headers } from "next/headers";
 import ProductPage from "components/product/Product";
 
 
@@ -13,9 +13,8 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
   const protocol = headersList.get('x-forwarded-proto') || 'https';
   const pathname = headersList.get('x-invoke-path') || '/';
   const fullUrl = `${protocol}://${domain}${pathname}`;
-  const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`);
-
-  let Product = productRequest.data?.find((item: any) => generateSlug(item.name) == category)
+  const { category:paramsCategory } = await searchParams
+let Product =  await fetchCategoryMeta(paramsCategory?? "", true)
 
   let ImageUrl = Product?.posterImageUrl?.imageUrl || "interiorfilm";
   let alt = Product?.Images_Alt_Text || "Interior films";
@@ -45,17 +44,16 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
 }
 
 async function Products({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
-  const { category } = await searchParams
-    const [categoryRes, productRes, addOnRes] = await Promise.all([
-    axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`),
-    axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
-    axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`),
-  ]);
+
+
+  const { category:paramsCategory } = await searchParams
+let category =  await fetchCategoryMeta(paramsCategory?? "")
+
+if(!category) notFound()
+  const totalProducts = category.products;
   return (
-    <ProductPage initialCategory={category ?? ''}  
-    category={categoryRes.data}
-      products={productRes.data.products}
-      addons={addOnRes.data.products} />
+
+    <ProductPage initialCategory={paramsCategory ?? ''} category={category}  totalProducts={totalProducts}/>
   );
 }
 
