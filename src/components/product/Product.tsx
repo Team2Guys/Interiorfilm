@@ -226,7 +226,6 @@ const getSpecificProductImages = (
 
   return (
     <>
-    <button onClick={productHandler}>productHandler</button>
       <Overlay
         title={activeLink?.name || "Products"} 
       />
