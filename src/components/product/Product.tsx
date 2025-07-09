@@ -5,10 +5,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Card from "components/ui/Card/Card";
 import { Select } from "antd";
 import PRODUCTS_TYPES from "types/interfaces";
-import axios from "axios";
-import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
 import { IoIosSearch } from "react-icons/io";
-// import { useRouter } from "next/navigation";
 import { generateSlug, sortProductsByCode, specificImageIndexByCode, specificProductCodesByCategory } from "data/Data";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,48 +21,20 @@ interface category {
   __v: any;
 }
 
-const StaticCategory = {
-  posterImageUrl: {
-    public_id: "string",
-    imageUrl: "string",
-  },
-  _id: "all",
-  name: "View All",
-  createdAt: "string",
-  updatedAt: "string",
-  __v: "any",
-};
-
-const ProductPage = ({ initialCategory }:{initialCategory:string}) => {
-  const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
-  const [adsontotalProducts, setTotaladsonProducts] = useState<PRODUCTS_TYPES[]>([]);
-  const [filteredProductsByCategory, setfilteredProductsByCategory] = useState<PRODUCTS_TYPES[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+const ProductPage = ({ initialCategory, category, totalProducts }: { initialCategory: string, category: category, totalProducts: PRODUCTS_TYPES[] }) => {
+  const [filteredProductsByCategory, setfilteredProductsByCategory] = useState<PRODUCTS_TYPES[]>(totalProducts ? totalProducts : []);
+  const [selectedProductImages, seselectedProductImages] = useState<PRODUCTS_TYPES[]>([]);
   const [showColors, setShowColors] = useState<boolean>(false);
   const [colorName, setColorName] = useState<string>();
   const [availableColors, setAvailableColors] = useState<{ value: string; label: string }[] | string[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortOption, setSortOption] = useState<string>("Default");
-  const [category, setCategory] = useState<category[]>([]);
-  const [activeLink, setActiveLink] = useState<category | undefined>()
-  let categoryName= initialCategory || null; // Use the initialCategory prop or set to null if not provided
-  // const [categoryName, setCategoryName] = useState<string | null>(null);
+  const [activeLink, setActiveLink] = useState<category | undefined>(category)
+  let categoryName = initialCategory || null;
   const dropdown = useRef<any>(null);
   const trigger = useRef<any>(null);
-  // const router = useRouter();
 
-//   useEffect(() => {
-//   const qs = new URLSearchParams(window.location.search);
-//   setCategoryName(qs.get('category'));
-// }, [router]);
-
-  useEffect(() => {
-    get_recordHandler();
-  }, []);
-
-  useEffect(() => {
-    productHandler(initialCategory);
-  }, [initialCategory]);
+  console.log(initialCategory, "categoryData", totalProducts)
 
   const Get_colors_handler = (products: any) => {
     let uniqcolorArray: string[] = [];
@@ -87,65 +56,28 @@ const ProductPage = ({ initialCategory }:{initialCategory:string}) => {
     }
   };
 
-  const get_recordHandler = async () => {
-    try {
-      setLoading(true);
-      const [categoryResponse, productResponse, addsOnproductResponse] = await Promise.all([
-        axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`),
-        axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
-        axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`),
-      ]);
-      let products = productResponse.data.products;
-      console.log("===============================");
-      console.log(products)
-      const categories = [StaticCategory, ...categoryResponse.data];
-      setCategory(categories);
-      setTotalProducts(products);
-      setTotaladsonProducts(addsOnproductResponse.data.products)
-      productHandler(categoryName, categories, products);
-    } catch (err) {
-      console.error("Error loading products or categories", err);
-    } finally {
-      setLoading(false);
-    }
+  const productHandler = async () => {
+
+    setfilteredProductsByCategory(totalProducts);
+    setActiveLink(category);
+    Get_colors_handler(totalProducts);
+
+    const categoryNameNormalized: any = categoryName?.trim();
+    const specificProductImages = getSpecificProductImages(
+      totalProducts,
+      specificProductCodesByCategory[categoryNameNormalized] || []
+    );
+
+
+    const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
+      if (products.length <= 3) return products;
+      return products.slice(0, 3);
+    };
+    const selectedProductImages = specificProductImages.length ? specificProductImages : getRandomProducts(totalProducts);
+
+    console.log(selectedProductImages, "categoryNameNormalized", specificProductCodesByCategory[categoryNameNormalized] )
+    seselectedProductImages(selectedProductImages)
   };
-
-  const productHandler = async (categoryName: string | null, newcategories?: category[], newProducts?: any) => {
-    try {
-      const activeCategory: any = (newcategories ? newcategories : category).find((cat) => generateSlug(cat.name) === categoryName);
-
-      if (categoryName === 'accessories') {
-        setfilteredProductsByCategory(adsontotalProducts);
-        setActiveLink({
-          ...StaticCategory,  // Update the activeLink to use the static "accessories" link
-          name: "accessories"  // Manually set name to "accessories"
-        });
-        Get_colors_handler(adsontotalProducts); // Ensure colors are handled correctly for "accessories"
-        return;
-      }
-
-      // Fallback for other categories
-      if (!activeCategory || activeCategory._id === "all") {
-        setfilteredProductsByCategory(newProducts ? newProducts : totalProducts);
-        setActiveLink(StaticCategory);
-        Get_colors_handler(newProducts ? newProducts : totalProducts);
-        return;
-      }
-
-      const filteredProductsByCategory = (
-        newProducts ? newProducts : totalProducts
-      ).filter((product: PRODUCTS_TYPES) => {
-        return product.category === activeCategory._id;
-      });
-
-      setfilteredProductsByCategory(filteredProductsByCategory);
-      setActiveLink(activeCategory);
-      Get_colors_handler(filteredProductsByCategory);
-    } catch (err) {
-      console.error("Error loading products or categories", err);
-    }
-  };
-
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -161,8 +93,9 @@ const ProductPage = ({ initialCategory }:{initialCategory:string}) => {
     colorName == value;
   };
 
-  let filteredProducts = Array.isArray(filteredProductsByCategory)
-    ? filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
+  useEffect(() => {
+
+    let filteredprod = filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
       let Search = searchTerm.toLowerCase();
 
       const nameMatch =
@@ -208,38 +141,43 @@ const ProductPage = ({ initialCategory }:{initialCategory:string}) => {
           ));
       return nameMatch && colorMatch;
     })
-    : [];
+    setfilteredProductsByCategory(filteredprod)
 
-    const sortProducts = (products: PRODUCTS_TYPES[]) => {
-      if (!products || products.length === 0) return [];
-      const getPrice = (product: PRODUCTS_TYPES) => product.salePrice ?? 0;
-    
-      if (sortOption === "Low to High") {
-        return products.sort((a, b) => getPrice(a) - getPrice(b));
-      } else if (sortOption === "High to Low") {
-        return products.sort((a, b) => getPrice(b) - getPrice(a));
-      } else {
-        return sortProductsByCode(
-          products.sort((a, b) => {
-            const nameA = a.name.toUpperCase();
-            const nameB = b.name.toUpperCase();
-            return nameA.localeCompare(nameB, undefined, {
-              numeric: true,
-              sensitivity: "base",
-            });
-          })
-        );
-      }
-    };
-    
+  }, [searchTerm])
 
 
-  if (categoryName === 'accessories') {
-    filteredProducts = adsontotalProducts;
-  }
+  const sortProducts = (products: PRODUCTS_TYPES[]) => {
+    if (!products || products.length === 0) return [];
+    const getPrice = (product: PRODUCTS_TYPES) => product.salePrice ?? 0;
 
-  // Continue with sorting
-  const sortedProducts = sortProducts(filteredProducts);
+    if (sortOption === "Low to High") {
+      return products.sort((a, b) => getPrice(a) - getPrice(b));
+    } else if (sortOption === "High to Low") {
+      return products.sort((a, b) => getPrice(b) - getPrice(a));
+    } else {
+      return sortProductsByCode(
+        products.sort((a, b) => {
+          const nameA = a.name.toUpperCase();
+          const nameB = b.name.toUpperCase();
+          return nameA.localeCompare(nameB, undefined, {
+            numeric: true,
+            sensitivity: "base",
+          });
+        })
+      );
+    }
+  };
+
+  useEffect(() => {
+    const sortedProducts = sortProducts(filteredProductsByCategory);
+
+    setfilteredProductsByCategory(sortedProducts)
+  }, [sortOption])
+
+  useEffect(() => {
+    productHandler();
+  }, [categoryName]);
+
 
   useEffect(() => {
     const clickHandler = (event: MouseEvent) => {
@@ -254,7 +192,7 @@ const ProductPage = ({ initialCategory }:{initialCategory:string}) => {
     };
     document.addEventListener("click", clickHandler);
     return () => document.removeEventListener("click", clickHandler);
-  });
+  },);
 
   useEffect(() => {
     const keyHandler = ({ code }: KeyboardEvent) => {
@@ -264,42 +202,33 @@ const ProductPage = ({ initialCategory }:{initialCategory:string}) => {
     };
     document.addEventListener("keydown", keyHandler);
     return () => document.removeEventListener("keydown", keyHandler);
-  });
+  },);
+
   const handleColorReset = () => {
     setColorName("");
   };
 
 
-  const categoryNameNormalized: any = categoryName?.trim();
+const getSpecificProductImages = (
+  products: PRODUCTS_TYPES[],
+  colorNames: string[]
+): PRODUCTS_TYPES[] => {
+  const colorSet = new Set(colorNames.map(c => c.trim().toLowerCase()));
+  
+  return products.filter(product =>
+    product.colors?.some((color) =>
+      colorSet.has(color.colorName?.trim().toLowerCase() ?? "")
+    )
+  );
+};
 
-
-  const specificProductCodes = specificProductCodesByCategory[categoryNameNormalized] || [];
-  console.log('+++++++++++++++++++++++')
-  console.log(specificProductCodes)
-  const getSpecificProductImages = (products: PRODUCTS_TYPES[], codes: string[]) => {
-    const productImages: PRODUCTS_TYPES[] = [];
-    codes.forEach(code => {
-      const matchedProducts = products.filter(product => product.code.trim() === code.trim());
-      matchedProducts.forEach(product => {
-        productImages.push(product);
-      });
-    });
-    return productImages;
-  };
-  const specificProductImages = getSpecificProductImages(filteredProductsByCategory, specificProductCodes);
-  const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
-    if (products.length <= 3) return products;
-    return products.slice(0, 3);
-  };
-  const selectedProductImages = specificProductImages.length
-    ? specificProductImages
-    : getRandomProducts(filteredProductsByCategory);
 
 
   return (
     <>
+    <button onClick={productHandler}>productHandler</button>
       <Overlay
-        title={activeLink?.name || "Products"}
+        title={activeLink?.name || "Products"} 
       />
       {categoryName != "accessories" && (<div className="hidden md:grid grid-cols-3 mt-2 gap-6">
         {selectedProductImages.map((product, index: number) => {
@@ -420,37 +349,10 @@ const ProductPage = ({ initialCategory }:{initialCategory:string}) => {
         <div className="w-full">
           <>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 gap-2 mt-10">
-              {loading ? (
-                Array.from({ length: 9 }).map((_, index) => (
-                  <div key={index} className="gap-10 flex flex-col mt-3">
-                    <SkeletonLoading
-                      avatar={{
-                        shape: "square",
-                        size: 150,
-                        className: "w-full flex flex-col",
-                      }}
-                      title={false}
-                      style={{ flexDirection: "column" }}
-                      paragraph={{ rows: 3 }}
-                      className="gap-10 flex"
-                      active={true}
-                    />
-                  </div>
-                ))
-              ) : (
-                <Card quickClass="right-8" ProductCard={sortedProducts} categoryName={categoryName ?? ''} slider={true} />
-              )}
+              <Card quickClass="right-8" ProductCard={filteredProductsByCategory} categoryName={categoryName ?? ''} slider={true} />
+
             </div>
           </>
-
-          {/* {productsToShow < sortedProducts.length && (
-              <button
-                className='px-5 py-2 bg-primary text-white rounded-md flex items-center mx-auto'
-                onClick={loadMoreProducts}
-              >
-                Load More
-              </button>
-            )} */}
         </div>
       </Container>
     </>

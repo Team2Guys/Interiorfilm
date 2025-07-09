@@ -77,7 +77,7 @@ export default function RootLayout({
 
       <html lang="en">
         {/* <GoogleTagManager gtmId="GTM-PFNKXKTR" /> */}
-        <head>
+
           {/* <GoogleTagManager gtmId="GTM-PFNKXKTR" /> */}
           <Script
             id="google-tag-manager"
@@ -122,7 +122,7 @@ export default function RootLayout({
             }}
           />
     
-        </head>
+    
 
         <body className={`${font.className} ${currency.variable}`} >
           <GoogleTagManager gtmId="GTM-PFNKXKTR" />

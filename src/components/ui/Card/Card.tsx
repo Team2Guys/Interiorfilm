@@ -6,9 +6,7 @@ import { LuShoppingCart } from "react-icons/lu";
 import { GoHeart } from "react-icons/go";
 import { usePathname, useRouter } from "next/navigation";
 import PRODUCTS_TYPES from "types/interfaces";
-import axios from "axios";
 import { generateSlug } from "data/Data";
-import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading";
 import { FiZoomIn } from "react-icons/fi";
 import Model from "components/ui/Modal/Model";
 import ProductDetails from "components/product_detail/ProductDetails";
@@ -27,21 +25,21 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({
   ProductCard,
   slider,
-  categoryId,
-  carDetail,
   cardClass,
   quickClass,
   categoryName,
 }) => {
   const router = useRouter();
-  const [totalProducts, setTotalProducts] = useState<PRODUCTS_TYPES[]>([]);
   const [productDetails, setproductDetails] = useState<PRODUCTS_TYPES | any>({});
   const [productDetailModel, setProductDetailModel] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [populated_categoryName, setCategoryName] = useState<string | any>(null);
   const [selectedProduct, setSelectedProduct] = useState<PRODUCTS_TYPES | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  
+  const pathname = usePathname();
+
+    const Homepage = pathname.startsWith("/");
+
   const handleProductClick = (product: PRODUCTS_TYPES) => {
     setIsLoading(true);
     setSelectedProduct(product);
@@ -55,22 +53,10 @@ const Card: React.FC<CardProps> = ({
     setIsModalOpen(false);
   };
 
-  const pathname = usePathname();
-
-  let CategoryId = categoryId ? categoryId : "demo";
-
   const getallProducts = async () => {
-    try {
       if (pathname.startsWith("/products") || slider) return;
-      console.log("slider false");
 
-      setLoading(true);
-      let response: any = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`
-      );
-      let products = response.data.products;
-      products.sort((a: PRODUCTS_TYPES, b: PRODUCTS_TYPES) => {
-        // Extract numeric part of product names
+      ProductCard?.sort((a: PRODUCTS_TYPES, b: PRODUCTS_TYPES) => {
         const nameA = a.name.match(/\d+/);
         const nameB = b.name.match(/\d+/);
         const numA = nameA ? parseInt(nameA[0], 10) : 0;
@@ -78,61 +64,19 @@ const Card: React.FC<CardProps> = ({
 
         return numA - numB;
       });
-      if (CategoryId !== "demo" && CategoryId) {
-        let filtered = products.filter((item: any) => {
-          return item.category === CategoryId;
-        });
-        setTotalProducts(filtered);
-      } else {
-        setTotalProducts(products);
-      }
-
-      // if (
-      //   products.length > 0 &&
-      //   products[0].colors &&
-      //   products[0].colors.length > 0
-      // ) {
-      //   setSelectedValue(products[0].colors[0]);
-      // }
-    } catch (err: any) {
-      console.log(err, "err");
-      if (err.response && err.response.data && err.response.data.message) {
-        console.log(err.response.data.message);
-      } else if (err.message) {
-         console.log(err.message);
-      } else {
-         console.log("An unexpected error occurred.");
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const ProductFilterHandler = () => {
-    if (CategoryId != "demo" && CategoryId) {
-      console.log("condition is working ", CategoryId);
-      let products = totalProducts;
-      let filtered = products.filter((item) => {
-        return item.category === CategoryId;
-      });
-
-      setTotalProducts(filtered);
-    }
+   
   };
 
   useEffect(() => {
     getallProducts();
   }, []);
 
-  useEffect(() => {
-    ProductFilterHandler();
-  }, [carDetail]);
 
 
 
   const handleAddToCart = (product: any) => {
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]")
-    ;
+      ;
 
     const existingItemIndex = existingCart.findIndex(
       (item: any) => item.id === product._id
@@ -143,10 +87,10 @@ const Card: React.FC<CardProps> = ({
         return (accum += value.length)
       }
     }, 0)
-        if (Total_length >= product.totalStockQuantity) {
-          message.error("Cannot add to cart. Exceeds available stock!");
-          return;
-        }
+    if (Total_length >= product.totalStockQuantity) {
+      message.error("Cannot add to cart. Exceeds available stock!");
+      return;
+    }
 
     if (existingItemIndex !== -1) {
 
@@ -160,8 +104,8 @@ const Card: React.FC<CardProps> = ({
         message.error("Cannot add to cart. Exceeds available stock!");
         return; // Prevent adding
       }
-  
-      
+
+
       const updatedCart = existingCart.map((item: any, index: number) => {
         if (index === existingItemIndex) {
           return {
@@ -180,7 +124,7 @@ const Card: React.FC<CardProps> = ({
         message.error("Product is out of stock!");
         return; // Prevent adding if stock is zero
       }
-  
+
       const newCartItem = {
         id: product._id,
         name: product.name,
@@ -198,31 +142,31 @@ const Card: React.FC<CardProps> = ({
         code: product.code,
         categoryName: categoryName,
       };
-  
+
       existingCart.push(newCartItem);
       localStorage.setItem("cart", JSON.stringify(existingCart));
     }
-  
+
     message.success("Product added to cart successfully!");
     window.dispatchEvent(new Event("cartChanged"));
   };
-  
+
   const handleAddToWishlist = (product: any) => {
     let existingWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
     const existingItemIndex = existingWishlist.findIndex(
       (item: any) => item.id === product._id
     );
-  
+
     if (existingItemIndex !== -1) {
 
       const existingItem = existingWishlist[existingItemIndex];
 
-   if (existingItem.length >= 100) {
+      if (existingItem.length >= 100) {
 
         message.error("Cannot add more than 100 units of this product to the wishlist!");
         return; // Prevent adding
       }
-      
+
       // if (existingItem.length + 1 > product.totalStockQuantity) {
       //   message.error("Cannot add to wishlist. Exceeds available stock!");
 
@@ -230,7 +174,7 @@ const Card: React.FC<CardProps> = ({
       // }
 
 
-  
+
       const updatedWishlist = existingWishlist.map(
         (item: any, index: number) => {
           if (index === existingItemIndex) {
@@ -251,7 +195,7 @@ const Card: React.FC<CardProps> = ({
         message.error("Product is out of stock!");
         return; // Prevent adding if stock is zero
       }
-  
+
       const newWishlistItem = {
         id: product._id,
         name: product.name,
@@ -266,40 +210,16 @@ const Card: React.FC<CardProps> = ({
           ? product.discountPrice
           : product.salePrice,
       };
-  
+
       existingWishlist.push(newWishlistItem);
       localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
     }
-  
+
     message.success("Product added to wishlist successfully!");
     window.dispatchEvent(new Event("WishlistChanged"));
   };
 
-  const Homepage = pathname.startsWith("/");
-  const slicedArray =
-    Homepage && totalProducts ? totalProducts.slice(0, 6) : [];
-  const productsToRender = slicedArray.length > 0 ? slicedArray : totalProducts;
 
-  const productHandler = async () => {
-    try {
-      const categoryRequest = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`
-      );
-      const [categoryResponse] = await Promise.all([categoryRequest]);
-      if (categoryRequest && ProductCard && categoryResponse.data.length > 0) {
-        const foundCategory = categoryResponse.data.find(
-          (cat: any) => cat._id === productDetails.category
-        );
-        setCategoryName(foundCategory ? foundCategory.name : null);
-      }
-    } catch (error) {
-      console.log("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    productHandler();
-  }, [productDetails]);
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
@@ -339,11 +259,11 @@ const Card: React.FC<CardProps> = ({
                 <FiZoomIn className=" p-[0.50rem] lg:p-[0.60rem] rounded-full bg-white hover:bg-primary text-slate-500 hover:text-white text-[30px] lg:text-[40px]" />
               </button>
             </div>
-            <div 
-                             id="ORDER-ID"
-            className="absolute bottom-3 xsm:bottom-5 z-20 w-full flex gap-1 2xsm:gap-2 md:gap-5 justify-center opacity-0 group-hover:opacity-100 transition ease-in-out duration-400">
+            <div
+              id="ORDER-ID"
+              className="absolute bottom-3 xsm:bottom-5 z-20 w-full flex gap-1 2xsm:gap-2 md:gap-5 justify-center opacity-0 group-hover:opacity-100 transition ease-in-out duration-400">
               <button
-                 id="ORDER-ID"
+                id="ORDER-ID"
                 className="bg-white w-16 xsm:w-20 md:w-[90px] h-7 xsm:h-[36.29px] xl:w-[114.45px] xl:h-[36.29px] text-9 md:text-11 py-1"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -364,8 +284,9 @@ const Card: React.FC<CardProps> = ({
                 Quick View
               </button>
             </div>
+            <Link href={`/product/${generateSlug(product.name)}`} className="testingClass">
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
-              <Link href={`/product/${generateSlug(product.name)}`} className="">
+              <>
                 <Image
                   className="bg-contain  w-full "
                   width={500}
@@ -376,8 +297,9 @@ const Card: React.FC<CardProps> = ({
                 <p className="absolute top-0 left-1 text-sm px-1 text-center text-black bg-[#fb701d]">
                   {product.totalStockQuantity === 0 && "Limited Stock"}
                 </p>
-              </Link>
+              </>
             )}
+            </Link>
           </div>
         </div>
         <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
@@ -395,7 +317,7 @@ const Card: React.FC<CardProps> = ({
             </p> */}
 
             <p className="text-black font-bold text-18 flex gap-1">
-            <span className="font-currency font-bold text-[24px]"></span>{" "}
+              <span className="font-currency font-bold text-[24px]"></span>{" "}
               <span
                 className={` text-20 ${product.discountPrice ? "text-red" : "text-black"
                   }`}
@@ -466,37 +388,20 @@ const Card: React.FC<CardProps> = ({
         <ProductDetails
           firstFlex="xl:w-9/12 2xl:w-8/12"
           isQuickView={true}
-          categoryName={populated_categoryName}
+          categoryName={categoryName}
           productDetail={productDetails}
         />
       </Model>
 
-      {ProductCard && ProductCard.length > 0 && !loading ? (
-        ProductCard.map((product, index) => renderProduct(product, index))
-      ) : productsToRender.length > 0 ? (
-        productsToRender.map(renderProduct)
-      ) : !loading ? (
-        <div className="flex justify-center">No Product Found</div>
-      ) : (
-        <>
-          {Array.from({ length: 3 }).map((_, index) => (
-            <div key={index} className="gap-10 flex flex-col">
-              <SkeletonLoading
-                avatar={{
-                  shape: "square",
-                  size: 280,
-                  className: "w-full flex flex-col",
-                }}
-                title={false}
-                style={{ flexDirection: "column" }}
-                paragraph={{ rows: 2 }}
-                className="gap-10 flex"
-                active={true}
-              />
-            </div>
-          ))}
-        </>
-      )}
+      {
+
+     (  Homepage ? ProductCard?.slice(0, 6) :  ProductCard)?.map((product, index) => renderProduct(product, index))
+
+
+
+    
+    
+      }
     </>
   );
 };
