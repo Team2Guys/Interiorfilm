@@ -6,25 +6,10 @@ import ProductSlider from "components/Carousel/ProductSlider/ProductSlider";
 import PRODUCTS_TYPES from "types/interfaces";
 import ProductDetails from "components/product_detail/ProductDetails";
 import Accordion from "components/widgets/Accordion";
-import ProductSkeleton from "components/Skeleton-loading/ProductSkelton";
 
 const Product = ({ products, productDetail, categoryName, productsAdon }: { products: PRODUCTS_TYPES[], productDetail: PRODUCTS_TYPES, categoryName: string, productsAdon?: PRODUCTS_TYPES[] }) => {
   const [productsLoading, setProductsLoading] = useState<boolean>(true);
-  // const fetchReviews = async (productId: string) => {
-  //   try {
-  //     const response = await axios.get(
-  //       `${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${productId}`
-  //     );
-  //     setReviews(response.data.reviews);
-  //   } catch (err) {
-  //     console.log("Failed to fetch reviews:", err);
-  //   }
-  // };
-  // useEffect(() => {
-  //   if (productDetail?._id) {
-  //     fetchReviews(productDetail?._id);
-  //   }
-  // }, [products]);
+
 
   useEffect(() => {
     setProductsLoading(true)
@@ -46,15 +31,11 @@ const Product = ({ products, productDetail, categoryName, productsAdon }: { prod
     <>
       <Overlay title="Shop" />
 
-      {productsLoading ? <ProductSkeleton /> : productDetail ? (
-        <>
           <ProductDetails
             productDetail={productDetail}
             categoryName={categoryName}
             isAccessory={categoryName === 'accessories'}
           />
-        </>
-      ) : null}
 
       {productDetail ? (
         <>

@@ -207,20 +207,20 @@ export default function ProductDetails({
               className={`w-full md:px-2 space-y-2 md:space-y-4 ${!isQuickView ? "md:w-3/3 xl:w-8/12" : "w-full xl:w-12/12"
                 }`}
             >
-              <span className="divide-8">
+              <div className="divide-8">
                 <h1 className="text-22 lg:text-[28px] text-[#000000] font-medium">
-                  {productDetail.name}
+                  {productDetail?.name || ""}
                 </h1>
                 <p className="text-30  text-[#B9BBBF] font-medium">
                   {productDetail.code}
                 </p>
-              </span>
+              </div>
               <hr className="text-[#E4E4E4]" />
 
               <div className="flex flex-wrap w-full justify-between items-center">
                 <div className="flex flex-col">
                   <p className="text-secondary font-poppins text-[25.92px] font-bold ">
-                  <span className="font-currency text-[28px]"></span>{" "}
+                    <span className="font-currency text-[28px]"></span>{" "}
                     <span>
                       {productDetail.discountPrice
                         ? productDetail.discountPrice
