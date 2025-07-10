@@ -24,7 +24,7 @@ const Hero = () => {
         preload="meta"
         aria-label="Background video showcasing product"
       >
-        <source src="/video/Agsons.mp4" type="video/mp4" />
+        <source src="https://bncmain.s3.eu-north-1.amazonaws.com/a.mp4" type="video/mp4" />
       </video>
       </div>
     

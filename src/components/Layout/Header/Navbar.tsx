@@ -115,32 +115,40 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    const handleCartChange = () => {
-      const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
-      setCartItems(updatedCart);
+useEffect(() => {
+  const handleCartChange = () => {
+    const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    setCartItems(updatedCart);
+    if (pathname !== '/cart' && updatedCart.length > 0) {
       setDrawerOpen(true);
       startAutoCloseTimer();
-    };
+    }
+  };
 
-    window.addEventListener("cartChanged", handleCartChange);
-    return () => window.removeEventListener("cartChanged", handleCartChange);
-  }, []);
+  window.addEventListener("cartChanged", handleCartChange);
+  const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+  setCartItems(updatedCart);
 
-  useEffect(() => {
-    const handleWishlistChange = () => {
-      const updatedWishlist = JSON.parse(
-        localStorage.getItem("wishlist") || "[]"
-      );
-      setWishlistItems(updatedWishlist);
-    };
+  return () => {
+    window.removeEventListener("cartChanged", handleCartChange);
+  };
+}, [pathname]);
 
-    window.addEventListener("WishlistChanged", handleWishlistChange);
+useEffect(() => {
+  const handleWishlistChange = () => {
+    const updatedWishlist = JSON.parse(
+      localStorage.getItem("wishlist") || "[]"
+    );
+    setWishlistItems(updatedWishlist);
+  };
 
-    return () => {
-      window.removeEventListener("WishlistChanged", handleWishlistChange);
-    };
-  }, []);
+  window.addEventListener("WishlistChanged", handleWishlistChange);
+  return () => {
+    window.removeEventListener("WishlistChanged", handleWishlistChange);
+  };
+}, []);
+
+
   useEffect(() => {
     if (!drawerOpen) stopAutoCloseTimer();
   }, [drawerOpen]);
@@ -170,9 +178,9 @@ const Navbar = () => {
   }, [products, searchTerm]);
 
   const cartItemCount = useMemo(() =>
-    cartItems.reduce((count, item) => count + (item.count || 0), 0),
-    [cartItems]
-  );
+  cartItems.reduce((count, item) => count + (item.length || 0), 0),
+  [cartItems]
+);
 
   return (
     <>
@@ -459,8 +467,8 @@ const Navbar = () => {
       <CartDrawer
         open={drawerOpen}
         onClose={handleCloseDrawer}
-        onMouseEnter={stopAutoCloseTimer}   // ← pause countdown
-        onMouseLeave={startAutoCloseTimer} // ← resume countdown
+        onMouseEnter={stopAutoCloseTimer}
+        onMouseLeave={startAutoCloseTimer}
       />
     </>
   );

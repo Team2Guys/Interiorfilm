@@ -202,7 +202,7 @@ const SearchProduct = ({products}: {products: PRODUCTS_TYPES[]}) => {
                       </div>
                     )}
                     <Button
-                      onClick={() => route.push("/products?category=view-all")}
+                      onClick={() => route.push("/categories")}
                       className="upercase bg-primary text-white py-5"
                       title={"View All"}
                     />

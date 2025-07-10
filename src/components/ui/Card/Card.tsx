@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { Modal, Rate, Spin, message } from "antd";
 import { LuShoppingCart } from "react-icons/lu";
@@ -11,6 +11,7 @@ import { FiZoomIn } from "react-icons/fi";
 import Model from "components/ui/Modal/Model";
 import ProductDetails from "components/product_detail/ProductDetails";
 import Link from "next/link";
+import { formatCategoryName } from "utils/helperFunctions";
 
 interface CardProps {
   ProductCard?: PRODUCTS_TYPES[];
@@ -37,9 +38,7 @@ const Card: React.FC<CardProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   
   const pathname = usePathname();
-
-    const Homepage = pathname.startsWith("/");
-
+const isHomePage = pathname === "/";
   const handleProductClick = (product: PRODUCTS_TYPES) => {
     setIsLoading(true);
     setSelectedProduct(product);
@@ -53,6 +52,7 @@ const Card: React.FC<CardProps> = ({
     setIsModalOpen(false);
   };
 
+const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [categoryName]);
   const getallProducts = async () => {
       if (pathname.startsWith("/products") || slider) return;
 
@@ -66,13 +66,9 @@ const Card: React.FC<CardProps> = ({
       });
    
   };
-
   useEffect(() => {
     getallProducts();
   }, []);
-
-
-
 
   const handleAddToCart = (product: any) => {
     let existingCart = JSON.parse(localStorage.getItem("cart") || "[]")
@@ -166,14 +162,6 @@ const Card: React.FC<CardProps> = ({
         message.error("Cannot add more than 100 units of this product to the wishlist!");
         return; // Prevent adding
       }
-
-      // if (existingItem.length + 1 > product.totalStockQuantity) {
-      //   message.error("Cannot add to wishlist. Exceeds available stock!");
-
-      //   return; // Prevent adding
-      // }
-
-
 
       const updatedWishlist = existingWishlist.map(
         (item: any, index: number) => {
@@ -310,12 +298,6 @@ const Card: React.FC<CardProps> = ({
             {product.code}
           </p>
           <div className="flex gap-2 justify-center items-center text-sm py-1 mt-0">
-            {/* <p className="lg:text-lg text-md text-center text-[#fb701d]">
-              {product.totalStockQuantity > 0 && (
-                'In Stock'
-              )}
-            </p> */}
-
             <p className="text-black font-bold text-18 flex gap-1">
               <span className="font-currency font-bold text-[24px]"></span>{" "}
               <span
@@ -388,20 +370,16 @@ const Card: React.FC<CardProps> = ({
         <ProductDetails
           firstFlex="xl:w-9/12 2xl:w-8/12"
           isQuickView={true}
-          categoryName={categoryName}
+          categoryName={displayCategoryName}
           productDetail={productDetails}
         />
       </Model>
 
-      {
-
-     (  Homepage ? ProductCard?.slice(0, 6) :  ProductCard)?.map((product, index) => renderProduct(product, index))
-
-
-
-    
-    
-      }
+      {ProductCard && 
+      (isHomePage 
+        ? ProductCard && ProductCard.slice(0, 6).map((product, index) => renderProduct(product, index))
+        : ProductCard && ProductCard.map((product, index) => renderProduct(product, index))
+      )}
     </>
   );
 };

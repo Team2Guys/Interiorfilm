@@ -74,8 +74,6 @@ const ProductPage = ({ initialCategory, category, totalProducts }: { initialCate
       return products.slice(0, 3);
     };
     const selectedProductImages = specificProductImages.length ? specificProductImages : getRandomProducts(totalProducts);
-
-    console.log(selectedProductImages, "categoryNameNormalized", specificProductCodesByCategory[categoryNameNormalized] )
     seselectedProductImages(selectedProductImages)
   };
 
