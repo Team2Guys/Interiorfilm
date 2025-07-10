@@ -37,9 +37,7 @@ const Card: React.FC<CardProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   
   const pathname = usePathname();
-
-    const Homepage = pathname.startsWith("/");
-
+const isHomePage = pathname === "/";
   const handleProductClick = (product: PRODUCTS_TYPES) => {
     setIsLoading(true);
     setSelectedProduct(product);
@@ -393,15 +391,11 @@ const Card: React.FC<CardProps> = ({
         />
       </Model>
 
-      {
-
-     (  Homepage ? ProductCard?.slice(0, 6) :  ProductCard)?.map((product, index) => renderProduct(product, index))
-
-
-
-    
-    
-      }
+      {ProductCard && 
+      (isHomePage 
+        ? ProductCard.slice(0, 6).map((product, index) => renderProduct(product, index))
+        : ProductCard.map((product, index) => renderProduct(product, index))
+      )}
     </>
   );
 };
