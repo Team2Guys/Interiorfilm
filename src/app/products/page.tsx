@@ -32,7 +32,7 @@ NotFound()
   ];
   let title = Product && Product.Meta_Title ? Product.Meta_Title : "Interior Films"
   let description = Product && Product.Meta_Description ? Product.Meta_Description : "Welcome to Interior films"
-  let url = `${fullUrl}/products?category=${category}`
+  let url = `${fullUrl}products?category=${category}`
   return {
     title: title,
     description: description,
