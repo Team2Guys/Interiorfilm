@@ -117,16 +117,21 @@ const Navbar = () => {
 
 useEffect(() => {
   const handleCartChange = () => {
-    if (pathname === '/cart') return;
-    
     const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
     setCartItems(updatedCart);
-    setDrawerOpen(true);
-    startAutoCloseTimer();
+    if (pathname !== '/cart' && updatedCart.length > 0) {
+      setDrawerOpen(true);
+      startAutoCloseTimer();
+    }
   };
 
   window.addEventListener("cartChanged", handleCartChange);
-  return () => window.removeEventListener("cartChanged", handleCartChange);
+  const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+  setCartItems(updatedCart);
+
+  return () => {
+    window.removeEventListener("cartChanged", handleCartChange);
+  };
 }, [pathname]);
 
 useEffect(() => {
@@ -173,9 +178,9 @@ useEffect(() => {
   }, [products, searchTerm]);
 
   const cartItemCount = useMemo(() =>
-    cartItems.reduce((count, item) => count + (item.count || 0), 0),
-    [cartItems]
-  );
+  cartItems.reduce((count, item) => count + (item.length || 0), 0),
+  [cartItems]
+);
 
   return (
     <>

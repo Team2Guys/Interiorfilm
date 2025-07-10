@@ -1,11 +1,13 @@
 'use client'
 
+import Container from "components/Layout/Container/Container"
 import SkeletonLoading from "components/Skeleton-loading/SkeletonLoading"
 
 function Loading() {
   return (
-    (
-      Array.from({ length: 3 }).map((_, index) => (
+  <Container className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 gap-2 mt-10">
+      {
+      Array.from({ length: 6 }).map((_, index) => (
         <div key={index} className="gap-10 flex flex-col">
           <SkeletonLoading
             avatar={{
@@ -21,7 +23,8 @@ function Loading() {
           />
         </div>
       ))
-    )
+    }
+  </Container>
   )
 }
 

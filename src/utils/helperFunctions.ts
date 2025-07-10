@@ -54,3 +54,11 @@ export const uploadPhotosToBackend = async (files: File[]): Promise<any[]> => {
       console.error("Failed to remove image:", error);
     }
   };
+
+ export const formatCategoryName = (slug?: string) => {
+  if (!slug) return "";
+  return slug
+    .split("-")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
