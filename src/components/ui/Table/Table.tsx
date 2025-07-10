@@ -62,42 +62,50 @@ const Table: React.FC<TableProps> = ({
     }
   };
 
+const increment = (index: number) => {
+  const product = data[index];
+  const newLengths = { ...lengths };
 
+  if (newLengths[index] >= product.totalStockQuantity) {
+    message.error(
+      "Cannot add more. You have reached the product's total stock!"
+    );
+    return;
+  }
+  if (newLengths[index] >= 100) {
+    message.error("Length cannot exceed 100 meters.");
+    return;
+  }
 
-  const increment = (index: number) => {
-    const product = data[index];
-    const newLengths = { ...lengths };
+  newLengths[index] = (newLengths[index] || 1) + 1;
+  setLengths(newLengths);
+  updateTotalPrice(index, newLengths[index]);
+  
+  // Dispatch only the relevant event
+  if (pathName === "/wishlist") {
+    window.dispatchEvent(new Event("WishlistChanged"));
+  } else {
+    window.dispatchEvent(new Event("cartChanged"));
+  }
+};
 
-    if (newLengths[index] >= product.totalStockQuantity) {
-      message.error(
-        "Cannot add more. You have reached the product's total stock!"
-      );
-      return;
-    }
-    if (newLengths[index] >= 100) {
-      message.error("Length cannot exceed 100 meters.");
-      return;
-    }
-
-    newLengths[index] = (newLengths[index] || 1) + 1;
+const decrement = (index: number) => {
+  const newLengths = { ...lengths };
+  if (newLengths[index] > 1) {
+    newLengths[index] -= 1;
     setLengths(newLengths);
     updateTotalPrice(index, newLengths[index]);
-    window.dispatchEvent(new Event("cartChanged"));
-    window.dispatchEvent(new Event("WishlistChanged"));
-  };
-
-  const decrement = (index: number) => {
-    const newLengths = { ...lengths };
-    if (newLengths[index] > 1) {
-      newLengths[index] -= 1;
-      setLengths(newLengths);
-      updateTotalPrice(index, newLengths[index]);
-      window.dispatchEvent(new Event("cartChanged"));
+    
+    // Dispatch only the relevant event
+    if (pathName === "/wishlist") {
       window.dispatchEvent(new Event("WishlistChanged"));
     } else {
-      message.error("Length cannot be less than 1 meter.");
+      window.dispatchEvent(new Event("cartChanged"));
     }
-  };
+  } else {
+    message.error("Length cannot be less than 1 meter.");
+  }
+};
 
   const updateTotalPrice = (index: number, newLength: number) => {
     const updatedData = [...data];
@@ -119,18 +127,22 @@ const Table: React.FC<TableProps> = ({
     onCartChange(updatedData);
   };
 
-  const removeItemFromCart = (index: number) => {
-    const updatedData = [...data];
-    updatedData.splice(index, 1);
-    setData(updatedData);
-    localStorage.setItem(
-      pathName === "/wishlist" ? "wishlist" : "cart",
-      JSON.stringify(updatedData)
-    );
-    window.dispatchEvent(new Event("cartChanged"));
+ const removeItemFromCart = (index: number) => {
+  const updatedData = [...data];
+  updatedData.splice(index, 1);
+  setData(updatedData);
+  localStorage.setItem(
+    pathName === "/wishlist" ? "wishlist" : "cart",
+    JSON.stringify(updatedData)
+  );
+  if (pathName === "/wishlist") {
     window.dispatchEvent(new Event("WishlistChanged"));
-    onCartChange(updatedData);
-  };
+  } else {
+    window.dispatchEvent(new Event("cartChanged"));
+  }
+  
+  onCartChange(updatedData);
+};
 
   const addToCart = (product: any, index: number) => {
     console.log('function called')

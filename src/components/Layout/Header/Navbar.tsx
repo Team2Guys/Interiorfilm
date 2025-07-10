@@ -115,32 +115,35 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    const handleCartChange = () => {
-      const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
-      setCartItems(updatedCart);
-      setDrawerOpen(true);
-      startAutoCloseTimer();
-    };
+useEffect(() => {
+  const handleCartChange = () => {
+    if (pathname === '/cart') return;
+    
+    const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    setCartItems(updatedCart);
+    setDrawerOpen(true);
+    startAutoCloseTimer();
+  };
 
-    window.addEventListener("cartChanged", handleCartChange);
-    return () => window.removeEventListener("cartChanged", handleCartChange);
-  }, []);
+  window.addEventListener("cartChanged", handleCartChange);
+  return () => window.removeEventListener("cartChanged", handleCartChange);
+}, [pathname]);
 
-  useEffect(() => {
-    const handleWishlistChange = () => {
-      const updatedWishlist = JSON.parse(
-        localStorage.getItem("wishlist") || "[]"
-      );
-      setWishlistItems(updatedWishlist);
-    };
+useEffect(() => {
+  const handleWishlistChange = () => {
+    const updatedWishlist = JSON.parse(
+      localStorage.getItem("wishlist") || "[]"
+    );
+    setWishlistItems(updatedWishlist);
+  };
 
-    window.addEventListener("WishlistChanged", handleWishlistChange);
+  window.addEventListener("WishlistChanged", handleWishlistChange);
+  return () => {
+    window.removeEventListener("WishlistChanged", handleWishlistChange);
+  };
+}, []);
 
-    return () => {
-      window.removeEventListener("WishlistChanged", handleWishlistChange);
-    };
-  }, []);
+
   useEffect(() => {
     if (!drawerOpen) stopAutoCloseTimer();
   }, [drawerOpen]);
@@ -459,8 +462,8 @@ const Navbar = () => {
       <CartDrawer
         open={drawerOpen}
         onClose={handleCloseDrawer}
-        onMouseEnter={stopAutoCloseTimer}   // ← pause countdown
-        onMouseLeave={startAutoCloseTimer} // ← resume countdown
+        onMouseEnter={stopAutoCloseTimer}
+        onMouseLeave={startAutoCloseTimer}
       />
     </>
   );
