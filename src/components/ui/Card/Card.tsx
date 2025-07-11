@@ -215,7 +215,7 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
         <div
           className="cursor-pointer  transition-all m-1 "
         >
-          <div className="text-center relative">
+          <div className="text-center relative h-[150px] sm:h-[350px] xl:h-[400px]">
             <div
               className={`space-y-3 absolute top-6 right-6 opacity-0 group-hover:opacity-100  overflow-hidden transition ease-in-out duration-400 hidden md:block ${quickClass}`}
             >
@@ -277,8 +277,9 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
               <>
                 <Image
                   className="bg-contain  w-full "
-                  width={500}
-                  height={500}
+                  fill
+                  fetchPriority="high"
+                  loading="lazy"
                   src={product.posterImageUrl.imageUrl}
                   alt={product.posterImageUrl.altText || product.name}
                 />
