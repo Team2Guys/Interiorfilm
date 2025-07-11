@@ -6,19 +6,12 @@ import { headers } from "next/headers";
 import ProductPage from "components/product/Product";
 import NotFound from "app/not-found";
 
-
 export async function generateMetadata({ searchParams }: { searchParams: Promise<{ category?: string }> }): Promise<Metadata | undefined> {
   const { category } = await searchParams;
   const headersList = await headers();
-  
-  // Get domain with fallback to production domain
   const rawDomain = headersList.get('x-forwarded-host') || headersList.get('host') || 'interiorfilm.ae';
-  
-  // Force HTTPS for all environments
   const protocol = 'https';
   const pathname = headersList.get('x-invoke-path') || '/';
-  
-  // Construct full URL with forced HTTPS
   const fullUrl = `${protocol}://${rawDomain}${pathname}`;
   console.log(fullUrl,"fullUrl")
   const { category: paramsCategory } = await searchParams;
@@ -28,8 +21,6 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
     NotFound();
     return;
   }
-
-  // Prepare metadata
   let ImageUrl = Product?.posterImageUrl?.imageUrl || "interiorfilm";
   let alt = Product?.Images_Alt_Text || "Interior films";
 
@@ -67,7 +58,6 @@ let category =  await fetchCategoryMeta(paramsCategory?? "")
 if(!category) notFound()
   const totalProducts = category.products;
   return (
-
     <ProductPage initialCategory={paramsCategory ?? ''} category={category}  totalProducts={totalProducts}/>
   );
 }
