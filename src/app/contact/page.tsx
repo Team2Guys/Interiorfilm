@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     title: 'Contact Us | Interior Film',
     description: 'Welcome to Interior Films',
     url: 'https://interiorfilm.ae/contact',
+     type: "website",
     images: [
       {
         url: `${blacklogo.src}`,

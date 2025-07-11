@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     title: 'Interior Film',
     description: 'Welcome to Interior Films',
     url: 'https://interiorfilm.ae/shipment-policy',
+    type: "website",
     images: [
       {
         url: `${blacklogo.src}`,

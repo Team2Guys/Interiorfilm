@@ -50,6 +50,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
       description: description,
       url: url,
       images: NewImage,
+      type: "website",
     },
     alternates: {
       canonical: Product?.Canonical_Tag || url,
