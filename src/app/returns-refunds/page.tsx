@@ -6,11 +6,11 @@ import { Metadata } from 'next';
 import blacklogo from "../../../public/images/logoblack.png";
 
 export const metadata: Metadata = {
-  title: 'Interior Film',
-  description: 'Welcome to Interior Films',
+  title: 'Returns & Refunds Policy | Interior Film UAE',
+  description: 'Understand our returns and refund policy at Interior Film UAE. Find out how to return wall decor items and request refunds for a smooth shopping experience.',
   openGraph: {
-    title: 'Interior Film',
-    description: 'Welcome to Interior Films',
+    title: 'Returns & Refunds Policy | Interior Film UAE',
+    description: 'Understand our returns and refund policy at Interior Film UAE. Find out how to return wall decor items and request refunds for a smooth shopping experience.',
     url: 'https://interiorfilm.ae/returns-refunds',
     type: "website",
     images: [

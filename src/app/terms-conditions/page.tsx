@@ -4,11 +4,11 @@ import blacklogo from "../../../public/images/logoblack.png";
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Interior Film',
-  description: 'Welcome to Interior Films',
+  title: 'Terms and Conditions | Interior Film UAE',
+  description: 'Read the terms and conditions for using Interior Film UAE. Learn about your rights, responsibilities, and our policies regarding wall decor purchases and website use.',
   openGraph: {
-    title: 'Interior Film',
-    description: 'Welcome to Interior Films',
+    title: 'Terms and Conditions | Interior Film UAE',
+    description: 'Read the terms and conditions for using Interior Film UAE. Learn about your rights, responsibilities, and our policies regarding wall decor purchases and website use.',
     url: 'https://interiorfilm.ae/terms-conditions',
     type: "website",
     images: [

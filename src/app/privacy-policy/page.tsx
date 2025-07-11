@@ -6,11 +6,11 @@ import blacklogo from "../../../public/images/logoblack.png";
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Interior Film',
-  description: 'Welcome to Interior Films',
+  title: 'Privacy Policy | Interior Film UAE',
+  description: 'Need help? Contact Interior Film UAE for support, inquiries, or feedback. Our team is here to assist you with your wall decor and interior film needs.',
   openGraph: {
-    title: 'Interior Film',
-    description: 'Welcome to Interior Films',
+    title: 'Privacy Policy | Interior Film UAE',
+    description: 'Need help? Contact Interior Film UAE for support, inquiries, or feedback. Our team is here to assist you with your wall decor and interior film needs.',
     url: 'https://interiorfilm.ae/privacy-policy',
     type: "website",
     images: [
