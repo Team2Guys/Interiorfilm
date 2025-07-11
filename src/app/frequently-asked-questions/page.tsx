@@ -8,7 +8,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Most Frequently Asked Questions | Interior Film',
     description: 'Have questions about our products? Find answers to frequently asked questions and get all the information you need about Interior Film.',
-    url: '/frequently-asked-questions',
+    url: 'https://interiorfilm.ae/frequently-asked-questions',
+    type: "website",
     images: [
       {
         url: `${blacklogo.src}`,
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: '/frequently-asked-questions',
+    canonical: 'https://interiorfilm.ae/frequently-asked-questions',
   },
 };
 

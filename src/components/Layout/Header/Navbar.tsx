@@ -136,13 +136,14 @@ useEffect(() => {
 
 useEffect(() => {
   const handleWishlistChange = () => {
-    const updatedWishlist = JSON.parse(
-      localStorage.getItem("wishlist") || "[]"
-    );
+    const updatedWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]" );
     setWishlistItems(updatedWishlist);
   };
 
   window.addEventListener("WishlistChanged", handleWishlistChange);
+  const updatedWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]" );
+  setWishlistItems(updatedWishlist);
+
   return () => {
     window.removeEventListener("WishlistChanged", handleWishlistChange);
   };

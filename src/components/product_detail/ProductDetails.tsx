@@ -76,7 +76,6 @@ export default function ProductDetails({
       )
       : [];
 
-
   const fetchReviews = async (productId: string) => {
     try {
       const response = await axios.get(
@@ -207,7 +206,7 @@ export default function ProductDetails({
               className={`w-full md:px-2 space-y-2 md:space-y-4 ${!isQuickView ? "md:w-3/3 xl:w-8/12" : "w-full xl:w-12/12"
                 }`}
             >
-              <div className="divide-8">
+              <div>
                 <h1 className="text-22 lg:text-[28px] text-[#000000] font-medium">
                   {productDetail?.name || ""}
                 </h1>
@@ -356,7 +355,7 @@ export default function ProductDetails({
                   <span className="absolute -top-3 left-2 bg-[#00FFBC]  px-2 py-1 rounded-lg text-xs font-extrabold">
                     tabby
                   </span>
-                  <p className="text-12 ">
+                  <div className="text-12">
                     Pay 4 interest-free payments of <span className="font-currency text-14"></span>{" "}
                     {totalPrice && (totalPrice / 4).toFixed()}{" "}
                     <Dialog>
@@ -376,7 +375,7 @@ export default function ProductDetails({
                         </DialogHeader>
                         <div className="py-5 ps-5 xs:ps-10 md:ps-20 pe-4 me-4 xs:me-7 max-h-[80vh] overflow-y-auto custom-scroll">
                           <Image src={tabbyLogo} alt="tabby logo" />
-                          <h2 className="text-xl xs:text-2xl sm:text-lg md:text-xl font-bold mt-5 leading-10 xs:leading-tight">
+                          <p className="text-xl xs:text-2xl sm:text-lg md:text-xl font-bold mt-5 leading-10 xs:leading-tight">
                             <span className="rounded-full bg-[#3BFFC1] px-4 py-0 text-nowrap">
                               Shop now,
                             </span>
@@ -384,7 +383,7 @@ export default function ProductDetails({
                             <span className="text-[#3BFFC1] text-outline-border  tracking-wider">
                               pay over time.
                             </span>
-                          </h2>
+                          </p>
                           <ul className='mt-5 font-bold text-lg xs:text-2xl sm:text-xl md:text-xl list-["–"] list-inside leading-normal md:leading-normal'>
                             {tabbyfeature.map((item) => (
                               <li key={item.id}>{item.para}</li>
@@ -422,13 +421,13 @@ export default function ProductDetails({
                         </div>
                       </DialogContent>
                     </Dialog>
-                  </p>
+                  </div>
                 </div>
                 <div className="relative w-1/2 border-4 border-[#D47C84] p-4 rounded-lg shadow">
                   <span className="absolute -top-3 left-2 bg-gradient-to-r from-blue-300 via-orange-300 to-pink-300 text-black font-extrabold px-2 py-1 rounded-lg text-xs">
                     tamara
                   </span>
-                  <p className="text-12">
+                  <div className="text-12">
                     Pay 4 interest-free payments of <span className="font-currency text-14"></span>{" "}
                     {totalPrice && (totalPrice / 4).toFixed()}{" "}
                     <Dialog>
@@ -453,9 +452,9 @@ export default function ProductDetails({
                               className="mx-auto"
                             />
                           </div>
-                          <h2 className="text-center font-bold text-2xl mt-5">
+                          <p className="text-center font-bold text-2xl mt-5">
                             Pay easier with Tamara
-                          </h2>
+                          </p>
                           <div className="px-4 py-2 bg-gradient-to-r from-orange-300 via-blue-300 to-pink-300 mt-4 rounded-[70px]">
                             <div className="bg-gradient-to-r from-orange-100 via-blue-100 to-pink-100 pb-6 pt-1 px-8 rounded-[70px] flex flex-col gap-2">
                               <div className="w-10/12 mx-auto">
@@ -506,7 +505,7 @@ export default function ProductDetails({
                         </div>
                       </DialogContent>
                     </Dialog>
-                  </p>
+                  </div>
                 </div>
               </div>
               <div className="flex flex-wrap gap-1 justify-between items-center px-2 md:px-0 bg-white  ">

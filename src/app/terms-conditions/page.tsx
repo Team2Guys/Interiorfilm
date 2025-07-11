@@ -9,7 +9,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Interior Film',
     description: 'Welcome to Interior Films',
-    url: '/terms-conditions',
+    url: 'https://interiorfilm.ae/terms-conditions',
+    type: "website",
     images: [
       {
         url: `${blacklogo.src}`,
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: '/terms-conditions',
+    canonical: 'https://interiorfilm.ae/terms-conditions',
   },
 };
 

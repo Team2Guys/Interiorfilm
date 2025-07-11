@@ -1,8 +1,29 @@
-'use client'
+
 import React from 'react';
 import Overlay from 'components/widgets/Overlay/Overlay';
 import Link from 'next/link';
+import { Metadata } from 'next';
+import blacklogo from "../../../public/images/logoblack.png";
 
+export const metadata: Metadata = {
+  title: 'Interior Film',
+  description: 'Welcome to Interior Films',
+  openGraph: {
+    title: 'Interior Film',
+    description: 'Welcome to Interior Films',
+    url: 'https://interiorfilm.ae/returns-refunds',
+    type: "website",
+    images: [
+      {
+        url: `${blacklogo.src}`,
+        alt: 'Interior Film',
+      },
+    ],
+  },
+  alternates: {
+    canonical: 'https://interiorfilm.ae/returns-refunds',
+  },
+};
 const ReturnRefund: React.FC = () => {
   return (
     <>

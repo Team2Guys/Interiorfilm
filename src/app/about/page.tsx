@@ -16,7 +16,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Top Notch Quality, Quick Delivery, Affordable Prices | Interior Film',
     description: 'Interior Film, based in Dubai, offers top-quality vinyl wrapping solutions from Yellowzone General Trading. Expert service for all your wrapping needs.',
-    url: '/about',
+    url: 'https://interiorfilm.ae/about',
+    type: "website",
     images: [
       {
         url: `${blacklogo.src}`,
@@ -25,8 +26,9 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: '/about',
+    canonical: 'https://interiorfilm.ae/about', 
   },
+  
 };
 
 
