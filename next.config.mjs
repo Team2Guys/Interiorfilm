@@ -21,7 +21,21 @@ const nextConfig = {
     },
     images: {
       domains: ['res.cloudinary.com'],
+      formats: ['image/avif', 'image/webp'],
     },
+     async headers() {
+    return [
+      {
+        source: '/_next/image',
+        headers: [
+          {
+            key: 'Content-Disposition',
+            value: 'inline',
+          },
+        ],
+      },
+    ];
+  },
     compiler: {
       removeConsole:  process.env.NEXT_PUBLIC_ENV =='production' ? true : false,
     },

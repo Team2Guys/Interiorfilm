@@ -272,10 +272,11 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
                 Quick View
               </button>
             </div>
-            <Link href={`/product/${generateSlug(product.name)}`} className="testingClass">
+            <Link href={`/product/${generateSlug(product.name)}`}>
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
               <>
                 <Image
+                 
                   className="bg-contain  w-full "
                   fill
                   fetchPriority="high"
