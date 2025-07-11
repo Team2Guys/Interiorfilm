@@ -6,11 +6,11 @@ import { Metadata } from 'next';
 
 
 export const metadata: Metadata = {
-  title: 'Top Notch Quality, Quick Delivery, Affordable Prices | Interior Film',
-  description: 'Interior Film, based in Dubai, offers top-quality vinyl wrapping solutions from Yellowzone General Trading. Expert service for all your wrapping needs.',
+  title: 'Stylish Interior Wall Coverings UAE',
+  description: 'Explore our full range of wall décor categories at Interior Film UAE. Discover stylish interior film options to transform your space with ease and elegance.',
   openGraph: {
-    title: 'Top Notch Quality, Quick Delivery, Affordable Prices | Interior Film',
-    description: 'Interior Film, based in Dubai, offers top-quality vinyl wrapping solutions from Yellowzone General Trading. Expert service for all your wrapping needs.',
+    title: 'Stylish Interior Wall Coverings UAE',
+    description: 'Explore our full range of wall décor categories at Interior Film UAE. Discover stylish interior film options to transform your space with ease and elegance.',
     url: 'https://interiorfilm.ae/categories',
      type: "website",
     images: [

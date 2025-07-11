@@ -80,7 +80,8 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products, loading }) => {
             className="mySwiper custom !pb-5"
           >
             {featuredProducts.map((product, index) => (
-              <SwiperSlide
+              <SwiperSlide 
+              className='!flex !flex-col !justify-between'
                 key={index}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}

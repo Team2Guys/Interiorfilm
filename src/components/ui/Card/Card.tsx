@@ -211,11 +211,11 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
-      <div className={`group mb-5 flex flex-col justify-between ${cardClass}`} key={index}>
+      <div className={`group mb-5 flex flex-col justify-between min-h-[246px] xsm:min-h-0 lg:min-h-[440px] xl:min-h-[490px] 2xl:min-h-0 ${cardClass}`} key={index}>
         <div
           className="cursor-pointer  transition-all space-y-1"
         >
-          <div className="text-center relative h-[150px] sm:h-[320px] xl:h-[370px] 2xl:h-[400px] ">
+          <div className="text-center relative h-[150px] sm:h-[320px] xl:h-[370px] ">
             <div
               className={`space-y-3 absolute top-6 right-6 opacity-0 group-hover:opacity-100 z-10 transition ease-in-out duration-400 hidden md:block ${quickClass}`}
             >

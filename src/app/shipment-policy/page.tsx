@@ -4,11 +4,11 @@ import blacklogo from "../../../public/images/logoblack.png";
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Interior Film',
-  description: 'Welcome to Interior Films',
+  title: 'Shipment Policy for Wall Decor Orders',
+  description: 'Learn about our shipping and delivery process at Interior Film UAE. Get details on dispatch times, delivery options, and order tracking for wall decor products.',
   openGraph: {
-    title: 'Interior Film',
-    description: 'Welcome to Interior Films',
+    title: 'Shipment Policy for Wall Decor Orders',
+    description: 'Learn about our shipping and delivery process at Interior Film UAE. Get details on dispatch times, delivery options, and order tracking for wall decor products.',
     url: 'https://interiorfilm.ae/shipment-policy',
     type: "website",
     images: [
