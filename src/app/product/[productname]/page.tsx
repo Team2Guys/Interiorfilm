@@ -11,10 +11,10 @@ type Props = {
 export async function generateMetadata({ params }: Props,): Promise<Metadata> {
   const { productname } = await params;
   const headersList = await headers();
-  const domain = headersList.get('x-forwarded-host') || headersList.get('host') || ''; // Fallback to host if x-forwarded-host is not present
-  const protocol = headersList.get('x-forwarded-proto') || 'https'; // Default to https if no protocol is set
-  const pathname = headersList.get('x-invoke-path') || '/'; // Fallback to root if no path
-  const fullUrl = `${protocol}://${domain}${pathname}`;
+   const rawHost = headersList.get('x-forwarded-host') || headersList.get('host') || 'localhost:3000';
+  const isLocalhost = rawHost.includes('localhost');
+  const baseDomain = isLocalhost? `https://${rawHost}`: 'https://interiorfilm.ae';
+  const fullUrl = `${baseDomain}`;
   console.log(fullUrl, "fullurl")
   const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
   const [productResponse] = await Promise.all([productRequest]);
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props,): Promise<Metadata> {
   ];
   let title = Product && Product.Meta_Title ? Product.Meta_Title : "Interior Films"
   let description = Product && Product.Meta_Description ? Product.Meta_Description : "Welcome to Interior films"
-  let url = `${fullUrl}product/${productname}`
+  let url = `${fullUrl}/product/${productname}`
   return {
     title: title,
     description: description,
