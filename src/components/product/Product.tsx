@@ -22,8 +22,8 @@ interface category {
 }
 
 const ProductPage = ({ initialCategory, category, totalProducts }: { initialCategory: string, category: category, totalProducts: PRODUCTS_TYPES[] }) => {
-  const [filteredProductsByCategory, setfilteredProductsByCategory] = useState<PRODUCTS_TYPES[]>(totalProducts ? totalProducts : []);
-  const [selectedProductImages, seselectedProductImages] = useState<PRODUCTS_TYPES[]>([]);
+  const [filteredProductsByCategory, setFilteredProductsByCategory] = useState<PRODUCTS_TYPES[]>(totalProducts ? totalProducts : []);
+  const [selectedProductImages, setSelectedProductImages] = useState<PRODUCTS_TYPES[]>([]);
   const [showColors, setShowColors] = useState<boolean>(false);
   const [colorName, setColorName] = useState<string>();
   const [availableColors, setAvailableColors] = useState<{ value: string; label: string }[] | string[]>([]);
@@ -56,26 +56,22 @@ const ProductPage = ({ initialCategory, category, totalProducts }: { initialCate
     }
   };
 
-  const productHandler = async () => {
+ const productHandler = () => {
+  setFilteredProductsByCategory(totalProducts);
+  setActiveLink(category);
+  Get_colors_handler(totalProducts);
 
-    setfilteredProductsByCategory(totalProducts);
-    setActiveLink(category);
-    Get_colors_handler(totalProducts);
+  const key = (initialCategory ?? "").trim().toLowerCase();
+  const preferredSKUs = specificProductCodesByCategory[key] ?? [];
 
-    const categoryNameNormalized: any = categoryName?.trim();
-    const specificProductImages = getSpecificProductImages(
-      totalProducts,
-      specificProductCodesByCategory[categoryNameNormalized] || []
-    );
+  // choose the three mapped SKUs, or fall back to a random 3
+  const picks =
+    preferredSKUs.length > 0
+      ? getSpecificProductImages(totalProducts, preferredSKUs)
+      : totalProducts.slice(0, 3);
 
-
-    const getRandomProducts = (products: PRODUCTS_TYPES[]) => {
-      if (products.length <= 3) return products;
-      return products.slice(0, 3);
-    };
-    const selectedProductImages = specificProductImages.length ? specificProductImages : getRandomProducts(totalProducts);
-    seselectedProductImages(selectedProductImages)
-  };
+  setSelectedProductImages(picks);
+};
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -139,7 +135,7 @@ const ProductPage = ({ initialCategory, category, totalProducts }: { initialCate
           ));
       return nameMatch && colorMatch;
     })
-    setfilteredProductsByCategory(filteredprod)
+    setFilteredProductsByCategory(filteredprod)
 
   }, [searchTerm])
 
@@ -169,12 +165,12 @@ const ProductPage = ({ initialCategory, category, totalProducts }: { initialCate
   useEffect(() => {
     const sortedProducts = sortProducts(filteredProductsByCategory);
 
-    setfilteredProductsByCategory(sortedProducts)
+    setFilteredProductsByCategory(sortedProducts)
   }, [sortOption])
 
   useEffect(() => {
     productHandler();
-  }, [categoryName]);
+  }, [initialCategory]);
 
 
   useEffect(() => {
@@ -209,15 +205,11 @@ const ProductPage = ({ initialCategory, category, totalProducts }: { initialCate
 
 const getSpecificProductImages = (
   products: PRODUCTS_TYPES[],
-  colorNames: string[]
+  skuList: string[]
 ): PRODUCTS_TYPES[] => {
-  const colorSet = new Set(colorNames.map(c => c.trim().toLowerCase()));
-  
-  return products.filter(product =>
-    product.colors?.some((color) =>
-      colorSet.has(color.colorName?.trim().toLowerCase() ?? "")
-    )
-  );
+  if (!skuList.length) return [];
+  const skuSet = new Set(skuList.map(s => s.trim().toUpperCase()));
+  return products.filter(p => skuSet.has(p.code?.trim().toUpperCase() ?? ""));
 };
 
 
@@ -227,24 +219,29 @@ const getSpecificProductImages = (
       <Overlay
         title={activeLink?.name || "Products"} 
       />
-      {categoryName != "accessories" && (<div className="hidden md:grid grid-cols-3 mt-2 gap-6">
-        {selectedProductImages.map((product, index: number) => {
-          const imageIndex = specificImageIndexByCode[product.code] || 0;
-          const selectedImage = product.imageUrl?.[imageIndex]?.imageUrl || product.posterImageUrl?.imageUrl;
-
-          return (
-            <Link href={`/product/${generateSlug(product.name)}`} className="w-full cursor-pointer" key={index}>
-              <Image
-                className={`object-cover w-full h-[450px] object-center ${index > 0 ? "hidden sm:block" : ""}`}
-                width={500}
-                height={500}
-                src={selectedImage}
-                alt={`product-image-${product.name}`}
-              />
-            </Link>
-          );
-        })}
-      </div>)}
+      {initialCategory?.toLowerCase() !== "accessories" && (
+        <div className="hidden md:grid grid-cols-3 mt-2 gap-6">
+          {selectedProductImages.map((product, i) => {
+            const idx = specificImageIndexByCode[product.code] ?? 0;
+            const img = product.imageUrl?.[idx]?.imageUrl || product.posterImageUrl?.imageUrl;
+            return (
+              <Link
+                key={product.code}
+                href={`/product/${generateSlug(product.name)}`}
+                className="w-full cursor-pointer relative h-[450px]"
+              >
+                <Image
+                  fill
+                  priority
+                  src={img}
+                  alt={product.name}
+                  className={`object-cover object-center ${i > 0 ? "hidden sm:block" : ""}`}
+                />
+              </Link>
+            );
+          })}
+        </div>
+      )}
       <Container className="mt-20 md:overflow-hidden">
         <div className="flex flex-wrap lg:flex-nowrap justify-between  gap-3">
           <div>
@@ -345,7 +342,7 @@ const getSpecificProductImages = (
         </div>
         <div className="w-full">
           <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 gap-2 mt-10">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 mt-10">
               <Card quickClass="right-8" ProductCard={filteredProductsByCategory} categoryName={categoryName ?? ''} slider={true} />
 
             </div>

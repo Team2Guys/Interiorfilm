@@ -211,11 +211,11 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
     return (
-      <div className={`group mb-5 ${cardClass}`} key={index}>
+      <div className={`group mb-5 flex flex-col justify-between  ${cardClass}`} key={index}>
         <div
-          className="cursor-pointer  transition-all m-1 "
+          className="cursor-pointer  transition-all space-y-1"
         >
-          <div className="text-center relative">
+          <div className="text-center relative h-[150px] sm:h-[320px] xl:h-[370px] 2xl:h-[400px]">
             <div
               className={`space-y-3 absolute top-6 right-6 opacity-0 group-hover:opacity-100  overflow-hidden transition ease-in-out duration-400 hidden md:block ${quickClass}`}
             >
@@ -277,8 +277,9 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
               <>
                 <Image
                   className="bg-contain  w-full "
-                  width={500}
-                  height={500}
+                  fill
+                  fetchPriority="high"
+                  loading="lazy"
                   src={product.posterImageUrl.imageUrl}
                   alt={product.posterImageUrl.altText || product.name}
                 />
@@ -289,11 +290,11 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
             )}
             </Link>
           </div>
-        </div>
-        <div className="text-center space-y-1 pt-3 pb-5 p-1 ">
-          <h3 className="lg:text-lg text-sm text-center text-black ">
+          <h3 className="md:text-base lg:text-lg text-sm text-center text-black ">
             {product.name}
           </h3>
+        </div>
+        <div className="text-center space-y-1 px-1">
           <p className="lg:text-lg text-sm text-center text-dark ">
             {product.code}
           </p>

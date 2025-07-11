@@ -369,36 +369,35 @@ export const AccordionsArray: ACCORDINTYPES[] = [
   },
 ];
 
-export const specificProductCodesByCategory: any = {
-  "plain-series": ["KH9003", "KH9025", "KH9022"],
-  "cement-grey-series": ["KS5004", "KS5007", "KS5005"],
-  "wood-grain-series": ["CA162", "CA164", "CA126"],
-  "marble-series": ["KS6007", "KS6004", "KS6011"],
-  "metal-series": ["KW006", "KW012", "KW013"],
-  "fabric-series": ["KS8005", "KS8006", "KS8002"],
-  "skin-touch-series": ["KH9603", "KH9612", "KH9611"],
-  "leather-series": ["KS7715", "KS7710", "KS7701"],
-  "accessories": ["as1541", "as122", "as789"]
+export const specificProductCodesByCategory: Record<string, string[]> = {
+  "plain-series":        ["KH9003", "KH9025", "KH9022"],
+  "cement-grey-series":  ["KS5004", "KS5007", "KS5005"],
+  "wood-grain-series":   ["CA162",  "CA164",  "CA126"],
+  "marble-series":       ["KS6007", "KS6004", "KS6011"],
+  "metal-series":        ["KW006",  "KW012",  "KW013"],
+  "fabric-series":       ["KS8005", "KS8006", "KS8002"],
+  "skin-touch-series":   ["KH9603", "KH9612", "KH9611"],
+  "leather-series":      ["KS7715", "KS7710", "KS7701"],
+  "accessories":         ["AS1541", "AS122",  "AS789"],
 };
 
-export const specificImageIndexByCode: any = {
-  
-  KH9615:0,
-  KH9603:1,
-  KS5005:2,
-  KS5007:1,
-  KH9025:2,
-  KH9022:2,
+export const specificImageIndexByCode: Record<string, number> = {
+  KH9615: 0,
+  KH9603: 1,
+  KS5005: 2,
+  KS5004: 2,
+  KS5007: 1,
+  KH9025: 2,
+  KH9022: 2,
   KS6007: 2,
   KS6004: 0,
   KS6011: 2,
-  CA126: 2,
+  CA126:  2,
   KS5002: 2,
-  KW013: 1,
+  KW013:  1,
   KS8005: 2,
   KS8002: 2,
   KS7701: 2,
-
 };
 export const sortProductsByCode = (products: PRODUCTS_TYPES[]): PRODUCTS_TYPES[] => {
   return products.sort((a, b) => {
