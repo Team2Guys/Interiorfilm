@@ -7,32 +7,41 @@ import ProductPage from "components/product/Product";
 import NotFound from "app/not-found";
 
 
-export async function generateMetadata({ searchParams }: { searchParams: Promise<{ category?: string }> }): Promise< Metadata | undefined> {
-  const { category } = await searchParams
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ category?: string }> }): Promise<Metadata | undefined> {
+  const { category } = await searchParams;
   const headersList = await headers();
-  const domain = headersList.get('x-forwarded-host') || headersList.get('host') || '';
-  const protocol = headersList.get('x-forwarded-proto') || 'https';
+  
+  // Get domain with fallback to production domain
+  const rawDomain = headersList.get('x-forwarded-host') || headersList.get('host') || 'interiorfilm.ae';
+  
+  // Force HTTPS for all environments
+  const protocol = 'https';
   const pathname = headersList.get('x-invoke-path') || '/';
-  const fullUrl = `${protocol}://${domain}${pathname}`;
-  const { category:paramsCategory } = await searchParams
-let Product =  await fetchCategoryMeta(paramsCategory?? "", true)
-if(!Product){
-NotFound()
-   return  
-}
+  
+  // Construct full URL with forced HTTPS
+  const fullUrl = `${protocol}://${rawDomain}${pathname}`;
+  console.log(fullUrl,"fullUrl")
+  const { category: paramsCategory } = await searchParams;
+  let Product = await fetchCategoryMeta(paramsCategory ?? "", true);
+  
+  if (!Product) {
+    NotFound();
+    return;
+  }
 
+  // Prepare metadata
   let ImageUrl = Product?.posterImageUrl?.imageUrl || "interiorfilm";
   let alt = Product?.Images_Alt_Text || "Interior films";
 
-  let NewImage = [
-    {
-      url: ImageUrl,
-      alt: alt
-    }
-  ];
-  let title = Product && Product.Meta_Title ? Product.Meta_Title : "Interior Films"
-  let description = Product && Product.Meta_Description ? Product.Meta_Description : "Welcome to Interior films"
-  let url = `${fullUrl}products?category=${category}`
+  let NewImage = [{
+    url: ImageUrl,
+    alt: alt
+  }];
+
+  let title = Product?.Meta_Title || "Interior Films";
+  let description = Product?.Meta_Description || "Welcome to Interior films";
+  let url = `${fullUrl}products?category=${category}`;
+  
   return {
     title: title,
     description: description,
@@ -43,7 +52,7 @@ NotFound()
       images: NewImage,
     },
     alternates: {
-      canonical: Product && Product.Canonical_Tag ? Product.Canonical_Tag : url,
+      canonical: Product?.Canonical_Tag || url,
     },
   }
 }

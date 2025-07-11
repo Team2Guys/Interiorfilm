@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Interior Film',
     description: 'Welcome to Interior Films',
-    url: '/privacy-policy',
+    url: 'https://interiorfilm.ae/privacy-policy',
     images: [
       {
         url: `${blacklogo.src}`,
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: '/privacy-policy',
+    canonical: 'https://interiorfilm.ae/privacy-policy',
   },
 };
 

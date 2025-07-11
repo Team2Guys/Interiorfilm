@@ -8,42 +8,42 @@ import { redirect } from 'next/navigation';
 type Props = {
   params: Promise<{ productname: string }>
 }
-export async function generateMetadata({ params }: Props,): Promise<Metadata> {
+
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { productname } = await params;
   const headersList = await headers();
-   const rawHost = headersList.get('x-forwarded-host') || headersList.get('host') || 'localhost:3000';
-  const isLocalhost = rawHost.includes('localhost');
-  const baseDomain = isLocalhost? `https://${rawHost}`: 'https://interiorfilm.ae';
-  const fullUrl = `${baseDomain}`;
-  console.log(fullUrl, "fullurl")
+  
+  // Get domain or fallback to production domain
+  const rawDomain = headersList.get('x-forwarded-host') || headersList.get('host');
+  const domain = rawDomain || 'interiorfilm.ae';
+  const protocol = 'https';
+  const pathname = headersList.get('x-invoke-path') || '/';
+  const fullUrl = `${protocol}://${domain}${pathname}`;
+  console.log(fullUrl, "fullurl");
   const productRequest = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`);
   const [productResponse] = await Promise.all([productRequest]);
-  const { products } = productResponse.data
-
-  let Product = products?.find((item: any) => generateSlug(item.name) == productname)
+  const { products } = productResponse.data;
+  let Product = products?.find((item: any) => generateSlug(item.name) == productname);
   if (!Product) {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`
     );
     const Allproducts = await response.json();
-    Product = Allproducts?.products?.find((item: any) => generateSlug(item.name) == productname)
-
+    Product = Allproducts?.products?.find((item: any) => generateSlug(item.name) == productname);
   }
-
-  console.log(Product, "Product")
-
   let ImageUrl = Product?.posterImageUrl?.imageUrl || "interiorfilm";
   let alt = Product?.Images_Alt_Text || "Interior films";
 
-  let NewImage = [
-    {
-      url: ImageUrl,
-      alt: alt
-    }
-  ];
-  let title = Product && Product.Meta_Title ? Product.Meta_Title : "Interior Films"
-  let description = Product && Product.Meta_Description ? Product.Meta_Description : "Welcome to Interior films"
-  let url = `${fullUrl}/product/${productname}`
+  let NewImage = [{
+    url: ImageUrl,
+    alt: alt
+  }];
+
+  let title = Product?.Meta_Title || "Interior Films";
+  let description = Product?.Meta_Description || "Welcome to Interior films";
+  let url = `https://${domain}/product/${productname}`;
+  
   return {
     title: title,
     description: description,
@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: Props,): Promise<Metadata> {
       images: NewImage,
     },
     alternates: {
-      canonical: Product && Product.Canonical_Tag ? Product.Canonical_Tag : url,
+      canonical: Product?.Canonical_Tag || url,
     },
   }
 }
