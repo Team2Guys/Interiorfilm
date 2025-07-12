@@ -72,8 +72,8 @@ export const categoryInitialValues: Category = {
 
 /* eslint-disable */
 export const generateSlug = (text: string) => {
-  return text
-    .toString()
+  if(!text) return ;
+  return text?.toString()
     .toLowerCase()
     .trim()
     .replace(/\s+/g, '-')
@@ -297,8 +297,6 @@ export const navarlink = [
   { ref: "about", title: "About Us" },
   { ref: "contact", title: "Contact Us" },
   { title: "FAQs", ref: "frequently-asked-questions" },
-
-
 ];
 export const footerlink = [
   { ref: "metal-series", title: "Metal Series" },

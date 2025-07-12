@@ -14,6 +14,7 @@ interface category {
     public_id: string;
     imageUrl: string;
   };
+    breadcum:string;
   _id: string;
   name: string;
   createdAt: string;
@@ -33,7 +34,7 @@ const ProductPage = ({ initialCategory, category, totalProducts }: { initialCate
   let categoryName = initialCategory || null;
   const dropdown = useRef<any>(null);
   const trigger = useRef<any>(null);
-  
+  console.log(category,"categorycategory")
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [initialCategory]);
@@ -65,8 +66,6 @@ const ProductPage = ({ initialCategory, category, totalProducts }: { initialCate
 
   const key = (initialCategory ?? "").trim().toLowerCase();
   const preferredSKUs = specificProductCodesByCategory[key] ?? [];
-
-  // choose the three mapped SKUs, or fall back to a random 3
   const picks =
     preferredSKUs.length > 0
       ? getSpecificProductImages(totalProducts, preferredSKUs)
@@ -88,7 +87,6 @@ const ProductPage = ({ initialCategory, category, totalProducts }: { initialCate
     setSortOption(value);
     colorName == value;
   };
-
   useEffect(() => {
 
     let filteredprod = filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
@@ -219,7 +217,7 @@ const getSpecificProductImages = (
   return (
     <>
       <Overlay
-        title={activeLink?.name || "Products"} 
+        title={category.breadcum ?? category.name} 
       />
       {initialCategory?.toLowerCase() !== "accessories" && (
         <div className="hidden md:grid grid-cols-3 mt-2 gap-6">
@@ -229,7 +227,7 @@ const getSpecificProductImages = (
             return (
               <Link
                 key={product.code}
-                href={`/product/${generateSlug(product.name)}`}
+                href={`/${categoryName}/${product.custom_url || generateSlug(product.name)}`}
                 className="w-full cursor-pointer relative h-[450px]"
               >
                 <Image

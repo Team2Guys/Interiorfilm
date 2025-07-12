@@ -1,16 +1,11 @@
-'use client';
+
 import SkeletonLoading from 'components/Skeleton-loading/SkeletonLoading';
 import Overlay from 'components/widgets/Overlay/Overlay';
 import { generateSlug } from 'data/Data';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { CategoriesType } from 'types/interfaces';
 const Category = ({ category }: { category: CategoriesType[] }) => {
-   const router = useRouter();
-   const handleNavigate = (item : CategoriesType) => {
-      router.push(`/products?category=${generateSlug(item.name)}`)
-   }
    return (
       <>
          {category.length < 1 ? new Array(6).fill(0).map((_ , index: number) => (
@@ -29,7 +24,7 @@ const Category = ({ category }: { category: CategoriesType[] }) => {
                <Overlay title='Categories' bodyText='Is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, ' />
                <div className='w-full my-10 md:mt-20 px-2 md:px-8 grid grid-cols-1 gap-15 lg:grid-cols-3 md:grid-cols-2 '>
                   {category.map((item: any, index) => (
-                     <div onClick={() => handleNavigate(item)} key={index} className='group w-full space-4 cursor-pointer '>
+                     <Link href={`/${item.custom_url ?? generateSlug(item.name)}`} key={index} className='group w-full space-4 cursor-pointer '>
                         <div className='relative'>
                            <Image
                               src={item.posterImageUrl.imageUrl}
@@ -39,14 +34,14 @@ const Category = ({ category }: { category: CategoriesType[] }) => {
                               height={1000}
                            />
                            <div className='hidden group-hover:block cursor-point absolute bg-white bottom-4 left-1/2 transform -translate-x-1/2 z-10 text-center py-1 px-4'>
-                              <Link className='text-black' href={`/products?category=${generateSlug(item.name)}`}>VIEW ALL</Link>
+                              <Link className='text-black' href={`/${generateSlug(item.name)}`}>VIEW ALL</Link>
                            </div>
                         </div>
                         <div className='flex items-center flex-col gap-2 mt-3'>
                            <h3 className='group-hover:text-primary uppercase font-poppins font-bold text-title-xsm'>{item.name}</h3>
                            <p className='text-12 xsm:text-14 lg:text-base text-center'>{item.description}</p>
                         </div>
-                     </div>
+                     </Link>
                   ))}
 
                </div>

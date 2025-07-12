@@ -145,7 +145,7 @@ interface PRODUCTS_TYPES {
   description?: string;
   salePrice?: number;
   purchasePrice?: number;
-  category?: string; 
+  category?: any; 
   imageUrl?: IMAGE_INTERFACE[];
   discountPrice?: any;
   colors?: Color[];
@@ -167,6 +167,7 @@ interface PRODUCTS_TYPES {
   updatedAt?: any;
   code?:string;
   categoryName?: string;
+  custom_url?:string
 }
 
 export default PRODUCTS_TYPES;

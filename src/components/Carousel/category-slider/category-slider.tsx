@@ -81,7 +81,7 @@ const CategorySlider = ({ categories }: { categories: any[] }) => {
                 <CategoryCard
                   name={category.name}
                   posterImageUrl={category.posterImageUrl.imageUrl}
-                  categoryId={generateSlug(category.name)}
+                  categoryId={generateSlug(category?.custom_url || category?.name ) || ""}
                   nameClass={category.name === 'Accessories' ? 'text-black' : 'text-white'}
                 />
               </SwiperSlide>

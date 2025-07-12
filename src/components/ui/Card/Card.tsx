@@ -47,7 +47,6 @@ const isHomePage = pathname === "/";
       setIsLoading(false);
     }, 100);
   };
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -128,6 +127,7 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
         imageUrl: product.posterImageUrl?.imageUrl,
         totalStockQuantity: product.totalStockQuantity,
         discountPrice: product.discountPrice,
+        custom_url: product.custom_url || generateSlug(product.name),
         length: 1,
         count: 1,
         totalPrice: product.discountPrice
@@ -191,6 +191,7 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
         imageUrl: product.posterImageUrl?.imageUrl,
         totalStockQuantity: product.totalStockQuantity,
         discountPrice: product.discountPrice,
+        custom_url: product.custom_url || generateSlug(product.name),
         count: 1,
         length: 1,
         categoryName: categoryName,
@@ -210,6 +211,7 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
 
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
+    console.log(product, "product")
     return (
       <div className={`group mb-5 flex flex-col justify-between min-h-[246px] xsm:min-h-0 lg:min-h-[440px] xl:min-h-[490px] 2xl:min-h-0 ${cardClass}`} key={index}>
         <div
@@ -272,7 +274,7 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
                 Quick View
               </button>
             </div>
-            <Link href={`/product/${generateSlug(product.name)}`}>
+            <Link href={`/${categoryName}/${product.custom_url ?? generateSlug(product.name)}`}>
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
               <>
                 <Image

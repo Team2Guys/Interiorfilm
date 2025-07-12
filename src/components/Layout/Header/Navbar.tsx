@@ -30,8 +30,6 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
- const [currentCategory, setCurrentCategory] = useState<string | null>(null);
-  const [activeLink, setActiveLink] = useState<string>('');
   const searchInputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
@@ -46,38 +44,6 @@ const Navbar = () => {
 
   const stopAutoCloseTimer = () => {
     if (drawerTimerRef.current) clearTimeout(drawerTimerRef.current);
-  };
-  
- const getUrlParams = () => {
-    if (typeof window === 'undefined') return {};
-    const search = window.location.search;
-    const params = new URLSearchParams(search);
-    return {
-      category: params.get('category')
-    };
-  };
-
-  // Update active link when URL changes
-  useEffect(() => {
-    const { category } = getUrlParams();
-    setCurrentCategory(category ?? null);
-
-    if (pathname === "/") {
-      setActiveLink("/");
-    } else if (pathname === "/products") {
-      setActiveLink(category ? `/products?category=${category}` : "/products");
-    } else {
-      setActiveLink(pathname);
-    }
-  }, [pathname]);
-
-  // Handle link clicks to force update active state
-  const handleLinkClick = (slug: string, ref: string) => {
-    setActiveLink(slug);
-    // For series links, also update current category
-    if (slug.startsWith('/products?category=')) {
-      setCurrentCategory(ref);
-    }
   };
 
   const showModal = () => setIsModalOpen(true);
@@ -326,31 +292,27 @@ useEffect(() => {
                 }
                 content={
                   <>
-                    <ul className="space-y-4 flex flex-col " >
-                      {navarlink.map((navItem, index) => {
-                          const isSeriesLink = navItem.title.includes("Series");
-                const slug = isSeriesLink 
-                  ? `/products?category=${navItem.ref}`
-                  : `/${navItem.ref || ''}`;
-
-                // Precise active state comparison
-                const isActive = isSeriesLink
-                  ? currentCategory === navItem.ref
-                  : activeLink === slug || pathname === `/${navItem.ref}`;
-
-                        return (
-                          <div onClick={onClose} key={index}>
-                            <Link
-                              className={`font-semibold text-16 text-black hover:text-black capitalize w-fit ${isActive ? "link-active" : "link-underline"
-                                }`} onClick={() => handleLinkClick(slug, navItem.ref)}
-                              href={slug}
-                            >
-                              {navItem.title.replace("Series", "")}
-                            </Link>
-                          </div>
-                        );
-                      })}
-                    </ul>
+                     <ul className="flex flex-col space-y-4">
+                  {navarlink.map(({ ref, title }) => {
+                    const slug = ref ? `/${ref}` : "/";
+  const isActive = pathname === slug;
+                    return (
+                      <li key={ref} onClick={onClose}>
+                        <Link
+                          href={slug}
+                          onClick={onClose}
+                          className={`font-semibold text-[16px] capitalize hover:text-black ${
+                            isActive
+                              ? "link-active"
+                              : "link-underline"
+                          }`}
+                        >
+                          {title.replace("Series", "")}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
                   </>
                 }
               />
@@ -360,35 +322,28 @@ useEffect(() => {
 
         <div>
           <Container
-            className={`hidden lg:flex  lg:justify-between uppercase text-11 xl:text-13 py-3  ${isHomePage
+            className={`hidden lg:flex  lg:justify-between text-11 xl:text-14 pt-3 pb-2  ${isHomePage
               ? isScrolled
                 ? "bg-white text-black"
                 : "bg-white text-black"
               : "bg-white text-black"
               }`}
           >
-            {navarlink.map((navItem, index) => {
-               const isSeriesLink = navItem.title.includes("Series");
-                const slug = isSeriesLink 
-                  ? `/products?category=${navItem.ref}`
-                  : `/${navItem.ref || ''}`;
-
-                // Precise active state comparison
-                const isActive = isSeriesLink
-                  ? currentCategory === navItem.ref
-                  : activeLink === slug || pathname === `/${navItem.ref}`;
-
-              return (
-                <Link
-                  className={`2xl:leading-7 2xl:tracking-[20%] ${isActive ? "link-active" : "link-underline"
-                    }`}
-                  key={index}
-                  href={slug} onClick={() => handleLinkClick(slug, navItem.ref)}
-                >
-                  {navItem.title.replace("Series", "")}
-                </Link>
-              );
-            })}
+             {navarlink.map(({ ref, title }) => {
+            const slug = ref ? `/${ref}` : "/";
+              const isActive = pathname === slug;
+            return (
+              <Link
+                key={ref}
+                href={slug}
+                className={`2xl:leading-6 capitalize ${
+                  isActive ? "link-active" : "link-underline"
+                }`}
+              >
+                {title.replace("Series", "")}
+              </Link>
+            );
+          })}
           </Container>
         </div>
       </nav>
