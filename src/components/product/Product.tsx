@@ -33,8 +33,10 @@ const ProductPage = ({ initialCategory, category, totalProducts }: { initialCate
   let categoryName = initialCategory || null;
   const dropdown = useRef<any>(null);
   const trigger = useRef<any>(null);
-
-  console.log(initialCategory, "categoryData", totalProducts)
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [initialCategory]);
 
   const Get_colors_handler = (products: any) => {
     let uniqcolorArray: string[] = [];

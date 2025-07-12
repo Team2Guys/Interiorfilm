@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import { Providers } from "./Providers";
 import "../css/style.css";
 import { GoogleTagManager } from '@next/third-parties/google';
+import ScrollToTop from 'components/ScrollToTop';
 const font = Montserrat({
   weight: '500',
   subsets: ['latin'],
@@ -130,6 +131,7 @@ export default function RootLayout({
             height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
           <PathnameWrapper>
             {children}
+            <ScrollToTop />
             <ToastContainer />
           </PathnameWrapper>
         </body>
