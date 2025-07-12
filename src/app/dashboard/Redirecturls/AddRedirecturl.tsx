@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import showToast from "components/Toaster/Toaster";
 import { RedirectUrls } from "types/interfaces";
+import revalidateTagHanlder from "components/serverAction/ServerAction";
 
 interface IVIEWREDIRECTURLS {
   setRedirectUrls: React.Dispatch<React.SetStateAction<RedirectUrls | undefined>>;
@@ -57,7 +58,7 @@ const handleSubmit = async (
     });
 
     if (!res.ok) throw new Error(`Failed to ${isUpdate ? "update" : "create"}`);
-
+    await revalidateTagHanlder("Redirecturl");
     showToast("success", `Redirect URL ${isUpdate ? "updated" : "created"} successfully!`);
     resetForm();
     setRedirectUrls(undefined);

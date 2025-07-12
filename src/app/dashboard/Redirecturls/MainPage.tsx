@@ -10,7 +10,7 @@ function MainPage({ Redirecturls }: { Redirecturls: RedirectUrls[] }) {
     const [RedirectUrls, setRedirectUrls] = useState<RedirectUrls | undefined>();
     const [selecteMenu, setselecteMenu] = useState<string>("All RedirectUrls");
 
-console.log("RedirecturlsRedirecturls",RedirectUrls)
+console.log(Redirecturls,"RedirecturlsRedirecturls",RedirectUrls)
 
     return (
 
