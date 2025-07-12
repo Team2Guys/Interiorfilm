@@ -167,6 +167,7 @@ interface PRODUCTS_TYPES {
   updatedAt?: any;
   code?:string;
   categoryName?: string;
+  custom_url?:string
 }
 
 export default PRODUCTS_TYPES;

@@ -8,7 +8,6 @@ import { message, Modal } from "antd";
 import Button from "../Button/Button";
 import PRODUCTS_TYPES from "types/interfaces";
 import Link from "next/link";
-import { generateSlug } from "data/Data";
 import { FiMinus, FiPlus } from "react-icons/fi";
 
 interface TableProps {
@@ -291,7 +290,7 @@ const decrement = (index: number) => {
                 >
                   <Link
                                  key={index}
-                    href={`/product/${generateSlug(product.name)}`}
+                    href={`/${product.categoryName}/${product.custom_url}`}
                     className="w-fit flex gap-1"
                   >
                     <Image

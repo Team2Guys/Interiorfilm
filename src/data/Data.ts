@@ -297,8 +297,6 @@ export const navarlink = [
   { ref: "about", title: "About Us" },
   { ref: "contact", title: "Contact Us" },
   { title: "FAQs", ref: "frequently-asked-questions" },
-
-
 ];
 export const footerlink = [
   { ref: "metal-series", title: "Metal Series" },

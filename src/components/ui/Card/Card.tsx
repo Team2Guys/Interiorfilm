@@ -128,6 +128,7 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
         imageUrl: product.posterImageUrl?.imageUrl,
         totalStockQuantity: product.totalStockQuantity,
         discountPrice: product.discountPrice,
+        custom_url: product.custom_url || generateSlug(product.name),
         length: 1,
         count: 1,
         totalPrice: product.discountPrice
@@ -191,6 +192,7 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
         imageUrl: product.posterImageUrl?.imageUrl,
         totalStockQuantity: product.totalStockQuantity,
         discountPrice: product.discountPrice,
+        custom_url: product.custom_url || generateSlug(product.name),
         count: 1,
         length: 1,
         categoryName: categoryName,
@@ -272,7 +274,7 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
                 Quick View
               </button>
             </div>
-            <Link href={`/product/${generateSlug(product.name)}`}>
+            <Link href={`/${categoryName}/${product.custom_url || generateSlug(product.name)}`}>
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
               <>
                 <Image
