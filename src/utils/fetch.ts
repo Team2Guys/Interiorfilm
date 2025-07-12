@@ -47,3 +47,23 @@ return data
     return null;
   }
 };
+
+export const fetchRedirectUrl = async () => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/general/getredirecturl`,
+      {
+        method: "GET",
+        next: { tags: ["Redirecturl"] },
+      }
+    );
+
+    const data = await response.json();
+    return data.redirecturls ?? [];
+  } catch (error) {
+    console.error("Error fetching redirect URLs:", error);
+    return null;
+  }
+};
+
+
