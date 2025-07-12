@@ -192,6 +192,8 @@ export default function ProductDetails({
     }
   }, [productDetail]);
 
+
+  console.log(productDetail, "productDetail")
   return (
     <div className="mt-10 mb-5 px-2 md:px-10  mx-auto xl:max-w-screen-3xl">
       <div className="flex flex-wrap lg:flex-nowrap gap-4  mt-2 p-2 ">

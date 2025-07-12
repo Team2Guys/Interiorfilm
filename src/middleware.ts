@@ -1,16 +1,16 @@
 // middleware.ts
-import { redirecPages } from 'data/redirect_pages';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { getSingleRedirectUrl } from 'utils/fetch';
 
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
     const { pathname, origin } = req.nextUrl;
-    
-    const redirectedProduct =  redirecPages.find((prod) => {
-        return prod.url === pathname.toLowerCase();
-    }); 
-    console.log(pathname, "splited", redirectedProduct)
+
+
+    let redirectedProduct = await getSingleRedirectUrl(pathname.replace(/^\/+|\/+$/g, ''))
+    console.log(redirectedProduct, "urls")
+ 
     if (redirectedProduct) {
         const redirectPath = redirectedProduct.redirectUrl == '/' ? '/' : redirectedProduct.redirectUrl;
         const absoluteUrl = new URL(redirectPath, origin);

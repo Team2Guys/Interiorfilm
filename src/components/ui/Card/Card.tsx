@@ -272,7 +272,7 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
                 Quick View
               </button>
             </div>
-            <Link href={`/product/${generateSlug(product.name)}`}>
+            <Link href={`/${categoryName}/${product.custom_url || generateSlug(product.name)}`}>
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
               <>
                 <Image

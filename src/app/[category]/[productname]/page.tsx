@@ -1,19 +1,24 @@
 import type { Metadata } from 'next'
-import Product from './Product';
 import axios from 'axios';
 import { headers } from "next/headers";
 import { generateSlug } from 'data/Data';
-import { redirect } from 'next/navigation';
+import { getSingleProduct } from 'utils/fetch';
+import { notFound } from 'next/navigation';
+import Container from "components/Layout/Container/Container";
+import Overlay from "components/widgets/Overlay/Overlay";
+import ProductSlider from "components/Carousel/ProductSlider/ProductSlider";
+import ProductDetails from "components/product_detail/ProductDetails";
+import Accordion from "components/widgets/Accordion";
 
 type Props = {
-  params: Promise<{ productname: string }>
+  params: Promise<{ productname: string, category: string }>
 }
 
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { productname } = await params;
   const headersList = await headers();
-  
+
   // Get domain or fallback to production domain
   const rawDomain = headersList.get('x-forwarded-host') || headersList.get('host');
   const domain = rawDomain || 'interiorfilm.ae';
@@ -43,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   let title = Product?.Meta_Title || "Interior Films";
   let description = Product?.Meta_Description || "Welcome to Interior films";
   let url = `https://${domain}/product/${productname}`;
-  
+
   return {
     title: title,
     description: description,
@@ -60,38 +65,44 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const Page = async ({ params }: { params: Promise<{ productname: string }> }) => {
-  const { productname } = await params;
-  const [categoryResponse, productResponse] = await Promise.all([
-    axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllcategories`),
-    await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAllproducts`),
-  ]);
-  if (productname && productResponse.data.products.length > 0) {
-    const foundProduct = productResponse.data.products.find(
-      (item: any) => generateSlug(item.name) === productname
-    );
+const Page = async ({ params }: Props) => {
+  const { productname, category } = await params;
+  let {product, products} = await getSingleProduct(productname, category)
 
-    if (foundProduct) {
-      const foundCategory = categoryResponse.data.find(
-        (cat: any) => cat._id === foundProduct.category
-      );
-      return (
-        <Product productDetail={foundProduct} products={productResponse.data.products} categoryName={foundCategory.name} />
-      )
-    }
-    if (foundProduct === undefined) {
-      const adsonProducts = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/addsOn_product/getAllproducts`);
-      const foundProductAdon = adsonProducts.data.products.find(
-        (item: any) => generateSlug(item.name) === productname
-      );
-      if (foundProductAdon) {
-        return (
-          <Product productsAdon={adsonProducts.data.products} products={productResponse.data.products} productDetail={foundProductAdon} categoryName='accessories' />
-        )
-      }
-      return redirect('/404')
-    }
-  }
+if(!product){
+  return notFound()
+}
+
+  return (
+   <>
+      <Overlay title="Shop" />
+
+          <ProductDetails
+            productDetail={product}
+            categoryName={category}
+            isAccessory={category === 'accessories'}
+          />
+
+      {product ? (
+        <>
+          <div className="block lg:hidden mt-5">
+            <Accordion />
+          </div>
+        </>
+      ) : null}
+
+      <Container className="mt-20">
+        <div className="flex justify-center items-center">
+          <p className="w-fit text-center text-lg border-b-2 border-primary md:text-3xl mb-5 uppercase tracking-[0.5rem]">
+            recommended Products</p>
+        </div>
+        <ProductSlider categoryName={category}  loading={false} products={products} />
+      </Container>
+    </>  )
+
+
+
+
 };
 
 export default Page;
