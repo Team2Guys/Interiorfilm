@@ -47,7 +47,6 @@ const isHomePage = pathname === "/";
       setIsLoading(false);
     }, 100);
   };
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -274,7 +273,7 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
                 Quick View
               </button>
             </div>
-            <Link href={`/${categoryName}/${product.custom_url || generateSlug(product.name)}`}>
+            <Link href={`/${categoryName}/${product.custom_url ?? generateSlug(product.name)}`}>
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
               <>
                 <Image
