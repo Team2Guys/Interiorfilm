@@ -14,9 +14,10 @@ import ProductSliderSkeleton from 'components/Skeleton-loading/ProductSliderSkel
 interface ProductSliderProps {
   products: PRODUCTS_TYPES[];
   loading?: boolean;
+  categoryName?: string;
 }
 
-const ProductSlider: React.FC<ProductSliderProps> = ({ products, loading }) => {
+const ProductSlider: React.FC<ProductSliderProps> = ({ products, loading,categoryName }) => {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<any>(null);
@@ -86,7 +87,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products, loading }) => {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
-                <Card ProductCard={[product]} slider={true} />
+                <Card categoryName={product.categoryName ?? categoryName} ProductCard={[product]} slider={true} />
               </SwiperSlide>
             ))}
           </Swiper>

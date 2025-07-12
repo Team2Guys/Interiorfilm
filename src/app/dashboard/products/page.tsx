@@ -39,6 +39,8 @@ const Products = () => {
     name: editProduct?.name,
     description: editProduct?.description,
     price: editProduct?.price,
+    breadcum: editProduct?.breadcum,
+    custom_url: editProduct?.custom_url,
     colors: editProduct?.colors,
     modelDetails: editProduct?.modelDetails,
     spacification: editProduct?.spacification,

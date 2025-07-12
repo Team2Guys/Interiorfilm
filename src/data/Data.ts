@@ -53,8 +53,8 @@ export const withoutVariation = [
 
 export const categoryValidationSchema = Yup.object({
   name: Yup.string().required('Required'),
-  description: Yup.string().required('required')
-
+  description: Yup.string().required('required'),
+  custom_url: Yup.string().required('required')
 });
 
 
@@ -64,6 +64,8 @@ export const categoryInitialValues: Category = {
   Meta_Title: "",
   Meta_Description: "",
   Canonical_Tag: "",
+  custom_url: "",
+  breadcum: ""
 };
 
 
@@ -88,6 +90,7 @@ export const AddProductvalidationSchema = Yup.object().shape({
   salePrice: Yup.number()
     .min(1, "Minimum sales price must be at least 1")
     .required('Required'),
+    custom_url: Yup.string().required('Required'),
   // purchasePrice: Yup.number()
   //   .min(1, "Must be at least 1")
   //   .required('Required'),
@@ -138,7 +141,8 @@ export const AddproductsinitialValues: FormValues = {
   URL: "",
   Canonical_Tag: "",
   Images_Alt_Text: "",
-
+ breadcum: "",
+ custom_url: "",
 };
 
 

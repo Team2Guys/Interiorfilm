@@ -36,7 +36,6 @@ const CategorySlider = ({ categories }: { categories: any[] }) => {
     }
   };
 
-
   return (
     <>
       {categories.length > 0 && (

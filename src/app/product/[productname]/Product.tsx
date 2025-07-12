@@ -50,7 +50,7 @@ const Product = ({ products, productDetail, categoryName, productsAdon }: { prod
           <p className="w-fit text-center text-lg border-b-2 border-primary md:text-3xl mb-5 uppercase tracking-[0.5rem]">
             recommended Products</p>
         </div>
-        <ProductSlider loading={productsLoading} products={filteredProducts} />
+        <ProductSlider categoryName={categoryName}  loading={productsLoading} products={filteredProducts} />
       </Container>
     </>
   );
