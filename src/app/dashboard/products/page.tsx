@@ -1,5 +1,4 @@
 'use client'
-
 import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
 import ViewProduct from "components/Dashboard/Tables/ViewProduct";
@@ -45,7 +44,8 @@ const Products = () => {
     modelDetails: editProduct?.modelDetails,
     spacification: editProduct?.spacification,
     discountPrice: editProduct?.discountPrice,
-    category: editProduct && editProduct?.category,
+    //@ts-ignore
+    category: editProduct && editProduct?.category?._id,
     sizes: editProduct && editProduct?.sizes,
     starRating: editProduct && editProduct.starRating,
     reviews: editProduct && editProduct.starRating,

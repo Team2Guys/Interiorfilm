@@ -99,7 +99,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
         posterImageUrl,
         imageUrl: imagesUrl,
         breadcum: values.breadcum,
-        custom_url:values.custom_url,
+        custom_url: values.custom_url,
         hoverImageUrl,
         createdAt,
         purchasePrice: 0
