@@ -212,6 +212,7 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
 
 
   const renderProduct = (product: PRODUCTS_TYPES, index: number) => {
+    console.log(product, "product")
     return (
       <div className={`group mb-5 flex flex-col justify-between min-h-[246px] xsm:min-h-0 lg:min-h-[440px] xl:min-h-[490px] 2xl:min-h-0 ${cardClass}`} key={index}>
         <div

@@ -72,8 +72,8 @@ export const categoryInitialValues: Category = {
 
 /* eslint-disable */
 export const generateSlug = (text: string) => {
-  return text
-    .toString()
+  if(!text) return ;
+  return text?.toString()
     .toLowerCase()
     .trim()
     .replace(/\s+/g, '-')

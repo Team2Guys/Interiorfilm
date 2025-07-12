@@ -24,7 +24,7 @@ const Category = ({ category }: { category: CategoriesType[] }) => {
                <Overlay title='Categories' bodyText='Is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, ' />
                <div className='w-full my-10 md:mt-20 px-2 md:px-8 grid grid-cols-1 gap-15 lg:grid-cols-3 md:grid-cols-2 '>
                   {category.map((item: any, index) => (
-                     <Link href={`/${generateSlug(item.name)}`} key={index} className='group w-full space-4 cursor-pointer '>
+                     <Link href={`/${item.custom_url ?? generateSlug(item.name)}`} key={index} className='group w-full space-4 cursor-pointer '>
                         <div className='relative'>
                            <Image
                               src={item.posterImageUrl.imageUrl}

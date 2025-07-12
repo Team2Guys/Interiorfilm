@@ -10,6 +10,7 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import PRODUCTS_TYPES from 'types/interfaces';
 import { RiArrowLeftSFill, RiArrowRightSFill } from 'react-icons/ri';
 import ProductSliderSkeleton from 'components/Skeleton-loading/ProductSliderSkeleton';
+import { generateSlug } from 'data/Data';
 
 interface ProductSliderProps {
   products: PRODUCTS_TYPES[];
@@ -87,7 +88,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products, loading,categor
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
-                <Card categoryName={product?.category?.name ?? categoryName} ProductCard={[product]} slider={true} />
+                <Card categoryName={product?.category?.custom_url || generateSlug(product?.category?.name || "")||categoryName} ProductCard={[product]} slider={true} />
               </SwiperSlide>
             ))}
           </Swiper>
