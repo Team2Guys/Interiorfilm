@@ -227,7 +227,7 @@ const getSpecificProductImages = (
             return (
               <Link
                 key={product.code}
-                href={`/product/${generateSlug(product.name)}`}
+                href={`/${categoryName}/${product.custom_url || generateSlug(product.name)}`}
                 className="w-full cursor-pointer relative h-[450px]"
               >
                 <Image
