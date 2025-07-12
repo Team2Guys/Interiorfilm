@@ -26,7 +26,7 @@ const SearchProduct = ({products}: {products: PRODUCTS_TYPES[]}) => {
   const [isFocused, setIsFocused] = useState(false);
   const route = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
-
+ console.log(products,"productsproducts")
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (
@@ -181,11 +181,7 @@ const SearchProduct = ({products}: {products: PRODUCTS_TYPES[]}) => {
                                   />
                                 )}
                                 <Link
-                                  href={{
-                                    pathname: `/product/${generateSlug(
-                                      product.name
-                                    )}`,
-                                  }}
+                                  href={`/${product.category.custom_url?? product.category.name}/${product.custom_url ?? generateSlug(product.name)}`}
                                   onClick={() => setIsFocused(false)}
                                   className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                                 >
