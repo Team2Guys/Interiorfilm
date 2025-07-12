@@ -16,7 +16,7 @@ export const fetchCategoryMeta = async (slug: string, meta?: boolean) => {
     }
 
     const data = await res.json();
-    return data.category; // assuming your controller returns { category: { ... } }
+    return data.category;
   } catch (error) {
     console.error('Error fetching category metadata:', error);
     return null;
@@ -101,3 +101,24 @@ export async function getSingleRedirectUrl(endpoint: string) {
     console.error('Fetch error:', error.message);
   }
 }
+
+
+export const fetchRedirectUrl = async () => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/general/getredirecturl`,
+      {
+        method: "GET",
+        next: { tags: ["Redirecturl"] },
+      }
+    );
+
+    const data = await response.json();
+    return data.redirecturls ?? [];
+  } catch (error) {
+    console.error("Error fetching redirect URLs:", error);
+    return null;
+  }
+};
+
+

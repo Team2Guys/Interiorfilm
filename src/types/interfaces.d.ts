@@ -260,3 +260,16 @@ export interface RECORDS {
   totalSales: string;
   totalRevenue: string;
 }
+export interface RedirectUrls {
+  updatedAt?: string
+  createdAt?: string;
+  url: string,
+  redirectUrl: string,
+  _id?: string,
+}
+
+
+export interface initialRedirectUrls extends Omit<RedirectUrls, "id"> {
+  redirectUrl?: string
+  url?: string,
+}

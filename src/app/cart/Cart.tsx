@@ -107,7 +107,7 @@ const Cart = ({products}: {products: PRODUCTS_TYPES[]}) => {
           <div className="flex flex-col justify-center items-center space-y-3">
             <p className="text-2xl">Your cart is empty.</p>
             <div>
-              <Link className="underline" href={"/products?category=view-all"}>
+              <Link className="underline" href={"/categories"}>
                 Continue Shopping
               </Link>
             </div>

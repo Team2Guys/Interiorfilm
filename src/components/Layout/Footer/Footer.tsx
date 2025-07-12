@@ -134,14 +134,11 @@ const Footer: React.FC = () => {
                   } md:max-h-none`}
               >
                 {footerlink.map((navItem, index) => {
-                  const slug = navItem.title.includes("Series")
-                    ? `/products?category=${navItem.ref}`
-                    : `/${navItem.ref}`;
                   return (
                     <li key={index}>
                       <Link
 
-                        href={slug}
+                        href={`/${navItem.ref}`}
                         className="hover:text-primary link-footer text-slate-400 cursor-pointer whitespace-nowrap text-base md:text-14 xl:text-base"
                       >
                         {navItem.title.replace("Series", "")}

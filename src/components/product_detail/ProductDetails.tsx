@@ -34,6 +34,7 @@ import EnviromentIcons from "./enviroment-icon";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import ProductSelect from "components/ui/Select/ProductSelect";
+import { formatCategoryName } from "utils/helperFunctions";
 interface productDetailsProps {
   productDetail: PRODUCTS_TYPES;
   categoryName?: string;
@@ -153,6 +154,7 @@ export default function ProductDetails({
         imageUrl: product.posterImageUrl?.imageUrl,
         discountPrice: product.discountPrice,
         totalStockQuantity: product.totalStockQuantity,
+        custom_url: product.custom_url || generateSlug(product.name),
         count: 1,
         length,
         totalPrice:
@@ -524,7 +526,7 @@ export default function ProductDetails({
               </div>
               <div className="flex items-center gap-2 text-black dark:text-white">
                 <p className="font-semibold text-12 md:text-16">Category: </p>
-                <Link href={`/products?category=${generateSlug(categoryName ? categoryName : "")}`} className="font-semibold hover:text-primary text-12 md:text-16">{categoryName}</Link>
+                <Link href={`/${generateSlug(categoryName ? categoryName : "")}`} className="font-semibold hover:text-primary text-12 md:text-16">{formatCategoryName(categoryName)}</Link>
               </div>
               <div>
                 <p className="text-14 md:text-16 font-normal">

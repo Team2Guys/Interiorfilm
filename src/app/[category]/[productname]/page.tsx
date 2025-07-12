@@ -14,12 +14,9 @@ type Props = {
   params: Promise<{ productname: string, category: string }>
 }
 
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { productname } = await params;
   const headersList = await headers();
-
-  // Get domain or fallback to production domain
   const rawDomain = headersList.get('x-forwarded-host') || headersList.get('host');
   const domain = rawDomain || 'interiorfilm.ae';
   const protocol = 'https';
@@ -74,7 +71,7 @@ if(!product){
 
   return (
    <>
-      <Overlay title="Shop" />
+      <Overlay title={product.breadcum ?? product.name} />
 
           <ProductDetails
             productDetail={product}
