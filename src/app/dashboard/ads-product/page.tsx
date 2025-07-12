@@ -53,7 +53,8 @@ const Products = () => {
     Meta_Title:editProduct &&  editProduct?.Meta_Title,
     Meta_Description:editProduct &&  editProduct?.Meta_Description,
     Canonical_Tag:editProduct &&  editProduct?.Canonical_Tag ,
-
+    breadcum: editProduct?.breadcum,
+    custom_url: editProduct?.custom_url,
 
   };  
 

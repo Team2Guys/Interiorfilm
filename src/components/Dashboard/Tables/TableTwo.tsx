@@ -32,7 +32,7 @@ const TableTwo = ({ setMenuType, seteditCategory, editCategory }: CategoryProps)
   const [colorMode, toggleColorMode] = useColorMode();
   console.log(toggleColorMode,editCategory,"toggleColorMode")
   const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
-
+ console.log(category,"categorycategory")
   const canAddCategory = loggedInUser && (loggedInUser.role == 'Admin' ? loggedInUser.canAddCategory : true)
   const canDeleteCategory = loggedInUser && (loggedInUser.role == 'Admin' ? loggedInUser.canDeleteCategory : true)
   const canEditCategory = loggedInUser && (loggedInUser.role == 'Admin' ? loggedInUser.canEditCategory : true)

@@ -23,7 +23,8 @@ interface editCategoryNameType {
   Meta_Description?: string
   Canonical_Tag?: string
   Meta_Title?: string
-
+  custom_url?: string
+  breadcum?: string
 }
 
 interface editCategoryProps {
@@ -37,7 +38,9 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
      description: editCategory.description,
      Meta_Title:editCategory.Meta_Title ,
      Canonical_Tag:editCategory.Canonical_Tag ,
-     Meta_Description:editCategory.Meta_Description 
+     Meta_Description:editCategory.Meta_Description,
+     custom_url:editCategory.custom_url, 
+     breadcum:editCategory.breadcum 
     
     } : null;
   let CategorImageUrl = editCategory && editCategory.posterImageUrl;
@@ -56,7 +59,12 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
       setloading(true);
       let posterImageUrl = posterimageUrl && posterimageUrl[0];
       if (!posterImageUrl) throw new Error("Please select relevant Images");
-      let newValue = { ...values, posterImageUrl };
+        let newValue = { 
+        ...values, 
+        posterImageUrl,
+        custom_url: values.custom_url || '',
+        breadcum: values.breadcum || '' 
+      };
 
       let updateFlag = editCategoryName ? true : false;
       let addProductUrl = updateFlag
@@ -167,7 +175,7 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
                           value={formik.values.name}
                           placeholder="Title"
                           className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
-                            ? "border-red-500"
+                            ? "border-red"
                             : ""
                             }`}
                         />
@@ -177,7 +185,48 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
                           </div>
                         ) : null}
                       </div>
-
+                      <div>
+                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                          BreadCum
+                        </label>
+                        <input
+                          type="text"
+                          name="breadcum"
+                          onChange={formik.handleChange}
+                          value={formik.values.breadcum}
+                          placeholder="breadcum"
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                            ? "border-red"
+                            : ""
+                            }`}
+                        />
+                        {formik.touched.breadcum && formik.errors.breadcum ? (
+                          <div className="text-red-500 text-sm">
+                            {formik.errors.breadcum}
+                          </div>
+                        ) : null}
+                      </div>
+                    <div>
+                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                          Custom Url
+                        </label>
+                        <input
+                          type="text"
+                          name="custom_url"
+                          onChange={formik.handleChange}
+                          value={formik.values.custom_url}
+                          placeholder="Enter custom url"
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                            ? "border-red"
+                            : ""
+                            }`}
+                        />
+                        {formik.touched.custom_url && formik.errors.custom_url ? (
+                          <div className="text-red text-sm">
+                            {formik.errors.custom_url}
+                          </div>
+                        ) : null}
+                      </div>
 
                       <div>
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white">
@@ -190,7 +239,7 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
                           value={formik.values.description}
                           placeholder="Description"
                           className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
-                            ? "border-red-500"
+                            ? "border-red"
                             : ""
                             }`}
                         />
@@ -217,7 +266,7 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
                             value={formik.values.Meta_Title}
                             placeholder="Meta Title"
                             className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
-                              ? "border-red-500"
+                              ? "border-red"
                               : ""
                               }`}
                           />
@@ -245,7 +294,7 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
                             value={formik.values.Canonical_Tag}
                             placeholder="Canonical Tag"
                             className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
-                              ? "border-red-500"
+                              ? "border-red"
                               : ""
                               }`}
 
@@ -273,7 +322,7 @@ const FormLayout = ({ seteditCategory, editCategory, setMenuType }: editCategory
                           placeholder="Meta Description"
                           className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.description &&
                             formik.errors.Meta_Description
-                            ? "border-red-500"
+                            ? "border-red"
                             : ""
                             }`}
                         />

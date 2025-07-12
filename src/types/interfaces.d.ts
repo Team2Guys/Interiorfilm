@@ -42,6 +42,8 @@ export interface USRPROPS {
     spacification: { specsDetails: string }[];
     discountPrice: string;
     category: string
+    custom_url?: string
+    breadcum?: string
   }
   
   export interface Category {
@@ -50,7 +52,8 @@ export interface USRPROPS {
     Meta_Description?: string
     Canonical_Tag?: string
     Meta_Title?: string
-  
+    custom_url?: string
+    breadcum?: string
   }
 
 /* eslint-disable */
@@ -104,6 +107,8 @@ export interface CategoriesType extends Category {}
    URL: string
    Canonical_Tag: string
    Images_Alt_Text: string
+   breadcum?: string
+   custom_url?: string
   // Og_title : string
   // Og_description: string
   // Og_Image: string
@@ -226,6 +231,8 @@ Og_title : string
 Og_description: string
 Og_Image: string
 OgUrl:string
+breadcum?: string
+custom_url?: string
 }
 
 export interface ITabbyList {
@@ -251,4 +258,17 @@ export interface RECORDS {
   totalProfit: string;
   totalSales: string;
   totalRevenue: string;
+}
+export interface RedirectUrls {
+  updatedAt?: string
+  createdAt?: string;
+  url: string,
+  redirectUrl: string,
+  _id?: string,
+}
+
+
+export interface initialRedirectUrls extends Omit<RedirectUrls, "id"> {
+  redirectUrl?: string
+  url?: string,
 }

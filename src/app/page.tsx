@@ -57,7 +57,7 @@ getCategorywihtCustomorizeField("name _id posterImageUrl"),
       <PreFooter />
       <SearchProduct products={combinedProducts} />
       <PDF />
-        <HomeFeature allProducts={mainProducts || []} />
+        <HomeFeature categories={categories} allProducts={mainProducts || []} />
       <Offer OffersData={offers} />
     </>
   );

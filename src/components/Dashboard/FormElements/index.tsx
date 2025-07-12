@@ -98,6 +98,8 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
         ...values,
         posterImageUrl,
         imageUrl: imagesUrl,
+        breadcum: values.breadcum,
+        custom_url:values.custom_url,
         hoverImageUrl,
         createdAt,
         purchasePrice: 0
@@ -284,7 +286,56 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                           </div>
                         ) : null}
                       </div>
-
+ <div>
+                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                          BreadCrumb
+                        </label>
+                        <input
+                          type="text"
+                          name="breadcum"
+                          onChange={formik.handleChange}
+                          value={formik.values.breadcum}
+                          placeholder="breadcum"
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                            ? "border-red"
+                            : ""
+                            }`}
+                        />
+                        {formik.touched.breadcum && formik.errors.breadcum ? (
+                          <div className="text-red text-sm">
+                            {
+                              formik.errors.breadcum as FormikErrors<
+                                FormValues["breadcum"]
+                              >
+                            }
+                          </div>
+                        ) : null}
+                      </div>
+                    <div>
+                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                          Custom Url
+                        </label>
+                        <input
+                          type="text"
+                          name="custom_url"
+                          onChange={formik.handleChange}
+                          value={formik.values.custom_url}
+                          placeholder="Enter custom url"
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                            ? "border-red"
+                            : ""
+                            }`}
+                        />
+                        {formik.touched.custom_url && formik.errors.custom_url ? (
+                         <div className="text-red text-sm">
+                            {
+                              formik.errors.custom_url as FormikErrors<
+                                FormValues["custom_url"]
+                              >
+                            }
+                          </div>
+                        ) : null}
+                      </div>
                       <div>
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                           Description{" "}
