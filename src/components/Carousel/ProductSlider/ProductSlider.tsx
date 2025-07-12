@@ -87,7 +87,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products, loading,categor
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
-                <Card categoryName={product.categoryName ?? categoryName} ProductCard={[product]} slider={true} />
+                <Card categoryName={product?.category?.name ?? categoryName} ProductCard={[product]} slider={true} />
               </SwiperSlide>
             ))}
           </Swiper>
