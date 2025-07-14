@@ -8,7 +8,6 @@ import { product} from "types/interfaces";
 import dynamic from 'next/dynamic';
 const AddAds = dynamic(() => import('components/AddAds/AddAds'));
 const AdsTable = dynamic(() => import('components/Dashboard/Tables/AdsTable'));
-
 const Products = () => {
   const [editProduct, setEditProduct] = useState<product | undefined>();
   const [products, setProducts] = useState<any[]>();

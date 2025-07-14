@@ -15,7 +15,7 @@ import SelectGroupTwo from "components/Dashboard/SelectGroup/SelectGroupTwo";
 import Imageupload from "components/ImageUpload/Imageupload";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
-import { dragImageSort, ImageRemoveHandler } from "utils/helperFunctions";
+import { handleFieldChange, handleImageDragSort, ImageRemoveHandler } from "utils/helperFunctions";
 import { FormValues, ADDPRODUCTFORMPROPS } from "types/interfaces";
 import Toaster from "components/Toaster/Toaster";
 import axios from "axios";
@@ -52,7 +52,7 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
   >(EditProductValue);
   const [imgError, setError] = useState<string | null | undefined>();
   const [Categories, setCategories] = useState<any[]>();
- const dragImage = useRef<number | null>(null);
+   const dragImage = useRef<number | null>(null);
    const draggedOverImage = useRef<number | null>(null);
 
   console.log(setIsOptionSelected,"Aylo.....");
@@ -187,34 +187,8 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
     CategoryHandler();
   }, []);
 
-  const handleImageIndex = (index: number, newImageIndex: number) => {
-    const updatedImagesUrl = imagesUrl.map((item, i) =>
-      i === index ? { ...item, imageIndex: newImageIndex } : item
-    );
-    setImagesUrl(updatedImagesUrl);
-  };
-
-  const handlealtText = (index: number, newaltText: string) => {
-    const updatedImagesUrl = imagesUrl.map((item, i) =>
-      i === index ? { ...item, altText: newaltText } : item
-    );
-    setImagesUrl(updatedImagesUrl);
-  };
-
-  const handlealtTextposterimageUrl = (index: number, newaltText: string) => {
-    //@ts-expect-error
-    const updatedImagesUrl = posterimageUrl.map((item, i) =>
-      i === index ? { ...item, altText: newaltText } : item
-    );
-    setposterimageUrl(updatedImagesUrl);
-  };
-
-  const handleSort = () => {
-  const sortedImages = dragImageSort(imagesUrl, dragImage.current, draggedOverImage.current);
-  setImagesUrl(sortedImages);
-};
-
-
+   const handleSort = () =>handleImageDragSort(imagesUrl,dragImage.current,draggedOverImage.current,setImagesUrl);
+   
   return (
     <>
       <p
@@ -283,10 +257,7 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
                                     name="altText"
                                     value={item.altText}
                                     onChange={(e) =>
-                                      handlealtTextposterimageUrl(
-                                        index,
-                                        String(e.target.value)
-                                      )
+                                     handleFieldChange(index,'altText', e.target.value,posterimageUrl,setposterimageUrl)
                                     }
                                   />
                                 </>
@@ -825,13 +796,12 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
                         {imagesUrl.map((item: any, index) => {
                           return (
-                            <div className="cursor-pointer" key={index} 
-                              draggable
+                            <div key={index} 
+                            draggable
                               onDragStart={() => (dragImage.current = index)}
                               onDragEnter={() => (draggedOverImage.current = index)}
                               onDragEnd={handleSort}
-                              onDragOver={(e) => e.preventDefault()}
-                              >
+                              onDragOver={(e) => e.preventDefault()}>
                             <div
                               className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
                               
@@ -861,21 +831,18 @@ const AddAds: React.FC<ADDPRODUCTFORMPROPS> = ({
                                 </div>
 
                                 <input
-                                  type="number"
+                                  type="text"
                                   placeholder="Add Image Index"
                                   className=" rounded-b-md p-2 text-sm focus:outline-none w-full "
                                   value={item.imageIndex}
                                   onChange={(e) =>
-                                    handleImageIndex(
-                                      index,
-                                      Number(e.target.value)
-                                    )
+                                   handleFieldChange(index,'imageIndex', e.target.value,imagesUrl,setImagesUrl)
                                   }
                                 />
                               </div>
                             </div>
                             <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText}  onChange={(e) =>
-                              handlealtText(index, String(e.target.value))
+                              handleFieldChange(index,'altText', e.target.value,imagesUrl,setImagesUrl)
                             }/>
                             </div>
 
