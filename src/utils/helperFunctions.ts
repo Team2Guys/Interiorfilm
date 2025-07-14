@@ -81,3 +81,18 @@ export const DateFormatHandler = (input: Date | string) => {
     hour12: true
   }).format(parsedDate).toUpperCase();
 };
+
+export function dragImageSort<T>(
+  list: T[],
+  dragIndex: number | null,
+  hoverIndex: number | null
+): T[] {
+  if (dragIndex === null || hoverIndex === null || dragIndex === hoverIndex) return list;
+
+  const updatedList = [...list];
+  const temp = updatedList[dragIndex];
+  updatedList[dragIndex] = updatedList[hoverIndex];
+  updatedList[hoverIndex] = temp;
+
+  return updatedList;
+}

@@ -18,14 +18,6 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>();
   const swiperContainerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState<number>(0);
-
-  const sortedThumbs = thumbs?.slice().sort((a, b) => {
-    const indexA = a.imageIndex ?? Number.MAX_SAFE_INTEGER;
-    const indexB = b.imageIndex ?? Number.MAX_SAFE_INTEGER;
-    return indexA - indexB;
-  });
-
-
   const handleSlideClick = (index: number) => {
     setActiveIndex(index);
   };
@@ -48,8 +40,8 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
                   modules={[ Navigation, Thumbs]}
                   className="bg-contain bg-white column-swipper"
                 >
-                  {sortedThumbs &&
-                    sortedThumbs.map((array, index) => (
+                  {thumbs &&
+                    thumbs.map((array, index) => (
                       <SwiperSlide
                         key={array.imageIndex ?? index}
                         className={`w-full h-full column-swiper-slider custom-scrollbar mt-3 md:mt-0`}
@@ -87,8 +79,8 @@ const Thumbnail: React.FC<ThumbProps> = ({ thumbs }) => {
                   setActiveIndex(realIndex);
                 }}
               >
-                {sortedThumbs &&
-                  sortedThumbs.map((array, index) => (
+                {thumbs &&
+                  thumbs.map((array, index) => (
                     <SwiperSlide key={index}>
                       <SideBySideMagnifier
                         imageSrc={array.imageUrl}

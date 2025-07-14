@@ -1,13 +1,14 @@
+import React from 'react'
+import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import Container from 'components/Layout/Container/Container'
 import Overlay from 'components/widgets/Overlay/Overlay'
 import Image from 'next/image'
-import React from 'react'
 import about from "../../../public/images/about.png"
-import Offer from 'components/widgets/Offer/Offer'
 import { offers } from 'data/sideMenuData'
 import { Metadata } from 'next'
-import Link from 'next/link'
 import blacklogo from "../../../public/images/logoblack.png";
+const Offer = dynamic(() => import('components/widgets/Offer/Offer'));
 
 
 export const metadata: Metadata = {

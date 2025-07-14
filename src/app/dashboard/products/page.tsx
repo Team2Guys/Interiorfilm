@@ -1,11 +1,12 @@
 'use client'
 import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
-import ViewProduct from "components/Dashboard/Tables/ViewProduct";
 import ProtectedRoute from "hooks/AuthHookAdmin";
 import { useEffect, useState } from "react";
 import { product} from "types/interfaces";
-import FormElements from "components/Dashboard/FormElements";
+import dynamic from "next/dynamic";
+const ViewProduct = dynamic(() => import('components/Dashboard/Tables/ViewProduct'));
+const FormElements = dynamic(() => import('components/Dashboard/FormElements'));
 
 const Products = () => {
   const [editProduct, setEditProduct] = useState<product | undefined>();

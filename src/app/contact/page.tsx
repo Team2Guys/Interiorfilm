@@ -1,6 +1,8 @@
+import React from "react";
 import { Metadata } from "next";
-import ContactUs from "./ContactUs";
+import dynamic from "next/dynamic";
 import blacklogo from "../../../public/images/logoblack.png";
+const ContactUs = dynamic(() => import('./ContactUs'));
 
 export const metadata: Metadata = {
   title: 'Contact Us | Interior Film',
@@ -23,11 +25,8 @@ export const metadata: Metadata = {
 };
 
 const Contact = () => {
-
-
   return (
     <ContactUs />
   );
 };
-
 export default Contact;
