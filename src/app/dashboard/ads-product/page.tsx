@@ -5,8 +5,9 @@ import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
 import ProtectedRoute from "hooks/AuthHookAdmin";
 import { useEffect, useState } from "react";
 import { product} from "types/interfaces";
-import AdsTable from "components/Dashboard/Tables/AdsTable";
-import AddAds from "components/AddAds/AddAds";
+import dynamic from 'next/dynamic';
+const AddAds = dynamic(() => import('components/AddAds/AddAds'));
+const AdsTable = dynamic(() => import('components/Dashboard/Tables/AdsTable'));
 
 const Products = () => {
   const [editProduct, setEditProduct] = useState<product | undefined>();

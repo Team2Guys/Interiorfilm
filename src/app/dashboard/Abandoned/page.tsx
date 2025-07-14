@@ -2,8 +2,8 @@
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb';
 import DefaultLayout from 'components/Dashboard/Layouts/DefaultLayout';
 import React from 'react';
-import AbundantOrder from 'components/Dashboard/view-abundant/AbundantOrder';
-
+import dynamic from 'next/dynamic';
+const AbundantOrder = dynamic(() => import('components/Dashboard/view-abundant/AbundantOrder'));
 
 
 const Abundant  = () => {

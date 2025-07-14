@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import {
   Formik,
   FieldArray,
@@ -14,7 +14,7 @@ import SelectGroupTwo from "components/Dashboard/SelectGroup/SelectGroupTwo";
 import Imageupload from "components/ImageUpload/Imageupload";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
-import { ImageRemoveHandler } from "utils/helperFunctions";
+import { dragImageSort, ImageRemoveHandler } from "utils/helperFunctions";
 import { FormValues, ADDPRODUCTFORMPROPS } from "types/interfaces";
 import Toaster from "components/Toaster/Toaster";
 import axios from "axios";
@@ -41,7 +41,8 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
   const token = Cookies.get("2guysAdminToken");
   const superAdminToken = Cookies.get("superAdminToken");
   let finalToken = token ? token : superAdminToken;
-
+  const dragImage = useRef<number | null>(null);
+  const draggedOverImage = useRef<number | null>(null);
 
   const headers = {
     token: finalToken,
@@ -185,6 +186,13 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
     );
     setposterimageUrl(updatedImagesUrl);
   };
+
+const handleSort = () => {
+  const sortedImages = dragImageSort(imagesUrl, dragImage.current, draggedOverImage.current);
+  setImagesUrl(sortedImages);
+};
+
+
   return (
     <>
       <p
@@ -393,37 +401,6 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                             </div>
                           ) : null}
                         </div>
-
-                        {/* <div className="w-[33%]">
-                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                            Purchase Price
-                          </label>
-                          <input
-                            type="number"
-                            name="purchasePrice"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.purchasePrice}
-                            placeholder="Purchase Price"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.purchasePrice &&
-                              formik.errors.purchasePrice
-                              ? "border-red-500"
-                              : ""
-                              }`}
-                          />
-                          {formik.touched.purchasePrice &&
-                            formik.errors.purchasePrice ? (
-                            <div className="text-red text-sm">
-                              {
-                                formik.errors.purchasePrice as FormikErrors<
-                                  FormValues["purchasePrice"]
-                                >
-                              }
-                            </div>
-                          ) : null}
-                        </div> */}
-
-
 
                         <div className="w-[50%]">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white">
@@ -841,62 +818,6 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                     </div>
                   </div>
 
-
-                  {/* <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
-                    <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                      <h3 className="font-medium text-black dark:text-white">
-                      colors
-                      </h3>
-                    </div>
-                    <div className="flex flex-col gap-4 p-4">
-                      <FieldArray name="sizes">
-                        {({ push, remove }) => (
-                          <div className="flex flex-col gap-2">
-                            {formik.values.sizes.map(
-                              (spec: any, index: any) => (
-                                <div key={index} className="flex items-center">
-                                  <input
-                                    type="number"
-                                    name={`sizes[${index}].sizesDetails`}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={
-                                      formik.values.sizes[index].sizes
-                                    }
-                                    placeholder="Sizes"
-                                    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.spacification?.[index]
-                                      ?.sizesDetails &&
-                                      (
-                                        formik.errors
-                                          .sizes as FormikErrors<FormValues["sizes"]>
-                                      )?.[index]?.sizesDetails
-                                      ? "border-red-500"
-                                      : ""
-                                      }`}
-                                  />
-                                  <button
-                                    type="button"
-                                    onClick={() => remove(index)}
-                                    className="ml-2 text-red"
-                                  >
-                                    <RxCross2 className="text-red" size={25} />
-                                  </button>
-                                </div>
-                              )
-                            )}
-                            <button
-                              type="button"
-                              onClick={() => push({ sizesDetails: "" })}
-                              className="px-4 py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
-                            >
-                              Add Sizes
-                            </button>
-                          </div>
-                        )}
-                      </FieldArray>
-                    </div>
-                  </div> */}
-
                   <div className="rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                       <h3 className="font-medium text-black dark:text-white">
@@ -954,10 +875,17 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                     </div>
                     <Imageupload setImagesUrl={setImagesUrl} />
                     {imagesUrl && imagesUrl.length > 0 ? (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4" 
+                      >
                         {imagesUrl.map((item: any, index) => {
                           return (
-                            <div key={index}>
+                            <div className="cursor-pointer" key={index}
+                              draggable
+                              onDragStart={() => (dragImage.current = index)}
+                              onDragEnter={() => (draggedOverImage.current = index)}
+                              onDragEnd={handleSort}
+                              onDragOver={(e) => e.preventDefault()}
+                              >
 
                               <div
                                 className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"

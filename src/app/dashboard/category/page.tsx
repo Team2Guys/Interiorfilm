@@ -1,12 +1,13 @@
 'use client'
-
 import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
-import TableTwo from "components/Dashboard/Tables/TableTwo";
 import DefaultLayout from "components/Dashboard/Layouts/DefaultLayout";
 import ProtectedRoute from "hooks/AuthHookAdmin";
 import { useState } from "react";
-import Addcategory from "components/AddCategory/Addcategory";
 import {CategoriesType} from 'types/interfaces'
+import dynamic from "next/dynamic";
+const TableTwo = dynamic(() => import('components/Dashboard/Tables/TableTwo'));
+const Addcategory = dynamic(() => import('components/AddCategory/Addcategory'));
+
 
 const AddCategory = () => {
 
