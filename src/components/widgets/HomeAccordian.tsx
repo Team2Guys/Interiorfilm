@@ -4,18 +4,13 @@ import ProductCollapse from "components/ui/Collapse/productCollpase";
 import Container from "components/Layout/Container/Container";
 import Image from "next/image";
 import { AccordionsArray } from "data/sideMenuData";
-import Kitchen from "../../../public/images/testimonial/Kitchen.jpg"
-import Hotel from "../../../public/images/testimonial/Hotel.jpg"
-import Office from "../../../public/images/testimonial/Office.jpg"
-import Restaurant from "../../../public/images/testimonial/Restaurant.jpg"
-import Furniture from "../../../public/images/testimonial/Furniture.jpg"
 const accordionImages = [
-  Kitchen,
-  "/images/testimonial/bath.jpg",
-  Hotel,
-  Office,
-  Restaurant,
-  Furniture,
+  "/images/testimonial/Kitchen.webp",
+  "/images/testimonial/bath.webp",
+  '/images/testimonial/Hotel.webp',
+  '/images/testimonial/Office.webp',
+  '/images/testimonial/Restaurant.webp',
+  '/images/testimonial/Furniture.webp',
 ];
 
 
@@ -33,7 +28,8 @@ function HomeAccordian() {
             src={accordionImages[openIndex || 0]}
             alt="Accordian Image"
             className="object-cover !relative"
-            loading="lazy"
+            priority
+            loading="eager"
             fill
           />
         </div>
