@@ -14,7 +14,7 @@ import SelectGroupTwo from "components/Dashboard/SelectGroup/SelectGroupTwo";
 import Imageupload from "components/ImageUpload/Imageupload";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
-import { dragImageSort, ImageRemoveHandler } from "utils/helperFunctions";
+import { handleFieldChange, handleImageDragSort, ImageRemoveHandler } from "utils/helperFunctions";
 import { FormValues, ADDPRODUCTFORMPROPS } from "types/interfaces";
 import Toaster from "components/Toaster/Toaster";
 import axios from "axios";
@@ -160,39 +160,10 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
   }, []);
 
 
-  const handleImageIndex = (index: number, newImageIndex: number) => {
-    const updatedImagesUrl = imagesUrl.map((item, i) =>
-      i === index ? { ...item, imageIndex: newImageIndex } : item
-    );
-    setImagesUrl(updatedImagesUrl);
-  };
-  const handlealtText = (index: number, newaltText: string) => {
-    const updatedImagesUrl = imagesUrl.map((item, i) =>
-      i === index ? { ...item, altText: newaltText } : item
-    );
-    setImagesUrl(updatedImagesUrl);
-  };
-  const handlealtTextHover = (index: number, newaltText: string) => {
-    //@ts-expect-error
-    const updatedImagesUrl = hoverImage.map((item, i) =>
-      i === index ? { ...item, altText: newaltText } : item
-    );
-    sethoverImage(updatedImagesUrl);
-  };
-  const handlealtTextposterimageUrl = (index: number, newaltText: string) => {
-    //@ts-expect-error
-    const updatedImagesUrl = posterimageUrl.map((item, i) =>
-      i === index ? { ...item, altText: newaltText } : item
-    );
-    setposterimageUrl(updatedImagesUrl);
-  };
-
-const handleSort = () => {
-  const sortedImages = dragImageSort(imagesUrl, dragImage.current, draggedOverImage.current);
-  setImagesUrl(sortedImages);
-};
 
 
+
+const handleSort = () =>handleImageDragSort(imagesUrl,dragImage.current,draggedOverImage.current,setImagesUrl);
   return (
     <>
       <p
@@ -257,7 +228,7 @@ const handleSort = () => {
                                   </div>
 
                                   <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText} onChange={(e) =>
-                                    handlealtTextposterimageUrl(index, String(e.target.value))
+                                    handleFieldChange(index,'altText', String(e.target.value),posterimageUrl,setposterimageUrl)
                                   } />
 
                                 </>
@@ -856,7 +827,7 @@ const handleSort = () => {
                                 />
                               </div>
                               <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText} onChange={(e) =>
-                                handlealtTextHover(index, String(e.target.value))
+                                handleFieldChange(index,'altText', String(e.target.value),hoverImage,sethoverImage)
                               } />
                             </div>
                           );
@@ -916,12 +887,12 @@ const handleSort = () => {
                                   </div>
 
                                   <input
-                                    type="number"
+                                    type="text"
                                     placeholder="Add Image Index"
                                     className=" rounded-b-md p-2 text-sm focus:outline-none w-full "
                                     value={item.imageIndex}
                                     onChange={(e) =>
-                                      handleImageIndex(index, Number(e.target.value))
+                                      handleFieldChange(index,'imageIndex', String(e.target.value),imagesUrl,setImagesUrl)
                                     }
                                   />
 
@@ -929,7 +900,7 @@ const handleSort = () => {
 
                               </div>
                               <input className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none" placeholder="altText" type="text" name="altText" value={item.altText} onChange={(e) =>
-                                handlealtText(index, String(e.target.value))
+                                handleFieldChange(index,'altText', e.target.value,imagesUrl,setImagesUrl)
                               } />
 
                             </div>

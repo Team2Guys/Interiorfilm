@@ -1,5 +1,6 @@
 import axios, { AxiosResponse,AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
+import React from "react";
 
 
 const token = Cookies.get("2guysAdminToken");
@@ -87,12 +88,53 @@ export function dragImageSort<T>(
   dragIndex: number | null,
   hoverIndex: number | null
 ): T[] {
-  if (dragIndex === null || hoverIndex === null || dragIndex === hoverIndex) return list;
+  if (
+    dragIndex === null ||
+    hoverIndex === null ||
+    dragIndex === hoverIndex
+  ) {
+    return list;
+  }
 
-  const updatedList = [...list];
-  const temp = updatedList[dragIndex];
-  updatedList[dragIndex] = updatedList[hoverIndex];
-  updatedList[hoverIndex] = temp;
+  const updated = [...list];
+  const temp = updated[dragIndex];
+  updated[dragIndex] = updated[hoverIndex];
+  updated[hoverIndex] = temp;
 
-  return updatedList;
+  return updated;
+}
+
+
+export function handleImageDragSort<T>(
+  items: T[],
+  dragIndex: number | null,
+  hoverIndex: number | null,
+  setter?: (items: T[]) => void  // eslint-disable-line
+): T[] {
+  const sorted = dragImageSort(items, dragIndex, hoverIndex);
+
+  if (setter) {
+    setter(sorted);
+  }
+
+  return sorted;
+}
+
+export function handleFieldChange<T>(
+  index: number,
+  field: keyof T,
+  value: any,
+  arrayState: T[] | null | undefined,
+  setArrayState:
+    | React.Dispatch<React.SetStateAction<T[]>>
+    | React.Dispatch<React.SetStateAction<T[] | null>>
+    | React.Dispatch<React.SetStateAction<T[] | null | undefined>>
+): void {
+  if (!arrayState) return;
+
+  const updatedArray = arrayState.map((item, i) =>
+    i === index ? { ...item, [field]: value } : item
+  );
+
+  setArrayState(updatedArray as any); // safely assert for now
 }
