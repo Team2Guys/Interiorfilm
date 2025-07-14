@@ -181,7 +181,7 @@ const SearchProduct = ({products}: {products: PRODUCTS_TYPES[]}) => {
                                   />
                                 )}
                                 <Link
-                                  href={`/${product.category.custom_url?? product.category.name}/${product.custom_url ?? generateSlug(product.name)}`}
+                                  href={`/${product.category.custom_url?? generateSlug(product.category.name)}/${product.custom_url ?? generateSlug(product.name)}`}
                                   onClick={() => setIsFocused(false)}
                                   className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                                 >

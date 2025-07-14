@@ -35,7 +35,6 @@ const Navbar = () => {
   const pathname = usePathname();
   const { loggedInUser }: any = useAppSelector((state) => state.userSlice);
   const isHomePage = pathname === "/";
-
   const drawerTimerRef = useRef<Timer | null>(null);
   const startAutoCloseTimer = () => {
     if (drawerTimerRef.current) clearTimeout(drawerTimerRef.current);
@@ -197,7 +196,7 @@ useEffect(() => {
                           />
                         )}
                         <Link
-                          href={`/${product.category.custom_url?? product.category.name}/${product.custom_url ?? generateSlug(product.name)}`}
+                          href={`/${product.category.custom_url?? generateSlug(product.category.name)}/${product.custom_url ?? generateSlug(product.name)}`}
                           onClick={() => setIsFocused(false)}
                           className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                         >
@@ -293,7 +292,8 @@ useEffect(() => {
                      <ul className="flex flex-col space-y-4">
                   {navarlink.map(({ ref, title }) => {
                     const slug = ref ? `/${ref}` : "/";
-  const isActive = pathname === slug;
+                    const isHomeLink = slug === "/";
+                    const isActive = isHomeLink ? pathname === "/" : pathname.startsWith(slug);
                     return (
                       <li key={ref} onClick={onClose}>
                         <Link
@@ -328,8 +328,9 @@ useEffect(() => {
               }`}
           >
              {navarlink.map(({ ref, title }) => {
-            const slug = ref ? `/${ref}` : "/";
-              const isActive = pathname === slug;
+              const slug = ref ? `/${ref}` : "/";
+               const isHomeLink = slug === "/";
+                const isActive = isHomeLink ? pathname === "/" : pathname.startsWith(slug);
             return (
               <Link
                 key={ref}
