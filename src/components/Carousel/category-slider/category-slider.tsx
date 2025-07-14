@@ -74,10 +74,10 @@ const CategorySlider = ({ categories }: { categories: any[] }) => {
               },
             }}
             modules={[Autoplay, Navigation]}
-            className="mySwiper custom"
+            className="mySwiper"
           >
             {categories.map((category: any) => (
-              <SwiperSlide key={category._id}>
+              <SwiperSlide key={category._id} className='overflow-hidden'>
                 <CategoryCard
                   name={category.name}
                   posterImageUrl={category.posterImageUrl.imageUrl}

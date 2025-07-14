@@ -278,11 +278,10 @@ const displayCategoryName = useMemo(() => formatCategoryName(categoryName), [cat
             {product.posterImageUrl && product.posterImageUrl.imageUrl && (
               <>
                 <Image
-                 
-                  className="bg-contain  w-full "
+                  className="bg-contain w-full "
                   fill
                   fetchPriority="high"
-                  loading="lazy"
+                  priority
                   src={product.posterImageUrl.imageUrl}
                   alt={product.posterImageUrl.altText || product.name}
                 />

@@ -261,7 +261,7 @@ const config: Config = {
         'client': "url('/images/Clints.png')",
         'overlay': "url('/images/overlay.png')",
         'Offer': "url('/images/back.png')",
-        'search': "url('/images/Searchimage/main.png')",
+        'search': "url('/images/Searchimage/main.webp')",
       },
       content: {
         "icon-copy": 'url("../images/icon/icon-copy-alt.svg")',
