@@ -10,9 +10,9 @@ export const fetchCategoryMeta = async (slug: string, meta?: boolean) => {
       next: { tags: ['categories'] },
     });
 
-    if (!res.ok) {
-      throw new Error(`Failed to fetch category metadata: ${res.statusText}`);
-    }
+    // if (!res.ok) {
+    //   throw new Error(`Failed to fetch category metadata: ${res.statusText}`);
+    // }
 
     const data = await res.json();
     return data.category; // assuming your controller returns { category: { ... } }
