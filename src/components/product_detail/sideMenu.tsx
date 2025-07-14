@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { TextWithIconData } from 'data/sideMenuData';
 import showToast from 'components/Toaster/Toaster';
 import axios from 'axios';
+import { generateSlug } from 'data/Data';
 
 export interface Product {
   posterImageUrl: {
@@ -31,7 +32,10 @@ export interface Product {
   code: string;
   totalStockQuantity: number;
   variantStockQuantities: Array<any>;
-  length:number
+  length:number;
+  custom_url?:string;
+  categoryName?:string;
+  
 }
 interface SideMenuProps {
   setAdsonProducts: React.Dispatch<React.SetStateAction<Product[]>>;
@@ -80,6 +84,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ setAdsonProducts }) => {
         imageUrl: product.posterImageUrl?.imageUrl,
         discountPrice: product.discountPrice,
         totalStockQuantity: product.totalStockQuantity,
+        custom_url: product.custom_url || generateSlug(product.name),
         count: 1,
         length:product.length,
         totalPrice: Number((product.discountPrice || product.salePrice)),
@@ -87,6 +92,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ setAdsonProducts }) => {
         //@ts-expect-error
         sizes: product.sizes || [], 
         code: product.code,
+        categoryName: 'accessories',
       };
 
       let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
