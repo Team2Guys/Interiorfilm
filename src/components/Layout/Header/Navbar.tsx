@@ -148,6 +148,27 @@ useEffect(() => {
   [cartItems]
 );
 
+useEffect(() => {
+  function handleClickOutside(e: Event) {
+    const inputEl   = searchInputRef.current;
+    const panelEl   = dropdownRef.current;
+    if (
+      inputEl  && !inputEl.contains(e.target as Node) &&
+      panelEl  && !panelEl.contains(e.target as Node)
+    ) {
+      setIsFocused(false);
+    }
+  }
+
+  document.addEventListener("mousedown", handleClickOutside);
+  document.addEventListener("touchstart", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+    document.removeEventListener("touchstart", handleClickOutside);
+  };
+}, []);
+
   return (
     <>
       <TopNav />
@@ -196,7 +217,7 @@ useEffect(() => {
                           />
                         )}
                         <Link
-                          href={`/${product.category.custom_url?? generateSlug(product.category.name)}/${product.custom_url ?? generateSlug(product.name)}`}
+                          href={`/${product.category.custom_url ?? generateSlug(product.category.name) ?? 'accessories'}/${product.custom_url ?? generateSlug(product.name)}`}
                           onClick={() => setIsFocused(false)}
                           className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                         >
