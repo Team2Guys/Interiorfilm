@@ -2,9 +2,6 @@ export const socialLinks = [
   {href: "https://www.instagram.com/interiorfilmuae/", icon: "FaInstagram" },
   { href: "https://www.facebook.com/Interiorfilmuae", icon: "FaFacebook" },
   { href: "https://www.pinterest.com/interiorfilmuae/", icon: "FaPinterest" },
-  // { href: "", icon: "FaTiktok" },
-  // { href: "", icon: "FaYoutube" },
-  // { href: "", icon: "FaTwitter" },
   ];
   
 

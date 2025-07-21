@@ -145,27 +145,27 @@ useEffect(() => {
 }, [searchTerm, colorName, totalProducts]);
 
 
-  const sortProducts = (products: PRODUCTS_TYPES[]) => {
-    if (!products || products.length === 0) return [];
-    const getPrice = (product: PRODUCTS_TYPES) => product.salePrice ?? 0;
-
-    if (sortOption === "Low to High") {
-      return products.sort((a, b) => getPrice(a) - getPrice(b));
-    } else if (sortOption === "High to Low") {
-      return products.sort((a, b) => getPrice(b) - getPrice(a));
-    } else {
-      return sortProductsByCode(
-        products.sort((a, b) => {
-          const nameA = a.name.toUpperCase();
-          const nameB = b.name.toUpperCase();
-          return nameA.localeCompare(nameB, undefined, {
-            numeric: true,
-            sensitivity: "base",
-          });
-        })
-      );
-    }
-  };
+const sortProducts = (products: PRODUCTS_TYPES[]) => {
+  if (!products || products.length === 0) return [];
+  const getPrice = (product: PRODUCTS_TYPES) => product.salePrice ?? 0;
+  const productsCopy = [...products]; 
+  if (sortOption === "Low to High") {
+    return productsCopy.sort((a, b) => getPrice(a) - getPrice(b));
+  } else if (sortOption === "High to Low") {
+    return productsCopy.sort((a, b) => getPrice(b) - getPrice(a));
+  } else {
+    return sortProductsByCode(
+      productsCopy.sort((a, b) => {
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
+        return nameA.localeCompare(nameB, undefined, {
+          numeric: true,
+          sensitivity: "base",
+        });
+      })
+    );
+  }
+};
 
   useEffect(() => {
     const sortedProducts = sortProducts(filteredProductsByCategory);
