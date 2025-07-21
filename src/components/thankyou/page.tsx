@@ -59,21 +59,19 @@ const Thankyou = () => {
     merchant_order_id
   }
   const [payementDetails, setpayementDetails] = useState<PaymentQueryParams>(paymentObject)
-  console.log(setpayementDetails,"setpayementDetails")
+  console.log(setpayementDetails, "setpayementDetails")
 
   const dbFunctionHandler = async () => {
 
 
     try {
-      if (!id || !success || !amount_cents || !integration_id || !currency || !order_id || !pending || !is_3d_secure || !created_at || !merchant_order_id) {
-        throw new Error('Missing required fields in request body')
-      }
+
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/postPayement`, payementDetails,);
+
       if (successFlag) {
         localStorage.removeItem('cart')
       }
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/sales/postPayement`, payementDetails,);
-      console.log(response, "response")
     } catch (error) {
       console.log(error, "err")
     }
