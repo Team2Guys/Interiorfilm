@@ -78,7 +78,6 @@ const ProductPage = ({ initialCategory, category, totalProducts }: { initialCate
   };
 
   const handleColorChange = (value: string) => {
-    setSortOption(value);
     setColorName(colorName == value ? "" : value);
   };
 
@@ -87,57 +86,63 @@ const ProductPage = ({ initialCategory, category, totalProducts }: { initialCate
     colorName == value;
   };
 
-  useEffect(() => {
+useEffect(() => {
+  if (!searchTerm && !colorName) {
+    setFilteredProductsByCategory(totalProducts);
+    return;
+  }
 
-    let filteredprod = filteredProductsByCategory.filter((product: PRODUCTS_TYPES) => {
-      let Search = searchTerm.toLowerCase();
+  let filteredprod = totalProducts.filter((product: PRODUCTS_TYPES) => {
+    let Search = searchTerm.toLowerCase();
 
-      const nameMatch =
-        product.name.toLowerCase().includes(Search) ||
-        (product.description &&
-          product.description.toLowerCase().includes(Search)) ||
-        (product.salePrice &&
-          product.salePrice.toString().toLowerCase().includes(Search)) ||
-        (product.purchasePrice &&
-          product.purchasePrice.toString().toLowerCase().includes(Search)) ||
-        (product.category &&
-          product.category.toString().toLowerCase().includes(Search)) ||
-        product.discountPrice?.toString().toLowerCase().includes(Search) ||
-        (product.colors &&
-          product.colors.some((color: any) =>
-            color.colorName.toLowerCase().includes(Search)
-          )) ||
-        product.modelDetails.some(
-          (model: any) =>
-            model.name.toLowerCase().includes(Search) ||
-            model.detail.toLowerCase().includes(Search)
-        ) ||
-        (product.spacification &&
-          product.spacification.some((spec: any) =>
-            spec.specsDetails.toLowerCase().includes(Search)
-          )) ||
-        product.starRating?.toString().toLowerCase().includes(Search) ||
-        product.reviews?.toLowerCase().includes(Search) ||
-        product.code.toLowerCase().includes(Search) ||
-        product.totalStockQuantity
-          ?.toString()
-          .toLowerCase()
-          .includes(Search) ||
-        (product.sizes &&
-          product.sizes.some((size: any) =>
-            size.sizesDetails.toLowerCase().includes(Search)
-          ));
-      const colorMatch =
-        !colorName ||
-        (product.colors &&
-          product.colors.some((color: any) =>
-            color.colorName.toLowerCase() === colorName.toLowerCase()
-          ));
-      return nameMatch && colorMatch;
-    })
-    setFilteredProductsByCategory(filteredprod)
+    const nameMatch =
+      product.name.toLowerCase().includes(Search) ||
+      (product.description &&
+        product.description.toLowerCase().includes(Search)) ||
+      (product.salePrice &&
+        product.salePrice.toString().toLowerCase().includes(Search)) ||
+      (product.purchasePrice &&
+        product.purchasePrice.toString().toLowerCase().includes(Search)) ||
+      (product.category &&
+        product.category.toString().toLowerCase().includes(Search)) ||
+      product.discountPrice?.toString().toLowerCase().includes(Search) ||
+      (product.colors &&
+        product.colors.some((color: any) =>
+          color.colorName.toLowerCase().includes(Search)
+        )) ||
+      product.modelDetails?.some(
+        (model: any) =>
+          model.name.toLowerCase().includes(Search) ||
+          model.detail.toLowerCase().includes(Search)
+      ) ||
+      (product.spacification &&
+        product.spacification.some((spec: any) =>
+          spec.specsDetails.toLowerCase().includes(Search)
+        )) ||
+      product.starRating?.toString().toLowerCase().includes(Search) ||
+      product.reviews?.toLowerCase().includes(Search) ||
+      product.code.toLowerCase().includes(Search) ||
+      product.totalStockQuantity
+        ?.toString()
+        .toLowerCase()
+        .includes(Search) ||
+      (product.sizes &&
+        product.sizes.some((size: any) =>
+          size.sizesDetails.toLowerCase().includes(Search)
+        ));
 
-  }, [searchTerm])
+ const colorMatch =
+  !colorName ||
+  (product.colors &&
+    product.colors.some((color: any) =>
+      color.colorName?.toLowerCase() === colorName.toLowerCase()
+    ));
+
+    return nameMatch && colorMatch;
+  });
+
+  setFilteredProductsByCategory(filteredprod);
+}, [searchTerm, colorName, totalProducts]);
 
 
   const sortProducts = (products: PRODUCTS_TYPES[]) => {
@@ -309,7 +314,7 @@ const getSpecificProductImages = (
                               ? "border-primary"
                               : "border-gray"
                               } cursor-pointer`}
-                            onClick={() => handleColorChange(item.label)}
+                            onClick={() => handleColorChange(item.value)}
                             style={{ backgroundColor: `#${item.value}` }}
                             key={item.label}
                           />
