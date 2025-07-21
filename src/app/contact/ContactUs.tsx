@@ -5,7 +5,6 @@ import Container from "components/Layout/Container/Container";
 import Overlay from "components/widgets/Overlay/Overlay";
 import Link from "next/link";
 import React, { useState } from "react";
-import { FaFacebookSquare, FaInstagram, FaPinterest } from "react-icons/fa";
 import { FiMail, FiPhone } from "react-icons/fi";
 import { TfiLocationPin } from "react-icons/tfi";
 import { useFormik } from "formik";
@@ -13,6 +12,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import Toaster from "components/Toaster/Toaster";
 import Loader from "components/Loader/Loader";
+import { socialLinks } from "data/FooterData";
 
 const contact_us_Validation = Yup.object().shape({
   user_name: Yup.string()
@@ -131,24 +131,18 @@ const ContactUs = () => {
                 Follow Us
               </h3>
               <div className="flex gap-5 ">
+               {socialLinks.map((link, index) => (
                 <Link
+                  key={index}
+                  href={link.href}
                   target="_blank"
-                  href={"https://www.facebook.com/InteriorFilm.ae"}
+                  className=" link-footer"
                 >
-                  <FaFacebookSquare className="text-white" size={25} />
+                  {React.createElement(require("react-icons/fa")[link.icon], {
+                    className: "text-2xl link-footer",
+                  })}
                 </Link>
-                <Link
-                  target="_blank"
-                  href={"https://www.instagram.com/interiorfilm.ae/"}
-                >
-                  <FaInstagram className="text-white" size={25} />
-                </Link>
-                <Link
-                  target="_blank"
-                  href={"https://www.pinterest.com/interiorfilmuae/"}
-                >
-                  <FaPinterest className="text-white" size={25} />
-                </Link>
+              ))}
               </div>
             </div>
             <div>
