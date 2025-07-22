@@ -28,13 +28,8 @@ const ViewOrder = () => {
             (sum: number, product: Product) => sum + parseFloat(product.totalPrice.toString()),
             0
           );
-          const totalShipping = fetchedProducts.reduce(
-            (sum: number, product: Product) => {
-              const fee = parseFloat(product.shippment_Fee) || 0;
-              return sum + fee;
-            },
-            0
-          );
+          const shipping = fetchedProducts.find((item: Product) => item.shippment_Fee);
+          const totalShipping = Number(shipping.shippment_Fee);
 
           setTotal(totalAmount);
           setShippingFee(totalShipping);
