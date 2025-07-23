@@ -121,6 +121,7 @@ export default function RootLayout({
               `,
             }}
           />
+          <meta name="google-site-verification" content="U3UWHEaHFMmthAFYIMe_u0gQtTuiolqnAbsGeuuxkFk" />
     
     
 
