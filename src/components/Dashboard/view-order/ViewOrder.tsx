@@ -1,15 +1,20 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import { Modal, Table } from 'antd';
 import axios from 'axios';
 import Loader from 'components/Loader/Loader';
 import { LuView } from 'react-icons/lu';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
+import * as XLSX from 'xlsx';
+import { generateSlug } from 'data/Data';
+import { FiDownloadCloud } from 'react-icons/fi';
+
 
 const ViewOrder = () => {
   const [groupedOrders, setGroupedOrders] = useState<any[]>([]);
   const [filteredOrders, setFilteredOrders] = useState<any[]>([]);
+  const [exportData, setexportData] = useState<any[]>([]);
   const [orderLoading, setOrderLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState<any[]>([]);
@@ -62,9 +67,11 @@ const ViewOrder = () => {
       dataIndex: 'totalPrice',
       key: 'totalPrice',
       render: (text: any, record: any) => {
-        let shipmentFee = record.products[0]?.shippment_Fee;
-        let fee = shipmentFee ? (shipmentFee === 'Free' || shipmentFee === 'undefine' ? 0 : Number(shipmentFee)) : 0
+        let rawFee = record.products[0]?.shippment_Fee;
 
+        let fee =  (rawFee === 'Free' || rawFee === 'undefine' || rawFee === undefined || rawFee === null)
+          ? 0
+          : Number(rawFee) || 0;
         const transactionAmount = record.products.reduce((accum: number, curr: any) => { return accum += curr.totalPrice }, 0)
         return <span>{transactionAmount + fee}</span>;
       },
@@ -123,13 +130,13 @@ const ViewOrder = () => {
   };
 
   // Function to group orders by order ID and filter by product success
-  const groupOrders = (orders: any[]) => {
+  const groupOrders = (orders: any[], setexportData?: React.Dispatch<SetStateAction<any>>) => {
     const grouped: { [key: string]: any } = {};
 
     orders.forEach(order => {
       order.products.forEach((product: any) => {
         // Only process products with success: true
-        if (product.paymentStatus) {
+        if (setexportData ? true : product.paymentStatus) {
           const currentOrder = grouped[product.order_id];
 
           if (currentOrder) {
@@ -138,6 +145,14 @@ const ViewOrder = () => {
             currentOrder.totalPrice = currentOrder.totalPrice || product.totalPrice;
             currentOrder.transactionId = currentOrder.transactionId || product.transactionId;
           } else {
+                    let rawFee = order.products[0]?.shippment_Fee;
+
+        let fee =  (rawFee === 'Free' || rawFee === 'undefine' || rawFee === undefined || rawFee === null)
+          ? 0
+          : Number(rawFee) || 0;
+
+                  const transactionAmount = order.products.reduce((accum: number, curr: any) => { return accum += curr.totalPrice }, 0)
+
             grouped[product.order_id] = {
               order_id: product.order_id,
               usermail: order.usermail,
@@ -148,18 +163,22 @@ const ViewOrder = () => {
               date: order.date,
               paymentStatus: product.paymentStatus, // Initial value
               transactionId: product.transactionId, // Initial value
-              totalPrice: product.totalPrice, // Initial value
+              totalPrice: transactionAmount + fee, // Initial value
               products: [product],
             };
           }
         }
+
       });
     });
 
     const filteredGroupedOrders = Object.values(grouped)
       .filter(order => order.products.length > 0)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
+    if (setexportData) {
+      setexportData(filteredGroupedOrders)
+      return
+    }
     setGroupedOrders(filteredGroupedOrders);
     setFilteredOrders(filteredGroupedOrders);
   };
@@ -183,6 +202,7 @@ const ViewOrder = () => {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       });
       groupOrders(sortedOrders);
+      groupOrders(sortedOrders, setexportData);
       console.log(response.data, "ordersordersorders")
     } catch (error) {
       console.log('Error fetching data:', error);
@@ -214,6 +234,37 @@ const ViewOrder = () => {
 
   let shippingfree = selectedProducts[0]?.shippment_Fee;
 
+
+  console.log(groupedOrders, "groupedOrders", exportData)
+
+  const handleExport = () => {
+    // Flatten the data (convert nested product into single row or join important values)
+    const filtered_orders = exportData?.map((order) => ({
+      OrderID: order.order_id,
+      Email: order.usermail,
+      Name: `${order.first_name} ${order.last_name}`,
+      Address: order.userAddress,
+      Phone: order.phone_number,
+      Date: new Date(order.date).toLocaleString(),
+      PaymentStatus: order.paymentStatus ? 'Paid' : 'Unpaid',
+      TotalPrice: order.totalPrice,
+      ProductNames: order.products.map((p: any) => p.name + `(${p.code})`).join(', '),
+      Productslength: order.products.map((p: any) => p.length).join(', '),
+      ProductsIds: order.products.map((p: any) => p.id).join(', '),
+      ProductsUrls: order.products.map((p: any) => `https://interiorfilm.ae/product/${generateSlug(p.name)}` ).join(', '),
+      DiscountedPrice :order.products.map((p: any) => p.discountPrice).join(', '),
+      SellingPrice : order.products.map((p: any) => p.price).join(', '),
+      Delivery_Charges : order?.products[0].shippment_Fee,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(filtered_orders);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Orders-IF');
+    XLSX.writeFile(workbook, 'Orders-IF.xlsx');
+  };
+
+
+  console.log(exportData, "exportData")
   return (
     <div>
       {orderLoading ? (
@@ -231,7 +282,7 @@ const ViewOrder = () => {
               onChange={handleSearch}
             />
             <div>
-              <p>Orders</p>
+              <button className='flex items-center gap-2' onClick={handleExport}> Export Orders <FiDownloadCloud  className='text-primary'/></button>
             </div>
           </div>
           <Table
@@ -241,7 +292,7 @@ const ViewOrder = () => {
             pagination={false}
             rowKey="_id"
           />
-          <Modal title="Order Detail" visible={visible} onOk={handleOk} onCancel={handleCancel} footer={null}>
+          <Modal title="Order Detail" open={visible} onOk={handleOk} onCancel={handleCancel} footer={null}>
             {selectedProducts.map((product) => {
 
               return (
