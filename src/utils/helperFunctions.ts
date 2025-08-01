@@ -42,7 +42,6 @@ export const uploadPhotosToBackend = async (files: File[]): Promise<any[]> => {
  export const ImageRemoveHandler = async (imagePublicId: string,setterFunction: any) => {
 
 
-  console.log(finalToken, "finalToken")
     const requestConfig: AxiosRequestConfig = {data: { imageUrl: imagePublicId },headers: headers,};
     try {
       const response = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/removeProductImage`,requestConfig);
@@ -52,6 +51,10 @@ export const uploadPhotosToBackend = async (files: File[]): Promise<any[]> => {
       );
     } catch (error) {
       console.error("Failed to remove image:", error);
+    } finally{
+           setterFunction((prev: any) =>
+        prev.filter((item: any) => item.public_id != imagePublicId)
+      );
     }
   };
 
